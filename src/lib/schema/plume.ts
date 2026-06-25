@@ -20,6 +20,7 @@ export const PlumeInputs = z.object({
   surfaceRoughness: z.enum(["urban", "rural"]).default("rural"),
   tempC: z.number(),
   rh: z.number().min(0).max(100).optional(),
+  molecularWeight: z.number().positive().optional(),
   lat: z.number().optional(),
   lng: z.number().optional(),
 });
@@ -32,6 +33,26 @@ export const ThresholdBand = z.object({
   label: z.string(),
 });
 export type ThresholdBand = z.infer<typeof ThresholdBand>;
+
+export const ThresholdBandMgM3 = z.object({
+  kind: z.enum(["AEGL", "ERPG", "TEEL"]),
+  level: z.number().int().min(0).max(3),
+  valueMgM3: z.number().nonnegative(),
+  label: z.string(),
+});
+export type ThresholdBandMgM3 = z.infer<typeof ThresholdBandMgM3>;
+
+export function ppmToMgM3(ppm: number, molecularWeight: number, tempC = 25): number {
+  const TK = tempC + 273.15;
+  const M = molecularWeight;
+  return (ppm * M * 101.325) / (8.314 * TK);
+}
+
+export function mgM3ToPpm(mgm3: number, molecularWeight: number, tempC = 25): number {
+  const TK = tempC + 273.15;
+  const M = molecularWeight;
+  return (mgm3 * 8.314 * TK) / (M * 101.325);
+}
 
 export const Isopleth = z.object({
   thresholdKind: z.enum(["AEGL", "ERPG", "TEEL"]),

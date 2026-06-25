@@ -17,6 +17,12 @@ export interface FavoriteRow {
   createdAt: string;
 }
 
+export interface MetaRow {
+  key: string;
+  value: string;
+  at: string;
+}
+
 export class HazmatDB extends Dexie {
   chemicals!: Table<Chemical, string>;
   npg!: Table<NPGRecord, string>;
@@ -28,10 +34,11 @@ export class HazmatDB extends Dexie {
   readings!: Table<Reading, string>;
   observations!: Table<Observation, string>;
   favorites!: Table<FavoriteRow, string>;
+  meta!: Table<MetaRow, string>;
 
   constructor() {
     super("hazmat-response-support");
-    this.version(1).stores({
+    this.version(2).stores({
       chemicals: "id, name, *un, *na, *cas",
       npg: "id, name, cas",
       facilities: "id, name, dunn, *chemicals.chemicalId",
@@ -42,6 +49,7 @@ export class HazmatDB extends Dexie {
       readings: "[source+monitorId+ts], source, ts, monitorId",
       observations: "[source+ts], source, ts",
       favorites: "id, kind",
+      meta: "key",
     });
   }
 }

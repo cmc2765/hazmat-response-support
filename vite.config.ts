@@ -62,6 +62,14 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 5173,
+    proxy: {
+      "/safety-suite": {
+        target: "http://localhost:8443",
+        changeOrigin: true,
+        ws: true,
+        rewrite: (p) => p.replace(/^\/safety-suite/, ""),
+      },
+    },
   },
   test: {
     environment: "node",

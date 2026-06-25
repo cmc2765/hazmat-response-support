@@ -8,7 +8,8 @@ export {
   normalizeRt as normalizeSafetySuiteRt,
   normalizeHistorical as normalizeSafetySuiteHistorical,
   parseSafetySuiteCsv,
-} from "./rae/safety-suite/adapter";
+  sha256SignRequest,
+} from "./rae/safety-suite";
 export type {
   SafetySuiteAdapterOptions,
   SafetySuiteDevice,
@@ -32,3 +33,4 @@ export { OpenMeteoAdapter } from "./weather/open-meteo";
 export type { OpenMeteoOptions } from "./weather/open-meteo";
 export { CwsMicroServerAdapter, normalize as normalizeCws } from "./weather/cws";
 export type { CwsMicroServerOptions, CwsRawPayload } from "./weather/cws";
+export * from "./dispatcher";

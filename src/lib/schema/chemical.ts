@@ -16,7 +16,7 @@ export const Chemical = z.object({
   name: z.string(),
   synonyms: z.array(z.string()).default([]),
   hazardClass: z.array(z.string()).default([]),
-  packingGroup: z.array(z.enum(["I", "II", "III"])).default([]),
+  packingGroup: z.array(z.enum(["I", "II", "III"])).optional(),
   ergGuide: z.string().optional(),
   placard: z.string().optional(),
   ppe: z.array(z.string()).default([]),
