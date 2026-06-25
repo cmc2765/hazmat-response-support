@@ -1,0 +1,26 @@
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   This product includes data from public-domain sources:
+     - PHMSA Emergency Response Guidebook (ERG) 2024
+     - NOAA CAMEO Chemicals suite
+     - NIOSH Pocket Guide to Chemical Hazards
+     - EPA Acute Exposure Guideline Levels (AEGL)
+     - AIHA Emergency Response Planning Guidelines (ERPG)
+     - DOE Temporary Emergency Exposure Limits (TEEL)
+
+   These data sources are not affiliated with this project; their inclusion
+   does not imply endorsement. All trademarks belong to their respective owners.
