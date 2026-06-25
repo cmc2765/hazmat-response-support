@@ -56,6 +56,7 @@ export const IntegrationConfig = z.object({
   enabled: z.boolean().default(true),
   url: z.string().optional(),
   apiKey: z.string().optional(),
+  appId: z.string().optional(),
   pollIntervalSec: z.number().int().positive().default(60),
   lastSeenTs: z.string().optional(),
   lastError: z.string().optional(),

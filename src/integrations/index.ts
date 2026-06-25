@@ -3,8 +3,29 @@ export * from "./security";
 export * from "./http";
 export * from "./registry";
 export * from "./base";
-export { SafetySuiteAdapter, normalize as normalizeSafetySuite, parseSafetySuiteCsv } from "./rae/safety-suite/adapter";
-export type { SafetySuiteRawEvent, SafetySuiteAdapterOptions } from "./rae/safety-suite/adapter";
+export {
+  SafetySuiteAdapter,
+  normalizeRt as normalizeSafetySuiteRt,
+  normalizeHistorical as normalizeSafetySuiteHistorical,
+  parseSafetySuiteCsv,
+} from "./rae/safety-suite/adapter";
+export type {
+  SafetySuiteAdapterOptions,
+  SafetySuiteDevice,
+  SafetySuiteSite,
+  SafetySuiteRtMessage,
+  SafetySuiteRtReading,
+} from "./rae/safety-suite/adapter";
+export {
+  ENDPOINTS as SAFETY_SUITE_ENDPOINTS,
+  buildRequestEnvelope,
+  decryptResponse,
+  decryptResponseJson,
+  importAesKey,
+  signRequest,
+  registerSignRequestFn,
+} from "./rae/safety-suite/crypto";
+export type { SafetySuiteCryptoKeys, SafetySuiteRequest, SignRequestFn } from "./rae/safety-suite/crypto";
 export { NwsAdapter } from "./weather/nws";
 export type { NwsOptions } from "./weather/nws";
 export { OpenMeteoAdapter } from "./weather/open-meteo";

@@ -7,6 +7,9 @@ export interface StoredSecret {
   apiKey?: string;
   username?: string;
   password?: string;
+  appId?: string;
+  secretKey?: string;
+  iv?: string;
   createdAt: string;
 }
 
