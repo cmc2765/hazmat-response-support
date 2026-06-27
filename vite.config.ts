@@ -69,6 +69,10 @@ export default defineConfig({
         ws: true,
         rewrite: (p) => p.replace(/^\/safety-suite/, ""),
       },
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
     },
   },
   test: {

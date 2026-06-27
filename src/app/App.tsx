@@ -22,7 +22,7 @@ const navItems = [
   { to: "/settings", label: "Settings" },
 ];
 
-export function App({ dataVersion }: { dataVersion?: string }) {
+export function App({ dataVersion, dataSource }: { dataVersion?: string; dataSource?: "bundled" | "synced" | "cached" }) {
   return (
     <div className="flex min-h-full flex-col">
       <header className="sticky top-0 z-10 border-b border-slate-800 bg-slate-950/80 backdrop-blur">
@@ -31,7 +31,12 @@ export function App({ dataVersion }: { dataVersion?: string }) {
             <img src="/favicon.svg" alt="" className="h-8 w-8" />
             <span className="text-lg font-bold tracking-tight">Hazmat Response</span>
           </div>
-          {dataVersion && <span className="badge" title="Bundled data version">data {dataVersion}</span>}
+          {dataVersion && (
+            <span className="badge" title="Bundled data version">
+              {dataSource === "synced" ? "synced " : dataSource === "bundled" ? "bundled " : ""}
+              {dataVersion}
+            </span>
+          )}
         </div>
         <nav className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-4 pb-2" aria-label="Primary">
           {navItems.map((item) => (

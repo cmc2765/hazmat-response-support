@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { DATA_VERSION } from "@/lib/seed";
+import { syncFromServer, getLastSyncVersion } from "@/lib/sync";
 
 interface DataManifest {
   version: string;
@@ -9,6 +10,8 @@ interface DataManifest {
 export function SettingsPage() {
   const [online, setOnline] = useState<boolean>(navigator.onLine);
   const [manifest, setManifest] = useState<DataManifest | null>(null);
+  const [syncMsg, setSyncMsg] = useState<string | null>(null);
+  const [lastSync, setLastSync] = useState<string | null>(getLastSyncVersion());
 
   useEffect(() => {
     const on = () => setOnline(true);
@@ -28,6 +31,17 @@ export function SettingsPage() {
       .catch(() => setManifest(null));
   }, []);
 
+  const doSync = async () => {
+    setSyncMsg("Syncing…");
+    const result = await syncFromServer();
+    if (result.ok) {
+      setLastSync(result.version);
+      setSyncMsg(`Synced ${result.counts.chemicals} chemicals, ${result.counts.npg} NPG, ${result.counts.facilities} facilities from server (v${result.version}).`);
+    } else {
+      setSyncMsg(`Sync failed: ${result.reason}. Using bundled data.`);
+    }
+  };
+
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">Settings</h1>
@@ -35,17 +49,16 @@ export function SettingsPage() {
       <section className="card space-y-2">
         <h2 className="font-semibold">Status</h2>
         <p className="text-sm text-slate-300">
-          Network:{" "}
-          <span className={online ? "text-green-400" : "text-red-400"}>
-            {online ? "online" : "offline"}
-          </span>
+          Network: <span className={online ? "text-green-400" : "text-red-400"}>{online ? "online" : "offline"}</span>
         </p>
         <p className="text-sm text-slate-300">
           Bundled data version: <span className="font-mono">{DATA_VERSION}</span>
         </p>
         <p className="text-sm text-slate-300">
-          Manifest version: <span className="font-mono">{manifest?.version ?? "—"}</span>
+          Last server sync: <span className="font-mono">{lastSync ?? "never"}</span>
         </p>
+        <button type="button" className="btn-primary" onClick={doSync}>Sync from server now</button>
+        {syncMsg && <p className="text-xs text-slate-400">{syncMsg}</p>}
       </section>
 
       <section className="card space-y-2">
