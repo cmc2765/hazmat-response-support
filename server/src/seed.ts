@@ -4,7 +4,7 @@
 import { getDb } from "./db.js";
 import * as schema from "./schema.js";
 import { eq, sql } from "drizzle-orm";
-import { CHEMICALS } from "../../src/data/chemicals.js";
+import { ALL_CHEMICALS } from "../../src/data/all-chemicals.js";
 import { NPG } from "../../src/data/npg.js";
 import { FACILITIES } from "../../src/data/facilities.js";
 import { THRESHOLDS } from "../../src/data/thresholds.js";
@@ -17,7 +17,7 @@ async function seed() {
   console.log("[seed] starting…");
 
   // ─── Chemicals ────────────────────────────────────────────────────────
-  for (const c of CHEMICALS) {
+  for (const c of ALL_CHEMICALS) {
     const mw = MOLECULAR_WEIGHTS[c.id] ? String(MOLECULAR_WEIGHTS[c.id]) : null;
     await db.insert(schema.chemicals).values({
       id: c.id, name: c.name, synonyms: JSON.stringify(c.synonyms ?? []),
@@ -34,7 +34,7 @@ async function seed() {
       set: { name: c.name, updatedAt: sql`(datetime('now'))` },
     });
   }
-  console.log(`[seed] chemicals: ${CHEMICALS.length} upserted`);
+  console.log(`[seed] chemicals: ${ALL_CHEMICALS.length} upserted`);
 
   // ─── NPG ──────────────────────────────────────────────────────────────
   for (const n of NPG) {
@@ -131,7 +131,7 @@ async function seed() {
   // ─── Data sources manifest ────────────────────────────────────────────
   const sources = [
     { key: "erg", edition: "2024", license: "Public Domain (PHMSA)", recordCount: ERG_TABLE_1.length },
-    { key: "cameo", edition: "subset-2025-01", license: "Public Domain (NOAA)", recordCount: CHEMICALS.length },
+    { key: "cameo", edition: "subset-2025-01", license: "Public Domain (NOAA)", recordCount: ALL_CHEMICALS.length },
     { key: "nioshNpg", edition: "2024-10", license: "Public Domain (CDC/NIOSH)", recordCount: NPG.length },
     { key: "tier2", edition: "demo-2024", license: "Public record", recordCount: FACILITIES.length },
     { key: "aeglErpgTeel", edition: "2024", license: "Public domain (EPA, AIHA, DOE)", recordCount: THRESHOLDS.length },

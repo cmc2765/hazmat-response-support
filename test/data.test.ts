@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { Chemical, NPGRecord, Facility } from "@/lib/schema";
-import { CHEMICALS } from "@/data/chemicals";
+import { ALL_CHEMICALS } from "@/data/all-chemicals";
 import { NPG } from "@/data/npg";
 import { FACILITIES } from "@/data/facilities";
 import { THRESHOLDS, getThresholds } from "@/data/thresholds";
@@ -8,7 +8,7 @@ import { lookupErg } from "@/data/erg";
 
 describe("bundled data", () => {
   it("chemicals validate against Zod", () => {
-    for (const c of CHEMICALS) {
+    for (const c of ALL_CHEMICALS) {
       expect(() => Chemical.parse(c)).not.toThrow();
     }
   });
@@ -26,7 +26,7 @@ describe("bundled data", () => {
   });
 
   it("every chemical referenced by a facility has a master entry", () => {
-    const ids = new Set(CHEMICALS.map((c) => c.id));
+    const ids = new Set(ALL_CHEMICALS.map((c) => c.id));
     for (const f of FACILITIES) {
       for (const c of f.chemicals) {
         expect(ids.has(c.chemicalId), `facility ${f.id} references unknown ${c.chemicalId}`).toBe(true);
@@ -35,14 +35,14 @@ describe("bundled data", () => {
   });
 
   it("every NPG record has a matching chemical entry", () => {
-    const ids = new Set(CHEMICALS.map((c) => c.id));
+    const ids = new Set(ALL_CHEMICALS.map((c) => c.id));
     for (const n of NPG) {
       expect(ids.has(n.id), `npg ${n.id} missing chemical entry`).toBe(true);
     }
   });
 
   it("every threshold set has a matching chemical entry", () => {
-    const ids = new Set(CHEMICALS.map((c) => c.id));
+    const ids = new Set(ALL_CHEMICALS.map((c) => c.id));
     for (const t of THRESHOLDS) {
       expect(ids.has(t.chemicalId), `thresholds ${t.chemicalId} missing chemical`).toBe(true);
     }

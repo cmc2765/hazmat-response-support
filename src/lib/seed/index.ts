@@ -3,7 +3,7 @@
 
 import { Chemical, NPGRecord, Facility } from "@/lib/schema";
 import { db } from "@/lib/db";
-import { CHEMICALS } from "@/data/chemicals";
+import { ALL_CHEMICALS } from "@/data/all-chemicals";
 import { NPG } from "@/data/npg";
 import { FACILITIES } from "@/data/facilities";
 
@@ -36,7 +36,7 @@ export async function markDataLoaded(): Promise<void> {
 }
 
 export async function loadBundledData(): Promise<SeedResult> {
-  const chemicals = CHEMICALS.map((c) => validate(Chemical, c, `chemical ${c.id}`));
+  const chemicals = ALL_CHEMICALS.map((c) => validate(Chemical, c, `chemical ${c.id}`));
   const npg = NPG.map((n) => validate(NPGRecord, n, `npg ${n.id}`));
   const facilities = FACILITIES.map((f) => validate(Facility, f, `facility ${f.id}`));
 
