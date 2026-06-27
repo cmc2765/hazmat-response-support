@@ -53,6 +53,14 @@ export async function syncFromServer(): Promise<SyncResult> {
 
   const data: ApiSyncResponse = await res.json();
 
+  const cachedChemicalCount = await db.chemicals.count();
+  if (data.chemicals.length < cachedChemicalCount) {
+    return {
+      ok: false,
+      reason: `server has fewer chemicals (${data.chemicals.length}) than the local cache (${cachedChemicalCount}); refusing to overwrite — reseed the server DB`,
+    };
+  }
+
   await db.transaction(
     "rw",
     db.chemicals, db.npg, db.facilities,
