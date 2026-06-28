@@ -101,8 +101,10 @@ app.get("/api/erg/:un", async (c) => {
   const db = getDb();
   const un = c.req.param("un");
   const rows = await db.select().from(schema.ergTable1).where(eq(schema.ergTable1.un, un));
-  if (rows.length === 0) return c.json({ error: "not found" }, 404);
-  return c.json(rows[0]);
+  const guide = c.req.query("guide")?.replace(/P$/i, "");
+  const row = guide ? rows.find((entry) => entry.guide.replace(/P$/i, "") === guide) : rows[0];
+  if (!row) return c.json({ error: "not found" }, 404);
+  return c.json(row);
 });
 
 // ─── Thresholds ─────────────────────────────────────────────────────────
