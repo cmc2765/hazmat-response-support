@@ -33,4 +33,3 @@ export { OpenMeteoAdapter } from "./weather/open-meteo";
 export type { OpenMeteoOptions } from "./weather/open-meteo";
 export { CwsMicroServerAdapter, normalize as normalizeCws } from "./weather/cws";
 export type { CwsMicroServerOptions, CwsRawPayload } from "./weather/cws";
-export * from "./dispatcher";

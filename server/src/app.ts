@@ -16,15 +16,18 @@
 // Run: npm run dev  (starts on http://localhost:3000)
 
 import { Hono } from "hono";
-import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { serveStatic } from "@hono/node-server/serve-static";
 import { eq, sql } from "drizzle-orm";
 import { getDb } from "./db.js";
 import * as schema from "./schema.js";
+import { runPlume } from "../../src/lib/model/plume.js";
+import { PlumeInputs } from "../../src/lib/schema/plume.js";
+import type { ThresholdBand } from "../../src/lib/schema/plume.js";
 
 const app = new Hono();
 app.use(logger());
-app.use(cors({ origin: "*" }));
+app.use("/*", serveStatic({ root: "./public" }));
 
 // ─── Manifest ───────────────────────────────────────────────────────────
 app.get("/api/manifest", async (c) => {
@@ -52,8 +55,8 @@ app.get("/api/chemicals", async (c) => {
     if (!q) return true;
     const n = q.toLowerCase();
     const synonyms = JSON.parse(r.synonyms as unknown as string) as string[];
-    const unList = r.un ? JSON.parse(r.un as unknown as string) as string[] : [];
-    const casList = r.cas ? JSON.parse(r.cas as unknown as string) as string[] : [];
+    const unList = (r.un ? JSON.parse(r.un as unknown as string) as string[] | null : null) ?? [];
+    const casList = (r.cas ? JSON.parse(r.cas as unknown as string) as string[] | null : null) ?? [];
     return (
       r.name.toLowerCase().includes(n) ||
       synonyms.some((s) => s.toLowerCase().includes(n)) ||
@@ -110,6 +113,37 @@ app.get("/api/thresholds", async (c) => {
     ? await db.select().from(schema.thresholds).where(eq(schema.thresholds.chemicalId, chemicalId))
     : await db.select().from(schema.thresholds);
   return c.json({ thresholds: rows });
+});
+
+// ─── Plume model ────────────────────────────────────────────────────────
+app.post("/api/plume/run", async (c) => {
+  const db = getDb();
+  const body = await c.req.json().catch(() => null);
+  const parsed = PlumeInputs.safeParse(body);
+  if (!parsed.success) {
+    return c.json({ error: "invalid plume inputs", issues: parsed.error.issues }, 400);
+  }
+  const inputs = parsed.data;
+
+  if (inputs.molecularWeight === undefined) {
+    const chemRows = await db.select().from(schema.chemicals).where(eq(schema.chemicals.id, inputs.chemicalId));
+    const mw = chemRows[0]?.molecularWeight;
+    if (mw) inputs.molecularWeight = Number(mw);
+  }
+
+  const thresholdRows = await db
+    .select()
+    .from(schema.thresholds)
+    .where(eq(schema.thresholds.chemicalId, inputs.chemicalId));
+  const thresholds: ThresholdBand[] = thresholdRows.map((r) => ({
+    kind: r.kind as ThresholdBand["kind"],
+    level: r.level,
+    valuePpm: Number(r.valuePpm),
+    label: `${r.kind}-${r.level}`,
+  }));
+
+  const result = runPlume(inputs, { thresholds });
+  return c.json(result);
 });
 
 // ─── Facilities ─────────────────────────────────────────────────────────

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HazMatIQ Prototype</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand" aria-label="HazMatIQ">
+          <span class="brand-emblem" aria-hidden="true">
+            <span class="nfpa-cell nfpa-fire"><span>1</span></span>
+            <span class="nfpa-cell nfpa-reactivity"><span>0</span></span>
+            <span class="nfpa-cell nfpa-health"><span>3</span></span>
+            <span class="nfpa-cell nfpa-special"><span>W</span></span>
+          </span>
+          <span class="brand-lockup">
+            <span class="brand-name"><span>HAZMAT</span><strong>IQ</strong></span>
+            <span class="brand-tagline">Incident intelligence</span>
+          </span>
+        </div>
+        <a
+          class="department-logo-link"
+          href="https://pelhamcityal.sharepoint.com/sites/PFDHAZMAT"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open the Pelham Fire Department HazMat SharePoint site in a new tab"
+          title="Pelham Fire Department HazMat SharePoint"
+        >
+          <img class="department-logo" src="assets/pelham-fire-logo.png" alt="Pelham Fire Department" />
+        </a>
+      </header>
+
+      <section class="alert-banner notification-center" id="notification-center" role="status" aria-live="polite" aria-atomic="false">
+        <div class="notification-heading">
+          <strong>Tactical Alert</strong>
+          <span class="notification-live"><span aria-hidden="true"></span> Notification Center</span>
+        </div>
+        <div class="notification-feed">
+          <div class="notification-item notification-system">
+            <span>System</span>
+            <strong id="tactical-alert-message">Training/demo mode—verify operational guidance with approved sources and HazMat SMEs.</strong>
+          </div>
+          <div class="notification-item">
+            <span>Weather</span>
+            <strong id="notification-weather">Awaiting live weather data</strong>
+          </div>
+          <div class="notification-item">
+            <span>Monitor readings</span>
+            <strong id="notification-monitoring">Awaiting connected detector data</strong>
+          </div>
+        </div>
+        <time class="notification-updated" id="notification-updated">Not yet updated</time>
+      </section>
+
+      <main class="layout">
+        <aside class="sidebar">
+          <div class="sidebar-card">
+            <h2>Command Dashboard</h2>
+            <p class="muted">Quick-access tactical modules</p>
+            <nav class="module-nav" aria-label="Primary">
+              <button class="module-btn active" data-view="home">Home Dashboard</button>
+              <button class="module-btn" data-view="incident">Incident Dashboard</button>
+              <button class="module-btn" data-view="lookup">Chemical Lookup</button>
+              <button class="module-btn" data-view="card">Chemical Card</button>
+              <button class="module-btn" data-view="plume">Plume Model</button>
+              <button class="module-btn" data-view="map">Live Map</button>
+              <button class="module-btn" data-view="monitor">Monitoring Equipment</button>
+              <button class="module-btn" data-view="report">Reports / ICS</button>
+              <button class="module-btn" data-view="source">Source Verification</button>
+            </nav>
+          </div>
+
+          <div class="sidebar-card compact">
+            <h3>Current Status</h3>
+            <ul>
+              <li>Unit: HazMat 2</li>
+              <li>Staging: North Gate</li>
+              <li>Air: Moderate</li>
+              <li>Data mode: Demo</li>
+            </ul>
+          </div>
+        </aside>
+
+        <section class="content-area">
+          <section id="home" class="view active">
+            <div class="console-grid compact-grid">
+              <button class="module-btn console-btn priority-btn" data-view="incident">NEW INCIDENT</button>
+              <button class="module-btn console-btn priority-btn" data-view="lookup">CHEMICAL ID</button>
+              <button class="module-btn console-btn priority-btn" data-view="plume">LIVE WEATHER</button>
+              <button class="module-btn console-btn priority-btn" data-view="plume">PLUME MODEL</button>
+              <button class="module-btn console-btn priority-btn" data-view="incident">ENTRY/DECON</button>
+              <button class="module-btn console-btn priority-btn" data-view="report">ICS FORMS</button>
+            </div>
+          </section>
+
+          <section id="incident" class="view">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Command</p>
+                <h2>Incident Dashboard</h2>
+              </div>
+              <button class="accent-btn">Update Scene</button>
+            </div>
+
+            <div class="incident-layout">
+              <article class="panel-card incident-input-card">
+                <h3>Primary incident tiles</h3>
+                <p class="big-label">Tap a tile to move directly into the operational workflow for that task.</p>
+                <div class="incident-tiles" aria-label="Incident workflow tiles">
+                  <button class="incident-task-btn active" type="button" data-task="identify" data-view="lookup">Identify</button>
+                  <button class="incident-task-btn" type="button" data-task="erg" data-view="card">ERG</button>
+                  <button class="incident-task-btn" type="button" data-task="plume" data-view="plume">Plume</button>
+                  <button class="incident-task-btn" type="button" data-task="zones" data-view="plume">Zones</button>
+                  <button class="incident-task-btn" type="button" data-task="entry" data-view="map">Entry</button>
+                  <button class="incident-task-btn" type="button" data-task="decon" data-view="map">Decon</button>
+                  <button class="incident-task-btn" type="button" data-task="monitoring" data-view="map">Monitoring</button>
+                  <button class="incident-task-btn" type="button" data-task="evacuation" data-view="report">Evacuation</button>
+                  <button class="incident-task-btn" type="button" data-task="ics" data-view="report">ICS Reports</button>
+                </div>
+              </article>
+
+              <article class="panel-card tier2-card">
+                <h3>Current focus</h3>
+                <p id="incident-focus-label" class="big-label">Identify the product and confirm the verified source before action.</p>
+                <div id="incident-focus-detail" class="incident-focus-detail">
+                  <strong>Active workflow:</strong> Chemical identification and reference review.
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section id="lookup" class="view">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Reference</p>
+                <h2>Chemical Identification Engine</h2>
+              </div>
+              <button class="ghost-btn">Search</button>
+            </div>
+
+            <div class="card-grid two-up">
+              <article class="panel-card">
+                <h3>Verified source workflow</h3>
+                <p class="big-label">Use CAMEO Chemicals and NIOSH as the authoritative chemical reference set before acting.</p>
+                <div class="chip-list">
+                  <li>CAMEO Chemicals</li>
+                  <li>NIOSH Pocket Guide</li>
+                  <li>NIOSH IDLH / PPE</li>
+                  <li>ERG 2024</li>
+                  <li>UN/NA number</li>
+                  <li>CAS number</li>
+                  <li>Chemical name</li>
+                  <li>Synonyms</li>
+                  <li>Placard</li>
+                  <li>Shipping paper</li>
+                  <li>SDS upload</li>
+                  <li>Detector readings</li>
+                </div>
+                <label class="input-label" for="chemical-search">Chemical or identifier</label>
+                <input id="chemical-search" type="text" placeholder="e.g. 1005 / ammonia / anhydrous" />
+                <div class="button-row">
+                  <button class="primary-btn" id="chemical-lookup-btn" type="button">Lookup</button>
+                  <button class="ghost-btn" type="button">Unknown Product Tree</button>
+                </div>
+              </article>
+              <article class="panel-card">
+                <h3>Reference output fields</h3>
+                <ul class="detail-list">
+                  <li><span>Verified source</span><strong id="lookup-verified-source">ERG · NIOSH · SDS · E-Plan</strong></li>
+                  <li><span>UN/NA</span><strong id="lookup-un">1005</strong></li>
+                  <li><span>ERG Guide</span><strong id="lookup-erg-guide">125</strong></li>
+                  <li><span>DOT hazard class</span><strong id="lookup-dot-class">2.3 / corrosive</strong></li>
+                  <li><span>Physical state</span><strong id="lookup-physical-state">Gas</strong></li>
+                  <li><span>IDLH / AEGL / PAC</span><strong id="lookup-idlh">300 ppm · AEGL-2 / AEGL-3 · PAC-2 / PAC-3</strong></li>
+                  <li><span>PPE / decon / EMS</span><strong id="lookup-ppe-decon">SCBA · decon corridor · EMS coordination</strong></li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section id="card" class="view">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Hazard summary</p>
+                <h2>Chemical Card</h2>
+              </div>
+              <button class="accent-btn">Save Card</button>
+            </div>
+
+            <div class="card-grid two-up chemical-card-grid">
+              <article class="panel-card hazard-card urgent-card chemical-card-panel first-responder-card">
+                <div class="chemical-card-header">
+                  <div>
+                    <p class="eyebrow">First responder view</p>
+                    <h3 id="chemical-name">ANHYDROUS AMMONIA</h3>
+                  </div>
+                  <span class="status-pill">CAMEO • NIOSH</span>
+                </div>
+                <p id="chemical-summary" class="big-label">Toxic inhalation and corrosive gas hazard. Treat as a life-safety concern until verified.</p>
+                <ul class="detail-list">
+                  <li><span>Primary Hazard</span><strong id="chemical-primary-hazard">Toxic inhalation / corrosive gas</strong></li>
+                  <li><span>Immediate Actions</span><strong id="chemical-immediate-actions">Approach uphill/upwind · SCBA required · Isolate area · Monitor downwind · Consider evacuation or shelter-in-place · Avoid low-lying/confined spaces · Establish decon</strong></li>
+                  <li><span>ERG Guide</span><strong id="chemical-erg-guide">125</strong></li>
+                  <li><span>Major Concern</span><strong id="chemical-major-concern">Respiratory injury</strong></li>
+                  <li><span>Recommended Mode</span><strong id="chemical-recommended-mode">HazMat Technician Operations</strong></li>
+                </ul>
+                <div class="action-box">
+                  <h4>Immediate Actions</h4>
+                  <ul id="chemical-actions-list">
+                    <li>Approach uphill / upwind</li>
+                    <li>SCBA required</li>
+                    <li>Isolate area</li>
+                    <li>Monitor downwind</li>
+                    <li>Consider evacuation or shelter-in-place</li>
+                    <li>Avoid low-lying / confined spaces</li>
+                    <li>Establish decon</li>
+                  </ul>
+                </div>
+                <div class="button-row">
+                  <button class="primary-btn" id="open-plume-btn" type="button">Open Plume Modeling</button>
+                </div>
+              </article>
+              <article class="panel-card chemical-card-panel specialist-card">
+                <div class="chemical-card-header">
+                  <div>
+                    <p class="eyebrow">HazMat specialist view</p>
+                    <h3>Advanced chemical data</h3>
+                  </div>
+                  <span class="status-pill">CAMEO • NIOSH references</span>
+                </div>
+                <ul class="detail-list" id="chemical-advanced-list">
+                  <li><span>CAS</span><strong>[source value]</strong></li>
+                  <li><span>UN</span><strong>[source value]</strong></li>
+                  <li><span>Molecular Weight</span><strong>[source value]</strong></li>
+                  <li><span>Vapor Density</span><strong>[source value]</strong></li>
+                  <li><span>Boiling Point</span><strong>[source value]</strong></li>
+                  <li><span>Flash Point</span><strong>[source value]</strong></li>
+                  <li><span>LEL / UEL</span><strong>[source values]</strong></li>
+                  <li><span>IDLH</span><strong>[source value]</strong></li>
+                  <li><span>AEGL</span><strong>[source values]</strong></li>
+                  <li><span>ERPG</span><strong>[source values]</strong></li>
+                  <li><span>PAC</span><strong>[source values]</strong></li>
+                  <li><span>Reactivity</span><strong>[source value]</strong></li>
+                  <li><span>Incompatibilities</span><strong>[source values]</strong></li>
+                  <li><span>PPE References</span><strong>[source values]</strong></li>
+                  <li><span>Decon References</span><strong>[source values]</strong></li>
+                </ul>
+                <div class="action-box">
+                  <h4>Verified source references</h4>
+                  <ul id="chemical-source-list">
+                    <li>ERG 2024: guide and initial isolation values</li>
+                    <li>NIOSH Pocket Guide: IDLH and respiratory protection data</li>
+                    <li>SDS: exposure controls and reactivity guidance</li>
+                    <li>E-Plan: facility inventory and emergency-contact context</li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section id="plume" class="view">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Modeling</p>
+                <h2>Live GIS plume workspace</h2>
+              </div>
+              <div class="map-toolbar-actions">
+                <button class="ghost-btn plume-mode-btn active" id="street-map-btn" data-map-mode="street" type="button">Street map</button>
+                <button class="ghost-btn plume-mode-btn" id="satellite-map-btn" data-map-mode="satellite" type="button">Satellite</button>
+              </div>
+            </div>
+
+            <article class="panel-card plume-map-card">
+              <div class="plume-map-toolbar">
+                <div>
+                  <p class="eyebrow">Incident location</p>
+                  <h3 id="plume-map-title">I-65 Mile Marker 140 · Northbound shoulder</h3>
+                  <p id="plume-map-subtitle" class="muted">GPS 33.28473 -86.80863 · Google Maps base showing homes, businesses, and nearby structures</p>
+                </div>
+                <div class="plume-map-facts">
+                  <span class="status-pill" id="scenario-badge">Quick model</span>
+                  <span class="status-pill">Release: pressurized liquefied gas</span>
+                  <span class="status-pill" id="plume-map-status">Basemap: Street</span>
+                </div>
+              </div>
+
+              <div class="plume-scenario-row" role="group" aria-label="Plume scenarios">
+                <button class="ghost-btn scenario-btn active" data-scenario="quick" type="button">Quick model</button>
+                <button class="ghost-btn scenario-btn" data-scenario="advanced" type="button">Advanced model</button>
+                <button class="ghost-btn scenario-btn" data-scenario="alohac" type="button">ALOHA-compatible output</button>
+                <button class="ghost-btn scenario-btn" data-scenario="toxic" type="button">Toxic plume</button>
+                <button class="ghost-btn scenario-btn" data-scenario="flammable" type="button">Flammable plume</button>
+                <button class="ghost-btn scenario-btn" data-scenario="fire" type="button">Fire model</button>
+                <button class="ghost-btn scenario-btn" data-scenario="bleve" type="button">BLEVE model</button>
+                <button class="ghost-btn scenario-btn" data-scenario="vce" type="button">Vapor cloud explosion model</button>
+                <button class="ghost-btn scenario-btn" data-scenario="wind-shift" type="button">Wind shift forecast</button>
+                <button class="ghost-btn scenario-btn" data-scenario="realtime" type="button">Real-time sensor update</button>
+                <button class="ghost-btn scenario-btn" data-scenario="export" type="button">Export to KML / GeoJSON / PDF</button>
+              </div>
+
+              <div class="plume-tool-row" role="group" aria-label="Map tools">
+                <button class="ghost-btn tool-btn active" data-tool="live" type="button">Live plume map</button>
+                <button class="ghost-btn tool-btn" data-tool="offline" type="button">Offline map cache</button>
+                <button class="ghost-btn tool-btn" data-tool="zones" type="button">Zone drawing</button>
+                <button class="ghost-btn tool-btn" data-tool="resources" type="button">Resource placement</button>
+                <button class="ghost-btn tool-btn" data-tool="roads" type="button">Road closure planner</button>
+                <button class="ghost-btn tool-btn" data-tool="receptors" type="button">Sensitive receptors</button>
+                <button class="ghost-btn tool-btn" data-tool="inventory" type="button">Facility inventory</button>
+                <button class="ghost-btn tool-btn" data-tool="hydrants" type="button">Hydrants</button>
+                <button class="ghost-btn tool-btn" data-tool="drains" type="button">Storm drains</button>
+                <button class="ghost-btn tool-btn" data-tool="waterways" type="button">Waterways</button>
+                <button class="ghost-btn tool-btn" data-tool="detectors" type="button">Detector integration</button>
+              </div>
+
+              <div class="plume-map-shell">
+                <aside class="plume-map-side">
+                  <h3>Scenario context</h3>
+                  <ul class="detail-list">
+                    <li><span>Product</span><strong>Anhydrous ammonia</strong></li>
+                    <li><span>GPS</span><strong id="plume-gps-summary">33.28473, -86.80863</strong></li>
+                    <li><span>Weather</span><strong id="scenario-weather-summary">Neutral / inversion possible</strong></li>
+                    <li><span>Model</span><strong id="scenario-name">Quick model</strong></li>
+                  </ul>
+                  <div class="action-box">
+                    <h4>Modeling basis</h4>
+                    <ul>
+                      <li>MARPLOT-style receptor awareness</li>
+                      <li>ALOHA-style hazard footprint assumptions</li>
+                      <li>Weather-station updates from the selected station</li>
+                      <li>Significant structures visible on the Google base map</li>
+                    </ul>
+                  </div>
+                  <div class="action-box detector-box">
+                    <h4>Honeywell Safety Suite</h4>
+                    <ul id="detector-feed-list">
+                      <li>MultiRAE 201 · North Gate · Active</li>
+                      <li>AreaRAE 302 · West perimeter · Active</li>
+                      <li>MultiRAE 203 · Command post · Standby</li>
+                    </ul>
+                  </div>
+                </aside>
+                <iframe id="plume-gis-map" class="plume-map-frame" title="Google Maps plume view" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              </div>
+            </article>
+
+            <div class="card-grid two-up">
+              <article class="panel-card">
+                <h3>Rapid scenario inputs</h3>
+                <label class="input-label" for="incident-location">Incident location</label>
+                <input id="incident-location" type="text" value="I-65 Mile Marker 140 · Northbound shoulder" />
+                <label class="input-label" for="gps-location">Address / GPS</label>
+                <input id="gps-location" type="text" value="33.2862, -86.7900" />
+                <label class="input-label" for="map-pin">Map pin / preplan</label>
+                <input id="map-pin" type="text" value="Facility preplan: Tank farm access road" />
+                <label class="input-label" for="terrain">Elevation / terrain / urban density</label>
+                <input id="terrain" type="text" value="Low elevation · urban corridor · moderate density" />
+                <label class="input-label" for="chemical-name-input">Chemical</label>
+                <input id="chemical-name-input" type="text" value="Anhydrous ammonia" />
+                <label class="input-label" for="release-rate">Release type</label>
+                <input id="release-rate" type="text" value="Pressurized liquefied gas" />
+                <label class="input-label" for="container">Container</label>
+                <input id="container" type="text" value="Rail tank car · leak at valve" />
+                <label class="input-label" for="release-details">Release details</label>
+                <input id="release-details" type="text" value="Hole size: 1 in · release duration: continuous" />
+                <label class="input-label" for="wind">Wind speed / direction</label>
+                <input id="wind" type="text" value="8 mph SW" />
+                <label class="input-label" for="stability">Atmospheric stability</label>
+                <input id="stability" type="text" value="Neutral / inversion possible" />
+                <label class="input-label" for="weather-station">Weather station</label>
+                <select id="weather-station">
+                  <option>North Gate Station</option>
+                  <option>South Rail Station</option>
+                  <option>Airport MET Radar</option>
+                  <option>Command Post Sensor</option>
+                </select>
+                <label class="input-label" for="weather-notes">Weather notes</label>
+                <input id="weather-notes" type="text" value="Forecast wind shift expected by 18:00" />
+              </article>
+              <article class="panel-card">
+                <h3>Operational outputs</h3>
+                <ul class="detail-list">
+                  <li><span>Downwind plume</span><strong id="zone-distance">Initial hot zone distance will be calculated from the current scenario</strong></li>
+                  <li><span>Hot / warm / cold zones</span><strong id="zone-summary">Zone placement is based on the selected model profile</strong></li>
+                  <li><span>Staging / decon</span><strong id="decon-summary">Decon placement will be recommended from current wind and terrain inputs</strong></li>
+                  <li><span>Evacuation / shelter-in-place</span><strong id="receptor-summary">Structures and receptor risks are highlighted directly on the map</strong></li>
+                  <li><span>Weather source</span><strong id="weather-status">Live weather: connected · latest update 2 min ago</strong></li>
+                </ul>
+                <div class="recommendation-box" id="plume-recommendation">
+                  <strong>Recommendation</strong>
+                  <p>Based on current inputs, establish the hot zone from the release point to the calculated downwind distance. Position decon crosswind/upwind on the recommended side. Avoid staging in the projected wind-shift area. Reassess every 10 minutes or with any wind change. Use AI and verified sources from NIOSH, Emergency Response Plans, SDS datasheets, and HazMat Specialists and Technician best practices to determine the best tactical operations.</p>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section id="map" class="view">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Geospatial</p>
+                <h2>Live HazMat Map</h2>
+              </div>
+              <button class="accent-btn">Toggle Overlay</button>
+            </div>
+
+            <div class="panel-card map-hero">
+              <div class="map-toolbar">
+                <div class="map-toolbar-title">
+                  <strong>LIVE HAZMAT MAP</strong>
+                  <span>Wind: 8 mph SW · Product: Ammonia</span>
+                </div>
+                <div class="map-toolbar-actions">
+                  <button class="ghost-btn">Re-run Plume</button>
+                  <button class="ghost-btn">Add Reading</button>
+                  <button class="ghost-btn">Drop Marker</button>
+                </div>
+              </div>
+              <div class="map-toolbar-secondary">
+                <button class="ghost-btn">Show Zones</button>
+                <button class="ghost-btn">Show Sensors</button>
+                <button class="ghost-btn">Show Evacuation</button>
+                <button class="ghost-btn">Offline map cache</button>
+              </div>
+            </div>
+
+            <div class="map-placeholder" id="live-map-surface">
+              <div class="map-legend">
+                <span class="legend-item red">Red · Hot Zone</span>
+                <span class="legend-item orange">Orange · Warm Zone</span>
+                <span class="legend-item green">Green · Cold Zone</span>
+                <span class="legend-item blue">Blue · Command / Staging</span>
+                <span class="legend-item purple">Purple · Monitoring</span>
+                <span class="legend-item gray">Gray · Unknown</span>
+              </div>
+              <div class="wind-arrow">↑ Wind 8 mph SW</div>
+              <div class="map-marker hot">Hot Zone</div>
+              <div class="map-marker warm">Warm Zone</div>
+              <div class="map-marker cold">Cold Zone</div>
+              <div class="map-marker plume">Plume Polygon</div>
+              <div class="map-marker entry">Entry Team</div>
+              <div class="map-marker decon">Decon Corridor</div>
+              <div class="map-marker monitor">Monitoring Points</div>
+              <div class="map-marker command">Command Post</div>
+              <div class="map-marker staging">Staging</div>
+              <div class="map-marker ems">EMS Treatment</div>
+              <div class="map-marker rehab">Rehab</div>
+              <div class="map-marker road">Road Closure</div>
+              <div class="map-marker shelter">Shelter-in-Place</div>
+              <div class="map-marker evac">Evacuation Group</div>
+              <div class="map-marker sensitive">Sensitive Location</div>
+              <div class="map-marker resource">Tier II / Facility</div>
+              <div id="tier2-facility-layer" class="tier2-facility-layer" aria-label="Tier II facility pins"></div>
+              <div id="tier2-facility-card" class="tier2-facility-card" hidden></div>
+              <p>Operational command board with plume, protective-action overlays, resource markers, and preplan-sensitive infrastructure for field use.</p>
+            </div>
+
+            <div class="map-action-row">
+              <button class="ghost-btn">Layers</button>
+              <button class="ghost-btn">Measure</button>
+              <button class="ghost-btn">Share</button>
+              <button class="ghost-btn">Export</button>
+                <button class="ghost-btn">Road closure planner</button>
+              </div>
+
+              <div class="card-grid two-up">
+                <article class="panel-card">
+                  <h3>Operational layers</h3>
+                  <div class="chip-list">
+                    <li>Live plume map</li>
+                    <li>Zone drawing</li>
+                    <li>Resource placement</li>
+                    <li>Sensitive receptors</li>
+                    <li>Facility inventory</li>
+                    <li>Hydrants</li>
+                    <li>Storm drains</li>
+                    <li>Waterways</li>
+                  </div>
+                </article>
+                <article class="panel-card">
+                  <h3>Detector integration</h3>
+                  <ul class="detail-list">
+                    <li><span>MultiRAE</span><strong>Monitor 201 · North Gate</strong></li>
+                    <li><span>AreaRAE</span><strong>Monitor 302 · West perimeter</strong></li>
+                    <li><span>Honeywell Safety Suite</span><strong>ID and location synced to the map</strong></li>
+                  </ul>
+                </article>
+                <div class="chip-list">
+                  <li>Plume model</li>
+                  <li>ERG isolation / protective action distances</li>
+                  <li>Hot zone</li>
+                  <li>Warm zone</li>
+                  <li>Cold zone</li>
+                  <li>Entry corridor</li>
+                  <li>Decon corridor</li>
+                  <li>Command post</li>
+                  <li>Staging</li>
+                  <li>EMS treatment</li>
+                  <li>Rehab</li>
+                  <li>Evacuation group</li>
+                  <li>Shelter-in-place area</li>
+                  <li>Waterways / storm drains</li>
+                  <li>Schools</li>
+                  <li>Hospitals</li>
+                  <li>Nursing homes</li>
+                  <li>Daycares</li>
+                  <li>High-risk occupancies</li>
+                  <li>Hydrants</li>
+                  <li>Rail lines</li>
+                  <li>Pipelines</li>
+                  <li>Chemical facilities</li>
+                  <li>Tier II sites</li>
+                  <li>Road closures</li>
+                  <li>Safe approach routes</li>
+                </div>
+              </article>
+              <article class="panel-card">
+                <h3>Live Tactical Notes</h3>
+                <ul class="detail-list">
+                  <li><span>Drag-and-drop</span><strong>Command post, staging, EMS, and rehab markers</strong></li>
+                  <li><span>Zones</span><strong>Hot, warm, cold, evacuation, and shelter overlays</strong></li>
+                  <li><span>Planning data</span><strong>CAMEO Data Manager style facility, route, and contact planning layers</strong></li>
+                  <li><span>Monitoring</span><strong>GPS team locations and last-known sensor positions</strong></li>
+                  <li><span>Readings</span><strong>Every reading carries a timestamp</strong></li>
+                  <li><span>Tools</span><strong>Measure, share, export, and layer controls</strong></li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section id="monitor" class="view">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Equipment</p>
+                <h2>Monitoring Equipment</h2>
+              </div>
+              <button class="ghost-btn">Calibrate</button>
+            </div>
+
+            <div class="card-grid two-up">
+              <article class="panel-card">
+                <h3>Connected Devices</h3>
+                <ul class="detail-list">
+                  <li><span>PID</span><strong>Offline</strong></li>
+                  <li><span>Multi-gas Meter</span><strong>Standby</strong></li>
+                  <li><span>Dräger Tube Kit</span><strong>Ready</strong></li>
+                  <li><span>Radiation Meter</span><strong>Pending</strong></li>
+                  <li><span>Weather Meter</span><strong>Connected</strong></li>
+                </ul>
+              </article>
+              <article class="panel-card">
+                <h3>Readings Panel</h3>
+                <p class="big-label">Placeholder readings from Honeywell Safety Suite, detector feeds, and monitoring logs.</p>
+                <ul class="detail-list">
+                  <li><span>LEL</span><strong data-monitor-reading="LEL">0.0%</strong></li>
+                  <li><span>O₂</span><strong data-monitor-reading="O₂">20.9%</strong></li>
+                  <li><span>H₂S</span><strong data-monitor-reading="H₂S">Pending</strong></li>
+                  <li><span>PID</span><strong data-monitor-reading="PID">Demo value</strong></li>
+                </ul>
+                <div class="status-pill">Monitoring plan: confirm wind shift / repeat readings</div>
+              </article>
+            </div>
+
+            <div class="panel-card">
+              <h3>Map Placement</h3>
+              <p class="big-label">Monitoring equipment can be placed directly on the active map to show location accuracy for each reading point.</p>
+              <div class="chip-list">
+                <li>PID station</li>
+                <li>Multi-gas point</li>
+                <li>Weather station</li>
+                <li>Decon monitor</li>
+              </div>
+            </div>
+          </section>
+
+          <section id="report" class="view">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Documentation</p>
+                <h2>Reports / ICS Forms</h2>
+              </div>
+              <button class="accent-btn">Export Pack</button>
+            </div>
+
+            <div class="card-grid two-up">
+              <article class="panel-card">
+                <h3>Import Compatibility</h3>
+                <div class="chip-list">
+                  <li>CAMEO-style data</li>
+                  <li>Tier II inventory</li>
+                  <li>CSV inventories</li>
+                  <li>SDS PDFs</li>
+                  <li>Shapefiles</li>
+                  <li>GeoJSON</li>
+                  <li>KML</li>
+                  <li>Preplans</li>
+                  <li>Weather feeds</li>
+                  <li>Detector CSV / Bluetooth</li>
+                </div>
+              </article>
+              <article class="panel-card">
+                <h3>Export Actions</h3>
+                <div class="button-row column">
+                  <button class="primary-btn">Export Incident Summary</button>
+                  <button class="ghost-btn">Generate ICS-214</button>
+                  <button class="ghost-btn">Generate Hazard Log</button>
+                  <button class="ghost-btn">Export Plume Map</button>
+                </div>
+              </article>
+            </div>
+
+            <div class="panel-card">
+              <h3>Output Pack</h3>
+              <ul class="detail-list">
+                <li><span>PDF incident report</span><strong>Available</strong></li>
+                <li><span>GeoJSON / KML</span><strong>Available</strong></li>
+                <li><span>CSV logs</span><strong>Available</strong></li>
+                <li><span>ICS forms</span><strong>Available</strong></li>
+                <li><span>Chemical research packet</span><strong>Available</strong></li>
+                <li><span>Public warning message</span><strong>Available</strong></li>
+                <li><span>After-action report</span><strong>Available</strong></li>
+              </ul>
+            </div>
+
+            <div class="panel-card">
+              <h3>Operational Compatibility</h3>
+              <div class="chip-list">
+                <li>Works on iPad</li>
+                <li>Works on Windows laptop</li>
+                <li>Works on command post desktop</li>
+                <li>Works offline</li>
+                <li>Syncs when internet returns</li>
+                <li>Supports multiple users</li>
+                <li>Allows mutual-aid access</li>
+              </div>
+            </div>
+          </section>
+
+          <section id="source" class="view">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Verification</p>
+                <h2>Source Verification</h2>
+              </div>
+              <button class="ghost-btn">Review Sources</button>
+            </div>
+
+            <div class="panel-card">
+              <h3>Reference status</h3>
+              <ul class="detail-list">
+                <li><span>CAMEO Chemicals</span><strong>Placeholder reference only</strong></li>
+                <li><span>NIOSH Pocket Guide</span><strong>Placeholder reference only</strong></li>
+                <li><span>NIOSH ERSH-DB</span><strong>Placeholder reference only</strong></li>
+                <li><span>ERG 2024</span><strong>Placeholder guide page</strong></li>
+                <li><span>ALOHA</span><strong>Demo plume model markup</strong></li>
+              </ul>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <footer class="footer-note">
+        Training / Demo Only.
+      </footer>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script.js"></script>
+  </body>
+</html>

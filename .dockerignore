@@ -1,0 +1,13 @@
+node_modules
+server/node_modules
+server/local.db
+server/local.db-journal
+server/local.db-wal
+server/local.db-shm
+.git
+test
+server/test
+scripts
+sample
+docs
+*.md

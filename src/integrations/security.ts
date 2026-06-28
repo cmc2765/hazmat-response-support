@@ -1,4 +1,3 @@
-import Dexie, { type Table } from "dexie";
 import type { IntegrationConfig } from "@/lib/schema";
 
 export interface StoredSecret {
@@ -13,33 +12,25 @@ export interface StoredSecret {
   createdAt: string;
 }
 
-export class SecretsDB extends Dexie {
-  secrets!: Table<StoredSecret, string>;
-
-  constructor() {
-    super("hazmat-secrets");
-    this.version(1).stores({
-      secrets: "integrationId,kind",
-    });
-  }
-}
-
-export const secretsDb = new SecretsDB();
+// In-memory for now — these adapters aren't wired into a live caller yet (see Future phases:
+// live integrations). Once they are, this should become a real server-side store (e.g. a
+// SQLite table alongside the rest of the data) rather than the old browser-IndexedDB approach.
+const secrets = new Map<string, StoredSecret>();
 
 export async function putSecret(s: StoredSecret): Promise<void> {
-  await secretsDb.secrets.put(s);
+  secrets.set(s.integrationId, s);
 }
 
 export async function getSecret(integrationId: string): Promise<StoredSecret | undefined> {
-  return secretsDb.secrets.get(integrationId);
+  return secrets.get(integrationId);
 }
 
 export async function deleteSecret(integrationId: string): Promise<void> {
-  await secretsDb.secrets.delete(integrationId);
+  secrets.delete(integrationId);
 }
 
 export async function listSecrets(): Promise<StoredSecret[]> {
-  return secretsDb.secrets.toArray();
+  return Array.from(secrets.values());
 }
 
 export function maskSecret(secret?: string): string {

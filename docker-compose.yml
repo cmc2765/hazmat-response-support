@@ -1,0 +1,13 @@
+services:
+  hazmatiq:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - hazmat-data:/data
+    environment:
+      - SQLITE_PATH=/data/local.db
+    restart: unless-stopped
+
+volumes:
+  hazmat-data:
