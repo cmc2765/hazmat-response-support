@@ -1,58 +1,57 @@
 # Working guide — who edits what
 
-This repo has two parts that can be worked on independently.
+This repo has two parts that can be worked on independently, and they live on two branches:
+
+| Branch | Who | Folder | What's there |
+|--------|-----|--------|--------------|
+| `frontend` | your coworker | `server/public/` | The UI — plain HTML/CSS/JS, no build step. `index.html`, `script.js`, `styles.css`, `assets/` |
+| `backend` | you | `server/src/`, `src/data/`, `src/lib/`, `scripts/` | The API, the database, the chemical/plume data |
+
+`main` is the shared, working version of the app. Both branches merge into `main` through a Pull Request (see workflow below).
 
 ## Frontend (UI) — your coworker
 
-All files under `src/` except `src/data/` and `src/lib/schema/` and `src/lib/sync.ts`.
+Everything lives in `server/public/`:
 
-| Directory | What's there | What to do |
-|-----------|-------------|------------|
-| `src/features/` | Page components (search, plume map, chemical detail, facilities, incidents, sensors, settings) | Add pages, improve layouts, change how things look |
-| `src/components/` | Shared UI components (buttons, cards, badges) | Add reusable components here |
-| `src/app/` | Routing, navigation bar, layout shell, Bootstrap | Change navigation, add routes, adjust layout |
-| `src/app/index.css` | Tailwind classes and custom styles | Change colors, spacing, fonts |
-| `tailwind.config.js` | Theme (colors, sizes, dark mode) | Adjust the visual theme |
-| `index.html` | HTML shell, PWA manifest link | Change page title, meta tags |
+| File | What's there |
+|------|-------------|
+| `index.html` | All the views/screens (home, lookup, plume, facilities, etc.) |
+| `script.js` | All the behavior — view switching, calling the API, rendering data |
+| `styles.css` | All the styling |
+| `assets/` | Images (department logo, etc.) |
 
-### Running the frontend
-
-```bash
-npm install
-npm run dev          # starts at http://localhost:5173
-```
-
-The frontend works standalone — it has bundled data and doesn't need the backend running.
-
-### What NOT to touch
-
-- `server/` — that's the backend
-- `src/data/` — that's the chemical data (managed by backend person)
-- `src/lib/schema/` — that's the type definitions (shared contract, managed by backend person)
-- `src/lib/sync.ts` — that's the server connection (managed by backend person)
-
-## Backend — you
-
-All files under `server/` plus `src/data/`, `src/lib/schema/`, and `src/lib/sync.ts`.
-
-| Directory | What's there | What to do |
-|-----------|-------------|------------|
-| `server/src/` | Hono API, Drizzle schema, database connection, seed script | Add API endpoints, change database schema |
-| `server/src/schema.ts` | Database table definitions | Add tables, change columns |
-| `server/src/seed.ts` | Loads data into the database | Update when data files change |
-| `server/scripts/` | Scrapers (Tier II, etc.) | Add data pipelines |
-| `src/data/` | Chemical, NPG, ERG, threshold, facility data | Add chemicals, update values |
-| `src/lib/schema/` | Zod type definitions (the shared contract) | Add fields, change types |
-| `src/lib/sync.ts` | PWA ↔ server sync client | Change how data syncs |
-
-### Running the backend
+The UI is served directly by the backend — there's no separate frontend dev server anymore. To see your changes:
 
 ```bash
 cd server
-npm install
-npm run db:init-sqlite   # one-time: creates the database
-npm run db:seed          # loads data into the database
-npm run dev              # starts API at http://localhost:3000
+npm install      # first time only
+npm run dev
+```
+
+Then open `http://localhost:3000/` (in Codespaces, it'll prompt "Open in Browser" when the server starts — click that).
+
+**Don't touch:** anything outside `server/public/`. If the UI needs data the API doesn't provide yet, don't add it yourself — tell the backend person what you need (see API contract below) and they'll add it.
+
+## Backend — you
+
+| Directory | What's there |
+|-----------|-------------|
+| `server/src/app.ts` | All API routes |
+| `server/src/schema.ts` | Database table definitions (Drizzle) |
+| `server/src/seed.ts` | Loads data into the database |
+| `src/data/` | Chemical, NPG, ERG, threshold, facility data |
+| `src/lib/model/` | The plume dispersion math |
+| `src/lib/schema/` | Zod type definitions (the shared contract) |
+| `scripts/` | Data pipelines (ERG, CAMEO, NIOSH, Tier II) |
+
+### Running it
+
+```bash
+cd server
+npm install                 # first time only
+npm run db:init-sqlite      # first time only: creates the database
+npm run db:seed             # first time only: loads data into it
+npm run dev                 # starts everything (UI + API) at http://localhost:3000
 ```
 
 ### The API contract
@@ -60,41 +59,58 @@ npm run dev              # starts API at http://localhost:3000
 The frontend talks to the backend through these endpoints (defined in `server/src/app.ts`):
 
 ```
-GET /api/manifest          → data version + source metadata
-GET /api/chemicals?q=      → search chemicals
-GET /api/chemicals/:id     → single chemical
-GET /api/npg               → NIOSH records
-GET /api/erg/:un           → ERG distances by UN number
-GET /api/thresholds        → AEGL/ERPG/TEEL values
-GET /api/facilities?q=     → Tier II facilities
-GET /api/facilities/:id    → single facility with chemicals
-GET /api/sync/:clientId    → full data sync
+GET  /api/manifest          → data version + source metadata
+GET  /api/chemicals?q=      → search chemicals
+GET  /api/chemicals/:id     → single chemical
+GET  /api/npg               → NIOSH records
+GET  /api/npg/:id           → single NIOSH record
+GET  /api/erg/:un           → ERG distances by UN number
+GET  /api/thresholds        → AEGL/ERPG/TEEL values (optional ?chemicalId=)
+POST /api/plume/run         → runs the real plume model, returns isopleths/distances
+GET  /api/facilities?q=     → Tier II facilities
+GET  /api/facilities/:id    → single facility with its chemical inventory
+GET  /api/sync/:clientId    → full data sync
 ```
 
-If you change what an endpoint returns, tell your coworker so they can update the UI.
+If you change what an endpoint returns or add a new one, tell your coworker so they can update the UI to match.
 
-## Git workflow for two people
+## Day-to-day workflow (using the Codespaces UI — no terminal commands needed)
 
-```bash
-# Before starting work:
-git pull origin main
+Both of you follow the same steps every time — just swap `frontend` for `backend` depending on which one is yours.
 
-# Create a branch for your changes:
-git checkout -b ui-improve-plume-page    # coworker
-git checkout -b backend-add-chemicals    # you
+### 1. Starting work for the day
 
-# Make your changes, then:
-git add .
-git commit -m "describe what you changed"
-git push origin ui-improve-plume-page
+1. Open your Codespace.
+2. Bottom-left corner of the window shows the current branch name. Click it.
+3. Pick your branch (`frontend` or `backend`) from the list.
+4. Click the **sync icon** (circular arrows) next to the branch name in the bottom-left — this pulls down anything that was merged into `main` since you last worked, so you're starting from the latest version.
 
-# When ready to merge into main:
-git checkout main
-git pull origin main
-git merge ui-improve-plume-page
-git push origin main
-```
+### 2. While you work
 
-If git says "merge conflict" — that means you both changed the same line in the same file. Ask each other which version to keep, then commit again.
+Just edit files normally. Nothing to commit yet — that happens when you're ready to save a checkpoint.
 
-**Rule of thumb:** if you stay in your own directories (frontend vs backend), you will almost never have conflicts.
+### 3. Saving your work (commit)
+
+1. Click the **Source Control icon** in the left sidebar (it shows a number badge for how many files changed).
+2. You'll see a list of changed files. Type a short message describing what you changed in the box at the top (e.g. "Fixed plume distance display").
+3. Click the **checkmark (✓ Commit)** button above the message box.
+
+### 4. Sharing your work (push)
+
+1. Right after committing, the bottom-left sync icon will show you're "ahead" of the remote.
+2. Click that sync icon again — this pushes your commit up to GitHub.
+
+### 5. Getting your work into `main`
+
+1. Go to the repo on **github.com** in a browser tab.
+2. GitHub usually shows a yellow banner: "`frontend` had recent pushes — Compare & pull request." Click it. (If you don't see it, go to the **Pull requests** tab → **New pull request** → set base: `main`, compare: `frontend` or `backend`.)
+3. Click **Create pull request**.
+4. The other person takes a quick look, then clicks the green **Merge pull request** button → **Confirm merge**.
+
+That's it — no merge commands, no conflict resolution tools needed for the normal case, since you're working in separate folders.
+
+### If GitHub says there's a merge conflict
+
+This only happens if you both changed the same file. Since you're working in separate folders (`server/public/` vs. everything else), this should be rare. If it happens, stop and message each other — don't guess which version to keep.
+
+**Rule of thumb:** stay in your own folder (frontend = `server/public/` only, backend = everything else) and you'll almost never see a conflict.
