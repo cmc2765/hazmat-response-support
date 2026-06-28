@@ -600,7 +600,95 @@ function ensurePlumeMap(location) {
         sources: {
           osm: {
             type: 'raster',
-            tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+function addHazMatIQBaseMap(map) {
+  if (!map) {
+    console.error("HazMatIQ map was not found.");
+    return null;
+  }
+
+  const cartoLight = L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions" target="_blank">CARTO</a>',
+      subdomains: "abcd",
+      maxZoom: 20,
+      detectRetina: true
+    }
+  );
+
+  const map = L.map("map", {
+  zoomControl: true,
+  attributionControl: true
+}).setView([33.2443, -86.8164], 13);
+
+addHazMatIQBaseMap(map);
+    }
+  );
+
+  const esriImagery = L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    {
+      attribution:
+        "Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community",
+      maxZoom: 19
+    }
+  );
+
+  cartoLight.addTo(map);
+
+  const baseMaps = {
+    "Responder Light Map": cartoLight,
+    "Dark Tactical Map": cartoDark,
+    "Satellite Imagery": esriImagery
+  };
+
+  L.control.layers(baseMaps, null, {
+    position: "topright",
+    collapsed: true
+  }).addTo(map);
+
+  return cartoLight;
+}// ======================================================
+// HazMatIQ Plume Map Safe Initializer
+// Prevents duplicate Leaflet maps and duplicate tile loads.
+// ======================================================
+
+let hazmatIQMap = null;
+let plumeLayerGroup = null;
+
+function initializeHazMatIQMap(latitude = 33.2443, longitude = -86.8164, zoom = 13) {
+  const mapContainer = document.getElementById("map");
+
+  if (!mapContainer) {
+    console.error("Map container with id='map' was not found.");
+    return null;
+  }
+
+  // If Leaflet already created a map in this container, reuse it.
+  if (hazmatIQMap) {
+    hazmatIQMap.setView([latitude, longitude], zoom);
+    setTimeout(() => {
+      hazmatIQMap.invalidateSize();
+    }, 200);
+    return hazmatIQMap;
+  }
+
+  hazmatIQMap = L.map("map", {
+    zoomControl: true,
+    attributionControl: true
+  }).setView([latitude, longitude], zoom);
+
+  addHazMatIQBaseMap(hazmatIQMap);
+
+  plumeLayerGroup = L.layerGroup().addTo(hazmatIQMap);
+
+  setTimeout(() => {
+    hazmatIQMap.invalidateSize();
+  }, 200);
+
+  return hazmatIQMap;
+}
             tileSize: 256,
             attribution: '© OpenStreetMap contributors',
           },
