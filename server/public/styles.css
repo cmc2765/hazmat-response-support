@@ -1401,6 +1401,8 @@ input, select {
 
 .muted { color: var(--muted); }
 
+.unit-secondary { font-size: 0.85em; color: var(--muted); font-weight: normal; }
+
 @media (max-width: 980px) {
   .layout { grid-template-columns: 1fr; }
   .topbar, .hero-card { flex-direction: column; align-items: flex-start; }

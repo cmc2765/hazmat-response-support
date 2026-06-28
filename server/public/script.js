@@ -21,7 +21,7 @@ function updateNotificationCenter(update = {}) {
     const updatedAt = update.timestamp ? new Date(update.timestamp) : new Date();
     const safeUpdatedAt = Number.isNaN(updatedAt.getTime()) ? new Date() : updatedAt;
     notificationUpdated.dateTime = safeUpdatedAt.toISOString();
-    notificationUpdated.textContent = `Updated ${safeUpdatedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    notificationUpdated.innerHTML = `Updated ${formatCentralZuluHtml(safeUpdatedAt)}`;
   }
 }
 
@@ -245,7 +245,7 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
     responderGuide,
     ergTable: hasGreenTable ? ergTable : null,
     dotClass: hazardClass.join(' / ') || 'N/A',
-    physicalState: physical.bp ? `Boiling point ${physical.bp} (see physical data)` : 'Not modeled in this dataset',
+    physicalState: physical.bp ? `Boiling point ${formatTempBoth(physical.bp)} (see physical data)` : 'Not modeled in this dataset',
     idlh: exposureLimits.idlh || 'Not in NIOSH dataset',
     aeGL: formatThresholdGroup(thresholdRows, 'AEGL'),
     erpg: formatThresholdGroup(thresholdRows, 'ERPG'),
@@ -261,11 +261,11 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
       ['Protective Action', protectiveAction],
       ['Formula', npg?.formula || 'N/A'],
       ['Molecular Weight', chem.molecularWeight ? `${chem.molecularWeight} g/mol` : (physical.mw ? `${physical.mw} g/mol` : 'N/A')],
-      ['Melting Point', physical.mp || 'N/A'],
-      ['Boiling Point', physical.bp || 'N/A'],
-      ['Vapor Pressure', physical.vpMmHg ? `${physical.vpMmHg} mmHg` : 'N/A'],
-      ['Specific Gravity', physical.sg || 'N/A'],
-      ['Flash Point', physical.flPt || 'N/A'],
+      ['Melting Point', physical.mp ? formatTempBoth(physical.mp) : 'N/A'],
+      ['Boiling Point', physical.bp ? formatTempBoth(physical.bp) : 'N/A'],
+      ['Vapor Pressure', physical.vpMmHg ? `${formatTempBoth(physical.vpMmHg)} mmHg` : 'N/A'],
+      ['Specific Gravity', physical.sg ? formatTempBoth(physical.sg) : 'N/A'],
+      ['Flash Point', physical.flPt ? formatTempBoth(physical.flPt) : 'N/A'],
       ['LEL / UEL', (physical.lel || physical.uel) ? `${physical.lel || '—'} / ${physical.uel || '—'}` : 'N/A'],
       ['NIOSH REL', exposureLimits.rel || 'N/A'],
       ['OSHA PEL', exposureLimits.pel || 'N/A'],
@@ -752,6 +752,41 @@ function degreesToCompass(degrees) {
   return points[Math.round(Number(degrees) / 45) % 8];
 }
 
+// Military-style Central time as the primary readout, Zulu (UTC) alongside in smaller
+// text — firefighters read clocks, not weather-station timestamps.
+function formatCentralZuluTime(date = new Date()) {
+  const centralParts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Chicago', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(date);
+  const hh = centralParts.find((p) => p.type === 'hour')?.value ?? '00';
+  const mm = centralParts.find((p) => p.type === 'minute')?.value ?? '00';
+  const zoneName = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Chicago', timeZoneName: 'short',
+  }).formatToParts(date).find((p) => p.type === 'timeZoneName')?.value ?? 'CT';
+  const zuluHH = String(date.getUTCHours()).padStart(2, '0');
+  const zuluMM = String(date.getUTCMinutes()).padStart(2, '0');
+  return { central: `${hh}${mm} ${zoneName}`, zulu: `${zuluHH}${zuluMM}Z` };
+}
+
+function formatCentralZuluHtml(date = new Date()) {
+  const { central, zulu } = formatCentralZuluTime(date);
+  return `${central} <small class="unit-secondary">(${zulu})</small>`;
+}
+
+// NIOSH/NPG source strings mix °C (mp/bp/vp/sg) and °F (flash point) depending on field.
+// Always show °F first (the unit firefighters actually use) with °C alongside, smaller.
+function formatTempBoth(str) {
+  if (!str) return str;
+  return String(str).replace(/(−|-)?(\d+(?:\.\d+)?)\s*°\s*([CF])/g, (match, sign, digits, unit) => {
+    const value = (sign === '−' || sign === '-' ? -1 : 1) * Number(digits);
+    const isCelsius = unit.toUpperCase() === 'C';
+    const c = isCelsius ? value : ((value - 32) * 5) / 9;
+    const f = isCelsius ? (value * 9) / 5 + 32 : value;
+    const fmt = (n) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+    return `${fmt(f)}°F <small class="unit-secondary">(${fmt(c)}°C)</small>`;
+  });
+}
+
 async function getIncidentCoordinates({ requestGps = true } = {}) {
   const input = document.getElementById('incident-coordinates-input');
   const entered = parseGpsCoordinate(input?.value);
@@ -915,7 +950,7 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
     await clearThreatZones('No backend or imported ALOHA/MARPLOT plume overlay is available.');
   }
   if (token !== plumeRefreshToken) return;
-  if (status) status.textContent = `Live incident data updated ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
+  if (status) status.innerHTML = `Live incident data updated ${formatCentralZuluHtml()}.`;
 }
 
 function kmlToGeoJson(kmlText) {
