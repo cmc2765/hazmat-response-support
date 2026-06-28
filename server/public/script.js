@@ -610,6 +610,15 @@ function ensurePlumeMap(location) {
     });
     plumeMap.addControl(new window.maplibregl.NavigationControl(), 'bottom-right');
     plumeMapReady = new Promise((resolve) => plumeMap.once('load', resolve));
+    plumeMap.getCanvas().style.cursor = 'crosshair';
+    plumeMap.on('click', (event) => {
+      const { lng, lat } = event.lngLat;
+      const input = document.getElementById('incident-coordinates-input');
+      if (input) input.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+      const status = document.getElementById('incident-location-status');
+      if (status) status.textContent = `Incident location set from map click: ${lat.toFixed(6)}, ${lng.toFixed(6)}.`;
+      refreshPlumeWorkspace({ requestGps: false });
+    });
   }
   plumeMap.resize();
   plumeMap.easeTo({ center: [location.lon, location.lat], duration: 400 });
