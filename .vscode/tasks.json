@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Prepare HazMatIQ preview",
+      "type": "shell",
+      "command": "if [ ! -d \"${workspaceFolder}/node_modules\" ]; then npm install --prefix \"${workspaceFolder}\"; fi; if [ ! -d node_modules ]; then npm install; fi; if [ ! -f local.db ]; then npm run db:init-sqlite && npm run db:seed; fi",
+      "options": {
+        "cwd": "${workspaceFolder}/server"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared",
+        "clear": false
+      }
+    }
+  ]
+}
