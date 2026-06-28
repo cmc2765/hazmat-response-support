@@ -20,15 +20,32 @@ Everything lives in `server/public/`:
 | `styles.css` | All the styling |
 | `assets/` | Images (department logo, etc.) |
 
-The UI is served directly by the backend — there's no separate frontend dev server anymore. To see your changes:
+The UI is served directly by the backend—there is no separate frontend server.
+
+### Preview your changes in Codespaces (one button)
+
+1. Click the **Run and Debug** icon in the left sidebar. It looks like a triangle with a small bug.
+2. At the top of that panel, select **Preview HazMatIQ**.
+3. Click the green **play button**.
+4. Wait a moment. Your preview opens automatically in a new browser tab.
+
+The first launch prepares the app and its demo data automatically. Keep the preview running while you edit. Save a file, return to the preview tab, and refresh the page to see the update.
+
+If the preview does not open automatically, click the **Ports** tab at the bottom of Codespaces. Find port **3000**, then click its globe icon (**Open in Browser**).
+
+To stop the preview, return to Codespaces and click the red square **Stop** button.
+
+If you prefer using the terminal, these commands do the same thing:
 
 ```bash
+## Start in the main project folder
+npm install      # first time only
 cd server
 npm install      # first time only
+npm run db:init-sqlite
+npm run db:seed
 npm run dev
 ```
-
-Then open `http://localhost:3000/` (in Codespaces, it'll prompt "Open in Browser" when the server starts — click that).
 
 **Don't touch:** anything outside `server/public/`. If the UI needs data the API doesn't provide yet, don't add it yourself — tell the backend person what you need (see API contract below) and they'll add it.
 
@@ -113,4 +130,4 @@ That's it — no merge commands, no conflict resolution tools needed for the nor
 
 This only happens if you both changed the same file. Since you're working in separate folders (`server/public/` vs. everything else), this should be rare. If it happens, stop and message each other — don't guess which version to keep.
 
-**Rule of thumb:** stay in your own folder (frontend = `server/public/` only, backend = everything else) and you'll almost never see a conflict.
+**Rule of thumb:** if you stay in your own directories (frontend vs backend), you will almost never have conflicts.

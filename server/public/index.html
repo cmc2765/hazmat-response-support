@@ -63,8 +63,7 @@
             <nav class="module-nav" aria-label="Primary">
               <button class="module-btn active" data-view="home">Home Dashboard</button>
               <button class="module-btn" data-view="incident">Incident Dashboard</button>
-              <button class="module-btn" data-view="lookup">Chemical Lookup</button>
-              <button class="module-btn" data-view="card">Chemical Card</button>
+              <button class="module-btn" data-view="lookup">Chemical ID</button>
               <button class="module-btn" data-view="plume">Plume Model</button>
               <button class="module-btn" data-view="map">Live Map</button>
               <button class="module-btn" data-view="monitor">Monitoring Equipment</button>
@@ -111,7 +110,7 @@
                 <p class="big-label">Tap a tile to move directly into the operational workflow for that task.</p>
                 <div class="incident-tiles" aria-label="Incident workflow tiles">
                   <button class="incident-task-btn active" type="button" data-task="identify" data-view="lookup">Identify</button>
-                  <button class="incident-task-btn" type="button" data-task="erg" data-view="card">ERG</button>
+                  <button class="incident-task-btn" type="button" data-task="erg" data-view="lookup">ERG</button>
                   <button class="incident-task-btn" type="button" data-task="plume" data-view="plume">Plume</button>
                   <button class="incident-task-btn" type="button" data-task="zones" data-view="plume">Zones</button>
                   <button class="incident-task-btn" type="button" data-task="entry" data-view="map">Entry</button>
@@ -136,65 +135,66 @@
             <div class="section-header">
               <div>
                 <p class="eyebrow">Reference</p>
-                <h2>Chemical Identification Engine</h2>
+                <h2>Chemical ID</h2>
               </div>
-              <button class="ghost-btn">Search</button>
             </div>
 
-            <div class="card-grid two-up">
-              <article class="panel-card">
-                <h3>Verified source workflow</h3>
-                <p class="big-label">Use CAMEO Chemicals and NIOSH as the authoritative chemical reference set before acting.</p>
-                <div class="chip-list">
-                  <li>CAMEO Chemicals</li>
-                  <li>NIOSH Pocket Guide</li>
-                  <li>NIOSH IDLH / PPE</li>
-                  <li>ERG 2024</li>
-                  <li>UN/NA number</li>
-                  <li>CAS number</li>
-                  <li>Chemical name</li>
-                  <li>Synonyms</li>
-                  <li>Placard</li>
-                  <li>Shipping paper</li>
-                  <li>SDS upload</li>
-                  <li>Detector readings</li>
+            <article class="panel-card chemical-id-search-card">
+              <h3>Search Chemical ID</h3>
+              <p class="big-label">Search chemical references or find a facility's submitted inventory.</p>
+              <form id="chemical-search-form" class="chemical-search-form" role="search">
+                <div class="chemical-search-input-wrap">
+                  <label class="sr-only" for="chemical-search">Chemical name, UN number, CAS number, or facility</label>
+                  <input
+                    id="chemical-search"
+                    type="search"
+                    role="combobox"
+                    placeholder="Chemical name, UN number, CAS number, or facility"
+                    autocomplete="off"
+                    aria-controls="chemical-search-suggestions"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                  />
+                  <div id="chemical-search-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
                 </div>
-                <label class="input-label" for="chemical-search">Chemical or identifier</label>
-                <input id="chemical-search" type="text" placeholder="e.g. 1005 / ammonia / anhydrous" />
-                <div class="button-row">
-                  <button class="primary-btn" id="chemical-lookup-btn" type="button">Lookup</button>
-                  <button class="ghost-btn" type="button">Unknown Product Tree</button>
-                </div>
-              </article>
-              <article class="panel-card">
-                <h3>Reference output fields</h3>
-                <ul class="detail-list">
-                  <li><span>Verified source</span><strong id="lookup-verified-source">ERG · NIOSH · SDS · E-Plan</strong></li>
-                  <li><span>UN/NA</span><strong id="lookup-un">1005</strong></li>
-                  <li><span>ERG Guide</span><strong id="lookup-erg-guide">125</strong></li>
-                  <li><span>DOT hazard class</span><strong id="lookup-dot-class">2.3 / corrosive</strong></li>
-                  <li><span>Physical state</span><strong id="lookup-physical-state">Gas</strong></li>
-                  <li><span>IDLH / AEGL / PAC</span><strong id="lookup-idlh">300 ppm · AEGL-2 / AEGL-3 · PAC-2 / PAC-3</strong></li>
-                  <li><span>PPE / decon / EMS</span><strong id="lookup-ppe-decon">SCBA · decon corridor · EMS coordination</strong></li>
-                </ul>
-              </article>
-            </div>
-          </section>
-
-          <section id="card" class="view">
-            <div class="section-header">
-              <div>
-                <p class="eyebrow">Hazard summary</p>
-                <h2>Chemical Card</h2>
+                <button class="primary-btn" id="chemical-lookup-btn" type="submit">Search</button>
+              </form>
+              <div class="chemical-search-types" id="chemical-search-options" aria-label="Search by chemical name, UN number, CAS number, or facility">
+                <strong>Search by:</strong>
+                <span>Chemical Name</span>
+                <span>UN Number</span>
+                <span>CAS Number</span>
+                <span>Facility</span>
               </div>
-              <button class="accent-btn">Save Card</button>
-            </div>
+              <p id="chemical-search-status" class="chemical-search-status" role="status" aria-live="polite"></p>
+            </article>
 
-            <div class="card-grid two-up chemical-card-grid">
+            <article id="facility-inventory" class="panel-card facility-inventory" hidden>
+              <div class="chemical-card-header">
+                <div>
+                  <p class="eyebrow">Facility submission</p>
+                  <h3 id="facility-name">Facility inventory</h3>
+                  <p id="facility-address" class="muted"></p>
+                </div>
+                <span class="status-pill" id="facility-source">Tier II</span>
+              </div>
+              <p class="big-label">Select a reported chemical to open its Responder and HazMat views.</p>
+              <div id="facility-chemical-list" class="facility-chemical-list"></div>
+            </article>
+
+            <div id="chemical-id-results" class="chemical-id-results" hidden>
+              <div class="section-header chemical-results-header">
+                <div>
+                  <p class="eyebrow">Hazard summary</p>
+                  <h2>Chemical ID Results</h2>
+                </div>
+                <button class="accent-btn" type="button">Save Chemical ID</button>
+              </div>
+              <div class="card-grid two-up chemical-card-grid">
               <article class="panel-card hazard-card urgent-card chemical-card-panel first-responder-card">
                 <div class="chemical-card-header">
                   <div>
-                    <p class="eyebrow">First responder view</p>
+                    <p class="eyebrow chemical-view-title">Responder View</p>
                     <h3 id="chemical-name">ANHYDROUS AMMONIA</h3>
                   </div>
                   <span class="status-pill">CAMEO • NIOSH</span>
@@ -226,10 +226,10 @@
               <article class="panel-card chemical-card-panel specialist-card">
                 <div class="chemical-card-header">
                   <div>
-                    <p class="eyebrow">HazMat specialist view</p>
+                    <p class="eyebrow chemical-view-title">HazMat View</p>
                     <h3>Advanced chemical data</h3>
                   </div>
-                  <span class="status-pill">CAMEO • NIOSH references</span>
+                  <span class="status-pill">CAMEO • NIOSH</span>
                 </div>
                 <ul class="detail-list" id="chemical-advanced-list">
                   <li><span>CAS</span><strong>[source value]</strong></li>
@@ -258,6 +258,7 @@
                   </ul>
                 </div>
               </article>
+              </div>
             </div>
           </section>
 

@@ -244,24 +244,11 @@ async function buildFullChemicalRecord(chem) {
   return chemicalRecordFromApi(chem, npg && !npg.error ? npg : null, thresholdRows);
 }
 
-let defaultChemicalRecordPromise = null;
-function getDefaultChemicalRecord() {
-  if (!defaultChemicalRecordPromise) {
-    defaultChemicalRecordPromise = fetchJson('/api/chemicals/ammonia').then((chem) =>
-      chem && !chem.error ? buildFullChemicalRecord(chem) : null,
-    );
-  }
-  return defaultChemicalRecordPromise;
-}
-
-async function findChemicalRecord(value) {
-  const query = String(value || '').trim();
-  if (!query) return getDefaultChemicalRecord();
-
-  const data = await fetchJson(`/api/chemicals?q=${encodeURIComponent(query)}`);
-  const chem = data?.chemicals?.[0];
-  if (!chem) return getDefaultChemicalRecord();
-  return buildFullChemicalRecord(chem);
+function normalizeChemicalQuery(value) {
+  return String(value || '')
+    .trim()
+    .replace(/^UN(?:\/NA)?\s*[-:#]?\s*/i, '')
+    .replace(/^CAS\s*(?:number|no\.)?\s*[-:#]?\s*/i, '');
 }
 
 function updateChemicalCard(record) {
@@ -284,34 +271,208 @@ function updateChemicalCard(record) {
   const sourceList = document.getElementById('chemical-source-list');
   sourceList.innerHTML = record.sources.map((item) => `<li>${item}</li>`).join('');
 
-  const lookupSource = document.getElementById('lookup-verified-source');
-  const lookupUn = document.getElementById('lookup-un');
-  const lookupErg = document.getElementById('lookup-erg-guide');
-  const lookupDot = document.getElementById('lookup-dot-class');
-  const lookupPhysical = document.getElementById('lookup-physical-state');
-  const lookupIdlh = document.getElementById('lookup-idlh');
-  const lookupPpe = document.getElementById('lookup-ppe-decon');
-
-  if (lookupSource) lookupSource.textContent = 'ERG · NIOSH · SDS · E-Plan';
-  if (lookupUn) lookupUn.textContent = record.advanced.find(([label]) => label === 'UN')?.[1] || 'N/A';
-  if (lookupErg) lookupErg.textContent = record.ergGuide;
-  if (lookupDot) lookupDot.textContent = record.dotClass;
-  if (lookupPhysical) lookupPhysical.textContent = record.physicalState;
-  if (lookupIdlh) lookupIdlh.textContent = `${record.idlh} · ${record.aeGL} · ${record.pac}`;
-  if (lookupPpe) lookupPpe.textContent = `${record.actions[1]} · decon corridor · EMS coordination`;
 }
 
-async function lookupChemical() {
-  const searchInput = document.getElementById('chemical-search');
-  const record = await findChemicalRecord(searchInput?.value || '');
+const chemicalSearchForm = document.getElementById('chemical-search-form');
+const chemicalSearchInput = document.getElementById('chemical-search');
+const chemicalSearchSuggestions = document.getElementById('chemical-search-suggestions');
+const chemicalSearchStatus = document.getElementById('chemical-search-status');
+const chemicalIdResults = document.getElementById('chemical-id-results');
+const facilityInventory = document.getElementById('facility-inventory');
+let chemicalSearchTimer = null;
+let latestChemicalSearch = 0;
+
+function setChemicalSearchStatus(message, state = '') {
+  if (!chemicalSearchStatus) return;
+  chemicalSearchStatus.textContent = message;
+  chemicalSearchStatus.dataset.state = state;
+}
+
+function clearChemicalSuggestions() {
+  if (!chemicalSearchSuggestions) return;
+  chemicalSearchSuggestions.replaceChildren();
+  chemicalSearchSuggestions.hidden = true;
+  chemicalSearchInput?.setAttribute('aria-expanded', 'false');
+}
+
+async function openChemical(chemical, facilityName = '') {
+  latestChemicalSearch += 1;
+  window.clearTimeout(chemicalSearchTimer);
+  setChemicalSearchStatus(`Loading ${chemical.name || 'chemical'}…`, 'loading');
+  const record = await buildFullChemicalRecord(chemical);
   updateChemicalCard(record);
-  showView('card');
+  if (chemicalIdResults) chemicalIdResults.hidden = false;
+  const context = facilityName ? ` from ${facilityName}'s submitted inventory` : '';
+  setChemicalSearchStatus(`Showing Responder View and HazMat View for ${record.name}${context}.`, 'success');
+  chemicalIdResults?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-const lookupButton = document.getElementById('chemical-lookup-btn');
-if (lookupButton) {
-  lookupButton.addEventListener('click', lookupChemical);
+async function openChemicalById(chemicalId, facilityName = '') {
+  const chemical = await fetchJson(`/api/chemicals/${encodeURIComponent(chemicalId)}`);
+  if (!chemical || chemical.error) {
+    setChemicalSearchStatus('Chemical details are not available for this facility submission.', 'error');
+    return;
+  }
+  await openChemical(chemical, facilityName);
 }
+
+async function openFacility(facilityId) {
+  latestChemicalSearch += 1;
+  window.clearTimeout(chemicalSearchTimer);
+  clearChemicalSuggestions();
+  setChemicalSearchStatus('Loading facility submission…', 'loading');
+  const facility = await fetchJson(`/api/facilities/${encodeURIComponent(facilityId)}`);
+  if (!facility || facility.error) {
+    setChemicalSearchStatus('Facility information could not be loaded.', 'error');
+    return;
+  }
+
+  document.getElementById('facility-name').textContent = facility.name;
+  document.getElementById('facility-address').textContent = facility.address;
+  document.getElementById('facility-source').textContent = `${facility.source || 'Tier II'} submission`;
+
+  const list = document.getElementById('facility-chemical-list');
+  list.replaceChildren();
+  const chemicalRecords = await Promise.all(
+    facility.chemicals.map((item) => fetchJson(`/api/chemicals/${encodeURIComponent(item.chemicalId)}`)),
+  );
+  facility.chemicals.forEach((item, index) => {
+    const chemical = chemicalRecords[index];
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'facility-chemical-btn';
+    const name = document.createElement('strong');
+    name.textContent = chemical?.name || item.chemicalId.replaceAll('-', ' ');
+    const detail = document.createElement('span');
+    detail.textContent = `${Number(item.maxDailyAmountValue).toLocaleString()} ${item.maxDailyAmountUnit} · ${item.container || 'Container not reported'} · Reported ${item.lastReportedYear}`;
+    button.append(name, detail);
+    button.addEventListener('click', () => chemical && !chemical.error
+      ? openChemical(chemical, facility.name)
+      : openChemicalById(item.chemicalId, facility.name));
+    list.append(button);
+  });
+
+  if (!facility.chemicals.length) {
+    const empty = document.createElement('p');
+    empty.className = 'muted';
+    empty.textContent = 'No chemical inventory was included in this facility submission.';
+    list.append(empty);
+  }
+
+  if (facilityInventory) facilityInventory.hidden = false;
+  if (chemicalIdResults) chemicalIdResults.hidden = true;
+  setChemicalSearchStatus(`${facility.chemicals.length} reported chemical${facility.chemicals.length === 1 ? '' : 's'} found for ${facility.name}.`, 'success');
+  facilityInventory?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function createSuggestion(kind, title, detail, onSelect) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'chemical-suggestion';
+  button.setAttribute('role', 'option');
+
+  const type = document.createElement('span');
+  type.className = 'chemical-suggestion-type';
+  type.textContent = kind;
+  const text = document.createElement('span');
+  const heading = document.createElement('strong');
+  heading.textContent = title;
+  const subtext = document.createElement('small');
+  subtext.textContent = detail;
+  text.append(heading, subtext);
+  button.append(type, text);
+  button.addEventListener('click', onSelect);
+  return button;
+}
+
+async function searchChemicalId(value, { submit = false } = {}) {
+  const rawQuery = String(value || '').trim();
+  if (!rawQuery) {
+    clearChemicalSuggestions();
+    setChemicalSearchStatus('Enter a chemical name, UN number, CAS number, or facility.', 'error');
+    return;
+  }
+
+  if (submit) setChemicalSearchStatus('Searching chemical and facility records…', 'loading');
+  const requestId = ++latestChemicalSearch;
+  const chemicalQuery = normalizeChemicalQuery(rawQuery);
+  const [chemicalData, facilityData] = await Promise.all([
+    fetchJson(`/api/chemicals?q=${encodeURIComponent(chemicalQuery)}`),
+    fetchJson(`/api/facilities?q=${encodeURIComponent(rawQuery)}`),
+  ]);
+  if (requestId !== latestChemicalSearch) return;
+
+  const chemicals = chemicalData?.chemicals || [];
+  const facilities = facilityData?.facilities || [];
+
+  if (submit && chemicals.length) {
+    clearChemicalSuggestions();
+    if (facilityInventory) facilityInventory.hidden = true;
+    await openChemical(chemicals[0]);
+    return;
+  }
+  if (submit && facilities.length === 1) {
+    await openFacility(facilities[0].id);
+    return;
+  }
+
+  if (!chemicalSearchSuggestions) return;
+  chemicalSearchSuggestions.replaceChildren();
+  chemicals.slice(0, 5).forEach((chemical) => {
+    const un = parseJsonField(chemical.un, [])?.[0];
+    const cas = parseJsonField(chemical.cas, [])?.[0];
+    chemicalSearchSuggestions.append(createSuggestion(
+      'Chemical',
+      chemical.name,
+      [un && `UN ${un}`, cas && `CAS ${cas}`].filter(Boolean).join(' · ') || 'Chemical reference',
+      () => {
+        if (chemicalSearchInput) chemicalSearchInput.value = chemical.name;
+        if (facilityInventory) facilityInventory.hidden = true;
+        clearChemicalSuggestions();
+        openChemical(chemical);
+      },
+    ));
+  });
+  facilities.slice(0, 8).forEach((facility) => {
+    chemicalSearchSuggestions.append(createSuggestion(
+      'Facility',
+      facility.name,
+      `${facility.address} · Submitted inventory`,
+      () => {
+        if (chemicalSearchInput) chemicalSearchInput.value = facility.name;
+        openFacility(facility.id);
+      },
+    ));
+  });
+
+  const matchCount = chemicals.length + facilities.length;
+  chemicalSearchSuggestions.hidden = matchCount === 0;
+  chemicalSearchInput?.setAttribute('aria-expanded', matchCount ? 'true' : 'false');
+  setChemicalSearchStatus(
+    matchCount ? `${chemicals.length} chemical and ${facilities.length} facility match${matchCount === 1 ? '' : 'es'}.` : 'No matching chemicals or submitted facilities found.',
+    matchCount ? '' : 'error',
+  );
+}
+
+chemicalSearchInput?.addEventListener('input', () => {
+  window.clearTimeout(chemicalSearchTimer);
+  const query = chemicalSearchInput.value.trim();
+  if (query.length < 2) {
+    clearChemicalSuggestions();
+    setChemicalSearchStatus('');
+    return;
+  }
+  chemicalSearchTimer = window.setTimeout(() => searchChemicalId(query), 200);
+});
+
+chemicalSearchInput?.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') clearChemicalSuggestions();
+});
+
+chemicalSearchForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  searchChemicalId(chemicalSearchInput?.value, { submit: true });
+});
 
 let currentPlumeMode = 'street';
 let currentScenario = 'quick';
@@ -608,16 +769,6 @@ document.querySelectorAll('.tool-btn').forEach((button) => {
 });
 
 updatePlumeMap(currentPlumeMode);
-
-const chemicalSearchInput = document.getElementById('chemical-search');
-if (chemicalSearchInput) {
-  chemicalSearchInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      lookupChemical();
-    }
-  });
-}
 
 // ─── Tier II facilities: backed by the real /api/facilities data ───
 
