@@ -1,0 +1,73 @@
+# TODO / Roadmap
+
+A backlog either of you can edit directly (check items off, add new ones, reorder). Ask
+Claude to update this file too — "add X to the TODO" or "mark Y done" both work.
+
+## Up next
+
+- [ ] **ERG database rework.** Redesign the ERG schema using a normalized,
+  lookup-table-plus-join-table pattern (inspired by reviewing the ERDSS/Chemical Companion
+  app's schema — see "Schema design direction" below) instead of flat string fields.
+  Expand data fidelity (Table 1 + Table 3, water-reactives, TIH flags already partially
+  there — review what's missing).
+
+## Schema design direction (decided 2026-06-28)
+
+ERDSS (aka Chemical Companion, by MEPSS/Hazard3) has a well-built schema worth modeling
+ours after — not copying their data, just the structural approach:
+
+- **Normalize repeated attributes into lookup tables + join tables**, instead of flat
+  string/array fields on the chemical row. E.g. their `nfpahealthhazards`,
+  `decontaminationprotocols`, `chemicalclasses` are standalone tables, joined via
+  `chemicals_nfpahazards`, `chemicals_decontaminationprotocols`, etc. We currently embed
+  most of this as `string[]` directly on `Chemical`/`NPGRecord` — works fine for the
+  current scale, but normalizing makes attributes searchable/reusable/consistent across
+  chemicals and scales better as the dataset grows toward thousands of records.
+- **Structured numeric fields over prose strings** where the data is actually numeric
+  (their `chemicals_respirators` has real `BreakthroughTimeLow/High`,
+  `PermeationRateLow/High` columns; ours currently has free-text PPE strings).
+- **A `revision_id`-style column on every table** for sync/change-tracking — directly
+  relevant to the multi-platform cloud sync goal below.
+- Apply this pattern going forward starting with the ERG rework, then revisit
+  chemicals/NPG/facilities schemas the same way once the pattern is proven out.
+
+## Bigger picture / project direction (as of 2026-06-28)
+
+This is growing beyond "hazmat response tool" into a broader platform for the fire
+service. Chris's stated direction:
+
+- **Equipment/apparatus inventory tracking** — persist what equipment/PPE is carried on
+  each specific apparatus, without making the end user re-enter it constantly. Needs to
+  work across multiple platforms/PCs, not be tied to one device the way ERDSS is
+  (ERDSS's big limitation: per-device only, no cloud storage, no sync, no persistence
+  across machines).
+- **ePCR** (electronic patient care reporting) — future module, not started.
+- **NERIS reporting** (the new national incident reporting system replacing NFIRS) —
+  future module, not started.
+- **Multi-platform cloud sync** — open architecture question, not yet decided: does this
+  stay local-SQLite-per-install with a sync layer, or move toward a centralized/hosted
+  database the apparatus-tracking and ePCR/NERIS pieces write to directly? This decision
+  affects how the equipment/apparatus schema should be shaped (e.g. whether it needs
+  org/station/apparatus-id scoping built in from day one). Worth deciding deliberately
+  before building the equipment-tracking schema, not backing into it.
+- **Top priority across all of this:** correctness and completeness of the safety-critical
+  data (chemical hazards, exposure limits, isolation distances, PPE/decon guidance) — this
+  is the information a responder relies on in a real emergency, so getting the schema right
+  early (extensible, fast, accurate, easy to add/correct data in) matters more than moving
+  fast.
+
+## Future phases carried over from earlier planning (not yet started)
+
+- **External data ingestion** — NIOSH bulk import is done (669 records). ERG/CAMEO/Tier II
+  are still hand-curated only; same kind of real public-data pipeline work could expand
+  those too.
+- **Real mapping** — replace the Google Maps iframe in `server/public` with OpenStreetMap/
+  MapLibre: device geolocation, click-to-set incident location, layered data (an
+  "infrastructure" layer was specifically requested). `maplibre-gl` is already a dependency
+  for this.
+- **Hybrid online/offline mode** — prefer live data when online, fall back to cached data
+  scoped to a user-selected region when offline (not a full-country cache). Server-side
+  design problem, not a browser-caching one.
+- **Live integrations** — Honeywell Safety Suite (RAE monitors) and live weather (NWS/
+  Open-Meteo/CWS microServer) adapters exist in `src/integrations/` with passing tests, but
+  nothing calls them yet from the running app.
