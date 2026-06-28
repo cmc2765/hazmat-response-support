@@ -1939,6 +1939,10 @@ select {
   white-space: nowrap;
 }
 
+.notification-updated .unit-secondary {
+  color: #fff;
+}
+
 @media (max-width: 900px) {
   .alert-banner.notification-center {
     grid-template-columns: 112px minmax(0, 1fr);

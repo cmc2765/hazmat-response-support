@@ -10,6 +10,12 @@ Claude to update this file too — "add X to the TODO" or "mark Y done" both wor
   app's schema — see "Schema design direction" below) instead of flat string fields.
   Expand data fidelity (Table 1 + Table 3, water-reactives, TIH flags already partially
   there — review what's missing).
+- [ ] **Terrain in the plume model.** The plume map (MapLibre/OSM, now live) doesn't
+  account for terrain — elevation, valleys/ridges, urban vs. open terrain roughness —
+  when calculating dispersion. Real terrain (especially elevation changes) measurably
+  changes how a plume actually travels; right now the model assumes flat ground. Needs
+  a terrain/elevation data source (e.g. open elevation API or a vendored dataset) feeding
+  into `src/lib/model/plume.ts` and `briggs.ts`.
 
 ## Schema design direction (decided 2026-06-28)
 
@@ -61,10 +67,10 @@ service. Chris's stated direction:
 - **External data ingestion** — NIOSH bulk import is done (669 records). ERG/CAMEO/Tier II
   are still hand-curated only; same kind of real public-data pipeline work could expand
   those too.
-- **Real mapping** — replace the Google Maps iframe in `server/public` with OpenStreetMap/
-  MapLibre: device geolocation, click-to-set incident location, layered data (an
-  "infrastructure" layer was specifically requested). `maplibre-gl` is already a dependency
-  for this.
+- **Real mapping** — done: OpenStreetMap/MapLibre is live in `server/public` (replaced the
+  old Google Maps iframe), with GPS auto-locate and click-to-set incident location both
+  working. Still open: layered data (an "infrastructure" layer was specifically requested)
+  and terrain-aware plume modeling (see "Up next" above).
 - **Hybrid online/offline mode** — prefer live data when online, fall back to cached data
   scoped to a user-selected region when offline (not a full-country cache). Server-side
   design problem, not a browser-caching one.
