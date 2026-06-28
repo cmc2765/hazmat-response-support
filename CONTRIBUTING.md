@@ -113,4 +113,4 @@ That's it — no merge commands, no conflict resolution tools needed for the nor
 
 This only happens if you both changed the same file. Since you're working in separate folders (`server/public/` vs. everything else), this should be rare. If it happens, stop and message each other — don't guess which version to keep.
 
-**Rule of thumb:** stay in your own folder (frontend = `server/public/` only, backend = everything else) and you'll almost never see a conflict.
+**Rule of thumb:** if you stay in your own directories (frontend vs backend), you will almost never have conflicts.
