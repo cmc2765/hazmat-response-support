@@ -25,6 +25,7 @@ pnpm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 !.vscode/launch.json
+!.vscode/settings.json
 !.vscode/settings.recommended.json
 !.vscode/tasks.json
 .idea

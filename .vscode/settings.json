@@ -1,0 +1,9 @@
+{
+  "remote.autoForwardPorts": true,
+  "remote.portsAttributes": {
+    "3000": {
+      "label": "HazMatIQ Preview",
+      "onAutoForward": "openBrowser"
+    }
+  }
+}

@@ -8,10 +8,11 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "cwd": "${workspaceFolder}/server",
-      "console": "integratedTerminal",
+      "console": "internalConsole",
+      "outputCapture": "std",
       "preLaunchTask": "Prepare HazMatIQ preview",
       "serverReadyAction": {
-        "pattern": "listening on http://localhost:([0-9]+)",
+        "pattern": ".*listening on http://localhost:([0-9]+)",
         "uriFormat": "http://localhost:%s",
         "action": "openExternally"
       },
