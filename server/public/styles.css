@@ -200,8 +200,8 @@ h1, h2, h3, p { margin-top: 0; }
 
 .layout {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
-  gap: 20px;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 18px;
 }
 
 .sidebar-card {
@@ -529,7 +529,7 @@ h1, h2, h3, p { margin-top: 0; }
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
   width: 100%;
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 .chemical-id-search-card {
@@ -688,9 +688,19 @@ h1, h2, h3, p { margin-top: 0; }
 
 .chemical-id-results {
   width: 100%;
-  max-width: 1600px;
-  margin-inline: auto;
+  max-width: none;
+  margin-inline: 0;
   scroll-margin-top: 16px;
+}
+
+@media (min-width: 981px) {
+  .chemical-card-grid .first-responder-card {
+    grid-column: 1;
+  }
+
+  .chemical-card-grid .specialist-card {
+    grid-column: 2;
+  }
 }
 
 .chemical-results-header {
@@ -711,10 +721,23 @@ h1, h2, h3, p { margin-top: 0; }
   margin-left: auto;
 }
 
+.chemical-result-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.chemical-result-actions .accent-btn {
+  margin-left: 0;
+}
+
 .chemical-card-panel {
   width: 100%;
   min-height: auto;
-  padding: clamp(24px, 2.5vw, 36px);
+  min-width: 0;
+  padding: clamp(18px, 2vw, 28px);
 }
 
 #chemical-id-results .first-responder-card {
@@ -761,6 +784,181 @@ h1, h2, h3, p { margin-top: 0; }
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 10px;
+}
+
+.erg-guide-heading,
+.erg-material-summary {
+  margin: 5px 0 0;
+  color: #4d5257;
+}
+
+.erg-guide-number {
+  min-width: 70px;
+  padding: 10px 14px;
+  border: 3px solid #bd4d0c;
+  border-radius: 8px;
+  color: #111;
+  background: #f58220;
+  font-size: 1.45rem;
+  font-weight: 950;
+  text-align: center;
+}
+
+.erg-quick-facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.7fr);
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.erg-quick-fact {
+  display: grid;
+  gap: 5px;
+  padding: 13px 15px;
+  border: 2px solid #d36a1e;
+  border-radius: 8px;
+  color: #171717;
+  background: #fff4dc;
+}
+
+.erg-quick-fact-primary {
+  border-width: 3px;
+  border-color: #a70f16;
+  background: #fff2a8;
+}
+
+.erg-quick-fact span {
+  color: #7a240d;
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.erg-quick-fact strong {
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.erg-page {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  color: #171717;
+}
+
+.erg-page-column {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.erg-section {
+  overflow: hidden;
+  border: 2px solid #d36a1e;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.erg-section > h4 {
+  margin: 0;
+  padding: 9px 12px;
+  color: #111;
+  background: #f58220;
+  font-size: 1.08rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.erg-section > h5 {
+  margin: 0;
+  padding: 8px 12px 2px;
+  color: #8c2d0b;
+  font-size: 0.9rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.erg-section > ul {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 6px 18px 12px 31px;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.erg-list-subheading {
+  margin: 3px 0 -2px -16px;
+  list-style: none;
+  font-weight: 950;
+}
+
+.erg-table-card {
+  margin: 0 0 16px;
+  padding: 14px;
+  border: 4px solid #168349;
+  border-radius: 10px;
+  color: #11251b;
+  background: #eaf8ef;
+}
+
+.erg-table-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.erg-table-heading h4,
+.erg-table-heading p {
+  margin: 0;
+}
+
+.erg-green-badge {
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: #fff;
+  background: #168349;
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.erg-table-wrap {
+  overflow-x: auto;
+}
+
+.erg-table-card table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.erg-table-card th,
+.erg-table-card td {
+  padding: 9px 10px;
+  border: 1px solid #7db596;
+  text-align: left;
+}
+
+.erg-table-card th {
+  color: #fff;
+  background: #168349;
+}
+
+.erg-table-card small {
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .erg-page,
+  .erg-quick-facts {
+    grid-template-columns: 1fr;
+  }
 }
 
 .legend-grid {
@@ -1462,6 +1660,23 @@ select {
   box-shadow: 0 0 0 2px rgba(255, 211, 35, 0.22);
 }
 
+@media (max-width: 620px) {
+  .chemical-results-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .chemical-result-actions {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .chemical-result-actions button {
+    flex: 1;
+  }
+
+}
+
 /* Viewport-fitting home command layout */
 .layout {
   align-items: stretch;
@@ -1526,7 +1741,7 @@ select {
 /* iPad portrait and landscape */
 @media (min-width: 720px) and (max-width: 1100px) {
   .app-shell { padding: 16px; }
-  .layout { grid-template-columns: 238px minmax(0, 1fr); gap: 14px; }
+  .layout { grid-template-columns: 215px minmax(0, 1fr); gap: 14px; }
   .topbar { flex-direction: row; align-items: center; padding: 15px 18px; }
   .alert-banner { margin: 10px 0; padding: 10px 14px; font-size: 0.88rem; }
   .sidebar-card { padding: 12px; margin-bottom: 10px; }

@@ -177,14 +177,26 @@ function formatThresholdGroup(thresholdRows, kind) {
   return rows.map((t) => `${kind}-${t.level} ${Number(t.valuePpm).toLocaleString()} ppm`).join(' / ');
 }
 
-function chemicalRecordFromApi(chem, npg, thresholdRows) {
+let ergGuideLibraryPromise;
+
+function fetchErgGuideLibrary() {
+  if (!ergGuideLibraryPromise) {
+    ergGuideLibraryPromise = fetchJson('/data/erg-guides-2024.json').then((data) => data?.guides || {});
+  }
+  return ergGuideLibraryPromise;
+}
+
+function isGenericErgReference(value) {
+  return /^\s*(?:refer to|per) ERG Guide/i.test(String(value || ''));
+}
+
+function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
   const synonyms = parseJsonField(chem.synonyms, []);
   const cas = parseJsonField(chem.cas, []) || [];
   const un = parseJsonField(chem.un, []) || [];
   const hazardClass = parseJsonField(chem.hazardClass, []) || [];
   const ppe = parseJsonField(chem.ppe, []) || [];
   const isolation = parseJsonField(chem.isolation, {}) || {};
-  const firstAid = parseJsonField(chem.firstAid, []) || [];
   const reactivity = parseJsonField(chem.reactivity, []) || [];
   const incompatibilities = parseJsonField(chem.incompatibilities, []) || [];
   const sources = parseJsonField(chem.sources, []) || [];
@@ -193,40 +205,77 @@ function chemicalRecordFromApi(chem, npg, thresholdRows) {
   const physical = npg ? parseJsonField(npg.physical, {}) : {};
   const health = npg ? parseJsonField(npg.health, {}) : {};
 
-  const actions = [isolation.initial, isolation.protective, ...ppe, ...firstAid].filter(Boolean);
+  const guideNumber = chem.ergGuide || 'N/A';
+  const fallbackHazards = reactivity.length ? reactivity : [`DOT hazard class: ${hazardClass.join(' / ') || 'not assigned'}.`];
+  const responderGuide = guideData || {
+    guide: guideNumber,
+    title: hazardClass.length ? `Hazard Class ${hazardClass.join(' / ')}` : 'Material-specific response information',
+    potentialHazards: {
+      fireOrExplosion: fallbackHazards,
+      health: health.symptoms?.length ? health.symptoms : ['No ERG health summary is available in this dataset.'],
+    },
+    publicSafety: {
+      general: ['Keep unauthorized personnel away.', 'Stay upwind, uphill and/or upstream.'],
+      protectiveClothing: ppe.length ? ppe : ['Use incident-specific PPE and respiratory protection.'],
+      evacuation: [isolation.initial, isolation.protective].filter((value) => value && !isGenericErgReference(value)),
+    },
+    emergencyResponse: {
+      fire: reactivity.length ? reactivity : ['Use response tactics appropriate to the confirmed material and container.'],
+      spillOrLeak: ['Do not touch or walk through spilled material.', 'Stop the leak only if it can be done without risk.'],
+    },
+  };
+  const guideIsolation = responderGuide.publicSafety.evacuation.find((item) => /^Isolate spill or leak area/i.test(item));
+  const hasGreenTable = ergTable && (Number(ergTable.tih) === 1 || Number(ergTable.isWaterReactive) === 1);
+  const initialIsolation = hasGreenTable
+    ? `Small spill — day ${Number(ergTable.smallInitialDayFt).toLocaleString()} ft / night ${Number(ergTable.smallInitialNightFt).toLocaleString()} ft; Large spill — day ${Number(ergTable.largeInitialDayFt).toLocaleString()} ft / night ${Number(ergTable.largeInitialNightFt).toLocaleString()} ft`
+    : (!isGenericErgReference(isolation.initial) && isolation.initial) || guideIsolation || 'Not listed in the available ERG data';
+  const guideProtectiveAction = responderGuide.publicSafety.evacuation.find((item) => /protective action|downwind direction/i.test(item));
+  const protectiveAction = hasGreenTable
+    ? 'Use the green ERG Table 1 distances shown above for spill size and day/night conditions.'
+    : (!isGenericErgReference(isolation.protective) && isolation.protective) || guideProtectiveAction || 'Establish from monitoring and incident conditions.';
 
   return {
     name: chem.name,
     aliases: synonyms,
-    summary: hazardClass.length
-      ? `Hazard class ${hazardClass.join('/')}. ${health.symptoms?.length ? 'Symptoms: ' + health.symptoms.slice(0, 3).join(', ') + '.' : `Refer to ERG Guide ${chem.ergGuide || 'N/A'}.`}`
-      : `Refer to ERG Guide ${chem.ergGuide || 'N/A'} for hazard summary.`,
-    primaryHazard: hazardClass.join(' / ') || 'See ERG guide',
-    immediateActions: actions.slice(0, 6).join(' · ') || `Refer to ERG Guide ${chem.ergGuide || 'N/A'}`,
-    ergGuide: chem.ergGuide || 'N/A',
+    summary: `Operational response summary for ${chem.name}, organized from verified ERG, CAMEO, and NIOSH data.`,
+    ergGuide: guideNumber,
+    un: un[0] || 'N/A',
+    initialIsolation,
+    protectiveAction,
+    responderGuide,
+    ergTable: hasGreenTable ? ergTable : null,
     dotClass: hazardClass.join(' / ') || 'N/A',
     physicalState: physical.bp ? `Boiling point ${physical.bp} (see physical data)` : 'Not modeled in this dataset',
     idlh: exposureLimits.idlh || 'Not in NIOSH dataset',
     aeGL: formatThresholdGroup(thresholdRows, 'AEGL'),
     erpg: formatThresholdGroup(thresholdRows, 'ERPG'),
     pac: formatThresholdGroup(thresholdRows, 'TEEL'),
-    majorConcern: health.targetOrgans?.length ? `Target organs: ${health.targetOrgans.join(', ')}` : (reactivity[0] || 'Refer to SDS'),
-    recommendedMode: 'HazMat Technician Operations',
-    actions: actions.length ? actions : ['Refer to ERG guide and department SOPs'],
     advanced: [
-      ['CAS', cas[0] || 'N/A'],
       ['UN', un[0] || 'N/A'],
+      ['CAS', cas[0] || 'N/A'],
+      ['DOT Hazard Class', hazardClass.join(' / ') || 'N/A'],
+      ['Placard', chem.placard || 'N/A'],
+      ['ERG Guide', guideNumber],
+      ['ERG Hazard Profile', responderGuide.title],
+      ['Initial Isolation', initialIsolation],
+      ['Protective Action', protectiveAction],
+      ['Formula', npg?.formula || 'N/A'],
       ['Molecular Weight', chem.molecularWeight ? `${chem.molecularWeight} g/mol` : (physical.mw ? `${physical.mw} g/mol` : 'N/A')],
+      ['Melting Point', physical.mp || 'N/A'],
       ['Boiling Point', physical.bp || 'N/A'],
+      ['Vapor Pressure', physical.vpMmHg ? `${physical.vpMmHg} mmHg` : 'N/A'],
+      ['Specific Gravity', physical.sg || 'N/A'],
       ['Flash Point', physical.flPt || 'N/A'],
       ['LEL / UEL', (physical.lel || physical.uel) ? `${physical.lel || '—'} / ${physical.uel || '—'}` : 'N/A'],
+      ['NIOSH REL', exposureLimits.rel || 'N/A'],
+      ['OSHA PEL', exposureLimits.pel || 'N/A'],
       ['IDLH', exposureLimits.idlh || 'N/A'],
       ['AEGL', formatThresholdGroup(thresholdRows, 'AEGL')],
       ['ERPG', formatThresholdGroup(thresholdRows, 'ERPG')],
       ['TEEL (PAC basis)', formatThresholdGroup(thresholdRows, 'TEEL')],
       ['Reactivity', reactivity.join('; ') || 'N/A'],
       ['Incompatibilities', incompatibilities.join(', ') || 'N/A'],
-      ['PPE References', ppe.join(', ') || 'N/A'],
+      ['PPE', responderGuide.publicSafety.protectiveClothing.join('; ') || ppe.join(', ') || 'N/A'],
       ['Decon References', `Per ERG Guide ${chem.ergGuide || '—'} and department SOPs`],
     ],
     sources: sources.length
@@ -236,12 +285,24 @@ function chemicalRecordFromApi(chem, npg, thresholdRows) {
 }
 
 async function buildFullChemicalRecord(chem) {
-  const [npg, thresholdsData] = await Promise.all([
+  const un = parseJsonField(chem.un, [])?.[0];
+  const guideNumber = String(chem.ergGuide || '').replace(/P$/i, '');
+  const [npg, thresholdsData, guideLibrary, ergTable] = await Promise.all([
     fetchJson(`/api/npg/${encodeURIComponent(chem.id)}`),
     fetchJson(`/api/thresholds?chemicalId=${encodeURIComponent(chem.id)}`),
+    fetchErgGuideLibrary(),
+    un && guideNumber
+      ? fetchJson(`/api/erg/${encodeURIComponent(un)}?guide=${encodeURIComponent(guideNumber)}`)
+      : Promise.resolve(null),
   ]);
   const thresholdRows = (thresholdsData?.thresholds || []).map((t) => ({ ...t, valuePpm: Number(t.valuePpm) }));
-  return chemicalRecordFromApi(chem, npg && !npg.error ? npg : null, thresholdRows);
+  return chemicalRecordFromApi(
+    chem,
+    npg && !npg.error ? npg : null,
+    thresholdRows,
+    guideLibrary[guideNumber],
+    ergTable && !ergTable.error ? ergTable : null,
+  );
 }
 
 function normalizeChemicalQuery(value) {
@@ -256,14 +317,58 @@ function updateChemicalCard(record) {
 
   document.getElementById('chemical-name').textContent = record.name;
   document.getElementById('chemical-summary').textContent = record.summary;
-  document.getElementById('chemical-primary-hazard').textContent = record.primaryHazard;
-  document.getElementById('chemical-immediate-actions').textContent = record.immediateActions;
   document.getElementById('chemical-erg-guide').textContent = record.ergGuide;
-  document.getElementById('chemical-major-concern').textContent = record.majorConcern;
-  document.getElementById('chemical-recommended-mode').textContent = record.recommendedMode;
+  document.getElementById('chemical-erg-heading').textContent = `ERG 2024 Guide ${record.ergGuide} — ${record.responderGuide.title}`;
+  document.getElementById('chemical-initial-isolation').textContent = record.initialIsolation;
+  document.getElementById('chemical-guide-material').textContent = `Guide ${record.ergGuide} · UN ${record.un}`;
 
-  const actionsList = document.getElementById('chemical-actions-list');
-  actionsList.innerHTML = record.actions.map((item) => `<li>${item}</li>`).join('');
+  const subheadings = new Set([
+    'Immediate precautionary measure', 'Small Fire', 'Large Fire', 'Fire Involving Tanks',
+    'Fire Involving Tanks, Rail Tank Cars or Highway Tanks', 'Small Spill', 'Large Spill',
+    'Small Liquid Spill', 'Large Liquid Spill', 'Spill', 'Fire',
+  ]);
+  const setErgList = (id, items, limit) => {
+    const list = document.getElementById(id);
+    const operationalItems = [...new Set(items || [])].slice(0, limit);
+    list.replaceChildren(...operationalItems.map((item) => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      if (subheadings.has(item)) li.className = 'erg-list-subheading';
+      return li;
+    }));
+  };
+  setErgList('chemical-erg-fire-hazards', record.responderGuide.potentialHazards.fireOrExplosion, 5);
+  setErgList('chemical-erg-health-hazards', record.responderGuide.potentialHazards.health, 5);
+  setErgList('chemical-erg-public-safety', record.responderGuide.publicSafety.general, 4);
+  setErgList('chemical-erg-protective-clothing', record.responderGuide.publicSafety.protectiveClothing, 4);
+  setErgList('chemical-erg-evacuation', record.responderGuide.publicSafety.evacuation, 5);
+  setErgList('chemical-erg-fire-response', record.responderGuide.emergencyResponse.fire, 10);
+  setErgList('chemical-erg-spill-response', record.responderGuide.emergencyResponse.spillOrLeak, 8);
+
+  const tableSection = document.getElementById('chemical-erg-table-1');
+  tableSection.hidden = !record.ergTable;
+  if (record.ergTable) {
+    const entry = record.ergTable;
+    document.getElementById('chemical-erg-table-badge').textContent = entry.isWaterReactive ? 'Water-reactive' : 'TIH';
+    document.getElementById('chemical-erg-table-note').textContent = `${entry.name} (UN ${entry.un}) — distances shown exactly as stored from ERG 2024 Table 1.`;
+    const rows = [
+      ['Small', 'Day', entry.smallInitialDayFt, entry.smallProtectiveDayMi],
+      ['Small', 'Night', entry.smallInitialNightFt, entry.smallProtectiveNightMi],
+      ['Large', 'Day', entry.largeInitialDayFt, entry.largeProtectiveDayMi],
+      ['Large', 'Night', entry.largeInitialNightFt, entry.largeProtectiveNightMi],
+    ];
+    const body = document.getElementById('chemical-erg-table-body');
+    body.replaceChildren(...rows.map(([size, period, initial, protective]) => {
+      const row = document.createElement('tr');
+      [size, period, `${Number(initial).toLocaleString()} ft`, `${Number(protective).toLocaleString()} mi`]
+        .forEach((value) => {
+          const cell = document.createElement('td');
+          cell.textContent = value;
+          row.append(cell);
+        });
+      return row;
+    }));
+  }
 
   const advancedList = document.getElementById('chemical-advanced-list');
   advancedList.innerHTML = record.advanced.map(([label, value]) => `<li><span>${label}</span><strong>${value}</strong></li>`).join('');

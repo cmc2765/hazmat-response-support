@@ -188,46 +188,85 @@
                   <p class="eyebrow">Hazard summary</p>
                   <h2>Chemical ID Results</h2>
                 </div>
-                <button class="accent-btn" type="button">Save Chemical ID</button>
+                <div class="chemical-result-actions">
+                  <button class="accent-btn" type="button">Save Chemical ID</button>
+                  <button class="primary-btn" id="open-plume-btn" type="button">Open Plume Modeling</button>
+                </div>
               </div>
+              <section id="chemical-erg-table-1" class="erg-table-card" hidden>
+                <div class="erg-table-heading">
+                  <div>
+                    <p class="eyebrow">Green-highlighted material</p>
+                    <h4>ERG Table 1 — Initial Isolation and Protective Action Distances</h4>
+                  </div>
+                  <span id="chemical-erg-table-badge" class="erg-green-badge">TIH</span>
+                </div>
+                <p id="chemical-erg-table-note" class="muted"></p>
+                <div class="erg-table-wrap">
+                  <table>
+                    <thead>
+                      <tr><th>Spill size</th><th>Time</th><th>Initial isolation<br><small>all directions</small></th><th>Protective action<br><small>downwind</small></th></tr>
+                    </thead>
+                    <tbody id="chemical-erg-table-body"></tbody>
+                  </table>
+                </div>
+              </section>
               <div class="card-grid two-up chemical-card-grid">
               <article class="panel-card hazard-card urgent-card chemical-card-panel first-responder-card">
                 <div class="chemical-card-header">
                   <div>
                     <p class="eyebrow chemical-view-title">Responder View</p>
                     <h3 id="chemical-name">ANHYDROUS AMMONIA</h3>
+                    <p id="chemical-erg-heading" class="erg-guide-heading">ERG 2024 Guide 125 — Gases - Corrosive</p>
                   </div>
-                  <span class="status-pill">CAMEO • NIOSH</span>
+                  <span id="chemical-erg-guide" class="erg-guide-number">125</span>
                 </div>
-                <p id="chemical-summary" class="big-label">Toxic inhalation and corrosive gas hazard. Treat as a life-safety concern until verified.</p>
-                <ul class="detail-list">
-                  <li><span>Primary Hazard</span><strong id="chemical-primary-hazard">Toxic inhalation / corrosive gas</strong></li>
-                  <li><span>Immediate Actions</span><strong id="chemical-immediate-actions">Approach uphill/upwind · SCBA required · Isolate area · Monitor downwind · Consider evacuation or shelter-in-place · Avoid low-lying/confined spaces · Establish decon</strong></li>
-                  <li><span>ERG Guide</span><strong id="chemical-erg-guide">125</strong></li>
-                  <li><span>Major Concern</span><strong id="chemical-major-concern">Respiratory injury</strong></li>
-                  <li><span>Recommended Mode</span><strong id="chemical-recommended-mode">HazMat Technician Operations</strong></li>
-                </ul>
-                <div class="action-box">
-                  <h4>Immediate Actions</h4>
-                  <ul id="chemical-actions-list">
-                    <li>Approach uphill / upwind</li>
-                    <li>SCBA required</li>
-                    <li>Isolate area</li>
-                    <li>Monitor downwind</li>
-                    <li>Consider evacuation or shelter-in-place</li>
-                    <li>Avoid low-lying / confined spaces</li>
-                    <li>Establish decon</li>
-                  </ul>
+                <p id="chemical-summary" class="erg-material-summary">ERG guidance for the initial phase of a transportation incident.</p>
+                <div class="erg-quick-facts" aria-label="Immediate ERG information">
+                  <div class="erg-quick-fact erg-quick-fact-primary">
+                    <span>Initial Isolation Distance</span>
+                    <strong id="chemical-initial-isolation">100 ft (small spill) / 500–1,000 ft (large spill)</strong>
+                  </div>
+                  <div class="erg-quick-fact">
+                    <span>Guide / Material</span>
+                    <strong id="chemical-guide-material">Guide 125 · UN 1005</strong>
+                  </div>
                 </div>
-                <div class="button-row">
-                  <button class="primary-btn" id="open-plume-btn" type="button">Open Plume Modeling</button>
+                <div id="chemical-erg-content" class="erg-page">
+                  <div class="erg-page-column">
+                    <section class="erg-section erg-hazards">
+                      <h4>Hazards</h4>
+                      <h5>Fire or Explosion</h5>
+                      <ul id="chemical-erg-fire-hazards"></ul>
+                      <h5>Health</h5>
+                      <ul id="chemical-erg-health-hazards"></ul>
+                    </section>
+                    <section class="erg-section erg-public-safety">
+                      <h4>PPE &amp; Isolation</h4>
+                      <h5>Scene Control</h5>
+                      <ul id="chemical-erg-public-safety"></ul>
+                      <h5>PPE</h5>
+                      <ul id="chemical-erg-protective-clothing"></ul>
+                      <h5>Isolation &amp; Protective Actions</h5>
+                      <ul id="chemical-erg-evacuation"></ul>
+                    </section>
+                  </div>
+                  <div class="erg-page-column">
+                    <section class="erg-section erg-response">
+                      <h4>Emergency Response Protocols</h4>
+                      <h5>Fire</h5>
+                      <ul id="chemical-erg-fire-response"></ul>
+                      <h5>Spill or Leak</h5>
+                      <ul id="chemical-erg-spill-response"></ul>
+                    </section>
+                  </div>
                 </div>
               </article>
               <article class="panel-card chemical-card-panel specialist-card">
                 <div class="chemical-card-header">
                   <div>
                     <p class="eyebrow chemical-view-title">HazMat View</p>
-                    <h3>Advanced chemical data</h3>
+                    <h3>ADVANCED CHEMICAL DATA</h3>
                   </div>
                   <span class="status-pill">CAMEO • NIOSH</span>
                 </div>
