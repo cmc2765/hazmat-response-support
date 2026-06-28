@@ -5,7 +5,7 @@ import { getDb } from "./db.js";
 import * as schema from "./schema.js";
 import { eq, sql } from "drizzle-orm";
 import { ALL_CHEMICALS } from "../../src/data/all-chemicals.js";
-import { NPG } from "../../src/data/npg.js";
+import { ALL_NPG as NPG } from "../../src/data/all-npg.js";
 import { FACILITIES } from "../../src/data/facilities.js";
 import { THRESHOLDS } from "../../src/data/thresholds.js";
 import { ERG_TABLE_1 } from "../../src/data/erg.js";

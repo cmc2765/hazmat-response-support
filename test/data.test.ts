@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { Chemical, NPGRecord, Facility } from "@/lib/schema";
 import { ALL_CHEMICALS } from "@/data/all-chemicals";
 import { NPG } from "@/data/npg";
+import { ALL_NPG } from "@/data/all-npg";
 import { FACILITIES } from "@/data/facilities";
 import { THRESHOLDS, getThresholds } from "@/data/thresholds";
 import { lookupErg } from "@/data/erg";
@@ -16,6 +17,18 @@ describe("bundled data", () => {
   it("NPG records validate against Zod", () => {
     for (const n of NPG) {
       expect(() => NPGRecord.parse(n)).not.toThrow();
+    }
+  });
+
+  it("ALL_NPG (hand-curated + NIOSH bulk import) validates against Zod and has no duplicate CAS", () => {
+    expect(ALL_NPG.length).toBeGreaterThan(600);
+    const seenCas = new Set<string>();
+    for (const n of ALL_NPG) {
+      expect(() => NPGRecord.parse(n)).not.toThrow();
+      if (n.cas) {
+        expect(seenCas.has(n.cas), `duplicate CAS ${n.cas} (${n.id})`).toBe(false);
+        seenCas.add(n.cas);
+      }
     }
   });
 

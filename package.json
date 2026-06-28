@@ -14,6 +14,7 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "data:niosh": "node scripts/niosh/index.js",
     "sample:mock": "node sample/mock-server/server.js",
     "sample:client": "node sample/integration-sample/client.js",
     "sample:all": "node sample/mock-server/server.js & npm run sample:client"
@@ -28,6 +29,7 @@
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "eslint": "^8.57.1",
+    "exceljs": "^4.4.0",
     "prettier": "^3.3.3",
     "typescript": "^5.6.2",
     "vitest": "^2.1.2",
