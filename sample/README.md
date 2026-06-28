@@ -1,8 +1,10 @@
 # Safety Suite mock server
 
 A minimal Node server that speaks the documented Honeywell Safety Suite SDK
-protocol so the PWA (or any other client) can be exercised end-to-end without
-real Safety Suite hardware.
+protocol so a client can be exercised end-to-end without real Safety Suite
+hardware. The app doesn't call this yet — live RAE monitor integration is
+still future work (see `CONTRIBUTING.md`) — but the adapter code in
+`src/integrations/rae/safety-suite/` is real and tested against this mock.
 
 Implements:
 
@@ -15,7 +17,7 @@ Implements:
   reading frames every 2 seconds.
 
 > The `$SIGN` formula is verified against `SHA-256(SIGN_SECRET || "\n" || canonical)`.
-> The PWA's `sha256SignRequest` matches this exactly. When Honeywell provides
+> The adapter's `sha256SignRequest` matches this exactly. When Honeywell provides
 > the real signing formula, register it via `registerSignRequestFn(fn)`.
 
 ## Run
@@ -34,31 +36,13 @@ Output:
 [mock] HTTP + WS listening on http://localhost:8443
 ```
 
-> **Plain HTTP, port 8443.** No SSL/TLS. If you see an SSL error in the
-> browser, you are pointing the PWA at `https://localhost:8443` (wrong) or
-> the PWA is being served from an HTTPS origin and the browser is blocking
-> the mixed-content fetch. Use the proxy path described below — it makes
-> everything same-origin plain HTTP.
+> **Plain HTTP, port 8443.** No SSL/TLS. A future live-integration UI would need to either
+> call this through a same-origin proxy on the Hono server, or accept the mixed-content
+> restrictions of calling plain HTTP directly from an HTTPS page.
 
 ## End-to-end (verified)
 
-### Option A — direct (PWA from localhost, mock on plain HTTP)
-
-```bash
-# Terminal 1
-npm run sample:mock
-
-# Terminal 2
-npm run dev
-# open http://localhost:5173 → Sensors → check "Use mock server"
-# The form auto-fills /safety-suite as base URL — keep it.
-# Save → Connect → readings appear within ~2s.
-```
-
-The PWA points at `/safety-suite/...` (same-origin) and the Vite dev proxy
-forwards to `http://localhost:8443/...`. No SSL anywhere.
-
-### Option B — standalone Node sample (no PWA)
+Standalone Node sample — exercises the adapter directly, no UI involved:
 
 ```bash
 npm run sample:mock    # terminal 1
@@ -68,6 +52,10 @@ npm run sample:client  # terminal 2
 # [sample] rt device=926 t=… CO=15ppm, H2S=7ppm, LEL=34%LEL, O2=36%
 ```
 
+There is no UI wiring for this yet (no "Sensors" page in `server/public/`). Once live RAE
+integration is built, it'll likely proxy through the Hono server rather than the old Vite
+dev-server proxy this doc used to describe.
+
 ## Environment variables
 
 | Var | Default | Notes |
@@ -75,26 +63,11 @@ npm run sample:client  # terminal 2
 | `PORT` | `8443` | TCP port. Plain HTTP. |
 | `APP_ID` | `98bcdc21-…` | Must match the value sent in the request envelope. |
 | `SIGN_SECRET` | `dev-sign-secret` | Used in the SHA-256 sign formula. |
-| `AES_KEY_B64` | 16 bytes of `0x01` (`AQEBAQ…`) | Must match the PWA's secretKey field. |
-| `AES_IV` | 16 zero bytes | Must match the PWA's AES IV field. 16 ASCII chars or 16 raw bytes. |
+| `AES_KEY_B64` | 16 bytes of `0x01` (`AQEBAQ…`) | Must match the adapter's secretKey field. |
+| `AES_IV` | 16 zero bytes | Must match the adapter's AES IV field. 16 ASCII chars or 16 raw bytes. |
 | `PRINT_KEYS` | `1` | Set to `0` to silence the credential echo on startup. |
-
-## Why a Vite proxy?
-
-When you serve the PWA from `http://localhost:5173` and the mock from
-`http://localhost:8443`, two things can break:
-
-1. **CORS** — browsers block cross-origin POST + WebSocket unless the mock
-   returns the right `Access-Control-Allow-*` headers. The mock doesn't.
-2. **Mixed content** — if you ever serve the PWA over HTTPS (or load it from a
-   non-`localhost` host), the browser refuses to fetch plain HTTP at all.
-
-The Vite dev proxy in `vite.config.ts` mounts the mock under the same origin
-(`/safety-suite/...`) so the browser never sees a cross-origin or
-mixed-content fetch. In production, deploy the mock behind a reverse proxy
-on the same host as the PWA.
 
 ## Tests
 
-The PWA's `test/safety-suite-crypto.test.ts` independently proves the AES/CBC
-PKCS5Padding path is byte-compatible with this mock's encrypted responses.
+`test/safety-suite-crypto.test.ts` independently proves the AES/CBC PKCS5Padding path is
+byte-compatible with this mock's encrypted responses.

@@ -14,11 +14,6 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "data:erg": "node scripts/erg/index.js",
-    "data:cameo": "node scripts/cameo/index.js",
-    "data:niosh": "node scripts/niosh/index.js",
-    "data:tier2": "node scripts/tier2/index.js",
-    "data:all": "npm run data:erg && npm run data:cameo && npm run data:niosh && npm run data:tier2",
     "sample:mock": "node sample/mock-server/server.js",
     "sample:client": "node sample/integration-sample/client.js",
     "sample:all": "node sample/mock-server/server.js & npm run sample:client"

@@ -10,9 +10,6 @@ build
 *.local
 *.tsbuildinfo
 
-# Vite cache
-.vite
-
 # Logs
 logs
 *.log
@@ -34,7 +31,6 @@ Thumbs.db
 
 # Test outputs
 coverage
-playwright-report
 test-results
 .nyc_output
 
@@ -48,12 +44,6 @@ public/data/*.json
 public/data/*.json.gz
 public/data/*.csv
 !public/data/.gitkeep
-
-# Service worker generated artifacts
-public/sw.js
-public/sw.js.map
-public/workbox-*.js
-public/workbox-*.js.map
 
 # Cache
 .cache

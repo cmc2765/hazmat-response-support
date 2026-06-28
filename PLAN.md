@@ -1,5 +1,13 @@
 # Hazmat Response Support — v1 Plan
 
+> **Status: partially superseded.** The product goals (§1-3) and most of §5-13 still hold.
+> §4 (Stack) is out of date — the PWA/React/Vite/Tailwind/Dexie/Workbox/Playwright stack
+> described below was replaced with a single Hono server serving a plain HTML/CSS/JS UI
+> (`server/public/`) and SQLite, packaged as one Docker container. See [README.md](./README.md)
+> for current architecture and [CONTRIBUTING.md](./CONTRIBUTING.md) for current workflow.
+> Kept here for the original design rationale and the integrations/risks sections, which
+> are still accurate.
+
 ## 1. Product overview
 Single-user, offline-first PWA for fire-department hazmat. Replaces CAMEO Chemicals + ERG with fast chemical lookup, on-scene plume modeling, NIOSH health data, Tier II facility awareness, incident logging, and live integrations for RAE monitors, online weather, and Columbia Weather Systems microServer.
 

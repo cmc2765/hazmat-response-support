@@ -15,8 +15,8 @@ This product bundles public-domain data from:
 - **DOE Temporary Emergency Exposure Limits (TEEL)** — published values.
 
 Inclusion does not imply endorsement by the source agencies. All trademarks belong to
-their respective owners. Each record in `/public/data/` carries a `sources` array
-with a per-row citation back to the canonical source.
+their respective owners. Each chemical/NIOSH/facility record in `/src/data/` carries a
+`sources` array with a per-row citation back to the canonical source.
 
 The app is not affiliated with NOAA, EPA, NIOSH, PHMSA, AIHA, DOE, Honeywell,
 Columbia Weather Systems, or OpenStreetMap/OpenFreeMap contributors.

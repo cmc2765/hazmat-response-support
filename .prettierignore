@@ -2,6 +2,5 @@ node_modules
 dist
 build
 coverage
-public/sw.js
-public/workbox-*.js
+server/public
 *.lock
