@@ -34,6 +34,13 @@ describe("API routes", () => {
     expect(body.chemicals.some((c) => c.id === "ammonia")).toBe(true);
   });
 
+  it("GET /api/erg/:un returns the Table 1 row matching the requested guide", async () => {
+    const res = await app.request("/api/erg/1005?guide=125");
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { un: string; guide: string; tih: number };
+    expect(body).toMatchObject({ un: "1005", guide: "125", tih: 1 });
+  });
+
   it("POST /api/plume/run returns isopleths for a valid request", async () => {
     const res = await app.request("/api/plume/run", {
       method: "POST",
