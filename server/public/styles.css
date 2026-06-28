@@ -445,6 +445,28 @@ h1, h2, h3, p { margin-top: 0; }
   align-items: start;
 }
 
+.incident-location-card {
+  grid-column: 1 / -1;
+  min-height: 0;
+}
+
+.incident-location-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.incident-location-fields label {
+  display: grid;
+  gap: 6px;
+}
+
+.incident-location-fields label > span {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
 .incident-input-card {
   border-color: rgba(52, 211, 153, 0.45);
   box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.18);
@@ -1014,54 +1036,6 @@ h1, h2, h3, p { margin-top: 0; }
 .legend-item.black { border-color: rgba(15, 23, 42, 0.7); }
 .legend-item.black::before { background: var(--black); }
 
-.plume-map-card {
-  min-height: auto;
-}
-
-.plume-scenario-row,
-.plume-tool-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.scenario-btn.active,
-.tool-btn.active {
-  background: var(--accent);
-  color: #09111a;
-  font-weight: 700;
-}
-
-.plume-map-toolbar {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: flex-start;
-  margin-bottom: 16px;
-}
-
-.plume-map-facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-end;
-}
-
-.plume-map-shell {
-  display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
-  gap: 16px;
-  align-items: start;
-}
-
-.plume-map-side {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
-  background: rgba(7, 17, 31, 0.82);
-}
-
 .plume-map-frame {
   width: 100%;
   min-height: 560px;
@@ -1070,35 +1044,122 @@ h1, h2, h3, p { margin-top: 0; }
   background: #0f172a;
 }
 
-.recommendation-box {
-  margin-top: 14px;
-  padding: 14px;
-  border-radius: 12px;
-  background: rgba(25, 184, 255, 0.12);
-  border: 1px solid rgba(25, 184, 255, 0.35);
+.plume-page-header {
+  align-items: flex-end;
 }
 
-.recommendation-box strong {
+.plume-sidebar-data {
+  display: none;
+  min-height: 0;
+}
+
+.layout:has(#plume.active) .plume-sidebar-data {
   display: block;
-  margin-bottom: 6px;
-  color: var(--accent-2);
 }
 
-.detector-box ul {
+.plume-sidebar-data > summary {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 900;
+  list-style-position: inside;
+}
+
+.plume-sidebar-data[open] > summary {
+  margin-bottom: 10px;
+}
+
+.plume-sidebar-data .status-pill {
+  margin-top: 0;
+  font-size: 0.68rem;
+}
+
+.plume-sidebar-data .detail-list {
+  gap: 2px;
+}
+
+.plume-sidebar-data .detail-list li {
   display: grid;
-  gap: 8px;
+  gap: 3px;
+  padding: 6px 0;
 }
 
-.recommendation-box p {
-  margin: 0;
-  line-height: 1.5;
-  color: var(--text);
+.plume-sidebar-data .detail-list strong {
+  overflow-wrap: anywhere;
+  font-size: 0.78rem;
 }
 
-.plume-mode-btn.active {
-  background: var(--accent-2);
-  color: #04121c;
-  font-weight: 700;
+.plume-import-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.plume-import-row label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.plume-full-map {
+  position: relative;
+  min-height: 650px;
+  overflow: hidden;
+  border: 2px solid #111;
+  border-radius: 16px;
+  background: #dce0e3;
+  box-shadow: 0 12px 28px rgba(17, 17, 17, 0.18);
+}
+
+.plume-full-map .plume-map-frame {
+  display: block;
+  width: 100%;
+  height: max(650px, calc(100dvh - 300px));
+  min-height: 650px;
+  border: 0;
+  border-radius: 0;
+}
+
+.plume-map-legend {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid #7b8085;
+  border-radius: 8px;
+  background: rgba(250, 251, 252, 0.96);
+  box-shadow: 0 5px 16px rgba(15, 23, 42, 0.2);
+}
+
+.plume-map-legend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.75rem;
+}
+
+.plume-map-legend i {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+}
+
+.plume-map-legend .zone-red { background: #d71920; }
+.plume-map-legend .zone-orange { background: #f58220; }
+.plume-map-legend .zone-yellow { background: #ffd323; }
+
+@media (max-width: 900px) {
+  .incident-location-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .plume-full-map .plume-map-frame {
+    height: 560px;
+    min-height: 560px;
+  }
 }
 
 .map-legend {
@@ -1382,7 +1443,6 @@ input, select {
 }
 
 .mode-card,
-.plume-map-side,
 .action-box,
 .tier2-result-btn {
   background: rgba(25, 21, 18, 0.9);
@@ -1408,14 +1468,12 @@ input, select {
 }
 
 .incident-focus-detail,
-.tier2-detail,
-.recommendation-box {
+.tier2-detail {
   background: rgba(255, 211, 35, 0.08);
   border-color: rgba(255, 211, 35, 0.32);
 }
 
 .tier2-result-btn strong,
-.recommendation-box strong,
 .logic-step strong,
 .tier2-facility-card h4,
 .tier2-facility-card a {
@@ -1434,13 +1492,6 @@ input, select {
   background: rgba(255, 211, 35, 0.12);
   border-color: rgba(255, 211, 35, 0.35);
   color: var(--yellow);
-}
-
-.plume-mode-btn.active,
-.scenario-btn.active,
-.tool-btn.active {
-  background: var(--yellow);
-  color: #1c1714;
 }
 
 input,
@@ -1530,7 +1581,6 @@ button:focus-visible {
 }
 
 .mode-card,
-.plume-map-side,
 .action-box,
 .tier2-result-btn {
   background: #eef0f2;
@@ -1547,14 +1597,12 @@ button:focus-visible {
 }
 
 .incident-focus-detail,
-.tier2-detail,
-.recommendation-box {
+.tier2-detail {
   background: #fff8d6;
   border-color: #d8b819;
 }
 
 .tier2-result-btn strong,
-.recommendation-box strong,
 .logic-step strong,
 .tier2-facility-card h4,
 .tier2-facility-card a {

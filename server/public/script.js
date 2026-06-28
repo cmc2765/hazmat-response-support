@@ -386,6 +386,7 @@ const chemicalIdResults = document.getElementById('chemical-id-results');
 const facilityInventory = document.getElementById('facility-inventory');
 let chemicalSearchTimer = null;
 let latestChemicalSearch = 0;
+let activeChemical = null;
 
 function setChemicalSearchStatus(message, state = '') {
   if (!chemicalSearchStatus) return;
@@ -401,6 +402,8 @@ function clearChemicalSuggestions() {
 }
 
 async function openChemical(chemical, facilityName = '') {
+  if (activeChemical?.id !== chemical.id) importedPlumeOverlay = null;
+  activeChemical = { id: chemical.id, name: chemical.name };
   latestChemicalSearch += 1;
   window.clearTimeout(chemicalSearchTimer);
   setChemicalSearchStatus(`Loading ${chemical.name || 'chemical'}…`, 'loading');
@@ -579,301 +582,412 @@ chemicalSearchForm?.addEventListener('submit', (event) => {
   searchChemicalId(chemicalSearchInput?.value, { submit: true });
 });
 
-let currentPlumeMode = 'street';
-let currentScenario = 'quick';
+let plumeRefreshToken = 0;
+let plumeMap = null;
+let plumeMapReady = null;
+let plumeSourceMarker = null;
+let importedPlumeOverlay = null;
+
+function ensurePlumeMap(location) {
+  if (!window.maplibregl) throw new Error('The local GIS map library did not load.');
+  if (!plumeMap) {
+    plumeMap = new window.maplibregl.Map({
+      container: 'plume-gis-map',
+      center: [location.lon, location.lat],
+      zoom: 13,
+      style: {
+        version: 8,
+        sources: {
+          osm: {
+            type: 'raster',
+            tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+            tileSize: 256,
+            attribution: '© OpenStreetMap contributors',
+          },
+        },
+        layers: [{ id: 'osm', type: 'raster', source: 'osm' }],
+      },
+    });
+    plumeMap.addControl(new window.maplibregl.NavigationControl(), 'bottom-right');
+    plumeMapReady = new Promise((resolve) => plumeMap.once('load', resolve));
+  }
+  plumeMap.resize();
+  plumeMap.easeTo({ center: [location.lon, location.lat], duration: 400 });
+  if (!plumeSourceMarker) {
+    plumeSourceMarker = new window.maplibregl.Marker({ color: '#111' })
+      .setLngLat([location.lon, location.lat])
+      .setPopup(new window.maplibregl.Popup().setText('Release source'))
+      .addTo(plumeMap);
+  } else {
+    plumeSourceMarker.setLngLat([location.lon, location.lat]);
+  }
+  return plumeMapReady;
+}
+
+function localMetersToLngLat([x, y], origin, windFromDeg) {
+  const earthRadiusM = 6378137;
+  const downwindBearing = ((Number(windFromDeg) + 180) % 360) * (Math.PI / 180);
+  const eastM = x * Math.sin(downwindBearing) + y * Math.cos(downwindBearing);
+  const northM = x * Math.cos(downwindBearing) - y * Math.sin(downwindBearing);
+  const lat = origin.lat + (northM / earthRadiusM) * (180 / Math.PI);
+  const lon = origin.lon + (eastM / (earthRadiusM * Math.cos(origin.lat * Math.PI / 180))) * (180 / Math.PI);
+  return [lon, lat];
+}
+
+function plumeResultToGeoJson(result, origin) {
+  const colors = { 3: '#d71920', 2: '#f58220', 1: '#ffd323', 0: '#34d399' };
+  return {
+    type: 'FeatureCollection',
+    features: (result?.isopleths || []).filter((zone) => zone.polygon?.length >= 3).map((zone) => {
+      const coordinates = zone.polygon.map((point) => localMetersToLngLat(point, origin, result.inputs.windDirDeg));
+      coordinates.push(coordinates[0]);
+      return {
+        type: 'Feature',
+        properties: {
+          label: `${zone.thresholdKind}-${zone.thresholdLevel}`,
+          color: colors[zone.thresholdLevel] || '#5aa9ff',
+          maxDownwindM: zone.maxDownwindM,
+        },
+        geometry: { type: 'Polygon', coordinates: [coordinates] },
+      };
+    }),
+  };
+}
+
+function forEachCoordinate(geojson, callback) {
+  const visit = (coordinates) => {
+    if (typeof coordinates?.[0] === 'number') callback(coordinates);
+    else (coordinates || []).forEach(visit);
+  };
+  (geojson?.features || []).forEach((feature) => visit(feature.geometry?.coordinates));
+}
+
+async function renderThreatZones(geojson, label) {
+  if (!plumeMap || !geojson?.features?.length) return false;
+  await plumeMapReady;
+  const source = plumeMap.getSource('hazmat-threat-zones');
+  if (source) {
+    source.setData(geojson);
+  } else {
+    plumeMap.addSource('hazmat-threat-zones', { type: 'geojson', data: geojson });
+    plumeMap.addLayer({
+      id: 'hazmat-threat-zones-fill',
+      type: 'fill',
+      source: 'hazmat-threat-zones',
+      paint: {
+        'fill-color': ['coalesce', ['get', 'color'], '#d71920'],
+        'fill-opacity': 0.34,
+      },
+    });
+    plumeMap.addLayer({
+      id: 'hazmat-threat-zones-outline',
+      type: 'line',
+      source: 'hazmat-threat-zones',
+      paint: {
+        'line-color': ['coalesce', ['get', 'color'], '#8b0d13'],
+        'line-width': 3,
+      },
+    });
+  }
+  const bounds = new window.maplibregl.LngLatBounds();
+  forEachCoordinate(geojson, (coordinate) => bounds.extend(coordinate));
+  if (!bounds.isEmpty()) plumeMap.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 500 });
+  const legend = document.getElementById('plume-map-legend');
+  if (legend) legend.hidden = false;
+  setText('plume-overlay-status', label);
+  return true;
+}
+
+async function clearThreatZones(message = '') {
+  if (plumeMap && plumeMapReady) {
+    await plumeMapReady;
+    const source = plumeMap.getSource('hazmat-threat-zones');
+    if (source) source.setData({ type: 'FeatureCollection', features: [] });
+  }
+  const legend = document.getElementById('plume-map-legend');
+  if (legend) legend.hidden = true;
+  if (message) setText('plume-overlay-status', message);
+}
 
 function parseGpsCoordinate(value) {
   const match = String(value || '').match(/(-?\d+(?:\.\d+)?)\s*[,/ ]\s*(-?\d+(?:\.\d+)?)/);
-  if (!match) {
-    return { lat: 33.2862, lon: -86.7900 };
+  if (!match) return null;
+  const lat = Number(match[1]);
+  const lon = Number(match[2]);
+  if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) return null;
+  return { lat, lon };
+}
+
+function getCurrentGps() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject(new Error('GPS is not supported by this device.'));
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => resolve({ lat: coords.latitude, lon: coords.longitude }),
+      () => reject(new Error('GPS permission was denied or the location is unavailable.')),
+      { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 },
+    );
+  });
+}
+
+function setText(id, value) {
+  const element = document.getElementById(id);
+  if (element) element.textContent = value;
+}
+
+function degreesToCompass(degrees) {
+  if (!Number.isFinite(Number(degrees))) return 'unknown direction';
+  const points = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  return points[Math.round(Number(degrees) / 45) % 8];
+}
+
+async function getIncidentCoordinates({ requestGps = true } = {}) {
+  const input = document.getElementById('incident-coordinates-input');
+  const entered = parseGpsCoordinate(input?.value);
+  if (entered) return { ...entered, source: 'Incident Dashboard' };
+  const address = document.getElementById('incident-address-input')?.value.trim();
+  if (address) {
+    const query = new URLSearchParams({ name: address, count: '1', language: 'en', format: 'json' });
+    const geocoded = await fetchJson(`https://geocoding-api.open-meteo.com/v1/search?${query}`);
+    const match = geocoded?.results?.[0];
+    if (match && Number.isFinite(match.latitude) && Number.isFinite(match.longitude)) {
+      if (input) input.value = `${match.latitude.toFixed(6)}, ${match.longitude.toFixed(6)}`;
+      return { lat: match.latitude, lon: match.longitude, source: 'Incident location input' };
+    }
   }
+  if (!requestGps) return null;
+  const gps = await getCurrentGps();
+  if (input) input.value = `${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}`;
+  return { ...gps, source: 'Current device GPS' };
+}
 
+async function fetchOpenMeteo(lat, lon) {
+  const parameters = new URLSearchParams({
+    latitude: String(lat),
+    longitude: String(lon),
+    current: 'temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure',
+    temperature_unit: 'fahrenheit',
+    wind_speed_unit: 'mph',
+    precipitation_unit: 'inch',
+    timezone: 'auto',
+  });
+  return fetchJson(`https://api.open-meteo.com/v1/forecast?${parameters}`);
+}
+
+async function fetchNwsObservation(lat, lon) {
+  const points = await fetchJson(`https://api.weather.gov/points/${lat.toFixed(4)},${lon.toFixed(4)}`);
+  const stationUrl = points?.properties?.observationStations;
+  if (!stationUrl) return null;
+  const stations = await fetchJson(stationUrl);
+  const station = stations?.features?.[0]?.properties;
+  if (!station?.stationIdentifier) return null;
+  const observation = await fetchJson(`https://api.weather.gov/stations/${encodeURIComponent(station.stationIdentifier)}/observations/latest`);
   return {
-    lat: Number(match[1]),
-    lon: Number(match[2]),
+    office: points.properties.gridId,
+    station,
+    observation: observation?.properties,
   };
 }
 
-function getScenarioProfile(scenarioName = currentScenario) {
-  const profiles = {
-    quick: {
-      label: 'Quick model',
-      distance: 750,
-      zone: 'Initial hot zone and isolation perimeter',
-      decon: 'Crosswind/upwind side of the release',
-      concern: 'Rapid screening for immediate protective actions',
-      side: 'upwind/crosswind',
-    },
-    advanced: {
-      label: 'Advanced model',
-      distance: 1200,
-      zone: 'Extended isolation and downwind receptor review',
-      decon: 'Crosswind/upwind side with a clear access corridor',
-      concern: 'More detailed receptor and terrain evaluation',
-      side: 'Bravo/Charlie side',
-    },
-    alohac: {
-      label: 'ALOHA-compatible output',
-      distance: 1100,
-      zone: 'ALOHA-style footprint with hazard buffer',
-      decon: 'Crosswind/upwind side with public-protection review',
-      concern: 'Compatible with ALOHA-style modeling assumptions',
-      side: 'upwind/crosswind',
-    },
-    toxic: {
-      label: 'Toxic plume',
-      distance: 1300,
-      zone: 'Toxic inhalation exposure envelope',
-      decon: 'Crosswind/upwind side and respiratory-protection corridor',
-      concern: 'Focused on toxic exposure and sheltering thresholds',
-      side: 'Bravo/Charlie side',
-    },
-    flammable: {
-      label: 'Flammable plume',
-      distance: 1500,
-      zone: 'Flammable vapor cloud buffer',
-      decon: 'Crosswind/upwind side with ignition-source control',
-      concern: 'Accounts for vapor cloud ignition potential',
-      side: 'upwind/crosswind',
-    },
-    fire: {
-      label: 'Fire model',
-      distance: 1700,
-      zone: 'Thermal exposure and fire spread perimeter',
-      decon: 'Crosswind/upwind side with remote staging',
-      concern: 'Includes fire growth and thermal effects',
-      side: 'upwind/crosswind',
-    },
-    bleve: {
-      label: 'BLEVE model',
-      distance: 2200,
-      zone: 'Fragment and thermal blast consideration',
-      decon: 'Crosswind/upwind side with evacuation buffer',
-      concern: 'Addresses BLEVE-related overpressure and fragment hazards',
-      side: 'Bravo/Charlie side',
-    },
-    vce: {
-      label: 'Vapor cloud explosion model',
-      distance: 2400,
-      zone: 'Blast overpressure perimeter',
-      decon: 'Crosswind/upwind side with remote operations',
-      concern: 'Focused on vapor cloud explosion consequences',
-      side: 'upwind/crosswind',
-    },
-    'wind-shift': {
-      label: 'Wind shift forecast',
-      distance: 1400,
-      zone: 'Shift-aware hot and warm zone planning',
-      decon: 'Crosswind/upwind side and avoid projected wind-shift corridors',
-      concern: 'Accounts for a forecast wind change and alternate plume path',
-      side: 'upwind/crosswind',
-    },
-    realtime: {
-      label: 'Real-time sensor update',
-      distance: 1050,
-      zone: 'Dynamic hazard envelope with frequent reassessment',
-      decon: 'Crosswind/upwind side and alternate route review',
-      concern: 'Continuously updated with the latest weather and observations',
-      side: 'upwind/crosswind',
-    },
-    export: {
-      label: 'Export to KML / GeoJSON / PDF',
-      distance: 1000,
-      zone: 'Export-ready plume and mapping package',
-      decon: 'Crosswind/upwind side with package-ready route notes',
-      concern: 'Prepared for KML, GeoJSON, and PDF export',
-      side: 'upwind/crosswind',
-    },
+function formatOpenMeteo(data) {
+  if (!data?.current) return null;
+  const current = data.current;
+  return {
+    location: `${Number(data.latitude).toFixed(4)}, ${Number(data.longitude).toFixed(4)} · ${Math.round(Number(data.elevation) * 3.28084).toLocaleString()} ft · ${data.timezone || 'local time'}`,
+    conditions: `${current.temperature_2m}°F · RH ${current.relative_humidity_2m}% · Wind ${current.wind_speed_10m} mph ${degreesToCompass(current.wind_direction_10m)} · Gust ${current.wind_gusts_10m} mph · Pressure ${current.surface_pressure} hPa`,
+    temperatureC: (Number(current.temperature_2m) - 32) * (5 / 9),
+    windSpeedMps: Number(current.wind_speed_10m) * 0.44704,
+    windDirDeg: Number(current.wind_direction_10m),
   };
-
-  return profiles[scenarioName] || profiles.quick;
 }
 
-// Scenarios that are genuine toxic vapor dispersion (what the Gaussian plume model computes).
-// fire/bleve/vce are thermal/blast phenomena and flammable is LEL-based — none of those are
-// represented by this model, so they keep the rough placeholder distance rather than being
-// mislabeled as real model output.
-const MODELED_SCENARIOS = new Set(['quick', 'advanced', 'alohac', 'toxic', 'wind-shift', 'realtime']);
-
-const COMPASS_TO_DEGREES = {
-  N: 0, NNE: 22.5, NE: 45, ENE: 67.5, E: 90, ESE: 112.5, SE: 135, SSE: 157.5,
-  S: 180, SSW: 202.5, SW: 225, WSW: 247.5, W: 270, WNW: 292.5, NW: 315, NNW: 337.5,
-};
-
-function parseWind(windText) {
-  const match = String(windText || '').match(/(\d+(?:\.\d+)?)\s*mph\s*([NSEW]{1,3})/i);
-  const speedMph = match ? Number(match[1]) : 8;
-  const dirDeg = match ? (COMPASS_TO_DEGREES[match[2].toUpperCase()] ?? 270) : 270;
-  return { speedMph, windSpeedMps: speedMph * 0.44704, windDirDeg: dirDeg };
+function formatNws(data) {
+  if (!data?.observation) return null;
+  const observation = data.observation;
+  const tempC = observation.temperature?.value;
+  const windMps = observation.windSpeed?.value;
+  const tempF = Number.isFinite(tempC) ? `${((tempC * 9) / 5 + 32).toFixed(1)}°F` : 'temperature unavailable';
+  const wind = Number.isFinite(windMps) ? `${(windMps * 2.23694).toFixed(1)} mph` : 'wind unavailable';
+  return {
+    station: `NWS ${data.office === 'BMX' ? 'Birmingham (BMX)' : data.office || 'office'} · ${data.station.stationIdentifier} ${data.station.name || ''}`.trim(),
+    conditions: `${tempF} · ${observation.textDescription || 'No description'} · Wind ${wind} ${degreesToCompass(observation.windDirection?.value)}`,
+  };
 }
 
-function parseStabilityClass(stabilityText) {
-  const text = String(stabilityText || '').toLowerCase();
-  if (text.includes('unstable')) return 'B';
-  if (text.includes('very stable')) return 'F';
-  if (text.includes('stable')) return 'E';
-  return 'D';
-}
+async function runBackendPlume(openMeteo) {
+  if (!activeChemical) return { summary: 'Select a CAMEO chemical before running the plume model.', result: null };
+  if (!openMeteo) return { summary: 'Live weather is unavailable; the plume model was not run.', result: null };
 
-let plumeRequestToken = 0;
-
-async function runRealPlumeModel(scenarioName) {
-  const chemNameInput = document.getElementById('chemical-name-input');
-  const windInput = document.getElementById('wind');
-  const stabilityInput = document.getElementById('stability');
-  const releaseDetailsInput = document.getElementById('release-details');
-
-  const chemQuery = chemNameInput?.value || 'ammonia';
-  const chemMatch = await fetchJson(`/api/chemicals?q=${encodeURIComponent(chemQuery)}`);
-  const chemicalId = chemMatch?.chemicals?.[0]?.id || 'ammonia';
-
-  const { windSpeedMps, windDirDeg } = parseWind(windInput?.value);
-  const stabilityClass = parseStabilityClass(stabilityInput?.value);
-  const releaseKind = /instantaneous/i.test(releaseDetailsInput?.value || '') ? 'puff' : 'plume';
-
-  const result = await (async () => {
-    const res = await fetch('/api/plume/run', {
+  try {
+    const response = await fetch('/api/plume/run', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chemicalId,
-        releaseKind,
-        windSpeedMps,
-        windDirDeg,
-        stabilityClass,
-        tempC: 20,
+        chemicalId: activeChemical.id,
+        releaseKind: 'plume',
+        windSpeedMps: Math.max(openMeteo.windSpeedMps, 0.1),
+        windDirDeg: openMeteo.windDirDeg,
+        stabilityClass: 'D',
+        tempC: openMeteo.temperatureC,
       }),
     });
-    if (!res.ok) return null;
-    return res.json();
-  })();
-
-  if (!result) return null;
-
-  const maxDownwindM = Math.max(0, ...result.isopleths.map((i) => i.maxDownwindM));
-  return {
-    distanceFt: Math.round(maxDownwindM * 3.28084),
-    modelVersion: result.modelVersion,
-    disclaimer: result.disclaimer,
-    chemicalId,
-  };
-}
-
-async function updatePlumeOutputs() {
-  const gpsInput = document.getElementById('gps-location');
-  const titleInput = document.getElementById('incident-location');
-  const titleEl = document.getElementById('plume-map-title');
-  const subtitleEl = document.getElementById('plume-map-subtitle');
-  const statusEl = document.getElementById('plume-map-status');
-  const gpsSummaryEl = document.getElementById('plume-gps-summary');
-  const weatherStatus = document.getElementById('weather-status');
-  const stationSelect = document.getElementById('weather-station');
-  const windInput = document.getElementById('wind');
-  const stabilityInput = document.getElementById('stability');
-  const weatherSummaryEl = document.getElementById('scenario-weather-summary');
-  const scenarioNameEl = document.getElementById('scenario-name');
-  const scenarioBadgeEl = document.getElementById('scenario-badge');
-  const zoneDistanceEl = document.getElementById('zone-distance');
-  const zoneSummaryEl = document.getElementById('zone-summary');
-  const deconSummaryEl = document.getElementById('decon-summary');
-  const receptorSummaryEl = document.getElementById('receptor-summary');
-  const recommendationEl = document.getElementById('plume-recommendation');
-
-  const { lat, lon } = parseGpsCoordinate(gpsInput?.value || '33.2862, -86.7900');
-  const incidentLabel = titleInput?.value || 'Incident location';
-  const mapModeLabel = currentPlumeMode === 'satellite' ? 'Satellite' : 'Street';
-  const safeLat = Number.isFinite(lat) ? lat : 33.2862;
-  const safeLon = Number.isFinite(lon) ? lon : -86.7900;
-  const profile = getScenarioProfile(currentScenario);
-  const windValue = windInput?.value || '8 mph SW';
-  const stabilityValue = stabilityInput?.value || 'Neutral / inversion possible';
-  const stationValue = stationSelect?.value || 'North Gate Station';
-  const windMatch = String(windValue).match(/(\d+)\s*mph\s*([NSEW]{1,2})/i);
-  const speed = windMatch ? Number(windMatch[1]) : 8;
-  const weatherText = `${stationValue} · ${windValue} · ${stabilityValue}`;
-
-  updateNotificationCenter({ weather: weatherText });
-
-  const token = ++plumeRequestToken;
-  let distanceFt = profile.distance + (speed * 18);
-  let modelNote = 'Placeholder estimate — this scenario type is not yet covered by the dispersion model.';
-  if (MODELED_SCENARIOS.has(currentScenario)) {
-    const modeled = await runRealPlumeModel(currentScenario);
-    if (token !== plumeRequestToken) return; // a newer input event superseded this run
-    if (modeled) {
-      distanceFt = modeled.distanceFt;
-      modelNote = `${modeled.disclaimer} (model ${modeled.modelVersion})`;
-    } else {
-      modelNote = 'Model unavailable — showing placeholder estimate.';
-    }
-  }
-
-  if (titleEl) titleEl.textContent = incidentLabel;
-  if (subtitleEl) subtitleEl.textContent = `GPS ${safeLat.toFixed(4)}, ${safeLon.toFixed(4)} · Google Maps base showing homes, businesses, and nearby structures`;
-  if (gpsSummaryEl) gpsSummaryEl.textContent = `${safeLat.toFixed(4)}, ${safeLon.toFixed(4)}`;
-  if (statusEl) statusEl.textContent = `Basemap: ${mapModeLabel}`;
-  if (weatherSummaryEl) weatherSummaryEl.textContent = weatherText;
-  if (scenarioNameEl) scenarioNameEl.textContent = profile.label;
-  if (scenarioBadgeEl) scenarioBadgeEl.textContent = profile.label;
-  if (zoneDistanceEl) zoneDistanceEl.textContent = `Establish the hot zone from the release point to ${distanceFt} feet downwind. ${modelNote}`;
-  if (zoneSummaryEl) zoneSummaryEl.textContent = `${profile.zone} with zonal buffers based on the current weather and surface conditions.`;
-  if (deconSummaryEl) deconSummaryEl.textContent = `Position decon ${profile.decon} and keep the ${profile.side} side clear for access.`;
-  if (receptorSummaryEl) receptorSummaryEl.textContent = `Nearby homes, businesses, and infrastructure should be reviewed in the Google map view for receptor impact.`;
-  if (weatherStatus) weatherStatus.textContent = `Live weather: ${stationValue} · latest update 2 min ago`;
-  if (recommendationEl) {
-    recommendationEl.innerHTML = `<strong>Recommendation</strong><p>Based on current inputs, establish the hot zone from the release point to ${distanceFt} feet downwind. Position decon ${profile.decon} and keep the ${profile.side} side clear for access. Avoid staging in the projected wind-shift area. Reassess every 10 minutes or with any wind change. Use AI and verified sources from NIOSH, Emergency Response Plans, SDS datasheets, and HazMat Specialists and Technician best practices to determine the best tactical operations.</p><p class="muted">${modelNote}</p>`;
-  }
-
-  const mapFrame = document.getElementById('plume-gis-map');
-  if (mapFrame) {
-    const mapType = currentPlumeMode === 'satellite' ? 'k' : 'm';
-    mapFrame.src = `https://www.google.com/maps?q=${safeLat},${safeLon}&t=${mapType}&z=16&output=embed`;
+    if (!response.ok) return { summary: 'Backend plume model unavailable for the current inputs.', result: null };
+    const result = await response.json();
+    const maxDownwindM = Math.max(0, ...(result.isopleths || []).map((item) => item.maxDownwindM));
+    return {
+      summary: `${Math.round(maxDownwindM * 3.28084).toLocaleString()} ft maximum modeled downwind extent · ${result.modelVersion}`,
+      result,
+    };
+  } catch {
+    return { summary: 'Backend plume model request failed.', result: null };
   }
 }
 
-function updatePlumeMap(mode = currentPlumeMode) {
-  currentPlumeMode = mode;
-  updatePlumeOutputs();
+async function refreshPlumeWorkspace({ requestGps = true } = {}) {
+  const token = ++plumeRefreshToken;
+  const status = document.getElementById('plume-live-status');
+  if (status) status.textContent = 'Resolving incident location…';
+
+  let location;
+  try {
+    location = await getIncidentCoordinates({ requestGps });
+  } catch (error) {
+    if (status) status.textContent = error.message;
+    setText('plume-location-source', 'Location required');
+    return;
+  }
+  if (!location) {
+    if (status) status.textContent = 'Enter coordinates in Incident Dashboard or use Current GPS.';
+    return;
+  }
+
+  const address = document.getElementById('incident-address-input')?.value.trim() || 'Current GPS incident location';
+  setText('plume-incident-address', address);
+  setText('plume-gps-summary', `${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}`);
+  setText('plume-location-source', location.source);
+  setText('plume-product-summary', activeChemical ? `${activeChemical.name} · CAMEO record` : 'No chemical selected');
+  setText('selected-model-summary', 'Plume Model');
+
+  try {
+    await ensurePlumeMap(location);
+  } catch (error) {
+    if (status) status.textContent = error.message;
+    return;
+  }
+  if (status) status.textContent = 'Loading Open-Meteo and National Weather Service observations…';
+
+  const [openMeteoResponse, nwsResponse] = await Promise.all([
+    fetchOpenMeteo(location.lat, location.lon),
+    fetchNwsObservation(location.lat, location.lon),
+  ]);
+  if (token !== plumeRefreshToken) return;
+
+  const openMeteo = formatOpenMeteo(openMeteoResponse);
+  const nws = formatNws(nwsResponse);
+  setText('open-meteo-location', openMeteo?.location || 'Open-Meteo unavailable');
+  setText('open-meteo-conditions', openMeteo?.conditions || 'Open-Meteo unavailable');
+  setText('nws-station-summary', nws?.station || 'NWS observation station unavailable');
+  setText('nws-weather-summary', nws?.conditions || 'NWS live observation unavailable');
+
+  const weatherNotification = openMeteo?.conditions || nws?.conditions || 'Live weather unavailable';
+  updateNotificationCenter({ weather: weatherNotification });
+  const modeled = await runBackendPlume(openMeteo);
+  setText('backend-model-summary', modeled.summary);
+  const imported = importedPlumeOverlay;
+  if (imported) {
+    await renderThreatZones(imported.geojson, imported.label);
+  } else if (modeled.result) {
+    const geojson = plumeResultToGeoJson(modeled.result, location);
+    const rendered = await renderThreatZones(geojson, `HazMatIQ backend zones · ${modeled.result.modelVersion}`);
+    if (!rendered) await clearThreatZones('No threshold polygon was returned for this chemical.');
+  } else {
+    await clearThreatZones('No backend or imported ALOHA/MARPLOT plume overlay is available.');
+  }
+  if (token !== plumeRefreshToken) return;
+  if (status) status.textContent = `Live incident data updated ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
 }
 
-const plumeButton = document.getElementById('open-plume-btn');
-if (plumeButton) {
-  plumeButton.addEventListener('click', () => {
-    showView('plume');
-    updatePlumeMap(currentPlumeMode);
-  });
+function kmlToGeoJson(kmlText) {
+  const xml = new DOMParser().parseFromString(kmlText, 'application/xml');
+  if (xml.querySelector('parsererror')) throw new Error('The KML file could not be parsed.');
+  const colors = ['#ffd323', '#f58220', '#d71920'];
+  const features = [...xml.querySelectorAll('Polygon')].map((polygon, index) => {
+    const zoneName = polygon.closest('Placemark')?.querySelector('name')?.textContent?.toLowerCase() || '';
+    const color = zoneName.includes('red') ? '#d71920'
+      : zoneName.includes('orange') ? '#f58220'
+        : zoneName.includes('yellow') ? '#ffd323'
+          : colors[index % colors.length];
+    const coordinateText = polygon.querySelector('outerBoundaryIs coordinates, coordinates')?.textContent || '';
+    const ring = coordinateText.trim().split(/\s+/).map((tuple) => tuple.split(',').slice(0, 2).map(Number))
+      .filter(([lon, lat]) => Number.isFinite(lon) && Number.isFinite(lat));
+    if (ring.length >= 3 && (ring[0][0] !== ring.at(-1)[0] || ring[0][1] !== ring.at(-1)[1])) ring.push(ring[0]);
+    return {
+      type: 'Feature',
+      properties: { color, source: 'ALOHA / MARPLOT KML' },
+      geometry: { type: 'Polygon', coordinates: [ring] },
+    };
+  }).filter((feature) => feature.geometry.coordinates[0].length >= 4);
+  if (!features.length) throw new Error('No polygon threat zones were found in the KML file.');
+  return { type: 'FeatureCollection', features };
 }
 
-document.querySelectorAll('.plume-mode-btn').forEach((button) => {
-  button.addEventListener('click', () => {
-    document.querySelectorAll('.plume-mode-btn').forEach((item) => item.classList.toggle('active', item === button));
-    updatePlumeMap(button.dataset.mapMode || 'street');
-  });
+async function importModelOverlay(file) {
+  const textContent = await file.text();
+  const geojson = kmlToGeoJson(textContent);
+  const label = `Imported ALOHA / MARPLOT KML · ${file.name}`;
+  importedPlumeOverlay = { geojson, label };
+  await renderThreatZones(geojson, label);
+  setText('backend-model-summary', label);
+}
+
+function openPlumeWorkspace() {
+  showView('plume');
+  refreshPlumeWorkspace({ requestGps: true });
+}
+
+document.getElementById('open-plume-btn')?.addEventListener('click', openPlumeWorkspace);
+document.querySelectorAll('[data-view="plume"]').forEach((button) => {
+  button.addEventListener('click', () => refreshPlumeWorkspace({ requestGps: true }));
 });
 
-document.querySelectorAll('.scenario-btn').forEach((button) => {
-  button.addEventListener('click', () => {
-    document.querySelectorAll('.scenario-btn').forEach((item) => item.classList.toggle('active', item === button));
-    currentScenario = button.dataset.scenario || 'quick';
-    updatePlumeOutputs();
-  });
+document.getElementById('refresh-plume-data-btn')?.addEventListener('click', () => refreshPlumeWorkspace({ requestGps: true }));
+document.getElementById('plume-overlay-import')?.addEventListener('change', async (event) => {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  setText('plume-overlay-status', `Importing ${file.name}…`);
+  try {
+    await importModelOverlay(file);
+  } catch (error) {
+    setText('plume-overlay-status', error.message);
+  } finally {
+    event.target.value = '';
+  }
 });
-
-document.querySelectorAll('.tool-btn').forEach((button) => {
-  button.addEventListener('click', () => {
-    document.querySelectorAll('.tool-btn').forEach((item) => item.classList.toggle('active', item === button));
-  });
+document.getElementById('update-incident-location-btn')?.addEventListener('click', async () => {
+  const status = document.getElementById('incident-location-status');
+  if (status) status.textContent = 'Validating incident location…';
+  const location = await getIncidentCoordinates({ requestGps: false });
+  if (!location) {
+    if (status) status.textContent = 'Enter valid coordinates, a location Open-Meteo can resolve, or use Current GPS.';
+    return;
+  }
+  if (status) status.textContent = `Incident location saved: ${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}.`;
+  refreshPlumeWorkspace({ requestGps: false });
 });
-
-['gps-location', 'incident-location', 'map-pin', 'terrain', 'chemical-name-input', 'release-rate', 'container', 'release-details', 'wind', 'stability', 'weather-station', 'weather-notes'].forEach((id) => {
-  const element = document.getElementById(id);
-  if (!element) return;
-
-  element.addEventListener('input', () => updatePlumeMap(currentPlumeMode));
-  element.addEventListener('change', () => updatePlumeMap(currentPlumeMode));
+document.getElementById('use-current-location-btn')?.addEventListener('click', async () => {
+  const status = document.getElementById('incident-location-status');
+  if (status) status.textContent = 'Requesting current GPS location…';
+  try {
+    const gps = await getCurrentGps();
+    const input = document.getElementById('incident-coordinates-input');
+    if (input) input.value = `${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}`;
+    if (status) status.textContent = `Current GPS saved: ${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}.`;
+  } catch (error) {
+    if (status) status.textContent = error.message;
+  }
 });
-
-updatePlumeMap(currentPlumeMode);
 
 // ─── Tier II facilities: backed by the real /api/facilities data ───
 
