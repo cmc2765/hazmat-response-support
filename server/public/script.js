@@ -6,6 +6,54 @@ const notificationWeather = document.getElementById('notification-weather');
 const notificationMonitoring = document.getElementById('notification-monitoring');
 const notificationUpdated = document.getElementById('notification-updated');
 
+let tacticalClockTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+let tacticalClockUsesGpsTimeZone = false;
+
+function renderTacticalClock() {
+  if (!notificationUpdated) return;
+
+  const now = new Date();
+  notificationUpdated.dateTime = now.toISOString();
+  notificationUpdated.textContent = now.toLocaleTimeString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23',
+    timeZone: tacticalClockTimeZone,
+    timeZoneName: 'short',
+  });
+  const source = tacticalClockUsesGpsTimeZone ? 'GPS location' : 'device timezone';
+  notificationUpdated.title = `Current time from ${source} (${tacticalClockTimeZone})`;
+}
+
+async function setTacticalClockTimeZoneFromCoordinates({ lat, lon }) {
+  const parameters = new URLSearchParams({
+    latitude: String(lat),
+    longitude: String(lon),
+    timezone: 'auto',
+    forecast_days: '1',
+    current: 'temperature_2m',
+  });
+  const locationData = await fetchJson(`https://api.open-meteo.com/v1/forecast?${parameters}`);
+  if (locationData?.timezone) {
+    tacticalClockTimeZone = locationData.timezone;
+    tacticalClockUsesGpsTimeZone = true;
+  }
+  renderTacticalClock();
+}
+
+async function initializeTacticalClock() {
+  renderTacticalClock();
+  window.setInterval(renderTacticalClock, 1000);
+
+  try {
+    const gps = await getCurrentGps();
+    await setTacticalClockTimeZoneFromCoordinates(gps);
+  } catch {
+    // The live clock remains useful with the device timezone if GPS is unavailable.
+  }
+}
+
 function updateNotificationCenter(update = {}) {
   if (Object.prototype.hasOwnProperty.call(update, 'tactical') && tacticalAlertMessage) {
     tacticalAlertMessage.textContent = update.tactical;
@@ -17,12 +65,6 @@ function updateNotificationCenter(update = {}) {
     notificationMonitoring.textContent = update.monitoring;
   }
 
-  if (notificationUpdated) {
-    const updatedAt = update.timestamp ? new Date(update.timestamp) : new Date();
-    const safeUpdatedAt = Number.isNaN(updatedAt.getTime()) ? new Date() : updatedAt;
-    notificationUpdated.dateTime = safeUpdatedAt.toISOString();
-    notificationUpdated.innerHTML = `Updated ${formatCentralZuluHtml(safeUpdatedAt)}`;
-  }
 }
 
 window.HazMatIQ = window.HazMatIQ || {};
@@ -1027,6 +1069,7 @@ document.getElementById('use-current-location-btn')?.addEventListener('click', a
     const gps = await getCurrentGps();
     const input = document.getElementById('incident-coordinates-input');
     if (input) input.value = `${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}`;
+    await setTacticalClockTimeZoneFromCoordinates(gps);
     if (status) status.textContent = `Current GPS saved: ${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}.`;
   } catch (error) {
     if (status) status.textContent = error.message;
@@ -1209,3 +1252,4 @@ document.addEventListener('pointerup', () => {
 });
 
 renderTier2Facilities();
+initializeTacticalClock();
