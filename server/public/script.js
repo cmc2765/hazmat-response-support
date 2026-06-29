@@ -249,6 +249,7 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
   const exposureLimits = npg ? parseJsonField(npg.exposureLimits, {}) : {};
   const physical = npg ? parseJsonField(npg.physical, {}) : {};
   const health = npg ? parseJsonField(npg.health, {}) : {};
+  const npgPpe = npg ? parseJsonField(npg.ppe, {}) : {};
 
   const guideNumber = chem.ergGuide || 'N/A';
   const fallbackHazards = reactivity.length ? reactivity : [`DOT hazard class: ${hazardClass.join(' / ') || 'not assigned'}.`];
@@ -282,11 +283,38 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
   return {
     name: chem.name,
     aliases: synonyms,
-    summary: `Operational response summary for ${chem.name}, organized from verified ERG, CAMEO, and NIOSH data.`,
+    summary: `Operational response summary for ${chem.name}, organized from the available ERG, CAMEO, and NIOSH records.`,
     ergGuide: guideNumber,
     un: un[0] || 'N/A',
     initialIsolation,
     protectiveAction,
+    commandFacts: {
+      initialIsolation: initialIsolation === 'Not listed in the available ERG data' ? null : initialIsolation,
+      protectiveAction: protectiveAction === 'Establish from monitoring and incident conditions.' ? null : protectiveAction,
+      isolationSource: hasGreenTable ? 'ERG 2024 Table 1 backend record' : 'ERG/CAMEO backend record',
+      idlh: exposureLimits.idlh || null,
+    },
+    ppeReference: ppe,
+    ppeSources: [
+      {
+        id: 'erg',
+        label: 'PHMSA ERG',
+        items: guideData?.publicSafety?.protectiveClothing || [],
+      },
+      {
+        id: 'niosh',
+        label: 'NIOSH NPG',
+        items: [
+          ...(npgPpe.skin || []).map((item) => `Skin: ${item}`),
+          ...(npgPpe.eye || []).map((item) => `Eye: ${item}`),
+          ...(npgPpe.respiratory || []).map((item) => `Respiratory: ${item}`),
+        ],
+      },
+      { id: 'osha', label: 'OSHA', items: [] },
+      { id: 'epa', label: 'EPA', items: [] },
+      { id: 'comptox', label: 'EPA CompTox', items: [] },
+      { id: 'kappler', label: 'Kappler HazMatch', items: [] },
+    ],
     responderGuide,
     ergTable: hasGreenTable ? ergTable : null,
     dotClass: hazardClass.join(' / ') || 'N/A',
@@ -432,7 +460,127 @@ const facilityInventory = document.getElementById('facility-inventory');
 let chemicalSearchTimer = null;
 let latestChemicalSearch = 0;
 let activeChemical = null;
+let activeChemicalRecord = null;
+let activePlumeCommand = null;
+let activePpeSelection = [];
 const selectedChemicalStorageKey = 'hazmatiq.selectedChemical';
+
+function replaceCommandList(id, items, emptyMessage) {
+  const list = document.getElementById(id);
+  if (!list) return;
+  const rows = (items || []).filter(Boolean);
+  list.replaceChildren(...(rows.length ? rows : [emptyMessage]).map((textValue) => {
+    const item = document.createElement('li');
+    item.textContent = textValue;
+    return item;
+  }));
+}
+
+const requiredPpeConsensusSources = ['erg', 'niosh', 'osha', 'epa', 'comptox', 'kappler'];
+
+function normalizePpeRecommendation(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[()]/g, '')
+    .replace(/[^a-z0-9+/-]+/g, ' ')
+    .replace(/\s+/g, ' ');
+}
+
+function correlatePpeSources(sourceRows = []) {
+  const rows = requiredPpeConsensusSources.map((sourceId) => {
+    const source = sourceRows.find((row) => row.id === sourceId) || { id: sourceId, label: sourceId, items: [] };
+    const uniqueItems = [...new Map((source.items || [])
+      .map((item) => [normalizePpeRecommendation(item), String(item).trim()])
+      .filter(([key]) => key)).values()];
+    return { ...source, items: uniqueItems };
+  });
+  const available = rows.filter((row) => row.items.length > 0);
+  const signatures = rows.map((row) => row.items.map(normalizePpeRecommendation).sort().join('|'));
+  const unanimous = available.length === rows.length
+    && signatures.every((signature) => signature === signatures[0]);
+
+  const groupedItems = new Map();
+  available.forEach((source) => {
+    source.items.forEach((item) => {
+      const key = normalizePpeRecommendation(item);
+      const group = groupedItems.get(key) || { text: item, sources: [] };
+      group.sources.push(source.label);
+      groupedItems.set(key, group);
+    });
+  });
+
+  return {
+    rows,
+    available,
+    missing: rows.filter((row) => row.items.length === 0),
+    unanimous,
+    selection: unanimous ? rows[0].items : [],
+    groupedItems: [...groupedItems.values()],
+  };
+}
+
+function renderIncidentCommandSnapshot() {
+  const chemicalLoaded = Boolean(activeChemical);
+  const recordLoaded = Boolean(activeChemicalRecord);
+  const commandFacts = activeChemicalRecord?.commandFacts;
+  setText('command-chemical-status', recordLoaded ? 'Backend record' : (chemicalLoaded ? 'Loading data' : 'Awaiting ID'));
+  setText('command-chemical-name', activeChemical?.name || 'No chemical identified');
+  setText('command-chemical-summary', recordLoaded
+    ? `UN ${activeChemicalRecord.un} · ERG ${activeChemicalRecord.ergGuide} · IDLH ${activeChemicalRecord.idlh}`
+    : (chemicalLoaded ? 'Loading ERG, CAMEO, and NIOSH records…' : 'Search Chemical ID to connect backend response data.'));
+  setText('command-chemical-source', recordLoaded
+    ? `Source: ${commandFacts?.isolationSource || 'backend chemical record'}; IDLH from NIOSH record when available.`
+    : 'Source: none');
+  replaceCommandList('command-chemical-details', recordLoaded ? [
+    commandFacts?.initialIsolation ? `Initial isolation: ${commandFacts.initialIsolation}` : 'Initial isolation: not available in the loaded backend record.',
+    commandFacts?.protectiveAction ? `Protective action: ${commandFacts.protectiveAction}` : 'Protective action: not available in the loaded backend record.',
+    commandFacts?.idlh ? `NIOSH IDLH: ${commandFacts.idlh}` : 'NIOSH IDLH: not available in the loaded backend record.',
+    `DOT class: ${activeChemicalRecord.dotClass}`,
+  ] : [], 'No chemical data loaded.');
+
+  setText('command-plume-status', activePlumeCommand ? 'Backend result' : 'Not plotted');
+  setText('command-plume-title', activePlumeCommand?.title || 'No active plume');
+  setText('command-plume-summary', activePlumeCommand?.summary || 'Confirm the release and weather inputs before plotting.');
+  setText('command-plume-source', activePlumeCommand?.source || 'Source: no model result');
+  replaceCommandList('command-plume-details', activePlumeCommand?.details || [], 'No plume model has been plotted.');
+
+  const ppeCorrelation = correlatePpeSources(activeChemicalRecord?.ppeSources || []);
+  const hasPpeSelection = activePpeSelection.length > 0;
+  const hasConsensus = ppeCorrelation.unanimous && ppeCorrelation.selection.length > 0;
+  const coverage = `${ppeCorrelation.available.length}/${requiredPpeConsensusSources.length} sources`;
+  setText('command-ppe-status', hasConsensus ? 'All sources match' : (hasPpeSelection ? 'Operator entered' : coverage));
+  setText('command-ppe-title', hasConsensus
+    ? ppeCorrelation.selection.join(' · ')
+    : (hasPpeSelection ? activePpeSelection.join(' · ') : 'No automatic PPE selection'));
+  setText('command-ppe-summary', hasConsensus
+    ? 'Strict text match across every required backend source.'
+    : (hasPpeSelection
+      ? 'Operator-entered selection; the backend does not currently prove full source agreement.'
+      : 'Source records are incomplete or differ. Review the available source text; HazMatIQ made no selection.'));
+  setText('command-ppe-source', activeChemicalRecord
+    ? `Coverage: ${coverage}. Missing: ${ppeCorrelation.missing.map((source) => source.label).join(', ') || 'none'}.`
+    : 'Source: no PPE record or operator entry');
+  const correlatedDetails = hasConsensus
+    ? ppeCorrelation.selection.map((item) => `${item} — all required sources`)
+    : [
+      ...ppeCorrelation.groupedItems.map((group) => `${group.text} — ${group.sources.join(', ')}`),
+      ...(hasPpeSelection ? activePpeSelection.map((item) => `${item} — operator entered`) : []),
+    ].slice(0, 8);
+  replaceCommandList('command-ppe-details', correlatedDetails, 'No source-attributed PPE guidance loaded.');
+}
+
+function updateIncidentPpeSelection(selection) {
+  const values = Array.isArray(selection) ? selection : [selection];
+  activePpeSelection = values
+    .map((item) => typeof item === 'string' ? item : item?.label || item?.name || '')
+    .map((item) => item.trim())
+    .filter(Boolean);
+  renderIncidentCommandSnapshot();
+}
+
+window.HazMatIQ.updateIncidentPpe = updateIncidentPpeSelection;
+document.addEventListener('hazmatiq:ppe-selection', (event) => updateIncidentPpeSelection(event.detail?.items || event.detail || []));
 
 function syncPlumeChemicalSelection() {
   const plumeChemicalInput = document.getElementById('plume-chemical-input');
@@ -448,6 +596,11 @@ function syncPlumeChemicalSelection() {
 
 function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {}) {
   const changed = activeChemical?.id !== chemical?.id;
+  if (changed) {
+    activeChemicalRecord = null;
+    activePlumeCommand = null;
+    activePpeSelection = [];
+  }
   activeChemical = chemical ? { id: chemical.id, name: chemical.name } : null;
   const incidentProductInput = document.getElementById('incident-product');
   if (incidentProductInput) incidentProductInput.value = activeChemical?.name || '';
@@ -464,9 +617,10 @@ function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {
     void clearThreatZones(activeChemical
       ? 'Chemical changed. Confirm inputs and select Plot Plume.'
       : 'Identify a chemical before plotting a plume.');
-    setText('backend-model-summary', 'Awaiting confirmed model inputs');
+    setText('backend-model-summary', 'Awaiting operator-entered model inputs');
   }
   syncPlumeChemicalSelection();
+  renderIncidentCommandSnapshot();
 }
 
 async function restoreSelectedChemical() {
@@ -477,14 +631,21 @@ async function restoreSelectedChemical() {
       return;
     }
     const chemical = await fetchJson(`/api/chemicals/${encodeURIComponent(saved.id)}`);
-    if (chemical && !chemical.error) setActiveChemical(chemical, { persist: false, clearOverlay: false });
-    else syncPlumeChemicalSelection();
+    if (chemical && !chemical.error) {
+      setActiveChemical(chemical, { persist: false, clearOverlay: false });
+      const record = await buildFullChemicalRecord(chemical);
+      if (activeChemical?.id === chemical.id) {
+        activeChemicalRecord = record;
+        renderIncidentCommandSnapshot();
+      }
+    } else syncPlumeChemicalSelection();
   } catch {
     syncPlumeChemicalSelection();
   }
 }
 
 void restoreSelectedChemical();
+renderIncidentCommandSnapshot();
 
 function setChemicalSearchStatus(message, state = '') {
   if (!chemicalSearchStatus) return;
@@ -505,6 +666,10 @@ async function openChemical(chemical, facilityName = '') {
   window.clearTimeout(chemicalSearchTimer);
   setChemicalSearchStatus(`Loading ${chemical.name || 'chemical'}…`, 'loading');
   const record = await buildFullChemicalRecord(chemical);
+  if (activeChemical?.id === chemical.id) {
+    activeChemicalRecord = record;
+    renderIncidentCommandSnapshot();
+  }
   updateChemicalCard(record);
   if (chemicalIdResults) chemicalIdResults.hidden = false;
   const context = facilityName ? ` from ${facilityName}'s submitted inventory` : '';
@@ -1162,6 +1327,8 @@ async function clearThreatZones(message = '') {
     if (source) source.setData({ type: 'FeatureCollection', features: [] });
   }
   currentThreatZoneGeoJson = null;
+  activePlumeCommand = null;
+  renderIncidentCommandSnapshot();
   resetDemographics('No plume zone is currently displayed.');
   const legend = document.getElementById('plume-map-legend');
   if (legend) legend.hidden = true;
@@ -1426,9 +1593,31 @@ async function plotPlumeFromControls() {
 
     importedPlumeOverlay = null;
     const geojson = plumeResultToGeoJson(modeled.result, location);
-    const label = `${activeChemical.name} · operator-confirmed inputs · ${modeled.result.modelVersion}`;
+    const label = `${activeChemical.name} · operator-entered inputs · ${modeled.result.modelVersion}`;
     const rendered = await renderThreatZones(geojson, label);
     if (!rendered) throw new Error('The model did not return a displayable threshold polygon.');
+    const releaseQuantity = document.getElementById('plume-release-quantity')?.value;
+    const releaseUnit = document.getElementById('plume-release-unit')?.selectedOptions?.[0]?.textContent;
+    const releaseType = document.getElementById('plume-release-type')?.selectedOptions?.[0]?.textContent;
+    const windSpeed = document.getElementById('plume-wind-speed')?.value;
+    const windDirection = document.getElementById('plume-wind-direction')?.value;
+    const temperature = document.getElementById('plume-temperature')?.value;
+    const stability = document.getElementById('plume-stability-class')?.value;
+    const surface = document.getElementById('plume-surface-roughness')?.selectedOptions?.[0]?.textContent;
+    const thresholdKinds = [...new Set((modeled.result.thresholdsUsed || []).map((threshold) => threshold.kind))];
+    activePlumeCommand = {
+      title: `${activeChemical.name} plume plotted`,
+      summary: modeled.summary,
+      source: `Source: /api/plume/run · model ${modeled.result.modelVersion} · ${thresholdKinds.join('/') || 'no'} backend thresholds.`,
+      details: [
+        `Operator input: ${releaseType}, ${releaseQuantity} ${releaseUnit}`,
+        `Weather input: ${windSpeed} mph from ${windDirection}°; ${temperature}°F`,
+        `Operator input: stability ${stability}; surface ${surface}`,
+        `Computed: ${new Date(modeled.result.computedAt).toLocaleString()}`,
+        modeled.result.disclaimer,
+      ],
+    };
+    renderIncidentCommandSnapshot();
     setText('plume-input-status', `Plotted ${activeChemical.name}. Review the assumptions and modeled zones before operational use.`);
     setText('plume-live-status', `Plume plotted ${formatCentralZuluHtml()}.`);
   } catch (error) {
@@ -1544,6 +1733,13 @@ async function importModelOverlay(file) {
   const label = `Imported ALOHA / MARPLOT KML · ${file.name}`;
   importedPlumeOverlay = { geojson, label };
   await renderThreatZones(geojson, label);
+  activePlumeCommand = {
+    title: 'Imported plume overlay',
+    summary: file.name,
+    source: 'Source: operator-imported ALOHA / MARPLOT KML; not calculated by the HazMatIQ backend.',
+    details: [`Imported file: ${file.name}`, `Imported: ${new Date().toLocaleString()}`],
+  };
+  renderIncidentCommandSnapshot();
   setText('backend-model-summary', label);
 }
 
@@ -1553,6 +1749,13 @@ function openPlumeWorkspace() {
 }
 
 document.getElementById('open-plume-btn')?.addEventListener('click', openPlumeWorkspace);
+document.querySelectorAll('[data-command-view]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const target = button.dataset.commandView;
+    if (target === 'plume') openPlumeWorkspace();
+    else if (target) showView(target);
+  });
+});
 document.querySelectorAll('[data-view="plume"]').forEach((button) => {
   button.addEventListener('click', () => refreshPlumeWorkspace({ requestGps: true }));
 });

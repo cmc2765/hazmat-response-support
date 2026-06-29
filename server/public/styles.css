@@ -438,6 +438,128 @@ h1, h2, h3, p { margin-top: 0; }
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.incident-command-snapshot {
+  margin-bottom: 14px;
+  padding: 16px;
+  border: 2px solid #aeb5bc;
+  border-radius: 16px;
+  background: #f1f3f4;
+  box-shadow: 0 8px 20px rgba(17, 17, 17, 0.1);
+}
+
+.command-snapshot-heading,
+.command-status-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.command-snapshot-heading {
+  margin-bottom: 12px;
+}
+
+.command-snapshot-heading .eyebrow,
+.command-snapshot-heading h3 {
+  margin-bottom: 0;
+}
+
+.command-snapshot-provenance {
+  max-width: 560px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-align: right;
+}
+
+.command-snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.command-status-card {
+  display: grid;
+  grid-template-rows: auto auto minmax(40px, auto) auto auto;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #b7bdc3;
+  border-top: 5px solid #6c757d;
+  border-radius: 11px;
+  background: #fff;
+}
+
+.command-chemical-card { border-top-color: #d71920; }
+.command-plume-card { border-top-color: #d6b615; }
+.command-ppe-card { border-top-color: #168349; }
+
+.command-status-heading > span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.command-status-heading > strong {
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #e9ecef;
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.command-status-card h4,
+.command-status-card p {
+  margin: 0;
+}
+
+.command-data-source {
+  color: #5d646b;
+  font-size: 0.65rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.command-status-card h4 {
+  overflow-wrap: anywhere;
+  font-size: 1rem;
+}
+
+.command-status-card p {
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.command-status-card details {
+  border-top: 1px solid #d4d8dc;
+  padding-top: 7px;
+  font-size: 0.74rem;
+}
+
+.command-status-card summary {
+  cursor: pointer;
+  font-weight: 850;
+}
+
+.command-status-card ul {
+  display: grid;
+  gap: 5px;
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+.command-card-action {
+  align-self: end;
+  min-height: 36px;
+  padding: 7px 9px;
+  font-size: 0.75rem;
+  font-weight: 850;
+}
+
 .incident-layout {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
@@ -454,8 +576,8 @@ h1, h2, h3, p { margin-top: 0; }
 .incident-form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 14px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .incident-field {
@@ -474,13 +596,13 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .incident-field textarea {
-  min-height: 88px;
+  min-height: 64px;
   resize: vertical;
   font: inherit;
 }
 
 .incident-form-actions {
-  margin-top: 16px;
+  margin-top: 10px;
 }
 
 #incident-location-status {
@@ -488,6 +610,7 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .incident-input-card {
+  padding: 16px;
   border-color: rgba(52, 211, 153, 0.45);
   box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.18);
 }
@@ -511,8 +634,10 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .facility-information-heading .big-label {
-  max-width: 620px;
-  text-align: right;
+  flex: 1;
+  max-width: none;
+  font-weight: 900;
+  text-align: center;
 }
 
 .eplan-login-form {
@@ -1016,6 +1141,19 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 @media (max-width: 900px) {
+  .command-snapshot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .command-snapshot-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .command-snapshot-provenance {
+    text-align: left;
+  }
+
   .erg-page,
   .erg-quick-facts {
     grid-template-columns: 1fr;
@@ -1429,10 +1567,6 @@ h1, h2, h3, p { margin-top: 0; }
   .facility-information-heading {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .facility-information-heading .big-label {
-    text-align: left;
   }
 
   .eplan-login-form {

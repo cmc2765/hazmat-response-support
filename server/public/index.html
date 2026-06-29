@@ -168,12 +168,66 @@
               <button class="accent-btn" id="update-incident-location-btn" type="button">Update Scene</button>
             </div>
 
+            <section class="incident-command-snapshot" aria-labelledby="command-snapshot-title">
+              <div class="command-snapshot-heading">
+                <div>
+                  <p class="eyebrow">Live command picture</p>
+                  <h3 id="command-snapshot-title">Command Snapshot</h3>
+                </div>
+                <p class="command-snapshot-provenance">Backend records, model output, and operator-entered selections only.</p>
+              </div>
+              <div class="command-snapshot-grid">
+                <article class="command-status-card command-chemical-card">
+                  <div class="command-status-heading">
+                    <span>Chemical</span>
+                    <strong id="command-chemical-status">Awaiting ID</strong>
+                  </div>
+                  <h4 id="command-chemical-name">No chemical identified</h4>
+                  <p id="command-chemical-summary">Search Chemical ID to connect backend response data.</p>
+                  <small id="command-chemical-source" class="command-data-source">Source: none</small>
+                  <details>
+                    <summary>Source details</summary>
+                    <ul id="command-chemical-details"><li>No chemical data loaded.</li></ul>
+                  </details>
+                  <button class="ghost-btn command-card-action" type="button" data-command-view="lookup">Identify / Review</button>
+                </article>
+                <article class="command-status-card command-plume-card">
+                  <div class="command-status-heading">
+                    <span>Plume</span>
+                    <strong id="command-plume-status">Not plotted</strong>
+                  </div>
+                  <h4 id="command-plume-title">No active plume</h4>
+                  <p id="command-plume-summary">Confirm the release and weather inputs before plotting.</p>
+                  <small id="command-plume-source" class="command-data-source">Source: no model result</small>
+                  <details>
+                    <summary>Model details</summary>
+                    <ul id="command-plume-details"><li>No plume model has been plotted.</li></ul>
+                  </details>
+                  <button class="ghost-btn command-card-action" type="button" data-command-view="plume">Open Plume Model</button>
+                </article>
+                <article class="command-status-card command-ppe-card">
+                  <div class="command-status-heading">
+                    <span>PPE</span>
+                    <strong id="command-ppe-status">No selection</strong>
+                  </div>
+                  <h4 id="command-ppe-title">Awaiting chemical ID</h4>
+                  <p id="command-ppe-summary">Backend reference text and operator-entered PPE will appear here.</p>
+                  <small id="command-ppe-source" class="command-data-source">Source: no PPE record or operator entry</small>
+                  <details>
+                    <summary>Source comparison</summary>
+                    <ul id="command-ppe-details"><li>No PPE guidance loaded.</li></ul>
+                  </details>
+                  <button class="ghost-btn command-card-action" type="button" data-command-view="lookup">Review PPE Guidance</button>
+                </article>
+              </div>
+            </section>
+
             <div class="incident-layout">
               <article class="panel-card incident-input-card">
                 <div class="chemical-card-header">
                   <div>
                     <p class="eyebrow">Incident brief</p>
-                    <h3>Manual Incident Inputs</h3>
+                    <h3>Incident Details</h3>
                   </div>
                   <button class="ghost-btn" id="use-current-location-btn" type="button">Use Current GPS</button>
                 </div>
@@ -408,7 +462,7 @@
                   <li><span>Decon References</span><strong>[source values]</strong></li>
                 </ul>
                 <div class="action-box">
-                  <h4>Verified source references</h4>
+                  <h4>Source references</h4>
                   <ul id="chemical-source-list">
                     <li>ERG 2024: guide and initial isolation values</li>
                     <li>NIOSH Pocket Guide: IDLH and respiratory protection data</li>
