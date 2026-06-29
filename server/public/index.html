@@ -126,8 +126,74 @@
 
             <div class="incident-layout">
               <article class="panel-card incident-input-card">
-                <h3>Primary incident tiles</h3>
-                <p class="big-label">Tap a tile to move directly into the operational workflow for that task.</p>
+                <div class="chemical-card-header">
+                  <div>
+                    <p class="eyebrow">Incident brief</p>
+                    <h3>Manual Incident Inputs</h3>
+                  </div>
+                  <button class="ghost-btn" id="use-current-location-btn" type="button">Use Current GPS</button>
+                </div>
+                <p class="big-label">Enter the current location and product details directly for the incident brief.</p>
+                <div class="incident-form-grid">
+                  <label class="incident-field incident-field-wide" for="incident-address-input">
+                    <span>Address or location description</span>
+                    <input id="incident-address-input" type="text" placeholder="Street address, highway marker, or facility" autocomplete="street-address" />
+                  </label>
+                  <label class="incident-field" for="incident-city">
+                    <span>City</span>
+                    <input id="incident-city" type="text" placeholder="City" autocomplete="address-level2" />
+                  </label>
+                  <label class="incident-field" for="incident-state">
+                    <span>State</span>
+                    <input id="incident-state" type="text" placeholder="State" autocomplete="address-level1" maxlength="2" />
+                  </label>
+                  <label class="incident-field incident-field-wide" for="incident-coordinates-input">
+                    <span>GPS latitude, longitude</span>
+                    <input id="incident-coordinates-input" type="text" placeholder="33.5186, -86.8104" inputmode="decimal" />
+                  </label>
+                  <label class="incident-field incident-field-wide" for="incident-product">
+                    <span>Product / chemical</span>
+                    <input id="incident-product" type="text" placeholder="Known or suspected product" />
+                  </label>
+                  <label class="incident-field incident-field-wide" for="incident-placard">
+                    <span>Placard / container clue</span>
+                    <input id="incident-placard" type="text" placeholder="UN/NA number, placard, railcar, drum, or vessel" />
+                  </label>
+                  <label class="incident-field incident-field-wide" for="incident-notes">
+                    <span>Notes</span>
+                    <textarea id="incident-notes" rows="3" placeholder="Leak indicators, odor reports, access issues, or other scene notes"></textarea>
+                  </label>
+                </div>
+                <div class="button-row incident-form-actions">
+                  <button class="primary-btn" id="save-incident-brief-btn" type="button">Save Incident Brief</button>
+                  <button class="ghost-btn" id="clear-incident-brief-btn" type="button">Clear</button>
+                </div>
+                <p id="incident-location-status" class="muted" role="status" aria-live="polite">Enter incident details or use the device's current GPS location.</p>
+              </article>
+
+              <article class="panel-card tier2-card">
+                <h3>Tier II Lookup</h3>
+                <p class="big-label">Search by facility name, city, or state and review its submitted chemical inventory.</p>
+                <label class="input-label" for="tier2-search">Search facility</label>
+                <input id="tier2-search" type="search" placeholder="Facility, city, state, or address" />
+                <div class="button-row">
+                  <button class="primary-btn" id="tier2-search-btn" type="button">Search Facility</button>
+                  <button class="ghost-btn" id="tier2-reset-btn" type="button">Reset</button>
+                </div>
+                <div id="tier2-results" class="tier2-results"></div>
+                <div id="tier2-detail" class="tier2-detail"></div>
+              </article>
+
+              <article class="panel-card incident-workflow-card">
+                <div class="incident-workflow-heading">
+                  <div>
+                    <h3>Operational Workflow</h3>
+                    <p id="incident-focus-label" class="big-label">Identify the product and confirm the verified source before action.</p>
+                  </div>
+                  <div id="incident-focus-detail" class="incident-focus-detail">
+                    <strong>Active workflow:</strong> Chemical identification and reference review.
+                  </div>
+                </div>
                 <div class="incident-tiles" aria-label="Incident workflow tiles">
                   <button class="incident-task-btn active" type="button" data-task="identify" data-view="lookup">Identify</button>
                   <button class="incident-task-btn" type="button" data-task="erg" data-view="lookup">ERG</button>
@@ -139,35 +205,6 @@
                   <button class="incident-task-btn" type="button" data-task="evacuation" data-view="report">Evacuation</button>
                   <button class="incident-task-btn" type="button" data-task="ics" data-view="report">ICS Reports</button>
                 </div>
-              </article>
-
-              <article class="panel-card tier2-card">
-                <h3>Current focus</h3>
-                <p id="incident-focus-label" class="big-label">Identify the product and confirm the verified source before action.</p>
-                <div id="incident-focus-detail" class="incident-focus-detail">
-                  <strong>Active workflow:</strong> Chemical identification and reference review.
-                </div>
-              </article>
-
-              <article class="panel-card incident-location-card">
-                <div class="chemical-card-header">
-                  <div>
-                    <p class="eyebrow">Location source for modeling</p>
-                    <h3>Incident Location</h3>
-                  </div>
-                  <button class="ghost-btn" id="use-current-location-btn" type="button">Use Current GPS</button>
-                </div>
-                <div class="incident-location-fields">
-                  <label>
-                    <span>Incident address or location description</span>
-                    <input id="incident-address-input" type="text" placeholder="Enter the incident address or location" autocomplete="street-address" />
-                  </label>
-                  <label>
-                    <span>GPS latitude, longitude</span>
-                    <input id="incident-coordinates-input" type="text" placeholder="33.5186, -86.8104" inputmode="decimal" />
-                  </label>
-                </div>
-                <p id="incident-location-status" class="muted" role="status" aria-live="polite">Enter coordinates or use the device's current GPS location.</p>
               </article>
             </div>
           </section>

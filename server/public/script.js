@@ -177,6 +177,73 @@ incidentTaskButtons.forEach((button) => {
 
 setIncidentTask('identify');
 
+const incidentBriefStorageKey = 'hazmatiq.incidentBrief';
+const incidentBriefFieldIds = [
+  'incident-address-input',
+  'incident-city',
+  'incident-state',
+  'incident-coordinates-input',
+  'incident-product',
+  'incident-placard',
+  'incident-notes',
+];
+
+function getIncidentAddressValue() {
+  return ['incident-address-input', 'incident-city', 'incident-state']
+    .map((id) => document.getElementById(id)?.value.trim())
+    .filter(Boolean)
+    .join(', ');
+}
+
+function setIncidentStatus(message) {
+  const status = document.getElementById('incident-location-status');
+  if (status) status.textContent = message;
+}
+
+function readIncidentBrief() {
+  return Object.fromEntries(incidentBriefFieldIds.map((id) => [id, document.getElementById(id)?.value.trim() || '']));
+}
+
+function saveIncidentBrief({ quiet = false } = {}) {
+  const brief = readIncidentBrief();
+  try {
+    window.localStorage.setItem(incidentBriefStorageKey, JSON.stringify({ ...brief, savedAt: new Date().toISOString() }));
+    if (!quiet) setIncidentStatus('Incident brief saved on this device. Use Update Scene to refresh the map and live conditions.');
+  } catch {
+    if (!quiet) setIncidentStatus('This browser could not save the incident brief locally.');
+  }
+}
+
+function restoreIncidentBrief() {
+  try {
+    const brief = JSON.parse(window.localStorage.getItem(incidentBriefStorageKey) || 'null');
+    if (!brief) return;
+    incidentBriefFieldIds.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element && typeof brief[id] === 'string') element.value = brief[id];
+    });
+    setIncidentStatus('Saved incident brief restored from this device.');
+  } catch {
+    // Ignore missing or malformed local-only drafts.
+  }
+}
+
+document.getElementById('save-incident-brief-btn')?.addEventListener('click', () => saveIncidentBrief());
+document.getElementById('clear-incident-brief-btn')?.addEventListener('click', () => {
+  incidentBriefFieldIds.forEach((id) => {
+    const element = document.getElementById(id);
+    if (element) element.value = '';
+  });
+  try {
+    window.localStorage.removeItem(incidentBriefStorageKey);
+  } catch {
+    // The visible form can still be cleared if browser storage is unavailable.
+  }
+  setIncidentStatus('Incident brief cleared.');
+});
+
+restoreIncidentBrief();
+
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
     if (button.dataset.view) {
@@ -446,6 +513,8 @@ function clearChemicalSuggestions() {
 async function openChemical(chemical, facilityName = '') {
   if (activeChemical?.id !== chemical.id) importedPlumeOverlay = null;
   activeChemical = { id: chemical.id, name: chemical.name };
+  const incidentProductInput = document.getElementById('incident-product');
+  if (incidentProductInput) incidentProductInput.value = chemical.name || '';
   latestChemicalSearch += 1;
   window.clearTimeout(chemicalSearchTimer);
   setChemicalSearchStatus(`Loading ${chemical.name || 'chemical'}…`, 'loading');
@@ -833,7 +902,7 @@ async function getIncidentCoordinates({ requestGps = true } = {}) {
   const input = document.getElementById('incident-coordinates-input');
   const entered = parseGpsCoordinate(input?.value);
   if (entered) return { ...entered, source: 'Incident Dashboard' };
-  const address = document.getElementById('incident-address-input')?.value.trim();
+  const address = getIncidentAddressValue();
   if (address) {
     const query = new URLSearchParams({ name: address, count: '1', language: 'en', format: 'json' });
     const geocoded = await fetchJson(`https://geocoding-api.open-meteo.com/v1/search?${query}`);
@@ -949,11 +1018,14 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
     return;
   }
 
-  const address = document.getElementById('incident-address-input')?.value.trim() || 'Current GPS incident location';
+  const address = getIncidentAddressValue() || 'Current GPS incident location';
   setText('plume-incident-address', address);
   setText('plume-gps-summary', `${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}`);
   setText('plume-location-source', location.source);
-  setText('plume-product-summary', activeChemical ? `${activeChemical.name} · CAMEO record` : 'No chemical selected');
+  const manualProduct = document.getElementById('incident-product')?.value.trim();
+  setText('plume-product-summary', activeChemical
+    ? `${activeChemical.name} · CAMEO record`
+    : (manualProduct ? `${manualProduct} · manual incident entry` : 'No chemical selected'));
   setText('selected-model-summary', 'Plume Model');
 
   try {
@@ -1053,6 +1125,7 @@ document.getElementById('plume-overlay-import')?.addEventListener('change', asyn
 });
 document.getElementById('update-incident-location-btn')?.addEventListener('click', async () => {
   const status = document.getElementById('incident-location-status');
+  saveIncidentBrief({ quiet: true });
   if (status) status.textContent = 'Validating incident location…';
   const location = await getIncidentCoordinates({ requestGps: false });
   if (!location) {
@@ -1148,6 +1221,10 @@ if (tier2SearchButton && tier2SearchInput) {
     }
   });
 }
+document.getElementById('tier2-reset-btn')?.addEventListener('click', () => {
+  if (tier2SearchInput) tier2SearchInput.value = '';
+  renderTier2Results();
+});
 
 renderTier2Results();
 getDefaultChemicalRecord().then(updateChemicalCard);
