@@ -446,10 +446,83 @@
               <button class="ghost-btn" id="refresh-plume-data-btn" type="button">Refresh Location &amp; Weather</button>
             </div>
 
+            <form class="plume-model-controls" id="plume-model-form">
+              <div class="plume-model-controls-heading">
+                <div>
+                  <p class="eyebrow">Model inputs</p>
+                  <h3>Confirm Conditions Before Plotting</h3>
+                </div>
+                <p id="plume-input-status" class="muted" role="status" aria-live="polite">Select a chemical through Chemical ID to begin.</p>
+              </div>
+              <div class="plume-model-input-grid">
+                <label class="plume-model-field plume-chemical-field" for="plume-chemical-input">
+                  <span>Chemical</span>
+                  <div class="plume-linked-input">
+                    <input id="plume-chemical-input" type="text" value="No identified chemical" readonly aria-describedby="plume-input-status" />
+                    <button class="ghost-btn" id="change-plume-chemical-btn" type="button">Identify / Change</button>
+                  </div>
+                </label>
+                <label class="plume-model-field" for="plume-release-type">
+                  <span>Release type</span>
+                  <select id="plume-release-type">
+                    <option value="plume">Continuous release</option>
+                    <option value="puff">Instantaneous release</option>
+                  </select>
+                </label>
+                <label class="plume-model-field" for="plume-release-quantity">
+                  <span id="plume-release-quantity-label">Release rate</span>
+                  <div class="plume-quantity-input">
+                    <input id="plume-release-quantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Required" required />
+                    <select id="plume-release-unit" aria-label="Release quantity unit">
+                      <option value="lb-min">lb/min</option>
+                      <option value="lb-sec">lb/sec</option>
+                    </select>
+                  </div>
+                </label>
+                <label class="plume-model-field" for="plume-wind-speed">
+                  <span>Wind speed (mph)</span>
+                  <input id="plume-wind-speed" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Required" required />
+                </label>
+                <label class="plume-model-field" for="plume-wind-direction">
+                  <span>Wind from (degrees)</span>
+                  <input id="plume-wind-direction" type="number" min="0" max="360" step="1" inputmode="decimal" placeholder="0–360" required />
+                </label>
+                <label class="plume-model-field" for="plume-temperature">
+                  <span>Air temperature (°F)</span>
+                  <input id="plume-temperature" type="number" step="0.1" inputmode="decimal" placeholder="Required" required />
+                </label>
+                <label class="plume-model-field" for="plume-stability-class">
+                  <span>Stability class</span>
+                  <select id="plume-stability-class">
+                    <option value="A">A — very unstable</option>
+                    <option value="B">B — unstable</option>
+                    <option value="C">C — slightly unstable</option>
+                    <option value="D" selected>D — neutral</option>
+                    <option value="E">E — slightly stable</option>
+                    <option value="F">F — stable</option>
+                  </select>
+                </label>
+                <label class="plume-model-field" for="plume-surface-roughness">
+                  <span>Surface</span>
+                  <select id="plume-surface-roughness">
+                    <option value="rural">Open / rural</option>
+                    <option value="urban">Urban / obstructed</option>
+                  </select>
+                </label>
+              </div>
+              <div class="plume-model-actions">
+                <button class="ghost-btn" id="use-live-plume-weather-btn" type="button">Use Live Weather</button>
+                <button class="plume-plot-btn" id="plot-plume-btn" type="submit" disabled>Plot Plume</button>
+              </div>
+            </form>
+
             <div class="plume-import-row">
-              <label class="ghost-btn" for="plume-overlay-import">Import ALOHA / MARPLOT KML</label>
-              <input id="plume-overlay-import" class="sr-only" type="file" accept=".kml,application/vnd.google-earth.kml+xml" />
-              <span id="plume-overlay-status" class="muted">Backend plume zones display automatically.</span>
+              <span id="plume-overlay-status" class="muted">Confirm the model inputs, then select Plot Plume.</span>
+              <div class="plume-map-view-controls" role="group" aria-label="Plume map view">
+                <button class="ghost-btn active" type="button" data-plume-map-view="street" aria-pressed="true">Street Map</button>
+                <button class="ghost-btn" type="button" data-plume-map-view="satellite" aria-pressed="false">Satellite</button>
+                <button class="ghost-btn" type="button" data-plume-map-view="street-3d" aria-pressed="false">Street / 3D</button>
+              </div>
             </div>
 
             <article class="plume-full-map">

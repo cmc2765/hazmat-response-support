@@ -1122,6 +1122,119 @@ h1, h2, h3, p { margin-top: 0; }
   align-items: flex-end;
 }
 
+.plume-model-controls {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding: 16px;
+  border: 2px solid #b7bdc3;
+  border-radius: 14px;
+  background: #f5f6f7;
+  box-shadow: 0 5px 16px rgba(17, 17, 17, 0.1);
+}
+
+.plume-model-controls-heading,
+.plume-model-actions,
+.plume-linked-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.plume-model-controls-heading h3,
+.plume-model-controls-heading .eyebrow,
+.plume-model-controls-heading p {
+  margin: 0;
+}
+
+.plume-model-controls-heading #plume-input-status {
+  max-width: 520px;
+  text-align: right;
+}
+
+.plume-model-input-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.plume-model-field {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+}
+
+.plume-model-field > span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.plume-chemical-field {
+  grid-column: span 2;
+}
+
+.plume-linked-input input {
+  min-width: 0;
+  flex: 1;
+  font-weight: 800;
+}
+
+.plume-quantity-input {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.plume-quantity-input input {
+  min-width: 0;
+  border-radius: 8px 0 0 8px;
+}
+
+.plume-quantity-input select {
+  min-width: 88px;
+  border-left: 0;
+  border-radius: 0 8px 8px 0;
+  font-weight: 800;
+}
+
+.plume-linked-input .ghost-btn {
+  min-height: 43px;
+  padding: 8px 12px;
+  white-space: nowrap;
+}
+
+.plume-model-actions {
+  justify-content: flex-end;
+}
+
+.plume-plot-btn {
+  min-width: 180px;
+  min-height: 50px;
+  padding: 12px 22px;
+  border: 2px solid #8f0d12;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ed252c, #b70e16);
+  box-shadow: 0 5px 12px rgba(183, 14, 22, 0.25);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.plume-plot-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--yellow);
+}
+
+.plume-plot-btn:disabled {
+  box-shadow: none;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+  opacity: 0.55;
+}
+
 .plume-demographics {
   display: none;
 }
@@ -1262,13 +1375,27 @@ h1, h2, h3, p { margin-top: 0; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   margin-bottom: 12px;
 }
 
-.plume-import-row label {
+.plume-map-view-controls {
   display: inline-flex;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.plume-map-view-controls .ghost-btn {
+  min-height: 40px;
+  padding: 8px 12px;
+}
+
+.plume-map-view-controls .ghost-btn.active {
+  border-color: #a78900;
+  background: var(--yellow);
+  color: #1c1714;
+  font-weight: 800;
 }
 
 .plume-full-map {
@@ -1327,6 +1454,10 @@ h1, h2, h3, p { margin-top: 0; }
     grid-template-columns: 1fr;
   }
 
+  .plume-model-input-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .incident-field-wide {
     grid-column: auto;
   }
@@ -1334,6 +1465,32 @@ h1, h2, h3, p { margin-top: 0; }
   .plume-full-map .plume-map-frame {
     height: 560px;
     min-height: 560px;
+  }
+}
+
+@media (max-width: 620px) {
+  .plume-model-controls-heading,
+  .plume-model-actions,
+  .plume-linked-input {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .plume-model-controls-heading #plume-input-status {
+    text-align: left;
+  }
+
+  .plume-model-input-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .plume-chemical-field {
+    grid-column: auto;
+  }
+
+  .plume-model-actions button,
+  .plume-plot-btn {
+    width: 100%;
   }
 }
 

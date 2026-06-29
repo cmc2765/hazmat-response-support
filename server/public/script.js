@@ -239,6 +239,7 @@ document.getElementById('clear-incident-brief-btn')?.addEventListener('click', (
   } catch {
     // The visible form can still be cleared if browser storage is unavailable.
   }
+  setActiveChemical(null);
   setIncidentStatus('Incident brief cleared.');
 });
 
@@ -354,7 +355,7 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
     responderGuide,
     ergTable: hasGreenTable ? ergTable : null,
     dotClass: hazardClass.join(' / ') || 'N/A',
-    physicalState: physical.bp ? `Boiling point ${formatTempBoth(physical.bp)} (see physical data)` : 'Not modeled in this dataset',
+    physicalState: physical.bp ? `Boiling point ${formatTempFahrenheit(physical.bp)} (see physical data)` : 'Not modeled in this dataset',
     idlh: exposureLimits.idlh || 'Not in NIOSH dataset',
     aeGL: formatThresholdGroup(thresholdRows, 'AEGL'),
     erpg: formatThresholdGroup(thresholdRows, 'ERPG'),
@@ -370,11 +371,11 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
       ['Protective Action', protectiveAction],
       ['Formula', npg?.formula || 'N/A'],
       ['Molecular Weight', chem.molecularWeight ? `${chem.molecularWeight} g/mol` : (physical.mw ? `${physical.mw} g/mol` : 'N/A')],
-      ['Melting Point', physical.mp ? formatTempBoth(physical.mp) : 'N/A'],
-      ['Boiling Point', physical.bp ? formatTempBoth(physical.bp) : 'N/A'],
-      ['Vapor Pressure', physical.vpMmHg ? `${formatTempBoth(physical.vpMmHg)} mmHg` : 'N/A'],
-      ['Specific Gravity', physical.sg ? formatTempBoth(physical.sg) : 'N/A'],
-      ['Flash Point', physical.flPt ? formatTempBoth(physical.flPt) : 'N/A'],
+      ['Melting Point', physical.mp ? formatTempFahrenheit(physical.mp) : 'N/A'],
+      ['Boiling Point', physical.bp ? formatTempFahrenheit(physical.bp) : 'N/A'],
+      ['Vapor Pressure', physical.vpMmHg ? `${formatTempFahrenheit(physical.vpMmHg)} mmHg` : 'N/A'],
+      ['Specific Gravity', physical.sg ? formatTempFahrenheit(physical.sg) : 'N/A'],
+      ['Flash Point', physical.flPt ? formatTempFahrenheit(physical.flPt) : 'N/A'],
       ['LEL / UEL', (physical.lel || physical.uel) ? `${physical.lel || '—'} / ${physical.uel || '—'}` : 'N/A'],
       ['NIOSH REL', exposureLimits.rel || 'N/A'],
       ['OSHA PEL', exposureLimits.pel || 'N/A'],
@@ -496,6 +497,59 @@ const facilityInventory = document.getElementById('facility-inventory');
 let chemicalSearchTimer = null;
 let latestChemicalSearch = 0;
 let activeChemical = null;
+const selectedChemicalStorageKey = 'hazmatiq.selectedChemical';
+
+function syncPlumeChemicalSelection() {
+  const plumeChemicalInput = document.getElementById('plume-chemical-input');
+  const plotButton = document.getElementById('plot-plume-btn');
+  if (plumeChemicalInput) plumeChemicalInput.value = activeChemical?.name || 'No identified chemical';
+  if (plotButton) plotButton.disabled = !activeChemical;
+  if (!activeChemical) {
+    setText('plume-input-status', 'Select a chemical through Chemical ID to begin.');
+  } else {
+    setText('plume-input-status', `${activeChemical.name} is linked from the active incident. Confirm the release and weather inputs.`);
+  }
+}
+
+function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {}) {
+  const changed = activeChemical?.id !== chemical?.id;
+  activeChemical = chemical ? { id: chemical.id, name: chemical.name } : null;
+  const incidentProductInput = document.getElementById('incident-product');
+  if (incidentProductInput) incidentProductInput.value = activeChemical?.name || '';
+  if (persist) {
+    try {
+      if (activeChemical) window.localStorage.setItem(selectedChemicalStorageKey, JSON.stringify(activeChemical));
+      else window.localStorage.removeItem(selectedChemicalStorageKey);
+    } catch {
+      // Chemical selection remains available for the current session.
+    }
+  }
+  if (changed && clearOverlay) {
+    importedPlumeOverlay = null;
+    void clearThreatZones(activeChemical
+      ? 'Chemical changed. Confirm inputs and select Plot Plume.'
+      : 'Identify a chemical before plotting a plume.');
+    setText('backend-model-summary', 'Awaiting confirmed model inputs');
+  }
+  syncPlumeChemicalSelection();
+}
+
+async function restoreSelectedChemical() {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(selectedChemicalStorageKey) || 'null');
+    if (!saved?.id) {
+      syncPlumeChemicalSelection();
+      return;
+    }
+    const chemical = await fetchJson(`/api/chemicals/${encodeURIComponent(saved.id)}`);
+    if (chemical && !chemical.error) setActiveChemical(chemical, { persist: false, clearOverlay: false });
+    else syncPlumeChemicalSelection();
+  } catch {
+    syncPlumeChemicalSelection();
+  }
+}
+
+void restoreSelectedChemical();
 
 function setChemicalSearchStatus(message, state = '') {
   if (!chemicalSearchStatus) return;
@@ -511,10 +565,7 @@ function clearChemicalSuggestions() {
 }
 
 async function openChemical(chemical, facilityName = '') {
-  if (activeChemical?.id !== chemical.id) importedPlumeOverlay = null;
-  activeChemical = { id: chemical.id, name: chemical.name };
-  const incidentProductInput = document.getElementById('incident-product');
-  if (incidentProductInput) incidentProductInput.value = chemical.name || '';
+  setActiveChemical(chemical);
   latestChemicalSearch += 1;
   window.clearTimeout(chemicalSearchTimer);
   setChemicalSearchStatus(`Loading ${chemical.name || 'chemical'}…`, 'loading');
@@ -701,9 +752,37 @@ let importedPlumeOverlay = null;
 let currentThreatZoneGeoJson = null;
 let threatZoneInteractionBound = false;
 let demographicsRequestToken = 0;
+let latestPlumeWeather = null;
 const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
+const satelliteMapStyle = {
+  version: 8,
+  sources: {
+    satellite: {
+      type: 'raster',
+      tiles: ['https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+      tileSize: 256,
+      attribution: 'Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+    },
+  },
+  layers: [{ id: 'satellite-basemap', type: 'raster', source: 'satellite' }],
+};
+const plumeMapViews = {
+  street: { style: plumeMapStyleUrl, styleKey: 'street', pitch: 0, bearing: 0 },
+  satellite: { style: satelliteMapStyle, styleKey: 'satellite', pitch: 0, bearing: 0 },
+  'street-3d': { style: plumeMapStyleUrl, styleKey: 'street', pitch: 60, bearing: -20, minZoom: 15 },
+};
+let activePlumeMapView = 'street';
+let activePlumeMapStyleKey = plumeMapViews.street.styleKey;
 const threatZoneColors = { 3: '#d71920', 2: '#ffd323', 1: '#18a567' };
 const threatZoneColorNames = { 3: 'red', 2: 'yellow', 1: 'green' };
+
+function updatePlumeMapViewButtons() {
+  document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
+    const isActive = button.dataset.plumeMapView === activePlumeMapView;
+    button.classList.toggle('active', isActive);
+    button.setAttribute('aria-pressed', String(isActive));
+  });
+}
 
 function updateIncidentLocationFromMap(lng, lat, action) {
   const input = document.getElementById('incident-coordinates-input');
@@ -716,11 +795,15 @@ function updateIncidentLocationFromMap(lng, lat, action) {
 function ensurePlumeMap(location) {
   if (!window.maplibregl) throw new Error('The local GIS map library did not load.');
   if (!plumeMap) {
+    const view = plumeMapViews[activePlumeMapView];
+    activePlumeMapStyleKey = view.styleKey;
     plumeMap = new window.maplibregl.Map({
       container: 'plume-gis-map',
       center: [location.lon, location.lat],
       zoom: 13,
-      style: plumeMapStyleUrl,
+      style: view.style,
+      pitch: view.pitch,
+      bearing: view.bearing,
     });
     plumeMap.addControl(new window.maplibregl.NavigationControl(), 'bottom-right');
     plumeMapReady = new Promise((resolve) => plumeMap.once('load', resolve));
@@ -779,9 +862,21 @@ function localMetersToLngLat([x, y], origin, windFromDeg) {
 }
 
 function plumeResultToGeoJson(result, origin) {
+  const validZones = (result?.isopleths || []).filter((zone) => zone.polygon?.length >= 3 && Number(zone.thresholdLevel) >= 1);
+  const thresholdKind = ['AEGL', 'ERPG', 'TEEL'].reduce((preferredKind, kind) => {
+    const levelCount = new Set(validZones.filter((zone) => zone.thresholdKind === kind).map((zone) => zone.thresholdLevel)).size;
+    const preferredLevelCount = new Set(validZones.filter((zone) => zone.thresholdKind === preferredKind).map((zone) => zone.thresholdLevel)).size;
+    return levelCount > preferredLevelCount ? kind : preferredKind;
+  }, 'AEGL');
+  const preferredZones = thresholdKind ? validZones.filter((zone) => zone.thresholdKind === thresholdKind) : validZones;
+  const uniqueZones = [...preferredZones.reduce((zonesByLevel, zone) => {
+    const threatRank = Math.max(1, Math.min(3, Number(zone.thresholdLevel) || 1));
+    if (!zonesByLevel.has(threatRank)) zonesByLevel.set(threatRank, zone);
+    return zonesByLevel;
+  }, new Map()).values()];
   return {
     type: 'FeatureCollection',
-    features: (result?.isopleths || []).filter((zone) => zone.polygon?.length >= 3).map((zone, index) => {
+    features: uniqueZones.map((zone, index) => {
       const coordinates = zone.polygon.map((point) => localMetersToLngLat(point, origin, result.inputs.windDirDeg));
       coordinates.push(coordinates[0]);
       const threatRank = Math.max(1, Math.min(3, Number(zone.thresholdLevel) || 1));
@@ -1041,6 +1136,30 @@ async function renderThreatZones(geojson, label) {
     }),
   };
   resetDemographics();
+  addThreatZoneLayers();
+  if (plumeMap.getLayer('hazmat-threat-zones-selection')) {
+    plumeMap.setFilter('hazmat-threat-zones-selection', ['==', ['get', 'zoneId'], '']);
+  }
+  if (!threatZoneInteractionBound) {
+    plumeMap.on('mouseenter', 'hazmat-threat-zones-fill', () => {
+      plumeMap.getCanvas().style.cursor = 'pointer';
+    });
+    plumeMap.on('mouseleave', 'hazmat-threat-zones-fill', () => {
+      plumeMap.getCanvas().style.cursor = 'crosshair';
+    });
+    threatZoneInteractionBound = true;
+  }
+  const bounds = new window.maplibregl.LngLatBounds();
+  forEachCoordinate(currentThreatZoneGeoJson, (coordinate) => bounds.extend(coordinate));
+  if (!bounds.isEmpty()) plumeMap.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 500 });
+  const legend = document.getElementById('plume-map-legend');
+  if (legend) legend.hidden = false;
+  setText('plume-overlay-status', label);
+  return true;
+}
+
+function addThreatZoneLayers() {
+  if (!plumeMap || !currentThreatZoneGeoJson) return;
   const source = plumeMap.getSource('hazmat-threat-zones');
   if (source) {
     source.setData(currentThreatZoneGeoJson);
@@ -1076,25 +1195,29 @@ async function renderThreatZones(geojson, label) {
       },
     });
   }
-  if (plumeMap.getLayer('hazmat-threat-zones-selection')) {
-    plumeMap.setFilter('hazmat-threat-zones-selection', ['==', ['get', 'zoneId'], '']);
+}
+
+async function setPlumeMapView(viewName) {
+  const view = plumeMapViews[viewName];
+  if (!view) return;
+  activePlumeMapView = viewName;
+  updatePlumeMapViewButtons();
+  if (!plumeMap) return;
+
+  if (activePlumeMapStyleKey !== view.styleKey) {
+    activePlumeMapStyleKey = view.styleKey;
+    plumeMapReady = new Promise((resolve) => plumeMap.once('style.load', resolve));
+    plumeMap.setStyle(view.style);
+    await plumeMapReady;
+  } else if (!plumeMap.isStyleLoaded()) {
+    await plumeMapReady;
   }
-  if (!threatZoneInteractionBound) {
-    plumeMap.on('mouseenter', 'hazmat-threat-zones-fill', () => {
-      plumeMap.getCanvas().style.cursor = 'pointer';
-    });
-    plumeMap.on('mouseleave', 'hazmat-threat-zones-fill', () => {
-      plumeMap.getCanvas().style.cursor = 'crosshair';
-    });
-    threatZoneInteractionBound = true;
-  }
-  const bounds = new window.maplibregl.LngLatBounds();
-  forEachCoordinate(currentThreatZoneGeoJson, (coordinate) => bounds.extend(coordinate));
-  if (!bounds.isEmpty()) plumeMap.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 500 });
-  const legend = document.getElementById('plume-map-legend');
-  if (legend) legend.hidden = false;
-  setText('plume-overlay-status', label);
-  return true;
+  if (activePlumeMapView !== viewName) return;
+  addThreatZoneLayers();
+
+  const camera = { pitch: view.pitch, bearing: view.bearing, duration: 500 };
+  if (view.minZoom) camera.zoom = Math.max(plumeMap.getZoom(), view.minZoom);
+  plumeMap.easeTo(camera);
 }
 
 async function clearThreatZones(message = '') {
@@ -1165,17 +1288,15 @@ function formatCentralZuluHtml(date = new Date()) {
   return `${central} <small class="unit-secondary">(${zulu})</small>`;
 }
 
-// NIOSH/NPG source strings mix °C (mp/bp/vp/sg) and °F (flash point) depending on field.
-// Always show °F first (the unit firefighters actually use) with °C alongside, smaller.
-function formatTempBoth(str) {
+// NIOSH/NPG source strings mix temperature units. Present temperatures in Fahrenheit.
+function formatTempFahrenheit(str) {
   if (!str) return str;
   return String(str).replace(/(−|-)?(\d+(?:\.\d+)?)\s*°\s*([CF])/g, (match, sign, digits, unit) => {
     const value = (sign === '−' || sign === '-' ? -1 : 1) * Number(digits);
     const isCelsius = unit.toUpperCase() === 'C';
-    const c = isCelsius ? value : ((value - 32) * 5) / 9;
     const f = isCelsius ? (value * 9) / 5 + 32 : value;
     const fmt = (n) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
-    return `${fmt(f)}°F <small class="unit-secondary">(${fmt(c)}°C)</small>`;
+    return `${fmt(f)}°F`;
   });
 }
 
@@ -1230,11 +1351,16 @@ async function fetchNwsObservation(lat, lon) {
 function formatOpenMeteo(data) {
   if (!data?.current) return null;
   const current = data.current;
+  const temperatureF = Number(current.temperature_2m);
+  const windSpeedMph = Number(current.wind_speed_10m);
+  const pressureInHg = Number(current.surface_pressure) * 0.0295299830714;
   return {
     location: `${Number(data.latitude).toFixed(4)}, ${Number(data.longitude).toFixed(4)} · ${Math.round(Number(data.elevation) * 3.28084).toLocaleString()} ft · ${data.timezone || 'local time'}`,
-    conditions: `${current.temperature_2m}°F · RH ${current.relative_humidity_2m}% · Wind ${current.wind_speed_10m} mph ${degreesToCompass(current.wind_direction_10m)} · Gust ${current.wind_gusts_10m} mph · Pressure ${current.surface_pressure} hPa`,
-    temperatureC: (Number(current.temperature_2m) - 32) * (5 / 9),
-    windSpeedMps: Number(current.wind_speed_10m) * 0.44704,
+    conditions: `${current.temperature_2m}°F · RH ${current.relative_humidity_2m}% · Wind ${current.wind_speed_10m} mph ${degreesToCompass(current.wind_direction_10m)} · Gust ${current.wind_gusts_10m} mph · Pressure ${pressureInHg.toFixed(2)} inHg`,
+    temperatureF,
+    temperatureC: (temperatureF - 32) * (5 / 9),
+    windSpeedMph,
+    windSpeedMps: windSpeedMph * 0.44704,
     windDirDeg: Number(current.wind_direction_10m),
   };
 }
@@ -1252,25 +1378,88 @@ function formatNws(data) {
   };
 }
 
-async function runBackendPlume(openMeteo) {
-  if (!activeChemical) return { summary: 'Select a CAMEO chemical before running the plume model.', result: null };
-  if (!openMeteo) return { summary: 'Live weather is unavailable; the plume model was not run.', result: null };
+function setPlumeInputValue(id, value) {
+  const input = document.getElementById(id);
+  if (input && Number.isFinite(Number(value))) input.value = String(value);
+}
+
+function applyLiveWeatherToPlumeInputs(weather) {
+  if (!weather) return false;
+  setPlumeInputValue('plume-wind-speed', Number(weather.windSpeedMph).toFixed(1));
+  setPlumeInputValue('plume-wind-direction', Math.round(weather.windDirDeg));
+  setPlumeInputValue('plume-temperature', Number(weather.temperatureF).toFixed(1));
+  setText('plume-input-status', `Live weather loaded for ${activeChemical?.name || 'the incident'}. Confirm all inputs before plotting.`);
+  return true;
+}
+
+function updatePlumeReleaseQuantityLabel() {
+  const releaseKind = document.getElementById('plume-release-type')?.value;
+  const unitSelect = document.getElementById('plume-release-unit');
+  setText('plume-release-quantity-label', releaseKind === 'puff' ? 'Total released mass' : 'Release rate');
+  if (!unitSelect) return;
+  const units = releaseKind === 'puff'
+    ? [['lb', 'lb']]
+    : [['lb-min', 'lb/min'], ['lb-sec', 'lb/sec']];
+  unitSelect.replaceChildren(...units.map(([value, label]) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = label;
+    return option;
+  }));
+}
+
+function readPlumeModelInputs(location) {
+  if (!activeChemical) throw new Error('Identify a chemical through Chemical ID before plotting.');
+  const releaseKind = document.getElementById('plume-release-type')?.value;
+  const releaseQuantity = Number(document.getElementById('plume-release-quantity')?.value);
+  const releaseUnit = document.getElementById('plume-release-unit')?.value;
+  const windSpeedMph = Number(document.getElementById('plume-wind-speed')?.value);
+  const windDirDeg = Number(document.getElementById('plume-wind-direction')?.value);
+  const temperatureF = Number(document.getElementById('plume-temperature')?.value);
+  const stabilityClass = document.getElementById('plume-stability-class')?.value;
+  const surfaceRoughness = document.getElementById('plume-surface-roughness')?.value;
+
+  if (!['plume', 'puff'].includes(releaseKind)) throw new Error('Select a valid release type.');
+  if (!Number.isFinite(releaseQuantity) || releaseQuantity <= 0) throw new Error('Enter a release quantity greater than zero.');
+  if (!Number.isFinite(windSpeedMph) || windSpeedMph <= 0) throw new Error('Enter a wind speed greater than zero.');
+  if (!Number.isFinite(windDirDeg) || windDirDeg < 0 || windDirDeg > 360) throw new Error('Enter the direction the wind is coming from, between 0 and 360 degrees.');
+  if (!Number.isFinite(temperatureF)) throw new Error('Enter the current air temperature.');
+
+  const releaseQuantityKg = releaseKind === 'puff'
+    ? releaseQuantity * 0.45359237
+    : releaseQuantity * ({ 'lb-min': 0.45359237 / 60, 'lb-sec': 0.45359237 }[releaseUnit] ?? 0.45359237 / 60);
+
+  return {
+    chemicalId: activeChemical.id,
+    releaseKind,
+    ...(releaseKind === 'puff' ? { totalMassKg: releaseQuantityKg } : { releaseRateKgPerSec: releaseQuantityKg }),
+    windSpeedMps: windSpeedMph * 0.44704,
+    windDirDeg,
+    stabilityClass,
+    surfaceRoughness,
+    tempC: (temperatureF - 32) * (5 / 9),
+    lat: location.lat,
+    lng: location.lon,
+  };
+}
+
+async function runBackendPlume(inputs) {
+  if (!activeChemical) return { summary: 'Identify a chemical before running the plume model.', result: null };
 
   try {
     const response = await fetch('/api/plume/run', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chemicalId: activeChemical.id,
-        releaseKind: 'plume',
-        windSpeedMps: Math.max(openMeteo.windSpeedMps, 0.1),
-        windDirDeg: openMeteo.windDirDeg,
-        stabilityClass: 'D',
-        tempC: openMeteo.temperatureC,
-      }),
+      body: JSON.stringify(inputs),
     });
-    if (!response.ok) return { summary: 'Backend plume model unavailable for the current inputs.', result: null };
-    const result = await response.json();
+    const result = await response.json().catch(() => null);
+    if (!response.ok) {
+      const detail = result?.error || 'Backend plume model unavailable for the current inputs.';
+      return { summary: detail, result: null };
+    }
+    if (!result?.isopleths?.some((item) => item.polygon?.length >= 3)) {
+      return { summary: 'No supported exposure thresholds were returned for this chemical.', result: null };
+    }
     const maxDownwindM = Math.max(0, ...(result.isopleths || []).map((item) => item.maxDownwindM));
     return {
       summary: `${Math.round(maxDownwindM * 3.28084).toLocaleString()} ft maximum modeled downwind extent · ${result.modelVersion}`,
@@ -1278,6 +1467,41 @@ async function runBackendPlume(openMeteo) {
     };
   } catch {
     return { summary: 'Backend plume model request failed.', result: null };
+  }
+}
+
+async function plotPlumeFromControls() {
+  const plotButton = document.getElementById('plot-plume-btn');
+  if (plotButton) plotButton.disabled = true;
+  setText('plume-input-status', 'Validating incident and model inputs…');
+  setText('plume-overlay-status', 'Calculating plume zones…');
+  try {
+    const location = await getIncidentCoordinates({ requestGps: true });
+    if (!location) throw new Error('Enter an incident location before plotting.');
+    await ensurePlumeMap(location);
+    const inputs = readPlumeModelInputs(location);
+    saveIncidentBrief({ quiet: true });
+    const modeled = await runBackendPlume(inputs);
+    setText('backend-model-summary', modeled.summary);
+    if (!modeled.result) {
+      await clearThreatZones(modeled.summary);
+      setText('plume-input-status', modeled.summary);
+      return;
+    }
+
+    importedPlumeOverlay = null;
+    const geojson = plumeResultToGeoJson(modeled.result, location);
+    const label = `${activeChemical.name} · operator-confirmed inputs · ${modeled.result.modelVersion}`;
+    const rendered = await renderThreatZones(geojson, label);
+    if (!rendered) throw new Error('The model did not return a displayable threshold polygon.');
+    setText('plume-input-status', `Plotted ${activeChemical.name}. Review the assumptions and modeled zones before operational use.`);
+    setText('plume-live-status', `Plume plotted ${formatCentralZuluHtml()}.`);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'The plume could not be plotted.';
+    setText('plume-input-status', message);
+    setText('plume-overlay-status', message);
+  } finally {
+    if (plotButton) plotButton.disabled = !activeChemical;
   }
 }
 
@@ -1332,20 +1556,18 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
 
   const weatherNotification = openMeteo?.conditions || nws?.conditions || 'Live weather unavailable';
   updateNotificationCenter({ weather: weatherNotification });
-  const modeled = await runBackendPlume(openMeteo);
-  setText('backend-model-summary', modeled.summary);
+  latestPlumeWeather = openMeteo;
+  if (openMeteo) applyLiveWeatherToPlumeInputs(openMeteo);
+  else setText('plume-input-status', 'Live weather is unavailable. Enter weather observations manually before plotting.');
+  setText('backend-model-summary', 'Awaiting Plot Plume');
   const imported = importedPlumeOverlay;
   if (imported) {
     await renderThreatZones(imported.geojson, imported.label);
-  } else if (modeled.result) {
-    const geojson = plumeResultToGeoJson(modeled.result, location);
-    const rendered = await renderThreatZones(geojson, `HazMatIQ backend zones · ${modeled.result.modelVersion}`);
-    if (!rendered) await clearThreatZones('No threshold polygon was returned for this chemical.');
   } else {
-    await clearThreatZones('No backend or imported ALOHA/MARPLOT plume overlay is available.');
+    await clearThreatZones('Confirm the model inputs, then select Plot Plume.');
   }
   if (token !== plumeRefreshToken) return;
-  if (status) status.innerHTML = `Live incident data updated ${formatCentralZuluHtml()}.`;
+  if (status) status.innerHTML = `Location and weather updated ${formatCentralZuluHtml()}.`;
 }
 
 function kmlToGeoJson(kmlText) {
@@ -1401,6 +1623,27 @@ document.querySelectorAll('[data-view="plume"]').forEach((button) => {
 });
 
 document.getElementById('refresh-plume-data-btn')?.addEventListener('click', () => refreshPlumeWorkspace({ requestGps: true }));
+document.getElementById('change-plume-chemical-btn')?.addEventListener('click', () => {
+  showView('lookup');
+  chemicalSearchInput?.focus();
+  chemicalSearchInput?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+document.getElementById('plume-release-type')?.addEventListener('change', updatePlumeReleaseQuantityLabel);
+document.getElementById('use-live-plume-weather-btn')?.addEventListener('click', async () => {
+  if (latestPlumeWeather) {
+    applyLiveWeatherToPlumeInputs(latestPlumeWeather);
+    return;
+  }
+  await refreshPlumeWorkspace({ requestGps: true });
+});
+document.getElementById('plume-model-form')?.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  await plotPlumeFromControls();
+});
+updatePlumeReleaseQuantityLabel();
+document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
+  button.addEventListener('click', () => setPlumeMapView(button.dataset.plumeMapView));
+});
 document.getElementById('plume-overlay-import')?.addEventListener('change', async (event) => {
   const file = event.target.files?.[0];
   if (!file) return;
