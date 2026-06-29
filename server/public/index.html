@@ -215,7 +215,14 @@
                 <p id="incident-location-status" class="muted" role="status" aria-live="polite">Enter incident details or use the device's current GPS location.</p>
               </article>
 
-              <article class="panel-card tier2-card eplan-login-card">
+              <article class="panel-card tier2-card facility-information-card">
+                <div class="facility-information-heading">
+                  <div>
+                    <p class="eyebrow">Facility records</p>
+                    <h3>Facility Information</h3>
+                  </div>
+                  <p class="big-label">Sign in to E-Plan to review facility submissions, inventories, and emergency contacts.</p>
+                </div>
                 <form
                   class="eplan-login-form"
                   action="https://erplan.net/eplan/login.htm"
@@ -240,29 +247,6 @@
                   </label>
                   <button class="primary-btn" type="submit">Login to E-Plan</button>
                 </form>
-              </article>
-
-              <article class="panel-card incident-workflow-card">
-                <div class="incident-workflow-heading">
-                  <div>
-                    <h3>Operational Workflow</h3>
-                    <p id="incident-focus-label" class="big-label">Identify the product and confirm the verified source before action.</p>
-                  </div>
-                  <div id="incident-focus-detail" class="incident-focus-detail">
-                    <strong>Active workflow:</strong> Chemical identification and reference review.
-                  </div>
-                </div>
-                <div class="incident-tiles" aria-label="Incident workflow tiles">
-                  <button class="incident-task-btn active" type="button" data-task="identify" data-view="lookup">Identify</button>
-                  <button class="incident-task-btn" type="button" data-task="erg" data-view="lookup">ERG</button>
-                  <button class="incident-task-btn" type="button" data-task="plume" data-view="plume">Plume</button>
-                  <button class="incident-task-btn" type="button" data-task="zones" data-view="plume">Zones</button>
-                  <button class="incident-task-btn" type="button" data-task="entry" data-view="map">Entry</button>
-                  <button class="incident-task-btn" type="button" data-task="decon" data-view="map">Decon</button>
-                  <button class="incident-task-btn" type="button" data-task="monitoring" data-view="map">Monitoring</button>
-                  <button class="incident-task-btn" type="button" data-task="evacuation" data-view="report">Evacuation</button>
-                  <button class="incident-task-btn" type="button" data-task="ics" data-view="report">ICS Reports</button>
-                </div>
               </article>
             </div>
           </section>

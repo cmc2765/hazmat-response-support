@@ -445,7 +445,8 @@ h1, h2, h3, p { margin-top: 0; }
   align-items: start;
 }
 
-.incident-workflow-card {
+.incident-input-card,
+.facility-information-card {
   grid-column: 1 / -1;
   min-height: 0;
 }
@@ -495,24 +496,38 @@ h1, h2, h3, p { margin-top: 0; }
   border-color: rgba(25, 184, 255, 0.35);
 }
 
-.eplan-login-card {
-  display: grid;
-  place-items: center;
-  min-height: 430px;
+.facility-information-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.facility-information-heading .eyebrow,
+.facility-information-heading h3,
+.facility-information-heading p {
+  margin-bottom: 0;
+}
+
+.facility-information-heading .big-label {
+  max-width: 620px;
+  text-align: right;
 }
 
 .eplan-login-form {
   display: grid;
-  gap: 14px;
-  width: min(100%, 360px);
-  justify-items: stretch;
+  grid-template-columns: minmax(150px, 0.65fr) repeat(2, minmax(180px, 1fr)) minmax(160px, 0.65fr);
+  gap: 16px;
+  width: 100%;
+  align-items: end;
 }
 
 .eplan-logo {
   display: block;
   width: min(100%, 230px);
   height: auto;
-  margin: 0 auto 10px;
+  margin: 0;
   padding: 10px;
   border-radius: 10px;
   background: #fff;
@@ -527,54 +542,12 @@ h1, h2, h3, p { margin-top: 0; }
   color: var(--muted);
   font-size: 0.84rem;
   font-weight: 800;
-  text-align: center;
+  text-align: left;
 }
 
 .eplan-login-form .primary-btn {
   width: 100%;
   margin-top: 4px;
-}
-
-.incident-workflow-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
-  gap: 18px;
-  align-items: start;
-}
-
-.incident-tiles {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 14px;
-}
-
-.incident-task-btn {
-  min-height: 72px;
-  border: 1px solid rgba(25, 184, 255, 0.3);
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(25, 184, 255, 0.16), rgba(16, 27, 44, 0.95));
-  color: var(--text);
-  font-weight: 700;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-}
-
-.incident-task-btn.active {
-  background: linear-gradient(135deg, var(--accent), rgba(25, 184, 255, 0.45));
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px rgba(255, 138, 0, 0.2);
-}
-
-.incident-focus-detail {
-  margin-top: 12px;
-  padding: 14px;
-  border-radius: 12px;
-  background: rgba(25, 184, 255, 0.12);
-  border: 1px solid rgba(25, 184, 255, 0.25);
-  line-height: 1.6;
 }
 
 .tier2-results,
@@ -1449,9 +1422,26 @@ h1, h2, h3, p { margin-top: 0; }
 .plume-map-legend .zone-green { background: #18a567; }
 
 @media (max-width: 900px) {
-  .incident-form-grid,
-  .incident-workflow-heading {
+  .incident-form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .facility-information-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .facility-information-heading .big-label {
+    text-align: left;
+  }
+
+  .eplan-login-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .eplan-logo,
+  .eplan-login-form .primary-btn {
+    grid-column: 1 / -1;
   }
 
   .plume-model-input-grid {
@@ -1478,6 +1468,15 @@ h1, h2, h3, p { margin-top: 0; }
 
   .plume-model-controls-heading #plume-input-status {
     text-align: left;
+  }
+
+  .eplan-login-form {
+    grid-template-columns: 1fr;
+  }
+
+  .eplan-logo,
+  .eplan-login-form .primary-btn {
+    grid-column: auto;
   }
 
   .plume-model-input-grid {
@@ -1790,18 +1789,6 @@ input, select, textarea {
   box-shadow: inset 0 0 0 1px rgba(255, 211, 35, 0.08);
 }
 
-.incident-task-btn {
-  border-color: rgba(255, 211, 35, 0.38);
-  background: linear-gradient(135deg, rgba(227, 32, 39, 0.14), rgba(48, 40, 35, 0.96));
-}
-
-.incident-task-btn.active {
-  background: linear-gradient(135deg, var(--red), #9f1219);
-  border-color: var(--yellow);
-  box-shadow: 0 0 0 2px rgba(255, 211, 35, 0.12);
-}
-
-.incident-focus-detail,
 .tier2-detail {
   background: rgba(255, 211, 35, 0.08);
   border-color: rgba(255, 211, 35, 0.32);
@@ -1884,7 +1871,6 @@ button:focus-visible {
 .module-btn,
 .mode-card,
 .tier2-result-btn,
-.incident-task-btn,
 .legend-item,
 .map-marker {
   color: var(--text);
@@ -1892,7 +1878,6 @@ button:focus-visible {
 
 .primary-btn,
 .accent-btn,
-.incident-task-btn.active,
 .priority-btn,
 .console-btn {
   color: #fff;
@@ -1922,17 +1907,6 @@ button:focus-visible {
   background: #eef0f2;
 }
 
-.incident-task-btn {
-  background: linear-gradient(135deg, #f8f9fa, #e2e6e9);
-  border-color: #b5bbc1;
-}
-
-.incident-task-btn.active {
-  background: linear-gradient(135deg, var(--red), #9f1219);
-  border-color: #9f1219;
-}
-
-.incident-focus-detail,
 .tier2-detail {
   background: #fff8d6;
   border-color: #d8b819;
