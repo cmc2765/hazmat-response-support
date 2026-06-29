@@ -171,17 +171,31 @@
                 <p id="incident-location-status" class="muted" role="status" aria-live="polite">Enter incident details or use the device's current GPS location.</p>
               </article>
 
-              <article class="panel-card tier2-card">
-                <h3>Tier II Lookup</h3>
-                <p class="big-label">Search by facility name, city, or state and review its submitted chemical inventory.</p>
-                <label class="input-label" for="tier2-search">Search facility</label>
-                <input id="tier2-search" type="search" placeholder="Facility, city, state, or address" />
-                <div class="button-row">
-                  <button class="primary-btn" id="tier2-search-btn" type="button">Search Facility</button>
-                  <button class="ghost-btn" id="tier2-reset-btn" type="button">Reset</button>
-                </div>
-                <div id="tier2-results" class="tier2-results"></div>
-                <div id="tier2-detail" class="tier2-detail"></div>
+              <article class="panel-card tier2-card eplan-login-card">
+                <form
+                  class="eplan-login-form"
+                  action="https://erplan.net/eplan/login.htm"
+                  method="post"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="E-Plan first responder login"
+                >
+                  <img
+                    class="eplan-logo"
+                    src="https://erplan.net/eplan/media/eplanlogo.gif"
+                    alt="E-Plan"
+                    referrerpolicy="no-referrer"
+                  />
+                  <label for="eplan-user-id">
+                    <span>Username</span>
+                    <input id="eplan-user-id" name="userID" type="text" autocomplete="username" required />
+                  </label>
+                  <label for="eplan-password">
+                    <span>Password</span>
+                    <input id="eplan-password" name="password" type="password" autocomplete="current-password" required />
+                  </label>
+                  <button class="primary-btn" type="submit">Login to E-Plan</button>
+                </form>
               </article>
 
               <article class="panel-card incident-workflow-card">

@@ -495,6 +495,46 @@ h1, h2, h3, p { margin-top: 0; }
   border-color: rgba(25, 184, 255, 0.35);
 }
 
+.eplan-login-card {
+  display: grid;
+  place-items: center;
+  min-height: 430px;
+}
+
+.eplan-login-form {
+  display: grid;
+  gap: 14px;
+  width: min(100%, 360px);
+  justify-items: stretch;
+}
+
+.eplan-logo {
+  display: block;
+  width: min(100%, 230px);
+  height: auto;
+  margin: 0 auto 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.eplan-login-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.eplan-login-form label > span {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.eplan-login-form .primary-btn {
+  width: 100%;
+  margin-top: 4px;
+}
+
 .incident-workflow-heading {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
