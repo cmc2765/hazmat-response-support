@@ -698,7 +698,12 @@ let plumeMap = null;
 let plumeMapReady = null;
 let plumeSourceMarker = null;
 let importedPlumeOverlay = null;
+let currentThreatZoneGeoJson = null;
+let threatZoneInteractionBound = false;
+let demographicsRequestToken = 0;
 const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
+const threatZoneColors = { 3: '#d71920', 2: '#ffd323', 1: '#18a567' };
+const threatZoneColorNames = { 3: 'red', 2: 'yellow', 1: 'green' };
 
 function updateIncidentLocationFromMap(lng, lat, action) {
   const input = document.getElementById('incident-coordinates-input');
@@ -721,6 +726,17 @@ function ensurePlumeMap(location) {
     plumeMapReady = new Promise((resolve) => plumeMap.once('load', resolve));
     plumeMap.getCanvas().style.cursor = 'crosshair';
     plumeMap.on('click', (event) => {
+      const renderedZones = plumeMap.getLayer('hazmat-threat-zones-fill')
+        ? plumeMap.queryRenderedFeatures(event.point, { layers: ['hazmat-threat-zones-fill'] })
+        : [];
+      if (renderedZones.length) {
+        const selected = [...renderedZones].sort((a, b) => Number(b.properties?.threatRank || 0) - Number(a.properties?.threatRank || 0))[0];
+        const sourceFeature = currentThreatZoneGeoJson?.features.find(
+          (feature) => String(feature.properties?.zoneId) === String(selected.properties?.zoneId),
+        ) || selected;
+        inspectThreatZone(sourceFeature);
+        return;
+      }
       const { lng, lat } = event.lngLat;
       updateIncidentLocationFromMap(lng, lat, 'Incident pin placed from map click');
     });
@@ -763,17 +779,24 @@ function localMetersToLngLat([x, y], origin, windFromDeg) {
 }
 
 function plumeResultToGeoJson(result, origin) {
-  const colors = { 3: '#d71920', 2: '#f58220', 1: '#ffd323', 0: '#34d399' };
   return {
     type: 'FeatureCollection',
-    features: (result?.isopleths || []).filter((zone) => zone.polygon?.length >= 3).map((zone) => {
+    features: (result?.isopleths || []).filter((zone) => zone.polygon?.length >= 3).map((zone, index) => {
       const coordinates = zone.polygon.map((point) => localMetersToLngLat(point, origin, result.inputs.windDirDeg));
       coordinates.push(coordinates[0]);
+      const threatRank = Math.max(1, Math.min(3, Number(zone.thresholdLevel) || 1));
       return {
         type: 'Feature',
+        id: index,
         properties: {
           label: `${zone.thresholdKind}-${zone.thresholdLevel}`,
-          color: colors[zone.thresholdLevel] || '#5aa9ff',
+          zoneId: `modeled-${index}`,
+          source: 'HazMatIQ plume model using CAMEO chemical data',
+          thresholdKind: zone.thresholdKind,
+          thresholdLevel: zone.thresholdLevel,
+          threatRank,
+          colorName: threatZoneColorNames[threatRank],
+          color: threatZoneColors[threatRank],
           maxDownwindM: zone.maxDownwindM,
         },
         geometry: { type: 'Polygon', coordinates: [coordinates] },
@@ -790,21 +813,257 @@ function forEachCoordinate(geojson, callback) {
   (geojson?.features || []).forEach((feature) => visit(feature.geometry?.coordinates));
 }
 
+function getThreatZoneRing(feature) {
+  const geometry = feature?.geometry;
+  if (geometry?.type === 'Polygon') return geometry.coordinates?.[0] || [];
+  if (geometry?.type === 'MultiPolygon') {
+    return [...(geometry.coordinates || [])]
+      .map((polygon) => polygon?.[0] || [])
+      .sort((a, b) => b.length - a.length)[0] || [];
+  }
+  return [];
+}
+
+function sampleClosedRing(ring, maxPoints = 70) {
+  if (ring.length <= maxPoints) return ring;
+  const step = Math.ceil((ring.length - 1) / (maxPoints - 1));
+  const sampled = ring.slice(0, -1).filter((_, index) => index % step === 0);
+  sampled.push(sampled[0]);
+  return sampled;
+}
+
+async function fetchExternalJson(url, options = {}, timeoutMs = 25000) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, { ...options, signal: controller.signal });
+    if (!response.ok) throw new Error(`Request failed (${response.status})`);
+    return await response.json();
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
+async function fetchCensusZoneStats(ring) {
+  const geometry = JSON.stringify({ rings: [sampleClosedRing(ring)] });
+  const statistics = JSON.stringify([
+    { statisticType: 'sum', onStatisticField: 'POP100', outStatisticFieldName: 'population' },
+    { statisticType: 'sum', onStatisticField: 'HU100', outStatisticFieldName: 'housing' },
+    { statisticType: 'count', onStatisticField: 'OBJECTID', outStatisticFieldName: 'blocks' },
+  ]);
+  const parameters = new URLSearchParams({
+    f: 'json',
+    where: '1=1',
+    geometry,
+    geometryType: 'esriGeometryPolygon',
+    inSR: '4326',
+    spatialRel: 'esriSpatialRelIntersects',
+    outStatistics: statistics,
+    returnGeometry: 'false',
+  });
+  const endpoint = 'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/10/query';
+  const data = await fetchExternalJson(`${endpoint}?${parameters}`);
+  if (data?.error) throw new Error(data.error.message || 'Census query failed');
+  const attributes = data?.features?.[0]?.attributes;
+  if (!attributes) throw new Error('No Census blocks returned');
+  return {
+    population: Number(attributes.population) || 0,
+    housing: Number(attributes.housing) || 0,
+    blocks: Number(attributes.blocks) || 0,
+  };
+}
+
+function getMappedFeatureName(element) {
+  return element?.tags?.name || element?.tags?.operator || element?.tags?.brand || '';
+}
+
+async function fetchMappedZoneOccupancies(ring) {
+  const polygon = sampleClosedRing(ring).map(([lon, lat]) => `${lat} ${lon}`).join(' ');
+  const query = `[out:json][timeout:25];(
+    nwr["building"~"^(house|residential|apartments|detached|semidetached_house|terrace|dormitory|commercial|retail|office|industrial|warehouse|hotel|school|hospital)$"](poly:"${polygon}");
+    nwr["building:use"~"^(residential|commercial|retail|office|industrial)$"](poly:"${polygon}");
+    nwr["amenity"~"^(school|kindergarten|childcare|college|university|hospital|clinic|doctors|nursing_home|social_facility|fire_station|police|community_centre|place_of_worship|shelter|prison)$"](poly:"${polygon}");
+    nwr["shop"](poly:"${polygon}");
+    nwr["office"](poly:"${polygon}");
+    nwr["tourism"="hotel"](poly:"${polygon}");
+    nwr["leisure"~"^(stadium|sports_centre)$"](poly:"${polygon}");
+  );out center tags;`;
+  const data = await fetchExternalJson('https://overpass-api.de/api/interpreter', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+    body: new URLSearchParams({ data: query }),
+  });
+  const elements = [...new Map((data?.elements || []).map((element) => [`${element.type}/${element.id}`, element])).values()];
+  const residentialBuildings = new Set(['house', 'residential', 'apartments', 'detached', 'semidetached_house', 'terrace', 'dormitory']);
+  const commercialBuildings = new Set(['commercial', 'retail', 'office', 'industrial', 'warehouse', 'hotel']);
+  const educationAmenities = new Set(['school', 'kindergarten', 'childcare', 'college', 'university']);
+  const medicalAmenities = new Set(['hospital', 'clinic', 'doctors', 'nursing_home', 'social_facility']);
+  const responseAmenities = new Set(['fire_station', 'police', 'shelter']);
+  const highOccupancyAmenities = new Set(['community_centre', 'place_of_worship', 'prison']);
+
+  const residential = elements.filter((element) => residentialBuildings.has(element.tags?.building)
+    || element.tags?.['building:use'] === 'residential');
+  const commercial = elements.filter((element) => commercialBuildings.has(element.tags?.building)
+    || commercialBuildings.has(element.tags?.['building:use']) || element.tags?.shop || element.tags?.office);
+  const education = elements.filter((element) => educationAmenities.has(element.tags?.amenity));
+  const medical = elements.filter((element) => medicalAmenities.has(element.tags?.amenity));
+  const response = elements.filter((element) => responseAmenities.has(element.tags?.amenity));
+  const highOccupancy = elements.filter((element) => highOccupancyAmenities.has(element.tags?.amenity)
+    || element.tags?.tourism === 'hotel' || ['stadium', 'sports_centre'].includes(element.tags?.leisure));
+
+  const describe = (label, rows) => {
+    if (!rows.length) return [];
+    const names = [...new Set(rows.map(getMappedFeatureName).filter(Boolean))].slice(0, 3);
+    return [`${label}: ${names.length ? names.join(', ') : `${rows.length} mapped site${rows.length === 1 ? '' : 's'}`}`];
+  };
+  return {
+    residential: residential.length,
+    commercial: commercial.length,
+    education: education.length,
+    medical: medical.length,
+    priorities: [
+      ...describe('Schools / daycare', education),
+      ...describe('Medical / care', medical),
+      ...describe('Fire / police / shelter', response),
+      ...describe('Other high-occupancy sites', highOccupancy),
+    ],
+  };
+}
+
+function setDemographicMetric(id, value) {
+  const element = document.getElementById(id);
+  if (element) element.textContent = value;
+}
+
+function resetDemographics(message = 'Click a red, yellow, or green plume zone to inspect potential exposures.') {
+  demographicsRequestToken += 1;
+  const badge = document.getElementById('demographics-zone-badge');
+  if (badge) {
+    badge.textContent = 'No zone';
+    delete badge.dataset.zoneColor;
+  }
+  setText('demographics-zone-summary', message);
+  ['population', 'housing', 'residential', 'commercial', 'schools', 'medical']
+    .forEach((metric) => setDemographicMetric(`demographics-${metric}`, '—'));
+  const list = document.getElementById('demographics-priority-list');
+  if (list) {
+    list.replaceChildren();
+    const item = document.createElement('li');
+    item.textContent = 'Select a plume zone to load nearby occupancies and sensitive sites.';
+    list.append(item);
+  }
+}
+
+function formatZoneDistance(meters) {
+  if (!Number.isFinite(Number(meters))) return '';
+  const feet = Number(meters) * 3.28084;
+  return feet >= 5280 ? `${(feet / 5280).toFixed(1)} mi downwind` : `${Math.round(feet).toLocaleString()} ft downwind`;
+}
+
+async function inspectThreatZone(feature) {
+  const ring = getThreatZoneRing(feature);
+  if (ring.length < 4) return;
+  const token = ++demographicsRequestToken;
+  const properties = feature.properties || {};
+  const colorName = properties.colorName || 'zone';
+  const badge = document.getElementById('demographics-zone-badge');
+  if (badge) {
+    badge.textContent = `${colorName.toUpperCase()} ZONE`;
+    badge.dataset.zoneColor = colorName;
+  }
+  const details = [properties.label, formatZoneDistance(properties.maxDownwindM), properties.source].filter(Boolean);
+  setText('demographics-zone-summary', details.join(' · '));
+  ['population', 'housing', 'residential', 'commercial', 'schools', 'medical']
+    .forEach((metric) => setDemographicMetric(`demographics-${metric}`, '…'));
+  setText('demographics-source-status', 'Loading U.S. Census and OpenStreetMap planning data…');
+  const list = document.getElementById('demographics-priority-list');
+  if (list) {
+    list.replaceChildren();
+    const item = document.createElement('li');
+    item.textContent = 'Loading sensitive sites and high-occupancy locations…';
+    list.append(item);
+  }
+  if (plumeMap?.getLayer('hazmat-threat-zones-selection')) {
+    plumeMap.setFilter('hazmat-threat-zones-selection', ['==', ['get', 'zoneId'], String(properties.zoneId)]);
+  }
+
+  const [censusResult, occupancyResult] = await Promise.allSettled([
+    fetchCensusZoneStats(ring),
+    fetchMappedZoneOccupancies(ring),
+  ]);
+  if (token !== demographicsRequestToken) return;
+
+  const census = censusResult.status === 'fulfilled' ? censusResult.value : null;
+  const occupancy = occupancyResult.status === 'fulfilled' ? occupancyResult.value : null;
+  setDemographicMetric('demographics-population', census ? census.population.toLocaleString() : 'Unavailable');
+  setDemographicMetric('demographics-housing', census ? census.housing.toLocaleString() : 'Unavailable');
+  setDemographicMetric('demographics-residential', occupancy ? occupancy.residential.toLocaleString() : 'Unavailable');
+  setDemographicMetric('demographics-commercial', occupancy ? occupancy.commercial.toLocaleString() : 'Unavailable');
+  setDemographicMetric('demographics-schools', occupancy ? occupancy.education.toLocaleString() : 'Unavailable');
+  setDemographicMetric('demographics-medical', occupancy ? occupancy.medical.toLocaleString() : 'Unavailable');
+
+  if (list) {
+    list.replaceChildren();
+    const priorities = occupancy?.priorities?.length
+      ? occupancy.priorities
+      : ['No mapped sensitive sites were returned; verify occupancies during reconnaissance.'];
+    priorities.forEach((priority) => {
+      const item = document.createElement('li');
+      item.textContent = priority;
+      list.append(item);
+    });
+  }
+  const sources = [
+    census ? `2020 Census: ${census.blocks} intersecting block${census.blocks === 1 ? '' : 's'} (planning upper bound)` : 'Census unavailable',
+    occupancy ? 'OpenStreetMap mapped features' : 'OpenStreetMap occupancy lookup unavailable',
+  ];
+  setText('demographics-source-status', `${sources.join(' · ')}. Verify current occupancy and evacuation counts through dispatch and field reconnaissance.`);
+}
+
 async function renderThreatZones(geojson, label) {
   if (!plumeMap || !geojson?.features?.length) return false;
   await plumeMapReady;
+  currentThreatZoneGeoJson = {
+    ...geojson,
+    features: geojson.features.map((feature, index) => {
+      const threatRank = Math.max(1, Math.min(3, Number(feature.properties?.threatRank) || (3 - Math.min(index, 2))));
+      return {
+        ...feature,
+        id: feature.id ?? index,
+        properties: {
+          ...feature.properties,
+          zoneId: String(feature.properties?.zoneId ?? `zone-${index}`),
+          threatRank,
+          colorName: feature.properties?.colorName || threatZoneColorNames[threatRank],
+          color: feature.properties?.color || threatZoneColors[threatRank],
+        },
+      };
+    }),
+  };
+  resetDemographics();
   const source = plumeMap.getSource('hazmat-threat-zones');
   if (source) {
-    source.setData(geojson);
+    source.setData(currentThreatZoneGeoJson);
   } else {
-    plumeMap.addSource('hazmat-threat-zones', { type: 'geojson', data: geojson });
+    plumeMap.addSource('hazmat-threat-zones', { type: 'geojson', data: currentThreatZoneGeoJson });
     plumeMap.addLayer({
       id: 'hazmat-threat-zones-fill',
       type: 'fill',
       source: 'hazmat-threat-zones',
       paint: {
         'fill-color': ['coalesce', ['get', 'color'], '#d71920'],
-        'fill-opacity': 0.34,
+        'fill-opacity': 0.08,
+      },
+    });
+    plumeMap.addLayer({
+      id: 'hazmat-threat-zones-selection',
+      type: 'line',
+      source: 'hazmat-threat-zones',
+      filter: ['==', ['get', 'zoneId'], ''],
+      paint: {
+        'line-color': ['coalesce', ['get', 'color'], '#d71920'],
+        'line-width': 8,
+        'line-opacity': 0.38,
       },
     });
     plumeMap.addLayer({
@@ -812,13 +1071,25 @@ async function renderThreatZones(geojson, label) {
       type: 'line',
       source: 'hazmat-threat-zones',
       paint: {
-        'line-color': ['coalesce', ['get', 'color'], '#8b0d13'],
-        'line-width': 3,
+        'line-color': ['coalesce', ['get', 'color'], '#d71920'],
+        'line-width': 4,
       },
     });
   }
+  if (plumeMap.getLayer('hazmat-threat-zones-selection')) {
+    plumeMap.setFilter('hazmat-threat-zones-selection', ['==', ['get', 'zoneId'], '']);
+  }
+  if (!threatZoneInteractionBound) {
+    plumeMap.on('mouseenter', 'hazmat-threat-zones-fill', () => {
+      plumeMap.getCanvas().style.cursor = 'pointer';
+    });
+    plumeMap.on('mouseleave', 'hazmat-threat-zones-fill', () => {
+      plumeMap.getCanvas().style.cursor = 'crosshair';
+    });
+    threatZoneInteractionBound = true;
+  }
   const bounds = new window.maplibregl.LngLatBounds();
-  forEachCoordinate(geojson, (coordinate) => bounds.extend(coordinate));
+  forEachCoordinate(currentThreatZoneGeoJson, (coordinate) => bounds.extend(coordinate));
   if (!bounds.isEmpty()) plumeMap.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 500 });
   const legend = document.getElementById('plume-map-legend');
   if (legend) legend.hidden = false;
@@ -832,6 +1103,8 @@ async function clearThreatZones(message = '') {
     const source = plumeMap.getSource('hazmat-threat-zones');
     if (source) source.setData({ type: 'FeatureCollection', features: [] });
   }
+  currentThreatZoneGeoJson = null;
+  resetDemographics('No plume zone is currently displayed.');
   const legend = document.getElementById('plume-map-legend');
   if (legend) legend.hidden = true;
   if (message) setText('plume-overlay-status', message);
@@ -1078,20 +1351,29 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
 function kmlToGeoJson(kmlText) {
   const xml = new DOMParser().parseFromString(kmlText, 'application/xml');
   if (xml.querySelector('parsererror')) throw new Error('The KML file could not be parsed.');
-  const colors = ['#ffd323', '#f58220', '#d71920'];
   const features = [...xml.querySelectorAll('Polygon')].map((polygon, index) => {
-    const zoneName = polygon.closest('Placemark')?.querySelector('name')?.textContent?.toLowerCase() || '';
-    const color = zoneName.includes('red') ? '#d71920'
-      : zoneName.includes('orange') ? '#f58220'
-        : zoneName.includes('yellow') ? '#ffd323'
-          : colors[index % colors.length];
+    const placemark = polygon.closest('Placemark');
+    const zoneLabel = placemark?.querySelector('name')?.textContent?.trim() || `Imported threat zone ${index + 1}`;
+    const zoneName = zoneLabel.toLowerCase();
+    const threatRank = zoneName.includes('red') ? 3
+      : zoneName.includes('orange') ? 2
+        : (zoneName.includes('yellow') || zoneName.includes('green')) ? 1
+          : Math.min(3, index + 1);
     const coordinateText = polygon.querySelector('outerBoundaryIs coordinates, coordinates')?.textContent || '';
     const ring = coordinateText.trim().split(/\s+/).map((tuple) => tuple.split(',').slice(0, 2).map(Number))
       .filter(([lon, lat]) => Number.isFinite(lon) && Number.isFinite(lat));
     if (ring.length >= 3 && (ring[0][0] !== ring.at(-1)[0] || ring[0][1] !== ring.at(-1)[1])) ring.push(ring[0]);
     return {
       type: 'Feature',
-      properties: { color, source: 'ALOHA / MARPLOT KML' },
+      id: index,
+      properties: {
+        zoneId: `imported-${index}`,
+        label: zoneLabel,
+        source: 'Imported ALOHA / MARPLOT KML',
+        threatRank,
+        colorName: threatZoneColorNames[threatRank],
+        color: threatZoneColors[threatRank],
+      },
       geometry: { type: 'Polygon', coordinates: [ring] },
     };
   }).filter((feature) => feature.geometry.coordinates[0].length >= 4);

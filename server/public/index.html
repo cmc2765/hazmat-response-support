@@ -73,6 +73,50 @@
             </nav>
           </div>
 
+          <section class="sidebar-card plume-demographics" id="plume-demographics" aria-labelledby="demographics-title">
+            <div class="demographics-heading">
+              <div>
+                <p class="eyebrow">Selected plume layer</p>
+                <h3 id="demographics-title">Demographics</h3>
+              </div>
+              <span class="status-pill" id="demographics-zone-badge">No zone</span>
+            </div>
+            <p id="demographics-zone-summary" class="demographics-summary">Click a red, yellow, or green plume zone to inspect potential exposures.</p>
+            <div class="demographics-grid" aria-live="polite">
+              <div class="demographic-stat">
+                <span>Population</span>
+                <strong id="demographics-population">—</strong>
+              </div>
+              <div class="demographic-stat">
+                <span>Housing units</span>
+                <strong id="demographics-housing">—</strong>
+              </div>
+              <div class="demographic-stat">
+                <span>Residential</span>
+                <strong id="demographics-residential">—</strong>
+              </div>
+              <div class="demographic-stat">
+                <span>Commercial</span>
+                <strong id="demographics-commercial">—</strong>
+              </div>
+              <div class="demographic-stat">
+                <span>Schools / daycare</span>
+                <strong id="demographics-schools">—</strong>
+              </div>
+              <div class="demographic-stat">
+                <span>Medical / care</span>
+                <strong id="demographics-medical">—</strong>
+              </div>
+            </div>
+            <div class="demographics-priorities">
+              <strong>Incident Commander priorities</strong>
+              <ul id="demographics-priority-list">
+                <li>Select a plume zone to load nearby occupancies and sensitive sites.</li>
+              </ul>
+            </div>
+            <p id="demographics-source-status" class="demographics-source-status">Population: U.S. Census 2020 intersecting blocks. Occupancies: OpenStreetMap mapped features.</p>
+          </section>
+
           <details class="sidebar-card plume-sidebar-data" id="plume-incident-data-panel">
             <summary>Incident Data</summary>
             <div class="plume-data-heading">
@@ -412,9 +456,9 @@
               <div id="plume-gis-map" class="plume-map-frame" role="application" aria-label="Interactive incident plume map"></div>
               <div class="plume-map-legend" id="plume-map-legend" hidden>
                 <strong>Threat zones</strong>
-                <span><i class="zone-red"></i> Level 3</span>
-                <span><i class="zone-orange"></i> Level 2</span>
-                <span><i class="zone-yellow"></i> Level 1</span>
+                <span><i class="zone-red"></i> Red · highest concern</span>
+                <span><i class="zone-yellow"></i> Yellow · serious concern</span>
+                <span><i class="zone-green"></i> Green · outer concern</span>
               </div>
             </article>
           </section>

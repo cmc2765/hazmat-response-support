@@ -1122,6 +1122,102 @@ h1, h2, h3, p { margin-top: 0; }
   align-items: flex-end;
 }
 
+.plume-demographics {
+  display: none;
+}
+
+.layout:has(#plume.active) .plume-demographics {
+  display: block;
+}
+
+.demographics-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.demographics-heading h3,
+.demographics-heading .eyebrow {
+  margin-bottom: 4px;
+}
+
+.demographics-summary {
+  margin: 8px 0 12px;
+  color: var(--text);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.demographics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.demographic-stat {
+  display: grid;
+  align-content: center;
+  min-height: 64px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--panel-2);
+  text-align: center;
+}
+
+.demographic-stat span {
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.demographic-stat strong {
+  margin-top: 3px;
+  font-size: 1rem;
+}
+
+.demographics-priorities {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 0.75rem;
+}
+
+.demographics-priorities ul {
+  display: grid;
+  gap: 5px;
+  margin: 7px 0 0;
+  padding-left: 18px;
+}
+
+.demographics-source-status {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.64rem;
+  line-height: 1.35;
+}
+
+#demographics-zone-badge[data-zone-color='red'] {
+  border-color: #d71920;
+  background: rgba(215, 25, 32, 0.16);
+  color: #ff777c;
+}
+
+#demographics-zone-badge[data-zone-color='yellow'] {
+  border-color: #d6b615;
+  background: rgba(255, 211, 35, 0.16);
+  color: #ffe36a;
+}
+
+#demographics-zone-badge[data-zone-color='green'] {
+  border-color: #16a36a;
+  background: rgba(22, 163, 106, 0.16);
+  color: #69e5ad;
+}
+
 .plume-sidebar-data {
   display: none;
   min-height: 0;
@@ -1222,8 +1318,8 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .plume-map-legend .zone-red { background: #d71920; }
-.plume-map-legend .zone-orange { background: #f58220; }
 .plume-map-legend .zone-yellow { background: #ffd323; }
+.plume-map-legend .zone-green { background: #18a567; }
 
 @media (max-width: 900px) {
   .incident-form-grid,
