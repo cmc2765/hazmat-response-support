@@ -698,6 +698,15 @@ let plumeMap = null;
 let plumeMapReady = null;
 let plumeSourceMarker = null;
 let importedPlumeOverlay = null;
+const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
+
+function updateIncidentLocationFromMap(lng, lat, action) {
+  const input = document.getElementById('incident-coordinates-input');
+  if (input) input.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+  setIncidentStatus(`${action}: ${lat.toFixed(6)}, ${lng.toFixed(6)}. Updating plume…`);
+  saveIncidentBrief({ quiet: true });
+  refreshPlumeWorkspace({ requestGps: false });
+}
 
 function ensurePlumeMap(location) {
   if (!window.maplibregl) throw new Error('The local GIS map library did not load.');
@@ -706,38 +715,37 @@ function ensurePlumeMap(location) {
       container: 'plume-gis-map',
       center: [location.lon, location.lat],
       zoom: 13,
-      style: {
-        version: 8,
-        sources: {
-          osm: {
-            type: 'raster',
-            tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-            tileSize: 256,
-            attribution: '© OpenStreetMap contributors',
-          },
-        },
-        layers: [{ id: 'osm', type: 'raster', source: 'osm' }],
-      },
+      style: plumeMapStyleUrl,
     });
     plumeMap.addControl(new window.maplibregl.NavigationControl(), 'bottom-right');
     plumeMapReady = new Promise((resolve) => plumeMap.once('load', resolve));
     plumeMap.getCanvas().style.cursor = 'crosshair';
     plumeMap.on('click', (event) => {
       const { lng, lat } = event.lngLat;
-      const input = document.getElementById('incident-coordinates-input');
-      if (input) input.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-      const status = document.getElementById('incident-location-status');
-      if (status) status.textContent = `Incident location set from map click: ${lat.toFixed(6)}, ${lng.toFixed(6)}.`;
-      refreshPlumeWorkspace({ requestGps: false });
+      updateIncidentLocationFromMap(lng, lat, 'Incident pin placed from map click');
+    });
+    plumeMap.on('error', (event) => {
+      if (event?.error?.message) setText('plume-overlay-status', `Map layer error: ${event.error.message}`);
     });
   }
   plumeMap.resize();
   plumeMap.easeTo({ center: [location.lon, location.lat], duration: 400 });
   if (!plumeSourceMarker) {
-    plumeSourceMarker = new window.maplibregl.Marker({ color: '#111' })
+    plumeSourceMarker = new window.maplibregl.Marker({
+      color: '#d71920',
+      draggable: true,
+      className: 'plume-source-marker',
+    })
       .setLngLat([location.lon, location.lat])
-      .setPopup(new window.maplibregl.Popup().setText('Release source'))
+      .setPopup(new window.maplibregl.Popup().setText('Release source — drag pin to adjust'))
       .addTo(plumeMap);
+    plumeSourceMarker.on('dragstart', () => {
+      setIncidentStatus('Moving incident release source…');
+    });
+    plumeSourceMarker.on('dragend', () => {
+      const { lng, lat } = plumeSourceMarker.getLngLat();
+      updateIncidentLocationFromMap(lng, lat, 'Incident pin moved');
+    });
   } else {
     plumeSourceMarker.setLngLat([location.lon, location.lat]);
   }
