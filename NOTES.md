@@ -19,6 +19,8 @@ Swap Plume and Weather Button on Home Page. Have weather button pull current liv
 
 
 ## Backend (CHRIS)
+Import Kappler HazMatch data for frontend
+Ensure data for demographics, populations, households, etc is stable for Plume Modeling
 
 ### Data.gov URL's
 

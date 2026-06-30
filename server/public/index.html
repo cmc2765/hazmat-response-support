@@ -171,8 +171,7 @@
             <section class="incident-command-snapshot" aria-labelledby="command-snapshot-title">
               <div class="command-snapshot-heading">
                 <div>
-                  <p class="eyebrow">Live command picture</p>
-                  <h3 id="command-snapshot-title">Command Snapshot</h3>
+                  <p class="eyebrow box-title" id="command-snapshot-title">HAZMAT COMMAND</p>
                 </div>
                 <p class="command-snapshot-provenance">Backend records, model output, and operator-entered selections only.</p>
               </div>
@@ -184,7 +183,6 @@
                   </div>
                   <h4 id="command-chemical-name">No chemical identified</h4>
                   <p id="command-chemical-summary">Search Chemical ID to connect backend response data.</p>
-                  <small id="command-chemical-source" class="command-data-source">Source: none</small>
                   <details>
                     <summary>Source details</summary>
                     <ul id="command-chemical-details"><li>No chemical data loaded.</li></ul>
@@ -198,7 +196,6 @@
                   </div>
                   <h4 id="command-plume-title">No active plume</h4>
                   <p id="command-plume-summary">Confirm the release and weather inputs before plotting.</p>
-                  <small id="command-plume-source" class="command-data-source">Source: no model result</small>
                   <details>
                     <summary>Model details</summary>
                     <ul id="command-plume-details"><li>No plume model has been plotted.</li></ul>
@@ -207,17 +204,29 @@
                 </article>
                 <article class="command-status-card command-ppe-card">
                   <div class="command-status-heading">
-                    <span>PPE</span>
+                    <span>PPE Selection</span>
                     <strong id="command-ppe-status">No selection</strong>
                   </div>
                   <h4 id="command-ppe-title">Awaiting chemical ID</h4>
                   <p id="command-ppe-summary">Backend reference text and operator-entered PPE will appear here.</p>
-                  <small id="command-ppe-source" class="command-data-source">Source: no PPE record or operator entry</small>
                   <details>
                     <summary>Source comparison</summary>
                     <ul id="command-ppe-details"><li>No PPE guidance loaded.</li></ul>
                   </details>
                   <button class="ghost-btn command-card-action" type="button" data-command-view="lookup">Review PPE Guidance</button>
+                </article>
+                <article class="command-status-card command-weather-card">
+                  <div class="command-status-heading">
+                    <span>Weather</span>
+                    <strong id="command-weather-status">Awaiting location</strong>
+                  </div>
+                  <h4 id="command-weather-title">No live observation</h4>
+                  <p id="command-weather-summary">Enter an incident location to load the weather used by plume modeling.</p>
+                  <details>
+                    <summary>Weather details</summary>
+                    <ul id="command-weather-details"><li>No live weather data loaded.</li></ul>
+                  </details>
+                  <button class="ghost-btn command-card-action command-weather-refresh" id="refresh-command-weather-btn" type="button">Refresh Live Weather</button>
                 </article>
               </div>
             </section>
@@ -226,8 +235,7 @@
               <article class="panel-card incident-input-card">
                 <div class="chemical-card-header">
                   <div>
-                    <p class="eyebrow">Incident brief</p>
-                    <h3>Incident Details</h3>
+                    <p class="eyebrow box-title">Incident brief</p>
                   </div>
                   <button class="ghost-btn" id="use-current-location-btn" type="button">Use Current GPS</button>
                 </div>
@@ -272,8 +280,7 @@
               <article class="panel-card tier2-card facility-information-card">
                 <div class="facility-information-heading">
                   <div>
-                    <p class="eyebrow">Facility records</p>
-                    <h3>Facility Information</h3>
+                    <p class="eyebrow box-title">Facility records</p>
                   </div>
                   <p class="big-label">Sign in to E-Plan to review facility submissions, inventories, and emergency contacts.</p>
                 </div>

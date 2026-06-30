@@ -460,8 +460,14 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .command-snapshot-heading .eyebrow,
-.command-snapshot-heading h3 {
+.box-title {
   margin-bottom: 0;
+}
+
+.eyebrow.box-title {
+  color: #a70f16;
+  font-size: 0.86rem;
+  font-weight: 950;
 }
 
 .command-snapshot-provenance {
@@ -475,7 +481,7 @@ h1, h2, h3, p { margin-top: 0; }
 
 .command-snapshot-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -494,6 +500,12 @@ h1, h2, h3, p { margin-top: 0; }
 .command-chemical-card { border-top-color: #d71920; }
 .command-plume-card { border-top-color: #d6b615; }
 .command-ppe-card { border-top-color: #168349; }
+.command-weather-card { border-color: #2779ad; border-top-color: #1677b8; }
+
+.command-weather-refresh {
+  border-color: #2779ad;
+  color: #155b87;
+}
 
 .command-status-heading > span {
   color: var(--muted);
@@ -514,13 +526,6 @@ h1, h2, h3, p { margin-top: 0; }
 .command-status-card h4,
 .command-status-card p {
   margin: 0;
-}
-
-.command-data-source {
-  color: #5d646b;
-  font-size: 0.65rem;
-  font-weight: 750;
-  line-height: 1.35;
 }
 
 .command-status-card h4 {
@@ -628,9 +633,14 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .facility-information-heading .eyebrow,
-.facility-information-heading h3,
 .facility-information-heading p {
   margin-bottom: 0;
+}
+
+@media (max-width: 1200px) {
+  .command-snapshot-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .facility-information-heading .big-label {

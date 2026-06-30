@@ -95,6 +95,7 @@ if (monitorReadingElements.length) {
 function showView(targetId) {
   buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
   views.forEach((view) => view.classList.toggle('active', view.id === targetId));
+  if (targetId === 'incident') void refreshCommandWeather({ requestGps: false });
 }
 
 buttons.forEach((button) => {
@@ -295,6 +296,14 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
       idlh: exposureLimits.idlh || null,
     },
     ppeReference: ppe,
+    ppeComponents: {
+      niosh: {
+        skin: npgPpe.skin || [],
+        eye: npgPpe.eye || [],
+        respiratory: [...(npgPpe.respiratory || []), ...(health.respiratorSelection || [])],
+      },
+      kappler: [],
+    },
     ppeSources: [
       {
         id: 'erg',
@@ -463,6 +472,8 @@ let activeChemical = null;
 let activeChemicalRecord = null;
 let activePlumeCommand = null;
 let activePpeSelection = [];
+let activeWeatherCommand = null;
+let commandWeatherRequestToken = 0;
 const selectedChemicalStorageKey = 'hazmatiq.selectedChemical';
 
 function replaceCommandList(id, items, emptyMessage) {
@@ -520,6 +531,48 @@ function correlatePpeSources(sourceRows = []) {
   };
 }
 
+function uniquePpeItems(items = []) {
+  return [...new Map(items
+    .map((item) => [normalizePpeRecommendation(item), String(item).trim()])
+    .filter(([key]) => key)).values()];
+}
+
+function buildPpeStartingReference(record) {
+  if (!record) return null;
+  const chemicalItems = uniquePpeItems(record.ppeReference || []);
+  const niosh = record.ppeComponents?.niosh || {};
+  const kappler = uniquePpeItems(record.ppeComponents?.kappler || []);
+  const clothing = uniquePpeItems(chemicalItems.filter((item) => /level\s+[a-d]|suit|clothing|splash|encapsulat/i.test(item)));
+  const nioshRespiratory = uniquePpeItems(niosh.respiratory || []);
+  const chemicalRespiratory = uniquePpeItems(chemicalItems.filter((item) => /scba|respirat|papr|supplied[- ]air|cartridge/i.test(item)));
+  const respiratory = uniquePpeItems([...nioshRespiratory, ...chemicalRespiratory]);
+  const nioshSkin = uniquePpeItems(niosh.skin || []);
+  const chemicalSkin = uniquePpeItems(chemicalItems.filter((item) => /glove|boot|skin/i.test(item)));
+  const skin = uniquePpeItems([...nioshSkin, ...chemicalSkin]);
+  const nioshEye = uniquePpeItems(niosh.eye || []);
+  const chemicalEye = uniquePpeItems(chemicalItems.filter((item) => /goggle|face\s*shield|eye/i.test(item)));
+  const eye = uniquePpeItems([...nioshEye, ...chemicalEye]);
+  const hasNiosh = nioshRespiratory.length > 0 || nioshSkin.length > 0 || nioshEye.length > 0;
+  const levelMatch = clothing.map((item) => item.match(/\bLevel\s+([A-D])\b/i)).find(Boolean);
+  const hasScba = respiratory.some((item) => /\bSCBA\b/i.test(item));
+  const hasData = chemicalItems.length > 0 || respiratory.length > 0 || skin.length > 0 || eye.length > 0 || kappler.length > 0;
+  if (!hasData) return null;
+
+  const levelLabel = levelMatch ? `Level ${levelMatch[1].toUpperCase()}` : 'Suit level not specified';
+  return {
+    title: hasScba ? `${levelLabel} + SCBA` : levelLabel,
+    summary: 'Source-backed starting PPE reference for the identified chemical; not an IC-confirmed selection.',
+    source: `Sources available: backend chemical PPE record${hasNiosh ? ', NIOSH NPG' : ''}${kappler.length ? ', Kappler HazMatch' : ''}.`,
+    details: [
+      clothing.length ? `Protective clothing — backend chemical PPE: ${clothing.join('; ')}` : 'Protective clothing level: not specified in the current backend record.',
+      respiratory.length ? `Respiratory — ${[nioshRespiratory.length ? `NIOSH: ${nioshRespiratory.join('; ')}` : '', chemicalRespiratory.length ? `backend chemical PPE: ${chemicalRespiratory.join('; ')}` : ''].filter(Boolean).join(' · ')}` : 'Respiratory protection: not specified in the current backend record.',
+      skin.length ? `Gloves / boots / skin — ${[nioshSkin.length ? `NIOSH: ${nioshSkin.join('; ')}` : '', chemicalSkin.length ? `backend chemical PPE: ${chemicalSkin.join('; ')}` : ''].filter(Boolean).join(' · ')}` : 'Gloves / boots / skin protection: not specified in the current backend record.',
+      eye.length ? `Eye / face — ${[nioshEye.length ? `NIOSH: ${nioshEye.join('; ')}` : '', chemicalEye.length ? `backend chemical PPE: ${chemicalEye.join('; ')}` : ''].filter(Boolean).join(' · ')}` : 'Eye / face protection: not specified in the current backend record.',
+      kappler.length ? `Kappler HazMatch garment data: ${kappler.join('; ')}` : 'Kappler HazMatch: no chemical-specific result is stored in the backend.',
+    ],
+  };
+}
+
 function renderIncidentCommandSnapshot() {
   const chemicalLoaded = Boolean(activeChemical);
   const recordLoaded = Boolean(activeChemicalRecord);
@@ -529,9 +582,6 @@ function renderIncidentCommandSnapshot() {
   setText('command-chemical-summary', recordLoaded
     ? `UN ${activeChemicalRecord.un} · ERG ${activeChemicalRecord.ergGuide} · IDLH ${activeChemicalRecord.idlh}`
     : (chemicalLoaded ? 'Loading ERG, CAMEO, and NIOSH records…' : 'Search Chemical ID to connect backend response data.'));
-  setText('command-chemical-source', recordLoaded
-    ? `Source: ${commandFacts?.isolationSource || 'backend chemical record'}; IDLH from NIOSH record when available.`
-    : 'Source: none');
   replaceCommandList('command-chemical-details', recordLoaded ? [
     commandFacts?.initialIsolation ? `Initial isolation: ${commandFacts.initialIsolation}` : 'Initial isolation: not available in the loaded backend record.',
     commandFacts?.protectiveAction ? `Protective action: ${commandFacts.protectiveAction}` : 'Protective action: not available in the loaded backend record.',
@@ -542,32 +592,36 @@ function renderIncidentCommandSnapshot() {
   setText('command-plume-status', activePlumeCommand ? 'Backend result' : 'Not plotted');
   setText('command-plume-title', activePlumeCommand?.title || 'No active plume');
   setText('command-plume-summary', activePlumeCommand?.summary || 'Confirm the release and weather inputs before plotting.');
-  setText('command-plume-source', activePlumeCommand?.source || 'Source: no model result');
   replaceCommandList('command-plume-details', activePlumeCommand?.details || [], 'No plume model has been plotted.');
 
   const ppeCorrelation = correlatePpeSources(activeChemicalRecord?.ppeSources || []);
+  const startingPpe = buildPpeStartingReference(activeChemicalRecord);
   const hasPpeSelection = activePpeSelection.length > 0;
   const hasConsensus = ppeCorrelation.unanimous && ppeCorrelation.selection.length > 0;
   const coverage = `${ppeCorrelation.available.length}/${requiredPpeConsensusSources.length} sources`;
-  setText('command-ppe-status', hasConsensus ? 'All sources match' : (hasPpeSelection ? 'Operator entered' : coverage));
+  setText('command-ppe-status', hasConsensus ? 'All sources match' : (hasPpeSelection ? 'Operator entered' : (startingPpe ? 'Starting reference' : coverage)));
   setText('command-ppe-title', hasConsensus
     ? ppeCorrelation.selection.join(' · ')
-    : (hasPpeSelection ? activePpeSelection.join(' · ') : 'No automatic PPE selection'));
+    : (hasPpeSelection ? activePpeSelection.join(' · ') : (startingPpe?.title || 'No PPE reference available')));
   setText('command-ppe-summary', hasConsensus
     ? 'Strict text match across every required backend source.'
     : (hasPpeSelection
       ? 'Operator-entered selection; the backend does not currently prove full source agreement.'
-      : 'Source records are incomplete or differ. Review the available source text; HazMatIQ made no selection.'));
-  setText('command-ppe-source', activeChemicalRecord
-    ? `Coverage: ${coverage}. Missing: ${ppeCorrelation.missing.map((source) => source.label).join(', ') || 'none'}.`
-    : 'Source: no PPE record or operator entry');
+      : (startingPpe?.summary || 'No source-attributed PPE guidance is available for this chemical.')));
   const correlatedDetails = hasConsensus
     ? ppeCorrelation.selection.map((item) => `${item} — all required sources`)
-    : [
-      ...ppeCorrelation.groupedItems.map((group) => `${group.text} — ${group.sources.join(', ')}`),
-      ...(hasPpeSelection ? activePpeSelection.map((item) => `${item} — operator entered`) : []),
-    ].slice(0, 8);
+    : (hasPpeSelection
+      ? [
+        ...activePpeSelection.map((item) => `${item} — operator entered`),
+        ...(startingPpe?.details || []),
+      ]
+      : (startingPpe?.details || ppeCorrelation.groupedItems.map((group) => `${group.text} — ${group.sources.join(', ')}`))).slice(0, 8);
   replaceCommandList('command-ppe-details', correlatedDetails, 'No source-attributed PPE guidance loaded.');
+
+  setText('command-weather-status', activeWeatherCommand ? 'Live' : 'Awaiting location');
+  setText('command-weather-title', activeWeatherCommand?.title || 'No live observation');
+  setText('command-weather-summary', activeWeatherCommand?.summary || 'Enter an incident location to load the weather used by plume modeling.');
+  replaceCommandList('command-weather-details', activeWeatherCommand?.details || [], 'No live weather data loaded.');
 }
 
 function updateIncidentPpeSelection(selection) {
@@ -1464,6 +1518,11 @@ function formatOpenMeteo(data) {
     windSpeedMph,
     windSpeedMps: windSpeedMph * 0.44704,
     windDirDeg: Number(current.wind_direction_10m),
+    gustMph: Number(current.wind_gusts_10m),
+    rh: Number(current.relative_humidity_2m),
+    precipitationIn: Number(current.precipitation),
+    pressureInHg,
+    observedAt: current.time,
   };
 }
 
@@ -1477,7 +1536,79 @@ function formatNws(data) {
   return {
     station: `NWS ${data.office === 'BMX' ? 'Birmingham (BMX)' : data.office || 'office'} · ${data.station.stationIdentifier} ${data.station.name || ''}`.trim(),
     conditions: `${tempF} · ${observation.textDescription || 'No description'} · Wind ${wind} ${degreesToCompass(observation.windDirection?.value)}`,
+    observedAt: observation.timestamp,
   };
+}
+
+function updateCommandWeatherState(openMeteo, nws, location) {
+  if (!openMeteo && !nws) {
+    activeWeatherCommand = null;
+    renderIncidentCommandSnapshot();
+    return;
+  }
+  const retrievedAt = new Date();
+  const displayNumber = (value, digits = 1) => Number.isFinite(Number(value)) ? Number(value).toFixed(digits) : 'Unavailable';
+  const displayMeasurement = (label, value, unit, digits = 1) => Number.isFinite(Number(value))
+    ? `${label} ${Number(value).toFixed(digits)}${unit}`
+    : `${label} unavailable`;
+  activeWeatherCommand = openMeteo ? {
+    title: `${displayMeasurement('Temperature', openMeteo.temperatureF, '°F')} · ${displayMeasurement('Wind', openMeteo.windSpeedMph, ' mph')} ${degreesToCompass(openMeteo.windDirDeg)}`,
+    summary: `${displayMeasurement('Gust', openMeteo.gustMph, ' mph')} · ${displayMeasurement('RH', openMeteo.rh, '%', 0)} · ${displayMeasurement('Pressure', openMeteo.pressureInHg, ' inHg', 2)}`,
+    source: `Source: Open-Meteo current conditions used by Plume Modeling · retrieved ${retrievedAt.toLocaleTimeString()}.`,
+    details: [
+      `Incident coordinates: ${location.lat.toFixed(5)}, ${location.lon.toFixed(5)}`,
+      `Open-Meteo observation time: ${openMeteo.observedAt || 'not provided'}`,
+      `Precipitation: ${displayNumber(openMeteo.precipitationIn, 2)} in`,
+      nws ? `${nws.station}: ${nws.conditions}` : 'NWS station observation unavailable.',
+    ],
+  } : {
+    title: 'NWS station observation',
+    summary: nws.conditions,
+    source: `Source: ${nws.station} · retrieved ${retrievedAt.toLocaleTimeString()}.`,
+    details: [
+      `Incident coordinates: ${location.lat.toFixed(5)}, ${location.lon.toFixed(5)}`,
+      `NWS observation time: ${nws.observedAt || 'not provided'}`,
+    ],
+  };
+  renderIncidentCommandSnapshot();
+}
+
+async function refreshCommandWeather({ requestGps = false } = {}) {
+  const token = ++commandWeatherRequestToken;
+  setText('command-weather-status', 'Loading');
+  let location;
+  try {
+    location = await getIncidentCoordinates({ requestGps });
+  } catch (error) {
+    if (token !== commandWeatherRequestToken) return;
+    activeWeatherCommand = null;
+    renderIncidentCommandSnapshot();
+    setText('command-weather-status', 'Location needed');
+    setText('command-weather-summary', error instanceof Error ? error.message : 'Incident location is required.');
+    return;
+  }
+  if (!location) {
+    if (token !== commandWeatherRequestToken) return;
+    activeWeatherCommand = null;
+    renderIncidentCommandSnapshot();
+    setText('command-weather-status', 'Location needed');
+    return;
+  }
+
+  const [openMeteoResponse, nwsResponse] = await Promise.all([
+    fetchOpenMeteo(location.lat, location.lon),
+    fetchNwsObservation(location.lat, location.lon),
+  ]);
+  if (token !== commandWeatherRequestToken) return;
+  const openMeteo = formatOpenMeteo(openMeteoResponse);
+  const nws = formatNws(nwsResponse);
+  latestPlumeWeather = openMeteo;
+  updateCommandWeatherState(openMeteo, nws, location);
+  setText('open-meteo-location', openMeteo?.location || 'Open-Meteo unavailable');
+  setText('open-meteo-conditions', openMeteo?.conditions || 'Open-Meteo unavailable');
+  setText('nws-station-summary', nws?.station || 'NWS observation station unavailable');
+  setText('nws-weather-summary', nws?.conditions || 'NWS live observation unavailable');
+  updateNotificationCenter({ weather: openMeteo?.conditions || nws?.conditions || 'Live weather unavailable' });
 }
 
 function setPlumeInputValue(id, value) {
@@ -1681,6 +1812,7 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   const weatherNotification = openMeteo?.conditions || nws?.conditions || 'Live weather unavailable';
   updateNotificationCenter({ weather: weatherNotification });
   latestPlumeWeather = openMeteo;
+  updateCommandWeatherState(openMeteo, nws, location);
   if (openMeteo) applyLiveWeatherToPlumeInputs(openMeteo);
   else setText('plume-input-status', 'Live weather is unavailable. Enter weather observations manually before plotting.');
   setText('backend-model-summary', 'Awaiting Plot Plume');
@@ -1761,6 +1893,7 @@ document.querySelectorAll('[data-view="plume"]').forEach((button) => {
 });
 
 document.getElementById('refresh-plume-data-btn')?.addEventListener('click', () => refreshPlumeWorkspace({ requestGps: true }));
+document.getElementById('refresh-command-weather-btn')?.addEventListener('click', () => refreshCommandWeather({ requestGps: true }));
 document.getElementById('change-plume-chemical-btn')?.addEventListener('click', () => {
   showView('lookup');
   chemicalSearchInput?.focus();
@@ -1779,6 +1912,11 @@ document.getElementById('plume-model-form')?.addEventListener('submit', async (e
   await plotPlumeFromControls();
 });
 updatePlumeReleaseQuantityLabel();
+window.setInterval(() => {
+  if (document.getElementById('incident')?.classList.contains('active')) {
+    void refreshCommandWeather({ requestGps: false });
+  }
+}, 5 * 60 * 1000);
 document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
   button.addEventListener('click', () => setPlumeMapView(button.dataset.plumeMapView));
 });
