@@ -1399,7 +1399,8 @@ function renderSavedChemicals() {
   const list = document.getElementById('my-chemicals-list');
   if (!list) return;
   list.replaceChildren();
-  const chemicals = readSavedChemicals();
+  const chemicals = readSavedChemicals().sort((a, b) =>
+    String(a.chemicalName || '').localeCompare(String(b.chemicalName || '')));
   if (!chemicals.length) {
     list.textContent = 'No saved chemicals yet. Use Chemical ID and click “Save to My Chemicals.”';
     return;
