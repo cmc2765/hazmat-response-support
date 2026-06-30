@@ -485,10 +485,6 @@ h1, h2, h3, p { margin-top: 0; }
   gap: 10px;
 }
 
-.command-snapshot-grid.awaiting-chemical {
-  grid-template-columns: minmax(0, 1fr);
-}
-
 .command-status-card {
   display: grid;
   grid-template-rows: auto auto minmax(40px, auto) auto auto;
@@ -541,6 +537,33 @@ h1, h2, h3, p { margin-top: 0; }
   color: var(--muted);
   font-size: 0.76rem;
   line-height: 1.4;
+}
+
+.command-weather-data {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.command-weather-row {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.command-weather-row > span {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.command-weather-row > strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-weight: 900;
 }
 
 .command-status-card details {
@@ -2204,18 +2227,18 @@ textarea {
 
 .incident-overview-actions {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
 }
 
 .incident-overview-actions .overview-action-btn {
-  min-height: 62px;
-  padding: 12px 16px;
+  min-height: 84px;
+  padding: 18px;
   background: #c9141b;
   border: 2px solid #e32027;
   color: #fff;
   font-family: Bahnschrift, "Aptos Display", "Segoe UI Variable Display", "Trebuchet MS", sans-serif;
-  font-size: 1rem;
+  font-size: 1.08rem;
   font-weight: 800;
   line-height: 1.15;
   text-align: center;

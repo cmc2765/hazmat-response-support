@@ -103,6 +103,11 @@ function showView(targetId) {
 
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
+    if (button.dataset.incidentAction === 'new' || button.dataset.incidentAction === 'training') {
+      beginNewIncident();
+    } else if (button.dataset.incidentAction === 'resume') {
+      resumeActiveIncident();
+    }
     if (button.dataset.view) {
       showView(button.dataset.view);
     }
@@ -167,6 +172,28 @@ function restoreIncidentBrief() {
   }
 }
 
+function beginNewIncident() {
+  incidentWorkflowActive = true;
+  incidentBriefFieldIds.forEach((id) => {
+    const element = document.getElementById(id);
+    if (element) element.value = '';
+  });
+  try {
+    window.localStorage.removeItem(incidentBriefStorageKey);
+  } catch {
+    // A new incident can still begin if browser storage is unavailable.
+  }
+  setActiveChemical(null);
+  setIncidentStatus('New incident started. Select a chemical to populate HAZMAT COMMAND data.');
+}
+
+function resumeActiveIncident() {
+  incidentWorkflowActive = true;
+  restoreIncidentBrief();
+  renderIncidentCommandSnapshot();
+  void restoreSelectedChemical();
+}
+
 document.getElementById('save-incident-brief-btn')?.addEventListener('click', () => saveIncidentBrief());
 document.getElementById('clear-incident-brief-btn')?.addEventListener('click', () => {
   incidentBriefFieldIds.forEach((id) => {
@@ -180,23 +207,6 @@ document.getElementById('clear-incident-brief-btn')?.addEventListener('click', (
   }
   setActiveChemical(null);
   setIncidentStatus('Incident brief cleared.');
-});
-
-restoreIncidentBrief();
-
-buttons.forEach((button) => {
-  button.addEventListener('click', () => {
-    if (button.dataset.view) {
-      showView(button.dataset.view);
-    }
-  });
-
-  button.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      button.click();
-    }
-  });
 });
 
 // ─── Chemical lookup/card: backed by the real API (207-chemical dataset, NPG, thresholds) ───
@@ -477,6 +487,7 @@ let activePlumeCommand = null;
 let activePpeSelection = [];
 let activeWeatherCommand = null;
 let commandWeatherRequestToken = 0;
+let incidentWorkflowActive = false;
 const selectedChemicalStorageKey = 'hazmatiq.selectedChemical';
 
 function replaceCommandList(id, items, emptyMessage) {
@@ -487,6 +498,22 @@ function replaceCommandList(id, items, emptyMessage) {
     const item = document.createElement('li');
     item.textContent = textValue;
     return item;
+  }));
+}
+
+function renderCommandWeatherRows(rows = []) {
+  const container = document.getElementById('command-weather-data');
+  if (!container) return;
+  container.removeAttribute('aria-label');
+  container.replaceChildren(...rows.filter(Boolean).map(({ label, value }) => {
+    const row = document.createElement('div');
+    row.className = 'command-weather-row';
+    const rowLabel = document.createElement('span');
+    rowLabel.textContent = `${label} —`;
+    const rowValue = document.createElement('strong');
+    rowValue.textContent = value;
+    row.append(rowLabel, rowValue);
+    return row;
   }));
 }
 
@@ -577,59 +604,69 @@ function buildPpeStartingReference(record) {
 }
 
 function renderIncidentCommandSnapshot() {
-  const chemicalLoaded = Boolean(activeChemical);
-  const snapshotGrid = document.getElementById('command-snapshot-grid');
-  snapshotGrid?.classList.toggle('awaiting-chemical', !chemicalLoaded);
-  document.querySelectorAll('.command-chemical-dependent').forEach((card) => {
-    card.hidden = !chemicalLoaded;
-  });
+  const chemicalLoaded = incidentWorkflowActive && Boolean(activeChemical);
+  if (!chemicalLoaded) {
+    [
+      'command-chemical-status',
+      'command-chemical-name',
+      'command-chemical-summary',
+      'command-plume-status',
+      'command-plume-title',
+      'command-plume-summary',
+      'command-ppe-status',
+      'command-ppe-title',
+      'command-ppe-summary',
+    ].forEach((id) => setText(id, ''));
+    ['command-chemical-details', 'command-plume-details', 'command-ppe-details'].forEach((id) => {
+      document.getElementById(id)?.replaceChildren();
+    });
+  } else {
+    const recordLoaded = Boolean(activeChemicalRecord);
+    const commandFacts = activeChemicalRecord?.commandFacts;
+    setText('command-chemical-status', recordLoaded ? 'Backend record' : 'Loading data');
+    setText('command-chemical-name', activeChemical.name);
+    setText('command-chemical-summary', recordLoaded
+      ? `UN ${activeChemicalRecord.un} · ERG ${activeChemicalRecord.ergGuide} · IDLH ${activeChemicalRecord.idlh}`
+      : 'Loading ERG, CAMEO, and NIOSH records…');
+    replaceCommandList('command-chemical-details', recordLoaded ? [
+      commandFacts?.initialIsolation ? `Initial isolation: ${commandFacts.initialIsolation}` : 'Initial isolation: not available in the loaded backend record.',
+      commandFacts?.protectiveAction ? `Protective action: ${commandFacts.protectiveAction}` : 'Protective action: not available in the loaded backend record.',
+      commandFacts?.idlh ? `NIOSH IDLH: ${commandFacts.idlh}` : 'NIOSH IDLH: not available in the loaded backend record.',
+      `DOT class: ${activeChemicalRecord.dotClass}`,
+    ] : [], 'Loading chemical data…');
 
-  const recordLoaded = Boolean(activeChemicalRecord);
-  const commandFacts = activeChemicalRecord?.commandFacts;
-  setText('command-chemical-status', recordLoaded ? 'Backend record' : (chemicalLoaded ? 'Loading data' : 'Awaiting ID'));
-  setText('command-chemical-name', activeChemical?.name || 'No chemical identified');
-  setText('command-chemical-summary', recordLoaded
-    ? `UN ${activeChemicalRecord.un} · ERG ${activeChemicalRecord.ergGuide} · IDLH ${activeChemicalRecord.idlh}`
-    : (chemicalLoaded ? 'Loading ERG, CAMEO, and NIOSH records…' : 'Search Chemical ID to connect backend response data.'));
-  replaceCommandList('command-chemical-details', recordLoaded ? [
-    commandFacts?.initialIsolation ? `Initial isolation: ${commandFacts.initialIsolation}` : 'Initial isolation: not available in the loaded backend record.',
-    commandFacts?.protectiveAction ? `Protective action: ${commandFacts.protectiveAction}` : 'Protective action: not available in the loaded backend record.',
-    commandFacts?.idlh ? `NIOSH IDLH: ${commandFacts.idlh}` : 'NIOSH IDLH: not available in the loaded backend record.',
-    `DOT class: ${activeChemicalRecord.dotClass}`,
-  ] : [], 'No chemical data loaded.');
+    setText('command-plume-status', activePlumeCommand ? 'Backend result' : 'Not plotted');
+    setText('command-plume-title', activePlumeCommand?.title || 'No active plume');
+    setText('command-plume-summary', activePlumeCommand?.summary || 'Confirm the release and weather inputs before plotting.');
+    replaceCommandList('command-plume-details', activePlumeCommand?.details || [], 'No plume model has been plotted.');
 
-  setText('command-plume-status', activePlumeCommand ? 'Backend result' : 'Not plotted');
-  setText('command-plume-title', activePlumeCommand?.title || 'No active plume');
-  setText('command-plume-summary', activePlumeCommand?.summary || 'Confirm the release and weather inputs before plotting.');
-  replaceCommandList('command-plume-details', activePlumeCommand?.details || [], 'No plume model has been plotted.');
-
-  const ppeCorrelation = correlatePpeSources(activeChemicalRecord?.ppeSources || []);
-  const startingPpe = buildPpeStartingReference(activeChemicalRecord);
-  const hasPpeSelection = activePpeSelection.length > 0;
-  const hasConsensus = ppeCorrelation.unanimous && ppeCorrelation.selection.length > 0;
-  const coverage = `${ppeCorrelation.available.length}/${requiredPpeConsensusSources.length} sources`;
-  setText('command-ppe-status', hasConsensus ? 'All sources match' : (hasPpeSelection ? 'Operator entered' : (startingPpe ? 'Starting reference' : coverage)));
-  setText('command-ppe-title', hasConsensus
-    ? ppeCorrelation.selection.join(' · ')
-    : (hasPpeSelection ? activePpeSelection.join(' · ') : (startingPpe?.title || 'No PPE reference available')));
-  setText('command-ppe-summary', hasConsensus
-    ? 'Strict text match across every required backend source.'
-    : (hasPpeSelection
-      ? 'Operator-entered selection; the backend does not currently prove full source agreement.'
-      : (startingPpe?.summary || 'No source-attributed PPE guidance is available for this chemical.')));
-  const correlatedDetails = hasConsensus
-    ? ppeCorrelation.selection.map((item) => `${item} — all required sources`)
-    : (hasPpeSelection
-      ? [
-        ...activePpeSelection.map((item) => `${item} — operator entered`),
-        ...(startingPpe?.details || []),
-      ]
-      : (startingPpe?.details || ppeCorrelation.groupedItems.map((group) => `${group.text} — ${group.sources.join(', ')}`))).slice(0, 8);
-  replaceCommandList('command-ppe-details', correlatedDetails, 'No source-attributed PPE guidance loaded.');
+    const ppeCorrelation = correlatePpeSources(activeChemicalRecord?.ppeSources || []);
+    const startingPpe = buildPpeStartingReference(activeChemicalRecord);
+    const hasPpeSelection = activePpeSelection.length > 0;
+    const hasConsensus = ppeCorrelation.unanimous && ppeCorrelation.selection.length > 0;
+    const coverage = `${ppeCorrelation.available.length}/${requiredPpeConsensusSources.length} sources`;
+    setText('command-ppe-status', hasConsensus ? 'All sources match' : (hasPpeSelection ? 'Operator entered' : (startingPpe ? 'Starting reference' : coverage)));
+    setText('command-ppe-title', hasConsensus
+      ? ppeCorrelation.selection.join(' · ')
+      : (hasPpeSelection ? activePpeSelection.join(' · ') : (startingPpe?.title || 'No PPE reference available')));
+    setText('command-ppe-summary', hasConsensus
+      ? 'Strict text match across every required backend source.'
+      : (hasPpeSelection
+        ? 'Operator-entered selection; the backend does not currently prove full source agreement.'
+        : (startingPpe?.summary || 'No source-attributed PPE guidance is available for this chemical.')));
+    const correlatedDetails = hasConsensus
+      ? ppeCorrelation.selection.map((item) => `${item} — all required sources`)
+      : (hasPpeSelection
+        ? [
+          ...activePpeSelection.map((item) => `${item} — operator entered`),
+          ...(startingPpe?.details || []),
+        ]
+        : (startingPpe?.details || ppeCorrelation.groupedItems.map((group) => `${group.text} — ${group.sources.join(', ')}`))).slice(0, 8);
+    replaceCommandList('command-ppe-details', correlatedDetails, 'No source-attributed PPE guidance loaded.');
+  }
 
   setText('command-weather-status', activeWeatherCommand ? 'Live' : 'Awaiting location');
-  setText('command-weather-title', activeWeatherCommand?.title || 'No live observation');
-  setText('command-weather-summary', activeWeatherCommand?.summary || 'Enter an incident location to load the weather used by plume modeling.');
+  renderCommandWeatherRows(activeWeatherCommand?.rows || []);
   replaceCommandList('command-weather-details', activeWeatherCommand?.details || [], 'No live weather data loaded.');
 }
 
@@ -707,7 +744,6 @@ async function restoreSelectedChemical() {
   }
 }
 
-void restoreSelectedChemical();
 renderIncidentCommandSnapshot();
 
 function setChemicalSearchStatus(message, state = '') {
@@ -1540,12 +1576,21 @@ function formatNws(data) {
   const observation = data.observation;
   const tempC = observation.temperature?.value;
   const windMps = observation.windSpeed?.value;
+  const gustMps = observation.windGust?.value;
+  const temperatureF = Number.isFinite(tempC) ? (tempC * 9) / 5 + 32 : null;
+  const windSpeedMph = Number.isFinite(windMps) ? windMps * 2.23694 : null;
+  const gustMph = Number.isFinite(gustMps) ? gustMps * 2.23694 : null;
   const tempF = Number.isFinite(tempC) ? `${((tempC * 9) / 5 + 32).toFixed(1)}°F` : 'temperature unavailable';
   const wind = Number.isFinite(windMps) ? `${(windMps * 2.23694).toFixed(1)} mph` : 'wind unavailable';
   return {
     station: `NWS ${data.office === 'BMX' ? 'Birmingham (BMX)' : data.office || 'office'} · ${data.station.stationIdentifier} ${data.station.name || ''}`.trim(),
     conditions: `${tempF} · ${observation.textDescription || 'No description'} · Wind ${wind} ${degreesToCompass(observation.windDirection?.value)}`,
     observedAt: observation.timestamp,
+    temperatureF,
+    windSpeedMph,
+    windDirDeg: Number(observation.windDirection?.value),
+    gustMph,
+    description: observation.textDescription || 'No description',
   };
 }
 
@@ -1557,12 +1602,18 @@ function updateCommandWeatherState(openMeteo, nws, location) {
   }
   const retrievedAt = new Date();
   const displayNumber = (value, digits = 1) => Number.isFinite(Number(value)) ? Number(value).toFixed(digits) : 'Unavailable';
-  const displayMeasurement = (label, value, unit, digits = 1) => Number.isFinite(Number(value))
-    ? `${label} ${Number(value).toFixed(digits)}${unit}`
-    : `${label} unavailable`;
+  const compactNumber = (value, digits = 1) => value !== null && value !== '' && Number.isFinite(Number(value))
+    ? Number(value).toFixed(digits).replace(/\.0$/, '')
+    : 'Unavailable';
   activeWeatherCommand = openMeteo ? {
-    title: `${displayMeasurement('Temperature', openMeteo.temperatureF, '°F')} · ${displayMeasurement('Wind', openMeteo.windSpeedMph, ' mph')} ${degreesToCompass(openMeteo.windDirDeg)}`,
-    summary: `${displayMeasurement('Gust', openMeteo.gustMph, ' mph')} · ${displayMeasurement('RH', openMeteo.rh, '%', 0)} · ${displayMeasurement('Pressure', openMeteo.pressureInHg, ' inHg', 2)}`,
+    rows: [
+      { label: 'Temperature', value: `${compactNumber(openMeteo.temperatureF)}°F` },
+      { label: 'Wind', value: `${compactNumber(openMeteo.windSpeedMph)} mph ${degreesToCompass(openMeteo.windDirDeg)}` },
+      { label: 'Gust', value: `${compactNumber(openMeteo.gustMph)} mph` },
+      { label: 'Humidity', value: `${compactNumber(openMeteo.rh, 0)}%` },
+      { label: 'Pressure', value: `${compactNumber(openMeteo.pressureInHg, 2)} inHg` },
+      { label: 'Precipitation', value: `${compactNumber(openMeteo.precipitationIn, 2)} in` },
+    ],
     source: `Source: Open-Meteo current conditions used by Plume Modeling · retrieved ${retrievedAt.toLocaleTimeString()}.`,
     details: [
       `Incident coordinates: ${location.lat.toFixed(5)}, ${location.lon.toFixed(5)}`,
@@ -1571,8 +1622,12 @@ function updateCommandWeatherState(openMeteo, nws, location) {
       nws ? `${nws.station}: ${nws.conditions}` : 'NWS station observation unavailable.',
     ],
   } : {
-    title: 'NWS station observation',
-    summary: nws.conditions,
+    rows: [
+      { label: 'Temperature', value: `${compactNumber(nws.temperatureF)}°F` },
+      { label: 'Conditions', value: nws.description },
+      { label: 'Wind', value: `${compactNumber(nws.windSpeedMph)} mph ${degreesToCompass(nws.windDirDeg)}` },
+      Number.isFinite(nws.gustMph) ? { label: 'Gust', value: `${compactNumber(nws.gustMph)} mph` } : null,
+    ],
     source: `Source: ${nws.station} · retrieved ${retrievedAt.toLocaleTimeString()}.`,
     details: [
       `Incident coordinates: ${location.lat.toFixed(5)}, ${location.lon.toFixed(5)}`,
@@ -1593,7 +1648,7 @@ async function refreshCommandWeather({ requestGps = false } = {}) {
     activeWeatherCommand = null;
     renderIncidentCommandSnapshot();
     setText('command-weather-status', 'Location needed');
-    setText('command-weather-summary', error instanceof Error ? error.message : 'Incident location is required.');
+    document.getElementById('command-weather-data')?.setAttribute('aria-label', error instanceof Error ? error.message : 'Incident location is required.');
     return;
   }
   if (!location) {

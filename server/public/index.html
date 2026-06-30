@@ -151,10 +151,9 @@
           <section id="overview" class="view active">
             <article class="panel-card incident-overview-card">
               <div class="incident-overview-actions">
-                <button class="module-btn overview-action-btn" data-view="incident">Start New Incident</button>
-                <button class="module-btn overview-action-btn" data-view="incident">Resume Active Incident</button>
-                <button class="module-btn overview-action-btn" data-view="incident">Training / Demo Mode</button>
-                <button class="module-btn overview-action-btn" data-view="report">Previous Incident Reports</button>
+                <button class="module-btn overview-action-btn" data-view="incident" data-incident-action="new">Start New Incident</button>
+                <button class="module-btn overview-action-btn" data-view="incident" data-incident-action="resume">Resume Active Incident</button>
+                <button class="module-btn overview-action-btn" data-view="incident" data-incident-action="training">Training / Demo Mode</button>
               </div>
             </article>
           </section>
@@ -168,8 +167,8 @@
                 <p class="command-snapshot-provenance">Backend records, model output, and operator-entered selections only.</p>
                 <button class="accent-btn" id="update-incident-location-btn" type="button">Update Scene</button>
               </div>
-              <div class="command-snapshot-grid awaiting-chemical" id="command-snapshot-grid">
-                <article class="command-status-card command-chemical-card command-chemical-dependent" hidden>
+              <div class="command-snapshot-grid" id="command-snapshot-grid">
+                <article class="command-status-card command-chemical-card">
                   <div class="command-status-heading">
                     <span>Chemical</span>
                     <strong id="command-chemical-status"></strong>
@@ -182,7 +181,7 @@
                   </details>
                   <button class="ghost-btn command-card-action" type="button" data-command-view="lookup">Identify / Review</button>
                 </article>
-                <article class="command-status-card command-plume-card command-chemical-dependent" hidden>
+                <article class="command-status-card command-plume-card">
                   <div class="command-status-heading">
                     <span>Plume</span>
                     <strong id="command-plume-status"></strong>
@@ -195,7 +194,7 @@
                   </details>
                   <button class="ghost-btn command-card-action" type="button" data-command-view="plume">Open Plume Model</button>
                 </article>
-                <article class="command-status-card command-ppe-card command-chemical-dependent" hidden>
+                <article class="command-status-card command-ppe-card">
                   <div class="command-status-heading">
                     <span>PPE Selection</span>
                     <strong id="command-ppe-status"></strong>
@@ -213,8 +212,7 @@
                     <span>Weather</span>
                     <strong id="command-weather-status"></strong>
                   </div>
-                  <h4 id="command-weather-title"></h4>
-                  <p id="command-weather-summary"></p>
+                  <div class="command-weather-data" id="command-weather-data" aria-live="polite"></div>
                   <details>
                     <summary>Weather details</summary>
                     <ul id="command-weather-details"></ul>
