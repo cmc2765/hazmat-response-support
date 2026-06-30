@@ -148,10 +148,59 @@
           <section id="overview" class="view active">
             <article class="panel-card incident-overview-card">
               <div class="incident-overview-actions">
-                <button class="module-btn overview-action-btn" data-view="incident" data-incident-action="new">Start New Incident</button>
-                <button class="module-btn overview-action-btn" data-view="incident" data-incident-action="resume">Resume Active Incident</button>
-                <button class="module-btn overview-action-btn" data-view="incident" data-incident-action="training">Training / Demo Mode</button>
+                <button class="module-btn overview-action-btn overview-action-incident" data-view="incident" data-incident-action="new">Start New Incident</button>
+                <button class="module-btn overview-action-btn overview-action-planning" data-view="planning-tools">Planning Tools</button>
+                <button class="module-btn overview-action-btn overview-action-training" data-view="incident" data-incident-action="training">Training / Demo Mode</button>
               </div>
+            </article>
+          </section>
+
+          <section id="planning-tools" class="view">
+            <article class="panel-card planning-tools-card">
+              <div class="planning-tools-heading">
+                <p class="eyebrow box-title">Facility Pre-Planning</p>
+                <h2>Planning Tools</h2>
+                <p>Review E-Plan facility records or open a locally stored facility pre-plan.</p>
+              </div>
+
+              <section class="planning-eplan-card" aria-labelledby="planning-eplan-title">
+                <h3 id="planning-eplan-title">E-Plan Facility Records</h3>
+                <p class="big-label">Sign in to review facility submissions, inventories, and emergency contacts.</p>
+                <form
+                  class="eplan-login-form"
+                  action="https://erplan.net/eplan/login.htm"
+                  method="post"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Planning tools E-Plan first responder login"
+                >
+                  <img
+                    class="eplan-logo"
+                    src="https://erplan.net/eplan/media/eplanlogo.gif"
+                    alt="E-Plan"
+                    referrerpolicy="no-referrer"
+                  />
+                  <label for="planning-eplan-user-id">
+                    <span>Username</span>
+                    <input id="planning-eplan-user-id" name="userID" type="text" autocomplete="username" required />
+                  </label>
+                  <label for="planning-eplan-password">
+                    <span>Password</span>
+                    <input id="planning-eplan-password" name="password" type="password" autocomplete="current-password" required />
+                  </label>
+                  <button class="primary-btn" type="submit">Login to E-Plan</button>
+                </form>
+              </section>
+
+              <section class="facility-preplan-section" aria-labelledby="facility-preplan-title">
+                <h3 id="facility-preplan-title">Facility Pre-Plans</h3>
+                <div class="facility-preplan-grid">
+                  <button class="facility-preplan-btn" type="button" data-preplan-name="Colonial Pipeline">Colonial Pipeline</button>
+                  <button class="facility-preplan-btn" type="button" data-preplan-name="Pelham Civic Complex">Pelham Civic Complex</button>
+                  <button class="facility-preplan-btn" type="button" data-preplan-name="Research Solutions">Research Solutions</button>
+                </div>
+                <p class="muted" id="facility-preplan-status" role="status" aria-live="polite">Pre-plan documents will be connected here when uploaded.</p>
+              </section>
             </article>
           </section>
 

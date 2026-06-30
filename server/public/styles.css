@@ -2485,20 +2485,87 @@ textarea {
 }
 
 .incident-overview-actions .overview-action-btn {
-  min-height: 84px;
-  padding: 18px;
+  min-height: 118px;
+  padding: 24px 20px;
   background: #c9141b;
   border: 2px solid #e32027;
   color: #fff;
   font-family: Bahnschrift, "Aptos Display", "Segoe UI Variable Display", "Trebuchet MS", sans-serif;
-  font-size: 1.08rem;
+  font-size: 1.25rem;
   font-weight: 800;
   line-height: 1.15;
   text-align: center;
 }
 
-.incident-overview-actions .overview-action-btn:hover,
-.incident-overview-actions .overview-action-btn:focus-visible {
+.incident-overview-actions .overview-action-planning {
+  background: #ffd323;
+  border-color: #e0b800;
+  color: #111;
+}
+
+.incident-overview-actions .overview-action-training {
+  background: #168349;
+  border-color: #1da35b;
+  color: #fff;
+}
+
+.incident-overview-actions .overview-action-planning:hover,
+.incident-overview-actions .overview-action-planning:focus-visible {
+  background: #ffe15c;
+  border-color: #111;
+}
+
+.incident-overview-actions .overview-action-training:hover,
+.incident-overview-actions .overview-action-training:focus-visible {
+  background: #1da35b;
+  border-color: #fff;
+}
+
+.planning-tools-card {
+  display: grid;
+  gap: 22px;
+}
+
+.planning-tools-heading h2,
+.planning-tools-heading p {
+  margin-bottom: 6px;
+}
+
+.planning-eplan-card,
+.facility-preplan-section {
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel-2);
+}
+
+.facility-preplan-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.facility-preplan-btn {
+  min-height: 56px;
+  padding: 12px 16px;
+  border: 2px solid #2779ad;
+  border-radius: 12px;
+  background: #e5f3ff;
+  color: #102a43;
+  font: 800 1rem Bahnschrift, "Aptos Display", "Segoe UI Variable Display", sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.facility-preplan-btn:hover,
+.facility-preplan-btn:focus-visible {
+  background: #cce8ff;
+  border-color: #125d8f;
+}
+
+.incident-overview-actions .overview-action-incident:hover,
+.incident-overview-actions .overview-action-incident:focus-visible {
   background: #e32027;
   border-color: var(--yellow);
 }
@@ -2565,7 +2632,9 @@ textarea {
   .sidebar .module-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
   .sidebar .module-btn { min-height: 44px; padding: 7px 8px; font-size: 0.76rem; line-height: 1.15; }
   .incident-overview-actions { grid-template-columns: 1fr; gap: 8px; }
-  .incident-overview-actions .overview-action-btn { min-height: 54px; }
+  .incident-overview-actions .overview-action-btn { min-height: 78px; }
+  .facility-preplan-grid { grid-template-columns: 1fr; }
+  .facility-preplan-btn { min-height: 52px; }
   .footer-note { display: none; }
 }
 
@@ -2661,11 +2730,15 @@ textarea {
 }
 
 .notification-updated {
+  width: 8.75ch;
   align-self: center;
   color: #ffe99a;
   font-size: 1rem;
   font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
   letter-spacing: 0.04em;
+  text-align: right;
   white-space: nowrap;
 }
 

@@ -8,6 +8,7 @@ const notificationUpdated = document.getElementById('notification-updated');
 
 let tacticalClockTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
 let tacticalClockUsesGpsTimeZone = false;
+let notificationWeatherLocation = null;
 
 function renderTacticalClock() {
   if (!notificationUpdated) return;
@@ -44,12 +45,22 @@ async function setTacticalClockTimeZoneFromCoordinates({ lat, lon }) {
 async function initializeTacticalClock() {
   renderTacticalClock();
   window.setInterval(renderTacticalClock, 1000);
+  updateNotificationCenter({ weather: 'Loading live weather…' });
+  window.setInterval(() => {
+    if (notificationWeatherLocation) void refreshNotificationWeather(notificationWeatherLocation);
+  }, 5 * 60 * 1000);
 
   try {
     const gps = await getCurrentGps();
-    await setTacticalClockTimeZoneFromCoordinates(gps);
+    try {
+      await setTacticalClockTimeZoneFromCoordinates(gps);
+    } catch {
+      // Weather can still load if the timezone lookup fails.
+    }
+    await refreshNotificationWeather(gps);
   } catch {
     // The live clock remains useful with the device timezone if GPS is unavailable.
+    updateNotificationCenter({ weather: 'Location needed for live weather' });
   }
 }
 
@@ -108,6 +119,12 @@ buttons.forEach((button) => {
       event.preventDefault();
       button.click();
     }
+  });
+});
+
+document.querySelectorAll('[data-preplan-name]').forEach((button) => {
+  button.addEventListener('click', () => {
+    setText('facility-preplan-status', `${button.dataset.preplanName} pre-plan is awaiting upload.`);
   });
 });
 
@@ -2345,6 +2362,23 @@ async function fetchNwsObservation(lat, lon) {
   };
 }
 
+async function fetchWeatherSources(lat, lon) {
+  const [openMeteoResult, nwsResult] = await Promise.allSettled([
+    fetchOpenMeteo(lat, lon),
+    fetchNwsObservation(lat, lon),
+  ]);
+  return {
+    openMeteo: formatOpenMeteo(openMeteoResult.status === 'fulfilled' ? openMeteoResult.value : null),
+    nws: formatNws(nwsResult.status === 'fulfilled' ? nwsResult.value : null),
+  };
+}
+
+async function refreshNotificationWeather({ lat, lon }) {
+  notificationWeatherLocation = { lat, lon };
+  const { openMeteo, nws } = await fetchWeatherSources(lat, lon);
+  updateNotificationCenter({ weather: openMeteo?.conditions || nws?.conditions || 'Live weather unavailable' });
+}
+
 function formatOpenMeteo(data) {
   if (!data?.current) return null;
   const current = data.current;
@@ -2456,13 +2490,8 @@ async function refreshCommandWeather({ requestGps = false } = {}) {
     return;
   }
 
-  const [openMeteoResponse, nwsResponse] = await Promise.all([
-    fetchOpenMeteo(location.lat, location.lon),
-    fetchNwsObservation(location.lat, location.lon),
-  ]);
+  const { openMeteo, nws } = await fetchWeatherSources(location.lat, location.lon);
   if (token !== commandWeatherRequestToken) return;
-  const openMeteo = formatOpenMeteo(openMeteoResponse);
-  const nws = formatNws(nwsResponse);
   latestPlumeWeather = openMeteo;
   updateCommandWeatherState(openMeteo, nws, location);
   setText('open-meteo-location', openMeteo?.location || 'Open-Meteo unavailable');
@@ -2710,14 +2739,8 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   }
   if (status) status.textContent = 'Loading Open-Meteo and National Weather Service observations…';
 
-  const [openMeteoResponse, nwsResponse] = await Promise.all([
-    fetchOpenMeteo(location.lat, location.lon),
-    fetchNwsObservation(location.lat, location.lon),
-  ]);
+  const { openMeteo, nws } = await fetchWeatherSources(location.lat, location.lon);
   if (token !== plumeRefreshToken) return;
-
-  const openMeteo = formatOpenMeteo(openMeteoResponse);
-  const nws = formatNws(nwsResponse);
   setText('open-meteo-location', openMeteo?.location || 'Open-Meteo unavailable');
   setText('open-meteo-conditions', openMeteo?.conditions || 'Open-Meteo unavailable');
   setText('nws-station-summary', nws?.station || 'NWS observation station unavailable');
@@ -2867,6 +2890,7 @@ document.getElementById('use-current-location-btn')?.addEventListener('click', a
     const input = document.getElementById('incident-coordinates-input');
     if (input) input.value = `${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}`;
     await setTacticalClockTimeZoneFromCoordinates(gps);
+    await refreshNotificationWeather(gps);
     if (status) status.textContent = `Current GPS saved: ${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}.`;
   } catch (error) {
     if (status) status.textContent = error.message;
