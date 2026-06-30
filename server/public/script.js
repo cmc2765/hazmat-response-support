@@ -65,7 +65,10 @@ function updateNotificationCenter(update = {}) {
     notificationWeather.textContent = update.weather;
   }
   if (Object.prototype.hasOwnProperty.call(update, 'monitoring') && notificationMonitoring) {
-    notificationMonitoring.textContent = update.monitoring;
+    const alerts = Array.isArray(update.monitoring)
+      ? update.monitoring.filter(Boolean).join(' · ')
+      : String(update.monitoring ?? '').trim();
+    notificationMonitoring.textContent = alerts || 'No Alerts Found';
   }
 
 }
@@ -76,24 +79,6 @@ window.HazMatIQ.updateNotifications = updateNotificationCenter;
 document.addEventListener('hazmatiq:telemetry', (event) => {
   updateNotificationCenter(event.detail || {});
 });
-
-const monitorReadingElements = document.querySelectorAll('[data-monitor-reading]');
-
-function syncMonitorNotification() {
-  const readingSummary = Array.from(monitorReadingElements)
-    .map((element) => `${element.dataset.monitorReading} ${element.textContent.trim()}`)
-    .join(' · ');
-
-  if (readingSummary) updateNotificationCenter({ monitoring: readingSummary });
-}
-
-if (monitorReadingElements.length) {
-  const monitorObserver = new MutationObserver(syncMonitorNotification);
-  monitorReadingElements.forEach((element) => {
-    monitorObserver.observe(element, { childList: true, characterData: true, subtree: true });
-  });
-  syncMonitorNotification();
-}
 
 function showView(targetId) {
   buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
@@ -138,6 +123,7 @@ const incidentBriefFieldIds = [
 ];
 const incidentsStorageKey = 'hazmatiq_incidents';
 const activeIncidentIdStorageKey = 'hazmatiq_active_incident_id';
+const systemModeStorageKey = 'hazmatiq_system_mode';
 const plumePlanningStorageKey = 'hazmatiq_plume_planning_session';
 let incidentTimerInterval = null;
 
@@ -162,6 +148,41 @@ function getActiveIncident() {
 
 function hasActiveIncident() {
   return Boolean(window.localStorage.getItem(activeIncidentIdStorageKey));
+}
+
+function setSystemMode(mode) {
+  try {
+    if (mode === 'training') window.sessionStorage.setItem(systemModeStorageKey, mode);
+    else window.sessionStorage.removeItem(systemModeStorageKey);
+  } catch {
+    // Mode still renders from incident state when session storage is unavailable.
+  }
+  renderSystemNotification();
+}
+
+function getIncidentElapsedTime(incident) {
+  const startedAt = Date.parse(incident?.startedAt || '');
+  const elapsedSeconds = Number.isFinite(startedAt) ? Math.max(0, Math.floor((Date.now() - startedAt) / 1000)) : 0;
+  const hours = String(Math.floor(elapsedSeconds / 3600)).padStart(2, '0');
+  const minutes = String(Math.floor((elapsedSeconds % 3600) / 60)).padStart(2, '0');
+  const seconds = String(elapsedSeconds % 60).padStart(2, '0');
+  return `${hours}:${minutes}:${seconds}`;
+}
+
+function renderSystemNotification() {
+  const activeIncident = getActiveIncident();
+  if (activeIncident) {
+    updateNotificationCenter({ tactical: `Active Incident · ${getIncidentElapsedTime(activeIncident)}` });
+    return;
+  }
+
+  let mode = null;
+  try {
+    mode = window.sessionStorage.getItem(systemModeStorageKey);
+  } catch {
+    // Fall through to the normal system state.
+  }
+  updateNotificationCenter({ tactical: mode === 'training' ? 'Training / Demo Mode' : 'System Normal' });
 }
 
 function updatePlumeModeLabel() {
@@ -198,19 +219,16 @@ function createIncidentRecord() {
   };
   writeIncidents([incident, ...incidents]);
   window.localStorage.setItem(activeIncidentIdStorageKey, incident.incidentId);
+  setSystemMode('incident');
   startIncidentTimer();
   renderIncidentLists();
 }
 
 function renderIncidentTimer() {
   const timer = document.getElementById('active-incident-timer');
-  if (!timer) return;
-  const startedAt = Date.parse(getActiveIncident()?.startedAt || '');
-  const elapsedSeconds = Number.isFinite(startedAt) ? Math.max(0, Math.floor((Date.now() - startedAt) / 1000)) : 0;
-  const hours = String(Math.floor(elapsedSeconds / 3600)).padStart(2, '0');
-  const minutes = String(Math.floor((elapsedSeconds % 3600) / 60)).padStart(2, '0');
-  const seconds = String(elapsedSeconds % 60).padStart(2, '0');
-  timer.textContent = `${hours}:${minutes}:${seconds}`;
+  const activeIncident = getActiveIncident();
+  if (timer) timer.textContent = getIncidentElapsedTime(activeIncident);
+  renderSystemNotification();
 }
 
 function startIncidentTimer() {
@@ -273,6 +291,7 @@ function completeActiveIncident() {
   };
   writeIncidents(incidents);
   window.localStorage.removeItem(activeIncidentIdStorageKey);
+  setSystemMode('normal');
   renderIncidentTimer();
   renderIncidentLists();
   setIncidentStatus('Incident completed and moved to Completed Reports.');
@@ -645,11 +664,13 @@ function beginNewIncident({ createRecord = false } = {}) {
   }
   setActiveChemical(null);
   if (createRecord) createIncidentRecord();
+  else setSystemMode('training');
   setIncidentStatus('New incident started. Select a chemical to populate HAZMAT COMMAND data.');
 }
 
 function resumeActiveIncident() {
   incidentWorkflowActive = true;
+  setSystemMode('incident');
   restoreIncidentBrief();
   renderIncidentCommandSnapshot();
   void restoreSelectedChemical();
