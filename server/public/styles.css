@@ -239,6 +239,11 @@ h1, h2, h3, p { margin-top: 0; }
   font-weight: 700;
 }
 
+.my-chemicals-nav {
+  font-style: italic;
+  font-weight: 800;
+}
+
 .primary-btn { background: var(--red); font-weight: 800; }
 .ghost-btn { background: var(--panel-2); border-color: #745f52; }
 .accent-btn { background: linear-gradient(105deg, #b70e16, var(--red)); font-weight: 800; }
@@ -451,7 +456,7 @@ h1, h2, h3, p { margin-top: 0; }
 .command-status-heading {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
 }
 
@@ -709,6 +714,7 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .report-incident-item {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   gap: 16px;
@@ -716,6 +722,10 @@ h1, h2, h3, p { margin-top: 0; }
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--panel-2);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
 }
 
 .report-incident-item small {
@@ -726,6 +736,69 @@ h1, h2, h3, p { margin-top: 0; }
 
 .report-form-options {
   margin-top: 20px;
+}
+
+.incident-report-summary-heading,
+.report-summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.incident-report-summary-heading {
+  align-items: flex-start;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 12px;
+}
+
+.print-summary-btn {
+  min-width: 48px;
+  padding: 10px;
+}
+
+.print-summary-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.report-summary-block {
+  margin-top: 18px;
+  break-inside: avoid;
+}
+
+.report-summary-block h3 {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 5px;
+}
+
+.report-summary-block dl {
+  margin: 0;
+}
+
+.report-summary-row {
+  padding: 6px 0;
+}
+
+.report-summary-row dt {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.report-summary-row dd {
+  max-width: 70%;
+  margin: 0;
+  text-align: right;
+}
+
+.report-summary-row ul {
+  margin: 0;
+  padding-left: 18px;
+  text-align: left;
 }
 
 .ics-form-library {
@@ -740,6 +813,34 @@ h1, h2, h3, p { margin-top: 0; }
   .report-incident-item {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #incident-report-summary,
+  #incident-report-summary * {
+    visibility: visible;
+  }
+
+  #incident-report-summary {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    margin: 0;
+    color: #000;
+    background: #fff;
+  }
+
+  #report .report-center {
+    position: static;
+  }
+
+  .report-summary-actions {
+    display: none;
   }
 }
 
@@ -1393,6 +1494,13 @@ h1, h2, h3, p { margin-top: 0; }
   text-align: right;
 }
 
+.plume-mode-label {
+  margin-top: 5px !important;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
 .plume-model-input-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(130px, 1fr));
@@ -1581,10 +1689,30 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .plume-sidebar-data > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #dcefff;
+  color: #123a63;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 900;
-  list-style-position: inside;
+  list-style: none;
+}
+
+.plume-sidebar-data > summary::-webkit-details-marker {
+  display: none;
+}
+
+.plume-sidebar-data > summary::before {
+  content: "▸";
+}
+
+.plume-sidebar-data[open] > summary::before {
+  content: "▾";
 }
 
 .plume-sidebar-data[open] > summary {
@@ -1592,6 +1720,7 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .plume-sidebar-data .status-pill {
+  margin-left: auto;
   margin-top: 0;
   font-size: 0.68rem;
 }

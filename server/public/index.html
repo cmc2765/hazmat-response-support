@@ -69,17 +69,15 @@
               <button class="module-btn" data-view="map">Live Map</button>
               <button class="module-btn" data-view="monitor">Monitoring Equipment</button>
               <button class="module-btn" data-view="report">Incident Reports</button>
+              <button class="module-btn my-chemicals-nav" data-view="my-chemicals">My Chemicals</button>
             </nav>
           </div>
 
-          <section class="sidebar-card plume-demographics" id="plume-demographics" aria-labelledby="demographics-title">
-            <div class="demographics-heading">
-              <div>
-                <p class="eyebrow">Selected plume layer</p>
-                <h3 id="demographics-title">Demographics</h3>
-              </div>
+          <details class="sidebar-card plume-demographics plume-sidebar-data" id="plume-demographics">
+            <summary>
+              Demographics
               <span class="status-pill" id="demographics-zone-badge">No zone</span>
-            </div>
+            </summary>
             <p id="demographics-zone-summary" class="demographics-summary">Click a red, yellow, or green plume zone to inspect potential exposures.</p>
             <div class="demographics-grid" aria-live="polite">
               <div class="demographic-stat">
@@ -87,11 +85,11 @@
                 <strong id="demographics-population">—</strong>
               </div>
               <div class="demographic-stat">
-                <span>Housing units</span>
+                <span>Estimated households</span>
                 <strong id="demographics-housing">—</strong>
               </div>
               <div class="demographic-stat">
-                <span>Residential</span>
+                <span>Residential zones/features</span>
                 <strong id="demographics-residential">—</strong>
               </div>
               <div class="demographic-stat">
@@ -114,7 +112,7 @@
               </ul>
             </div>
             <p id="demographics-source-status" class="demographics-source-status">Population: U.S. Census 2020 intersecting blocks. Occupancies: OpenStreetMap mapped features.</p>
-          </section>
+          </details>
 
           <details class="sidebar-card plume-sidebar-data" id="plume-incident-data-panel">
             <summary>Incident Data</summary>
@@ -407,7 +405,7 @@
                 </div>
                 <div class="chemical-result-actions">
                   <button class="primary-btn" id="open-plume-btn" type="button">Open Plume Model</button>
-                  <button class="accent-btn" type="button">Save Chemical ID</button>
+                  <button class="accent-btn" id="save-my-chemical-btn" type="button">Save to My Chemicals</button>
                 </div>
               </div>
               <section id="chemical-erg-table-1" class="erg-table-card" hidden>
@@ -518,12 +516,20 @@
             </div>
           </section>
 
+          <section id="my-chemicals" class="view">
+            <article class="panel-card facility-inventory">
+              <h2>My Chemicals</h2>
+              <div id="my-chemicals-list" class="facility-chemical-list"></div>
+            </article>
+          </section>
+
           <section id="plume" class="view">
             <form class="plume-model-controls" id="plume-model-form">
               <div class="plume-model-controls-heading">
                 <div>
                   <p class="eyebrow">Model inputs</p>
                   <h3>Confirm Conditions Before Plotting</h3>
+                  <p id="plume-mode-label" class="plume-mode-label">Planning Mode - Not attached to an incident</p>
                 </div>
                 <p id="plume-input-status" class="muted" role="status" aria-live="polite">Select a chemical through Chemical ID to begin.</p>
               </div>
@@ -791,7 +797,7 @@
                 <div id="current-incident-options" class="report-form-options" tabindex="-1">
                   <h3>Form and Report Options</h3>
                   <div class="button-row">
-                    <button class="ghost-btn" type="button">Incident Summary</button>
+                    <button class="ghost-btn" id="open-current-incident-summary-btn" type="button">Incident Summary</button>
                     <button class="ghost-btn" type="button">ICS 201 Incident Briefing</button>
                     <button class="ghost-btn" type="button">ICS 214 Activity Log</button>
                   </div>
@@ -821,6 +827,24 @@
                   <button class="ghost-btn" type="button">ICS 215 Operational Planning Worksheet</button>
                   <button class="ghost-btn" type="button">ICS 215A IAP Safety Analysis</button>
                 </div>
+              </section>
+
+              <section id="incident-report-summary" class="report-section incident-report-summary" hidden>
+                <div class="incident-report-summary-heading">
+                  <div>
+                    <p class="eyebrow">HazMat incident documentation</p>
+                    <h2 id="incident-report-summary-title">Incident Summary</h2>
+                  </div>
+                  <div class="button-row report-summary-actions">
+                    <button class="ghost-btn" id="back-to-incident-reports-btn" type="button">Back to Reports</button>
+                    <button class="primary-btn print-summary-btn" id="print-incident-summary-btn" type="button" aria-label="Print incident summary" title="Print or save as PDF">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v7H7z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div id="incident-report-summary-content"></div>
               </section>
             </div>
           </section>

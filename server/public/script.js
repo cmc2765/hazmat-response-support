@@ -100,6 +100,8 @@ function showView(targetId) {
   views.forEach((view) => view.classList.toggle('active', view.id === targetId));
   if (targetId === 'incident') void refreshCommandWeather({ requestGps: false });
   if (targetId === 'report') renderIncidentLists();
+  if (targetId === 'my-chemicals') renderSavedChemicals();
+  if (targetId === 'plume') updatePlumeModeLabel();
 }
 
 buttons.forEach((button) => {
@@ -136,6 +138,7 @@ const incidentBriefFieldIds = [
 ];
 const incidentsStorageKey = 'hazmatiq_incidents';
 const activeIncidentIdStorageKey = 'hazmatiq_active_incident_id';
+const plumePlanningStorageKey = 'hazmatiq_plume_planning_session';
 let incidentTimerInterval = null;
 
 // Local-only storage until incident records move to a database.
@@ -155,6 +158,28 @@ function writeIncidents(incidents) {
 function getActiveIncident() {
   const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
   return readIncidents().find((incident) => incident.incidentId === activeId) || null;
+}
+
+function hasActiveIncident() {
+  return Boolean(window.localStorage.getItem(activeIncidentIdStorageKey));
+}
+
+function updatePlumeModeLabel() {
+  const label = document.getElementById('plume-mode-label');
+  if (label) {
+    label.textContent = hasActiveIncident()
+      ? 'Active Incident Mode - Data will be saved to the current incident'
+      : 'Planning Mode - Not attached to an incident';
+  }
+}
+
+function savePlanningState(update) {
+  try {
+    const current = JSON.parse(window.localStorage.getItem(plumePlanningStorageKey) || '{}');
+    window.localStorage.setItem(plumePlanningStorageKey, JSON.stringify({ ...current, ...update }));
+  } catch {
+    // Planning state can remain in memory if browser storage is unavailable.
+  }
 }
 
 function createIncidentRecord() {
@@ -255,7 +280,8 @@ function completeActiveIncident() {
 
 function renderIncidentCard(container, incident, activeId) {
   if (!container) return;
-  const item = document.createElement('article');
+  const item = document.createElement('button');
+  item.type = 'button';
   item.className = 'report-incident-item';
   const details = document.createElement('div');
   const name = document.createElement('strong');
@@ -268,6 +294,7 @@ function renderIncidentCard(container, incident, activeId) {
   status.textContent = incident.incidentId === activeId ? 'Active' : incident.status || 'Completed';
   details.append(name, summary);
   item.append(details, status);
+  item.addEventListener('click', () => openIncidentSummary(incident.incidentId));
   container.append(item);
 }
 
@@ -286,6 +313,98 @@ function renderIncidentLists() {
   if (!previous.length && previousContainer) previousContainer.textContent = 'No completed incidents saved yet.';
 }
 
+function appendIncidentSummarySection(container, title, entries) {
+  const applicable = entries.filter(([, value]) => Array.isArray(value) ? value.length : value !== '' && value !== null && value !== undefined);
+  if (!applicable.length) return;
+  const section = document.createElement('section');
+  section.className = 'report-summary-block';
+  const heading = document.createElement('h3');
+  heading.textContent = title;
+  const list = document.createElement('dl');
+  applicable.forEach(([label, value]) => {
+    const row = document.createElement('div');
+    row.className = 'report-summary-row';
+    const term = document.createElement('dt');
+    term.textContent = label;
+    const description = document.createElement('dd');
+    if (Array.isArray(value)) {
+      const bullets = document.createElement('ul');
+      value.forEach((item) => {
+        const bullet = document.createElement('li');
+        bullet.textContent = item;
+        bullets.append(bullet);
+      });
+      description.append(bullets);
+    } else {
+      description.textContent = String(value);
+    }
+    row.append(term, description);
+    list.append(row);
+  });
+  section.append(heading, list);
+  container.append(section);
+}
+
+function openIncidentSummary(incidentId) {
+  const incident = readIncidents().find((item) => item.incidentId === incidentId);
+  const summary = document.getElementById('incident-report-summary');
+  const content = document.getElementById('incident-report-summary-content');
+  if (!incident || !summary || !content) return;
+  document.getElementById('incident-report-summary-title').textContent = incident.incidentName || 'Incident Summary';
+  content.replaceChildren();
+  appendIncidentSummarySection(content, 'Incident Details', [
+    ['Incident name', incident.incidentName],
+    ['Incident number', incident.incidentNumber],
+    ['Incident ID', incident.incidentId],
+    ['Status', incident.status],
+    ['Started', [incident.startDate, incident.startTime].filter(Boolean).join(' ')],
+    ['Completed', [incident.completedDate, incident.completedTime].filter(Boolean).join(' ')],
+  ]);
+  appendIncidentSummarySection(content, 'Location', [
+    ['Facility', incident.facilityName],
+    ['Address', [incident.address, incident.city, incident.state, incident.zip].filter(Boolean).join(', ')],
+    ['GPS', incident.latitude !== '' && incident.longitude !== '' ? `${incident.latitude}, ${incident.longitude}` : ''],
+  ]);
+  appendIncidentSummarySection(content, 'Chemical and Release', [
+    ['Chemical', incident.chemicalName],
+    ['CAS number', incident.casNumber],
+    ['UN/NA number', incident.unNumber],
+    ['Quantity', incident.quantity],
+    ['Container type', incident.containerType],
+    ['Sources', incident.chemicalSources],
+  ]);
+  appendIncidentSummarySection(content, 'Conditions', [
+    ['Weather', incident.weather],
+    ['Wind speed', incident.windSpeed],
+    ['Wind direction', incident.windDirection],
+  ]);
+  appendIncidentSummarySection(content, 'PPE Requirements', [['Guidance', incident.ppeSummary?.items || []]]);
+  appendIncidentSummarySection(content, 'Medical Summary', [['Guidance', incident.medicalSummary?.items || []]]);
+  appendIncidentSummarySection(content, 'Plume Model', [
+    ['Result', incident.plumeSummary?.summary],
+    ['Source', incident.plumeSummary?.source],
+    ['Details', incident.plumeSummary?.details || []],
+  ]);
+  appendIncidentSummarySection(content, 'Documentation Notes', [['Notes', incident.notes]]);
+  document.querySelector('.report-tabs').hidden = true;
+  ['current', 'previous', 'library'].forEach((name) => {
+    const section = document.getElementById(`report-${name}-section`);
+    if (section) section.hidden = true;
+  });
+  summary.hidden = false;
+  summary.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeIncidentSummary() {
+  const summary = document.getElementById('incident-report-summary');
+  if (summary) summary.hidden = true;
+  const tabs = document.querySelector('.report-tabs');
+  if (tabs) tabs.hidden = false;
+  const selected = document.querySelector('[data-report-tab].primary-btn')?.dataset.reportTab || 'current';
+  const selectedSection = document.getElementById(`report-${selected}-section`);
+  if (selectedSection) selectedSection.hidden = false;
+}
+
 document.querySelectorAll('[data-report-tab]').forEach((button) => {
   button.addEventListener('click', () => {
     const selected = button.dataset.reportTab;
@@ -301,6 +420,13 @@ document.querySelectorAll('[data-report-tab]').forEach((button) => {
     if (selected === 'current') document.getElementById('current-incident-options')?.focus();
   });
 });
+
+document.getElementById('open-current-incident-summary-btn')?.addEventListener('click', () => {
+  const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
+  if (activeId) openIncidentSummary(activeId);
+});
+document.getElementById('back-to-incident-reports-btn')?.addEventListener('click', closeIncidentSummary);
+document.getElementById('print-incident-summary-btn')?.addEventListener('click', () => window.print());
 
 // Save brief edits directly to the active incident.
 incidentBriefFieldIds.forEach((id) => {
@@ -578,6 +704,7 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
   const synonyms = parseJsonField(chem.synonyms, []);
   const cas = parseJsonField(chem.cas, []) || [];
   const un = parseJsonField(chem.un, []) || [];
+  const na = parseJsonField(chem.na, []) || [];
   const hazardClass = parseJsonField(chem.hazardClass, []) || [];
   const ppe = parseJsonField(chem.ppe, []) || [];
   const firstAid = parseJsonField(chem.firstAid, []) || [];
@@ -633,6 +760,7 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
     summary: `Operational response summary for ${chem.name}, organized from the available ERG, CAMEO, and NIOSH records.`,
     ergGuide: guideNumber,
     un: un[0] || 'N/A',
+    na: na[0] || 'N/A',
     initialIsolation,
     protectiveAction,
     commandFacts: {
@@ -1117,7 +1245,8 @@ function syncPlumeChemicalSelection() {
   if (!activeChemical) {
     setText('plume-input-status', 'Select a chemical through Chemical ID to begin.');
   } else {
-    setText('plume-input-status', `${activeChemical.name} is linked from the active incident. Confirm the release and weather inputs.`);
+    const mode = hasActiveIncident() ? 'active incident' : 'planning session';
+    setText('plume-input-status', `${activeChemical.name} is linked to the ${mode}. Confirm the release and weather inputs.`);
   }
 }
 
@@ -1133,8 +1262,13 @@ function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {
   if (incidentProductInput) incidentProductInput.value = activeChemical?.name || '';
   if (persist) {
     try {
-      if (activeChemical) window.localStorage.setItem(selectedChemicalStorageKey, JSON.stringify(activeChemical));
-      else window.localStorage.removeItem(selectedChemicalStorageKey);
+      if (hasActiveIncident()) {
+        if (activeChemical) window.localStorage.setItem(selectedChemicalStorageKey, JSON.stringify(activeChemical));
+        else window.localStorage.removeItem(selectedChemicalStorageKey);
+      } else {
+        window.localStorage.removeItem(selectedChemicalStorageKey);
+        savePlanningState({ selectedChemical: activeChemical, updatedAt: new Date().toISOString() });
+      }
     } catch {
       // Chemical selection remains available for the current session.
     }
@@ -1214,6 +1348,78 @@ async function openChemicalById(chemicalId, facilityName = '') {
   }
   await openChemical(chemical, facilityName);
 }
+
+const myChemicalsStorageKey = 'hazmatiq_my_chemicals';
+
+// Saved chemicals stay local until account storage is added.
+function readSavedChemicals() {
+  try {
+    const chemicals = JSON.parse(window.localStorage.getItem(myChemicalsStorageKey) || '[]');
+    return Array.isArray(chemicals) ? chemicals : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveCurrentChemical() {
+  if (!activeChemical || !activeChemicalRecord) return;
+  const advanced = Object.fromEntries(activeChemicalRecord.advanced || []);
+  const savedChemical = {
+    chemicalId: activeChemical.id,
+    chemicalName: activeChemicalRecord.name,
+    casNumber: advanced.CAS === 'N/A' ? '' : advanced.CAS || '',
+    unNumber: activeChemicalRecord.un !== 'N/A' ? activeChemicalRecord.un : (activeChemicalRecord.na === 'N/A' ? '' : activeChemicalRecord.na),
+    ergGuide: activeChemicalRecord.ergGuide === 'N/A' ? '' : activeChemicalRecord.ergGuide,
+    savedAt: new Date().toISOString(),
+  };
+  const chemicals = readSavedChemicals();
+  const duplicateIndex = chemicals.findIndex((chemical) =>
+    (savedChemical.casNumber && chemical.casNumber === savedChemical.casNumber)
+    || (savedChemical.unNumber && chemical.unNumber === savedChemical.unNumber)
+    || chemical.chemicalName?.toLowerCase() === savedChemical.chemicalName.toLowerCase());
+  if (duplicateIndex >= 0) chemicals[duplicateIndex] = savedChemical;
+  else chemicals.unshift(savedChemical);
+  window.localStorage.setItem(myChemicalsStorageKey, JSON.stringify(chemicals));
+  setChemicalSearchStatus(`${savedChemical.chemicalName} saved to My Chemicals.`, 'success');
+}
+
+function renderSavedChemicals() {
+  const list = document.getElementById('my-chemicals-list');
+  if (!list) return;
+  list.replaceChildren();
+  const chemicals = readSavedChemicals();
+  if (!chemicals.length) {
+    list.textContent = 'No saved chemicals yet. Use Chemical ID and click “Save to My Chemicals.”';
+    return;
+  }
+  chemicals.forEach((chemical) => {
+    const card = document.createElement('article');
+    card.className = 'facility-chemical-btn';
+    const name = document.createElement('strong');
+    name.textContent = chemical.chemicalName;
+    const details = document.createElement('span');
+    const savedAt = chemical.savedAt ? new Date(chemical.savedAt).toLocaleString() : '';
+    details.textContent = [
+      chemical.casNumber && `CAS ${chemical.casNumber}`,
+      chemical.unNumber && `UN/NA ${chemical.unNumber}`,
+      chemical.ergGuide && `ERG ${chemical.ergGuide}`,
+      savedAt && `Saved ${savedAt}`,
+    ].filter(Boolean).join(' · ');
+    const openButton = document.createElement('button');
+    openButton.className = 'ghost-btn';
+    openButton.type = 'button';
+    openButton.textContent = 'Open Chemical';
+    openButton.addEventListener('click', async () => {
+      showView('lookup');
+      if (chemicalSearchInput) chemicalSearchInput.value = chemical.chemicalName;
+      await openChemicalById(chemical.chemicalId);
+    });
+    card.append(name, details, openButton);
+    list.append(card);
+  });
+}
+
+document.getElementById('save-my-chemical-btn')?.addEventListener('click', saveCurrentChemical);
 
 async function openFacility(facilityId) {
   latestChemicalSearch += 1;
@@ -1487,7 +1693,7 @@ function updateIncidentLocationFromMap(lng, lat, action) {
   const input = document.getElementById('incident-coordinates-input');
   if (input) input.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
   setIncidentStatus(`${action}: ${lat.toFixed(6)}, ${lng.toFixed(6)}. Updating plume…`);
-  saveIncidentBrief({ quiet: true });
+  if (hasActiveIncident()) saveIncidentBrief({ quiet: true });
   refreshPlumeWorkspace({ requestGps: false });
 }
 
@@ -2268,17 +2474,32 @@ async function runBackendPlume(inputs) {
   }
 }
 
+// Planning results stay separate from official incident documentation.
+function savePlumeResult(command) {
+  const savedAt = new Date().toISOString();
+  const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
+  if (!activeId) {
+    savePlanningState({ selectedChemical: activeChemical, plumeSummary: command, savedAt });
+    return;
+  }
+  const incidents = readIncidents();
+  const index = incidents.findIndex((incident) => incident.incidentId === activeId);
+  if (index < 0) return;
+  incidents[index] = { ...incidents[index], plumeSummary: command, plumeUpdatedAt: savedAt };
+  writeIncidents(incidents);
+}
+
 async function plotPlumeFromControls() {
   const plotButton = document.getElementById('plot-plume-btn');
   if (plotButton) plotButton.disabled = true;
-  setText('plume-input-status', 'Validating incident and model inputs…');
+  setText('plume-input-status', 'Validating location and model inputs…');
   setText('plume-overlay-status', 'Calculating plume zones…');
   try {
     const location = await getIncidentCoordinates({ requestGps: true });
-    if (!location) throw new Error('Enter an incident location before plotting.');
+    if (!location) throw new Error('Enter a location before plotting.');
     await ensurePlumeMap(location);
     const inputs = readPlumeModelInputs(location);
-    saveIncidentBrief({ quiet: true });
+    if (hasActiveIncident()) saveIncidentBrief({ quiet: true });
     const modeled = await runBackendPlume(inputs);
     setText('backend-model-summary', modeled.summary);
     if (!modeled.result) {
@@ -2313,8 +2534,12 @@ async function plotPlumeFromControls() {
         modeled.result.disclaimer,
       ],
     };
+    savePlumeResult(activePlumeCommand);
     renderIncidentCommandSnapshot();
-    setText('plume-input-status', `Plotted ${activeChemical.name}. Review the assumptions and modeled zones before operational use.`);
+    const documentationNote = hasActiveIncident()
+      ? 'Saved to the active incident.'
+      : 'Planning result only; not part of incident documentation.';
+    setText('plume-input-status', `Plotted ${activeChemical.name}. ${documentationNote}`);
     setText('plume-live-status', `Plume plotted ${formatCentralZuluHtml()}.`);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'The plume could not be plotted.';
@@ -2436,6 +2661,7 @@ async function importModelOverlay(file) {
     source: 'Source: operator-imported ALOHA / MARPLOT KML; not calculated by the HazMatIQ backend.',
     details: [`Imported file: ${file.name}`, `Imported: ${new Date().toLocaleString()}`],
   };
+  savePlumeResult(activePlumeCommand);
   renderIncidentCommandSnapshot();
   setText('backend-model-summary', label);
 }
