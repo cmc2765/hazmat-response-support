@@ -21,6 +21,15 @@ export function getDb(): DbClient {
   const conn = new Database(SQLITE_PATH);
   conn.pragma("journal_mode = WAL");
   conn.pragma("foreign_keys = ON");
+  conn.exec(`
+    CREATE TABLE IF NOT EXISTS incidents (
+      id TEXT PRIMARY KEY,
+      status TEXT NOT NULL,
+      report TEXT NOT NULL,
+      updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+    CREATE INDEX IF NOT EXISTS idx_incidents_status ON incidents(status);
+  `);
   _client = drizzle(conn, { schema });
   console.log(`[db] SQLite at ${SQLITE_PATH}`);
   return _client;

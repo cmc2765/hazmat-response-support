@@ -168,6 +168,37 @@ app.get("/api/facilities/:id", async (c) => {
   return c.json({ ...facilityRows[0], chemicals: chemRows });
 });
 
+// ─── Durable incident reports ──────────────────────────────────────────
+app.get("/api/incidents", async (c) => {
+  const rows = await getDb().select().from(schema.incidents);
+  const incidents = rows.flatMap((row) => {
+    try {
+      return [{ ...JSON.parse(row.report), incidentId: row.id, status: row.status }];
+    } catch {
+      return [];
+    }
+  });
+  return c.json({ incidents });
+});
+
+app.post("/api/incidents", async (c) => {
+  const body = await c.req.json().catch(() => null) as { incidents?: unknown[] } | null;
+  if (!body || !Array.isArray(body.incidents)) return c.json({ error: "incidents must be an array" }, 400);
+
+  const incidents = body.incidents.filter((item): item is Record<string, unknown> => (
+    Boolean(item) && typeof item === "object" && typeof (item as Record<string, unknown>).incidentId === "string"
+  ));
+  for (const incident of incidents) {
+    const id = incident.incidentId as string;
+    const status = typeof incident.status === "string" ? incident.status : "Completed";
+    await getDb().insert(schema.incidents).values({ id, status, report: JSON.stringify(incident) }).onConflictDoUpdate({
+      target: schema.incidents.id,
+      set: { status, report: JSON.stringify(incident), updatedAt: sql`(datetime('now'))` },
+    });
+  }
+  return c.json({ saved: incidents.length });
+});
+
 // ─── Sync (delta since last sync) ───────────────────────────────────────
 app.get("/api/sync/:clientId", async (c) => {
   const db = getDb();

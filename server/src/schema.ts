@@ -168,6 +168,18 @@ export const syncState = sqliteTable(
   },
 );
 
+// ─── Incident reports ───────────────────────────────────────────────────
+export const incidents = sqliteTable(
+  "incidents",
+  {
+    id: text("id").primaryKey(),
+    status: text("status").notNull(),
+    report: text("report").notNull(),
+    updatedAt: text("updated_at").notNull().default(sql`(datetime('now'))`),
+  },
+  (t) => ({ statusIdx: index("idx_incidents_status").on(t.status) }),
+);
+
 export type ChemicalRow = typeof chemicals.$inferSelect;
 export type NpgRow = typeof npgRecords.$inferSelect;
 export type ErgRow = typeof ergTable1.$inferSelect;
@@ -176,3 +188,4 @@ export type FacilityRow = typeof facilities.$inferSelect;
 export type FacilityChemicalRow = typeof facilityChemicals.$inferSelect;
 export type DataSourceRow = typeof dataSources.$inferSelect;
 export type SyncStateRow = typeof syncState.$inferSelect;
+export type IncidentRow = typeof incidents.$inferSelect;

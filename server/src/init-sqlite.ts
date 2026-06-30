@@ -128,6 +128,14 @@ CREATE TABLE IF NOT EXISTS sync_state (
   last_sync_at TEXT NOT NULL DEFAULT (datetime('now')),
   last_data_version TEXT
 );
+
+CREATE TABLE IF NOT EXISTS incidents (
+  id TEXT PRIMARY KEY,
+  status TEXT NOT NULL,
+  report TEXT NOT NULL,
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_incidents_status ON incidents(status);
 `);
 
 console.log("[init-sqlite] tables created");

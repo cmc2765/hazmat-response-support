@@ -70,6 +70,27 @@ describe("API routes", () => {
     expect(res.status).toBe(400);
   });
 
+  it("persists completed incident reports", async () => {
+    const incident = {
+      incidentId: "incident-test-1",
+      incidentName: "Warehouse response",
+      status: "Completed",
+      startedAt: "2026-06-29T20:00:00.000Z",
+      completedAt: "2026-06-29T21:00:00.000Z",
+    };
+    const saved = await app.request("/api/incidents", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ incidents: [incident] }),
+    });
+    expect(saved.status).toBe(200);
+
+    const response = await app.request("/api/incidents");
+    expect(response.status).toBe(200);
+    const body = (await response.json()) as { incidents: typeof incident[] };
+    expect(body.incidents).toContainEqual(incident);
+  });
+
   it("serves the static UI at /", async () => {
     const res = await app.request("/");
     expect(res.status).toBe(200);

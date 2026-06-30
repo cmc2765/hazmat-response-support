@@ -126,6 +126,7 @@ const activeIncidentIdStorageKey = 'hazmatiq_active_incident_id';
 const systemModeStorageKey = 'hazmatiq_system_mode';
 const plumePlanningStorageKey = 'hazmatiq_plume_planning_session';
 let incidentTimerInterval = null;
+let incidentSyncTimer = null;
 
 // Local-only storage until incident records move to a database.
 function readIncidents() {
@@ -139,6 +140,44 @@ function readIncidents() {
 
 function writeIncidents(incidents) {
   window.localStorage.setItem(incidentsStorageKey, JSON.stringify(incidents));
+  window.clearTimeout(incidentSyncTimer);
+  incidentSyncTimer = window.setTimeout(() => syncIncidentsToBackend(incidents), 250);
+}
+
+async function syncIncidentsToBackend(incidents = readIncidents()) {
+  try {
+    const response = await fetch('/api/incidents', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ incidents }),
+    });
+    if (!response.ok) throw new Error(`Incident sync failed (${response.status})`);
+  } catch (error) {
+    console.warn('Incident reports remain saved on this device; backend sync is unavailable.', error);
+  }
+}
+
+function incidentModifiedAt(incident) {
+  return Date.parse(incident.updatedAt || incident.completedAt || incident.startedAt || '') || 0;
+}
+
+async function restoreIncidentsFromBackend() {
+  try {
+    const response = await fetch('/api/incidents');
+    if (!response.ok) throw new Error(`Incident restore failed (${response.status})`);
+    const remote = (await response.json()).incidents;
+    if (!Array.isArray(remote)) return;
+
+    const merged = new Map(remote.map((incident) => [incident.incidentId, incident]));
+    readIncidents().forEach((local) => {
+      const saved = merged.get(local.incidentId);
+      if (!saved || incidentModifiedAt(local) >= incidentModifiedAt(saved)) merged.set(local.incidentId, local);
+    });
+    writeIncidents([...merged.values()]);
+    renderIncidentLists();
+  } catch (error) {
+    console.warn('Using incident reports saved on this device; backend restore is unavailable.', error);
+  }
 }
 
 function getActiveIncident() {
@@ -215,6 +254,7 @@ function createIncidentRecord() {
     startDate: now.toLocaleDateString(),
     startTime: now.toLocaleTimeString(),
     startedAt: now.toISOString(),
+    updatedAt: now.toISOString(),
     status: 'Active',
   };
   writeIncidents([incident, ...incidents]);
@@ -474,6 +514,7 @@ incidentBriefFieldIds.forEach((id) => {
 });
 startIncidentTimer();
 renderIncidentLists();
+void restoreIncidentsFromBackend();
 
 const completeIncidentDialog = document.getElementById('complete-incident-dialog');
 document.getElementById('complete-incident-btn')?.addEventListener('click', () => completeIncidentDialog?.showModal());
@@ -1035,10 +1076,15 @@ function normalizePpeRecommendation(value) {
     .replace(/\s+/g, ' ');
 }
 
+function isEmergencyContactInstruction(value) {
+  return /\b(?:call|dial)\s*9-?1-?1\b|\btelephone\b|\bphone\s+(?:number|the)\b|emergency\s+(?:number|telephone)|number\s+(?:listed|shown)\s+on\s+(?:the\s+)?SDS/i.test(String(value || ''));
+}
+
 function correlatePpeSources(sourceRows = []) {
   const rows = requiredPpeConsensusSources.map((sourceId) => {
     const source = sourceRows.find((row) => row.id === sourceId) || { id: sourceId, label: sourceId, items: [] };
     const uniqueItems = [...new Map((source.items || [])
+      .filter((item) => !isEmergencyContactInstruction(item))
       .map((item) => [normalizePpeRecommendation(item), String(item).trim()])
       .filter(([key]) => key)).values()];
     return { ...source, items: uniqueItems };
@@ -1070,6 +1116,7 @@ function correlatePpeSources(sourceRows = []) {
 
 function uniquePpeItems(items = []) {
   return [...new Map(items
+    .filter((item) => !isEmergencyContactInstruction(item))
     .map((item) => [normalizePpeRecommendation(item), String(item).trim()])
     .filter(([key]) => key)).values()];
 }
@@ -1096,17 +1143,18 @@ function buildPpeStartingReference(record) {
   if (!hasData) return null;
 
   const levelLabel = levelMatch ? `Level ${levelMatch[1].toUpperCase()}` : 'Suit level not specified';
+  const showEyeProtection = eye.length > 0 && !hasScba;
   return {
     title: hasScba ? `${levelLabel} + SCBA` : levelLabel,
-    summary: 'Source-backed starting PPE reference for the identified chemical; not an IC-confirmed selection.',
-    source: `Sources available: backend chemical PPE record${hasNiosh ? ', NIOSH NPG' : ''}${kappler.length ? ', Kappler HazMatch' : ''}.`,
+    summary: 'Starting PPE recommendation for the identified chemical; confirm suit compatibility in Kappler HazMatch.',
+    source: `Sources available: ${hasNiosh ? 'NIOSH NPG' : 'chemical response data'}${kappler.length ? ', Kappler HazMatch' : ''}.`,
     details: [
-      clothing.length ? `Protective clothing — backend chemical PPE: ${clothing.join('; ')}` : 'Protective clothing level: not specified in the current backend record.',
-      respiratory.length ? `Respiratory — ${[nioshRespiratory.length ? `NIOSH: ${nioshRespiratory.join('; ')}` : '', chemicalRespiratory.length ? `backend chemical PPE: ${chemicalRespiratory.join('; ')}` : ''].filter(Boolean).join(' · ')}` : 'Respiratory protection: not specified in the current backend record.',
-      skin.length ? `Gloves / boots / skin — ${[nioshSkin.length ? `NIOSH: ${nioshSkin.join('; ')}` : '', chemicalSkin.length ? `backend chemical PPE: ${chemicalSkin.join('; ')}` : ''].filter(Boolean).join(' · ')}` : 'Gloves / boots / skin protection: not specified in the current backend record.',
-      eye.length ? `Eye / face — ${[nioshEye.length ? `NIOSH: ${nioshEye.join('; ')}` : '', chemicalEye.length ? `backend chemical PPE: ${chemicalEye.join('; ')}` : ''].filter(Boolean).join(' · ')}` : 'Eye / face protection: not specified in the current backend record.',
-      kappler.length ? `Kappler HazMatch garment data: ${kappler.join('; ')}` : 'Kappler HazMatch: no chemical-specific result is stored in the backend.',
-    ],
+      clothing.length ? `Protective clothing — ${clothing.join('; ')}` : 'Protective clothing level: not specified.',
+      respiratory.length ? `Respiratory — ${respiratory.join('; ')}` : 'Respiratory protection: not specified.',
+      skin.length ? `Gloves / boots / skin — ${skin.join('; ')}` : 'Gloves / boots / skin protection: not specified.',
+      showEyeProtection ? `Eye / face — ${eye.join('; ')}` : null,
+      kappler.length ? `Kappler HazMatch garment match — ${kappler.join('; ')}` : null,
+    ].filter(Boolean),
   };
 }
 

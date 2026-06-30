@@ -703,6 +703,15 @@ h1, h2, h3, p { margin-top: 0; }
   font-size: 0.75rem;
 }
 
+.ppe-reference-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .report-tabs,
 .report-section {
   margin-top: 18px;
