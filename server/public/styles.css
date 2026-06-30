@@ -1239,10 +1239,6 @@ h1, h2, h3, p { margin-top: 0; }
   cursor: grabbing;
 }
 
-.plume-page-header {
-  align-items: flex-end;
-}
-
 .plume-model-controls {
   display: grid;
   gap: 14px;
@@ -2180,15 +2176,9 @@ textarea {
 
 }
 
-/* Viewport-fitting home command layout */
+/* Compact default incident entry screen */
 .layout {
   align-items: stretch;
-}
-
-.content-area,
-#home.active,
-#home .compact-grid {
-  min-height: 100%;
 }
 
 .content-area {
@@ -2199,44 +2189,58 @@ textarea {
   grid-area: 1 / 1;
 }
 
-#home.active {
-  display: flex;
+.incident-overview-card {
+  width: min(100%, 760px);
+  padding: 18px;
 }
 
-#home .compact-grid {
-  flex: 1;
-  width: 100%;
-  grid-template-rows: repeat(2, minmax(0, 1fr));
+.incident-overview-card h3 {
+  margin-bottom: 4px;
 }
 
-#home .priority-btn {
-  min-height: 100px;
-  padding: clamp(16px, 1.8vw, 24px);
+.incident-overview-card > .muted {
+  margin-bottom: 14px;
+}
+
+.incident-overview-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.incident-overview-actions .overview-action-btn {
+  min-height: 62px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #4b1618, #9f1219);
+  border: 2px solid #e32027;
+  color: #fff;
   font-family: Bahnschrift, "Aptos Display", "Segoe UI Variable Display", "Trebuchet MS", sans-serif;
-  font-size: clamp(1.1rem, 1.4vw, 1.35rem);
+  font-size: 1rem;
   font-weight: 800;
-  font-stretch: condensed;
   line-height: 1.15;
-  letter-spacing: 0.055em;
   text-align: center;
-  text-wrap: balance;
+}
+
+.incident-overview-actions .overview-action-btn:hover,
+.incident-overview-actions .overview-action-btn:focus-visible {
+  background: linear-gradient(135deg, #751619, #c51a21);
+  border-color: var(--yellow);
 }
 
 @media (min-width: 720px) {
-  .app-shell:has(#home.active) {
+  .app-shell:has(#overview.active) {
     min-height: 100dvh;
     height: auto;
     overflow: visible;
   }
 
-  .app-shell:has(#home.active) .layout {
+  .app-shell:has(#overview.active) .layout {
     min-height: auto;
   }
 
-  .app-shell:has(#home.active) .sidebar,
-  .app-shell:has(#home.active) .content-area,
-  .app-shell:has(#home.active) #home,
-  .app-shell:has(#home.active) #home .compact-grid {
+  .app-shell:has(#overview.active) .sidebar,
+  .app-shell:has(#overview.active) .content-area,
+  .app-shell:has(#overview.active) #overview {
     min-height: 0;
   }
 }
@@ -2252,16 +2256,13 @@ textarea {
   .sidebar-card .muted { margin-bottom: 10px; font-size: 0.88rem; }
   .sidebar .module-nav { gap: 6px; }
   .sidebar .module-btn { min-height: 44px; padding: 8px 12px; font-size: 0.94rem; }
-  #home .compact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  #home .compact-grid { grid-template-rows: repeat(3, minmax(0, 1fr)); }
-  #home .priority-btn { min-height: 88px; padding: 14px; font-size: 1.05rem; }
   .footer-note { margin-top: 10px; padding: 9px 13px; font-size: 0.78rem; }
 }
 
 /* Short tablet and laptop screens retain every menu option above the fold. */
 @media (min-width: 720px) and (max-height: 850px) {
   .sidebar-card.compact,
-  .app-shell:has(#home.active) .footer-note {
+  .app-shell:has(#overview.active) .footer-note {
     display: none;
   }
 
@@ -2272,7 +2273,6 @@ textarea {
   .sidebar .module-btn { min-height: 42px; padding: 7px 11px; font-size: 0.9rem; }
   .brand-emblem { width: 48px; height: 48px; flex-basis: 48px; }
   .department-logo { width: 68px; height: 68px; }
-  #home .priority-btn { min-height: 82px; }
 }
 
 /* Mobile command layout */
@@ -2288,9 +2288,8 @@ textarea {
   .sidebar-card.compact { display: none; }
   .sidebar .module-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
   .sidebar .module-btn { min-height: 44px; padding: 7px 8px; font-size: 0.76rem; line-height: 1.15; }
-  #home .compact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  #home .compact-grid { grid-template-rows: repeat(3, minmax(0, 1fr)); }
-  #home .priority-btn { min-height: 86px; padding: 12px; font-size: 0.92rem; letter-spacing: 0.035em; }
+  .incident-overview-actions { grid-template-columns: 1fr; gap: 8px; }
+  .incident-overview-actions .overview-action-btn { min-height: 54px; }
   .footer-note { display: none; }
 }
 

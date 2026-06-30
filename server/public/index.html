@@ -62,7 +62,7 @@
             <h2>Command Dashboard</h2>
             <p class="muted">Quick-access tactical modules</p>
             <nav class="module-nav" aria-label="Primary">
-              <button class="module-btn active" data-view="home">Home Dashboard</button>
+              <button class="module-btn active" data-view="overview">Incident Overview</button>
               <button class="module-btn" data-view="incident">Incident Dashboard</button>
               <button class="module-btn" data-view="lookup">Chemical ID</button>
               <button class="module-btn" data-view="plume">Plume Model</button>
@@ -148,32 +148,27 @@
         </aside>
 
         <section class="content-area">
-          <section id="home" class="view active">
-            <div class="console-grid compact-grid">
-              <button class="module-btn console-btn priority-btn" data-view="incident">NEW INCIDENT</button>
-              <button class="module-btn console-btn priority-btn" data-view="lookup">CHEMICAL ID</button>
-              <button class="module-btn console-btn priority-btn" data-view="plume">LIVE WEATHER</button>
-              <button class="module-btn console-btn priority-btn" data-view="plume">PLUME MODEL</button>
-              <button class="module-btn console-btn priority-btn" data-view="incident">ENTRY/DECON</button>
-              <button class="module-btn console-btn priority-btn" data-view="report">ICS FORMS</button>
-            </div>
+          <section id="overview" class="view active">
+            <article class="panel-card incident-overview-card">
+              <h3>Incident Overview</h3>
+              <p class="muted">Select an incident workflow.</p>
+              <div class="incident-overview-actions">
+                <button class="module-btn overview-action-btn" data-view="incident">Start New Incident</button>
+                <button class="module-btn overview-action-btn" data-view="incident">Resume Active Incident</button>
+                <button class="module-btn overview-action-btn" data-view="incident">Training / Demo Mode</button>
+                <button class="module-btn overview-action-btn" data-view="report">Previous Incident Reports</button>
+              </div>
+            </article>
           </section>
 
           <section id="incident" class="view">
-            <div class="section-header">
-              <div>
-                <p class="eyebrow">Command</p>
-                <h2>Incident Dashboard</h2>
-              </div>
-              <button class="accent-btn" id="update-incident-location-btn" type="button">Update Scene</button>
-            </div>
-
             <section class="incident-command-snapshot" aria-labelledby="command-snapshot-title">
               <div class="command-snapshot-heading">
                 <div>
                   <p class="eyebrow box-title" id="command-snapshot-title">HAZMAT COMMAND</p>
                 </div>
                 <p class="command-snapshot-provenance">Backend records, model output, and operator-entered selections only.</p>
+                <button class="accent-btn" id="update-incident-location-btn" type="button">Update Scene</button>
               </div>
               <div class="command-snapshot-grid">
                 <article class="command-status-card command-chemical-card">
@@ -313,13 +308,6 @@
           </section>
 
           <section id="lookup" class="view">
-            <div class="section-header">
-              <div>
-                <p class="eyebrow">Reference</p>
-                <h2>Chemical ID</h2>
-              </div>
-            </div>
-
             <article class="panel-card chemical-id-search-card">
               <h3>Search Chemical ID</h3>
               <p class="big-label">Search chemical references or find a facility's submitted inventory.</p>
@@ -483,14 +471,6 @@
           </section>
 
           <section id="plume" class="view">
-            <div class="section-header plume-page-header">
-              <div>
-                <p class="eyebrow">Live modeling workspace</p>
-                <h2>Plume Model</h2>
-              </div>
-              <button class="ghost-btn" id="refresh-plume-data-btn" type="button">Refresh Location &amp; Weather</button>
-            </div>
-
             <form class="plume-model-controls" id="plume-model-form">
               <div class="plume-model-controls-heading">
                 <div>
@@ -556,6 +536,7 @@
                 </label>
               </div>
               <div class="plume-model-actions">
+                <button class="ghost-btn" id="refresh-plume-data-btn" type="button">Refresh Location &amp; Weather</button>
                 <button class="ghost-btn" id="use-live-plume-weather-btn" type="button">Use Live Weather</button>
                 <button class="plume-plot-btn" id="plot-plume-btn" type="submit" disabled>Plot Plume</button>
               </div>
@@ -582,14 +563,6 @@
           </section>
 
           <section id="map" class="view">
-            <div class="section-header">
-              <div>
-                <p class="eyebrow">Geospatial</p>
-                <h2>Live HazMat Map</h2>
-              </div>
-              <button class="accent-btn">Toggle Overlay</button>
-            </div>
-
             <div class="panel-card map-hero">
               <div class="map-toolbar">
                 <div class="map-toolbar-title">
@@ -597,6 +570,7 @@
                   <span>Wind: 8 mph SW · Product: Ammonia</span>
                 </div>
                 <div class="map-toolbar-actions">
+                  <button class="accent-btn">Toggle Overlay</button>
                   <button class="ghost-btn">Re-run Plume</button>
                   <button class="ghost-btn">Add Reading</button>
                   <button class="ghost-btn">Drop Marker</button>
@@ -715,17 +689,12 @@
           </section>
 
           <section id="monitor" class="view">
-            <div class="section-header">
-              <div>
-                <p class="eyebrow">Equipment</p>
-                <h2>Monitoring Equipment</h2>
-              </div>
-              <button class="ghost-btn">Calibrate</button>
-            </div>
-
             <div class="card-grid two-up">
               <article class="panel-card">
-                <h3>Connected Devices</h3>
+                <div class="chemical-card-header">
+                  <h3>Connected Devices</h3>
+                  <button class="ghost-btn">Calibrate</button>
+                </div>
                 <ul class="detail-list">
                   <li><span>PID</span><strong>Offline</strong></li>
                   <li><span>Multi-gas Meter</span><strong>Standby</strong></li>
@@ -760,14 +729,6 @@
           </section>
 
           <section id="report" class="view">
-            <div class="section-header">
-              <div>
-                <p class="eyebrow">Documentation</p>
-                <h2>Reports / ICS Forms</h2>
-              </div>
-              <button class="accent-btn">Export Pack</button>
-            </div>
-
             <div class="card-grid two-up">
               <article class="panel-card">
                 <h3>Import Compatibility</h3>
@@ -787,6 +748,7 @@
               <article class="panel-card">
                 <h3>Export Actions</h3>
                 <div class="button-row column">
+                  <button class="accent-btn">Export Pack</button>
                   <button class="primary-btn">Export Incident Summary</button>
                   <button class="ghost-btn">Generate ICS-214</button>
                   <button class="ghost-btn">Generate Hazard Log</button>
@@ -823,16 +785,11 @@
           </section>
 
           <section id="source" class="view">
-            <div class="section-header">
-              <div>
-                <p class="eyebrow">Verification</p>
-                <h2>Source Verification</h2>
-              </div>
-              <button class="ghost-btn">Review Sources</button>
-            </div>
-
             <div class="panel-card">
-              <h3>Reference status</h3>
+              <div class="chemical-card-header">
+                <h3>Reference status</h3>
+                <button class="ghost-btn">Review Sources</button>
+              </div>
               <ul class="detail-list">
                 <li><span>CAMEO Chemicals</span><strong>Bundled chemical and reactivity records</strong></li>
                 <li><span>NIOSH Pocket Guide</span><strong>Bundled exposure and physical-property records</strong></li>

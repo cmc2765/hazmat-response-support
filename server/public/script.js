@@ -2038,15 +2038,6 @@ document.getElementById('tier2-reset-btn')?.addEventListener('click', () => {
 renderTier2Results();
 getDefaultChemicalRecord().then(updateChemicalCard);
 
-const homeButtons = document.querySelectorAll('#home .primary-btn');
-homeButtons.forEach((button, index) => {
-  button.addEventListener('click', () => {
-    const viewNames = ['incident', 'lookup', 'plume', 'map'];
-    const target = viewNames[index];
-    document.querySelector(`[data-view="${target}"]`).click();
-  });
-});
-
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Enter' && document.activeElement && document.activeElement.classList.contains('module-btn')) {
     event.preventDefault();
