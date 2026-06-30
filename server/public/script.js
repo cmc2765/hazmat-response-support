@@ -20,7 +20,6 @@ function renderTacticalClock() {
     second: '2-digit',
     hourCycle: 'h23',
     timeZone: tacticalClockTimeZone,
-    timeZoneName: 'short',
   });
   const source = tacticalClockUsesGpsTimeZone ? 'GPS location' : 'device timezone';
   notificationUpdated.title = `Current time from ${source} (${tacticalClockTimeZone})`;
@@ -53,6 +52,10 @@ async function initializeTacticalClock() {
     // The live clock remains useful with the device timezone if GPS is unavailable.
   }
 }
+
+// Start the clock before the remaining dashboard modules initialize so an
+// unrelated module error cannot leave the Notification Center time unloaded.
+initializeTacticalClock();
 
 function updateNotificationCenter(update = {}) {
   if (Object.prototype.hasOwnProperty.call(update, 'tactical') && tacticalAlertMessage) {
@@ -575,6 +578,12 @@ function buildPpeStartingReference(record) {
 
 function renderIncidentCommandSnapshot() {
   const chemicalLoaded = Boolean(activeChemical);
+  const snapshotGrid = document.getElementById('command-snapshot-grid');
+  snapshotGrid?.classList.toggle('awaiting-chemical', !chemicalLoaded);
+  document.querySelectorAll('.command-chemical-dependent').forEach((card) => {
+    card.hidden = !chemicalLoaded;
+  });
+
   const recordLoaded = Boolean(activeChemicalRecord);
   const commandFacts = activeChemicalRecord?.commandFacts;
   setText('command-chemical-status', recordLoaded ? 'Backend record' : (chemicalLoaded ? 'Loading data' : 'Awaiting ID'));
@@ -2129,4 +2138,3 @@ document.addEventListener('pointerup', () => {
 });
 
 renderTier2Facilities();
-initializeTacticalClock();

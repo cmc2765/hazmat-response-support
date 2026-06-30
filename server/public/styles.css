@@ -485,6 +485,10 @@ h1, h2, h3, p { margin-top: 0; }
   gap: 10px;
 }
 
+.command-snapshot-grid.awaiting-chemical {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .command-status-card {
   display: grid;
   grid-template-rows: auto auto minmax(40px, auto) auto auto;
@@ -2191,15 +2195,11 @@ textarea {
 
 .incident-overview-card {
   width: min(100%, 760px);
-  padding: 18px;
-}
-
-.incident-overview-card h3 {
-  margin-bottom: 4px;
-}
-
-.incident-overview-card > .muted {
-  margin-bottom: 14px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .incident-overview-actions {
@@ -2211,7 +2211,7 @@ textarea {
 .incident-overview-actions .overview-action-btn {
   min-height: 62px;
   padding: 12px 16px;
-  background: linear-gradient(135deg, #4b1618, #9f1219);
+  background: #c9141b;
   border: 2px solid #e32027;
   color: #fff;
   font-family: Bahnschrift, "Aptos Display", "Segoe UI Variable Display", "Trebuchet MS", sans-serif;
@@ -2223,7 +2223,7 @@ textarea {
 
 .incident-overview-actions .overview-action-btn:hover,
 .incident-overview-actions .overview-action-btn:focus-visible {
-  background: linear-gradient(135deg, #751619, #c51a21);
+  background: #e32027;
   border-color: var(--yellow);
 }
 
@@ -2387,7 +2387,9 @@ textarea {
 .notification-updated {
   align-self: center;
   color: #ffe99a;
-  font-size: 0.66rem;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
   white-space: nowrap;
 }
 
@@ -2403,7 +2405,10 @@ textarea {
 
   .notification-heading { min-width: 0; }
   .notification-feed { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .notification-updated { display: none; }
+  .notification-updated {
+    grid-column: 1 / -1;
+    justify-self: end;
+  }
 }
 
 @media (max-width: 719px) {

@@ -62,7 +62,7 @@
             <h2>Command Dashboard</h2>
             <p class="muted">Quick-access tactical modules</p>
             <nav class="module-nav" aria-label="Primary">
-              <button class="module-btn active" data-view="overview">Incident Overview</button>
+              <button class="module-btn active" data-view="overview">HazMatIQ Home</button>
               <button class="module-btn" data-view="incident">Incident Dashboard</button>
               <button class="module-btn" data-view="lookup">Chemical ID</button>
               <button class="module-btn" data-view="plume">Plume Model</button>
@@ -150,8 +150,6 @@
         <section class="content-area">
           <section id="overview" class="view active">
             <article class="panel-card incident-overview-card">
-              <h3>Incident Overview</h3>
-              <p class="muted">Select an incident workflow.</p>
               <div class="incident-overview-actions">
                 <button class="module-btn overview-action-btn" data-view="incident">Start New Incident</button>
                 <button class="module-btn overview-action-btn" data-view="incident">Resume Active Incident</button>
@@ -170,56 +168,56 @@
                 <p class="command-snapshot-provenance">Backend records, model output, and operator-entered selections only.</p>
                 <button class="accent-btn" id="update-incident-location-btn" type="button">Update Scene</button>
               </div>
-              <div class="command-snapshot-grid">
-                <article class="command-status-card command-chemical-card">
+              <div class="command-snapshot-grid awaiting-chemical" id="command-snapshot-grid">
+                <article class="command-status-card command-chemical-card command-chemical-dependent" hidden>
                   <div class="command-status-heading">
                     <span>Chemical</span>
-                    <strong id="command-chemical-status">Awaiting ID</strong>
+                    <strong id="command-chemical-status"></strong>
                   </div>
-                  <h4 id="command-chemical-name">No chemical identified</h4>
-                  <p id="command-chemical-summary">Search Chemical ID to connect backend response data.</p>
+                  <h4 id="command-chemical-name"></h4>
+                  <p id="command-chemical-summary"></p>
                   <details>
                     <summary>Source details</summary>
-                    <ul id="command-chemical-details"><li>No chemical data loaded.</li></ul>
+                    <ul id="command-chemical-details"></ul>
                   </details>
                   <button class="ghost-btn command-card-action" type="button" data-command-view="lookup">Identify / Review</button>
                 </article>
-                <article class="command-status-card command-plume-card">
+                <article class="command-status-card command-plume-card command-chemical-dependent" hidden>
                   <div class="command-status-heading">
                     <span>Plume</span>
-                    <strong id="command-plume-status">Not plotted</strong>
+                    <strong id="command-plume-status"></strong>
                   </div>
-                  <h4 id="command-plume-title">No active plume</h4>
-                  <p id="command-plume-summary">Confirm the release and weather inputs before plotting.</p>
+                  <h4 id="command-plume-title"></h4>
+                  <p id="command-plume-summary"></p>
                   <details>
                     <summary>Model details</summary>
-                    <ul id="command-plume-details"><li>No plume model has been plotted.</li></ul>
+                    <ul id="command-plume-details"></ul>
                   </details>
                   <button class="ghost-btn command-card-action" type="button" data-command-view="plume">Open Plume Model</button>
                 </article>
-                <article class="command-status-card command-ppe-card">
+                <article class="command-status-card command-ppe-card command-chemical-dependent" hidden>
                   <div class="command-status-heading">
                     <span>PPE Selection</span>
-                    <strong id="command-ppe-status">No selection</strong>
+                    <strong id="command-ppe-status"></strong>
                   </div>
-                  <h4 id="command-ppe-title">Awaiting chemical ID</h4>
-                  <p id="command-ppe-summary">Backend reference text and operator-entered PPE will appear here.</p>
+                  <h4 id="command-ppe-title"></h4>
+                  <p id="command-ppe-summary"></p>
                   <details>
                     <summary>Source comparison</summary>
-                    <ul id="command-ppe-details"><li>No PPE guidance loaded.</li></ul>
+                    <ul id="command-ppe-details"></ul>
                   </details>
                   <button class="ghost-btn command-card-action" type="button" data-command-view="lookup">Review PPE Guidance</button>
                 </article>
                 <article class="command-status-card command-weather-card">
                   <div class="command-status-heading">
                     <span>Weather</span>
-                    <strong id="command-weather-status">Awaiting location</strong>
+                    <strong id="command-weather-status"></strong>
                   </div>
-                  <h4 id="command-weather-title">No live observation</h4>
-                  <p id="command-weather-summary">Enter an incident location to load the weather used by plume modeling.</p>
+                  <h4 id="command-weather-title"></h4>
+                  <p id="command-weather-summary"></p>
                   <details>
                     <summary>Weather details</summary>
-                    <ul id="command-weather-details"><li>No live weather data loaded.</li></ul>
+                    <ul id="command-weather-details"></ul>
                   </details>
                   <button class="ghost-btn command-card-action command-weather-refresh" id="refresh-command-weather-btn" type="button">Refresh Live Weather</button>
                 </article>
