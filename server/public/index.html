@@ -68,8 +68,7 @@
               <button class="module-btn" data-view="plume">Plume Model</button>
               <button class="module-btn" data-view="map">Live Map</button>
               <button class="module-btn" data-view="monitor">Monitoring Equipment</button>
-              <button class="module-btn" data-view="report">Reports / ICS</button>
-              <button class="module-btn" data-view="source">Source Verification</button>
+              <button class="module-btn" data-view="report">Incident Reports</button>
             </nav>
           </div>
 
@@ -228,14 +227,37 @@
                   <div>
                     <p class="eyebrow box-title">Incident brief</p>
                   </div>
-                  <button class="ghost-btn" id="use-current-location-btn" type="button">Use Current GPS</button>
+                  <div class="button-row">
+                    <span class="status-pill incident-timer">Incident <strong id="active-incident-timer">00:00:00</strong></span>
+                    <button class="ghost-btn" id="use-current-location-btn" type="button">Use Current GPS</button>
+                  </div>
                 </div>
-                <p class="big-label">Enter the current location and product details directly for the incident brief.</p>
                 <div class="incident-form-grid">
-                  <label class="incident-field incident-field-wide" for="incident-address-input">
-                    <span>Address or location description</span>
-                    <input id="incident-address-input" type="text" placeholder="Street address, highway marker, or facility" autocomplete="street-address" />
+                  <label class="incident-field incident-field-wide" for="incidentName">
+                    <span>Incident Name <small class="required-marker">* required</small></span>
+                    <input id="incidentName" name="incidentName" type="text" placeholder="Enter incident name" required />
                   </label>
+                  <div class="incident-field incident-field-wide">
+                    <label class="incident-field-label" for="incident-address-input">Address or Location</label>
+                    <div class="incident-address-autocomplete">
+                      <input
+                        id="incident-address-input"
+                        type="text"
+                        role="combobox"
+                        placeholder="Street address, highway marker, or facility"
+                        autocomplete="off"
+                        aria-autocomplete="list"
+                        aria-controls="incident-address-suggestions"
+                        aria-expanded="false"
+                      />
+                      <div
+                        id="incident-address-suggestions"
+                        class="chemical-search-suggestions incident-address-suggestions"
+                        role="listbox"
+                        hidden
+                      ></div>
+                    </div>
+                  </div>
                   <label class="incident-field" for="incident-city">
                     <span>City</span>
                     <input id="incident-city" type="text" placeholder="City" autocomplete="address-level2" />
@@ -248,15 +270,23 @@
                     <span>GPS latitude, longitude</span>
                     <input id="incident-coordinates-input" type="text" placeholder="33.5186, -86.8104" inputmode="decimal" />
                   </label>
-                  <label class="incident-field incident-field-wide" for="incident-product">
-                    <span>Product / chemical</span>
-                    <input id="incident-product" type="text" placeholder="Known or suspected product" />
-                  </label>
-                  <label class="incident-field incident-field-wide" for="incident-placard">
-                    <span>Placard / container clue</span>
-                    <input id="incident-placard" type="text" placeholder="UN/NA number, placard, railcar, drum, or vessel" />
-                  </label>
-                  <label class="incident-field incident-field-wide" for="incident-notes">
+                  <div class="incident-field incident-field-wide">
+                    <label class="incident-field-label" for="incident-product">Product / Chemical / UN Placard</label>
+                    <div class="chemical-search-input-wrap">
+                      <input
+                        id="incident-product"
+                        type="text"
+                        role="combobox"
+                        placeholder="Product, chemical, UN/NA number, or placard"
+                        autocomplete="off"
+                        aria-autocomplete="list"
+                        aria-controls="incident-product-suggestions"
+                        aria-expanded="false"
+                      />
+                      <div id="incident-product-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
+                    </div>
+                  </div>
+                  <label class="incident-field incident-field-full" for="incident-notes">
                     <span>Notes</span>
                     <textarea id="incident-notes" rows="3" placeholder="Leak indicators, odor reports, access issues, or other scene notes"></textarea>
                   </label>
@@ -300,7 +330,29 @@
                   <button class="primary-btn" type="submit">Login to E-Plan</button>
                 </form>
               </article>
+
+              <article class="panel-card incident-guidance-card ppe-summary-card">
+                <h3>PPE Requirements</h3>
+                <div id="incident-ppe-guidance">Select or identify a chemical to populate PPE guidance.</div>
+                <p id="incident-ppe-sources" class="incident-guidance-sources" hidden></p>
+              </article>
+
+              <article class="panel-card incident-guidance-card medical-summary-card">
+                <h3>Medical</h3>
+                <div id="incident-medical-guidance">Select or identify a chemical to populate medical guidance.</div>
+                <p id="incident-medical-sources" class="incident-guidance-sources" hidden></p>
+              </article>
             </div>
+            <div class="button-row">
+              <button class="primary-btn" id="complete-incident-btn" type="button">Complete Incident</button>
+            </div>
+            <dialog id="complete-incident-dialog" aria-labelledby="complete-incident-question">
+              <h3 id="complete-incident-question">Are you sure you want to complete this incident?</h3>
+              <div class="button-row">
+                <button class="primary-btn" id="confirm-complete-incident-btn" type="button">Yes, Complete Incident</button>
+                <button class="ghost-btn" id="cancel-complete-incident-btn" type="button">Cancel</button>
+              </div>
+            </dialog>
           </section>
 
           <section id="lookup" class="view">
@@ -725,58 +777,51 @@
           </section>
 
           <section id="report" class="view">
-            <div class="card-grid two-up">
-              <article class="panel-card">
-                <h3>Import Compatibility</h3>
-                <div class="chip-list">
-                  <li>CAMEO-style data</li>
-                  <li>Tier II inventory</li>
-                  <li>CSV inventories</li>
-                  <li>SDS PDFs</li>
-                  <li>Shapefiles</li>
-                  <li>GeoJSON</li>
-                  <li>KML</li>
-                  <li>Preplans</li>
-                  <li>Weather feeds</li>
-                  <li>Detector CSV / Bluetooth</li>
-                </div>
-              </article>
-              <article class="panel-card">
-                <h3>Export Actions</h3>
-                <div class="button-row column">
-                  <button class="accent-btn">Export Pack</button>
-                  <button class="primary-btn">Export Incident Summary</button>
-                  <button class="ghost-btn">Generate ICS-214</button>
-                  <button class="ghost-btn">Generate Hazard Log</button>
-                  <button class="ghost-btn">Export Plume Map</button>
-                </div>
-              </article>
-            </div>
-
-            <div class="panel-card">
-              <h3>Output Pack</h3>
-              <ul class="detail-list">
-                <li><span>PDF incident report</span><strong>Available</strong></li>
-                <li><span>GeoJSON / KML</span><strong>Available</strong></li>
-                <li><span>CSV logs</span><strong>Available</strong></li>
-                <li><span>ICS forms</span><strong>Available</strong></li>
-                <li><span>Chemical research packet</span><strong>Available</strong></li>
-                <li><span>Public warning message</span><strong>Available</strong></li>
-                <li><span>After-action report</span><strong>Available</strong></li>
-              </ul>
-            </div>
-
-            <div class="panel-card">
-              <h3>Operational Compatibility</h3>
-              <div class="chip-list">
-                <li>Works on iPad</li>
-                <li>Works on Windows laptop</li>
-                <li>Works on command post desktop</li>
-                <li>Works offline</li>
-                <li>Syncs when internet returns</li>
-                <li>Supports multiple users</li>
-                <li>Allows mutual-aid access</li>
+            <div class="panel-card report-center">
+              <h2>Incident Reports &amp; ICS Forms</h2>
+              <div class="button-row report-tabs">
+                <button class="primary-btn" type="button" data-report-tab="current">Current Incident Forms</button>
+                <button class="ghost-btn" type="button" data-report-tab="previous">Previous Completed Reports</button>
+                <button class="ghost-btn" type="button" data-report-tab="library">ICS Forms Library</button>
               </div>
+
+              <section id="report-current-section" class="report-section">
+                <h3>Current Active Incident</h3>
+                <div id="current-incident-list" class="report-incident-list"></div>
+                <div id="current-incident-options" class="report-form-options" tabindex="-1">
+                  <h3>Form and Report Options</h3>
+                  <div class="button-row">
+                    <button class="ghost-btn" type="button">Incident Summary</button>
+                    <button class="ghost-btn" type="button">ICS 201 Incident Briefing</button>
+                    <button class="ghost-btn" type="button">ICS 214 Activity Log</button>
+                  </div>
+                  <p class="muted">PDF autofill will be added later.</p>
+                </div>
+              </section>
+
+              <section id="report-previous-section" class="report-section" hidden>
+                <h3>Previous Completed Reports</h3>
+                <div id="previous-incident-list" class="report-incident-list"></div>
+              </section>
+
+              <section id="report-library-section" class="report-section" hidden>
+                <h3>ICS Forms Library</h3>
+                <div class="ics-form-library">
+                  <button class="ghost-btn" type="button">ICS 201 Incident Briefing</button>
+                  <button class="ghost-btn" type="button">ICS 202 Incident Objectives</button>
+                  <button class="ghost-btn" type="button">ICS 203 Organization Assignment List</button>
+                  <button class="ghost-btn" type="button">ICS 204 Assignment List</button>
+                  <button class="ghost-btn" type="button">ICS 205 Communications Plan</button>
+                  <button class="ghost-btn" type="button">ICS 205A Communications List</button>
+                  <button class="ghost-btn" type="button">ICS 206 Medical Plan</button>
+                  <button class="ghost-btn" type="button">ICS 208 Safety Message / Plan</button>
+                  <button class="ghost-btn" type="button">ICS 208HM Site Safety and Control Plan</button>
+                  <button class="ghost-btn" type="button">ICS 209 Incident Status Summary</button>
+                  <button class="ghost-btn" type="button">ICS 214 Activity Log</button>
+                  <button class="ghost-btn" type="button">ICS 215 Operational Planning Worksheet</button>
+                  <button class="ghost-btn" type="button">ICS 215A IAP Safety Analysis</button>
+                </div>
+              </section>
             </div>
           </section>
 

@@ -99,11 +99,14 @@ function showView(targetId) {
   buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
   views.forEach((view) => view.classList.toggle('active', view.id === targetId));
   if (targetId === 'incident') void refreshCommandWeather({ requestGps: false });
+  if (targetId === 'report') renderIncidentLists();
 }
 
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
-    if (button.dataset.incidentAction === 'new' || button.dataset.incidentAction === 'training') {
+    if (button.dataset.incidentAction === 'new') {
+      beginNewIncident({ createRecord: true });
+    } else if (button.dataset.incidentAction === 'training') {
       beginNewIncident();
     } else if (button.dataset.incidentAction === 'resume') {
       resumeActiveIncident();
@@ -123,14 +126,321 @@ buttons.forEach((button) => {
 
 const incidentBriefStorageKey = 'hazmatiq.incidentBrief';
 const incidentBriefFieldIds = [
+  'incidentName',
   'incident-address-input',
   'incident-city',
   'incident-state',
   'incident-coordinates-input',
   'incident-product',
-  'incident-placard',
   'incident-notes',
 ];
+const incidentsStorageKey = 'hazmatiq_incidents';
+const activeIncidentIdStorageKey = 'hazmatiq_active_incident_id';
+let incidentTimerInterval = null;
+
+// Local-only storage until incident records move to a database.
+function readIncidents() {
+  try {
+    const incidents = JSON.parse(window.localStorage.getItem(incidentsStorageKey) || '[]');
+    return Array.isArray(incidents) ? incidents : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeIncidents(incidents) {
+  window.localStorage.setItem(incidentsStorageKey, JSON.stringify(incidents));
+}
+
+function getActiveIncident() {
+  const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
+  return readIncidents().find((incident) => incident.incidentId === activeId) || null;
+}
+
+function createIncidentRecord() {
+  const now = new Date();
+  const oldActiveId = window.localStorage.getItem(activeIncidentIdStorageKey);
+  const incidents = readIncidents().map((incident) => incident.incidentId === oldActiveId
+    ? { ...incident, status: 'Completed', completedAt: now.toISOString() }
+    : incident);
+  const incident = {
+    incidentId: window.crypto?.randomUUID?.() || `incident-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    incidentName: document.getElementById('incidentName')?.value.trim() || 'New Incident',
+    startDate: now.toLocaleDateString(),
+    startTime: now.toLocaleTimeString(),
+    startedAt: now.toISOString(),
+    status: 'Active',
+  };
+  writeIncidents([incident, ...incidents]);
+  window.localStorage.setItem(activeIncidentIdStorageKey, incident.incidentId);
+  startIncidentTimer();
+  renderIncidentLists();
+}
+
+function renderIncidentTimer() {
+  const timer = document.getElementById('active-incident-timer');
+  if (!timer) return;
+  const startedAt = Date.parse(getActiveIncident()?.startedAt || '');
+  const elapsedSeconds = Number.isFinite(startedAt) ? Math.max(0, Math.floor((Date.now() - startedAt) / 1000)) : 0;
+  const hours = String(Math.floor(elapsedSeconds / 3600)).padStart(2, '0');
+  const minutes = String(Math.floor((elapsedSeconds % 3600) / 60)).padStart(2, '0');
+  const seconds = String(elapsedSeconds % 60).padStart(2, '0');
+  timer.textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+function startIncidentTimer() {
+  renderIncidentTimer();
+  if (!incidentTimerInterval) incidentTimerInterval = window.setInterval(renderIncidentTimer, 1000);
+}
+
+function getIncidentFormData() {
+  const coordinates = parseGpsCoordinate(document.getElementById('incident-coordinates-input')?.value);
+  const advanced = Object.fromEntries(activeChemicalRecord?.advanced || []);
+  return {
+    incidentName: document.getElementById('incidentName')?.value.trim() || getActiveIncident()?.incidentName || 'New Incident',
+    incidentNumber: document.getElementById('incident-number')?.value.trim() || '',
+    facilityName: document.getElementById('incident-facility-name')?.value.trim()
+      || (!document.getElementById('facility-inventory')?.hidden ? document.getElementById('facility-name')?.textContent.trim() : '')
+      || '',
+    address: document.getElementById('incident-address-input')?.value.trim() || '',
+    city: document.getElementById('incident-city')?.value.trim() || '',
+    state: document.getElementById('incident-state')?.value.trim() || '',
+    zip: document.getElementById('incident-zip')?.value.trim() || '',
+    latitude: coordinates?.lat ?? '',
+    longitude: coordinates?.lon ?? '',
+    weather: latestPlumeWeather?.conditions || '',
+    windSpeed: document.getElementById('plume-wind-speed')?.value || latestPlumeWeather?.windSpeedMph || '',
+    windDirection: document.getElementById('plume-wind-direction')?.value || latestPlumeWeather?.windDirDeg || '',
+    chemicalName: document.getElementById('incident-product')?.value.trim() || activeChemical?.name || '',
+    casNumber: advanced.CAS === 'N/A' ? '' : advanced.CAS || '',
+    unNumber: activeChemicalRecord?.un === 'N/A' ? '' : activeChemicalRecord?.un || '',
+    quantity: document.getElementById('plume-release-quantity')?.value || '',
+    containerType: document.getElementById('incident-container-type')?.value.trim() || '',
+    notes: document.getElementById('incident-notes')?.value.trim() || '',
+  };
+}
+
+function updateActiveIncidentRecord() {
+  const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
+  if (!activeId) return;
+  const incidents = readIncidents();
+  const index = incidents.findIndex((incident) => incident.incidentId === activeId);
+  if (index < 0) return;
+  incidents[index] = { ...incidents[index], ...getIncidentFormData(), updatedAt: new Date().toISOString() };
+  writeIncidents(incidents);
+  renderIncidentLists();
+}
+
+// Complete the active incident without removing its saved record.
+function completeActiveIncident() {
+  updateActiveIncidentRecord();
+  const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
+  const incidents = readIncidents();
+  const index = incidents.findIndex((incident) => incident.incidentId === activeId);
+  if (index < 0) return;
+  const now = new Date();
+  incidents[index] = {
+    ...incidents[index],
+    status: 'Completed',
+    completedAt: now.toISOString(),
+    completedDate: now.toLocaleDateString(),
+    completedTime: now.toLocaleTimeString(),
+  };
+  writeIncidents(incidents);
+  window.localStorage.removeItem(activeIncidentIdStorageKey);
+  renderIncidentTimer();
+  renderIncidentLists();
+  setIncidentStatus('Incident completed and moved to Previous Completed Reports.');
+}
+
+function renderIncidentCard(container, incident, activeId) {
+  if (!container) return;
+  const item = document.createElement('article');
+  item.className = 'report-incident-item';
+  const details = document.createElement('div');
+  const name = document.createElement('strong');
+  name.textContent = incident.incidentName || 'New Incident';
+  const summary = document.createElement('small');
+  const place = [incident.facilityName, incident.address, incident.city, incident.state].filter(Boolean).join(', ');
+  summary.textContent = [incident.startDate, incident.startTime, place].filter(Boolean).join(' · ');
+  const status = document.createElement('span');
+  status.className = 'status-pill';
+  status.textContent = incident.incidentId === activeId ? 'Active' : incident.status || 'Completed';
+  details.append(name, summary);
+  item.append(details, status);
+  container.append(item);
+}
+
+function renderIncidentLists() {
+  const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
+  const incidents = readIncidents();
+  const currentContainer = document.getElementById('current-incident-list');
+  const previousContainer = document.getElementById('previous-incident-list');
+  currentContainer?.replaceChildren();
+  previousContainer?.replaceChildren();
+  const current = incidents.find((incident) => incident.incidentId === activeId);
+  if (current) renderIncidentCard(currentContainer, current, activeId);
+  else if (currentContainer) currentContainer.textContent = 'No active incident. Start one from the Home Page.';
+  const previous = incidents.filter((incident) => incident.status === 'Completed');
+  previous.forEach((incident) => renderIncidentCard(previousContainer, incident, activeId));
+  if (!previous.length && previousContainer) previousContainer.textContent = 'No completed incidents saved yet.';
+}
+
+document.querySelectorAll('[data-report-tab]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const selected = button.dataset.reportTab;
+    document.querySelectorAll('[data-report-tab]').forEach((tab) => {
+      tab.classList.toggle('primary-btn', tab === button);
+      tab.classList.toggle('ghost-btn', tab !== button);
+    });
+    ['current', 'previous', 'library'].forEach((name) => {
+      const section = document.getElementById(`report-${name}-section`);
+      if (section) section.hidden = name !== selected;
+    });
+    renderIncidentLists();
+    if (selected === 'current') document.getElementById('current-incident-options')?.focus();
+  });
+});
+
+// Save brief edits directly to the active incident.
+incidentBriefFieldIds.forEach((id) => {
+  document.getElementById(id)?.addEventListener('input', updateActiveIncidentRecord);
+});
+['plume-release-quantity', 'plume-wind-speed', 'plume-wind-direction'].forEach((id) => {
+  document.getElementById(id)?.addEventListener('input', updateActiveIncidentRecord);
+});
+startIncidentTimer();
+renderIncidentLists();
+
+const completeIncidentDialog = document.getElementById('complete-incident-dialog');
+document.getElementById('complete-incident-btn')?.addEventListener('click', () => completeIncidentDialog?.showModal());
+document.getElementById('cancel-complete-incident-btn')?.addEventListener('click', () => completeIncidentDialog?.close());
+document.getElementById('confirm-complete-incident-btn')?.addEventListener('click', () => {
+  completeActiveIncident();
+  completeIncidentDialog?.close();
+});
+
+const incidentAddressInput = document.getElementById('incident-address-input');
+const incidentAddressSuggestions = document.getElementById('incident-address-suggestions');
+const arcgisGeocoderUrl = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer';
+let incidentAddressSearchTimer = 0;
+let latestIncidentAddressSearch = 0;
+
+function clearIncidentAddressSuggestions() {
+  if (!incidentAddressSuggestions) return;
+  incidentAddressSuggestions.replaceChildren();
+  incidentAddressSuggestions.hidden = true;
+  incidentAddressInput?.setAttribute('aria-expanded', 'false');
+}
+
+function focusIncidentAddressSuggestion(currentButton, offset) {
+  const buttons = [...(incidentAddressSuggestions?.querySelectorAll('button') || [])];
+  const currentIndex = buttons.indexOf(currentButton);
+  buttons[(currentIndex + offset + buttons.length) % buttons.length]?.focus();
+}
+
+async function selectIncidentAddress(suggestion) {
+  latestIncidentAddressSearch += 1;
+  clearIncidentAddressSuggestions();
+  setIncidentStatus('Loading the selected address…');
+
+  const query = new URLSearchParams({
+    f: 'json',
+    SingleLine: suggestion.text,
+    magicKey: suggestion.magicKey,
+    countryCode: 'USA',
+    outFields: 'Address,StAddr,ShortLabel,City,Region,RegionAbbr,Postal,Country',
+    maxLocations: '1',
+    forStorage: 'false',
+  });
+  const result = await fetchJson(`${arcgisGeocoderUrl}/findAddressCandidates?${query}`);
+  const candidate = result?.candidates?.[0];
+  if (!candidate) {
+    setIncidentStatus('That address could not be resolved. Try another suggestion or enter the location manually.');
+    return;
+  }
+
+  const attributes = candidate.attributes || {};
+  const cityInput = document.getElementById('incident-city');
+  const stateInput = document.getElementById('incident-state');
+  const coordinateInput = document.getElementById('incident-coordinates-input');
+  if (incidentAddressInput) {
+    incidentAddressInput.value = attributes.StAddr || attributes.Address || attributes.ShortLabel || candidate.address || suggestion.text;
+  }
+  if (cityInput) cityInput.value = attributes.City || '';
+  if (stateInput) stateInput.value = attributes.RegionAbbr || attributes.Region || '';
+  if (coordinateInput && Number.isFinite(candidate.location?.y) && Number.isFinite(candidate.location?.x)) {
+    coordinateInput.value = `${candidate.location.y.toFixed(6)}, ${candidate.location.x.toFixed(6)}`;
+  }
+  updateActiveIncidentRecord();
+  setIncidentStatus(`Address selected: ${candidate.address || suggestion.text}. City, state, and GPS updated.`);
+}
+
+async function searchIncidentAddresses(value) {
+  const requestId = ++latestIncidentAddressSearch;
+  const query = new URLSearchParams({
+    f: 'json',
+    text: value,
+    countryCode: 'USA',
+    maxSuggestions: '6',
+  });
+  const result = await fetchJson(`${arcgisGeocoderUrl}/suggest?${query}`);
+  if (requestId !== latestIncidentAddressSearch || !incidentAddressSuggestions) return;
+
+  incidentAddressSuggestions.replaceChildren();
+  (result?.suggestions || []).forEach((suggestion) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'chemical-suggestion';
+    button.setAttribute('role', 'option');
+
+    const type = document.createElement('span');
+    type.className = 'chemical-suggestion-type';
+    type.textContent = 'Address';
+    const text = document.createElement('strong');
+    text.textContent = suggestion.text;
+    button.append(type, text);
+    button.addEventListener('click', () => void selectIncidentAddress(suggestion));
+    button.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        focusIncidentAddressSuggestion(button, event.key === 'ArrowDown' ? 1 : -1);
+      } else if (event.key === 'Escape') {
+        clearIncidentAddressSuggestions();
+        incidentAddressInput?.focus();
+      }
+    });
+    incidentAddressSuggestions.append(button);
+  });
+
+  const hasSuggestions = incidentAddressSuggestions.childElementCount > 0;
+  incidentAddressSuggestions.hidden = !hasSuggestions;
+  incidentAddressInput?.setAttribute('aria-expanded', String(hasSuggestions));
+}
+
+incidentAddressInput?.addEventListener('input', () => {
+  window.clearTimeout(incidentAddressSearchTimer);
+  clearIncidentAddressSuggestions();
+  const coordinateInput = document.getElementById('incident-coordinates-input');
+  if (coordinateInput) coordinateInput.value = '';
+  const value = incidentAddressInput.value.trim();
+  if (value.length < 3) return;
+  incidentAddressSearchTimer = window.setTimeout(() => void searchIncidentAddresses(value), 350);
+});
+
+incidentAddressInput?.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') clearIncidentAddressSuggestions();
+  if (event.key === 'ArrowDown' && !incidentAddressSuggestions?.hidden) {
+    event.preventDefault();
+    incidentAddressSuggestions?.querySelector('button')?.focus();
+  }
+});
+
+document.addEventListener('click', (event) => {
+  if (!incidentAddressSuggestions?.contains(event.target) && event.target !== incidentAddressInput) {
+    clearIncidentAddressSuggestions();
+  }
+});
 
 function getIncidentAddressValue() {
   return ['incident-address-input', 'incident-city', 'incident-state']
@@ -152,6 +462,7 @@ function saveIncidentBrief({ quiet = false } = {}) {
   const brief = readIncidentBrief();
   try {
     window.localStorage.setItem(incidentBriefStorageKey, JSON.stringify({ ...brief, savedAt: new Date().toISOString() }));
+    updateActiveIncidentRecord();
     if (!quiet) setIncidentStatus('Incident brief saved on this device. Use Update Scene to refresh the map and live conditions.');
   } catch {
     if (!quiet) setIncidentStatus('This browser could not save the incident brief locally.');
@@ -166,13 +477,18 @@ function restoreIncidentBrief() {
       const element = document.getElementById(id);
       if (element && typeof brief[id] === 'string') element.value = brief[id];
     });
+    const productInput = document.getElementById('incident-product');
+    const legacyPlacard = typeof brief['incident-placard'] === 'string' ? brief['incident-placard'].trim() : '';
+    if (productInput && legacyPlacard && !productInput.value.includes(legacyPlacard)) {
+      productInput.value = [productInput.value.trim(), legacyPlacard].filter(Boolean).join(' / ');
+    }
     setIncidentStatus('Saved incident brief restored from this device.');
   } catch {
     // Ignore missing or malformed local-only drafts.
   }
 }
 
-function beginNewIncident() {
+function beginNewIncident({ createRecord = false } = {}) {
   incidentWorkflowActive = true;
   incidentBriefFieldIds.forEach((id) => {
     const element = document.getElementById(id);
@@ -184,6 +500,7 @@ function beginNewIncident() {
     // A new incident can still begin if browser storage is unavailable.
   }
   setActiveChemical(null);
+  if (createRecord) createIncidentRecord();
   setIncidentStatus('New incident started. Select a chemical to populate HAZMAT COMMAND data.');
 }
 
@@ -194,7 +511,14 @@ function resumeActiveIncident() {
   void restoreSelectedChemical();
 }
 
-document.getElementById('save-incident-brief-btn')?.addEventListener('click', () => saveIncidentBrief());
+document.getElementById('save-incident-brief-btn')?.addEventListener('click', () => {
+  const nameInput = document.getElementById('incidentName');
+  if (!nameInput?.reportValidity()) {
+    setIncidentStatus('Enter an Incident Name before saving.');
+    return;
+  }
+  saveIncidentBrief();
+});
 document.getElementById('clear-incident-brief-btn')?.addEventListener('click', () => {
   incidentBriefFieldIds.forEach((id) => {
     const element = document.getElementById(id);
@@ -206,6 +530,7 @@ document.getElementById('clear-incident-brief-btn')?.addEventListener('click', (
     // The visible form can still be cleared if browser storage is unavailable.
   }
   setActiveChemical(null);
+  updateActiveIncidentRecord();
   setIncidentStatus('Incident brief cleared.');
 });
 
@@ -255,6 +580,7 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
   const un = parseJsonField(chem.un, []) || [];
   const hazardClass = parseJsonField(chem.hazardClass, []) || [];
   const ppe = parseJsonField(chem.ppe, []) || [];
+  const firstAid = parseJsonField(chem.firstAid, []) || [];
   const isolation = parseJsonField(chem.isolation, {}) || {};
   const reactivity = parseJsonField(chem.reactivity, []) || [];
   const incompatibilities = parseJsonField(chem.incompatibilities, []) || [];
@@ -264,6 +590,13 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
   const physical = npg ? parseJsonField(npg.physical, {}) : {};
   const health = npg ? parseJsonField(npg.health, {}) : {};
   const npgPpe = npg ? parseJsonField(npg.ppe, {}) : {};
+  const sourceText = sources.map((source) => (typeof source === 'string' ? source : source.source || '')).join(' ');
+  const summarySources = [
+    npg && 'NIOSH',
+    (/ERG/i.test(sourceText) || guideData || ergTable) && 'ERG',
+    /CAMEO/i.test(sourceText) && 'CAMEO',
+    /Kappler|HazMatch/i.test(sourceText) && 'HazMatch',
+  ].filter(Boolean);
 
   const guideNumber = chem.ergGuide || 'N/A';
   const fallbackHazards = reactivity.length ? reactivity : [`DOT hazard class: ${hazardClass.join(' / ') || 'not assigned'}.`];
@@ -317,6 +650,13 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
       },
       kappler: [],
     },
+    medical: {
+      hazards: responderGuide.potentialHazards.health || [],
+      symptoms: health.symptoms || [],
+      targetOrgans: health.targetOrgans || [],
+      firstAid: [...new Set([...(health.firstAid || []), ...firstAid])],
+    },
+    summarySources,
     ppeSources: [
       {
         id: 'erg',
@@ -603,6 +943,92 @@ function buildPpeStartingReference(record) {
   };
 }
 
+function shortGuidance(value) {
+  const text = String(value || '').trim();
+  return text.length > 180 ? `${text.slice(0, 177)}…` : text;
+}
+
+function buildIncidentPpeSummary(record) {
+  const reference = buildPpeStartingReference(record);
+  if (!reference) return null;
+  const verifiedDetails = reference.details.filter((detail) => !/not specified|no chemical-specific|not available/i.test(detail));
+  const warning = record.responderGuide?.publicSafety?.general?.[0];
+  return {
+    items: [
+      `Recommended PPE: ${reference.title}`,
+      ...verifiedDetails.slice(0, 4),
+      warning && `Entry warning: ${warning}`,
+    ].filter(Boolean).map(shortGuidance),
+    sources: record.summarySources,
+  };
+}
+
+function buildIncidentMedicalSummary(record) {
+  const medical = record.medical || {};
+  const items = [];
+  const hazards = (medical.hazards || []).filter((item) => !/no .*available|no ERG health/i.test(item));
+  if (hazards.length) items.push(`Health hazards: ${hazards.slice(0, 2).join('; ')}`);
+  if (medical.symptoms?.length) items.push(`Signs/symptoms: ${medical.symptoms.slice(0, 4).join(', ')}`);
+  if (medical.targetOrgans?.length) items.push(`Affected systems: ${medical.targetOrgans.slice(0, 4).join(', ')}`);
+  if (medical.firstAid?.length) items.push(`First aid: ${medical.firstAid.slice(0, 2).join('; ')}`);
+  const decon = medical.firstAid?.find((item) => /decontam|flush|irrigat|contaminated clothing/i.test(item));
+  const emsAlert = medical.firstAid?.find((item) => /transport|medical|oxygen|CPR|monitor|observe/i.test(item));
+  if (decon) items.push(`Decon: ${decon}`);
+  if (emsAlert && emsAlert !== decon) items.push(`EMS alert: ${emsAlert}`);
+  return items.length ? { items: items.slice(0, 6).map(shortGuidance), sources: record.summarySources } : null;
+}
+
+function saveIncidentGuidance(ppeSummary, medicalSummary, chemicalSources) {
+  const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
+  const incidents = readIncidents();
+  const index = incidents.findIndex((incident) => incident.incidentId === activeId);
+  if (index < 0) return;
+  incidents[index] = { ...incidents[index], ppeSummary, medicalSummary, chemicalSources };
+  writeIncidents(incidents);
+}
+
+function renderGuidanceBox(bodyId, sourceId, summary, fallback) {
+  const body = document.getElementById(bodyId);
+  const source = document.getElementById(sourceId);
+  if (!body || !source) return;
+  body.replaceChildren();
+  if (summary?.items?.length) {
+    const list = document.createElement('ul');
+    list.className = 'incident-guidance-list';
+    summary.items.forEach((item) => {
+      const row = document.createElement('li');
+      row.textContent = item;
+      list.append(row);
+    });
+    body.append(list);
+  } else {
+    body.textContent = fallback;
+  }
+  source.textContent = summary?.sources?.length ? `Sources: ${summary.sources.join(' / ')}` : '';
+  source.hidden = !source.textContent;
+}
+
+function renderIncidentGuidance() {
+  const enteredChemical = document.getElementById('incident-product')?.value.trim();
+  const hasSelectedChemical = getActiveIncident() && activeChemical && enteredChemical === activeChemical.name;
+  if (!hasSelectedChemical) {
+    renderGuidanceBox('incident-ppe-guidance', 'incident-ppe-sources', null, 'Select or identify a chemical to populate PPE guidance.');
+    renderGuidanceBox('incident-medical-guidance', 'incident-medical-sources', null, 'Select or identify a chemical to populate medical guidance.');
+    return;
+  }
+  if (!activeChemicalRecord) {
+    renderGuidanceBox('incident-ppe-guidance', 'incident-ppe-sources', null, 'No verified PPE guidance available for this chemical.');
+    renderGuidanceBox('incident-medical-guidance', 'incident-medical-sources', null, 'No verified medical guidance available for this chemical.');
+    return;
+  }
+  const ppeSummary = buildIncidentPpeSummary(activeChemicalRecord);
+  const medicalSummary = buildIncidentMedicalSummary(activeChemicalRecord);
+  renderGuidanceBox('incident-ppe-guidance', 'incident-ppe-sources', ppeSummary, 'No verified PPE guidance available for this chemical.');
+  renderGuidanceBox('incident-medical-guidance', 'incident-medical-sources', medicalSummary, 'No verified medical guidance available for this chemical.');
+
+  saveIncidentGuidance(ppeSummary, medicalSummary, activeChemicalRecord.summarySources);
+}
+
 function renderIncidentCommandSnapshot() {
   const chemicalLoaded = incidentWorkflowActive && Boolean(activeChemical);
   if (!chemicalLoaded) {
@@ -668,6 +1094,7 @@ function renderIncidentCommandSnapshot() {
   setText('command-weather-status', activeWeatherCommand ? 'Live' : 'Awaiting location');
   renderCommandWeatherRows(activeWeatherCommand?.rows || []);
   replaceCommandList('command-weather-details', activeWeatherCommand?.details || [], 'No live weather data loaded.');
+  renderIncidentGuidance();
 }
 
 function updateIncidentPpeSelection(selection) {
@@ -721,6 +1148,7 @@ function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {
   }
   syncPlumeChemicalSelection();
   renderIncidentCommandSnapshot();
+  if (activeChemical) updateActiveIncidentRecord();
 }
 
 async function restoreSelectedChemical() {
@@ -736,6 +1164,7 @@ async function restoreSelectedChemical() {
       const record = await buildFullChemicalRecord(chemical);
       if (activeChemical?.id === chemical.id) {
         activeChemicalRecord = record;
+        updateActiveIncidentRecord();
         renderIncidentCommandSnapshot();
       }
     } else syncPlumeChemicalSelection();
@@ -767,6 +1196,7 @@ async function openChemical(chemical, facilityName = '') {
   const record = await buildFullChemicalRecord(chemical);
   if (activeChemical?.id === chemical.id) {
     activeChemicalRecord = record;
+    updateActiveIncidentRecord();
     renderIncidentCommandSnapshot();
   }
   updateChemicalCard(record);
@@ -941,6 +1371,76 @@ chemicalSearchInput?.addEventListener('keydown', (event) => {
 chemicalSearchForm?.addEventListener('submit', (event) => {
   event.preventDefault();
   searchChemicalId(chemicalSearchInput?.value, { submit: true });
+});
+
+const incidentProductInput = document.getElementById('incident-product');
+const incidentProductSuggestions = document.getElementById('incident-product-suggestions');
+let incidentProductSearchTimer = null;
+let latestIncidentProductSearch = 0;
+
+function clearIncidentProductSuggestions() {
+  if (!incidentProductSuggestions) return;
+  incidentProductSuggestions.replaceChildren();
+  incidentProductSuggestions.hidden = true;
+  incidentProductInput?.setAttribute('aria-expanded', 'false');
+}
+
+async function selectIncidentProduct(chemical) {
+  latestIncidentProductSearch += 1;
+  clearIncidentProductSuggestions();
+  setActiveChemical(chemical);
+  setIncidentStatus(`Loading ${chemical.name}…`);
+  const record = await buildFullChemicalRecord(chemical);
+  if (activeChemical?.id !== chemical.id) return;
+  activeChemicalRecord = record;
+  updateActiveIncidentRecord();
+  renderIncidentCommandSnapshot();
+  setIncidentStatus(`${chemical.name} selected for the active incident.`);
+}
+
+async function searchIncidentProducts(value) {
+  const requestId = ++latestIncidentProductSearch;
+  const data = await fetchJson(`/api/chemicals?q=${encodeURIComponent(normalizeChemicalQuery(value))}`);
+  if (requestId !== latestIncidentProductSearch || !incidentProductSuggestions) return;
+  incidentProductSuggestions.replaceChildren();
+  (data?.chemicals || []).slice(0, 8).forEach((chemical) => {
+    const un = parseJsonField(chemical.un, [])?.[0];
+    const cas = parseJsonField(chemical.cas, [])?.[0];
+    incidentProductSuggestions.append(createSuggestion(
+      'Chemical',
+      chemical.name,
+      [un && `UN ${un}`, cas && `CAS ${cas}`].filter(Boolean).join(' · ') || 'Chemical reference',
+      () => void selectIncidentProduct(chemical),
+    ));
+  });
+  const hasSuggestions = incidentProductSuggestions.childElementCount > 0;
+  incidentProductSuggestions.hidden = !hasSuggestions;
+  incidentProductInput?.setAttribute('aria-expanded', String(hasSuggestions));
+}
+
+incidentProductInput?.addEventListener('input', () => {
+  window.clearTimeout(incidentProductSearchTimer);
+  latestIncidentProductSearch += 1;
+  clearIncidentProductSuggestions();
+  saveIncidentGuidance(null, null, []);
+  renderIncidentGuidance();
+  const query = incidentProductInput.value.trim();
+  if (query.length < 2) return;
+  incidentProductSearchTimer = window.setTimeout(() => void searchIncidentProducts(query), 200);
+});
+
+incidentProductInput?.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') clearIncidentProductSuggestions();
+  if (event.key === 'ArrowDown' && !incidentProductSuggestions?.hidden) {
+    event.preventDefault();
+    incidentProductSuggestions?.querySelector('button')?.focus();
+  }
+});
+
+document.addEventListener('click', (event) => {
+  if (!incidentProductSuggestions?.contains(event.target) && event.target !== incidentProductInput) {
+    clearIncidentProductSuggestions();
+  }
 });
 
 let plumeRefreshToken = 0;
@@ -1635,6 +2135,7 @@ function updateCommandWeatherState(openMeteo, nws, location) {
     ],
   };
   renderIncidentCommandSnapshot();
+  updateActiveIncidentRecord();
 }
 
 async function refreshCommandWeather({ requestGps = false } = {}) {

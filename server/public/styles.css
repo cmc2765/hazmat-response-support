@@ -607,9 +607,9 @@ h1, h2, h3, p { margin-top: 0; }
 
 .incident-form-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px 10px;
+  margin-top: 8px;
 }
 
 .incident-field {
@@ -618,17 +618,35 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .incident-field-wide {
+  grid-column: span 2;
+}
+
+.incident-field-full {
   grid-column: 1 / -1;
 }
 
-.incident-field > span {
+.incident-field > span,
+.incident-field-label {
   color: var(--muted);
   font-size: 0.84rem;
   font-weight: 800;
 }
 
+.required-marker {
+  color: var(--red);
+  font-size: 0.72rem;
+}
+
+.incident-address-autocomplete {
+  position: relative;
+}
+
+.incident-address-suggestions {
+  max-height: 280px;
+}
+
 .incident-field textarea {
-  min-height: 64px;
+  min-height: 56px;
   resize: vertical;
   font: inherit;
 }
@@ -641,10 +659,88 @@ h1, h2, h3, p { margin-top: 0; }
   margin: 12px 0 0;
 }
 
+.incident-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
 .incident-input-card {
-  padding: 16px;
+  padding: 14px;
   border-color: rgba(52, 211, 153, 0.45);
   box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.18);
+}
+
+.incident-guidance-card {
+  min-height: 0;
+  padding: 14px;
+}
+
+.ppe-summary-card {
+  background: #fff0d8;
+}
+
+.medical-summary-card {
+  background: #e5f3ff;
+}
+
+.incident-guidance-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.incident-guidance-sources {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.report-tabs,
+.report-section {
+  margin-top: 18px;
+}
+
+.report-incident-list,
+.ics-form-library {
+  display: grid;
+  gap: 10px;
+}
+
+.report-incident-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-2);
+}
+
+.report-incident-item small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+.report-form-options {
+  margin-top: 20px;
+}
+
+.ics-form-library {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 620px) {
+  .ics-form-library {
+    grid-template-columns: 1fr;
+  }
+
+  .report-incident-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 .tier2-card {
@@ -1615,7 +1711,8 @@ h1, h2, h3, p { margin-top: 0; }
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .incident-field-wide {
+  .incident-field-wide,
+  .incident-field-full {
     grid-column: auto;
   }
 
