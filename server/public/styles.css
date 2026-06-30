@@ -240,6 +240,7 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .my-chemicals-nav {
+  color: #fff0a6 !important;
   font-style: italic;
   font-weight: 800;
 }
@@ -801,6 +802,14 @@ h1, h2, h3, p { margin-top: 0; }
   text-align: left;
 }
 
+.plume-map-summary img {
+  display: block;
+  width: 100%;
+  max-height: 720px;
+  border: 1px solid var(--border);
+  object-fit: contain;
+}
+
 .ics-form-library {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -841,6 +850,10 @@ h1, h2, h3, p { margin-top: 0; }
 
   .report-summary-actions {
     display: none;
+  }
+
+  .plume-map-summary {
+    break-before: page;
   }
 }
 
@@ -1585,6 +1598,7 @@ h1, h2, h3, p { margin-top: 0; }
 
 .plume-demographics {
   display: none;
+  margin-top: 28px;
 }
 
 .layout:has(#plume.active) .plume-demographics {

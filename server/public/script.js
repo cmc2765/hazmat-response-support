@@ -275,7 +275,7 @@ function completeActiveIncident() {
   window.localStorage.removeItem(activeIncidentIdStorageKey);
   renderIncidentTimer();
   renderIncidentLists();
-  setIncidentStatus('Incident completed and moved to Previous Completed Reports.');
+  setIncidentStatus('Incident completed and moved to Completed Reports.');
 }
 
 function renderIncidentCard(container, incident, activeId) {
@@ -385,6 +385,17 @@ function openIncidentSummary(incidentId) {
     ['Source', incident.plumeSummary?.source],
     ['Details', incident.plumeSummary?.details || []],
   ]);
+  if (incident.plumeMapImage) {
+    const mapSection = document.createElement('section');
+    mapSection.className = 'report-summary-block plume-map-summary';
+    const mapHeading = document.createElement('h3');
+    mapHeading.textContent = 'Most Recent Plume Map';
+    const mapImage = document.createElement('img');
+    mapImage.src = incident.plumeMapImage;
+    mapImage.alt = 'Most recent plume model map for this incident';
+    mapSection.append(mapHeading, mapImage);
+    content.append(mapSection);
+  }
   appendIncidentSummarySection(content, 'Documentation Notes', [['Notes', incident.notes]]);
   document.querySelector('.report-tabs').hidden = true;
   ['current', 'previous', 'library'].forEach((name) => {
@@ -1709,6 +1720,7 @@ function ensurePlumeMap(location) {
       style: view.style,
       pitch: view.pitch,
       bearing: view.bearing,
+      preserveDrawingBuffer: true,
     });
     plumeMap.addControl(new window.maplibregl.NavigationControl(), 'bottom-right');
     plumeMapReady = new Promise((resolve) => plumeMap.once('load', resolve));
@@ -2474,19 +2486,53 @@ async function runBackendPlume(inputs) {
   }
 }
 
+async function capturePlumeMapImage() {
+  if (!plumeMap) return '';
+  await new Promise((resolve) => {
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      resolve();
+    };
+    plumeMap.once('idle', finish);
+    window.setTimeout(finish, 1200);
+  });
+  try {
+    return plumeMap.getCanvas().toDataURL('image/jpeg', 0.82);
+  } catch {
+    return '';
+  }
+}
+
 // Planning results stay separate from official incident documentation.
-function savePlumeResult(command) {
+function savePlumeResult(command, mapImage = '') {
   const savedAt = new Date().toISOString();
   const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
   if (!activeId) {
-    savePlanningState({ selectedChemical: activeChemical, plumeSummary: command, savedAt });
+    savePlanningState({
+      selectedChemical: activeChemical,
+      plumeSummary: command,
+      ...(mapImage ? { plumeMapImage: mapImage } : {}),
+      savedAt,
+    });
     return;
   }
   const incidents = readIncidents();
   const index = incidents.findIndex((incident) => incident.incidentId === activeId);
   if (index < 0) return;
-  incidents[index] = { ...incidents[index], plumeSummary: command, plumeUpdatedAt: savedAt };
-  writeIncidents(incidents);
+  incidents[index] = {
+    ...incidents[index],
+    plumeSummary: command,
+    plumeUpdatedAt: savedAt,
+    ...(mapImage ? { plumeMapImage: mapImage } : {}),
+  };
+  try {
+    writeIncidents(incidents);
+  } catch {
+    delete incidents[index].plumeMapImage;
+    writeIncidents(incidents);
+  }
 }
 
 async function plotPlumeFromControls() {
@@ -2534,7 +2580,7 @@ async function plotPlumeFromControls() {
         modeled.result.disclaimer,
       ],
     };
-    savePlumeResult(activePlumeCommand);
+    savePlumeResult(activePlumeCommand, await capturePlumeMapImage());
     renderIncidentCommandSnapshot();
     const documentationNote = hasActiveIncident()
       ? 'Saved to the active incident.'
@@ -2661,7 +2707,7 @@ async function importModelOverlay(file) {
     source: 'Source: operator-imported ALOHA / MARPLOT KML; not calculated by the HazMatIQ backend.',
     details: [`Imported file: ${file.name}`, `Imported: ${new Date().toLocaleString()}`],
   };
-  savePlumeResult(activePlumeCommand);
+  savePlumeResult(activePlumeCommand, await capturePlumeMapImage());
   renderIncidentCommandSnapshot();
   setText('backend-model-summary', label);
 }
