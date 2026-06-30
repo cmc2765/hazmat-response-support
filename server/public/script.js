@@ -276,6 +276,8 @@ function completeActiveIncident() {
   renderIncidentTimer();
   renderIncidentLists();
   setIncidentStatus('Incident completed and moved to Completed Reports.');
+  showView('report');
+  document.querySelector('[data-report-tab="previous"]')?.click();
 }
 
 function renderIncidentCard(container, incident, activeId) {
