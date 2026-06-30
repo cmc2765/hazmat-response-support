@@ -389,11 +389,16 @@ function openIncidentSummary(incidentId) {
     const mapSection = document.createElement('section');
     mapSection.className = 'report-summary-block plume-map-summary';
     const mapHeading = document.createElement('h3');
-    mapHeading.textContent = 'Most Recent Plume Map';
+    mapHeading.textContent = `${incident.incidentName || 'Incident'} Plume Model`;
+    const mapTimestamp = document.createElement('p');
+    mapTimestamp.className = 'muted';
+    mapTimestamp.textContent = incident.plumeUpdatedAt
+      ? `Plume model generated ${new Date(incident.plumeUpdatedAt).toLocaleString()}`
+      : 'Plume model date and time unavailable';
     const mapImage = document.createElement('img');
     mapImage.src = incident.plumeMapImage;
     mapImage.alt = 'Most recent plume model map for this incident';
-    mapSection.append(mapHeading, mapImage);
+    mapSection.append(mapHeading, mapTimestamp, mapImage);
     content.append(mapSection);
   }
   appendIncidentSummarySection(content, 'Documentation Notes', [['Notes', incident.notes]]);
