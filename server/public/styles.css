@@ -1091,6 +1091,10 @@ h1, h2, h3, p { margin-top: 0; }
   gap: 10px;
 }
 
+.my-chemicals-list {
+  grid-template-columns: 1fr;
+}
+
 .facility-chemical-btn {
   display: grid;
   gap: 5px;

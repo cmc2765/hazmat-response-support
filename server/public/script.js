@@ -1383,7 +1383,8 @@ function saveCurrentChemical() {
     ergGuide: activeChemicalRecord.ergGuide === 'N/A' ? '' : activeChemicalRecord.ergGuide,
     savedAt: new Date().toISOString(),
   };
-  const chemicals = readSavedChemicals();
+  const chemicals = readSavedChemicals().sort((a, b) =>
+    String(a.chemicalName || '').localeCompare(String(b.chemicalName || '')));
   const duplicateIndex = chemicals.findIndex((chemical) =>
     (savedChemical.casNumber && chemical.casNumber === savedChemical.casNumber)
     || (savedChemical.unNumber && chemical.unNumber === savedChemical.unNumber)
