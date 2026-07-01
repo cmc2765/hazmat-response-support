@@ -49,7 +49,7 @@
             <strong id="notification-weather">Awaiting live weather data</strong>
           </div>
           <div class="notification-item">
-            <span>Monitor readings</span>
+            <span>Monitor Alerts</span>
             <strong id="notification-monitoring">No Alerts Found</strong>
           </div>
         </div>
@@ -117,9 +117,9 @@
               </div>
             </div>
             <div class="demographics-priorities">
-              <strong>Evacuation / shelter-in-place notes</strong>
+              <strong>Protective Action Guidance</strong>
               <ul id="demographics-priority-list">
-                <li>Select a plume zone to load nearby occupancies and sensitive sites.</li>
+                <li>Select a chemical and run the plume model to populate protective action guidance.</li>
               </ul>
             </div>
             <p id="demographics-source-status" class="demographics-source-status">Population estimate: U.S. Census geography. Occupancies: OpenStreetMap mapped features.</p>
@@ -198,7 +198,6 @@
                 <div>
                   <p class="eyebrow box-title" id="command-snapshot-title">HAZMAT COMMAND</p>
                 </div>
-                <p class="command-snapshot-provenance">Backend records, model output, and operator-entered selections only.</p>
                 <button class="accent-btn" id="update-incident-location-btn" type="button">Update Scene</button>
               </div>
               <div class="command-snapshot-grid" id="command-snapshot-grid">
@@ -247,10 +246,6 @@
                     <strong id="command-weather-status"></strong>
                   </div>
                   <div class="command-weather-data" id="command-weather-data" aria-live="polite"></div>
-                  <details>
-                    <summary>Weather details</summary>
-                    <ul id="command-weather-details"></ul>
-                  </details>
                   <button class="ghost-btn command-card-action command-weather-refresh" id="refresh-command-weather-btn" type="button">Refresh Live Weather</button>
                 </article>
               </div>
@@ -334,12 +329,6 @@
               </article>
 
               <article class="panel-card tier2-card facility-information-card">
-                <div class="facility-information-heading">
-                  <div>
-                    <p class="eyebrow box-title">Facility records</p>
-                  </div>
-                  <p class="big-label">Sign in to E-Plan to review facility submissions, inventories, and emergency contacts.</p>
-                </div>
                 <form
                   class="eplan-login-form"
                   action="https://erplan.net/eplan/login.htm"
@@ -378,8 +367,19 @@
 
               <article class="panel-card incident-guidance-card medical-summary-card">
                 <h3>Medical Summary</h3>
+                <p class="medical-primary-source"><strong>Primary medical reference: CHEMM (HHS/ASPR)</strong></p>
+                <div class="medical-reference-actions" aria-label="CHEMM medical guidance">
+                  <a href="https://chemm.hhs.gov/mmghome.htm" target="_blank" rel="noopener noreferrer">Acute Patient Care</a>
+                  <a href="https://chemm.hhs.gov/toxidrome_cards.htm" target="_blank" rel="noopener noreferrer">Toxidrome Cards</a>
+                  <a href="https://chemm.hhs.gov/guidance.htm" target="_blank" rel="noopener noreferrer">PRISM Decontamination</a>
+                  <a href="https://chemm.hhs.gov/medical_countermeasures.htm" target="_blank" rel="noopener noreferrer">Medical Countermeasures</a>
+                </div>
                 <div id="incident-medical-guidance">Select or identify a chemical to populate medical guidance.</div>
                 <p id="incident-medical-sources" class="incident-guidance-sources" hidden></p>
+              </article>
+              <article class="panel-card incident-guidance-card protective-summary-card">
+                <h3>Protective Action Guidance</h3>
+                <div id="incident-protective-guidance">Select a chemical and run the plume model to populate protective action guidance.</div>
               </article>
             </div>
             <div class="button-row">
@@ -567,78 +567,156 @@
           <section id="plume" class="view">
             <form class="plume-model-controls" id="plume-model-form">
               <div class="plume-model-controls-heading">
-                <div>
-                  <p class="eyebrow">Model inputs</p>
-                  <h3>Confirm Conditions Before Plotting</h3>
-                  <p id="plume-mode-label" class="plume-mode-label">Planning Mode - Not attached to an incident</p>
-                </div>
-                <p id="plume-input-status" class="muted" role="status" aria-live="polite">Select a chemical through Chemical ID to begin.</p>
+                <p class="eyebrow">Model Inputs</p>
+                <p id="plume-input-status" class="muted" role="status" aria-live="polite"></p>
               </div>
               <div class="plume-model-input-grid">
-                <label class="plume-model-field plume-chemical-field" for="plume-chemical-input">
-                  <span>Chemical</span>
-                  <div class="plume-linked-input">
-                    <input id="plume-chemical-input" type="text" value="No identified chemical" readonly aria-describedby="plume-input-status" />
-                    <button class="ghost-btn" id="change-plume-chemical-btn" type="button">Identify / Change</button>
+                <div class="plume-model-section">
+                  <strong>Chemical and Release Data</strong>
+                  <div class="plume-model-section-grid plume-release-grid">
+                    <label class="plume-model-field plume-chemical-field" for="plume-chemical-input">
+                      <span>Chemical</span>
+                      <div class="plume-linked-input">
+                        <input id="plume-chemical-input" type="text" value="No identified chemical" readonly aria-describedby="plume-input-status" />
+                        <button class="ghost-btn" id="change-plume-chemical-btn" type="button">Identify / Change</button>
+                      </div>
+                    </label>
+                    <label class="plume-model-field" for="plume-container-type">
+                      <span>Container</span>
+                      <select id="plume-container-type">
+                        <option value="unknown">Unknown / Custom</option>
+                        <option value="small-container">Small container / bottle</option>
+                        <option value="package">Bag / box / package</option>
+                        <option value="drum">Drum</option>
+                        <option value="jerrican">Jerrican / carboy</option>
+                        <option value="ibc">IBC tote</option>
+                        <option value="cylinder">Cylinder</option>
+                        <option value="ton-cylinder">Ton cylinder</option>
+                        <option value="portable-tank">Portable tank / ISO tank</option>
+                        <option value="ast">Aboveground storage tank</option>
+                        <option value="ust">Underground storage tank</option>
+                        <option value="process-vessel">Process vessel</option>
+                        <option value="cargo-tank">Cargo tank truck</option>
+                        <option value="rail-tank-car">Rail tank car</option>
+                        <option value="pipeline">Pipeline</option>
+                        <option value="puddle">Puddle / pool</option>
+                        <option value="direct-release">Direct release / unknown source</option>
+                      </select>
+                    </label>
+                    <label class="plume-model-field" for="plume-release-type">
+                      <span>Release type</span>
+                      <select id="plume-release-type">
+                        <option value="plume">Continuous release</option>
+                        <option value="puff">Instantaneous release</option>
+                      </select>
+                    </label>
+                    <label class="plume-model-field" for="plume-release-quantity">
+                      <span id="plume-release-quantity-label">Release rate</span>
+                      <div class="plume-quantity-input">
+                        <input id="plume-release-quantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Required" required />
+                        <select id="plume-release-unit" aria-label="Release quantity unit">
+                          <option value="lb-min">lb/min</option>
+                          <option value="lb-sec">lb/sec</option>
+                        </select>
+                      </div>
+                    </label>
+                    <div class="container-profile" aria-label="Editable container planning profile">
+                      <p id="container-profile-guidance" class="container-profile-guidance">Enter known container size, pressure, and release details manually.</p>
+                      <div class="container-profile-fields">
+                        <label class="plume-model-field" for="container-size">
+                          <span>Container size</span>
+                          <input id="container-size" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter" />
+                        </label>
+                        <label class="plume-model-field" for="container-size-unit">
+                          <span>Size unit</span>
+                          <select id="container-size-unit">
+                            <option value="">Select</option>
+                            <option value="gal">gal</option>
+                            <option value="lb">lb</option>
+                            <option value="L">L</option>
+                            <option value="ft3">ft³</option>
+                          </select>
+                        </label>
+                        <label class="plume-model-field" for="container-fill-level">
+                          <span>Fill level %</span>
+                          <input id="container-fill-level" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="Enter" />
+                        </label>
+                        <label class="plume-model-field" for="container-pressure">
+                          <span>Pressure</span>
+                          <input id="container-pressure" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter" />
+                        </label>
+                        <label class="plume-model-field" for="container-pressure-unit">
+                          <span>Pressure unit</span>
+                          <select id="container-pressure-unit">
+                            <option value="">Select</option>
+                            <option value="psig">psig</option>
+                            <option value="psi">psi</option>
+                            <option value="bar">bar</option>
+                            <option value="kPa">kPa</option>
+                          </select>
+                        </label>
+                      </div>
+                      <div class="container-profile-details">
+                        <label for="container-capacity"><span>Typical capacity/range</span><input id="container-capacity" type="text" /></label>
+                        <label for="container-pressure-profile"><span>Pressure profile</span><input id="container-pressure-profile" type="text" /></label>
+                        <label for="container-payload-notes"><span>Payload notes</span><input id="container-payload-notes" type="text" /></label>
+                        <label for="container-model-source"><span>Model source type</span><input id="container-model-source" type="text" /></label>
+                        <label for="container-confidence"><span>Confidence</span><input id="container-confidence" type="text" /></label>
+                        <label for="container-cfr-reference"><span>CFR / specification</span><input id="container-cfr-reference" type="text" /></label>
+                      </div>
+                      <small>Container values are planning defaults. Verify with SDS, shipping papers, facility inventory, container markings, or local authority data.</small>
+                    </div>
                   </div>
-                </label>
-                <label class="plume-model-field" for="plume-release-type">
-                  <span>Release type</span>
-                  <select id="plume-release-type">
-                    <option value="plume">Continuous release</option>
-                    <option value="puff">Instantaneous release</option>
-                  </select>
-                </label>
-                <label class="plume-model-field" for="plume-release-quantity">
-                  <span id="plume-release-quantity-label">Release rate</span>
-                  <div class="plume-quantity-input">
-                    <input id="plume-release-quantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Required" required />
-                    <select id="plume-release-unit" aria-label="Release quantity unit">
-                      <option value="lb-min">lb/min</option>
-                      <option value="lb-sec">lb/sec</option>
-                    </select>
+                </div>
+                <div class="plume-model-section">
+                  <strong>Weather Data</strong>
+                  <div class="plume-model-section-grid plume-weather-grid">
+                    <label class="plume-model-field" for="plume-wind-speed">
+                      <span>Wind speed (mph)</span>
+                      <input id="plume-wind-speed" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Required" required />
+                    </label>
+                    <label class="plume-model-field" for="plume-wind-direction">
+                      <span>Wind from</span>
+                      <select id="plume-wind-direction" required>
+                        <option value="" selected>Select direction</option>
+                        <option value="0">North</option>
+                        <option value="45">NE</option>
+                        <option value="90">East</option>
+                        <option value="135">SE</option>
+                        <option value="180">South</option>
+                        <option value="225">SW</option>
+                        <option value="270">West</option>
+                        <option value="315">NW</option>
+                      </select>
+                    </label>
+                    <label class="plume-model-field" for="plume-temperature">
+                      <span>Air Temp (°F)</span>
+                      <input id="plume-temperature" type="number" step="0.1" inputmode="decimal" placeholder="Required" required />
+                    </label>
+                    <label class="plume-model-field" for="plume-elevation">
+                      <span>Elevation (ft)</span>
+                      <input id="plume-elevation" type="text" placeholder="Unavailable" readonly />
+                    </label>
+                    <label class="plume-model-field" for="plume-stability-class">
+                      <span>Stability class</span>
+                      <select id="plume-stability-class">
+                        <option value="A">A — very unstable</option>
+                        <option value="B">B — unstable</option>
+                        <option value="C">C — slightly unstable</option>
+                        <option value="D" selected>D — neutral</option>
+                        <option value="E">E — slightly stable</option>
+                        <option value="F">F — stable</option>
+                      </select>
+                    </label>
+                    <label class="plume-model-field" for="plume-surface-roughness">
+                      <span>Surface</span>
+                      <select id="plume-surface-roughness">
+                        <option value="rural">Open / rural</option>
+                        <option value="urban">Urban / obstructed</option>
+                      </select>
+                    </label>
                   </div>
-                </label>
-                <label class="plume-model-field" for="plume-wind-speed">
-                  <span>Wind speed (mph)</span>
-                  <input id="plume-wind-speed" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Required" required />
-                </label>
-                <label class="plume-model-field" for="plume-wind-direction">
-                  <span>Wind from</span>
-                  <select id="plume-wind-direction" required>
-                    <option value="" selected>Select direction</option>
-                    <option value="0">North</option>
-                    <option value="45">NE</option>
-                    <option value="90">East</option>
-                    <option value="135">SE</option>
-                    <option value="180">South</option>
-                    <option value="225">SW</option>
-                    <option value="270">West</option>
-                    <option value="315">NW</option>
-                  </select>
-                </label>
-                <label class="plume-model-field" for="plume-temperature">
-                  <span>Air temperature (°F)</span>
-                  <input id="plume-temperature" type="number" step="0.1" inputmode="decimal" placeholder="Required" required />
-                </label>
-                <label class="plume-model-field" for="plume-stability-class">
-                  <span>Stability class</span>
-                  <select id="plume-stability-class">
-                    <option value="A">A — very unstable</option>
-                    <option value="B">B — unstable</option>
-                    <option value="C">C — slightly unstable</option>
-                    <option value="D" selected>D — neutral</option>
-                    <option value="E">E — slightly stable</option>
-                    <option value="F">F — stable</option>
-                  </select>
-                </label>
-                <label class="plume-model-field" for="plume-surface-roughness">
-                  <span>Surface</span>
-                  <select id="plume-surface-roughness">
-                    <option value="rural">Open / rural</option>
-                    <option value="urban">Urban / obstructed</option>
-                  </select>
-                </label>
+                </div>
               </div>
               <div class="plume-model-actions">
                 <button class="ghost-btn" id="use-live-plume-weather-btn" type="button">Refresh Weather</button>
@@ -669,6 +747,9 @@
                     <li><span>GPS Location</span><strong id="plume-gps-summary">Awaiting coordinates</strong></li>
                     <li><span>Open-Meteo</span><strong id="open-meteo-summary">Awaiting live data</strong></li>
                     <li><span>Model Result</span><strong id="backend-model-summary">Run plume model to view result.</strong></li>
+                    <li><span>Weather Station</span><strong id="nws-station-summary">NWS observation station unavailable</strong></li>
+                    <li><span>Weather Station Details</span><strong id="nws-weather-summary">NWS live observation unavailable</strong></li>
+                    <li><span>Observation Time</span><strong id="nws-observation-summary">Observation time unavailable</strong></li>
                   </ul>
                 </div>
               </details>

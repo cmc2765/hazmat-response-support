@@ -1457,23 +1457,114 @@ function renderGuidanceBox(bodyId, sourceId, summary, fallback) {
   source.hidden = !source.textContent;
 }
 
+function isAvailableGuidance(value) {
+  return value !== null && value !== undefined && value !== '' && value !== 'N/A' && !/^not /i.test(String(value));
+}
+
+function getAdvancedValue(record, label) {
+  return new Map(record?.advanced || []).get(label);
+}
+
+function buildProtectiveActionGuidance() {
+  const record = activeChemicalRecord;
+  const guidance = {
+    recommendation: [],
+    cameoAloha: [],
+    niosh: [],
+    oshaNote: 'Shelter-in-place or evacuation actions should follow local incident command, AHJ, and emergency management direction. OSHA workplace guidance emphasizes planning for evacuation, shelter, accountability, and following local emergency response authority instructions.',
+  };
+  if (!record) return guidance;
+
+  if (isAvailableGuidance(record.commandFacts?.initialIsolation)) {
+    guidance.recommendation.push(`Initial isolation — ${record.commandFacts.initialIsolation} (Source: ERG / PHMSA)`);
+  }
+  if (isAvailableGuidance(record.commandFacts?.protectiveAction)) {
+    guidance.recommendation.push(`Protective action distance — ${record.commandFacts.protectiveAction} (Source: ERG / PHMSA)`);
+  }
+  if (record.ergTable) {
+    guidance.recommendation.push(`ERG Guide ${record.ergGuide} Table 1 distances available for spill size and day/night conditions. (Source: ERG / PHMSA)`);
+  }
+
+  const zone = currentThreatZoneGeoJson?.features?.[0]?.properties;
+  const zoneSource = /ALOHA|MARPLOT/i.test(activePlumeCommand?.source || zone?.source || '') ? 'ALOHA' : 'EPA / NOAA CAMEO';
+  if (activePlumeCommand) {
+    guidance.cameoAloha.push(`Model result summary — ${activePlumeCommand.summary} (Source: ${zoneSource})`);
+  }
+  if (zone?.label) guidance.cameoAloha.push(`Threat zone type — ${zone.label} (Source: ${zoneSource})`);
+  if (zone?.thresholdKind || zone?.thresholdLevel) {
+    guidance.cameoAloha.push(`Toxic endpoint / AEGL level — ${[zone.thresholdKind, zone.thresholdLevel].filter(Boolean).join(' ')} (Source: ${zoneSource})`);
+  }
+  if (Number.isFinite(Number(zone?.maxDownwindM))) {
+    guidance.cameoAloha.push(`Downwind threat distance — ${formatZoneDistance(zone.maxDownwindM)} (Source: ${zoneSource})`);
+  }
+
+  const exposureLimits = [
+    isAvailableGuidance(record.idlh) && `IDLH — ${record.idlh}`,
+    isAvailableGuidance(getAdvancedValue(record, 'NIOSH REL')) && `NIOSH REL — ${getAdvancedValue(record, 'NIOSH REL')}`,
+    isAvailableGuidance(getAdvancedValue(record, 'OSHA PEL')) && `OSHA PEL — ${getAdvancedValue(record, 'OSHA PEL')}`,
+  ].filter(Boolean);
+  if (exposureLimits.length) guidance.niosh.push(`${exposureLimits.join('; ')} (Source: NIOSH)`);
+  if (record.medical?.symptoms?.length) {
+    guidance.niosh.push(`Primary symptoms — ${record.medical.symptoms.slice(0, 4).join(', ')} (Source: NIOSH)`);
+  }
+  const respiratorNotes = record.ppeComponents?.niosh?.respiratory || [];
+  if (respiratorNotes.length) {
+    guidance.niosh.push(`Respirator/PPE warning — ${respiratorNotes.slice(0, 2).join('; ')} (Source: NIOSH)`);
+  }
+  return guidance;
+}
+
+function appendGuidanceSection(container, title, items, fallback) {
+  const section = document.createElement('li');
+  section.append(Object.assign(document.createElement('strong'), { textContent: title }));
+  const list = document.createElement('ul');
+  (items.length ? items : [fallback]).forEach((text) => {
+    const row = document.createElement('li');
+    row.textContent = text;
+    list.append(row);
+  });
+  section.append(list);
+  container.append(section);
+}
+
+function renderProtectiveActionGuidance(targetId) {
+  const target = document.getElementById(targetId);
+  if (!target) return;
+  target.replaceChildren();
+  const guidance = buildProtectiveActionGuidance();
+  const list = document.createElement('ul');
+  list.className = 'incident-guidance-list';
+  appendGuidanceSection(
+    list,
+    'Recommended Protective Action',
+    guidance.recommendation,
+    activeChemical ? 'No Current Data Exists' : 'Select a chemical and run the plume model to populate protective action guidance.',
+  );
+  appendGuidanceSection(list, 'EPA / NOAA CAMEO / ALOHA', guidance.cameoAloha, 'No CAMEO/ALOHA threat-zone data available.');
+  appendGuidanceSection(list, 'NIOSH', guidance.niosh, 'No NIOSH exposure guidance available for this chemical.');
+  target.append(...(target.tagName === 'UL' ? [...list.children] : [list]));
+}
+
 function renderIncidentGuidance() {
   const enteredChemical = document.getElementById('incident-product')?.value.trim();
   const hasSelectedChemical = getActiveIncident() && activeChemical && enteredChemical === activeChemical.name;
   if (!hasSelectedChemical) {
     renderGuidanceBox('incident-ppe-guidance', 'incident-ppe-sources', null, 'Select or identify a chemical to populate PPE guidance.');
     renderGuidanceBox('incident-medical-guidance', 'incident-medical-sources', null, 'Select or identify a chemical to populate medical guidance.');
+    renderProtectiveActionGuidance('incident-protective-guidance');
     return;
   }
   if (!activeChemicalRecord) {
     renderGuidanceBox('incident-ppe-guidance', 'incident-ppe-sources', null, 'No verified PPE guidance available for this chemical.');
     renderGuidanceBox('incident-medical-guidance', 'incident-medical-sources', null, 'No verified medical guidance available for this chemical.');
+    renderProtectiveActionGuidance('incident-protective-guidance');
     return;
   }
   const ppeSummary = buildIncidentPpeSummary(activeChemicalRecord);
   const medicalSummary = buildIncidentMedicalSummary(activeChemicalRecord);
   renderGuidanceBox('incident-ppe-guidance', 'incident-ppe-sources', ppeSummary, 'No verified PPE guidance available for this chemical.');
   renderGuidanceBox('incident-medical-guidance', 'incident-medical-sources', medicalSummary, 'No verified medical guidance available for this chemical.');
+  renderProtectiveActionGuidance('incident-protective-guidance');
 
   saveIncidentGuidance(ppeSummary, medicalSummary, activeChemicalRecord.summarySources);
 }
@@ -1491,10 +1582,12 @@ function renderIncidentCommandSnapshot() {
       'command-ppe-status',
       'command-ppe-title',
       'command-ppe-summary',
+      'command-protective-status',
     ].forEach((id) => setText(id, ''));
     ['command-chemical-details', 'command-plume-details', 'command-ppe-details'].forEach((id) => {
       document.getElementById(id)?.replaceChildren();
     });
+    renderProtectiveActionGuidance('command-protective-guidance');
   } else {
     const recordLoaded = Boolean(activeChemicalRecord);
     const commandFacts = activeChemicalRecord?.commandFacts;
@@ -1514,6 +1607,8 @@ function renderIncidentCommandSnapshot() {
     setText('command-plume-title', activePlumeCommand?.title || 'No active plume');
     setText('command-plume-summary', activePlumeCommand?.summary || 'Confirm the release and weather inputs before plotting.');
     replaceCommandList('command-plume-details', activePlumeCommand?.details || [], 'No plume model has been plotted.');
+    setText('command-protective-status', activeChemicalRecord ? 'Loaded' : 'Awaiting data');
+    renderProtectiveActionGuidance('command-protective-guidance');
 
     const ppeCorrelation = correlatePpeSources(activeChemicalRecord?.ppeSources || []);
     const startingPpe = buildPpeStartingReference(activeChemicalRecord);
@@ -1564,7 +1659,7 @@ function syncPlumeChemicalSelection() {
   if (plumeChemicalInput) plumeChemicalInput.value = activeChemical?.name || 'No identified chemical';
   if (plotButton) plotButton.disabled = !activeChemical;
   if (!activeChemical) {
-    setText('plume-input-status', 'Select a chemical through Chemical ID to begin.');
+    setText('plume-input-status', '');
   } else {
     const mode = hasActiveIncident() ? 'active incident' : 'planning session';
     setText('plume-input-status', `${activeChemical.name} is linked to the ${mode}. Confirm the release and weather inputs.`);
@@ -1985,7 +2080,7 @@ let plumeDistanceMarkers = [];
 const plumeHazardsCacheKey = 'hazmatiq_plume_hazards_cache';
 const plumeLayerState = { centerline: false, distance: false, hazards: false };
 const plumeLayerIds = {
-  centerline: ['hazmat-threat-zone-wind-arrow'],
+  centerline: ['hazmat-threat-zone-centerline', 'hazmat-threat-zone-wind-arrow'],
   distance: ['hazmat-threat-zone-distance-line', 'hazmat-threat-zone-distance-ticks', 'hazmat-threat-zone-distance-points', 'hazmat-threat-zone-distance-labels'],
   hazards: ['hazmat-plume-hazards-points', 'hazmat-plume-hazards-labels'],
 };
@@ -2289,13 +2384,7 @@ function resetDemographics(message = 'Click a red, yellow, or green plume zone t
   setText('demographics-zone-summary', message);
   ['population', 'housing', 'schools', 'healthcare', 'nursing', 'critical', 'businesses']
     .forEach((metric) => setDemographicMetric(`demographics-${metric}`, '—'));
-  const list = document.getElementById('demographics-priority-list');
-  if (list) {
-    list.replaceChildren();
-    const item = document.createElement('li');
-    item.textContent = 'Select a plume zone to load nearby occupancies and sensitive sites.';
-    list.append(item);
-  }
+  renderProtectiveActionGuidance('demographics-priority-list');
 }
 
 function formatZoneDistance(meters) {
@@ -2320,13 +2409,7 @@ async function inspectThreatZone(feature) {
   ['population', 'housing', 'schools', 'healthcare', 'nursing', 'critical', 'businesses']
     .forEach((metric) => setDemographicMetric(`demographics-${metric}`, '…'));
   setText('demographics-source-status', 'Loading U.S. Census and OpenStreetMap planning data…');
-  const list = document.getElementById('demographics-priority-list');
-  if (list) {
-    list.replaceChildren();
-    const item = document.createElement('li');
-    item.textContent = 'Loading sensitive sites and high-occupancy locations…';
-    list.append(item);
-  }
+  renderProtectiveActionGuidance('demographics-priority-list');
   if (plumeMap?.getLayer('hazmat-threat-zones-selection')) {
     plumeMap.setFilter('hazmat-threat-zones-selection', ['==', ['get', 'zoneId'], String(properties.zoneId)]);
   }
@@ -2347,17 +2430,7 @@ async function inspectThreatZone(feature) {
   setDemographicMetric('demographics-critical', occupancy ? occupancy.critical.toLocaleString() : 'Unavailable');
   setDemographicMetric('demographics-businesses', occupancy ? occupancy.businesses.toLocaleString() : 'Unavailable');
 
-  if (list) {
-    list.replaceChildren();
-    const priorities = occupancy?.priorities?.length
-      ? occupancy.priorities
-      : ['No mapped sensitive sites were returned; verify occupancies during reconnaissance.'];
-    priorities.forEach((priority) => {
-      const item = document.createElement('li');
-      item.textContent = priority;
-      list.append(item);
-    });
-  }
+  renderProtectiveActionGuidance('demographics-priority-list');
   const sources = [
     census ? `2020 Census: ${census.blocks} intersecting block${census.blocks === 1 ? '' : 's'} (planning upper bound)` : 'Census unavailable',
     occupancy ? 'OpenStreetMap mapped features' : 'OpenStreetMap occupancy lookup unavailable',
@@ -2882,7 +2955,7 @@ async function fetchOpenMeteo(lat, lon) {
   const parameters = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lon),
-    current: 'temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure',
+    current: 'temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure',
     temperature_unit: 'fahrenheit',
     wind_speed_unit: 'mph',
     precipitation_unit: 'inch',
@@ -2940,15 +3013,18 @@ function formatOpenMeteo(data) {
   if (!data?.current) return null;
   const current = data.current;
   const temperatureF = Number(current.temperature_2m);
+  const feelsLikeF = Number(current.apparent_temperature);
   const windSpeedMph = Number(current.wind_speed_10m);
   const pressureInHg = Number(current.surface_pressure) * 0.0295299830714;
   const elevationMeters = Number(data.elevation);
   const elevationFt = Number.isFinite(elevationMeters) ? Math.round(elevationMeters * 3.28084) : null;
+  const feelsLike = Number.isFinite(feelsLikeF) ? ` · Feels Like ${feelsLikeF.toFixed(1)}°F` : '';
   return {
     location: `${Number(data.latitude).toFixed(4)}, ${Number(data.longitude).toFixed(4)}${elevationFt === null ? '' : ` · ${elevationFt.toLocaleString()} ft`} · ${data.timezone || 'local time'}`,
     elevationFt,
-    conditions: `${current.temperature_2m}°F · RH ${current.relative_humidity_2m}% · Wind ${current.wind_speed_10m} mph ${degreesToCompass(current.wind_direction_10m)} · Gust ${current.wind_gusts_10m} mph · Pressure ${pressureInHg.toFixed(2)} inHg`,
+    conditions: `${current.temperature_2m}°F${feelsLike} · RH ${current.relative_humidity_2m}% · Wind ${current.wind_speed_10m} mph ${degreesToCompass(current.wind_direction_10m)} · Gust ${current.wind_gusts_10m} mph · Pressure ${pressureInHg.toFixed(2)} inHg`,
     temperatureF,
+    feelsLikeF: Number.isFinite(feelsLikeF) ? feelsLikeF : null,
     temperatureC: (temperatureF - 32) * (5 / 9),
     windSpeedMph,
     windSpeedMps: windSpeedMph * 0.44704,
@@ -2968,16 +3044,22 @@ function formatNws(data) {
   const windMps = observation.windSpeed?.value;
   const gustMps = observation.windGust?.value;
   const temperatureF = Number.isFinite(tempC) ? (tempC * 9) / 5 + 32 : null;
+  const heatIndexC = observation.heatIndex?.value;
+  const windChillC = observation.windChill?.value;
+  const apparentC = Number.isFinite(heatIndexC) ? heatIndexC : windChillC;
+  const feelsLikeF = Number.isFinite(apparentC) ? (apparentC * 9) / 5 + 32 : null;
   const windSpeedMph = Number.isFinite(windMps) ? windMps * 2.23694 : null;
   const gustMph = Number.isFinite(gustMps) ? gustMps * 2.23694 : null;
   const tempF = Number.isFinite(tempC) ? `${((tempC * 9) / 5 + 32).toFixed(1)}°F` : 'temperature unavailable';
+  const feelsLike = Number.isFinite(feelsLikeF) ? ` · Feels Like ${feelsLikeF.toFixed(1)}°F` : '';
   const wind = Number.isFinite(windMps) ? `${(windMps * 2.23694).toFixed(1)} mph` : 'wind unavailable';
   return {
     station: `NWS ${data.office === 'BMX' ? 'Birmingham (BMX)' : data.office || 'office'} · ${data.station.stationIdentifier} ${data.station.name || ''}`.trim(),
     displayStation: `${data.station.stationIdentifier} · ${data.station.name || 'NWS weather station'}`,
-    conditions: `${tempF} · ${observation.textDescription || 'No description'} · Wind ${wind} ${degreesToCompass(observation.windDirection?.value)}`,
+    conditions: `${tempF}${feelsLike} · ${observation.textDescription || 'No description'} · Wind ${wind} ${degreesToCompass(observation.windDirection?.value)}`,
     observedAt: observation.timestamp,
     temperatureF,
+    feelsLikeF,
     windSpeedMph,
     windDirDeg: Number(observation.windDirection?.value),
     gustMph,
@@ -2999,6 +3081,7 @@ function updateCommandWeatherState(openMeteo, nws, location) {
   activeWeatherCommand = openMeteo ? {
     rows: [
       { label: 'Temperature', value: `${compactNumber(openMeteo.temperatureF)}°F` },
+      { label: 'Feels Like', value: `${compactNumber(openMeteo.feelsLikeF)}°F` },
       { label: 'Wind', value: `${compactNumber(openMeteo.windSpeedMph)} mph ${degreesToCompass(openMeteo.windDirDeg)}` },
       { label: 'Gust', value: `${compactNumber(openMeteo.gustMph)} mph` },
       { label: 'Humidity', value: `${compactNumber(openMeteo.rh, 0)}%` },
@@ -3015,6 +3098,7 @@ function updateCommandWeatherState(openMeteo, nws, location) {
   } : {
     rows: [
       { label: 'Temperature', value: `${compactNumber(nws.temperatureF)}°F` },
+      Number.isFinite(nws.feelsLikeF) ? { label: 'Feels Like', value: `${compactNumber(nws.feelsLikeF)}°F` } : null,
       { label: 'Conditions', value: nws.description },
       { label: 'Wind', value: `${compactNumber(nws.windSpeedMph)} mph ${degreesToCompass(nws.windDirDeg)}` },
       Number.isFinite(nws.gustMph) ? { label: 'Gust', value: `${compactNumber(nws.gustMph)} mph` } : null,
@@ -3059,6 +3143,7 @@ async function refreshCommandWeather({ requestGps = false } = {}) {
   setText('open-meteo-conditions', openMeteo?.conditions || 'Open-Meteo unavailable');
   setText('nws-station-summary', nws?.station || 'NWS observation station unavailable');
   setText('nws-weather-summary', nws?.conditions || 'NWS live observation unavailable');
+  setText('nws-observation-summary', nws?.observedAt || 'Observation time unavailable');
   updateNotificationCenter({ weather: openMeteo?.conditions || nws?.conditions || 'Live weather unavailable' });
 }
 
@@ -3073,8 +3158,6 @@ function applyLiveWeatherToPlumeInputs(weather) {
   const compassBearing = Math.round(Number(weather.windDirDeg) / 45) % 8 * 45;
   setPlumeInputValue('plume-wind-direction', compassBearing);
   setPlumeInputValue('plume-temperature', Number(weather.temperatureF).toFixed(1));
-  const refreshed = formatCentralZuluTime();
-  setText('plume-input-status', `${weather.displayStation || weather.source || 'Live weather station'} · Refreshed ${refreshed.central} (${refreshed.zulu})`);
   return true;
 }
 
@@ -3090,6 +3173,65 @@ function selectPlumeWeather(openMeteo, nws) {
   if (isComplete(openMeteo)) return { ...openMeteo, source: 'Open-Meteo current conditions', displayStation: 'Open-Meteo' };
   if (isComplete(nws)) return { ...nws, source: nws.station || 'National Weather Service' };
   return null;
+}
+
+// Local planning descriptors only; operators must verify the actual container.
+const containerProfiles = [
+  { id: 'unknown', label: 'Unknown / Custom', category: 'custom', typicalCapacityText: '', pressureProfile: '', payloadNotes: '', modelSourceType: '', sourceNotes: 'Enter known container details manually.', confidence: 'Unknown' },
+  { id: 'small-container', label: 'Small container / bottle', category: 'package', typicalCapacityText: 'Varies', pressureProfile: 'Usually atmospheric; may be pressurized', payloadNotes: 'Verify label, closure, product, and remaining quantity', modelSourceType: 'Direct release; select plume or puff from observed release', sourceNotes: 'Planning descriptor only; verify container markings.', confidence: 'Low' },
+  { id: 'package', label: 'Bag / box / package', category: 'package', typicalCapacityText: 'Varies', pressureProfile: 'Typically atmospheric', payloadNotes: 'May contain solids, powders, inner containers, or mixed packaging', modelSourceType: 'Direct release; select plume or puff from observed release', sourceNotes: 'Planning descriptor only; verify packaging.', confidence: 'Low' },
+  { id: 'drum', label: 'Drum', category: 'bulk-package', typicalCapacityText: '55-gal', pressureProfile: 'Usually atmospheric or low pressure', payloadNotes: 'Verify drum type, product, headspace, and fill level', modelSourceType: 'Continuous plume or puff; operator selects release type', sourceNotes: 'Common planning size, not an exact capacity.', confidence: 'Medium', defaultSize: '55', defaultSizeUnit: 'gal' },
+  { id: 'jerrican', label: 'Jerrican / carboy', category: 'package', typicalCapacityText: 'Varies', pressureProfile: 'Usually atmospheric', payloadNotes: 'Verify material compatibility, closure, and fill level', modelSourceType: 'Continuous plume or puff; operator selects release type', sourceNotes: 'Planning descriptor only; verify package markings.', confidence: 'Low' },
+  { id: 'ibc', label: 'IBC tote', category: 'bulk-package', typicalCapacityText: '275–330 gal', pressureProfile: 'Usually atmospheric or low pressure', payloadNotes: 'Verify UN marking, product, valve condition, and fill level', modelSourceType: 'Continuous plume or pool source as observed', sourceNotes: 'Common planning range, not an exact capacity.', confidence: 'Medium', defaultSize: '275', defaultSizeUnit: 'gal' },
+  { id: 'cylinder', label: 'Cylinder', category: 'pressure-vessel', typicalCapacityText: 'Varies by cylinder', pressureProfile: 'Pressurized; product and temperature dependent', payloadNotes: 'Verify product, cylinder marking, service pressure, and valve condition', modelSourceType: 'Pressurized continuous release or puff as observed', sourceNotes: 'Planning descriptor only; verify cylinder markings.', confidence: 'Low' },
+  { id: 'ton-cylinder', label: 'Ton cylinder', category: 'pressure-vessel', typicalCapacityText: 'Ton container', pressureProfile: 'Pressurized liquefied gas; product and temperature dependent', payloadNotes: 'Verify product, valve orientation, markings, and remaining quantity', modelSourceType: 'Pressurized continuous release or puff as observed', sourceNotes: 'Planning descriptor only; verify product and markings.', confidence: 'Medium' },
+  { id: 'portable-tank', label: 'Portable tank / ISO tank', category: 'transport-tank', typicalCapacityText: 'Varies by specification', pressureProfile: 'Atmospheric to pressurized; specification dependent', payloadNotes: 'Verify tank specification, product, fill level, and relief devices', modelSourceType: 'Continuous plume, puff, or pool source as observed', sourceNotes: 'Planning descriptor only; verify tank data plate.', confidence: 'Low' },
+  { id: 'ast', label: 'Aboveground storage tank', category: 'fixed-storage', typicalCapacityText: 'Facility-specific', pressureProfile: 'Atmospheric or pressurized; tank-specific', payloadNotes: 'Verify inventory, tank geometry, fill level, diking, and product', modelSourceType: 'Continuous plume or pool source as observed', sourceNotes: 'Facility records should replace planning assumptions.', confidence: 'Low' },
+  { id: 'ust', label: 'Underground storage tank', category: 'fixed-storage', typicalCapacityText: 'Facility-specific', pressureProfile: 'Usually atmospheric or low pressure; system-specific', payloadNotes: 'Verify product, tank geometry, fill level, and piping involvement', modelSourceType: 'Continuous release or pool source as observed', sourceNotes: 'Facility records should replace planning assumptions.', confidence: 'Low' },
+  { id: 'process-vessel', label: 'Process vessel', category: 'process', typicalCapacityText: 'Process-specific', pressureProfile: 'Process pressure and temperature dependent', payloadNotes: 'Verify contents, operating state, isolation, geometry, and safeguards', modelSourceType: 'Continuous plume or puff based on process release', sourceNotes: 'Process data should replace planning assumptions.', confidence: 'Low' },
+  { id: 'cargo-tank', label: 'Cargo tank truck', category: 'transport-tank', typicalCapacityText: 'Varies by DOT/MC specification', pressureProfile: 'Atmospheric to pressurized; specification dependent', payloadNotes: 'Verify specification plate, product, compartments, and fill level', modelSourceType: 'Continuous plume, puff, or pool source as observed', sourceNotes: 'Shipping papers and specification plate are controlling sources.', confidence: 'Low' },
+  { id: 'rail-tank-car', label: 'Rail tank car', category: 'transport-tank', typicalCapacityText: 'Varies by DOT tank-car class', pressureProfile: 'Atmospheric to pressurized; tank class and product dependent', payloadNotes: 'Verify reporting marks, specification, product, and damage location', modelSourceType: 'Continuous plume, puff, or pool source as observed', sourceNotes: 'Train consist and shipping papers are controlling sources.', confidence: 'Low' },
+  { id: 'pipeline', label: 'Pipeline', category: 'pipeline', typicalCapacityText: 'Use segment data', pressureProfile: 'System operating pressure dependent', payloadNotes: 'Verify product, diameter, pressure, isolation points, and flow status', modelSourceType: 'Continuous release while flowing; operator verifies conditions', sourceNotes: 'Pipeline operator data should replace planning assumptions.', confidence: 'Low' },
+  { id: 'puddle', label: 'Puddle / pool', category: 'surface-release', typicalCapacityText: 'User Observed', pressureProfile: 'Atmospheric', payloadNotes: 'Verify product, surface, containment, area, and depth', modelSourceType: 'Pool evaporation or direct release', sourceNotes: 'Field measurements should replace planning assumptions.', confidence: 'Low' },
+  { id: 'direct-release', label: 'Direct release / unknown source', category: 'release', typicalCapacityText: 'Unknown', pressureProfile: 'Unknown; verify source conditions', payloadNotes: 'Document observed source, release duration, and available quantity', modelSourceType: 'Direct release; select plume or puff from observed release', sourceNotes: 'Use observed conditions and authoritative records when available.', confidence: 'Unknown' },
+];
+
+// CFR parts identify specifications and markings; they do not supply one safe size, fill, or pressure for a broad container category.
+const containerCfrDefaults = {
+  'small-container': { reference: '49 CFR Part 178, Subparts B/L/M — verify packaging marking', payloadNotes: 'Verify UN/DOT marking, material, closure, product, and remaining quantity' },
+  package: { reference: '49 CFR Part 178, Subparts L/M — verify UN packaging code', payloadNotes: 'Verify UN packaging code, inner packaging, product, and remaining quantity' },
+  drum: { reference: '49 CFR §§ 178.504–178.509 — verify UN drum marking', payloadNotes: 'Verify UN drum code, material, product, closure, headspace, and fill level' },
+  jerrican: { reference: '49 CFR §§ 178.509/178.511 — verify UN jerrican marking', payloadNotes: 'Verify UN jerrican code, material, product, closure, and fill level' },
+  ibc: { reference: '49 CFR Part 178, Subparts N/O; Part 180, Subpart D', pressureProfile: 'IBC design/test pressure varies by marked UN type; verify marking and records', payloadNotes: 'Verify UN IBC code, product, capacity marking, valve condition, inspection, and fill level' },
+  cylinder: { reference: '49 CFR Part 178, Subpart C — verify DOT/UN cylinder marking', pressureProfile: 'Service/test pressure is specification-specific; use the marked DOT/UN value', payloadNotes: 'Verify DOT/UN specification, service pressure marking, product, valve, and remaining quantity' },
+  'ton-cylinder': { reference: 'Verify marked DOT specification; consult applicable 49 CFR Part 178/179 requirements', pressureProfile: 'Pressure is product-, temperature-, and marked-specification dependent', payloadNotes: 'Verify product, DOT specification marking, valve orientation, and remaining quantity' },
+  'portable-tank': { reference: '49 CFR Part 178, Subpart H; Part 180, Subpart G', pressureProfile: 'Design/test pressure varies by marked UN/DOT portable-tank instruction', payloadNotes: 'Verify tank instruction/specification, data plate, product, test status, and fill level' },
+  'cargo-tank': { reference: '49 CFR Part 178, Subpart J; Part 180, Subpart E', pressureProfile: 'Pressure depends on marked DOT 406/407/412 or MC 331/338 specification', payloadNotes: 'Verify specification plate, DOT/MC type, product, test markings, compartments, and fill level' },
+  'rail-tank-car': { reference: '49 CFR Part 179; Part 180, Subpart F — verify tank-car marking', pressureProfile: 'Pressure and test requirements vary by marked DOT tank-car class', payloadNotes: 'Verify reporting marks, DOT class, qualification markings, product, and damage location' },
+};
+
+function applyContainerProfile() {
+  const selectedId = document.getElementById('plume-container-type')?.value || 'unknown';
+  const profile = containerProfiles.find((item) => item.id === selectedId) || containerProfiles[0];
+  const cfrDefaults = containerCfrDefaults[profile.id];
+  const setInput = (id, value = '') => {
+    const input = document.getElementById(id);
+    if (input) input.value = value;
+  };
+  setInput('container-size', profile.defaultSize);
+  setInput('container-size-unit', profile.defaultSizeUnit);
+  setInput('container-fill-level');
+  setInput('container-pressure');
+  setInput('container-pressure-unit');
+  setInput('container-capacity', profile.typicalCapacityText);
+  setInput('container-pressure-profile', cfrDefaults?.pressureProfile || profile.pressureProfile);
+  setInput('container-payload-notes', cfrDefaults?.payloadNotes || profile.payloadNotes);
+  setInput('container-model-source', profile.modelSourceType);
+  setInput('container-confidence', profile.confidence);
+  setInput('container-cfr-reference', cfrDefaults?.reference || 'Not determined by 49 CFR Parts 178–180; verify source records');
+  setText('container-profile-guidance', profile.id === 'unknown'
+    ? 'Enter known container size, pressure, and release details manually.'
+    : `${profile.label} planning profile · ${profile.sourceNotes}`);
 }
 
 function updatePlumeReleaseQuantityLabel() {
@@ -3109,7 +3251,7 @@ function updatePlumeReleaseQuantityLabel() {
 }
 
 function readPlumeModelInputs(location) {
-  if (!activeChemical) throw new Error('Identify a chemical through Chemical ID before plotting.');
+  if (!activeChemical) throw new Error('Identify a chemical before plotting.');
   const releaseKind = document.getElementById('plume-release-type')?.value;
   const releaseQuantity = Number(document.getElementById('plume-release-quantity')?.value);
   const releaseUnit = document.getElementById('plume-release-unit')?.value;
@@ -3318,6 +3460,10 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
 
   const { openMeteo, nws } = await fetchWeatherSources(location.lat, location.lon);
   if (token !== plumeRefreshToken) return;
+  const elevationInput = document.getElementById('plume-elevation');
+  if (elevationInput) {
+    elevationInput.value = Number.isFinite(openMeteo?.elevationFt) ? openMeteo.elevationFt.toLocaleString() : '';
+  }
   setText('open-meteo-location', openMeteo?.location || 'Open-Meteo unavailable');
   setText('open-meteo-conditions', openMeteo?.conditions || 'Open-Meteo unavailable');
   setText('open-meteo-summary', openMeteo
@@ -3325,6 +3471,7 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
     : 'Open-Meteo unavailable');
   setText('nws-station-summary', nws?.station || 'NWS observation station unavailable');
   setText('nws-weather-summary', nws?.conditions || 'NWS live observation unavailable');
+  setText('nws-observation-summary', nws?.observedAt || 'Observation time unavailable');
 
   const weatherNotification = openMeteo?.conditions || nws?.conditions || 'Live weather unavailable';
   updateNotificationCenter({ weather: weatherNotification });
@@ -3418,6 +3565,7 @@ document.getElementById('change-plume-chemical-btn')?.addEventListener('click', 
   chemicalSearchInput?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 });
 document.getElementById('plume-release-type')?.addEventListener('change', updatePlumeReleaseQuantityLabel);
+document.getElementById('plume-container-type')?.addEventListener('change', applyContainerProfile);
 document.getElementById('use-live-plume-weather-btn')?.addEventListener('click', async () => {
   const button = document.getElementById('use-live-plume-weather-btn');
   if (button) {
@@ -3438,6 +3586,7 @@ document.getElementById('plume-model-form')?.addEventListener('submit', async (e
   await plotPlumeFromControls();
 });
 updatePlumeReleaseQuantityLabel();
+applyContainerProfile();
 window.setInterval(() => {
   if (document.getElementById('incident')?.classList.contains('active')) {
     void refreshCommandWeather({ requestGps: false });
@@ -3454,7 +3603,6 @@ document.querySelectorAll('[data-plume-layer]').forEach((button) => {
       setPlumeLayerVisibility(layerName, false);
       button.classList.remove('active');
       button.setAttribute('aria-pressed', 'false');
-      button.textContent = layerName[0].toUpperCase() + layerName.slice(1);
       setText('plume-layers-status', layerName === 'hazards' ? 'Hazards layer hidden.' : '');
       return;
     }
@@ -3478,7 +3626,6 @@ document.querySelectorAll('[data-plume-layer]').forEach((button) => {
       setPlumeLayerVisibility(layerName, true);
       button.classList.add('active');
       button.setAttribute('aria-pressed', 'true');
-      button.textContent = `${button.textContent} On`;
       if (layerName !== 'hazards') setText('plume-layers-status', '');
     } catch {
       plumeLayerState[layerName] = false;
