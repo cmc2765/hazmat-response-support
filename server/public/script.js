@@ -1769,6 +1769,7 @@ document.querySelector('.plume-map-layout')?.append(document.getElementById('plu
 const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
 const satelliteMapStyle = {
   version: 8,
+  glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
   sources: {
     satellite: {
       type: 'raster',
@@ -2198,11 +2199,11 @@ function buildThreatZoneGuides() {
     properties: { guideType: 'centerline' },
     geometry: { type: 'LineString', coordinates: [start, end] },
   }];
-  [0.25, 0.5, 0.75, 1].forEach((fraction) => {
-    const distance = maxDistance * fraction;
+  [0.25, 0.5, 1, 1.5, 2].filter((miles) => miles * 1609.344 <= maxDistance).forEach((miles) => {
+    const distance = miles * 1609.344;
     features.push({
       type: 'Feature',
-      properties: { guideType: 'distance', label: formatZoneDistance(distance) },
+      properties: { guideType: 'distance', label: `${miles < 1 ? miles : miles.toFixed(1)} mi` },
       geometry: { type: 'Point', coordinates: localMetersToLngLat([distance, 0], origin, windFromDeg) },
     });
   });
@@ -2212,6 +2213,15 @@ function buildThreatZoneGuides() {
     geometry: { type: 'Point', coordinates: localMetersToLngLat([maxDistance * 0.14, 0], origin, windFromDeg) },
   });
   return { type: 'FeatureCollection', features };
+}
+
+function addOptionalPlumeGuideLayer(layer) {
+  if (plumeMap.getLayer(layer.id)) return;
+  try {
+    plumeMap.addLayer(layer);
+  } catch (error) {
+    console.warn(`Optional plume guide ${layer.id} could not be displayed.`, error);
+  }
 }
 
 function addThreatZoneLayers() {
@@ -2266,10 +2276,10 @@ function addThreatZoneLayers() {
   const guideSource = plumeMap.getSource('hazmat-threat-zone-guides');
   if (guideSource) {
     guideSource.setData(currentThreatZoneGuideGeoJson);
-    return;
+  } else {
+    plumeMap.addSource('hazmat-threat-zone-guides', { type: 'geojson', data: currentThreatZoneGuideGeoJson });
   }
-  plumeMap.addSource('hazmat-threat-zone-guides', { type: 'geojson', data: currentThreatZoneGuideGeoJson });
-  plumeMap.addLayer({
+  addOptionalPlumeGuideLayer({
     id: 'hazmat-threat-zone-centerline',
     type: 'line',
     source: 'hazmat-threat-zone-guides',
@@ -2280,7 +2290,7 @@ function addThreatZoneLayers() {
       'line-dasharray': [3, 2],
     },
   });
-  plumeMap.addLayer({
+  addOptionalPlumeGuideLayer({
     id: 'hazmat-threat-zone-distance-points',
     type: 'circle',
     source: 'hazmat-threat-zone-guides',
@@ -2292,7 +2302,7 @@ function addThreatZoneLayers() {
       'circle-stroke-width': 2,
     },
   });
-  plumeMap.addLayer({
+  addOptionalPlumeGuideLayer({
     id: 'hazmat-threat-zone-distance-labels',
     type: 'symbol',
     source: 'hazmat-threat-zone-guides',
@@ -2309,7 +2319,7 @@ function addThreatZoneLayers() {
       'text-halo-width': 2,
     },
   });
-  plumeMap.addLayer({
+  addOptionalPlumeGuideLayer({
     id: 'hazmat-threat-zone-wind-arrow',
     type: 'symbol',
     source: 'hazmat-threat-zone-guides',
@@ -2536,6 +2546,7 @@ function formatNws(data) {
   const wind = Number.isFinite(windMps) ? `${(windMps * 2.23694).toFixed(1)} mph` : 'wind unavailable';
   return {
     station: `NWS ${data.office === 'BMX' ? 'Birmingham (BMX)' : data.office || 'office'} · ${data.station.stationIdentifier} ${data.station.name || ''}`.trim(),
+    displayStation: `${data.station.stationIdentifier} · ${data.station.name || 'NWS weather station'}`,
     conditions: `${tempF} · ${observation.textDescription || 'No description'} · Wind ${wind} ${degreesToCompass(observation.windDirection?.value)}`,
     observedAt: observation.timestamp,
     temperatureF,
@@ -2633,8 +2644,23 @@ function applyLiveWeatherToPlumeInputs(weather) {
   setPlumeInputValue('plume-wind-speed', Number(weather.windSpeedMph).toFixed(1));
   setPlumeInputValue('plume-wind-direction', Math.round(weather.windDirDeg));
   setPlumeInputValue('plume-temperature', Number(weather.temperatureF).toFixed(1));
-  setText('plume-input-status', `Live weather loaded for ${activeChemical?.name || 'the incident'}. Confirm all inputs before plotting.`);
+  const refreshed = formatCentralZuluTime();
+  setText('plume-input-status', `${weather.displayStation || weather.source || 'Live weather station'} · Refreshed ${refreshed.central} (${refreshed.zulu})`);
   return true;
+}
+
+function selectPlumeWeather(openMeteo, nws) {
+  const isReading = (value) => value !== null && value !== '' && Number.isFinite(Number(value));
+  const isComplete = (weather) => weather
+    && isReading(weather.temperatureF)
+    && isReading(weather.windSpeedMph)
+    && isReading(weather.windDirDeg);
+  const observationAge = (weather) => Date.now() - Date.parse(weather?.observedAt || '');
+  const nwsIsCurrent = isComplete(nws) && observationAge(nws) >= 0 && observationAge(nws) <= 2 * 60 * 60 * 1000;
+  if (nwsIsCurrent) return { ...nws, source: nws.station || 'National Weather Service' };
+  if (isComplete(openMeteo)) return { ...openMeteo, source: 'Open-Meteo current conditions', displayStation: 'Open-Meteo' };
+  if (isComplete(nws)) return { ...nws, source: nws.station || 'National Weather Service' };
+  return null;
 }
 
 function updatePlumeReleaseQuantityLabel() {
@@ -2870,9 +2896,9 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
 
   const weatherNotification = openMeteo?.conditions || nws?.conditions || 'Live weather unavailable';
   updateNotificationCenter({ weather: weatherNotification });
-  latestPlumeWeather = openMeteo;
+  latestPlumeWeather = selectPlumeWeather(openMeteo, nws);
   updateCommandWeatherState(openMeteo, nws, location);
-  if (openMeteo) applyLiveWeatherToPlumeInputs(openMeteo);
+  if (latestPlumeWeather) applyLiveWeatherToPlumeInputs(latestPlumeWeather);
   else setText('plume-input-status', 'Live weather is unavailable. Enter weather observations manually before plotting.');
   setText('backend-model-summary', 'Awaiting Plot Plume');
   const imported = importedPlumeOverlay;
@@ -2961,11 +2987,19 @@ document.getElementById('change-plume-chemical-btn')?.addEventListener('click', 
 });
 document.getElementById('plume-release-type')?.addEventListener('change', updatePlumeReleaseQuantityLabel);
 document.getElementById('use-live-plume-weather-btn')?.addEventListener('click', async () => {
-  if (latestPlumeWeather) {
-    applyLiveWeatherToPlumeInputs(latestPlumeWeather);
-    return;
+  const button = document.getElementById('use-live-plume-weather-btn');
+  if (button) {
+    button.disabled = true;
+    button.textContent = 'Refreshing…';
   }
-  await refreshPlumeWorkspace({ requestGps: true });
+  try {
+    await refreshPlumeWorkspace({ requestGps: true });
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = 'Refresh Weather';
+    }
+  }
 });
 document.getElementById('plume-model-form')?.addEventListener('submit', async (event) => {
   event.preventDefault();
