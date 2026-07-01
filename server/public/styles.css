@@ -2033,23 +2033,19 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .plume-layer-controls {
-  position: absolute;
-  z-index: 3;
-  left: 14px;
-  bottom: 14px;
-  display: grid;
-  gap: 6px;
-  max-width: min(430px, calc(100% - 28px));
-  padding: 9px 10px;
-  border: 1px solid #7b8085;
-  border-radius: 10px;
-  background: rgba(250, 251, 252, 0.94);
-  box-shadow: 0 5px 16px rgba(15, 23, 42, 0.2);
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
   color: #071f36;
 }
 
 .plume-layer-controls > div {
   display: flex;
+  flex: 1;
+  justify-content: space-evenly;
   gap: 6px;
 }
 
@@ -2071,9 +2067,22 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .plume-layer-controls small {
-  min-height: 1em;
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
   color: #5d646b;
   line-height: 1.2;
+  white-space: nowrap;
+}
+
+.plume-distance-label {
+  padding: 2px 5px;
+  border: 1px solid #17202a;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #17202a;
+  font: 800 0.7rem Inter, "Segoe UI", sans-serif;
+  white-space: nowrap;
 }
 
 @media (max-width: 900px) {
@@ -2730,7 +2739,7 @@ textarea {
 }
 
 .incident-overview-card {
-  width: min(100%, 760px);
+  width: 100%;
   min-height: 0;
   padding: 0;
   border: 0;

@@ -1764,11 +1764,12 @@ let currentThreatZoneGeoJson = null;
 let currentThreatZoneGuideGeoJson = null;
 let currentPlumeHazardsGeoJson = null;
 let currentPlumeHazardsSignature = '';
+let plumeDistanceMarkers = [];
 const plumeHazardsCacheKey = 'hazmatiq_plume_hazards_cache';
 const plumeLayerState = { centerline: false, distance: false, hazards: false };
 const plumeLayerIds = {
   centerline: ['hazmat-threat-zone-centerline', 'hazmat-threat-zone-wind-arrow'],
-  distance: ['hazmat-threat-zone-distance-line', 'hazmat-threat-zone-distance-points', 'hazmat-threat-zone-distance-labels'],
+  distance: ['hazmat-threat-zone-distance-line', 'hazmat-threat-zone-distance-ticks', 'hazmat-threat-zone-distance-points', 'hazmat-threat-zone-distance-labels'],
   hazards: ['hazmat-plume-hazards-points', 'hazmat-plume-hazards-labels'],
 };
 let threatZoneInteractionBound = false;
@@ -2193,7 +2194,9 @@ async function renderThreatZones(geojson, label) {
 
 function buildThreatZoneGuides() {
   const zones = currentThreatZoneGeoJson?.features || [];
-  const longest = [...zones].sort((a, b) => Number(b.properties?.maxDownwindM || 0) - Number(a.properties?.maxDownwindM || 0))[0];
+  const longest = zones
+    .filter((zone) => zone.properties?.thresholdKind === 'AEGL' && Number(zone.properties?.thresholdLevel) === 1)
+    .sort((a, b) => Number(b.properties?.maxDownwindM || 0) - Number(a.properties?.maxDownwindM || 0))[0];
   const maxDistance = Number(longest?.properties?.maxDownwindM);
   const windFromDeg = Number(longest?.properties?.windFromDeg);
   const origin = plumeSourceMarker?.getLngLat();
@@ -2210,6 +2213,17 @@ function buildThreatZoneGuides() {
   }];
   [0.25, 0.5, 1, 1.5, 2].filter((miles) => miles * 1609.344 <= maxDistance).forEach((miles) => {
     const distance = miles * 1609.344;
+    features.push({
+      type: 'Feature',
+      properties: { guideType: 'distanceTick' },
+      geometry: {
+        type: 'LineString',
+        coordinates: [
+          localMetersToLngLat([distance, -12], origin, windFromDeg),
+          localMetersToLngLat([distance, 12], origin, windFromDeg),
+        ],
+      },
+    });
     features.push({
       type: 'Feature',
       properties: { guideType: 'distance', label: `${miles < 1 ? miles : miles.toFixed(1)} mi` },
@@ -2237,6 +2251,22 @@ function setPlumeLayerVisibility(layerName, visible) {
   (plumeLayerIds[layerName] || []).forEach((id) => {
     if (plumeMap?.getLayer(id)) plumeMap.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
   });
+  if (layerName === 'distance') syncDistanceDomMarkers();
+}
+
+function syncDistanceDomMarkers() {
+  plumeDistanceMarkers.forEach((marker) => marker.remove());
+  plumeDistanceMarkers = [];
+  if (!plumeMap || !plumeLayerState.distance || activePlumeMapView !== 'satellite') return;
+  (currentThreatZoneGuideGeoJson?.features || [])
+    .filter((feature) => feature.properties?.guideType === 'distance')
+    .forEach((feature) => {
+      const label = document.createElement('span');
+      label.className = 'plume-distance-label';
+      label.textContent = feature.properties.label;
+      plumeDistanceMarkers.push(new window.maplibregl.Marker({ element: label, anchor: 'bottom' })
+        .setLngLat(feature.geometry.coordinates).addTo(plumeMap));
+    });
 }
 
 function addThreatZoneLayers() {
@@ -2316,6 +2346,19 @@ function addThreatZoneLayers() {
       'line-color': '#fff',
       'line-width': 1.5,
       'line-opacity': 0.9,
+      'line-dasharray': [4, 2],
+    },
+  });
+  addOptionalPlumeGuideLayer({
+    id: 'hazmat-threat-zone-distance-ticks',
+    type: 'line',
+    source: 'hazmat-threat-zone-guides',
+    filter: ['==', ['get', 'guideType'], 'distanceTick'],
+    layout: { visibility: plumeLayerState.distance ? 'visible' : 'none' },
+    paint: {
+      'line-color': '#fff',
+      'line-width': 3,
+      'line-opacity': 0.95,
     },
   });
   addOptionalPlumeGuideLayer({
@@ -2331,6 +2374,7 @@ function addThreatZoneLayers() {
       'circle-stroke-width': 2,
     },
   });
+  syncDistanceDomMarkers();
   // The raster-only satellite style has no font atlas; keep text annotations on street styles.
   if (activePlumeMapView === 'satellite') return;
   addOptionalPlumeGuideLayer({
@@ -2521,6 +2565,7 @@ async function clearThreatZones(message = '') {
   }
   currentThreatZoneGeoJson = null;
   currentThreatZoneGuideGeoJson = null;
+  syncDistanceDomMarkers();
   activePlumeCommand = null;
   renderIncidentCommandSnapshot();
   resetDemographics('No plume zone is currently displayed.');
@@ -2978,7 +3023,7 @@ async function plotPlumeFromControls() {
 
     importedPlumeOverlay = null;
     const geojson = plumeResultToGeoJson(modeled.result, location);
-    const label = 'Plume centered on modeled AEGL threat zones.';
+    const label = '';
     const rendered = await renderThreatZones(geojson, label);
     if (!rendered) throw new Error('The model did not return a displayable threshold polygon.');
     const releaseQuantity = document.getElementById('plume-release-quantity')?.value;

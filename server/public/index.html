@@ -647,7 +647,15 @@
             </form>
 
             <div class="plume-import-row">
-              <span id="plume-overlay-status" class="muted">Confirm the model inputs, then select Plot Plume.</span>
+              <div class="plume-layer-controls" aria-label="Map Layers">
+                <strong>Map Layers</strong>
+                <div>
+                  <button type="button" data-plume-layer="centerline" aria-pressed="false">Centerline</button>
+                  <button type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
+                  <button type="button" data-plume-layer="hazards" aria-pressed="false">Hazards</button>
+                </div>
+                <small id="plume-layers-status" role="status" aria-live="polite"></small>
+              </div>
               <div class="plume-map-view-controls" role="group" aria-label="Plume map view">
                 <button class="ghost-btn active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
                 <button class="ghost-btn" type="button" data-plume-map-view="street" aria-pressed="false">Street Map</button>
@@ -675,15 +683,6 @@
                   <span><i class="zone-yellow"></i> Yellow · AEGL 2</span>
                   <span><i class="zone-green"></i> Green · AEGL 1</span>
                   <span><i class="zone-centerline"></i> Downwind centerline</span>
-                </div>
-                <div class="plume-layer-controls" aria-label="Map Layers">
-                  <strong>Map Layers</strong>
-                  <div>
-                    <button type="button" data-plume-layer="centerline" aria-pressed="false">Centerline</button>
-                    <button type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
-                    <button type="button" data-plume-layer="hazards" aria-pressed="false">Hazards</button>
-                  </div>
-                  <small id="plume-layers-status" role="status" aria-live="polite"></small>
                 </div>
               </article>
             </div>
