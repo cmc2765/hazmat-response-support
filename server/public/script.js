@@ -1382,7 +1382,7 @@ function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {
     void clearThreatZones(activeChemical
       ? 'Chemical changed. Confirm inputs and select Plot Plume.'
       : 'Identify a chemical before plotting a plume.');
-    setText('backend-model-summary', 'Awaiting operator-entered model inputs');
+    setText('backend-model-summary', 'Run plume model to view result.');
   }
   syncPlumeChemicalSelection();
   renderIncidentCommandSnapshot();
@@ -1762,6 +1762,15 @@ let plumeSourceMarker = null;
 let importedPlumeOverlay = null;
 let currentThreatZoneGeoJson = null;
 let currentThreatZoneGuideGeoJson = null;
+let currentPlumeHazardsGeoJson = null;
+let currentPlumeHazardsSignature = '';
+const plumeHazardsCacheKey = 'hazmatiq_plume_hazards_cache';
+const plumeLayerState = { centerline: false, distance: false, hazards: false };
+const plumeLayerIds = {
+  centerline: ['hazmat-threat-zone-centerline', 'hazmat-threat-zone-wind-arrow'],
+  distance: ['hazmat-threat-zone-distance-line', 'hazmat-threat-zone-distance-points', 'hazmat-threat-zone-distance-labels'],
+  hazards: ['hazmat-plume-hazards-points', 'hazmat-plume-hazards-labels'],
+};
 let threatZoneInteractionBound = false;
 let demographicsRequestToken = 0;
 let latestPlumeWeather = null;
@@ -2160,6 +2169,7 @@ async function renderThreatZones(geojson, label) {
   };
   resetDemographics();
   addThreatZoneLayers();
+  if (plumeLayerState.hazards) void showPlumeHazards();
   if (plumeMap.getLayer('hazmat-threat-zones-selection')) {
     plumeMap.setFilter('hazmat-threat-zones-selection', ['==', ['get', 'zoneId'], '']);
   }
@@ -2223,6 +2233,12 @@ function addOptionalPlumeGuideLayer(layer) {
   }
 }
 
+function setPlumeLayerVisibility(layerName, visible) {
+  (plumeLayerIds[layerName] || []).forEach((id) => {
+    if (plumeMap?.getLayer(id)) plumeMap.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
+  });
+}
+
 function addThreatZoneLayers() {
   if (!plumeMap || !currentThreatZoneGeoJson) return;
   const source = plumeMap.getSource('hazmat-threat-zones');
@@ -2283,6 +2299,7 @@ function addThreatZoneLayers() {
     type: 'line',
     source: 'hazmat-threat-zone-guides',
     filter: ['==', ['get', 'guideType'], 'centerline'],
+    layout: { visibility: plumeLayerState.centerline ? 'visible' : 'none' },
     paint: {
       'line-color': '#17202a',
       'line-width': 3,
@@ -2290,10 +2307,23 @@ function addThreatZoneLayers() {
     },
   });
   addOptionalPlumeGuideLayer({
+    id: 'hazmat-threat-zone-distance-line',
+    type: 'line',
+    source: 'hazmat-threat-zone-guides',
+    filter: ['==', ['get', 'guideType'], 'centerline'],
+    layout: { visibility: plumeLayerState.distance ? 'visible' : 'none' },
+    paint: {
+      'line-color': '#fff',
+      'line-width': 1.5,
+      'line-opacity': 0.9,
+    },
+  });
+  addOptionalPlumeGuideLayer({
     id: 'hazmat-threat-zone-distance-points',
     type: 'circle',
     source: 'hazmat-threat-zone-guides',
     filter: ['==', ['get', 'guideType'], 'distance'],
+    layout: { visibility: plumeLayerState.distance ? 'visible' : 'none' },
     paint: {
       'circle-radius': 4,
       'circle-color': '#fff',
@@ -2309,6 +2339,7 @@ function addThreatZoneLayers() {
     source: 'hazmat-threat-zone-guides',
     filter: ['==', ['get', 'guideType'], 'distance'],
     layout: {
+      visibility: plumeLayerState.distance ? 'visible' : 'none',
       'text-field': ['get', 'label'],
       'text-size': 12,
       'text-offset': [0, 1.2],
@@ -2326,6 +2357,7 @@ function addThreatZoneLayers() {
     source: 'hazmat-threat-zone-guides',
     filter: ['==', ['get', 'guideType'], 'wind'],
     layout: {
+      visibility: plumeLayerState.centerline ? 'visible' : 'none',
       'text-field': '➤',
       'text-size': 26,
       'text-rotate': ['get', 'rotation'],
@@ -2339,9 +2371,116 @@ function addThreatZoneLayers() {
   });
 }
 
+function getPlumeHazardsBounds() {
+  if (!currentThreatZoneGeoJson?.features?.length || !plumeSourceMarker) return null;
+  const bounds = { west: Infinity, south: Infinity, east: -Infinity, north: -Infinity };
+  forEachCoordinate(currentThreatZoneGeoJson, ([lon, lat]) => {
+    bounds.west = Math.min(bounds.west, lon);
+    bounds.south = Math.min(bounds.south, lat);
+    bounds.east = Math.max(bounds.east, lon);
+    bounds.north = Math.max(bounds.north, lat);
+  });
+  const source = plumeSourceMarker.getLngLat();
+  if (!Object.values(bounds).every(Number.isFinite)) return null;
+  return {
+    ...bounds,
+    signature: [source.lng, source.lat, bounds.west, bounds.south, bounds.east, bounds.north]
+      .map((value) => value.toFixed(5)).join('|'),
+  };
+}
+
+function addPlumeHazardsLayers(geojson) {
+  if (!plumeMap || !geojson) return;
+  const source = plumeMap.getSource('hazmat-plume-hazards');
+  if (source) source.setData(geojson);
+  else plumeMap.addSource('hazmat-plume-hazards', { type: 'geojson', data: geojson });
+  addOptionalPlumeGuideLayer({
+    id: 'hazmat-plume-hazards-points',
+    type: 'circle',
+    source: 'hazmat-plume-hazards',
+    layout: { visibility: plumeLayerState.hazards ? 'visible' : 'none' },
+    paint: {
+      'circle-radius': 5,
+      'circle-color': '#f05a28',
+      'circle-stroke-color': '#fff',
+      'circle-stroke-width': 2,
+    },
+  });
+  if (activePlumeMapView !== 'satellite') {
+    addOptionalPlumeGuideLayer({
+      id: 'hazmat-plume-hazards-labels',
+      type: 'symbol',
+      source: 'hazmat-plume-hazards',
+      layout: {
+        visibility: plumeLayerState.hazards ? 'visible' : 'none',
+        'text-field': ['get', 'name'],
+        'text-size': 11,
+        'text-offset': [0, 1.1],
+      },
+      paint: {
+        'text-color': '#17202a',
+        'text-halo-color': '#fff',
+        'text-halo-width': 2,
+      },
+    });
+  }
+}
+
+async function showPlumeHazards() {
+  const bounds = getPlumeHazardsBounds();
+  if (!bounds) {
+    setText('plume-layers-status', 'Hazards unavailable until plume bounds or release point are available.');
+    return false;
+  }
+  let cached = null;
+  try {
+    cached = JSON.parse(window.localStorage.getItem(plumeHazardsCacheKey) || 'null');
+  } catch {
+    // Continue without cached hazards.
+  }
+  if (currentPlumeHazardsSignature === bounds.signature && currentPlumeHazardsGeoJson) {
+    // Reuse the current in-memory hazards.
+  } else if (cached?.signature === bounds.signature && cached.geojson) {
+    currentPlumeHazardsGeoJson = cached.geojson;
+    currentPlumeHazardsSignature = cached.signature;
+  } else {
+    const bbox = `${bounds.south},${bounds.west},${bounds.north},${bounds.east}`;
+    const query = `[out:json][timeout:25];(nwr["name"]["amenity"](${bbox});nwr["name"]["shop"](${bbox});nwr["name"]["office"](${bbox});nwr["name"]["power"](${bbox});nwr["name"]["industrial"](${bbox}););out center tags;`;
+    const data = await fetchExternalJson('https://overpass-api.de/api/interpreter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body: new URLSearchParams({ data: query }),
+    });
+    currentPlumeHazardsGeoJson = {
+      type: 'FeatureCollection',
+      features: (data?.elements || []).flatMap((element, index) => {
+        const lon = element.lon ?? element.center?.lon;
+        const lat = element.lat ?? element.center?.lat;
+        if (!Number.isFinite(lon) || !Number.isFinite(lat) || !element.tags?.name) return [];
+        return [{
+          type: 'Feature', id: index,
+          properties: { name: element.tags.name },
+          geometry: { type: 'Point', coordinates: [lon, lat] },
+        }];
+      }),
+    };
+    currentPlumeHazardsSignature = bounds.signature;
+    try {
+      window.localStorage.setItem(plumeHazardsCacheKey, JSON.stringify({ signature: bounds.signature, geojson: currentPlumeHazardsGeoJson }));
+    } catch {
+      // The in-memory cache still prevents repeat calls this session.
+    }
+  }
+  addPlumeHazardsLayers(currentPlumeHazardsGeoJson);
+  setPlumeLayerVisibility('hazards', true);
+  setText('plume-layers-status', 'Hazards loaded from OpenStreetMap/Overpass.');
+  return true;
+}
+
 async function setPlumeMapView(viewName) {
   const view = plumeMapViews[viewName];
   if (!view) return;
+  const activeZones = currentThreatZoneGeoJson;
   activePlumeMapView = viewName;
   updatePlumeMapViewButtons();
   if (!plumeMap) return;
@@ -2355,11 +2494,21 @@ async function setPlumeMapView(viewName) {
     await plumeMapReady;
   }
   if (activePlumeMapView !== viewName) return;
+  currentThreatZoneGeoJson = activeZones;
   addThreatZoneLayers();
+  if (plumeLayerState.hazards && currentPlumeHazardsGeoJson) addPlumeHazardsLayers(currentPlumeHazardsGeoJson);
 
   const camera = { pitch: view.pitch, bearing: view.bearing, duration: 500 };
   if (view.minZoom) camera.zoom = Math.max(plumeMap.getZoom(), view.minZoom);
-  plumeMap.easeTo(camera);
+  if (activeZones?.features?.length) {
+    const bounds = new window.maplibregl.LngLatBounds();
+    forEachCoordinate(activeZones, (coordinate) => bounds.extend(coordinate));
+    if (!bounds.isEmpty()) plumeMap.fitBounds(bounds, { padding: 70, maxZoom: 15, pitch: view.pitch, bearing: view.bearing, duration: 400 });
+    const legend = document.getElementById('plume-map-legend');
+    if (legend) legend.hidden = false;
+  } else {
+    plumeMap.easeTo(camera);
+  }
 }
 
 async function clearThreatZones(message = '') {
@@ -2490,8 +2639,9 @@ async function fetchNwsObservation(lat, lon) {
     if (!station?.stationIdentifier) continue;
     const observation = await fetchJson(`https://api.weather.gov/stations/${encodeURIComponent(station.stationIdentifier)}/observations/latest?refresh=${Date.now()}`);
     const values = observation?.properties;
-    const complete = [values?.temperature?.value, values?.windSpeed?.value, values?.windDirection?.value]
-      .every((value) => typeof value === 'number' && Number.isFinite(value));
+    const complete = typeof values?.temperature?.value === 'number' && Number.isFinite(values.temperature.value)
+      && typeof values?.windSpeed?.value === 'number' && Number.isFinite(values.windSpeed.value) && values.windSpeed.value > 0
+      && typeof values?.windDirection?.value === 'number' && Number.isFinite(values.windDirection.value);
     if (complete) {
       return { office: points.properties.gridId, station, observation: values };
     }
@@ -2530,8 +2680,11 @@ function formatOpenMeteo(data) {
   const temperatureF = Number(current.temperature_2m);
   const windSpeedMph = Number(current.wind_speed_10m);
   const pressureInHg = Number(current.surface_pressure) * 0.0295299830714;
+  const elevationMeters = Number(data.elevation);
+  const elevationFt = Number.isFinite(elevationMeters) ? Math.round(elevationMeters * 3.28084) : null;
   return {
-    location: `${Number(data.latitude).toFixed(4)}, ${Number(data.longitude).toFixed(4)} · ${Math.round(Number(data.elevation) * 3.28084).toLocaleString()} ft · ${data.timezone || 'local time'}`,
+    location: `${Number(data.latitude).toFixed(4)}, ${Number(data.longitude).toFixed(4)}${elevationFt === null ? '' : ` · ${elevationFt.toLocaleString()} ft`} · ${data.timezone || 'local time'}`,
+    elevationFt,
     conditions: `${current.temperature_2m}°F · RH ${current.relative_humidity_2m}% · Wind ${current.wind_speed_10m} mph ${degreesToCompass(current.wind_direction_10m)} · Gust ${current.wind_gusts_10m} mph · Pressure ${pressureInHg.toFixed(2)} inHg`,
     temperatureF,
     temperatureC: (temperatureF - 32) * (5 / 9),
@@ -2667,7 +2820,7 @@ function selectPlumeWeather(openMeteo, nws) {
   const isReading = (value) => value !== null && value !== '' && Number.isFinite(Number(value));
   const isComplete = (weather) => weather
     && isReading(weather.temperatureF)
-    && isReading(weather.windSpeedMph)
+    && isReading(weather.windSpeedMph) && Number(weather.windSpeedMph) > 0
     && isReading(weather.windDirDeg);
   const observationAge = (weather) => Date.now() - Date.parse(weather?.observedAt || '');
   const nwsIsCurrent = isComplete(nws) && observationAge(nws) >= 0 && observationAge(nws) <= 2 * 60 * 60 * 1000;
@@ -2883,8 +3036,8 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
     return;
   }
 
-  const address = getIncidentAddressValue() || 'Current GPS incident location';
-  setText('plume-incident-address', address);
+  const incident = getActiveIncident();
+  setText('plume-summary-incident-name', incident?.incidentName || 'Planning Mode');
   setText('plume-gps-summary', `${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}`);
   setText('plume-location-source', location.source);
   const manualProduct = document.getElementById('incident-product')?.value.trim();
@@ -2905,6 +3058,9 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   if (token !== plumeRefreshToken) return;
   setText('open-meteo-location', openMeteo?.location || 'Open-Meteo unavailable');
   setText('open-meteo-conditions', openMeteo?.conditions || 'Open-Meteo unavailable');
+  setText('open-meteo-summary', openMeteo
+    ? `${openMeteo.conditions}${openMeteo.elevationFt === null ? '' : ` · Elevation ${openMeteo.elevationFt.toLocaleString()} ft`}`
+    : 'Open-Meteo unavailable');
   setText('nws-station-summary', nws?.station || 'NWS observation station unavailable');
   setText('nws-weather-summary', nws?.conditions || 'NWS live observation unavailable');
 
@@ -2914,7 +3070,7 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   updateCommandWeatherState(openMeteo, nws, location);
   if (latestPlumeWeather) applyLiveWeatherToPlumeInputs(latestPlumeWeather);
   else setText('plume-input-status', 'Live weather is unavailable. Enter weather observations manually before plotting.');
-  setText('backend-model-summary', 'Awaiting Plot Plume');
+  setText('backend-model-summary', 'Run plume model to view result.');
   const imported = importedPlumeOverlay;
   if (imported) {
     await renderThreatZones(imported.geojson, imported.label);
@@ -3027,6 +3183,48 @@ window.setInterval(() => {
 }, 5 * 60 * 1000);
 document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
   button.addEventListener('click', () => setPlumeMapView(button.dataset.plumeMapView));
+});
+document.querySelectorAll('[data-plume-layer]').forEach((button) => {
+  button.addEventListener('click', async () => {
+    const layerName = button.dataset.plumeLayer;
+    if (plumeLayerState[layerName]) {
+      plumeLayerState[layerName] = false;
+      setPlumeLayerVisibility(layerName, false);
+      button.classList.remove('active');
+      button.setAttribute('aria-pressed', 'false');
+      button.textContent = layerName[0].toUpperCase() + layerName.slice(1);
+      setText('plume-layers-status', layerName === 'hazards' ? 'Hazards layer hidden.' : '');
+      return;
+    }
+
+    const guidesAvailable = currentThreatZoneGuideGeoJson?.features?.some((feature) => feature.properties?.guideType === 'centerline');
+    if (layerName === 'centerline' && !guidesAvailable) {
+      setText('plume-layers-status', 'Centerline unavailable until plume model is run.');
+      return;
+    }
+    if (layerName === 'distance' && !guidesAvailable) {
+      setText('plume-layers-status', 'Distance markers unavailable until plume model is run.');
+      return;
+    }
+
+    plumeLayerState[layerName] = true;
+    try {
+      if (layerName === 'hazards' && !await showPlumeHazards()) {
+        plumeLayerState.hazards = false;
+        return;
+      }
+      setPlumeLayerVisibility(layerName, true);
+      button.classList.add('active');
+      button.setAttribute('aria-pressed', 'true');
+      button.textContent = `${button.textContent} On`;
+      if (layerName !== 'hazards') setText('plume-layers-status', '');
+    } catch {
+      plumeLayerState[layerName] = false;
+      setText('plume-layers-status', layerName === 'hazards'
+        ? 'Hazards unavailable until plume bounds or release point are available.'
+        : '');
+    }
+  });
 });
 document.getElementById('plume-overlay-import')?.addEventListener('change', async (event) => {
   const file = event.target.files?.[0];

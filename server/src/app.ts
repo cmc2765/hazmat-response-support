@@ -181,8 +181,12 @@ app.get("/api/weather/current", async (c) => {
       try {
         const observation = await getJson(`https://api.weather.gov/stations/${encodeURIComponent(stationId)}/observations/latest`, headers);
         const values = observation.properties as Record<string, { value?: unknown }> | undefined;
-        const isComplete = [values?.temperature?.value, values?.windSpeed?.value, values?.windDirection?.value]
-          .every((value) => typeof value === "number" && Number.isFinite(value));
+        const temperature = values?.temperature?.value;
+        const windSpeed = values?.windSpeed?.value;
+        const windDirection = values?.windDirection?.value;
+        const isComplete = typeof temperature === "number" && Number.isFinite(temperature)
+          && typeof windSpeed === "number" && Number.isFinite(windSpeed) && windSpeed > 0
+          && typeof windDirection === "number" && Number.isFinite(windDirection);
         if (isComplete) return { office: pointProperties?.gridId, station, observation: observation.properties };
       } catch {
         // Try the next-nearest reporting station.

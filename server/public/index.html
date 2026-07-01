@@ -60,7 +60,6 @@
         <aside class="sidebar">
           <div class="sidebar-card">
             <h2>Command Dashboard</h2>
-            <p class="muted">Quick-access tactical modules</p>
             <nav class="module-nav" aria-label="Primary">
               <button class="module-btn home-logo-btn active" data-view="overview" aria-label="HazMatIQ Home">
                 <span class="home-nav-emblem" aria-hidden="true">
@@ -124,25 +123,6 @@
               </ul>
             </div>
             <p id="demographics-source-status" class="demographics-source-status">Population estimate: U.S. Census geography. Occupancies: OpenStreetMap mapped features.</p>
-          </details>
-
-          <details class="sidebar-card plume-sidebar-data" id="plume-incident-data-panel">
-            <summary>Incident Data</summary>
-            <div class="plume-data-heading">
-              <span class="status-pill" id="plume-location-source">Awaiting location</span>
-            </div>
-            <ul class="detail-list">
-              <li><span>Incident</span><strong id="plume-incident-address">Not entered</strong></li>
-              <li><span>GPS</span><strong id="plume-gps-summary">Awaiting coordinates</strong></li>
-              <li><span>Product</span><strong id="plume-product-summary">No chemical selected</strong></li>
-              <li><span>Open-Meteo grid</span><strong id="open-meteo-location">Awaiting live data</strong></li>
-              <li><span>Open-Meteo</span><strong id="open-meteo-conditions">Awaiting live data</strong></li>
-              <li><span>NWS office / station</span><strong id="nws-station-summary">Awaiting live data</strong></li>
-              <li><span>NWS observation</span><strong id="nws-weather-summary">Awaiting live data</strong></li>
-              <li><span>Selected model</span><strong id="selected-model-summary">Plume Model</strong></li>
-              <li><span>Model result</span><strong id="backend-model-summary">Awaiting incident data</strong></li>
-            </ul>
-            <p id="plume-live-status" class="muted" role="status" aria-live="polite">Enter an incident location or allow GPS access.</p>
           </details>
 
         </aside>
@@ -673,6 +653,17 @@
                 <button class="ghost-btn" type="button" data-plume-map-view="street" aria-pressed="false">Street Map</button>
                 <button class="ghost-btn" type="button" data-plume-map-view="street-3d" aria-pressed="false">Street 3D</button>
               </div>
+              <details class="plume-summary-panel" id="plume-incident-data-panel">
+                <summary>Summary</summary>
+                <div class="plume-summary-content">
+                  <ul class="detail-list">
+                    <li><span>Incident Name</span><strong id="plume-summary-incident-name">Planning Mode</strong></li>
+                    <li><span>GPS Location</span><strong id="plume-gps-summary">Awaiting coordinates</strong></li>
+                    <li><span>Open-Meteo</span><strong id="open-meteo-summary">Awaiting live data</strong></li>
+                    <li><span>Model Result</span><strong id="backend-model-summary">Run plume model to view result.</strong></li>
+                  </ul>
+                </div>
+              </details>
             </div>
 
             <div class="plume-map-layout">
@@ -684,6 +675,15 @@
                   <span><i class="zone-yellow"></i> Yellow · AEGL 2</span>
                   <span><i class="zone-green"></i> Green · AEGL 1</span>
                   <span><i class="zone-centerline"></i> Downwind centerline</span>
+                </div>
+                <div class="plume-layer-controls" aria-label="Map Layers">
+                  <strong>Map Layers</strong>
+                  <div>
+                    <button type="button" data-plume-layer="centerline" aria-pressed="false">Centerline</button>
+                    <button type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
+                    <button type="button" data-plume-layer="hazards" aria-pressed="false">Hazards</button>
+                  </div>
+                  <small id="plume-layers-status" role="status" aria-live="polite"></small>
                 </div>
               </article>
             </div>
