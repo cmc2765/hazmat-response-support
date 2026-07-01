@@ -1769,7 +1769,6 @@ document.querySelector('.plume-map-layout')?.append(document.getElementById('plu
 const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
 const satelliteMapStyle = {
   version: 8,
-  glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
   sources: {
     satellite: {
       type: 'raster',
@@ -1878,7 +1877,7 @@ function localMetersToLngLat([x, y], origin, windFromDeg) {
 }
 
 function plumeResultToGeoJson(result, origin) {
-  const validZones = (result?.isopleths || []).filter((zone) => zone.polygon?.length >= 3 && Number(zone.thresholdLevel) >= 1);
+  const validZones = (result?.isopleths || []).filter((zone) => zone.polygon?.length >= 2 && Number(zone.thresholdLevel) >= 1);
   const fallbackThresholdKind = ['AEGL', 'ERPG', 'TEEL'].reduce((preferredKind, kind) => {
     const levelCount = new Set(validZones.filter((zone) => zone.thresholdKind === kind).map((zone) => zone.thresholdLevel)).size;
     const preferredLevelCount = new Set(validZones.filter((zone) => zone.thresholdKind === preferredKind).map((zone) => zone.thresholdLevel)).size;
@@ -2302,6 +2301,8 @@ function addThreatZoneLayers() {
       'circle-stroke-width': 2,
     },
   });
+  // The raster-only satellite style has no font atlas; keep text annotations on street styles.
+  if (activePlumeMapView === 'satellite') return;
   addOptionalPlumeGuideLayer({
     id: 'hazmat-threat-zone-distance-labels',
     type: 'symbol',
@@ -2484,17 +2485,29 @@ async function fetchNwsObservation(lat, lon) {
   const stationUrl = points?.properties?.observationStations;
   if (!stationUrl) return null;
   const stations = await fetchJson(stationUrl);
-  const station = stations?.features?.[0]?.properties;
-  if (!station?.stationIdentifier) return null;
-  const observation = await fetchJson(`https://api.weather.gov/stations/${encodeURIComponent(station.stationIdentifier)}/observations/latest`);
-  return {
-    office: points.properties.gridId,
-    station,
-    observation: observation?.properties,
-  };
+  for (const feature of stations?.features?.slice(0, 8) || []) {
+    const station = feature?.properties;
+    if (!station?.stationIdentifier) continue;
+    const observation = await fetchJson(`https://api.weather.gov/stations/${encodeURIComponent(station.stationIdentifier)}/observations/latest?refresh=${Date.now()}`);
+    const values = observation?.properties;
+    const complete = [values?.temperature?.value, values?.windSpeed?.value, values?.windDirection?.value]
+      .every((value) => typeof value === 'number' && Number.isFinite(value));
+    if (complete) {
+      return { office: points.properties.gridId, station, observation: values };
+    }
+  }
+  return null;
 }
 
 async function fetchWeatherSources(lat, lon) {
+  const proxyQuery = new URLSearchParams({ lat: String(lat), lon: String(lon), refresh: String(Date.now()) });
+  const proxy = await fetchJson(`/api/weather/current?${proxyQuery}`);
+  if (proxy?.openMeteo || proxy?.nws) {
+    return {
+      openMeteo: formatOpenMeteo(proxy.openMeteo),
+      nws: formatNws(proxy.nws),
+    };
+  }
   const [openMeteoResult, nwsResult] = await Promise.allSettled([
     fetchOpenMeteo(lat, lon),
     fetchNwsObservation(lat, lon),
@@ -2642,7 +2655,8 @@ function setPlumeInputValue(id, value) {
 function applyLiveWeatherToPlumeInputs(weather) {
   if (!weather) return false;
   setPlumeInputValue('plume-wind-speed', Number(weather.windSpeedMph).toFixed(1));
-  setPlumeInputValue('plume-wind-direction', Math.round(weather.windDirDeg));
+  const compassBearing = Math.round(Number(weather.windDirDeg) / 45) % 8 * 45;
+  setPlumeInputValue('plume-wind-direction', compassBearing);
   setPlumeInputValue('plume-temperature', Number(weather.temperatureF).toFixed(1));
   const refreshed = formatCentralZuluTime();
   setText('plume-input-status', `${weather.displayStation || weather.source || 'Live weather station'} · Refreshed ${refreshed.central} (${refreshed.zulu})`);
@@ -2728,7 +2742,7 @@ async function runBackendPlume(inputs) {
       const detail = result?.error || 'Backend plume model unavailable for the current inputs.';
       return { summary: detail, result: null };
     }
-    if (!result?.isopleths?.some((item) => item.polygon?.length >= 3)) {
+    if (!result?.isopleths?.some((item) => item.polygon?.length >= 2)) {
       return { summary: 'No supported exposure thresholds were returned for this chemical.', result: null };
     }
     const maxDownwindM = Math.max(0, ...(result.isopleths || []).map((item) => item.maxDownwindM));

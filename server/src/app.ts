@@ -148,6 +148,57 @@ app.post("/api/plume/run", async (c) => {
   return c.json(result);
 });
 
+// Proxy live weather so browser CORS rules cannot block plume inputs.
+app.get("/api/weather/current", async (c) => {
+  const lat = Number(c.req.query("lat"));
+  const lon = Number(c.req.query("lon"));
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return c.json({ error: "valid lat and lon are required" }, 400);
+
+  const openMeteoUrl = new URL("https://api.open-meteo.com/v1/forecast");
+  openMeteoUrl.search = new URLSearchParams({
+    latitude: String(lat), longitude: String(lon),
+    current: "temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure",
+    temperature_unit: "fahrenheit", wind_speed_unit: "mph", precipitation_unit: "inch", timezone: "auto",
+  }).toString();
+
+  const getJson = async (url: string, headers?: Record<string, string>) => {
+    const response = await fetch(url, { headers });
+    if (!response.ok) throw new Error(`Weather request failed (${response.status})`);
+    return response.json() as Promise<Record<string, unknown>>;
+  };
+  const fetchNws = async () => {
+    const headers = { "User-Agent": "HazMatIQ/0.1 (weather support)" };
+    const points = await getJson(`https://api.weather.gov/points/${lat.toFixed(4)},${lon.toFixed(4)}`, headers);
+    const pointProperties = points.properties as Record<string, unknown> | undefined;
+    const stationUrl = pointProperties?.observationStations;
+    if (typeof stationUrl !== "string") throw new Error("NWS station lookup unavailable");
+    const stations = await getJson(stationUrl, headers);
+    const features = stations.features as Array<{ properties?: Record<string, unknown> }> | undefined;
+    for (const feature of features?.slice(0, 8) ?? []) {
+      const station = feature.properties;
+      const stationId = station?.stationIdentifier;
+      if (typeof stationId !== "string") continue;
+      try {
+        const observation = await getJson(`https://api.weather.gov/stations/${encodeURIComponent(stationId)}/observations/latest`, headers);
+        const values = observation.properties as Record<string, { value?: unknown }> | undefined;
+        const isComplete = [values?.temperature?.value, values?.windSpeed?.value, values?.windDirection?.value]
+          .every((value) => typeof value === "number" && Number.isFinite(value));
+        if (isComplete) return { office: pointProperties?.gridId, station, observation: observation.properties };
+      } catch {
+        // Try the next-nearest reporting station.
+      }
+    }
+    throw new Error("No nearby NWS station has complete plume weather data");
+  };
+
+  const [openMeteoResult, nwsResult] = await Promise.allSettled([getJson(openMeteoUrl.toString()), fetchNws()]);
+  const openMeteo = openMeteoResult.status === "fulfilled" ? openMeteoResult.value : null;
+  const nws = nwsResult.status === "fulfilled" ? nwsResult.value : null;
+  if (!openMeteo && !nws) return c.json({ error: "live weather feeds unavailable" }, 502);
+  c.header("Cache-Control", "no-store");
+  return c.json({ openMeteo, nws });
+});
+
 // ─── Facilities ─────────────────────────────────────────────────────────
 app.get("/api/facilities", async (c) => {
   const db = getDb();

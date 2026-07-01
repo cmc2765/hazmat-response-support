@@ -624,8 +624,18 @@
                   <input id="plume-wind-speed" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Required" required />
                 </label>
                 <label class="plume-model-field" for="plume-wind-direction">
-                  <span>Wind from (degrees)</span>
-                  <input id="plume-wind-direction" type="number" min="0" max="360" step="1" inputmode="decimal" placeholder="0–360" required />
+                  <span>Wind from</span>
+                  <select id="plume-wind-direction" required>
+                    <option value="" selected>Select direction</option>
+                    <option value="0">North</option>
+                    <option value="45">NE</option>
+                    <option value="90">East</option>
+                    <option value="135">SE</option>
+                    <option value="180">South</option>
+                    <option value="225">SW</option>
+                    <option value="270">West</option>
+                    <option value="315">NW</option>
+                  </select>
                 </label>
                 <label class="plume-model-field" for="plume-temperature">
                   <span>Air temperature (°F)</span>
