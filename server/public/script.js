@@ -1768,7 +1768,7 @@ let plumeDistanceMarkers = [];
 const plumeHazardsCacheKey = 'hazmatiq_plume_hazards_cache';
 const plumeLayerState = { centerline: false, distance: false, hazards: false };
 const plumeLayerIds = {
-  centerline: ['hazmat-threat-zone-centerline', 'hazmat-threat-zone-wind-arrow'],
+  centerline: ['hazmat-threat-zone-wind-arrow'],
   distance: ['hazmat-threat-zone-distance-line', 'hazmat-threat-zone-distance-ticks', 'hazmat-threat-zone-distance-points', 'hazmat-threat-zone-distance-labels'],
   hazards: ['hazmat-plume-hazards-points', 'hazmat-plume-hazards-labels'],
 };
