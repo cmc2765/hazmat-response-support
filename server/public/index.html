@@ -62,7 +62,15 @@
             <h2>Command Dashboard</h2>
             <p class="muted">Quick-access tactical modules</p>
             <nav class="module-nav" aria-label="Primary">
-              <button class="module-btn active" data-view="overview">HazMatIQ Home</button>
+              <button class="module-btn home-logo-btn active" data-view="overview" aria-label="HazMatIQ Home">
+                <span class="home-nav-emblem" aria-hidden="true">
+                  <span class="home-nav-cell home-nav-fire"><span>1</span></span>
+                  <span class="home-nav-cell home-nav-reactivity"><span>0</span></span>
+                  <span class="home-nav-cell home-nav-health"><span>3</span></span>
+                  <span class="home-nav-cell home-nav-special"><span>W</span></span>
+                </span>
+                <span class="home-nav-brand">HazMat<strong>IQ</strong></span>
+              </button>
               <button class="module-btn" data-view="incident">Incident Dashboard</button>
               <button class="module-btn" data-view="lookup">Chemical ID</button>
               <button class="module-btn" data-view="plume">Plume Model</button>
@@ -73,15 +81,15 @@
             </nav>
           </div>
 
-          <details class="sidebar-card plume-demographics plume-sidebar-data" id="plume-demographics">
+          <details class="sidebar-card plume-demographics plume-sidebar-data" id="plume-demographics" open>
             <summary>
-              Demographics
+              Threat Zone
               <span class="status-pill" id="demographics-zone-badge">No zone</span>
             </summary>
             <p id="demographics-zone-summary" class="demographics-summary">Click a red, yellow, or green plume zone to inspect potential exposures.</p>
             <div class="demographics-grid" aria-live="polite">
               <div class="demographic-stat">
-                <span>Population</span>
+                <span>Estimated population</span>
                 <strong id="demographics-population">—</strong>
               </div>
               <div class="demographic-stat">
@@ -89,29 +97,33 @@
                 <strong id="demographics-housing">—</strong>
               </div>
               <div class="demographic-stat">
-                <span>Residential zones/features</span>
-                <strong id="demographics-residential">—</strong>
-              </div>
-              <div class="demographic-stat">
-                <span>Commercial</span>
-                <strong id="demographics-commercial">—</strong>
-              </div>
-              <div class="demographic-stat">
-                <span>Schools / daycare</span>
+                <span>Schools / daycares</span>
                 <strong id="demographics-schools">—</strong>
               </div>
               <div class="demographic-stat">
-                <span>Medical / care</span>
-                <strong id="demographics-medical">—</strong>
+                <span>Healthcare facilities</span>
+                <strong id="demographics-healthcare">—</strong>
+              </div>
+              <div class="demographic-stat">
+                <span>Nursing homes / assisted living</span>
+                <strong id="demographics-nursing">—</strong>
+              </div>
+              <div class="demographic-stat">
+                <span>Critical infrastructure</span>
+                <strong id="demographics-critical">—</strong>
+              </div>
+              <div class="demographic-stat">
+                <span>Businesses / industrial sites</span>
+                <strong id="demographics-businesses">—</strong>
               </div>
             </div>
             <div class="demographics-priorities">
-              <strong>Incident Commander priorities</strong>
+              <strong>Evacuation / shelter-in-place notes</strong>
               <ul id="demographics-priority-list">
                 <li>Select a plume zone to load nearby occupancies and sensitive sites.</li>
               </ul>
             </div>
-            <p id="demographics-source-status" class="demographics-source-status">Population: U.S. Census 2020 intersecting blocks. Occupancies: OpenStreetMap mapped features.</p>
+            <p id="demographics-source-status" class="demographics-source-status">Population estimate: U.S. Census geography. Occupancies: OpenStreetMap mapped features.</p>
           </details>
 
           <details class="sidebar-card plume-sidebar-data" id="plume-incident-data-panel">
@@ -133,15 +145,6 @@
             <p id="plume-live-status" class="muted" role="status" aria-live="polite">Enter an incident location or allow GPS access.</p>
           </details>
 
-          <div class="sidebar-card compact">
-            <h3>Current Status</h3>
-            <ul>
-              <li>Unit: HazMat 2</li>
-              <li>Staging: North Gate</li>
-              <li>Air: Moderate</li>
-              <li>Data mode: Demo</li>
-            </ul>
-          </div>
         </aside>
 
         <section class="content-area">
@@ -163,44 +166,49 @@
                 <p>Review E-Plan facility records or open a locally stored facility pre-plan.</p>
               </div>
 
-              <section class="planning-eplan-card" aria-labelledby="planning-eplan-title">
-                <h3 id="planning-eplan-title">E-Plan Facility Records</h3>
-                <p class="big-label">Sign in to review facility submissions, inventories, and emergency contacts.</p>
-                <form
-                  class="eplan-login-form"
-                  action="https://erplan.net/eplan/login.htm"
-                  method="post"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Planning tools E-Plan first responder login"
-                >
-                  <img
-                    class="eplan-logo"
-                    src="https://erplan.net/eplan/media/eplanlogo.gif"
-                    alt="E-Plan"
-                    referrerpolicy="no-referrer"
-                  />
-                  <label for="planning-eplan-user-id">
-                    <span>Username</span>
-                    <input id="planning-eplan-user-id" name="userID" type="text" autocomplete="username" required />
-                  </label>
-                  <label for="planning-eplan-password">
-                    <span>Password</span>
-                    <input id="planning-eplan-password" name="password" type="password" autocomplete="current-password" required />
-                  </label>
-                  <button class="primary-btn" type="submit">Login to E-Plan</button>
-                </form>
-              </section>
+              <div class="planning-tools-layout">
+                <div class="planning-tools-primary">
+                  <section class="planning-eplan-card" aria-labelledby="planning-eplan-title">
+                    <h3 id="planning-eplan-title">E-Plan Facility Records</h3>
+                    <p class="big-label">Sign in to review facility submissions, inventories, and emergency contacts.</p>
+                    <form
+                      class="eplan-login-form"
+                      action="https://erplan.net/eplan/login.htm"
+                      method="post"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Planning tools E-Plan first responder login"
+                    >
+                      <img
+                        class="eplan-logo"
+                        src="https://erplan.net/eplan/media/eplanlogo.gif"
+                        alt="E-Plan"
+                        referrerpolicy="no-referrer"
+                      />
+                      <label for="planning-eplan-user-id">
+                        <span>Username</span>
+                        <input id="planning-eplan-user-id" name="userID" type="text" autocomplete="username" required />
+                      </label>
+                      <label for="planning-eplan-password">
+                        <span>Password</span>
+                        <input id="planning-eplan-password" name="password" type="password" autocomplete="current-password" required />
+                      </label>
+                      <button class="primary-btn" type="submit">Login to E-Plan</button>
+                    </form>
+                  </section>
 
-              <section class="facility-preplan-section" aria-labelledby="facility-preplan-title">
-                <h3 id="facility-preplan-title">Facility Pre-Plans</h3>
-                <div class="facility-preplan-grid">
-                  <button class="facility-preplan-btn" type="button" data-preplan-name="Colonial Pipeline">Colonial Pipeline</button>
-                  <button class="facility-preplan-btn" type="button" data-preplan-name="Pelham Civic Complex">Pelham Civic Complex</button>
-                  <button class="facility-preplan-btn" type="button" data-preplan-name="Research Solutions">Research Solutions</button>
+                  <section class="facility-preplan-section" aria-labelledby="facility-preplan-title">
+                    <h3 id="facility-preplan-title">Facility Pre-Plans</h3>
+                    <div class="facility-preplan-grid">
+                      <button class="facility-preplan-btn" type="button" data-preplan-name="Colonial Pipeline">Colonial Pipeline</button>
+                      <button class="facility-preplan-btn" type="button" data-preplan-name="Pelham Civic Complex">Pelham Civic Complex</button>
+                      <button class="facility-preplan-btn" type="button" data-preplan-name="Research Solutions">Research Solutions</button>
+                    </div>
+                    <p class="muted" id="facility-preplan-status" role="status" aria-live="polite">Pre-plan documents will be connected here when uploaded.</p>
+                  </section>
                 </div>
-                <p class="muted" id="facility-preplan-status" role="status" aria-live="polite">Pre-plan documents will be connected here when uploaded.</p>
-              </section>
+                <aside class="planning-tools-future" aria-label="Space reserved for additional planning tools"></aside>
+              </div>
             </article>
           </section>
 
@@ -652,21 +660,24 @@
             <div class="plume-import-row">
               <span id="plume-overlay-status" class="muted">Confirm the model inputs, then select Plot Plume.</span>
               <div class="plume-map-view-controls" role="group" aria-label="Plume map view">
-                <button class="ghost-btn active" type="button" data-plume-map-view="street" aria-pressed="true">Street Map</button>
-                <button class="ghost-btn" type="button" data-plume-map-view="satellite" aria-pressed="false">Satellite</button>
+                <button class="ghost-btn" type="button" data-plume-map-view="street" aria-pressed="false">Street Map</button>
+                <button class="ghost-btn active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
                 <button class="ghost-btn" type="button" data-plume-map-view="street-3d" aria-pressed="false">Street / 3D</button>
               </div>
             </div>
 
-            <article class="plume-full-map">
-              <div id="plume-gis-map" class="plume-map-frame" role="application" aria-label="Interactive incident plume map"></div>
-              <div class="plume-map-legend" id="plume-map-legend" hidden>
-                <strong>Threat zones</strong>
-                <span><i class="zone-red"></i> Red · highest concern</span>
-                <span><i class="zone-yellow"></i> Yellow · serious concern</span>
-                <span><i class="zone-green"></i> Green · outer concern</span>
-              </div>
-            </article>
+            <div class="plume-map-layout">
+              <article class="plume-full-map">
+                <div id="plume-gis-map" class="plume-map-frame" role="application" aria-label="Interactive incident plume map"></div>
+                <div class="plume-map-legend" id="plume-map-legend" hidden>
+                  <strong>Threat zones</strong>
+                  <span><i class="zone-red"></i> Red · AEGL 3</span>
+                  <span><i class="zone-yellow"></i> Yellow · AEGL 2</span>
+                  <span><i class="zone-green"></i> Green · AEGL 1</span>
+                  <span><i class="zone-centerline"></i> Downwind centerline</span>
+                </div>
+              </article>
+            </div>
           </section>
 
           <section id="map" class="view">

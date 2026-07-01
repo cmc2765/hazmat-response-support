@@ -46,11 +46,7 @@ button, input {
 .app-shell {
   min-height: 100vh;
   padding: 24px;
-  background-image:
-    linear-gradient(rgba(32, 35, 39, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(32, 35, 39, 0.035) 1px, transparent 1px),
-    radial-gradient(circle at top left, rgba(227, 32, 39, 0.12), transparent 34%);
-  background-size: 28px 28px, 28px 28px, auto;
+  background: #d4d6d8;
 }
 
 .topbar, .sidebar-card, .panel-card, .hero-card, .map-placeholder, .footer-note, .alert-banner {
@@ -77,9 +73,9 @@ button, input {
 }
 
 .brand-emblem {
-  width: 54px;
-  height: 54px;
-  flex: 0 0 54px;
+  width: 60px;
+  height: 60px;
+  flex: 0 0 60px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
@@ -132,12 +128,20 @@ button, input {
   transform: skewX(-4deg);
 }
 
-.brand-name > span { color: var(--text); }
+.brand-name > span {
+  color: var(--text);
+  -webkit-text-stroke: 0.6px #b20f16;
+  paint-order: stroke fill;
+}
 .brand-name strong {
   margin-left: 0.1em;
   color: var(--yellow);
   font-weight: 1000;
-  text-shadow: 3px 3px 0 var(--red);
+  text-shadow:
+    1px 1px 0 #f05a28,
+    2px 2px 0 var(--red),
+    3px 3px 0 #9f1016,
+    4px 4px 2px rgba(32, 35, 39, 0.24);
 }
 
 .brand-tagline {
@@ -237,6 +241,62 @@ h1, h2, h3, p { margin-top: 0; }
   background: var(--yellow);
   color: #1c1714;
   font-weight: 700;
+}
+
+.home-logo-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.home-nav-emblem {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid #111;
+  background: #111;
+  transform: rotate(45deg);
+}
+
+.home-nav-cell {
+  display: grid;
+  place-items: center;
+}
+
+.home-nav-cell > span {
+  color: #fff;
+  font-size: 0.55rem;
+  font-weight: 950;
+  line-height: 1;
+  transform: rotate(-45deg);
+}
+
+.home-nav-health { background: #005baa; }
+.home-nav-fire { background: #e31b23; }
+.home-nav-reactivity { background: #ffd100; }
+.home-nav-reactivity > span { color: #111; }
+.home-nav-special { background: #fff; }
+.home-nav-special > span {
+  color: #1769aa;
+  text-decoration: line-through;
+}
+
+.home-nav-brand {
+  color: var(--text);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  transform: scaleX(1.12);
+  transform-origin: left center;
+}
+
+.home-nav-brand strong {
+  color: #b20f16;
 }
 
 .my-chemicals-nav {
@@ -1491,9 +1551,10 @@ h1, h2, h3, p { margin-top: 0; }
 
 .plume-model-controls {
   display: grid;
-  gap: 14px;
-  margin-bottom: 14px;
-  padding: 16px;
+  gap: 5px;
+  margin-right: 268px;
+  margin-bottom: 9px;
+  padding: 8px 10px;
   border: 2px solid #b7bdc3;
   border-radius: 14px;
   background: #f5f6f7;
@@ -1521,7 +1582,7 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .plume-mode-label {
-  margin-top: 5px !important;
+  margin-top: 2px !important;
   color: var(--muted);
   font-size: 0.76rem;
   font-weight: 800;
@@ -1530,19 +1591,30 @@ h1, h2, h3, p { margin-top: 0; }
 .plume-model-input-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(130px, 1fr));
-  gap: 10px;
+  gap: 4px 8px;
 }
 
 .plume-model-field {
   display: grid;
   align-content: start;
-  gap: 5px;
+  gap: 3px;
 }
 
 .plume-model-field > span {
   color: var(--muted);
   font-size: 0.76rem;
   font-weight: 850;
+}
+
+.plume-model-controls input,
+.plume-model-controls select {
+  padding: 6px 9px;
+}
+
+#plume-release-quantity::placeholder {
+  color: #c9141b;
+  font-weight: 800;
+  opacity: 1;
 }
 
 .plume-chemical-field {
@@ -1573,8 +1645,8 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .plume-linked-input .ghost-btn {
-  min-height: 43px;
-  padding: 8px 12px;
+  min-height: 34px;
+  padding: 6px 10px;
   white-space: nowrap;
 }
 
@@ -1584,8 +1656,8 @@ h1, h2, h3, p { margin-top: 0; }
 
 .plume-plot-btn {
   min-width: 180px;
-  min-height: 50px;
-  padding: 12px 22px;
+  min-height: 38px;
+  padding: 7px 18px;
   border: 2px solid #8f0d12;
   border-radius: 12px;
   background: linear-gradient(135deg, #ed252c, #b70e16);
@@ -1773,6 +1845,7 @@ h1, h2, h3, p { margin-top: 0; }
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  margin-right: 268px;
   margin-bottom: 12px;
 }
 
@@ -1802,6 +1875,43 @@ h1, h2, h3, p { margin-top: 0; }
   border-radius: 16px;
   background: #dce0e3;
   box-shadow: 0 12px 28px rgba(17, 17, 17, 0.18);
+}
+
+.plume-map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  align-items: start;
+  gap: 18px;
+  width: min(100%, 1500px);
+  margin-inline: auto;
+}
+
+.plume-map-layout .plume-demographics {
+  display: block;
+  margin-top: 0;
+  border-color: #2b5d85;
+  background: linear-gradient(145deg, #164a75, #0d3457);
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 10px 28px rgba(13, 52, 87, 0.24);
+}
+
+.plume-map-layout .plume-demographics > summary {
+  background: #c9141b;
+  color: #fff;
+}
+
+.plume-map-layout .plume-demographics .demographics-summary {
+  color: #fff;
+}
+
+.plume-map-layout .plume-demographics .demographics-priorities {
+  border-top-color: rgba(255, 255, 255, 0.25);
+}
+
+.plume-map-layout .plume-demographics .demographics-source-status {
+  color: #d9e3ed;
 }
 
 .plume-full-map .plume-map-frame {
@@ -1843,8 +1953,22 @@ h1, h2, h3, p { margin-top: 0; }
 .plume-map-legend .zone-red { background: #d71920; }
 .plume-map-legend .zone-yellow { background: #ffd323; }
 .plume-map-legend .zone-green { background: #18a567; }
+.plume-map-legend .zone-centerline {
+  height: 3px;
+  border-radius: 0;
+  background: #17202a;
+}
 
 @media (max-width: 900px) {
+  .plume-map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .plume-model-controls,
+  .plume-import-row {
+    margin-right: 0;
+  }
+
   .incident-form-grid {
     grid-template-columns: 1fr;
   }
@@ -2393,10 +2517,12 @@ textarea {
 
 /* Command dashboard navy treatment */
 .sidebar .sidebar-card {
-  background: var(--navy);
-  border-color: #2d5479;
+  background: linear-gradient(145deg, #164a75, #0d3457);
+  border-color: #2b5d85;
   color: #fff;
-  box-shadow: 0 10px 28px rgba(18, 58, 99, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 10px 28px rgba(13, 52, 87, 0.24);
 }
 
 .sidebar .muted,
@@ -2410,9 +2536,9 @@ textarea {
   justify-content: flex-start;
   min-height: 50px;
   padding: 11px 16px;
-  background: #1a476f;
-  border-color: #3c6488;
-  color: #fff;
+  background: #d4d6d8;
+  border-color: #aeb4b9;
+  color: #071f36;
   font-size: 1rem;
   font-weight: 800;
   line-height: 1.2;
@@ -2428,15 +2554,28 @@ textarea {
 }
 
 .sidebar .module-btn:hover {
-  background: #21557f;
-  border-color: var(--yellow);
+  background: #e0e2e3;
+  border-color: #071f36;
 }
 
 .sidebar .module-btn.active {
+  background: #d4d6d8;
+  border-color: #071f36;
+  color: #071f36;
+  box-shadow: inset 3px 0 0 #071f36;
+}
+
+.sidebar .home-logo-btn,
+.sidebar .home-logo-btn:hover,
+.sidebar .home-logo-btn.active {
   background: var(--yellow);
-  border-color: var(--yellow);
+  border-color: #d1aa00;
   color: #202327;
-  box-shadow: 0 0 0 2px rgba(255, 211, 35, 0.22);
+  box-shadow: none;
+}
+
+.sidebar .my-chemicals-nav {
+  color: #071f36 !important;
 }
 
 @media (max-width: 620px) {
@@ -2524,6 +2663,10 @@ textarea {
 .planning-tools-card {
   display: grid;
   gap: 22px;
+  color: #17120a;
+  border: 1px solid #aeb4b9;
+  background: #f2f4f5;
+  box-shadow: 0 10px 24px rgba(34, 38, 42, 0.12);
 }
 
 .planning-tools-heading h2,
@@ -2531,37 +2674,140 @@ textarea {
   margin-bottom: 6px;
 }
 
+.planning-tools-heading h2 {
+  color: #111;
+}
+
+.planning-tools-heading .eyebrow {
+  color: #5d646b;
+  font-weight: 900;
+}
+
+.planning-tools-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+  min-height: 480px;
+}
+
+.planning-tools-primary {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+}
+
+.planning-tools-primary .eplan-login-form {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.planning-tools-primary .eplan-logo,
+.planning-tools-primary .eplan-login-form .primary-btn {
+  grid-column: 1 / -1;
+}
+
 .planning-eplan-card,
 .facility-preplan-section {
   padding: 20px;
-  border: 1px solid var(--border);
+  border: 1px solid #c3c8cc;
   border-radius: 12px;
-  background: var(--panel-2);
+  color: #17120a;
+  box-shadow: none;
+}
+
+.planning-eplan-card {
+  background: #fff;
+}
+
+.facility-preplan-section {
+  background: #fff;
+}
+
+.planning-tools-future {
+  min-width: 0;
+}
+
+.planning-eplan-card h3,
+.facility-preplan-section h3,
+.planning-eplan-card .big-label,
+.facility-preplan-section .muted,
+.eplan-login-form label > span {
+  color: #17120a;
+}
+
+.planning-eplan-card .eplan-logo {
+  border: 2px solid #17120a;
+}
+
+.planning-eplan-card input {
+  border: 2px solid #17120a;
+  background: #fffdf2;
+  color: #111;
+}
+
+.planning-eplan-card .primary-btn {
+  border: 1px solid #9f1016;
+  background: #c9141b;
+  color: #fff;
+  box-shadow: none;
+}
+
+.planning-eplan-card .primary-btn:hover,
+.planning-eplan-card .primary-btn:focus-visible {
+  border-color: #111;
+  background: #a70f16;
 }
 
 .facility-preplan-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 10px;
-  margin: 14px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 12px 0 16px;
 }
 
 .facility-preplan-btn {
-  min-height: 56px;
-  padding: 12px 16px;
-  border: 2px solid #2779ad;
-  border-radius: 12px;
-  background: #e5f3ff;
-  color: #102a43;
-  font: 800 1rem Bahnschrift, "Aptos Display", "Segoe UI Variable Display", sans-serif;
+  min-height: 0;
+  padding: 2px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #9f1016;
+  font: 700 1rem Bahnschrift, "Aptos Display", "Segoe UI Variable Display", sans-serif;
   text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   cursor: pointer;
+  box-shadow: none;
+  transition: color 0.18s ease;
 }
 
 .facility-preplan-btn:hover,
 .facility-preplan-btn:focus-visible {
-  background: #cce8ff;
-  border-color: #125d8f;
+  background: transparent;
+  color: #111;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 1100px) {
+  .planning-tools-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .planning-tools-future {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .planning-tools-primary .eplan-login-form {
+    grid-template-columns: 1fr;
+  }
+
+  .planning-tools-primary .eplan-logo,
+  .planning-tools-primary .eplan-login-form .primary-btn {
+    grid-column: auto;
+  }
 }
 
 .incident-overview-actions .overview-action-incident:hover,
@@ -2634,7 +2880,7 @@ textarea {
   .incident-overview-actions { grid-template-columns: 1fr; gap: 8px; }
   .incident-overview-actions .overview-action-btn { min-height: 78px; }
   .facility-preplan-grid { grid-template-columns: 1fr; }
-  .facility-preplan-btn { min-height: 52px; }
+  .facility-preplan-btn { min-height: 0; }
   .footer-note { display: none; }
 }
 
