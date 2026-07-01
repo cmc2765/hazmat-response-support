@@ -22,11 +22,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@hono/node-server": "^1.13.0",
+    "better-sqlite3": "^11.3.0",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.36.0",
     "hono": "^4.6.0",
-    "@hono/node-server": "^1.13.0",
-    "better-sqlite3": "^11.3.0",
+    "pdf-lib": "^1.17.1",
     "tsx": "^4.19.0"
   },
   "devDependencies": {

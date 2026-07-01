@@ -11,8 +11,14 @@ beforeAll(() => {
   const dbPath = path.join(mkdtempSync(path.join(tmpdir(), "hazmat-test-")), "test.db");
   process.env.SQLITE_PATH = dbPath;
 
-  execFileSync("npx", ["tsx", "src/init-sqlite.ts"], { cwd: path.resolve(__dirname, ".."), env: process.env });
-  execFileSync("npx", ["tsx", "src/seed.ts"], { cwd: path.resolve(__dirname, ".."), env: process.env });
+  execFileSync("npx", ["tsx", "src/init-sqlite.ts"], {
+    cwd: path.resolve(__dirname, ".."),
+    env: process.env,
+  });
+  execFileSync("npx", ["tsx", "src/seed.ts"], {
+    cwd: path.resolve(__dirname, ".."),
+    env: process.env,
+  });
 }, 30_000);
 
 describe("API routes", () => {
@@ -87,8 +93,41 @@ describe("API routes", () => {
 
     const response = await app.request("/api/incidents");
     expect(response.status).toBe(200);
-    const body = (await response.json()) as { incidents: typeof incident[] };
+    const body = (await response.json()) as { incidents: (typeof incident)[] };
     expect(body.incidents).toContainEqual(incident);
+  });
+
+  it("prepares and generates a populated FEMA ICS form", async () => {
+    const incident = {
+      incidentId: "incident-pdf-1",
+      incidentName: "Warehouse response",
+      incidentNumber: "HM-42",
+      status: "Active",
+      startDate: "7/1/2026",
+      startTime: "10:15:00 AM",
+      icsForms: { "201": { fields: {} } },
+    };
+    const prepared = await app.request("/api/ics-forms/201/prepare", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(incident),
+    });
+    expect(prepared.status).toBe(200);
+    const preparation = (await prepared.json()) as {
+      fields: Array<{ name: string; value: string }>;
+    };
+    expect(preparation.fields).toContainEqual(
+      expect.objectContaining({ name: "Incident Name", value: "Warehouse response" }),
+    );
+
+    const pdf = await app.request("/api/ics-forms/201/pdf", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(incident),
+    });
+    expect(pdf.status).toBe(200);
+    expect(pdf.headers.get("content-type")).toBe("application/pdf");
+    expect(new TextDecoder().decode((await pdf.arrayBuffer()).slice(0, 4))).toBe("%PDF");
   });
 
   it("serves the static UI at /", async () => {

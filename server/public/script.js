@@ -131,19 +131,40 @@ document.querySelectorAll('[data-preplan-name]').forEach((button) => {
 const incidentBriefStorageKey = 'hazmatiq.incidentBrief';
 const incidentBriefFieldIds = [
   'incidentName',
+  'incident-number',
+  'incident-facility-name',
   'incident-address-input',
   'incident-city',
   'incident-state',
+  'incident-zip',
   'incident-coordinates-input',
   'incident-product',
+  'incident-container-type',
   'incident-notes',
 ];
 const incidentsStorageKey = 'hazmatiq_incidents';
 const activeIncidentIdStorageKey = 'hazmatiq_active_incident_id';
 const systemModeStorageKey = 'hazmatiq_system_mode';
 const plumePlanningStorageKey = 'hazmatiq_plume_planning_session';
+const icsFormCatalog = [
+  ['201', 'ICS 201 Incident Briefing'],
+  ['202', 'ICS 202 Incident Objectives'],
+  ['203', 'ICS 203 Organization Assignment List'],
+  ['204', 'ICS 204 Assignment List'],
+  ['205', 'ICS 205 Communications Plan'],
+  ['205A', 'ICS 205A Communications List'],
+  ['206', 'ICS 206 Medical Plan'],
+  ['208', 'ICS 208 Safety Message / Plan'],
+  ['208HM', 'ICS 208HM Site Safety and Control Plan'],
+  ['209', 'ICS 209 Incident Status Summary'],
+  ['214', 'ICS 214 Activity Log'],
+  ['215', 'ICS 215 Operational Planning Worksheet'],
+  ['215A', 'ICS 215A IAP Safety Analysis'],
+];
 let incidentTimerInterval = null;
 let incidentSyncTimer = null;
+let openIcsForm = null;
+let openIcsFormObjectUrl = null;
 
 // Local-only storage until incident records move to a database.
 function readIncidents() {
@@ -263,7 +284,17 @@ function createIncidentRecord() {
   const now = new Date();
   const oldActiveId = window.localStorage.getItem(activeIncidentIdStorageKey);
   const incidents = readIncidents().map((incident) => incident.incidentId === oldActiveId
-    ? { ...incident, status: 'Completed', completedAt: now.toISOString() }
+    ? {
+        ...incident,
+        status: 'Completed',
+        completedAt: now.toISOString(),
+        completedDate: now.toLocaleDateString(),
+        completedTime: now.toLocaleTimeString(),
+        icsForms: Object.fromEntries(icsFormCatalog.map(([id]) => [id, {
+          ...(incident.icsForms?.[id] || { fields: {} }),
+          archivedAt: now.toISOString(),
+        }])),
+      }
     : incident);
   const incident = {
     incidentId: window.crypto?.randomUUID?.() || `incident-${Date.now()}-${Math.random().toString(16).slice(2)}`,
@@ -273,6 +304,7 @@ function createIncidentRecord() {
     startedAt: now.toISOString(),
     updatedAt: now.toISOString(),
     status: 'Active',
+    icsForms: Object.fromEntries(icsFormCatalog.map(([id]) => [id, { fields: {}, createdAt: now.toISOString() }])),
   };
   writeIncidents([incident, ...incidents]);
   window.localStorage.setItem(activeIncidentIdStorageKey, incident.incidentId);
@@ -345,13 +377,17 @@ function completeActiveIncident() {
     completedAt: now.toISOString(),
     completedDate: now.toLocaleDateString(),
     completedTime: now.toLocaleTimeString(),
+    icsForms: Object.fromEntries(icsFormCatalog.map(([id]) => [id, {
+      ...(incidents[index].icsForms?.[id] || { fields: {} }),
+      archivedAt: now.toISOString(),
+    }])),
   };
   writeIncidents(incidents);
   window.localStorage.removeItem(activeIncidentIdStorageKey);
   setSystemMode('normal');
   renderIncidentTimer();
   renderIncidentLists();
-  setIncidentStatus('Incident completed and moved to Completed Reports.');
+  setIncidentStatus('Incident completed and its ICS forms moved to Completed Forms.');
   showView('report');
   document.querySelector('[data-report-tab="previous"]')?.click();
 }
@@ -388,7 +424,41 @@ function renderIncidentLists() {
   else if (currentContainer) currentContainer.textContent = 'No active incident. Start one from the Home Page.';
   const previous = incidents.filter((incident) => incident.status === 'Completed');
   previous.forEach((incident) => renderIncidentCard(previousContainer, incident, activeId));
-  if (!previous.length && previousContainer) previousContainer.textContent = 'No completed incidents saved yet.';
+  if (!previous.length && previousContainer) previousContainer.textContent = 'No completed incident forms saved yet.';
+  renderActiveIcsFormList();
+}
+
+function createIcsFormLink(incidentId, formId, title) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'ics-form-text-link';
+  button.textContent = title;
+  button.addEventListener('click', () => void openIncidentIcsForm(incidentId, formId));
+  return button;
+}
+
+function renderActiveIcsFormList() {
+  const container = document.getElementById('active-ics-form-list');
+  if (!container) return;
+  container.replaceChildren();
+  const incident = getActiveIncident();
+  if (!incident) {
+    container.textContent = 'Start an incident to create its ICS form drafts.';
+    return;
+  }
+  icsFormCatalog.forEach(([id, title]) => container.append(createIcsFormLink(incident.incidentId, id, title)));
+}
+
+function appendCompletedIcsForms(container, incident) {
+  const section = document.createElement('section');
+  section.className = 'report-summary-block completed-ics-forms';
+  const heading = document.createElement('h3');
+  heading.textContent = 'Completed Forms';
+  const list = document.createElement('div');
+  list.className = 'incident-ics-form-list';
+  icsFormCatalog.forEach(([id, title]) => list.append(createIcsFormLink(incident.incidentId, id, title)));
+  section.append(heading, list);
+  container.append(section);
 }
 
 function appendIncidentSummarySection(container, title, entries) {
@@ -480,12 +550,15 @@ function openIncidentSummary(incidentId) {
     content.append(mapSection);
   }
   appendIncidentSummarySection(content, 'Documentation Notes', [['Notes', incident.notes]]);
+  if (incident.status === 'Completed') appendCompletedIcsForms(content, incident);
   document.querySelector('.report-tabs').hidden = true;
   ['current', 'previous', 'library'].forEach((name) => {
     const section = document.getElementById(`report-${name}-section`);
     if (section) section.hidden = true;
   });
   summary.hidden = false;
+  const formEditor = document.getElementById('ics-form-editor');
+  if (formEditor) formEditor.hidden = true;
   summary.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -498,6 +571,150 @@ function closeIncidentSummary() {
   const selectedSection = document.getElementById(`report-${selected}-section`);
   if (selectedSection) selectedSection.hidden = false;
 }
+
+function formatIcsFieldLabel(name) {
+  return name
+    .replace(/_/g, ' ')
+    .replace(/Row(\d+)/g, ' — row $1')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function setIcsFormEditing(editing) {
+  if (!openIcsForm) return;
+  openIcsForm.editing = editing;
+  document.querySelectorAll('#ics-form-fields input, #ics-form-fields textarea').forEach((field) => {
+    field.disabled = !editing;
+  });
+  const editButton = document.getElementById('edit-ics-form-btn');
+  const saveButton = document.getElementById('save-ics-form-btn');
+  if (editButton) editButton.hidden = editing || !openIcsForm.completed;
+  if (saveButton) saveButton.hidden = !editing;
+}
+
+async function openIncidentIcsForm(incidentId, formId) {
+  const incident = readIncidents().find((item) => item.incidentId === incidentId);
+  const editor = document.getElementById('ics-form-editor');
+  const fieldsContainer = document.getElementById('ics-form-fields');
+  const status = document.getElementById('ics-form-editor-status');
+  if (!incident || !editor || !fieldsContainer || !status) return;
+
+  openIcsForm = { incidentId, formId, completed: incident.status === 'Completed', editing: incident.status !== 'Completed' };
+  document.querySelector('.report-tabs').hidden = true;
+  ['current', 'previous', 'library'].forEach((name) => {
+    const section = document.getElementById(`report-${name}-section`);
+    if (section) section.hidden = true;
+  });
+  const summary = document.getElementById('incident-report-summary');
+  if (summary) summary.hidden = true;
+  editor.hidden = false;
+  fieldsContainer.replaceChildren();
+  status.textContent = 'Preparing the saved FEMA form…';
+
+  try {
+    const response = await fetch(`/api/ics-forms/${encodeURIComponent(formId)}/prepare`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(incident),
+    });
+    if (!response.ok) throw new Error(`Form preparation failed (${response.status})`);
+    const prepared = await response.json();
+    document.getElementById('ics-form-editor-title').textContent = prepared.title;
+    document.getElementById('ics-form-editor-context').textContent = openIcsForm.completed
+      ? `${incident.incidentName} · Completed form`
+      : `${incident.incidentName} · Active incident form`;
+    prepared.fields.forEach((field) => {
+      const label = document.createElement('label');
+      label.className = 'ics-form-field';
+      const caption = document.createElement('span');
+      caption.textContent = formatIcsFieldLabel(field.name);
+      const control = document.createElement(field.multiline ? 'textarea' : 'input');
+      if (!field.multiline) control.type = 'text';
+      else control.rows = 3;
+      control.name = field.name;
+      control.value = field.value || '';
+      control.dataset.source = field.source;
+      control.addEventListener('input', () => { control.dataset.dirty = 'true'; });
+      label.append(caption, control);
+      fieldsContainer.append(label);
+    });
+    setIcsFormEditing(!openIcsForm.completed);
+    status.textContent = openIcsForm.completed
+      ? 'Archived with the completed incident. Select Edit to add missing information.'
+      : 'Dashboard data is prefilled. Manual changes are saved with this active incident.';
+    editor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (error) {
+    console.error(error);
+    status.textContent = 'The FEMA form could not be prepared. Please try again.';
+  }
+}
+
+function saveOpenIcsForm() {
+  if (!openIcsForm) return null;
+  const incidents = readIncidents();
+  const index = incidents.findIndex((incident) => incident.incidentId === openIcsForm.incidentId);
+  if (index < 0) return null;
+  const incident = incidents[index];
+  const existing = incident.icsForms?.[openIcsForm.formId] || { fields: {} };
+  const fields = { ...(existing.fields || {}) };
+  document.querySelectorAll('#ics-form-fields input[data-dirty="true"], #ics-form-fields textarea[data-dirty="true"]').forEach((control) => {
+    if (control.value.trim()) fields[control.name] = control.value;
+    else delete fields[control.name];
+    delete control.dataset.dirty;
+    control.dataset.source = control.value.trim() ? 'manual' : 'blank';
+  });
+  const now = new Date().toISOString();
+  incidents[index] = {
+    ...incident,
+    updatedAt: now,
+    icsForms: {
+      ...(incident.icsForms || {}),
+      [openIcsForm.formId]: { ...existing, fields, updatedAt: now },
+    },
+  };
+  writeIncidents(incidents);
+  document.getElementById('ics-form-editor-status').textContent = 'Form saved with the incident.';
+  if (openIcsForm.completed) setIcsFormEditing(false);
+  return incidents[index];
+}
+
+async function openIcsPdf() {
+  if (!openIcsForm) return;
+  const incident = openIcsForm.editing
+    ? saveOpenIcsForm()
+    : readIncidents().find((item) => item.incidentId === openIcsForm.incidentId);
+  if (!incident) return;
+  const status = document.getElementById('ics-form-editor-status');
+  status.textContent = 'Generating the populated FEMA PDF…';
+  try {
+    const response = await fetch(`/api/ics-forms/${encodeURIComponent(openIcsForm.formId)}/pdf`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(incident),
+    });
+    if (!response.ok) throw new Error(`PDF generation failed (${response.status})`);
+    if (openIcsFormObjectUrl) URL.revokeObjectURL(openIcsFormObjectUrl);
+    openIcsFormObjectUrl = URL.createObjectURL(await response.blob());
+    window.open(openIcsFormObjectUrl, '_blank', 'noopener');
+    status.textContent = 'The populated PDF opened in a new tab.';
+  } catch (error) {
+    console.error(error);
+    status.textContent = 'The populated PDF could not be generated. Please try again.';
+  }
+}
+
+document.getElementById('edit-ics-form-btn')?.addEventListener('click', () => setIcsFormEditing(true));
+document.getElementById('save-ics-form-btn')?.addEventListener('click', saveOpenIcsForm);
+document.getElementById('download-ics-form-btn')?.addEventListener('click', () => void openIcsPdf());
+document.getElementById('back-from-ics-form-btn')?.addEventListener('click', () => {
+  const incidentId = openIcsForm?.incidentId;
+  const completed = openIcsForm?.completed;
+  document.getElementById('ics-form-editor').hidden = true;
+  openIcsForm = null;
+  if (completed && incidentId) openIncidentSummary(incidentId);
+  else closeIncidentSummary();
+});
 
 document.querySelectorAll('[data-report-tab]').forEach((button) => {
   button.addEventListener('click', () => {

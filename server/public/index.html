@@ -859,7 +859,7 @@
               <h2>Incident Reports &amp; ICS Forms</h2>
               <div class="button-row report-tabs">
                 <button class="primary-btn" type="button" data-report-tab="current">Current Incident Forms</button>
-                <button class="ghost-btn" type="button" data-report-tab="previous">Completed Reports</button>
+                <button class="ghost-btn" type="button" data-report-tab="previous">Completed Forms</button>
                 <button class="ghost-btn" type="button" data-report-tab="library">ICS Forms Library</button>
               </div>
 
@@ -867,38 +867,35 @@
                 <h3>Current Active Incident</h3>
                 <div id="current-incident-list" class="report-incident-list"></div>
                 <div id="current-incident-options" class="report-form-options" tabindex="-1">
-                  <h3>Form and Report Options</h3>
-                  <div class="button-row">
-                    <button class="ghost-btn" id="open-current-incident-summary-btn" type="button">Incident Summary</button>
-                    <button class="ghost-btn" type="button">ICS 201 Incident Briefing</button>
-                    <button class="ghost-btn" type="button">ICS 214 Activity Log</button>
-                  </div>
-                  <p class="muted">PDF autofill will be added later.</p>
+                  <h3>Active Incident Forms</h3>
+                  <button class="ghost-btn" id="open-current-incident-summary-btn" type="button">Incident Summary</button>
+                  <div id="active-ics-form-list" class="incident-ics-form-list"></div>
+                  <p class="muted">Available dashboard data is automatically merged into each saved FEMA form.</p>
                 </div>
               </section>
 
               <section id="report-previous-section" class="report-section" hidden>
-                <h3>Completed Reports</h3>
+                <h3>Completed Forms</h3>
                 <div id="previous-incident-list" class="report-incident-list"></div>
               </section>
 
               <section id="report-library-section" class="report-section" hidden>
                 <h3>ICS Forms Library</h3>
-                <div class="ics-form-library">
-                  <button class="ghost-btn" type="button">ICS 201 Incident Briefing</button>
-                  <button class="ghost-btn" type="button">ICS 202 Incident Objectives</button>
-                  <button class="ghost-btn" type="button">ICS 203 Organization Assignment List</button>
-                  <button class="ghost-btn" type="button">ICS 204 Assignment List</button>
-                  <button class="ghost-btn" type="button">ICS 205 Communications Plan</button>
-                  <button class="ghost-btn" type="button">ICS 205A Communications List</button>
-                  <button class="ghost-btn" type="button">ICS 206 Medical Plan</button>
-                  <button class="ghost-btn" type="button">ICS 208 Safety Message / Plan</button>
-                  <button class="ghost-btn" type="button">ICS 208HM Site Safety and Control Plan</button>
-                  <button class="ghost-btn" type="button">ICS 209 Incident Status Summary</button>
-                  <button class="ghost-btn" type="button">ICS 214 Activity Log</button>
-                  <button class="ghost-btn" type="button">ICS 215 Operational Planning Worksheet</button>
-                  <button class="ghost-btn" type="button">ICS 215A IAP Safety Analysis</button>
-                </div>
+                <ul class="ics-form-library">
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20201%2C%20Incident%20Briefing%20%28v3%29.pdf" target="_blank" rel="noopener noreferrer">ICS 201 Incident Briefing</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20202%2C%20Incident%20Objectives%20%28v3.1%29.pdf" target="_blank" rel="noopener noreferrer">ICS 202 Incident Objectives</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20203%2C%20Organization%20Assignment%20List%20%28v3%29.pdf" target="_blank" rel="noopener noreferrer">ICS 203 Organization Assignment List</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20204%2C%20Assignment%20List%20%28v3.1%29.pdf" target="_blank" rel="noopener noreferrer">ICS 204 Assignment List</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20205%2C%20Incident%20Radio%20Communications%20Plan%20%28v3.1%29.pdf" target="_blank" rel="noopener noreferrer">ICS 205 Communications Plan</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20205A%2C%20Communications%20List%20%28v3%29.pdf" target="_blank" rel="noopener noreferrer">ICS 205A Communications List</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20206%2C%20Medical%20Plan%20%28v3%29.pdf" target="_blank" rel="noopener noreferrer">ICS 206 Medical Plan</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20208%2C%20Safety%20Message-Plan%20%28v3.1%29.pdf" target="_blank" rel="noopener noreferrer">ICS 208 Safety Message / Plan</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20208HM%2C%20Site%20Safety%20and%20Control%20Plan%20%28v3%29.pdf" target="_blank" rel="noopener noreferrer">ICS 208HM Site Safety and Control Plan</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20209%2C%20Incident%20Status%20Summary%20%28v3%29.pdf" target="_blank" rel="noopener noreferrer">ICS 209 Incident Status Summary</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20214%2C%20Activity%20Log%20%28v3.1%29.pdf" target="_blank" rel="noopener noreferrer">ICS 214 Activity Log</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20215%2C%20Operational%20Planning%20Worksheet%20%28v3%29.pdf" target="_blank" rel="noopener noreferrer">ICS 215 Operational Planning Worksheet</a></li>
+                  <li><a href="https://training.fema.gov/EMIWeb/IS/ICSResource/assets/ICS%20Forms//ICS%20Form%20215A%2C%20Incident%20Action%20Plan%20Safety%20Analysis%20%28v3%29.pdf" target="_blank" rel="noopener noreferrer">ICS 215A IAP Safety Analysis</a></li>
+                </ul>
               </section>
 
               <section id="incident-report-summary" class="report-section incident-report-summary" hidden>
@@ -917,6 +914,23 @@
                   </div>
                 </div>
                 <div id="incident-report-summary-content"></div>
+              </section>
+
+              <section id="ics-form-editor" class="report-section incident-report-summary" hidden>
+                <div class="incident-report-summary-heading">
+                  <div>
+                    <p class="eyebrow" id="ics-form-editor-context">Active incident form</p>
+                    <h2 id="ics-form-editor-title">ICS Form</h2>
+                  </div>
+                  <div class="button-row report-summary-actions">
+                    <button class="ghost-btn" id="back-from-ics-form-btn" type="button">Back to Forms</button>
+                    <button class="primary-btn" id="edit-ics-form-btn" type="button" hidden>Edit</button>
+                    <button class="primary-btn" id="save-ics-form-btn" type="button">Save</button>
+                    <button class="ghost-btn" id="download-ics-form-btn" type="button">Open PDF</button>
+                  </div>
+                </div>
+                <p class="muted" id="ics-form-editor-status" role="status" aria-live="polite"></p>
+                <div id="ics-form-fields" class="ics-form-fields"></div>
               </section>
             </div>
           </section>
