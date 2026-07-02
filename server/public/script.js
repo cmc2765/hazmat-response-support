@@ -94,7 +94,10 @@ document.addEventListener('hazmatiq:telemetry', (event) => {
 function showView(targetId) {
   buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
   views.forEach((view) => view.classList.toggle('active', view.id === targetId));
-  if (targetId === 'incident') void refreshCommandWeather({ requestGps: false });
+  if (targetId === 'incident') {
+    renderIncidentCommandSnapshot();
+    void refreshCommandWeather({ requestGps: false });
+  }
   if (targetId === 'report') renderIncidentLists();
   if (targetId === 'my-chemicals') renderSavedChemicals();
   if (targetId === 'plume') updatePlumeModeLabel();
@@ -141,6 +144,20 @@ const incidentBriefFieldIds = [
   'incident-product',
   'incident-container-type',
   'incident-notes',
+];
+const incidentContainerFieldIds = [
+  'plume-container-type',
+  'container-size',
+  'container-size-unit',
+  'container-fill-level',
+  'container-pressure',
+  'container-pressure-unit',
+  'container-capacity',
+  'container-pressure-profile',
+  'container-payload-notes',
+  'container-model-source',
+  'container-confidence',
+  'container-cfr-reference',
 ];
 const incidentsStorageKey = 'hazmatiq_incidents';
 const activeIncidentIdStorageKey = 'hazmatiq_active_incident_id';
@@ -328,6 +345,7 @@ function startIncidentTimer() {
 function getIncidentFormData() {
   const coordinates = parseGpsCoordinate(document.getElementById('incident-coordinates-input')?.value);
   const advanced = Object.fromEntries(activeChemicalRecord?.advanced || []);
+  const containerSelect = document.getElementById('plume-container-type');
   return {
     incidentName: document.getElementById('incidentName')?.value.trim() || getActiveIncident()?.incidentName || 'New Incident',
     incidentNumber: document.getElementById('incident-number')?.value.trim() || '',
@@ -347,7 +365,19 @@ function getIncidentFormData() {
     casNumber: advanced.CAS === 'N/A' ? '' : advanced.CAS || '',
     unNumber: activeChemicalRecord?.un === 'N/A' ? '' : activeChemicalRecord?.un || '',
     quantity: document.getElementById('plume-release-quantity')?.value || '',
-    containerType: document.getElementById('incident-container-type')?.value.trim() || '',
+    containerType: containerSelect?.selectedOptions?.[0]?.textContent.trim() || '',
+    containerProfileId: containerSelect?.value || '',
+    containerSize: document.getElementById('container-size')?.value || '',
+    containerSizeUnit: document.getElementById('container-size-unit')?.value || '',
+    containerFillLevel: document.getElementById('container-fill-level')?.value || '',
+    containerPressure: document.getElementById('container-pressure')?.value || '',
+    containerPressureUnit: document.getElementById('container-pressure-unit')?.value || '',
+    containerCapacity: document.getElementById('container-capacity')?.value.trim() || '',
+    containerPressureProfile: document.getElementById('container-pressure-profile')?.value.trim() || '',
+    containerPayloadNotes: document.getElementById('container-payload-notes')?.value.trim() || '',
+    containerModelSource: document.getElementById('container-model-source')?.value.trim() || '',
+    containerConfidence: document.getElementById('container-confidence')?.value.trim() || '',
+    containerCfrReference: document.getElementById('container-cfr-reference')?.value.trim() || '',
     notes: document.getElementById('incident-notes')?.value.trim() || '',
   };
 }
@@ -519,6 +549,15 @@ function openIncidentSummary(incidentId) {
     ['UN/NA number', incident.unNumber],
     ['Quantity', incident.quantity],
     ['Container type', incident.containerType],
+    ['Container size', [incident.containerSize, incident.containerSizeUnit].filter(Boolean).join(' ')],
+    ['Fill level', incident.containerFillLevel ? `${incident.containerFillLevel}%` : ''],
+    ['Pressure', [incident.containerPressure, incident.containerPressureUnit].filter(Boolean).join(' ')],
+    ['Typical capacity/range', incident.containerCapacity],
+    ['Pressure profile', incident.containerPressureProfile],
+    ['Payload notes', incident.containerPayloadNotes],
+    ['Model source type', incident.containerModelSource],
+    ['Container confidence', incident.containerConfidence],
+    ['CFR / specification', incident.containerCfrReference],
     ['Sources', incident.chemicalSources],
   ]);
   appendIncidentSummarySection(content, 'Conditions', [
@@ -938,6 +977,9 @@ function beginNewIncident({ createRecord = false } = {}) {
     // A new incident can still begin if browser storage is unavailable.
   }
   setActiveChemical(null);
+  const containerSelect = document.getElementById('plume-container-type');
+  if (containerSelect) containerSelect.value = 'unknown';
+  applyContainerProfile();
   if (createRecord) createIncidentRecord();
   else setSystemMode('training');
   setIncidentStatus('New incident started. Select a chemical to populate HAZMAT COMMAND data.');
@@ -947,6 +989,7 @@ function resumeActiveIncident() {
   incidentWorkflowActive = true;
   setSystemMode('incident');
   restoreIncidentBrief();
+  restoreIncidentContainerData();
   renderIncidentCommandSnapshot();
   void restoreSelectedChemical();
 }
@@ -1547,7 +1590,7 @@ function renderProtectiveActionGuidance(targetId) {
 
 function renderIncidentGuidance() {
   const enteredChemical = document.getElementById('incident-product')?.value.trim();
-  const hasSelectedChemical = getActiveIncident() && activeChemical && enteredChemical === activeChemical.name;
+  const hasSelectedChemical = activeChemical && enteredChemical === activeChemical.name;
   if (!hasSelectedChemical) {
     renderGuidanceBox('incident-ppe-guidance', 'incident-ppe-sources', null, 'Select or identify a chemical to populate PPE guidance.');
     renderGuidanceBox('incident-medical-guidance', 'incident-medical-sources', null, 'Select or identify a chemical to populate medical guidance.');
@@ -1570,7 +1613,7 @@ function renderIncidentGuidance() {
 }
 
 function renderIncidentCommandSnapshot() {
-  const chemicalLoaded = incidentWorkflowActive && Boolean(activeChemical);
+  const chemicalLoaded = Boolean(activeChemical);
   if (!chemicalLoaded) {
     [
       'command-chemical-status',
@@ -2162,6 +2205,11 @@ function ensurePlumeMap(location) {
     });
     plumeMap.on('error', (event) => {
       if (event?.error?.message) setText('plume-overlay-status', `Map layer error: ${event.error.message}`);
+    });
+    // Basemap style changes remove custom sources and layers; restore the saved plume overlays.
+    plumeMap.on('style.load', () => {
+      if (currentThreatZoneGeoJson?.features?.length) addThreatZoneLayers();
+      if (plumeLayerState.hazards && currentPlumeHazardsGeoJson) addPlumeHazardsLayers(currentPlumeHazardsGeoJson);
     });
   }
   plumeMap.resize();
@@ -3234,6 +3282,31 @@ function applyContainerProfile() {
     : `${profile.label} planning profile · ${profile.sourceNotes}`);
 }
 
+function restoreIncidentContainerData() {
+  const incident = getActiveIncident();
+  if (!incident) return;
+  const containerSelect = document.getElementById('plume-container-type');
+  if (containerSelect && incident.containerProfileId) containerSelect.value = incident.containerProfileId;
+  applyContainerProfile();
+  const savedValues = {
+    'container-size': incident.containerSize,
+    'container-size-unit': incident.containerSizeUnit,
+    'container-fill-level': incident.containerFillLevel,
+    'container-pressure': incident.containerPressure,
+    'container-pressure-unit': incident.containerPressureUnit,
+    'container-capacity': incident.containerCapacity,
+    'container-pressure-profile': incident.containerPressureProfile,
+    'container-payload-notes': incident.containerPayloadNotes,
+    'container-model-source': incident.containerModelSource,
+    'container-confidence': incident.containerConfidence,
+    'container-cfr-reference': incident.containerCfrReference,
+  };
+  Object.entries(savedValues).forEach(([id, value]) => {
+    const input = document.getElementById(id);
+    if (input && value !== undefined && value !== null) input.value = String(value);
+  });
+}
+
 function updatePlumeReleaseQuantityLabel() {
   const releaseKind = document.getElementById('plume-release-type')?.value;
   const unitSelect = document.getElementById('plume-release-unit');
@@ -3546,6 +3619,7 @@ function openPlumeWorkspace() {
 }
 
 document.getElementById('open-plume-btn')?.addEventListener('click', openPlumeWorkspace);
+document.getElementById('open-incident-dashboard-btn')?.addEventListener('click', () => showView('incident'));
 document.querySelectorAll('[data-command-view]').forEach((button) => {
   button.addEventListener('click', () => {
     const target = button.dataset.commandView;
@@ -3565,7 +3639,14 @@ document.getElementById('change-plume-chemical-btn')?.addEventListener('click', 
   chemicalSearchInput?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 });
 document.getElementById('plume-release-type')?.addEventListener('change', updatePlumeReleaseQuantityLabel);
-document.getElementById('plume-container-type')?.addEventListener('change', applyContainerProfile);
+document.getElementById('plume-container-type')?.addEventListener('change', () => {
+  applyContainerProfile();
+  updateActiveIncidentRecord();
+});
+incidentContainerFieldIds.slice(1).forEach((id) => {
+  const field = document.getElementById(id);
+  field?.addEventListener(field.tagName === 'SELECT' ? 'change' : 'input', updateActiveIncidentRecord);
+});
 document.getElementById('use-live-plume-weather-btn')?.addEventListener('click', async () => {
   const button = document.getElementById('use-live-plume-weather-btn');
   if (button) {

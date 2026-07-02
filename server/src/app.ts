@@ -61,6 +61,41 @@ function textValue(value: unknown) {
   return typeof value === "string" || typeof value === "number" ? String(value) : "";
 }
 
+function incidentContainerSummary(incident: Record<string, unknown>, detailed = false) {
+  const size = [incident.containerSize, incident.containerSizeUnit]
+    .map(textValue)
+    .filter(Boolean)
+    .join(" ");
+  const pressure = [incident.containerPressure, incident.containerPressureUnit]
+    .map(textValue)
+    .filter(Boolean)
+    .join(" ");
+  const parts = [
+    textValue(incident.containerType),
+    size && `Size ${size}`,
+    incident.containerFillLevel && `Fill ${textValue(incident.containerFillLevel)}%`,
+    pressure && `Pressure ${pressure}`,
+  ];
+  if (detailed) {
+    parts.push(
+      !size && incident.containerCapacity
+        ? `Capacity ${textValue(incident.containerCapacity)}`
+        : "",
+      incident.containerPressureProfile
+        ? `Pressure profile ${textValue(incident.containerPressureProfile)}`
+        : "",
+      incident.containerPayloadNotes ? `Payload ${textValue(incident.containerPayloadNotes)}` : "",
+      incident.containerModelSource
+        ? `Source type ${textValue(incident.containerModelSource)}`
+        : "",
+      incident.containerCfrReference
+        ? `Specification ${textValue(incident.containerCfrReference)}`
+        : "",
+    );
+  }
+  return parts.map(textValue).filter(Boolean).join(" · ");
+}
+
 function automaticIcsValue(fieldName: string, incident: Record<string, unknown>) {
   const normalized = fieldName.toLowerCase().replace(/[^a-z0-9]/g, "");
   if (/^(1)?incidentname\d*$/.test(normalized)) return textValue(incident.incidentName);
@@ -85,19 +120,28 @@ function automaticIcsValue(fieldName: string, incident: Record<string, unknown>)
       .filter(Boolean)
       .join(" · ");
   }
+  if (/^containertyperow1$/.test(normalized)) {
+    return incidentContainerSummary(incident, true);
+  }
   if (normalized.includes("primarymaterialsorhazards") || /^19materialrow1$/.test(normalized)) {
     return [
       incident.chemicalName,
       incident.unNumber && `UN/NA ${textValue(incident.unNumber)}`,
       incident.quantity,
-      incident.containerType,
+      incidentContainerSummary(incident),
     ]
       .map(textValue)
       .filter(Boolean)
       .join(" · ");
   }
   if (normalized.startsWith("5situationsummary")) {
-    return [incident.notes, incident.chemicalName, incident.address, incident.weather]
+    return [
+      incident.notes,
+      incident.chemicalName,
+      incidentContainerSummary(incident, true),
+      incident.address,
+      incident.weather,
+    ]
       .map(textValue)
       .filter(Boolean)
       .join(" · ");
