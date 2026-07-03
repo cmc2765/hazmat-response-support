@@ -131,6 +131,10 @@ document.querySelectorAll('[data-preplan-name]').forEach((button) => {
   });
 });
 
+document.getElementById('add-facility-preplan-btn')?.addEventListener('click', () => {
+  setText('facility-preplan-status', 'Document upload, naming, and saving will be available here in a future update.');
+});
+
 const incidentBriefStorageKey = 'hazmatiq.incidentBrief';
 const incidentBriefFieldIds = [
   'incidentName',
