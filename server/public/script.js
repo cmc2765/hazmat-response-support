@@ -1290,6 +1290,29 @@ function updateChemicalCard(record) {
     }));
   }
 
+  const additionalSection = document.getElementById('chemical-erg-additional-tables');
+  const additionalRows = record.ergTable?.additionalTables || [];
+  additionalSection.hidden = additionalRows.length === 0;
+  document.getElementById('chemical-erg-additional-table-rows').replaceChildren(
+    ...additionalRows.map((item) => {
+      const row = document.createElement('article');
+      row.className = 'erg-additional-table-row';
+      const label = document.createElement('div');
+      label.className = 'erg-additional-table-label';
+      const eyebrow = document.createElement('p');
+      eyebrow.className = 'eyebrow';
+      eyebrow.textContent = `ERG Table ${item.table}`;
+      const title = document.createElement('h4');
+      title.textContent = item.title;
+      label.append(eyebrow, title);
+      const detail = document.createElement('p');
+      detail.className = 'muted';
+      detail.textContent = item.detail;
+      row.append(label, detail);
+      return row;
+    }),
+  );
+
   const advancedList = document.getElementById('chemical-advanced-list');
   advancedList.innerHTML = record.advanced.map(([label, value]) => `<li><span>${label}</span><strong>${value}</strong></li>`).join('');
 

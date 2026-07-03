@@ -22,9 +22,39 @@ export interface ErgEntry {
   largeInitialNightFt?: number;
   largeProtectiveNightMi?: number;
   isWaterReactive?: boolean;
-  // Table 3 chemical name when water-reactive
+  // ERG Table 2 material name when water-reactive
   waterReactiveName?: string;
   tih?: boolean; // toxic by inhalation
+}
+
+export interface ErgAdditionalTable {
+  table: 2 | 3;
+  title: string;
+  detail: string;
+}
+
+// ERG Table 3 supplies container-specific large-spill information for these
+// six commonly transported TIH gases. The bundled model does not reproduce
+// those quantity rows, so the UI directs responders to the current ERG table.
+const ERG_TABLE_3_UN_NUMBERS = new Set(["1005", "1017", "1040", "1050", "1052", "1079"]);
+
+export function getErgAdditionalTables(entry: ErgEntry): ErgAdditionalTable[] {
+  const tables: ErgAdditionalTable[] = [];
+  if (entry.isWaterReactive) {
+    tables.push({
+      table: 2,
+      title: "Water-reactive materials that produce toxic gases",
+      detail: `${entry.waterReactiveName || entry.name} is associated with ERG Table 2. Keep the material dry and consult the current table for toxic-gas response information.`,
+    });
+  }
+  if (ERG_TABLE_3_UN_NUMBERS.has(entry.un) && entry.tih) {
+    tables.push({
+      table: 3,
+      title: "Large spills from different containers",
+      detail: `${entry.name} is associated with ERG Table 3. Consult the current table for container type and quantity-specific large-spill distances.`,
+    });
+  }
+  return tables;
 }
 
 export const ERG_TABLE_1: ErgEntry[] = [
@@ -237,7 +267,7 @@ export const ERG_TABLE_1: ErgEntry[] = [
     smallInitialNightFt: 750, smallProtectiveNightMi: 1.8,
     largeInitialNightFt: 4500, largeProtectiveNightMi: 8.0,
     tih: true },
-  // Water-reactive (Table 3) — initial isolation only, no PA distance.
+  // Water-reactive (Table 2) — initial isolation only, no PA distance.
   { un: "1428", name: "Sodium", guide: "138",
     smallInitialDayFt: 50, smallProtectiveDayMi: 0,
     largeInitialDayFt: 150, largeProtectiveDayMi: 0,

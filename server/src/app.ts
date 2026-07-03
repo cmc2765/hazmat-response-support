@@ -28,6 +28,7 @@ import * as schema from "./schema.js";
 import { runPlume } from "../../src/lib/model/plume.js";
 import { PlumeInputs } from "../../src/lib/schema/plume.js";
 import type { ThresholdBand } from "../../src/lib/schema/plume.js";
+import { getErgAdditionalTables } from "../../src/data/erg.js";
 
 const app = new Hono();
 app.use(logger());
@@ -239,7 +240,16 @@ app.get("/api/erg/:un", async (c) => {
   const guide = c.req.query("guide")?.replace(/P$/i, "");
   const row = guide ? rows.find((entry) => entry.guide.replace(/P$/i, "") === guide) : rows[0];
   if (!row) return c.json({ error: "not found" }, 404);
-  return c.json(row);
+  return c.json({ ...row, additionalTables: getErgAdditionalTables({
+    ...row,
+    smallProtectiveDayMi: Number(row.smallProtectiveDayMi),
+    largeProtectiveDayMi: Number(row.largeProtectiveDayMi),
+    smallProtectiveNightMi: Number(row.smallProtectiveNightMi),
+    largeProtectiveNightMi: Number(row.largeProtectiveNightMi),
+    isWaterReactive: Boolean(row.isWaterReactive),
+    tih: Boolean(row.tih),
+    waterReactiveName: row.waterReactiveName || undefined,
+  }) });
 });
 
 // ─── Thresholds ─────────────────────────────────────────────────────────

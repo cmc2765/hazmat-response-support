@@ -1368,6 +1368,31 @@ h1, h2, h3, p { margin-top: 0; }
   scroll-margin-top: 16px;
 }
 
+.erg-additional-tables {
+  margin: 0 0 18px;
+}
+
+.erg-additional-table-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
+  align-items: center;
+  gap: 18px;
+  padding: 14px 18px;
+  border: 1px solid #8aae73;
+  border-left: 5px solid #398044;
+  border-radius: 10px;
+  background: #f3faef;
+}
+
+.erg-additional-table-row + .erg-additional-table-row { margin-top: 10px; }
+.erg-additional-table-row h4,
+.erg-additional-table-row p { margin: 0; }
+.erg-additional-table-row .eyebrow { color: #17603a; }
+
+@media (max-width: 700px) {
+  .erg-additional-table-row { grid-template-columns: 1fr; }
+}
+
 @media (min-width: 981px) {
   .chemical-card-grid .first-responder-card {
     grid-column: 1;

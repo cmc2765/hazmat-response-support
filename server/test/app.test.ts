@@ -47,6 +47,14 @@ describe("API routes", () => {
     expect(body).toMatchObject({ un: "1005", guide: "125", tih: 1 });
   });
 
+  it("GET /api/erg/:un includes associated ERG table references", async () => {
+    const table2 = await (await app.request("/api/erg/1428?guide=138")).json() as { additionalTables: Array<{ table: number }> };
+    expect(table2.additionalTables).toContainEqual(expect.objectContaining({ table: 2 }));
+
+    const table3 = await (await app.request("/api/erg/1017?guide=124")).json() as { additionalTables: Array<{ table: number }> };
+    expect(table3.additionalTables).toContainEqual(expect.objectContaining({ table: 3 }));
+  });
+
   it("POST /api/plume/run returns isopleths for a valid request", async () => {
     const res = await app.request("/api/plume/run", {
       method: "POST",

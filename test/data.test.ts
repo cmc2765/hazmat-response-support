@@ -5,7 +5,7 @@ import { NPG } from "@/data/npg";
 import { ALL_NPG } from "@/data/all-npg";
 import { FACILITIES } from "@/data/facilities";
 import { THRESHOLDS, getThresholds } from "@/data/thresholds";
-import { lookupErg } from "@/data/erg";
+import { getErgAdditionalTables, lookupErg } from "@/data/erg";
 
 describe("bundled data", () => {
   it("chemicals validate against Zod", () => {
@@ -72,6 +72,12 @@ describe("ERG lookup", () => {
   it("flags water-reactives", () => {
     const e = lookupErg("1428");
     expect(e?.isWaterReactive).toBe(true);
+  });
+
+  it("identifies associated ERG Tables 2 and 3", () => {
+    expect(getErgAdditionalTables(lookupErg("1428")!).map((item) => item.table)).toEqual([2]);
+    expect(getErgAdditionalTables(lookupErg("1017")!).map((item) => item.table)).toEqual([3]);
+    expect(getErgAdditionalTables(lookupErg("1006")!)).toEqual([]);
   });
 });
 
