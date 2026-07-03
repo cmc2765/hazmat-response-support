@@ -943,6 +943,42 @@ h1, h2, h3, p { margin-top: 0; }
   object-fit: contain;
 }
 
+.report-edit-notice {
+  margin: 16px 0 10px;
+  padding: 9px 12px;
+  border-left: 4px solid var(--accent);
+  color: var(--navy);
+  background: var(--panel-2);
+  font-weight: 750;
+}
+
+.completed-report-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.completed-report-edit-grid label {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+}
+
+.completed-report-edit-grid label > span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.completed-report-edit-grid input,
+.completed-report-edit-grid textarea { width: 100%; }
+.completed-report-edit-grid .report-edit-field-wide { grid-column: 1 / -1; }
+
+@media (max-width: 900px) {
+  .completed-report-edit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 .ics-form-library {
   margin: 12px 0 0;
   padding: 0;
@@ -999,6 +1035,8 @@ h1, h2, h3, p { margin-top: 0; }
     align-items: flex-start;
     flex-direction: column;
   }
+
+  .completed-report-edit-grid { grid-template-columns: 1fr; }
 }
 
 @media print {
@@ -1065,20 +1103,25 @@ h1, h2, h3, p { margin-top: 0; }
 
 .eplan-login-form {
   display: grid;
-  grid-template-columns: minmax(150px, 0.65fr) repeat(2, minmax(180px, 1fr)) minmax(160px, 0.65fr);
-  gap: 16px;
+  grid-template-columns: minmax(200px, 1fr) minmax(190px, 0.65fr);
+  gap: 6px;
   width: 100%;
-  align-items: end;
+  max-width: 520px;
+  margin-inline: auto;
+  align-items: center;
 }
 
 .eplan-logo {
   display: block;
-  width: min(100%, 230px);
-  height: auto;
-  margin: 0;
-  padding: 10px;
-  border-radius: 10px;
-  background: #fff;
+  width: 100%;
+  height: 56px;
+  margin: 0 auto;
+  padding: 0;
+  background: transparent;
+  mix-blend-mode: multiply;
+  object-fit: contain;
+  object-position: left center;
+  justify-self: start;
 }
 
 .eplan-login-form label {
@@ -1094,8 +1137,24 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .eplan-login-form .primary-btn {
-  width: 100%;
-  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 190px;
+  min-height: 36px;
+  margin-top: 0;
+  border-color: #b65000;
+  background: #ed7203;
+  color: #fff;
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.eplan-login-form .primary-btn:hover,
+.eplan-login-form .primary-btn:focus-visible {
+  border-color: #833b00;
+  background: #c85d00;
 }
 
 .facility-information-card {
@@ -1103,21 +1162,21 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .facility-information-card .eplan-login-form {
-  grid-template-columns: minmax(220px, 0.8fr) repeat(2, minmax(150px, 1fr)) minmax(140px, 0.6fr);
-  gap: 8px 10px;
+  grid-template-columns: minmax(200px, 1fr) minmax(190px, 0.65fr);
+  gap: 6px;
 }
 
 .facility-information-card .eplan-logo {
   width: 100%;
   max-width: none;
-  height: 64px;
-  justify-self: center;
+  height: 56px;
+  justify-self: start;
   padding: 0;
   border-radius: 0;
   background: transparent;
   mix-blend-mode: multiply;
   object-fit: contain;
-  object-position: center;
+  object-position: left center;
 }
 
 .facility-information-card .eplan-login-form label {
@@ -1138,7 +1197,7 @@ h1, h2, h3, p { margin-top: 0; }
 
 @media (max-width: 620px) {
   .facility-information-card .eplan-login-form {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1.6fr) minmax(120px, 0.55fr);
   }
 
   .facility-information-card .eplan-logo {
@@ -1388,6 +1447,21 @@ h1, h2, h3, p { margin-top: 0; }
 .erg-additional-table-row h4,
 .erg-additional-table-row p { margin: 0; }
 .erg-additional-table-row .eyebrow { color: #17603a; }
+
+.erg-container-distances {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid #8aae73;
+}
+
+.erg-container-distances > h4,
+.erg-container-distances > p { margin: 0 0 8px; }
+.erg-container-distances h4 small { color: #17603a; }
+.erg-container-table { min-width: 980px; }
+.erg-container-table th:first-child,
+.erg-container-table td:first-child { min-width: 220px; text-align: left; }
+.erg-container-table td:not(:first-child) { white-space: nowrap; }
+.erg-table-footnote { margin-top: 8px !important; font-size: 0.82rem; }
 
 @media (max-width: 700px) {
   .erg-additional-table-row { grid-template-columns: 1fr; }
@@ -1848,32 +1922,73 @@ h1, h2, h3, p { margin-top: 0; }
   font-weight: 800;
 }
 
-.container-profile-fields,
-.container-profile-details {
+.container-profile-controls {
   display: grid;
-  gap: 5px;
+  gap: 4px;
   min-width: 0;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
-.container-profile-fields {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-}
-
-.container-profile-details {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-}
-
-.container-profile-details label {
-  display: grid;
-  gap: 3px;
-  min-width: 0;
-}
-
-.container-profile-details span,
 .container-profile small {
   color: var(--muted);
   font-size: 0.65rem;
   font-weight: 800;
+}
+
+.release-data-control {
+  min-width: 0;
+  border: 1px solid #b8bec4;
+  border-radius: 7px;
+  background: #fff;
+}
+
+.release-data-control summary {
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  min-height: 42px;
+  padding: 5px 20px 5px 6px;
+  color: #071f36;
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+  text-align: center;
+}
+
+.release-data-control summary::after {
+  content: '▾';
+  position: absolute;
+  top: 11px;
+  right: 6px;
+  color: #d71920;
+}
+
+.release-data-control[open] summary::after { transform: rotate(180deg); }
+.release-data-control summary > span { color: #555; font-size: 0.62rem; font-weight: 900; line-height: 1.05; text-transform: uppercase; }
+.release-data-control summary > strong { overflow-wrap: anywhere; font-size: 0.72rem; line-height: 1.1; }
+.release-data-control:has(input[required], select[required]) summary > span::after {
+  content: ' *';
+  color: #d71920;
+  font-size: 0.8rem;
+}
+.release-data-control > label,
+.release-data-control > select,
+.release-data-control > input,
+.release-data-control > dl,
+.release-data-control > .release-override-row { margin: 0 9px 9px; width: calc(100% - 18px); }
+.release-data-control label { display: grid; gap: 3px; color: #111; font-size: 0.78rem; font-weight: 850; }
+.release-override-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(80px, 0.45fr); gap: 6px; }
+.release-data-facts { display: grid; gap: 5px; }
+.release-data-facts > div { display: grid; gap: 1px; }
+.release-data-facts dt { color: #555; font-size: 0.68rem; font-weight: 850; text-transform: uppercase; }
+.release-data-facts dd { margin: 0; color: #071f36; font-size: 0.82rem; font-weight: 750; }
+
+@media (max-width: 1100px) {
+  .container-profile-controls { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .container-profile-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 .container-profile input,
@@ -1898,7 +2013,6 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .plume-release-grid .plume-model-field > span,
-.plume-release-grid .container-profile-details span,
 .plume-weather-grid .plume-model-field > span {
   color: #111;
   font-size: 0.8rem;
@@ -2435,12 +2549,12 @@ h1, h2, h3, p { margin-top: 0; }
   }
 
   .eplan-login-form {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1.6fr) minmax(120px, 0.55fr);
   }
 
   .eplan-logo,
   .eplan-login-form .primary-btn {
-    grid-column: 1 / -1;
+    grid-column: auto;
   }
 
   .plume-model-input-grid {
@@ -2471,7 +2585,7 @@ h1, h2, h3, p { margin-top: 0; }
   }
 
   .eplan-login-form {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1.6fr) minmax(120px, 0.55fr);
   }
 
   .eplan-logo,
@@ -2483,13 +2597,8 @@ h1, h2, h3, p { margin-top: 0; }
     grid-template-columns: 1fr;
   }
 
-  .plume-release-grid,
-  .container-profile-details {
+  .plume-release-grid {
     grid-template-columns: 1fr;
-  }
-
-  .container-profile-fields {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .plume-weather-grid {
@@ -3166,12 +3275,12 @@ textarea {
 }
 
 .planning-tools-primary .eplan-login-form {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(200px, 1fr) minmax(190px, 0.65fr);
 }
 
 .planning-tools-primary .eplan-logo,
 .planning-tools-primary .eplan-login-form .primary-btn {
-  grid-column: 1 / -1;
+  grid-column: auto;
 }
 
 .planning-eplan-card,
@@ -3204,7 +3313,7 @@ textarea {
 }
 
 .planning-eplan-card .eplan-logo {
-  border: 2px solid #17120a;
+  border: 0;
 }
 
 .planning-eplan-card input {
@@ -3214,16 +3323,16 @@ textarea {
 }
 
 .planning-eplan-card .primary-btn {
-  border: 1px solid #9f1016;
-  background: #c9141b;
+  border: 1px solid #b65000;
+  background: #ed7203;
   color: #fff;
   box-shadow: none;
 }
 
 .planning-eplan-card .primary-btn:hover,
 .planning-eplan-card .primary-btn:focus-visible {
-  border-color: #111;
-  background: #a70f16;
+  border-color: #833b00;
+  background: #c85d00;
 }
 
 .facility-preplan-grid {
@@ -3270,7 +3379,7 @@ textarea {
 
 @media (max-width: 620px) {
   .planning-tools-primary .eplan-login-form {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1.6fr) minmax(120px, 0.55fr);
   }
 
   .planning-tools-primary .eplan-logo,

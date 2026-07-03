@@ -33,10 +33,79 @@ export interface ErgAdditionalTable {
   detail: string;
 }
 
-// ERG Table 3 supplies container-specific large-spill information for these
-// six commonly transported TIH gases. The bundled model does not reproduce
-// those quantity rows, so the UI directs responders to the current ERG table.
-const ERG_TABLE_3_UN_NUMBERS = new Set(["1005", "1017", "1040", "1050", "1052", "1079"]);
+export interface ErgContainerDistance {
+  container: string;
+  initialIsolationFt: number;
+  dayLowWindMi: string;
+  dayModerateWindMi: string;
+  dayHighWindMi: string;
+  nightLowWindMi: string;
+  nightModerateWindMi: string;
+  nightHighWindMi: string;
+}
+
+const table3Row = (
+  container: string,
+  initialIsolationFt: number,
+  dayLowWindMi: string,
+  dayModerateWindMi: string,
+  dayHighWindMi: string,
+  nightLowWindMi: string,
+  nightModerateWindMi: string,
+  nightHighWindMi: string,
+): ErgContainerDistance => ({
+  container,
+  initialIsolationFt,
+  dayLowWindMi,
+  dayModerateWindMi,
+  dayHighWindMi,
+  nightLowWindMi,
+  nightModerateWindMi,
+  nightHighWindMi,
+});
+
+// ERG 2024 Table 3. Protective-action distances are miles; a trailing "+"
+// means the distance can be larger in certain atmospheric conditions.
+export const ERG_TABLE_3: Record<string, ErgContainerDistance[]> = {
+  "1005": [
+    table3Row("Rail tank car", 1000, "1.0", "0.8", "0.6", "2.6", "1.3", "0.8"),
+    table3Row("Highway tank truck or trailer", 500, "0.5", "0.3", "0.3", "1.1", "0.4", "0.4"),
+    table3Row("Agricultural nurse tank", 200, "0.3", "0.2", "0.2", "0.9", "0.2", "0.2"),
+    table3Row("Multiple small cylinders", 100, "0.2", "0.1", "0.1", "0.5", "0.2", "0.1"),
+  ],
+  "1017": [
+    table3Row("Rail tank car", 3000, "6.0", "3.9", "3.2", "7.0+", "5.6", "4.1"),
+    table3Row("Highway tank truck or trailer", 2000, "3.5", "2.1", "1.6", "4.0", "2.9", "2.4"),
+    table3Row("Multiple ton cylinders", 1000, "1.2", "0.8", "0.6", "2.2", "1.4", "0.8"),
+    table3Row("Multiple small cylinders or single ton cylinder", 500, "0.9", "0.5", "0.3", "1.5", "0.8", "0.4"),
+  ],
+  "1040": [
+    table3Row("Rail tank car", 600, "1.0", "0.5", "0.4", "1.8", "0.9", "0.5"),
+    table3Row("Highway tank truck or trailer", 300, "0.6", "0.3", "0.3", "1.3", "0.4", "0.3"),
+    table3Row("Multiple small cylinders or single ton cylinder", 100, "0.3", "0.1", "0.1", "0.5", "0.2", "0.1"),
+  ],
+  "1050": [
+    table3Row("Rail tank car", 1500, "2.3", "1.3", "1.1", "6.1", "2.1", "1.4"),
+    table3Row("Highway tank truck or trailer", 600, "0.9", "0.5", "0.4", "2.3", "0.9", "0.5"),
+    table3Row("Multiple ton cylinders", 100, "0.3", "0.1", "0.1", "0.6", "0.2", "0.1"),
+    table3Row("Multiple small cylinders or single ton cylinder", 100, "0.2", "0.1", "0.1", "0.6", "0.2", "0.1"),
+  ],
+  "1052": [
+    table3Row("Rail tank car", 1500, "2.1", "1.3", "1.1", "4.0", "1.9", "1.2"),
+    table3Row("Highway tank truck or trailer", 700, "1.2", "0.7", "0.6", "2.3", "1.0", "0.6"),
+    table3Row("Multiple small cylinders or single ton cylinder", 300, "0.5", "0.2", "0.2", "1.1", "0.3", "0.2"),
+  ],
+  "1079": [
+    table3Row("Rail tank car", 3000, "7.0+", "7.0+", "4.3", "7.0+", "7.0+", "6.0"),
+    table3Row("Highway tank truck or trailer", 3000, "7.0+", "3.8", "3.3", "7.0+", "5.1", "3.9"),
+    table3Row("Multiple ton cylinders", 1500, "3.3", "1.4", "1.1", "4.3", "2.5", "1.7"),
+    table3Row("Multiple small cylinders or single ton cylinder", 600, "1.9", "0.9", "0.7", "3.5", "1.5", "0.9"),
+  ],
+};
+
+export function getErgContainerDistances(un: string): ErgContainerDistance[] {
+  return ERG_TABLE_3[un] || [];
+}
 
 export function getErgAdditionalTables(entry: ErgEntry): ErgAdditionalTable[] {
   const tables: ErgAdditionalTable[] = [];
@@ -47,13 +116,6 @@ export function getErgAdditionalTables(entry: ErgEntry): ErgAdditionalTable[] {
       detail: `${entry.waterReactiveName || entry.name} is associated with ERG Table 2. Keep the material dry and consult the current table for toxic-gas response information.`,
     });
   }
-  if (ERG_TABLE_3_UN_NUMBERS.has(entry.un) && entry.tih) {
-    tables.push({
-      table: 3,
-      title: "Large spills from different containers",
-      detail: `${entry.name} is associated with ERG Table 3. Consult the current table for container type and quantity-specific large-spill distances.`,
-    });
-  }
   return tables;
 }
 
@@ -61,7 +123,7 @@ export const ERG_TABLE_1: ErgEntry[] = [
   { un: "1005", name: "Ammonia, anhydrous", guide: "125",
     smallInitialDayFt: 100, smallProtectiveDayMi: 0.1,
     largeInitialDayFt: 500, largeProtectiveDayMi: 1.0,
-    smallInitialNightFt: 100, smallProtectiveNightMi: 0.2,
+    smallInitialNightFt: 100, smallProtectiveNightMi: 0.1,
     largeInitialNightFt: 1000, largeProtectiveNightMi: 2.3,
     tih: true },
   { un: "1005", name: "Ammonia solutions", guide: "154",
@@ -71,15 +133,15 @@ export const ERG_TABLE_1: ErgEntry[] = [
     largeInitialNightFt: 1000, largeProtectiveNightMi: 2.3,
     tih: true },
   { un: "1017", name: "Chlorine", guide: "124",
-    smallInitialDayFt: 150, smallProtectiveDayMi: 0.4,
+    smallInitialDayFt: 200, smallProtectiveDayMi: 0.2,
     largeInitialDayFt: 1500, largeProtectiveDayMi: 4.1,
-    smallInitialNightFt: 750, smallProtectiveNightMi: 1.4,
+    smallInitialNightFt: 200, smallProtectiveNightMi: 0.9,
     largeInitialNightFt: 4500, largeProtectiveNightMi: 7.5,
     tih: true },
   { un: "1050", name: "Hydrogen chloride, anhydrous", guide: "125",
     smallInitialDayFt: 100, smallProtectiveDayMi: 0.1,
     largeInitialDayFt: 1000, largeProtectiveDayMi: 2.3,
-    smallInitialNightFt: 100, smallProtectiveNightMi: 0.3,
+    smallInitialNightFt: 100, smallProtectiveNightMi: 0.2,
     largeInitialNightFt: 1800, largeProtectiveNightMi: 3.4,
     tih: true },
   { un: "1052", name: "Hydrogen fluoride, anhydrous", guide: "125",
@@ -89,9 +151,9 @@ export const ERG_TABLE_1: ErgEntry[] = [
     largeInitialNightFt: 1800, largeProtectiveNightMi: 3.4,
     tih: true },
   { un: "1079", name: "Sulfur dioxide", guide: "125",
-    smallInitialDayFt: 100, smallProtectiveDayMi: 0.2,
+    smallInitialDayFt: 300, smallProtectiveDayMi: 0.4,
     largeInitialDayFt: 1000, largeProtectiveDayMi: 3.1,
-    smallInitialNightFt: 100, smallProtectiveNightMi: 0.5,
+    smallInitialNightFt: 300, smallProtectiveNightMi: 1.6,
     largeInitialNightFt: 1800, largeProtectiveNightMi: 5.7,
     tih: true },
   { un: "1016", name: "Carbon monoxide, compressed", guide: "119",
@@ -119,9 +181,9 @@ export const ERG_TABLE_1: ErgEntry[] = [
     largeInitialNightFt: 1800, largeProtectiveNightMi: 4.3,
     tih: true },
   { un: "1040", name: "Ethylene oxide", guide: "119P",
-    smallInitialDayFt: 50, smallProtectiveDayMi: 0.1,
+    smallInitialDayFt: 100, smallProtectiveDayMi: 0.1,
     largeInitialDayFt: 300, largeProtectiveDayMi: 0.7,
-    smallInitialNightFt: 50, smallProtectiveNightMi: 0.2,
+    smallInitialNightFt: 100, smallProtectiveNightMi: 0.2,
     largeInitialNightFt: 1000, largeProtectiveNightMi: 2.2,
     tih: true },
   { un: "1280", name: "Propylene oxide", guide: "127P",

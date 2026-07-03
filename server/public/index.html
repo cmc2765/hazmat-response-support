@@ -150,14 +150,9 @@
                 <div class="planning-tools-primary">
                   <section class="planning-eplan-card" aria-labelledby="planning-eplan-title">
                     <h3 id="planning-eplan-title">E-Plan Facility Records</h3>
-                    <p class="big-label">Sign in to review facility submissions, inventories, and emergency contacts.</p>
-                    <form
+                    <div
                       class="eplan-login-form"
-                      action="https://erplan.net/eplan/login.htm"
-                      method="post"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Planning tools E-Plan first responder login"
+                      aria-label="Open E-Plan first responder login"
                     >
                       <img
                         class="eplan-logo"
@@ -165,16 +160,8 @@
                         alt="E-Plan"
                         referrerpolicy="no-referrer"
                       />
-                      <label for="planning-eplan-user-id">
-                        <span>Username</span>
-                        <input id="planning-eplan-user-id" name="userID" type="text" autocomplete="username" required />
-                      </label>
-                      <label for="planning-eplan-password">
-                        <span>Password</span>
-                        <input id="planning-eplan-password" name="password" type="password" autocomplete="current-password" required />
-                      </label>
-                      <button class="primary-btn" type="submit">Login to E-Plan</button>
-                    </form>
+                      <a class="primary-btn" href="https://erplan.net/eplan/login.htm" target="eplan-program" rel="noopener noreferrer">Open E-Plan Login</a>
+                    </div>
                   </section>
 
                   <section class="facility-preplan-section" aria-labelledby="facility-preplan-title">
@@ -329,13 +316,9 @@
               </article>
 
               <article class="panel-card tier2-card facility-information-card">
-                <form
+                <div
                   class="eplan-login-form"
-                  action="https://erplan.net/eplan/login.htm"
-                  method="post"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="E-Plan first responder login"
+                  aria-label="Open E-Plan first responder login"
                 >
                   <img
                     class="eplan-logo"
@@ -343,16 +326,8 @@
                     alt="E-Plan"
                     referrerpolicy="no-referrer"
                   />
-                  <label for="eplan-user-id">
-                    <span>Username</span>
-                    <input id="eplan-user-id" name="userID" type="text" autocomplete="username" required />
-                  </label>
-                  <label for="eplan-password">
-                    <span>Password</span>
-                    <input id="eplan-password" name="password" type="password" autocomplete="current-password" required />
-                  </label>
-                  <button class="primary-btn" type="submit">Login to E-Plan</button>
-                </form>
+                  <a class="primary-btn" href="https://erplan.net/eplan/login.htm" target="eplan-program" rel="noopener noreferrer">Open E-Plan Login</a>
+                </div>
               </article>
 
               <article class="panel-card incident-guidance-card ppe-summary-card">
@@ -466,6 +441,28 @@
                     </thead>
                     <tbody id="chemical-erg-table-body"></tbody>
                   </table>
+                </div>
+                <div id="chemical-erg-container-distances" class="erg-container-distances" hidden>
+                  <h4>Container-specific large-spill distances <small>ERG Table 3</small></h4>
+                  <p class="muted">Protective-action distance varies by container, time of day, and wind speed.</p>
+                  <div class="erg-table-wrap">
+                    <table class="erg-container-table">
+                      <thead>
+                        <tr>
+                          <th rowspan="2">Transport container</th>
+                          <th rowspan="2">Initial isolation<br><small>all directions</small></th>
+                          <th colspan="3">Day — protect downwind</th>
+                          <th colspan="3">Night — protect downwind</th>
+                        </tr>
+                        <tr>
+                          <th>Low<br><small>&lt;6 mph</small></th><th>Moderate<br><small>6–12 mph</small></th><th>High<br><small>&gt;12 mph</small></th>
+                          <th>Low<br><small>&lt;6 mph</small></th><th>Moderate<br><small>6–12 mph</small></th><th>High<br><small>&gt;12 mph</small></th>
+                        </tr>
+                      </thead>
+                      <tbody id="chemical-erg-container-body"></tbody>
+                    </table>
+                  </div>
+                  <p class="erg-table-footnote muted">Distances marked “+” may be larger under certain atmospheric conditions.</p>
                 </div>
               </section>
               <section id="chemical-erg-additional-tables" class="erg-additional-tables" aria-label="Additional ERG tables" hidden>
@@ -585,28 +582,6 @@
                         <button class="ghost-btn" id="change-plume-chemical-btn" type="button">Identify / Change</button>
                       </div>
                     </label>
-                    <label class="plume-model-field" for="plume-container-type">
-                      <span>Container</span>
-                      <select id="plume-container-type">
-                        <option value="unknown">Unknown / Custom</option>
-                        <option value="small-container">Small container / bottle</option>
-                        <option value="package">Bag / box / package</option>
-                        <option value="drum">Drum</option>
-                        <option value="jerrican">Jerrican / carboy</option>
-                        <option value="ibc">IBC tote</option>
-                        <option value="cylinder">Cylinder</option>
-                        <option value="ton-cylinder">Ton cylinder</option>
-                        <option value="portable-tank">Portable tank / ISO tank</option>
-                        <option value="ast">Aboveground storage tank</option>
-                        <option value="ust">Underground storage tank</option>
-                        <option value="process-vessel">Process vessel</option>
-                        <option value="cargo-tank">Cargo tank truck</option>
-                        <option value="rail-tank-car">Rail tank car</option>
-                        <option value="pipeline">Pipeline</option>
-                        <option value="puddle">Puddle / pool</option>
-                        <option value="direct-release">Direct release / unknown source</option>
-                      </select>
-                    </label>
                     <label class="plume-model-field" for="plume-release-type">
                       <span>Release type</span>
                       <select id="plume-release-type">
@@ -626,47 +601,51 @@
                     </label>
                     <div class="container-profile" aria-label="Editable container planning profile">
                       <p id="container-profile-guidance" class="container-profile-guidance">Enter known container size, pressure, and release details manually.</p>
-                      <div class="container-profile-fields">
-                        <label class="plume-model-field" for="container-size">
-                          <span>Container size</span>
-                          <input id="container-size" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter" />
-                        </label>
-                        <label class="plume-model-field" for="container-size-unit">
-                          <span>Size unit</span>
-                          <select id="container-size-unit">
-                            <option value="">Select</option>
-                            <option value="gal">gal</option>
-                            <option value="lb">lb</option>
-                            <option value="L">L</option>
-                            <option value="ft3">ft³</option>
-                          </select>
-                        </label>
-                        <label class="plume-model-field" for="container-fill-level">
-                          <span>Fill level %</span>
-                          <input id="container-fill-level" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="Enter" />
-                        </label>
-                        <label class="plume-model-field" for="container-pressure">
-                          <span>Pressure</span>
-                          <input id="container-pressure" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter" />
-                        </label>
-                        <label class="plume-model-field" for="container-pressure-unit">
-                          <span>Pressure unit</span>
-                          <select id="container-pressure-unit">
-                            <option value="">Select</option>
-                            <option value="psig">psig</option>
-                            <option value="psi">psi</option>
-                            <option value="bar">bar</option>
-                            <option value="kPa">kPa</option>
-                          </select>
-                        </label>
-                      </div>
-                      <div class="container-profile-details">
-                        <label for="container-capacity"><span>Typical capacity/range</span><input id="container-capacity" type="text" /></label>
-                        <label for="container-pressure-profile"><span>Pressure profile</span><input id="container-pressure-profile" type="text" /></label>
-                        <label for="container-payload-notes"><span>Payload notes</span><input id="container-payload-notes" type="text" /></label>
-                        <label for="container-model-source"><span>Model source type</span><input id="container-model-source" type="text" /></label>
-                        <label for="container-confidence"><span>Confidence</span><input id="container-confidence" type="text" /></label>
-                        <label for="container-cfr-reference"><span>CFR / specification</span><input id="container-cfr-reference" type="text" /></label>
+                      <div class="container-profile-controls">
+                        <details class="release-data-control">
+                          <summary><span>Container Type</span><strong id="container-type-summary">Unknown / Custom</strong></summary>
+                          <label for="plume-container-type">Compatible or likely container</label>
+                          <select id="plume-container-type"></select>
+                        </details>
+                        <details class="release-data-control">
+                          <summary><span>Container Size</span><strong id="container-size-summary">User select</strong></summary>
+                          <label for="container-size-preset">Planning size</label>
+                          <select id="container-size-preset"></select>
+                          <div class="release-override-row">
+                            <label for="container-size">Override<input id="container-size" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter" /></label>
+                            <label for="container-size-unit">Unit<select id="container-size-unit"><option value="">Select</option><option value="gal">gal</option><option value="lb">lb</option><option value="tons">tons</option><option value="L">L</option><option value="kg">kg</option><option value="ft3">ft³</option></select></label>
+                          </div>
+                        </details>
+                        <details class="release-data-control">
+                          <summary><span>Capacity / Range</span><strong id="container-capacity-summary">Verify container</strong></summary>
+                          <dl class="release-data-facts"><div><dt>Planning default</dt><dd id="container-capacity-default">—</dd></div><div><dt>Typical range</dt><dd id="container-capacity-typical">—</dd></div><div><dt>Possible range</dt><dd id="container-capacity-possible">—</dd></div></dl>
+                          <label for="container-capacity">User override<input id="container-capacity" type="text" placeholder="Enter known capacity" /></label>
+                        </details>
+                        <details class="release-data-control">
+                          <summary><span>Pressure</span><strong id="container-pressure-summary">Verify pressure</strong></summary>
+                          <dl class="release-data-facts"><div><dt>Normal operating pressure</dt><dd id="container-pressure-normal">—</dd></div><div><dt>Planning range</dt><dd id="container-pressure-range">—</dd></div></dl>
+                          <div class="release-override-row">
+                            <label for="container-pressure">Override<input id="container-pressure" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter" /></label>
+                            <label for="container-pressure-unit">Unit<select id="container-pressure-unit"><option value="">Select</option><option value="psig">psig</option><option value="psi">psi</option><option value="bar">bar</option><option value="kPa">kPa</option><option value="atm">atm</option></select></label>
+                          </div>
+                        </details>
+                        <details class="release-data-control">
+                          <summary><span>Pressure Profile</span><strong id="container-pressure-profile-summary">Unknown / verify</strong></summary>
+                          <label for="container-pressure-profile">Release pressure behavior</label>
+                          <select id="container-pressure-profile"><option>Atmospheric / non-pressure</option><option>Low-pressure liquid cargo tank</option><option>Liquefied compressed gas / vapor-pressure governed</option><option>High-pressure compressed gas</option><option>Cryogenic refrigerated liquid</option><option>Water-reactive / special handling</option><option>Unknown / verify</option></select>
+                        </details>
+                        <details class="release-data-control">
+                          <summary><span>Fill Level</span><strong id="container-fill-summary">85% planning default</strong></summary>
+                          <label for="container-fill-level">Percent full</label>
+                          <select id="container-fill-level"><option value="25">25%</option><option value="50">50%</option><option value="75">75%</option><option value="85" selected>85%</option><option value="90">90%</option><option value="95">95%</option><option value="100">100%</option></select>
+                        </details>
+                        <details class="release-data-control">
+                          <summary><span>Release Location / Phase</span><strong id="container-release-summary">Unknown / user select</strong></summary>
+                          <label for="container-release-location">Release location</label>
+                          <select id="container-release-location"><option>Unknown</option><option>Vapor space leak</option><option>Liquid space leak</option><option>Bottom outlet / liquid release</option><option>Top fitting / vapor release</option><option>Valve / piping failure</option></select>
+                          <label for="container-release-phase">Release phase</label>
+                          <select id="container-release-phase"><option>Unknown / verify</option><option>Gas / vapor</option><option>Liquid</option><option>Two-phase flashing release</option><option>Cryogenic liquid</option><option>Solid / powder</option></select>
+                        </details>
                       </div>
                       <small>Container values are planning defaults. Verify with SDS, shipping papers, facility inventory, container markings, or local authority data.</small>
                     </div>
@@ -991,6 +970,9 @@
                   </div>
                   <div class="button-row report-summary-actions">
                     <button class="ghost-btn" id="back-to-incident-reports-btn" type="button">Back to Reports</button>
+                    <button class="ghost-btn" id="edit-incident-summary-btn" type="button" hidden>Edit Report</button>
+                    <button class="ghost-btn" id="cancel-incident-summary-edit-btn" type="button" hidden>Cancel</button>
+                    <button class="primary-btn" id="save-incident-summary-btn" type="button" hidden>Save Changes</button>
                     <button class="primary-btn print-summary-btn" id="print-incident-summary-btn" type="button" aria-label="Print incident summary" title="Print or save as PDF">
                       <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v7H7z" />

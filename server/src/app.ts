@@ -28,7 +28,7 @@ import * as schema from "./schema.js";
 import { runPlume } from "../../src/lib/model/plume.js";
 import { PlumeInputs } from "../../src/lib/schema/plume.js";
 import type { ThresholdBand } from "../../src/lib/schema/plume.js";
-import { getErgAdditionalTables } from "../../src/data/erg.js";
+import { getErgAdditionalTables, getErgContainerDistances } from "../../src/data/erg.js";
 
 const app = new Hono();
 app.use(logger());
@@ -249,7 +249,7 @@ app.get("/api/erg/:un", async (c) => {
     isWaterReactive: Boolean(row.isWaterReactive),
     tih: Boolean(row.tih),
     waterReactiveName: row.waterReactiveName || undefined,
-  }) });
+  }), containerSpecificDistances: getErgContainerDistances(row.un) });
 });
 
 // ─── Thresholds ─────────────────────────────────────────────────────────

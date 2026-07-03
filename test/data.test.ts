@@ -5,7 +5,7 @@ import { NPG } from "@/data/npg";
 import { ALL_NPG } from "@/data/all-npg";
 import { FACILITIES } from "@/data/facilities";
 import { THRESHOLDS, getThresholds } from "@/data/thresholds";
-import { getErgAdditionalTables, lookupErg } from "@/data/erg";
+import { getErgAdditionalTables, getErgContainerDistances, lookupErg } from "@/data/erg";
 
 describe("bundled data", () => {
   it("chemicals validate against Zod", () => {
@@ -74,10 +74,20 @@ describe("ERG lookup", () => {
     expect(e?.isWaterReactive).toBe(true);
   });
 
-  it("identifies associated ERG Tables 2 and 3", () => {
+  it("identifies associated ERG Table 2 without a redundant Table 3 notice", () => {
     expect(getErgAdditionalTables(lookupErg("1428")!).map((item) => item.table)).toEqual([2]);
-    expect(getErgAdditionalTables(lookupErg("1017")!).map((item) => item.table)).toEqual([3]);
+    expect(getErgAdditionalTables(lookupErg("1017")!)).toEqual([]);
     expect(getErgAdditionalTables(lookupErg("1006")!)).toEqual([]);
+  });
+
+  it("returns ERG Table 3 distances by container and wind band", () => {
+    const ammonia = getErgContainerDistances("1005");
+    expect(ammonia.map((row) => row.container)).toContain("Agricultural nurse tank");
+    expect(ammonia.find((row) => row.container === "Rail tank car")).toMatchObject({
+      initialIsolationFt: 1000,
+      nightLowWindMi: "2.6",
+    });
+    expect(getErgContainerDistances("1006")).toEqual([]);
   });
 });
 

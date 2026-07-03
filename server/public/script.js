@@ -154,10 +154,9 @@ const incidentContainerFieldIds = [
   'container-pressure-unit',
   'container-capacity',
   'container-pressure-profile',
-  'container-payload-notes',
-  'container-model-source',
-  'container-confidence',
-  'container-cfr-reference',
+  'container-size-preset',
+  'container-release-location',
+  'container-release-phase',
 ];
 const incidentsStorageKey = 'hazmatiq_incidents';
 const activeIncidentIdStorageKey = 'hazmatiq_active_incident_id';
@@ -182,6 +181,7 @@ let incidentTimerInterval = null;
 let incidentSyncTimer = null;
 let openIcsForm = null;
 let openIcsFormObjectUrl = null;
+let openIncidentSummaryId = null;
 
 // Local-only storage until incident records move to a database.
 function readIncidents() {
@@ -316,6 +316,8 @@ function createIncidentRecord() {
   const incident = {
     incidentId: window.crypto?.randomUUID?.() || `incident-${Date.now()}-${Math.random().toString(16).slice(2)}`,
     incidentName: document.getElementById('incidentName')?.value.trim() || 'New Incident',
+    // Reserved for the future First Due integration; HazMatIQ does not generate this number.
+    incidentNumber: '',
     startDate: now.toLocaleDateString(),
     startTime: now.toLocaleTimeString(),
     startedAt: now.toISOString(),
@@ -374,10 +376,8 @@ function getIncidentFormData() {
     containerPressureUnit: document.getElementById('container-pressure-unit')?.value || '',
     containerCapacity: document.getElementById('container-capacity')?.value.trim() || '',
     containerPressureProfile: document.getElementById('container-pressure-profile')?.value.trim() || '',
-    containerPayloadNotes: document.getElementById('container-payload-notes')?.value.trim() || '',
-    containerModelSource: document.getElementById('container-model-source')?.value.trim() || '',
-    containerConfidence: document.getElementById('container-confidence')?.value.trim() || '',
-    containerCfrReference: document.getElementById('container-cfr-reference')?.value.trim() || '',
+    containerReleaseLocation: document.getElementById('container-release-location')?.value || '',
+    containerReleasePhase: document.getElementById('container-release-phase')?.value || '',
     notes: document.getElementById('incident-notes')?.value.trim() || '',
   };
 }
@@ -523,16 +523,113 @@ function appendIncidentSummarySection(container, title, entries) {
   container.append(section);
 }
 
+const completedReportFields = [
+  ['incidentName', 'Incident name', 'text'],
+  ['startDate', 'Start date', 'text'],
+  ['startTime', 'Start time', 'text'],
+  ['completedDate', 'Completed date', 'text'],
+  ['completedTime', 'Completed time', 'text'],
+  ['facilityName', 'Facility', 'text'],
+  ['address', 'Street address / scene location', 'text'],
+  ['city', 'City', 'text'],
+  ['state', 'State', 'text'],
+  ['zip', 'ZIP', 'text'],
+  ['latitude', 'Latitude', 'number'],
+  ['longitude', 'Longitude', 'number'],
+  ['chemicalName', 'Chemical / product', 'text'],
+  ['casNumber', 'CAS number', 'text'],
+  ['unNumber', 'UN/NA number', 'text'],
+  ['quantity', 'Released quantity / rate', 'text'],
+  ['containerType', 'Container type', 'text'],
+  ['containerSize', 'Container size', 'text'],
+  ['containerSizeUnit', 'Size unit', 'text'],
+  ['containerFillLevel', 'Fill level %', 'number'],
+  ['containerPressure', 'Pressure', 'number'],
+  ['containerPressureUnit', 'Pressure unit', 'text'],
+  ['containerCapacity', 'Capacity / range', 'text'],
+  ['containerPressureProfile', 'Pressure profile', 'text'],
+  ['containerReleaseLocation', 'Release location', 'text'],
+  ['containerReleasePhase', 'Release phase', 'text'],
+  ['weather', 'Weather / conditions', 'text'],
+  ['windSpeed', 'Wind speed', 'text'],
+  ['windDirection', 'Wind direction', 'text'],
+  ['notes', 'Scene notes', 'textarea'],
+];
+
+function setIncidentSummaryEditing(editing) {
+  const edit = document.getElementById('edit-incident-summary-btn');
+  const save = document.getElementById('save-incident-summary-btn');
+  const cancel = document.getElementById('cancel-incident-summary-edit-btn');
+  if (edit) edit.hidden = editing || !openIncidentSummaryId;
+  if (save) save.hidden = !editing;
+  if (cancel) cancel.hidden = !editing;
+}
+
+function renderCompletedReportEditor(incident) {
+  const content = document.getElementById('incident-report-summary-content');
+  if (!content) return;
+  content.replaceChildren();
+  const notice = document.createElement('p');
+  notice.className = 'report-edit-notice';
+  notice.textContent = 'Incident number is reserved for First Due and remains blank.';
+  const form = document.createElement('form');
+  form.id = 'completed-report-edit-form';
+  form.className = 'completed-report-edit-grid';
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    saveCompletedReportEdits();
+  });
+  completedReportFields.forEach(([key, labelText, type]) => {
+    const label = document.createElement('label');
+    if (type === 'textarea') label.className = 'report-edit-field-wide';
+    const caption = document.createElement('span');
+    caption.textContent = labelText;
+    const control = document.createElement(type === 'textarea' ? 'textarea' : 'input');
+    if (type === 'textarea') control.rows = 5;
+    else {
+      control.type = type;
+      if (type === 'number') control.step = 'any';
+    }
+    control.name = key;
+    control.value = incident[key] ?? '';
+    label.append(caption, control);
+    form.append(label);
+  });
+  content.append(notice, form);
+  setIncidentSummaryEditing(true);
+}
+
+function saveCompletedReportEdits() {
+  const form = document.getElementById('completed-report-edit-form');
+  if (!form || !openIncidentSummaryId) return;
+  const incidents = readIncidents();
+  const index = incidents.findIndex((incident) => incident.incidentId === openIncidentSummaryId);
+  if (index < 0 || incidents[index].status !== 'Completed') return;
+  const values = Object.fromEntries(new FormData(form).entries());
+  incidents[index] = {
+    ...incidents[index],
+    ...values,
+    incidentNumber: '',
+    updatedAt: new Date().toISOString(),
+  };
+  writeIncidents(incidents);
+  renderIncidentLists();
+  openIncidentSummary(openIncidentSummaryId);
+}
+
 function openIncidentSummary(incidentId) {
   const incident = readIncidents().find((item) => item.incidentId === incidentId);
   const summary = document.getElementById('incident-report-summary');
   const content = document.getElementById('incident-report-summary-content');
   if (!incident || !summary || !content) return;
+  openIncidentSummaryId = incidentId;
+  setIncidentSummaryEditing(false);
+  const editButton = document.getElementById('edit-incident-summary-btn');
+  if (editButton) editButton.hidden = incident.status !== 'Completed';
   document.getElementById('incident-report-summary-title').textContent = incident.incidentName || 'Incident Summary';
   content.replaceChildren();
   appendIncidentSummarySection(content, 'Incident Details', [
     ['Incident name', incident.incidentName],
-    ['Incident number', incident.incidentNumber],
     ['Incident ID', incident.incidentId],
     ['Status', incident.status],
     ['Started', [incident.startDate, incident.startTime].filter(Boolean).join(' ')],
@@ -554,10 +651,8 @@ function openIncidentSummary(incidentId) {
     ['Pressure', [incident.containerPressure, incident.containerPressureUnit].filter(Boolean).join(' ')],
     ['Typical capacity/range', incident.containerCapacity],
     ['Pressure profile', incident.containerPressureProfile],
-    ['Payload notes', incident.containerPayloadNotes],
-    ['Model source type', incident.containerModelSource],
-    ['Container confidence', incident.containerConfidence],
-    ['CFR / specification', incident.containerCfrReference],
+    ['Release location', incident.containerReleaseLocation],
+    ['Release phase', incident.containerReleasePhase],
     ['Sources', incident.chemicalSources],
   ]);
   appendIncidentSummarySection(content, 'Conditions', [
@@ -602,6 +697,8 @@ function openIncidentSummary(incidentId) {
 }
 
 function closeIncidentSummary() {
+  openIncidentSummaryId = null;
+  setIncidentSummaryEditing(false);
   const summary = document.getElementById('incident-report-summary');
   if (summary) summary.hidden = true;
   const tabs = document.querySelector('.report-tabs');
@@ -776,6 +873,14 @@ document.getElementById('open-current-incident-summary-btn')?.addEventListener('
   if (activeId) openIncidentSummary(activeId);
 });
 document.getElementById('back-to-incident-reports-btn')?.addEventListener('click', closeIncidentSummary);
+document.getElementById('edit-incident-summary-btn')?.addEventListener('click', () => {
+  const incident = readIncidents().find((item) => item.incidentId === openIncidentSummaryId);
+  if (incident?.status === 'Completed') renderCompletedReportEditor(incident);
+});
+document.getElementById('cancel-incident-summary-edit-btn')?.addEventListener('click', () => {
+  if (openIncidentSummaryId) openIncidentSummary(openIncidentSummaryId);
+});
+document.getElementById('save-incident-summary-btn')?.addEventListener('click', saveCompletedReportEdits);
 document.getElementById('print-incident-summary-btn')?.addEventListener('click', () => window.print());
 
 // Save brief edits directly to the active incident.
@@ -1103,8 +1208,9 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
   };
   const guideIsolation = responderGuide.publicSafety.evacuation.find((item) => /^Isolate spill or leak area/i.test(item));
   const hasGreenTable = ergTable && (Number(ergTable.tih) === 1 || Number(ergTable.isWaterReactive) === 1);
+  const hasContainerDistances = (ergTable?.containerSpecificDistances || []).length > 0;
   const initialIsolation = hasGreenTable
-    ? `Small spill — day ${Number(ergTable.smallInitialDayFt).toLocaleString()} ft / night ${Number(ergTable.smallInitialNightFt).toLocaleString()} ft; Large spill — day ${Number(ergTable.largeInitialDayFt).toLocaleString()} ft / night ${Number(ergTable.largeInitialNightFt).toLocaleString()} ft`
+    ? `Small spill — day ${Number(ergTable.smallInitialDayFt).toLocaleString()} ft / night ${Number(ergTable.smallInitialNightFt).toLocaleString()} ft; ${hasContainerDistances ? 'Large spill — select the transport container and wind band in the ERG table below' : `Large spill — day ${Number(ergTable.largeInitialDayFt).toLocaleString()} ft / night ${Number(ergTable.largeInitialNightFt).toLocaleString()} ft`}`
     : (!isGenericErgReference(isolation.initial) && isolation.initial) || guideIsolation || 'Not listed in the available ERG data';
   const guideProtectiveAction = responderGuide.publicSafety.evacuation.find((item) => /protective action|downwind direction/i.test(item));
   const protectiveAction = hasGreenTable
@@ -1271,21 +1377,49 @@ function updateChemicalCard(record) {
     const entry = record.ergTable;
     document.getElementById('chemical-erg-table-badge').textContent = entry.isWaterReactive ? 'Water-reactive' : 'TIH';
     document.getElementById('chemical-erg-table-note').textContent = `${entry.name} (UN ${entry.un}) — distances shown exactly as stored from ERG 2024 Table 1.`;
-    const rows = [
-      ['Small', 'Day', entry.smallInitialDayFt, entry.smallProtectiveDayMi],
-      ['Small', 'Night', entry.smallInitialNightFt, entry.smallProtectiveNightMi],
-      ['Large', 'Day', entry.largeInitialDayFt, entry.largeProtectiveDayMi],
-      ['Large', 'Night', entry.largeInitialNightFt, entry.largeProtectiveNightMi],
-    ];
+    const containerRows = entry.containerSpecificDistances || [];
+    const rows = containerRows.length
+      ? [
+          ['Small', 'Day', `${Number(entry.smallInitialDayFt).toLocaleString()} ft`, `${Number(entry.smallProtectiveDayMi).toLocaleString()} mi`],
+          ['Small', 'Night', `${Number(entry.smallInitialNightFt).toLocaleString()} ft`, `${Number(entry.smallProtectiveNightMi).toLocaleString()} mi`],
+          ['Large', 'By container', 'See table below', 'Select day/night wind band'],
+        ]
+      : [
+          ['Small', 'Day', `${Number(entry.smallInitialDayFt).toLocaleString()} ft`, `${Number(entry.smallProtectiveDayMi).toLocaleString()} mi`],
+          ['Small', 'Night', `${Number(entry.smallInitialNightFt).toLocaleString()} ft`, `${Number(entry.smallProtectiveNightMi).toLocaleString()} mi`],
+          ['Large', 'Day', `${Number(entry.largeInitialDayFt).toLocaleString()} ft`, `${Number(entry.largeProtectiveDayMi).toLocaleString()} mi`],
+          ['Large', 'Night', `${Number(entry.largeInitialNightFt).toLocaleString()} ft`, `${Number(entry.largeProtectiveNightMi).toLocaleString()} mi`],
+        ];
     const body = document.getElementById('chemical-erg-table-body');
     body.replaceChildren(...rows.map(([size, period, initial, protective]) => {
       const row = document.createElement('tr');
-      [size, period, `${Number(initial).toLocaleString()} ft`, `${Number(protective).toLocaleString()} mi`]
+      [size, period, initial, protective]
         .forEach((value) => {
           const cell = document.createElement('td');
           cell.textContent = value;
           row.append(cell);
         });
+      return row;
+    }));
+
+    const containerSection = document.getElementById('chemical-erg-container-distances');
+    containerSection.hidden = containerRows.length === 0;
+    document.getElementById('chemical-erg-container-body').replaceChildren(...containerRows.map((distance) => {
+      const row = document.createElement('tr');
+      [
+        distance.container,
+        `${Number(distance.initialIsolationFt).toLocaleString()} ft`,
+        `${distance.dayLowWindMi} mi`,
+        `${distance.dayModerateWindMi} mi`,
+        `${distance.dayHighWindMi} mi`,
+        `${distance.nightLowWindMi} mi`,
+        `${distance.nightModerateWindMi} mi`,
+        `${distance.nightHighWindMi} mi`,
+      ].forEach((value) => {
+        const cell = document.createElement('td');
+        cell.textContent = value;
+        row.append(cell);
+      });
       return row;
     }));
   }
@@ -1531,6 +1665,35 @@ function getAdvancedValue(record, label) {
   return new Map(record?.advanced || []).get(label);
 }
 
+function buildErgDistanceGuidance(record) {
+  const entry = record?.ergTable;
+  if (!entry) return [];
+
+  const source = '(Source: ERG / PHMSA)';
+  const lines = [
+    `ERG Table 1 — Small spill: day isolate ${Number(entry.smallInitialDayFt).toLocaleString()} ft and protect ${Number(entry.smallProtectiveDayMi).toLocaleString()} mi downwind; night isolate ${Number(entry.smallInitialNightFt).toLocaleString()} ft and protect ${Number(entry.smallProtectiveNightMi).toLocaleString()} mi downwind. ${source}`,
+  ];
+  const containerRows = entry.containerSpecificDistances || [];
+  if (containerRows.length) {
+    containerRows.forEach((distance) => {
+      lines.push(
+        `ERG Table 3 — ${distance.container}: isolate ${Number(distance.initialIsolationFt).toLocaleString()} ft; protect downwind by wind speed (low / moderate / high) — day ${distance.dayLowWindMi} / ${distance.dayModerateWindMi} / ${distance.dayHighWindMi} mi, night ${distance.nightLowWindMi} / ${distance.nightModerateWindMi} / ${distance.nightHighWindMi} mi. ${source}`,
+      );
+    });
+    if (containerRows.some((distance) => Object.values(distance).some((value) => String(value).includes('+')))) {
+      lines.push(`ERG Table 3 — Distances marked “+” may be larger under certain atmospheric conditions. ${source}`);
+    }
+  } else {
+    lines.push(
+      `ERG Table 1 — Large spill: day isolate ${Number(entry.largeInitialDayFt).toLocaleString()} ft and protect ${Number(entry.largeProtectiveDayMi).toLocaleString()} mi downwind; night isolate ${Number(entry.largeInitialNightFt).toLocaleString()} ft and protect ${Number(entry.largeProtectiveNightMi).toLocaleString()} mi downwind. ${source}`,
+    );
+  }
+  (entry.additionalTables || []).forEach((item) => {
+    lines.push(`ERG Table ${item.table} — ${item.detail} ${source}`);
+  });
+  return lines;
+}
+
 function buildProtectiveActionGuidance() {
   const record = activeChemicalRecord;
   const guidance = {
@@ -1541,14 +1704,15 @@ function buildProtectiveActionGuidance() {
   };
   if (!record) return guidance;
 
-  if (isAvailableGuidance(record.commandFacts?.initialIsolation)) {
-    guidance.recommendation.push(`Initial isolation — ${record.commandFacts.initialIsolation} (Source: ERG / PHMSA)`);
-  }
-  if (isAvailableGuidance(record.commandFacts?.protectiveAction)) {
-    guidance.recommendation.push(`Protective action distance — ${record.commandFacts.protectiveAction} (Source: ERG / PHMSA)`);
-  }
   if (record.ergTable) {
-    guidance.recommendation.push(`ERG Guide ${record.ergGuide} Table 1 distances available for spill size and day/night conditions. (Source: ERG / PHMSA)`);
+    guidance.recommendation.push(...buildErgDistanceGuidance(record));
+  } else {
+    if (isAvailableGuidance(record.commandFacts?.initialIsolation)) {
+      guidance.recommendation.push(`Initial isolation — ${record.commandFacts.initialIsolation} (Source: ERG / PHMSA)`);
+    }
+    if (isAvailableGuidance(record.commandFacts?.protectiveAction)) {
+      guidance.recommendation.push(`Protective action distance — ${record.commandFacts.protectiveAction} (Source: ERG / PHMSA)`);
+    }
   }
 
   const zone = currentThreatZoneGeoJson?.features?.[0]?.properties;
@@ -1570,13 +1734,6 @@ function buildProtectiveActionGuidance() {
     isAvailableGuidance(getAdvancedValue(record, 'OSHA PEL')) && `OSHA PEL — ${getAdvancedValue(record, 'OSHA PEL')}`,
   ].filter(Boolean);
   if (exposureLimits.length) guidance.niosh.push(`${exposureLimits.join('; ')} (Source: NIOSH)`);
-  if (record.medical?.symptoms?.length) {
-    guidance.niosh.push(`Primary symptoms — ${record.medical.symptoms.slice(0, 4).join(', ')} (Source: NIOSH)`);
-  }
-  const respiratorNotes = record.ppeComponents?.niosh?.respiratory || [];
-  if (respiratorNotes.length) {
-    guidance.niosh.push(`Respirator/PPE warning — ${respiratorNotes.slice(0, 2).join('; ')} (Source: NIOSH)`);
-  }
   return guidance;
 }
 
@@ -1606,8 +1763,12 @@ function renderProtectiveActionGuidance(targetId) {
     guidance.recommendation,
     activeChemical ? 'No Current Data Exists' : 'Select a chemical and run the plume model to populate protective action guidance.',
   );
-  appendGuidanceSection(list, 'EPA / NOAA CAMEO / ALOHA', guidance.cameoAloha, 'No CAMEO/ALOHA threat-zone data available.');
-  appendGuidanceSection(list, 'NIOSH', guidance.niosh, 'No NIOSH exposure guidance available for this chemical.');
+  if (guidance.cameoAloha.length) {
+    appendGuidanceSection(list, 'EPA / NOAA CAMEO / ALOHA', guidance.cameoAloha, '');
+  }
+  if (guidance.niosh.length) {
+    appendGuidanceSection(list, 'NIOSH Exposure Limits', guidance.niosh, '');
+  }
   target.append(...(target.tagName === 'UL' ? [...list.children] : [list]));
 }
 
@@ -1763,6 +1924,7 @@ function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {
     setText('backend-model-summary', 'Run plume model to view result.');
   }
   syncPlumeChemicalSelection();
+  if (changed) applyChemicalContainerProfile();
   renderIncidentCommandSnapshot();
   if (activeChemical) updateActiveIncidentRecord();
 }
@@ -1780,6 +1942,8 @@ async function restoreSelectedChemical() {
       const record = await buildFullChemicalRecord(chemical);
       if (activeChemical?.id === chemical.id) {
         activeChemicalRecord = record;
+        applyChemicalContainerProfile();
+        restoreIncidentContainerData();
         updateActiveIncidentRecord();
         renderIncidentCommandSnapshot();
       }
@@ -1812,6 +1976,7 @@ async function openChemical(chemical, facilityName = '') {
   const record = await buildFullChemicalRecord(chemical);
   if (activeChemical?.id === chemical.id) {
     activeChemicalRecord = record;
+    applyChemicalContainerProfile();
     updateActiveIncidentRecord();
     renderIncidentCommandSnapshot();
   }
@@ -2083,6 +2248,7 @@ async function selectIncidentProduct(chemical) {
   const record = await buildFullChemicalRecord(chemical);
   if (activeChemical?.id !== chemical.id) return;
   activeChemicalRecord = record;
+  applyChemicalContainerProfile();
   updateActiveIncidentRecord();
   renderIncidentCommandSnapshot();
   setIncidentStatus(`${chemical.name} selected for the active incident.`);
@@ -3246,63 +3412,144 @@ function selectPlumeWeather(openMeteo, nws) {
   return null;
 }
 
-// Local planning descriptors only; operators must verify the actual container.
+// Operational planning defaults. Exact chemical profiles win; otherwise the
+// chemical's UN number, hazard class, name, and likely phase select a family.
 const containerProfiles = [
-  { id: 'unknown', label: 'Unknown / Custom', category: 'custom', typicalCapacityText: '', pressureProfile: '', payloadNotes: '', modelSourceType: '', sourceNotes: 'Enter known container details manually.', confidence: 'Unknown' },
-  { id: 'small-container', label: 'Small container / bottle', category: 'package', typicalCapacityText: 'Varies', pressureProfile: 'Usually atmospheric; may be pressurized', payloadNotes: 'Verify label, closure, product, and remaining quantity', modelSourceType: 'Direct release; select plume or puff from observed release', sourceNotes: 'Planning descriptor only; verify container markings.', confidence: 'Low' },
-  { id: 'package', label: 'Bag / box / package', category: 'package', typicalCapacityText: 'Varies', pressureProfile: 'Typically atmospheric', payloadNotes: 'May contain solids, powders, inner containers, or mixed packaging', modelSourceType: 'Direct release; select plume or puff from observed release', sourceNotes: 'Planning descriptor only; verify packaging.', confidence: 'Low' },
-  { id: 'drum', label: 'Drum', category: 'bulk-package', typicalCapacityText: '55-gal', pressureProfile: 'Usually atmospheric or low pressure', payloadNotes: 'Verify drum type, product, headspace, and fill level', modelSourceType: 'Continuous plume or puff; operator selects release type', sourceNotes: 'Common planning size, not an exact capacity.', confidence: 'Medium', defaultSize: '55', defaultSizeUnit: 'gal' },
-  { id: 'jerrican', label: 'Jerrican / carboy', category: 'package', typicalCapacityText: 'Varies', pressureProfile: 'Usually atmospheric', payloadNotes: 'Verify material compatibility, closure, and fill level', modelSourceType: 'Continuous plume or puff; operator selects release type', sourceNotes: 'Planning descriptor only; verify package markings.', confidence: 'Low' },
-  { id: 'ibc', label: 'IBC tote', category: 'bulk-package', typicalCapacityText: '275–330 gal', pressureProfile: 'Usually atmospheric or low pressure', payloadNotes: 'Verify UN marking, product, valve condition, and fill level', modelSourceType: 'Continuous plume or pool source as observed', sourceNotes: 'Common planning range, not an exact capacity.', confidence: 'Medium', defaultSize: '275', defaultSizeUnit: 'gal' },
-  { id: 'cylinder', label: 'Cylinder', category: 'pressure-vessel', typicalCapacityText: 'Varies by cylinder', pressureProfile: 'Pressurized; product and temperature dependent', payloadNotes: 'Verify product, cylinder marking, service pressure, and valve condition', modelSourceType: 'Pressurized continuous release or puff as observed', sourceNotes: 'Planning descriptor only; verify cylinder markings.', confidence: 'Low' },
-  { id: 'ton-cylinder', label: 'Ton cylinder', category: 'pressure-vessel', typicalCapacityText: 'Ton container', pressureProfile: 'Pressurized liquefied gas; product and temperature dependent', payloadNotes: 'Verify product, valve orientation, markings, and remaining quantity', modelSourceType: 'Pressurized continuous release or puff as observed', sourceNotes: 'Planning descriptor only; verify product and markings.', confidence: 'Medium' },
-  { id: 'portable-tank', label: 'Portable tank / ISO tank', category: 'transport-tank', typicalCapacityText: 'Varies by specification', pressureProfile: 'Atmospheric to pressurized; specification dependent', payloadNotes: 'Verify tank specification, product, fill level, and relief devices', modelSourceType: 'Continuous plume, puff, or pool source as observed', sourceNotes: 'Planning descriptor only; verify tank data plate.', confidence: 'Low' },
-  { id: 'ast', label: 'Aboveground storage tank', category: 'fixed-storage', typicalCapacityText: 'Facility-specific', pressureProfile: 'Atmospheric or pressurized; tank-specific', payloadNotes: 'Verify inventory, tank geometry, fill level, diking, and product', modelSourceType: 'Continuous plume or pool source as observed', sourceNotes: 'Facility records should replace planning assumptions.', confidence: 'Low' },
-  { id: 'ust', label: 'Underground storage tank', category: 'fixed-storage', typicalCapacityText: 'Facility-specific', pressureProfile: 'Usually atmospheric or low pressure; system-specific', payloadNotes: 'Verify product, tank geometry, fill level, and piping involvement', modelSourceType: 'Continuous release or pool source as observed', sourceNotes: 'Facility records should replace planning assumptions.', confidence: 'Low' },
-  { id: 'process-vessel', label: 'Process vessel', category: 'process', typicalCapacityText: 'Process-specific', pressureProfile: 'Process pressure and temperature dependent', payloadNotes: 'Verify contents, operating state, isolation, geometry, and safeguards', modelSourceType: 'Continuous plume or puff based on process release', sourceNotes: 'Process data should replace planning assumptions.', confidence: 'Low' },
-  { id: 'cargo-tank', label: 'Cargo tank truck', category: 'transport-tank', typicalCapacityText: 'Varies by DOT/MC specification', pressureProfile: 'Atmospheric to pressurized; specification dependent', payloadNotes: 'Verify specification plate, product, compartments, and fill level', modelSourceType: 'Continuous plume, puff, or pool source as observed', sourceNotes: 'Shipping papers and specification plate are controlling sources.', confidence: 'Low' },
-  { id: 'rail-tank-car', label: 'Rail tank car', category: 'transport-tank', typicalCapacityText: 'Varies by DOT tank-car class', pressureProfile: 'Atmospheric to pressurized; tank class and product dependent', payloadNotes: 'Verify reporting marks, specification, product, and damage location', modelSourceType: 'Continuous plume, puff, or pool source as observed', sourceNotes: 'Train consist and shipping papers are controlling sources.', confidence: 'Low' },
-  { id: 'pipeline', label: 'Pipeline', category: 'pipeline', typicalCapacityText: 'Use segment data', pressureProfile: 'System operating pressure dependent', payloadNotes: 'Verify product, diameter, pressure, isolation points, and flow status', modelSourceType: 'Continuous release while flowing; operator verifies conditions', sourceNotes: 'Pipeline operator data should replace planning assumptions.', confidence: 'Low' },
-  { id: 'puddle', label: 'Puddle / pool', category: 'surface-release', typicalCapacityText: 'User Observed', pressureProfile: 'Atmospheric', payloadNotes: 'Verify product, surface, containment, area, and depth', modelSourceType: 'Pool evaporation or direct release', sourceNotes: 'Field measurements should replace planning assumptions.', confidence: 'Low' },
-  { id: 'direct-release', label: 'Direct release / unknown source', category: 'release', typicalCapacityText: 'Unknown', pressureProfile: 'Unknown; verify source conditions', payloadNotes: 'Document observed source, release duration, and available quantity', modelSourceType: 'Direct release; select plume or puff from observed release', sourceNotes: 'Use observed conditions and authoritative records when available.', confidence: 'Unknown' },
+  { id: 'unknown', label: 'Unknown / Custom', sizes: ['User identified'], capacityDefault: '', typicalRange: '', possibleRange: '', pressureProfile: 'Unknown / verify', pressureNormal: 'Unknown; verify container markings', pressureRange: 'User verified', pressureUnit: 'psig' },
+  { id: 'dot-406', label: 'DOT-406 / MC-306 cargo tank', sizes: ['Cargo tank trailer / transport', 'Compartmented cargo tank'], defaultSize: '8500', sizeUnit: 'gal', capacityDefault: '8,500 gal', typicalRange: '6,000–9,500 gal', possibleRange: 'Verify specification and compartments', pressureProfile: 'Atmospheric / non-pressure', pressureNormal: 'Near atmospheric; vented', pressureRange: 'Usually not pressure-driven', pressureUnit: 'psig' },
+  { id: 'dot-407', label: 'DOT-407 / MC-307 cargo tank', sizes: ['Cargo tank trailer / transport'], defaultSize: '6500', sizeUnit: 'gal', capacityDefault: '6,500 gal', typicalRange: '5,000–7,500 gal', possibleRange: 'Verify specification plate', pressureProfile: 'Low-pressure liquid cargo tank', pressureNormal: 'Low pressure; transfer dependent', pressureRange: 'Commonly under 40 psig unless verified', pressureUnit: 'psig' },
+  { id: 'dot-412', label: 'DOT-412 / MC-312 corrosive cargo tank', sizes: ['Corrosive cargo tank trailer'], defaultSize: '5500', sizeUnit: 'gal', capacityDefault: '5,500 gal', typicalRange: '4,000–7,000 gal', possibleRange: 'Verify product compatibility', pressureProfile: 'Low-pressure liquid cargo tank', pressureNormal: 'Low pressure; product/transfer dependent', pressureRange: 'Verify specification plate', pressureUnit: 'psig' },
+  { id: 'mc-331', label: 'MC-331 pressure cargo tank', sizes: ['Cargo tank trailer / transport', 'Bobtail / small cargo tank'], defaultSize: '10000', sizeUnit: 'gal', capacityDefault: '10,000 water gal', typicalRange: '8,000–12,000 water gal', possibleRange: '3,500–15,000 water gal', pressureProfile: 'Liquefied compressed gas / vapor-pressure governed', pressureNormal: 'Chemical and temperature dependent', pressureRange: 'Use vapor pressure; operator override', pressureUnit: 'psig' },
+  { id: 'mc-338', label: 'MC-338 cryogenic cargo tank', sizes: ['Cryogenic cargo tank trailer'], defaultSize: '7000', sizeUnit: 'gal', capacityDefault: '7,000 gal', typicalRange: '4,000–11,000 gal', possibleRange: 'Verify tank data plate', pressureProfile: 'Cryogenic refrigerated liquid', pressureNormal: 'Low-to-moderate cryogenic tank pressure', pressureRange: 'Product-specific; verify', pressureUnit: 'psig' },
+  { id: 'tube-trailer', label: 'Tube trailer / compressed gas trailer', sizes: ['Tube trailer / cylinder bundle'], capacityDefault: 'Tube trailer / cylinder bundle', typicalRange: 'Configuration-specific', possibleRange: 'Verify tube count and water volume', pressureProfile: 'High-pressure compressed gas', pressureNormal: 'High pressure; verify service pressure', pressureRange: 'Broad product/container-specific range', pressureUnit: 'psig' },
+  { id: 'ton-cylinder', label: 'Ton cylinder', sizes: ['Single ton cylinder', 'Multiple ton cylinders'], defaultSize: '2000', sizeUnit: 'lb', capacityDefault: '2,000 lb', typicalRange: '1 ton nominal', possibleRange: 'Single or multiple containers', pressureProfile: 'Liquefied compressed gas / vapor-pressure governed', pressureNormal: 'Product-temperature dependent', pressureRange: 'Use vapor pressure; verify', pressureUnit: 'psig' },
+  { id: '150lb-cylinder', label: '150-lb cylinder', sizes: ['Single 150-lb cylinder', 'Multiple small cylinders'], defaultSize: '150', sizeUnit: 'lb', capacityDefault: '150 lb', typicalRange: '150 lb nominal', possibleRange: 'Single or multiple cylinders', pressureProfile: 'Liquefied compressed gas / vapor-pressure governed', pressureNormal: 'Product-temperature dependent', pressureRange: 'Verify cylinder and temperature', pressureUnit: 'psig' },
+  { id: 'nurse-tank', label: 'Agricultural nurse tank', sizes: ['1,000 gal nurse tank', '1,500 gal nurse tank', '2,000 gal nurse tank'], defaultSize: '1000', sizeUnit: 'gal', capacityDefault: '1,000 gal', typicalRange: '1,000–1,500 gal', possibleRange: 'Up to 2,000 gal', pressureProfile: 'Liquefied compressed gas / vapor-pressure governed', pressureNormal: 'Chemical-temperature dependent', pressureRange: 'Use vapor pressure; verify', pressureUnit: 'psig' },
+  { id: 'rail-pressure', label: 'Rail pressure tank car', sizes: ['Rail pressure tank car'], defaultSize: '20000', sizeUnit: 'gal', capacityDefault: '20,000 gal planning value', typicalRange: '10,000–33,500 gal', possibleRange: 'Commodity and car dependent', pressureProfile: 'Liquefied compressed gas / vapor-pressure governed', pressureNormal: 'Product-temperature dependent', pressureRange: 'Verify consist and car markings', pressureUnit: 'psig' },
+  { id: 'rail-nonpressure', label: 'Rail non-pressure tank car', sizes: ['General service rail tank car'], defaultSize: '25000', sizeUnit: 'gal', capacityDefault: '25,000 gal', typicalRange: '20,000–30,000 gal', possibleRange: 'Car and commodity dependent', pressureProfile: 'Low-pressure liquid cargo tank', pressureNormal: 'Atmospheric or low pressure', pressureRange: 'Verify car markings', pressureUnit: 'psig' },
+  { id: 'ibc', label: 'IBC tote', sizes: ['275 gal tote', '330 gal tote'], defaultSize: '275', sizeUnit: 'gal', capacityDefault: '275 gal', typicalRange: '275–330 gal', possibleRange: 'Verify UN marking', pressureProfile: 'Atmospheric / non-pressure', pressureNormal: 'Near atmospheric', pressureRange: 'Not pressure-driven', pressureUnit: 'psig' },
+  { id: 'drum', label: 'Drum', sizes: ['55 gal liquid drum', 'Smaller package drum'], defaultSize: '55', sizeUnit: 'gal', capacityDefault: '55 gal', typicalRange: '55 gal liquid drum', possibleRange: 'Package-specific', pressureProfile: 'Atmospheric / non-pressure', pressureNormal: 'Near atmospheric', pressureRange: 'Not pressure-driven unless marked', pressureUnit: 'psig' },
+  { id: 'portable-tank', label: 'Portable tank / ISO tank', sizes: ['20-ft ISO tank', 'Portable bulk tank'], defaultSize: '5500', sizeUnit: 'gal', capacityDefault: '5,500 gal', typicalRange: '5,000–6,600 gal', possibleRange: 'Tank instruction/commodity dependent', pressureProfile: 'Low-pressure liquid cargo tank', pressureNormal: 'Tank and commodity dependent', pressureRange: 'Verify data plate', pressureUnit: 'psig' },
+  { id: 'compressed-cylinder', label: 'Compressed gas cylinder', sizes: ['Single cylinder', 'Cylinder bundle'], capacityDefault: 'Cylinder-specific', typicalRange: 'Verify marked water volume/service pressure', possibleRange: 'Single or multiple cylinders', pressureProfile: 'High-pressure compressed gas', pressureNormal: 'High pressure; marked service pressure', pressureRange: 'Verify cylinder marking', pressureUnit: 'psig' },
+  { id: 'cryogenic-cylinder', label: 'Cryogenic cylinder', sizes: ['Cryogenic liquid cylinder'], capacityDefault: 'Cylinder-specific', typicalRange: 'Verify marked capacity', possibleRange: 'Single or multiple cylinders', pressureProfile: 'Cryogenic refrigerated liquid', pressureNormal: 'Relief-protected cryogenic pressure', pressureRange: 'Product-specific; verify', pressureUnit: 'psig' },
+  { id: 'solid-package', label: 'Drum / bag / supersack / bulk package', sizes: ['Drum', 'Bag', 'Supersack', 'Box', 'Hopper / bulk package'], capacityDefault: 'Package-specific', typicalRange: 'Verify package marking', possibleRange: 'Small package through bulk package', pressureProfile: 'Atmospheric / non-pressure', pressureNormal: 'Non-pressure solid/package', pressureRange: 'Not pressure-driven', pressureUnit: 'psig' },
+  { id: 'fixed-tank', label: 'Stationary pressure vessel', sizes: ['Facility-specific fixed tank'], capacityDefault: 'Facility-specific', typicalRange: 'Use facility inventory', possibleRange: 'Verify tank data', pressureProfile: 'Liquefied compressed gas / vapor-pressure governed', pressureNormal: 'Process/product dependent', pressureRange: 'Verify facility records', pressureUnit: 'psig' },
 ];
 
-// CFR parts identify specifications and markings; they do not supply one safe size, fill, or pressure for a broad container category.
-const containerCfrDefaults = {
-  'small-container': { reference: '49 CFR Part 178, Subparts B/L/M — verify packaging marking', payloadNotes: 'Verify UN/DOT marking, material, closure, product, and remaining quantity' },
-  package: { reference: '49 CFR Part 178, Subparts L/M — verify UN packaging code', payloadNotes: 'Verify UN packaging code, inner packaging, product, and remaining quantity' },
-  drum: { reference: '49 CFR §§ 178.504–178.509 — verify UN drum marking', payloadNotes: 'Verify UN drum code, material, product, closure, headspace, and fill level' },
-  jerrican: { reference: '49 CFR §§ 178.509/178.511 — verify UN jerrican marking', payloadNotes: 'Verify UN jerrican code, material, product, closure, and fill level' },
-  ibc: { reference: '49 CFR Part 178, Subparts N/O; Part 180, Subpart D', pressureProfile: 'IBC design/test pressure varies by marked UN type; verify marking and records', payloadNotes: 'Verify UN IBC code, product, capacity marking, valve condition, inspection, and fill level' },
-  cylinder: { reference: '49 CFR Part 178, Subpart C — verify DOT/UN cylinder marking', pressureProfile: 'Service/test pressure is specification-specific; use the marked DOT/UN value', payloadNotes: 'Verify DOT/UN specification, service pressure marking, product, valve, and remaining quantity' },
-  'ton-cylinder': { reference: 'Verify marked DOT specification; consult applicable 49 CFR Part 178/179 requirements', pressureProfile: 'Pressure is product-, temperature-, and marked-specification dependent', payloadNotes: 'Verify product, DOT specification marking, valve orientation, and remaining quantity' },
-  'portable-tank': { reference: '49 CFR Part 178, Subpart H; Part 180, Subpart G', pressureProfile: 'Design/test pressure varies by marked UN/DOT portable-tank instruction', payloadNotes: 'Verify tank instruction/specification, data plate, product, test status, and fill level' },
-  'cargo-tank': { reference: '49 CFR Part 178, Subpart J; Part 180, Subpart E', pressureProfile: 'Pressure depends on marked DOT 406/407/412 or MC 331/338 specification', payloadNotes: 'Verify specification plate, DOT/MC type, product, test markings, compartments, and fill level' },
-  'rail-tank-car': { reference: '49 CFR Part 179; Part 180, Subpart F — verify tank-car marking', pressureProfile: 'Pressure and test requirements vary by marked DOT tank-car class', payloadNotes: 'Verify reporting marks, DOT class, qualification markings, product, and damage location' },
+const profileById = (id) => containerProfiles.find((item) => item.id === id) || containerProfiles[0];
+const chemicalContainerOverrides = {
+  '1005': { defaultId: 'mc-331', ids: ['mc-331', 'nurse-tank', 'rail-pressure', 'fixed-tank'] },
+  '1017': { defaultId: 'ton-cylinder', ids: ['ton-cylinder', '150lb-cylinder', 'rail-pressure'] },
+  '1075': { defaultId: 'mc-331', ids: ['mc-331', 'rail-pressure', 'fixed-tank'] },
+  '1203': { defaultId: 'dot-406', ids: ['dot-406', 'rail-nonpressure', 'drum'] },
+  '1202': { defaultId: 'dot-406', ids: ['dot-406', 'rail-nonpressure', 'drum'] },
+  '1823': { defaultId: 'dot-412', ids: ['dot-412', 'ibc', 'drum', 'rail-nonpressure'] },
+  '1824': { defaultId: 'dot-412', ids: ['dot-412', 'ibc', 'drum', 'rail-nonpressure'] },
+  '1830': { defaultId: 'dot-412', ids: ['dot-412', 'rail-nonpressure', 'ibc', 'drum'] },
+  '1789': { defaultId: 'dot-412', ids: ['dot-412', 'ibc', 'drum', 'rail-nonpressure'] },
+  '2031': { defaultId: 'dot-412', ids: ['dot-412', 'ibc', 'drum', 'rail-nonpressure'] },
+  '1170': { defaultId: 'dot-406', ids: ['dot-406', 'dot-407', 'rail-nonpressure', 'drum', 'ibc'] },
+  '1230': { defaultId: 'dot-407', ids: ['dot-407', 'dot-406', 'rail-nonpressure', 'drum', 'ibc'] },
+  '1049': { defaultId: 'tube-trailer', ids: ['tube-trailer', 'compressed-cylinder'] },
+  '1073': { defaultId: 'mc-338', ids: ['mc-338', 'cryogenic-cylinder'] },
+  '1977': { defaultId: 'mc-338', ids: ['mc-338', 'cryogenic-cylinder'] },
 };
 
-function applyContainerProfile() {
+function getContainerOptionsForChemical(chemical) {
+  if (!chemical) {
+    const unknown = profileById('unknown');
+    return {
+      recommendedContainer: unknown.label,
+      containerOptions: [unknown],
+      containerSize: { default: unknown.sizes[0], options: unknown.sizes },
+      capacity: { default: '', typicalRange: '', possibleRange: '', unit: '' },
+      pressure: { default: unknown.pressureProfile, range: unknown.pressureRange, unit: unknown.pressureUnit, normalOperatingPressure: unknown.pressureNormal },
+      pressureProfile: { default: unknown.pressureProfile },
+      fillLevel: { defaultPercent: 85, options: [25, 50, 75, 85, 90, 95, 100] },
+      releaseLocation: { default: 'Unknown', options: ['Unknown'] },
+    };
+  }
+  const un = String(chemical?.un || '').replace(/\D/g, '');
+  const name = String(chemical?.name || activeChemical?.name || '').toLowerCase();
+  const hazard = `${chemical?.dotClass || ''} ${name}`.toLowerCase();
+  let match = chemicalContainerOverrides[un];
+  if (!match && /liquid oxygen|oxygen, refrigerated/.test(name)) match = chemicalContainerOverrides['1073'];
+  if (!match && /liquid nitrogen|nitrogen, refrigerated/.test(name)) match = chemicalContainerOverrides['1977'];
+  if (!match && /cryogenic|refrigerated liquid/.test(hazard)) match = { defaultId: 'mc-338', ids: ['mc-338', 'cryogenic-cylinder'] };
+  if (!match && /(liquefied|liquified).*(gas)|lpg|propane|butane/.test(hazard)) match = { defaultId: 'mc-331', ids: ['mc-331', 'compressed-cylinder', 'rail-pressure'] };
+  if (!match && /class 2|compressed gas|\b2\.[123]\b/.test(hazard)) match = { defaultId: 'compressed-cylinder', ids: ['compressed-cylinder', 'tube-trailer', 'mc-331', 'rail-pressure'] };
+  if (!match && /class 3|flammable liquid|\b3\b/.test(hazard)) match = { defaultId: 'dot-406', ids: ['dot-406', 'dot-407', 'rail-nonpressure', 'ibc', 'drum'] };
+  if (!match && /class 8|corrosive|\b8\b/.test(hazard)) match = { defaultId: 'dot-412', ids: ['dot-412', 'rail-nonpressure', 'ibc', 'drum'] };
+  if (!match && /oxidizer|class 5\.1|\b5\.1\b/.test(hazard)) match = { defaultId: 'dot-407', ids: ['dot-407', 'dot-412', 'ibc', 'drum', 'rail-nonpressure'] };
+  if (!match && /solid|powder/.test(hazard)) match = { defaultId: 'solid-package', ids: ['solid-package', 'drum'] };
+  if (!match) match = { defaultId: 'dot-407', ids: ['dot-407', 'portable-tank', 'ibc', 'drum', 'unknown'] };
+  const selected = profileById(match.defaultId);
+  return {
+    recommendedContainer: selected.label,
+    containerOptions: match.ids.map(profileById),
+    containerSize: { default: selected.sizes[0], options: selected.sizes },
+    capacity: { default: selected.capacityDefault, typicalRange: selected.typicalRange, possibleRange: selected.possibleRange, unit: selected.sizeUnit || '' },
+    pressure: { default: selected.pressureProfile, range: selected.pressureRange, unit: selected.pressureUnit, normalOperatingPressure: selected.pressureNormal },
+    pressureProfile: { default: selected.pressureProfile },
+    fillLevel: { defaultPercent: 85, options: [25, 50, 75, 85, 90, 95, 100] },
+    releaseLocation: { default: 'Unknown', options: ['Vapor space leak', 'Liquid space leak', 'Bottom outlet / liquid release', 'Top fitting / vapor release', 'Valve / piping failure', 'Unknown'] },
+  };
+}
+
+window.HazMatIQ.getContainerOptionsForChemical = getContainerOptionsForChemical;
+
+let activeContainerOptions = getContainerOptionsForChemical(null);
+
+function setSelectOptions(select, options, selectedValue) {
+  if (!select) return;
+  select.replaceChildren(...options.map(({ value, label }) => Object.assign(document.createElement('option'), { value, textContent: label })));
+  if (selectedValue && options.some((option) => option.value === selectedValue)) select.value = selectedValue;
+}
+
+function updateContainerControlSummaries() {
+  const container = profileById(document.getElementById('plume-container-type')?.value);
+  setText('container-type-summary', container.label);
+  setText('container-size-summary', document.getElementById('container-size-preset')?.value || 'User select');
+  setText('container-capacity-summary', document.getElementById('container-capacity')?.value || container.capacityDefault || 'Verify container');
+  setText('container-pressure-summary', document.getElementById('container-pressure')?.value
+    ? `${document.getElementById('container-pressure').value} ${document.getElementById('container-pressure-unit')?.value || ''}`
+    : container.pressureNormal);
+  setText('container-pressure-profile-summary', document.getElementById('container-pressure-profile')?.value || 'Unknown / verify');
+  setText('container-fill-summary', `${document.getElementById('container-fill-level')?.value || 85}% planning value`);
+  setText('container-release-summary', `${document.getElementById('container-release-location')?.value || 'Unknown'} · ${document.getElementById('container-release-phase')?.value || 'Unknown / verify'}`);
+}
+
+function applyContainerProfile({ keepUserValues = false } = {}) {
   const selectedId = document.getElementById('plume-container-type')?.value || 'unknown';
-  const profile = containerProfiles.find((item) => item.id === selectedId) || containerProfiles[0];
-  const cfrDefaults = containerCfrDefaults[profile.id];
+  const profile = profileById(selectedId);
   const setInput = (id, value = '') => {
     const input = document.getElementById(id);
-    if (input) input.value = value;
+    if (input && (!keepUserValues || !input.value)) input.value = value || '';
   };
+  setSelectOptions(document.getElementById('container-size-preset'), profile.sizes.map((label) => ({ value: label, label })), profile.sizes[0]);
   setInput('container-size', profile.defaultSize);
-  setInput('container-size-unit', profile.defaultSizeUnit);
-  setInput('container-fill-level');
+  setInput('container-size-unit', profile.sizeUnit);
+  setInput('container-fill-level', 85);
   setInput('container-pressure');
-  setInput('container-pressure-unit');
-  setInput('container-capacity', profile.typicalCapacityText);
-  setInput('container-pressure-profile', cfrDefaults?.pressureProfile || profile.pressureProfile);
-  setInput('container-payload-notes', cfrDefaults?.payloadNotes || profile.payloadNotes);
-  setInput('container-model-source', profile.modelSourceType);
-  setInput('container-confidence', profile.confidence);
-  setInput('container-cfr-reference', cfrDefaults?.reference || 'Not determined by 49 CFR Parts 178–180; verify source records');
+  setInput('container-pressure-unit', profile.pressureUnit);
+  setInput('container-capacity', profile.capacityDefault);
+  setInput('container-pressure-profile', profile.pressureProfile);
+  setText('container-capacity-default', profile.capacityDefault || 'Verify container');
+  setText('container-capacity-typical', profile.typicalRange || 'Verify container');
+  setText('container-capacity-possible', profile.possibleRange || 'Verify container');
+  setText('container-pressure-normal', profile.pressureNormal);
+  setText('container-pressure-range', profile.pressureRange);
   setText('container-profile-guidance', profile.id === 'unknown'
     ? 'Enter known container size, pressure, and release details manually.'
-    : `${profile.label} planning profile · ${profile.sourceNotes}`);
+    : `${profile.label} chemical planning default · verify the actual container before plotting.`);
+  updateContainerControlSummaries();
+}
+
+function applyChemicalContainerProfile() {
+  activeContainerOptions = getContainerOptionsForChemical(activeChemicalRecord || activeChemical);
+  const select = document.getElementById('plume-container-type');
+  setSelectOptions(select, activeContainerOptions.containerOptions.map((profile) => ({ value: profile.id, label: profile.label })), activeContainerOptions.containerOptions[0]?.id);
+  applyContainerProfile();
 }
 
 function restoreIncidentContainerData() {
@@ -3319,15 +3566,14 @@ function restoreIncidentContainerData() {
     'container-pressure-unit': incident.containerPressureUnit,
     'container-capacity': incident.containerCapacity,
     'container-pressure-profile': incident.containerPressureProfile,
-    'container-payload-notes': incident.containerPayloadNotes,
-    'container-model-source': incident.containerModelSource,
-    'container-confidence': incident.containerConfidence,
-    'container-cfr-reference': incident.containerCfrReference,
+    'container-release-location': incident.containerReleaseLocation,
+    'container-release-phase': incident.containerReleasePhase,
   };
   Object.entries(savedValues).forEach(([id, value]) => {
     const input = document.getElementById(id);
     if (input && value !== undefined && value !== null) input.value = String(value);
   });
+  updateContainerControlSummaries();
 }
 
 function updatePlumeReleaseQuantityLabel() {
@@ -3668,7 +3914,10 @@ document.getElementById('plume-container-type')?.addEventListener('change', () =
 });
 incidentContainerFieldIds.slice(1).forEach((id) => {
   const field = document.getElementById(id);
-  field?.addEventListener(field.tagName === 'SELECT' ? 'change' : 'input', updateActiveIncidentRecord);
+  field?.addEventListener(field.tagName === 'SELECT' ? 'change' : 'input', () => {
+    updateContainerControlSummaries();
+    updateActiveIncidentRecord();
+  });
 });
 document.getElementById('use-live-plume-weather-btn')?.addEventListener('click', async () => {
   const button = document.getElementById('use-live-plume-weather-btn');
@@ -3690,7 +3939,7 @@ document.getElementById('plume-model-form')?.addEventListener('submit', async (e
   await plotPlumeFromControls();
 });
 updatePlumeReleaseQuantityLabel();
-applyContainerProfile();
+applyChemicalContainerProfile();
 window.setInterval(() => {
   if (document.getElementById('incident')?.classList.contains('active')) {
     void refreshCommandWeather({ requestGps: false });
