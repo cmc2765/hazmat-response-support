@@ -600,54 +600,29 @@
                       </div>
                     </label>
                     <div class="container-profile" aria-label="Editable container planning profile">
-                      <p id="container-profile-guidance" class="container-profile-guidance">Enter known container size, pressure, and release details manually.</p>
-                      <div class="container-profile-controls">
-                        <details class="release-data-control">
-                          <summary><span>Container Type</span><strong id="container-type-summary">Unknown / Custom</strong></summary>
-                          <label for="plume-container-type">Compatible or likely container</label>
-                          <select id="plume-container-type"></select>
-                        </details>
-                        <details class="release-data-control">
-                          <summary><span>Container Size</span><strong id="container-size-summary">User select</strong></summary>
-                          <label for="container-size-preset">Planning size</label>
-                          <select id="container-size-preset"></select>
-                          <div class="release-override-row">
-                            <label for="container-size">Override<input id="container-size" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter" /></label>
-                            <label for="container-size-unit">Unit<select id="container-size-unit"><option value="">Select</option><option value="gal">gal</option><option value="lb">lb</option><option value="tons">tons</option><option value="L">L</option><option value="kg">kg</option><option value="ft3">ft³</option></select></label>
-                          </div>
-                        </details>
-                        <details class="release-data-control">
-                          <summary><span>Capacity / Range</span><strong id="container-capacity-summary">Verify container</strong></summary>
-                          <dl class="release-data-facts"><div><dt>Planning default</dt><dd id="container-capacity-default">—</dd></div><div><dt>Typical range</dt><dd id="container-capacity-typical">—</dd></div><div><dt>Possible range</dt><dd id="container-capacity-possible">—</dd></div></dl>
-                          <label for="container-capacity">User override<input id="container-capacity" type="text" placeholder="Enter known capacity" /></label>
-                        </details>
-                        <details class="release-data-control">
-                          <summary><span>Pressure</span><strong id="container-pressure-summary">Verify pressure</strong></summary>
-                          <dl class="release-data-facts"><div><dt>Normal operating pressure</dt><dd id="container-pressure-normal">—</dd></div><div><dt>Planning range</dt><dd id="container-pressure-range">—</dd></div></dl>
-                          <div class="release-override-row">
-                            <label for="container-pressure">Override<input id="container-pressure" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter" /></label>
-                            <label for="container-pressure-unit">Unit<select id="container-pressure-unit"><option value="">Select</option><option value="psig">psig</option><option value="psi">psi</option><option value="bar">bar</option><option value="kPa">kPa</option><option value="atm">atm</option></select></label>
-                          </div>
-                        </details>
-                        <details class="release-data-control">
-                          <summary><span>Pressure Profile</span><strong id="container-pressure-profile-summary">Unknown / verify</strong></summary>
-                          <label for="container-pressure-profile">Release pressure behavior</label>
-                          <select id="container-pressure-profile"><option>Atmospheric / non-pressure</option><option>Low-pressure liquid cargo tank</option><option>Liquefied compressed gas / vapor-pressure governed</option><option>High-pressure compressed gas</option><option>Cryogenic refrigerated liquid</option><option>Water-reactive / special handling</option><option>Unknown / verify</option></select>
-                        </details>
-                        <details class="release-data-control">
-                          <summary><span>Fill Level</span><strong id="container-fill-summary">85% planning default</strong></summary>
-                          <label for="container-fill-level">Percent full</label>
-                          <select id="container-fill-level"><option value="25">25%</option><option value="50">50%</option><option value="75">75%</option><option value="85" selected>85%</option><option value="90">90%</option><option value="95">95%</option><option value="100">100%</option></select>
-                        </details>
-                        <details class="release-data-control">
-                          <summary><span>Release Location / Phase</span><strong id="container-release-summary">Unknown / user select</strong></summary>
-                          <label for="container-release-location">Release location</label>
-                          <select id="container-release-location"><option>Unknown</option><option>Vapor space leak</option><option>Liquid space leak</option><option>Bottom outlet / liquid release</option><option>Top fitting / vapor release</option><option>Valve / piping failure</option></select>
-                          <label for="container-release-phase">Release phase</label>
-                          <select id="container-release-phase"><option>Unknown / verify</option><option>Gas / vapor</option><option>Liquid</option><option>Two-phase flashing release</option><option>Cryogenic liquid</option><option>Solid / powder</option></select>
-                        </details>
+                      <div class="container-bubble-grid">
+                        <label class="container-bubble" for="plume-container-type"><span>Container Type</span><select id="plume-container-type"></select></label>
+                        <label class="container-bubble" for="container-capacity"><span>Capacity</span><select id="container-capacity"><option>Unknown / verify</option><option>Small package</option><option>5 gal</option><option>30 gal</option><option>55 gal</option><option>275 gal</option><option>330 gal</option><option>500 gal</option><option>1,000 gal</option><option>5,000 gal</option><option>10,000 gal</option><option>Facility-specific / custom</option></select></label>
+                        <label class="container-bubble" for="container-pressure-condition"><span>Pressure Condition</span><select id="container-pressure-condition"><option>Unknown / verify</option><option>Atmospheric / open container</option><option>Low pressure / product transfer</option><option>Pressurized liquid</option><option>Liquefied compressed gas</option><option>Compressed gas</option><option>Cryogenic / refrigerated liquid</option><option>Pipeline pressure</option><option>Pressure relief / venting</option><option>Rupture / catastrophic release</option><option>User-entered PSIG</option></select></label>
+                        <label class="container-bubble" for="container-fill-level"><span>Fill %</span><select id="container-fill-level"><option value="">Unknown / verify</option><option value="25">25%</option><option value="50">50%</option><option value="75">75%</option><option value="85" selected>85%</option><option value="100">100%</option><option value="custom">Custom</option></select></label>
+                        <label class="container-bubble" for="container-release-location"><span>Release Location</span><select id="container-release-location"><option>Unknown</option><option>Top</option><option>Side</option><option>Bottom</option><option>Valve / fitting</option><option>Manway</option><option>Piping</option><option>Rupture / tear</option><option>Vent / relief device</option></select></label>
+                        <label class="container-bubble" for="container-release-phase"><span>Release Phase</span><select id="container-release-phase"><option>Unknown / verify</option><option>Gas / vapor</option><option>Liquid</option><option>Two-phase</option><option>Solid / powder</option><option>Puddle / pool</option><option>Aerosol / mist</option></select></label>
+                        <label class="container-bubble" for="container-model-source"><span>Model Source</span><select id="container-model-source"><option>Auto-select</option><option>Direct release</option><option>Puddle</option><option>Tank</option><option>Gas pipeline</option><option>Liquid flow</option><option>Solid release</option><option>Unknown / verify</option></select></label>
                       </div>
-                      <small>Container values are planning defaults. Verify with SDS, shipping papers, facility inventory, container markings, or local authority data.</small>
+                      <details class="container-details">
+                        <summary>Container Details</summary>
+                        <dl class="release-data-facts"><div><dt>Typical range</dt><dd id="container-capacity-typical">—</dd></div><div><dt>Pressure behavior</dt><dd id="container-pressure-behavior">Unknown / verify</dd></div><div><dt>Payload note</dt><dd id="container-capacity-possible">—</dd></div><div><dt>Confidence</dt><dd id="container-pressure-confidence-summary">Planning default</dd></div><div><dt>Verification note</dt><dd id="container-pressure-note">Verify actual container conditions.</dd></div></dl>
+                        <div class="container-detail-fields">
+                          <label for="container-size-preset">Container size<select id="container-size-preset"></select></label>
+                          <label for="container-size">Size override<input id="container-size" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter" /></label>
+                          <label for="container-size-unit">Size unit<select id="container-size-unit"><option value="">Select</option><option value="gal">gal</option><option value="lb">lb</option><option value="tons">tons</option><option value="L">L</option><option value="kg">kg</option><option value="ft3">ft³</option></select></label>
+                          <label for="container-pressure-profile">Pressure behavior<select id="container-pressure-profile"><option>Atmospheric / non-pressure</option><option>Low-pressure liquid cargo tank</option><option>Liquefied compressed gas / vapor-pressure governed</option><option>High-pressure compressed gas</option><option>Cryogenic refrigerated liquid</option><option>Water-reactive / special handling</option><option>Unknown / verify</option></select></label>
+                        </div>
+                        <details class="pressure-override" id="pressure-override"><summary>Advanced PSIG Override</summary><label for="container-pressure">PSIG value<input id="container-pressure" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter PSIG" /></label><input id="container-pressure-unit" type="hidden" value="psig" /><label for="container-pressure-source">Pressure value source<select id="container-pressure-source"><option>Unknown</option><option>Responder estimate</option><option>Gauge observed</option><option>SDS / shipping papers</option><option>Facility inventory / E-Plan</option><option>Container spec plate</option><option>Pipeline operator confirmed</option></select></label></details>
+                        <span id="container-pressure-confidence" class="pressure-confidence-badge">Planning default</span>
+                        <span id="container-capacity-default" hidden></span><span id="container-pressure-normal" hidden></span><span id="container-pressure-range" hidden></span><span id="container-pressure-model-source" hidden></span><span id="container-profile-guidance" hidden></span>
+                      </details>
+                      <small class="container-profile-footer">Planning defaults only. Verify with SDS, shipping papers, facility inventory, or container markings.</small>
                     </div>
                   </div>
                 </div>
