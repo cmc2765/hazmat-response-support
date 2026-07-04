@@ -146,6 +146,57 @@ describe("API routes", () => {
     expect(new TextDecoder().decode((await pdf.arrayBuffer()).slice(0, 4))).toBe("%PDF");
   });
 
+  it("prefills hazmat ICS fields from the incident chemical profile snapshot", async () => {
+    const incident = {
+      incidentId: "incident-chemical-profile-1",
+      incidentName: "Ammonia release",
+      chemicalName: "Ammonia (anhydrous)",
+      chemicalProfile: {
+        header: {
+          name: "Ammonia (anhydrous)",
+          cas: "7664-41-7",
+          un: "1005",
+          ergGuide: "125",
+          idlh: "300 ppm",
+          hazard: "Toxic gas",
+        },
+        properties: {
+          physicalState: "Gas",
+          flashPoint: "Not relevant",
+          vaporPressure: "7600 mmHg",
+          vaporDensity: "0.59",
+          specificGravity: "0.6818",
+          lelUel: "15 / 28",
+        },
+        exposures: { idlh: "300 ppm", symptoms: ["Burning", "Difficulty breathing"] },
+        ppeRespiratory: { bestMatch: "Kappler — Frontline 500" },
+        detectors: { items: ["Ammonia electrochemical sensor"] },
+        medical: { firstAid: ["Remove victim from contaminated area"] },
+      },
+      icsForms: { "208HM": { fields: {} } },
+    };
+    const response = await app.request("/api/ics-forms/208HM/prepare", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(incident),
+    });
+    expect(response.status).toBe(200);
+    const body = await response.json() as { fields: Array<{ name: string; value: string; source: string }> };
+    expect(body.fields).toContainEqual(expect.objectContaining({
+      name: "19 MaterialRow1",
+      value: expect.stringContaining("Ammonia (anhydrous)"),
+      source: "automatic",
+    }));
+    expect(body.fields).toContainEqual(expect.objectContaining({
+      name: "IDLHRow1",
+      value: "300 ppm",
+      source: "automatic",
+    }));
+    expect(body.fields).toContainEqual(expect.objectContaining({ name: "Phys StateRow1", value: "Gas" }));
+    expect(body.fields).toContainEqual(expect.objectContaining({ name: "LELRow1", value: "15" }));
+    expect(body.fields).toContainEqual(expect.objectContaining({ name: "UELRow1", value: "28" }));
+  });
+
   it("serves the static UI at /", async () => {
     const res = await app.request("/");
     expect(res.status).toBe(200);

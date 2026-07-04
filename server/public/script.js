@@ -354,6 +354,12 @@ function getIncidentFormData() {
   const coordinates = parseGpsCoordinate(document.getElementById('incident-coordinates-input')?.value);
   const advanced = Object.fromEntries(activeChemicalRecord?.advanced || []);
   const containerSelect = document.getElementById('plume-container-type');
+  const existingIncident = getActiveIncident();
+  const selectionMatchesIncident = String(activeChemical?.selectedChemicalId ?? '') === String(existingIncident?.selectedChemicalId ?? '');
+  const chemicalProfile = activeChemicalRecord?.profile
+    || (selectionMatchesIncident ? existingIncident?.chemicalProfile : null)
+    || null;
+  const profileMatchesIncident = chemicalProfile?.header?.name === existingIncident?.chemicalProfile?.header?.name;
   return {
     incidentName: document.getElementById('incidentName')?.value.trim() || getActiveIncident()?.incidentName || 'New Incident',
     incidentNumber: document.getElementById('incident-number')?.value.trim() || '',
@@ -369,9 +375,17 @@ function getIncidentFormData() {
     weather: latestPlumeWeather?.conditions || '',
     windSpeed: document.getElementById('plume-wind-speed')?.value || latestPlumeWeather?.windSpeedMph || '',
     windDirection: document.getElementById('plume-wind-direction')?.value || latestPlumeWeather?.windDirDeg || '',
-    chemicalName: document.getElementById('incident-product')?.value.trim() || activeChemical?.name || '',
-    casNumber: advanced.CAS === 'N/A' ? '' : advanced.CAS || '',
-    unNumber: activeChemicalRecord?.un === 'N/A' ? '' : activeChemicalRecord?.un || '',
+    chemicalName: document.getElementById('incident-product')?.value.trim() || activeChemical?.name || existingIncident?.chemicalName || '',
+    selectedChemicalId: activeChemical?.selectedChemicalId ?? existingIncident?.selectedChemicalId ?? null,
+    casNumber: advanced.CAS === 'N/A' ? '' : advanced.CAS || chemicalProfile?.header?.cas || existingIncident?.casNumber || '',
+    unNumber: activeChemicalRecord?.un === 'N/A' ? '' : activeChemicalRecord?.un || chemicalProfile?.header?.un || existingIncident?.unNumber || '',
+    ergGuide: chemicalProfile?.header?.ergGuide || activeChemicalRecord?.ergGuide || existingIncident?.ergGuide || '',
+    idlh: chemicalProfile?.header?.idlh || activeChemicalRecord?.idlh || existingIncident?.idlh || '',
+    primaryHazard: chemicalProfile?.header?.hazard || existingIncident?.primaryHazard || '',
+    chemicalProfile,
+    chemicalProfileCapturedAt: chemicalProfile
+      ? (profileMatchesIncident ? existingIncident?.chemicalProfileCapturedAt : null) || new Date().toISOString()
+      : null,
     quantity: document.getElementById('plume-release-quantity')?.value || '',
     containerType: containerSelect?.selectedOptions?.[0]?.textContent.trim() || '',
     containerProfileId: containerSelect?.value || '',
@@ -532,6 +546,60 @@ function appendIncidentSummarySection(container, title, entries) {
   container.append(section);
 }
 
+function incidentProfileValue(value) {
+  if (Array.isArray(value)) {
+    return value.flatMap((item) => {
+      const formatted = incidentProfileValue(item);
+      return Array.isArray(formatted) ? formatted : formatted ? [formatted] : [];
+    });
+  }
+  if (value && typeof value === 'object') {
+    return Object.entries(value).flatMap(([key, item]) => {
+      const formatted = incidentProfileValue(item);
+      if (!formatted || (Array.isArray(formatted) && !formatted.length)) return [];
+      const label = titleCaseProfileLabel(key.replace(/([a-z])([A-Z0-9])/g, '$1 $2'));
+      return Array.isArray(formatted)
+        ? formatted.map((entry) => `${label}: ${entry}`)
+        : [`${label}: ${formatted}`];
+    });
+  }
+  const text = String(value ?? '').trim();
+  return hasAvailableProfileData(text) ? text : '';
+}
+
+function appendChemicalProfileToIncidentReport(container, profile) {
+  if (!profile || typeof profile !== 'object') return;
+  const header = profile.header || {};
+  appendIncidentSummarySection(container, 'Chemical Hazard Summary', [
+    ['Canonical chemical', header.name],
+    ['CAS number', header.cas],
+    ['UN/NA number', header.un],
+    ['ERG guide', header.ergGuide],
+    ['IDLH', header.idlh],
+    ['Primary hazard', header.hazard],
+  ]);
+  const sections = [
+    ['Chemical Properties', 'properties'],
+    ['Exposure Information', 'exposures'],
+    ['PPE / Respiratory Protection', 'ppeRespiratory'],
+    ['Detection Information', 'detectors'],
+    ['Reactivity', 'reactivity'],
+    ['Isolation Distances / ERG', 'isolationErg'],
+    ['Medical Considerations', 'medical'],
+    ['Fire', 'fire'],
+    ['Decontamination', 'decon'],
+  ];
+  sections.forEach(([title, key]) => {
+    const section = profile[key];
+    if (!section || typeof section !== 'object') return;
+    const entries = Object.entries(section).map(([field, value]) => [
+      titleCaseProfileLabel(field.replace(/([a-z])([A-Z0-9])/g, '$1 $2')),
+      incidentProfileValue(value),
+    ]);
+    appendIncidentSummarySection(container, title, entries);
+  });
+}
+
 const completedReportFields = [
   ['incidentName', 'Incident name', 'text'],
   ['startDate', 'Start date', 'text'],
@@ -664,6 +732,7 @@ function openIncidentSummary(incidentId) {
     ['Release phase', incident.containerReleasePhase],
     ['Sources', incident.chemicalSources],
   ]);
+  appendChemicalProfileToIncidentReport(content, incident.chemicalProfile);
   appendIncidentSummarySection(content, 'Conditions', [
     ['Weather', incident.weather],
     ['Wind speed', incident.windSpeed],
@@ -1347,121 +1416,453 @@ function normalizeChemicalQuery(value) {
     .replace(/^CAS\s*(?:number|no\.)?\s*[-:#]?\s*/i, '');
 }
 
+function hasAvailableProfileData(value) {
+  if (Array.isArray(value)) return value.some(hasAvailableProfileData);
+  if (value === null || value === undefined) return false;
+  if (typeof value === 'object') return Object.values(value).some(hasAvailableProfileData);
+  const text = String(value).trim();
+  if (!text) return false;
+  if (/^(?:not available|n\/a|not established|null|undefined)(?:\s*[/|·—–-]\s*(?:not available|n\/a|not established|null|undefined))*$/i.test(text)) return false;
+  if (/^[^:]+:\s*(?:not available|n\/a|not established|null|undefined)$/i.test(text)) return false;
+  if (/^no\s+.+\s+(?:available|record available)$/i.test(text)) return false;
+  return true;
+}
+
+function profileDisplayParts(value) {
+  const values = Array.isArray(value) ? value : [value];
+  return values
+    .flatMap((item) => {
+      const text = String(item ?? '').trim();
+      if (!text) return [];
+      if (text.includes(' · ')) return text.split(/\s*·\s*/);
+      if (text.length >= 160) return readableProfileBullets(text);
+      return [text];
+    })
+    .map((item) => item.trim())
+    .filter(hasAvailableProfileData);
+}
+
+function shouldUseCompactColumns(items) {
+  if (!Array.isArray(items) || items.length < 6 || items.some((item) => typeof item !== 'string')) return false;
+  const lengths = items.map((item) => item.trim().length);
+  const averageLength = lengths.reduce((total, length) => total + length, 0) / lengths.length;
+  return Math.max(...lengths) <= 120 && averageLength <= 72;
+}
+
+function titleCaseProfileLabel(value) {
+  return String(value || '').replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
+}
+
+function createProfileSection(title, rows, list = false) {
+  const section = document.createElement('section');
+  section.className = 'chemical-profile-section';
+  section.dataset.section = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const heading = document.createElement('h4');
+  heading.textContent = titleCaseProfileLabel(title);
+  section.append(heading);
+  if (list) {
+    const items = (Array.isArray(rows) ? rows : [rows]).filter(hasAvailableProfileData);
+    if (!items.length) return null;
+    const listEl = document.createElement('ul');
+    listEl.className = 'chemical-profile-list';
+    if (shouldUseCompactColumns(items)) listEl.classList.add('compact-columns');
+    items.forEach((item) => {
+      const li = document.createElement('li');
+      if (item && typeof item === 'object') {
+        li.className = 'chemical-profile-list-row';
+        li.dataset.field = String(item.label || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        const label = document.createElement('strong');
+        label.textContent = titleCaseProfileLabel(item.label);
+        const value = document.createElement('span');
+        value.textContent = item.value;
+        li.append(label, value);
+      } else {
+        li.textContent = item;
+      }
+      listEl.append(li);
+    });
+    section.append(listEl);
+  } else {
+    const entries = (Array.isArray(rows) ? rows : [rows])
+      .filter((entry) => entry && hasAvailableProfileData(entry.value));
+    if (!entries.length) return null;
+    const grid = document.createElement('div');
+    grid.className = 'chemical-profile-grid';
+    entries.forEach((entry) => {
+      const row = document.createElement('div');
+      row.className = 'chemical-profile-row';
+      row.dataset.field = String(entry.label || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const label = document.createElement('span');
+      label.textContent = titleCaseProfileLabel(entry.label);
+      const parts = profileDisplayParts(entry.value);
+      const value = parts.length > 1 ? document.createElement('ul') : document.createElement('strong');
+      if (parts.length > 1) {
+        value.className = 'chemical-profile-value-list';
+        if (shouldUseCompactColumns(parts)) value.classList.add('compact-columns');
+        parts.forEach((part) => {
+          const item = document.createElement('li');
+          item.textContent = part;
+          value.append(item);
+        });
+      } else {
+        value.textContent = parts[0];
+      }
+      row.append(label, value);
+      grid.append(row);
+    });
+    section.append(grid);
+  }
+  return section;
+}
+
+function readableProfileBullets(value) {
+  const text = String(value || '').trim();
+  if (!text || text === 'Not available') return ['Not available'];
+  return text
+    .split(/(?<=[.!?])\s+(?=[A-Z0-9])|;\s+/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+}
+
+function monitoringConcernEntries(values) {
+  return (Array.isArray(values) ? values : [values]).map((item) => {
+    const [rawLabel, ...valueParts] = String(item || '').split(':');
+    const label = rawLabel
+      .replaceAll('_', ' ')
+      .replace(/([a-z])([A-Z0-9])/g, '$1 $2')
+      .replace(/Ppm\b/g, 'ppm')
+      .replace(/MgM3\b/g, 'mg/m³')
+      .replace(/\bhr\b/gi, ' hr')
+      .trim();
+    return { key: rawLabel, label, value: valueParts.join(':').trim() || 'Not available' };
+  });
+}
+
+function createMonitoringConcernSections(values) {
+  const entries = monitoringConcernEntries(values);
+  const groups = [
+    ['Primary Limits', /^(IDLH|REL|PEL|TLV|LOC)/i],
+    ['AEGL Levels', /^AEGL/i],
+    ['ERPG / TEEL Levels', /^(ERPG|TEEL)/i],
+    ['Additional Exposure Levels', /^(MRL|MEG|Toxicity|Median)/i],
+  ];
+  const assigned = new Set();
+  const sections = groups.map(([title, pattern]) => {
+    const rows = entries.filter((entry, index) => {
+      if (!pattern.test(entry.key)) return false;
+      assigned.add(index);
+      return true;
+    });
+    return createProfileSection(title, rows, true);
+  });
+  const remaining = entries.filter((_, index) => !assigned.has(index));
+  sections.push(createProfileSection('Other Monitoring Concerns', remaining, true));
+  return sections;
+}
+
+function createErgGreenTable(title, headers, rows) {
+  if (!rows?.length) return null;
+  const section = document.createElement('section');
+  section.className = 'chemical-profile-section erg-profile-table';
+  const heading = document.createElement('h4');
+  heading.textContent = title;
+  const wrap = document.createElement('div');
+  wrap.className = 'erg-profile-table-wrap';
+  const table = document.createElement('table');
+  const head = document.createElement('thead');
+  const headRow = document.createElement('tr');
+  headers.forEach((header) => {
+    const cell = document.createElement('th');
+    cell.textContent = header;
+    headRow.append(cell);
+  });
+  head.append(headRow);
+  const body = document.createElement('tbody');
+  rows.forEach((values) => {
+    const row = document.createElement('tr');
+    values.forEach((value) => {
+      const cell = document.createElement('td');
+      cell.textContent = value;
+      row.append(cell);
+    });
+    body.append(row);
+  });
+  table.append(head, body);
+  wrap.append(table);
+  section.append(heading, wrap);
+  return section;
+}
+
+function createErgReferenceTables(isolationErg) {
+  const table1 = isolationErg?.ergTable1?.[0];
+  const table1Section = table1 ? createErgGreenTable(
+    'ERG Green Table 1 — Initial Isolation and Protective Action Distances',
+    ['Spill / period', 'Initial isolation', 'Protective action'],
+    [
+      ['Small spill — day', `${table1.smallInitialDayFt} ft`, `${table1.smallProtectiveDayMi} mi`],
+      ['Small spill — night', `${table1.smallInitialNightFt ?? table1.smallInitialDayFt} ft`, `${table1.smallProtectiveNightMi ?? table1.smallProtectiveDayMi} mi`],
+      ['Large spill — day', `${table1.largeInitialDayFt} ft`, `${table1.largeProtectiveDayMi} mi`],
+      ['Large spill — night', `${table1.largeInitialNightFt ?? table1.largeInitialDayFt} ft`, `${table1.largeProtectiveNightMi ?? table1.largeProtectiveDayMi} mi`],
+    ],
+  ) : null;
+  const table2Rows = (isolationErg?.ergTable2 || []).map((entry) => [entry.title, entry.detail]);
+  const table2Section = createErgGreenTable(
+    'ERG Green Table 2 — Water-Reactive Toxic Gases',
+    ['Reference', 'Response information'],
+    table2Rows,
+  );
+  const table3Rows = (isolationErg?.ergTable3 || []).map((entry) => [
+    entry.container,
+    `${entry.initialIsolationFt} ft`,
+    `${entry.dayLowWindMi} mi`,
+    `${entry.dayModerateWindMi} mi`,
+    `${entry.dayHighWindMi} mi`,
+    `${entry.nightLowWindMi} mi`,
+    `${entry.nightModerateWindMi} mi`,
+    `${entry.nightHighWindMi} mi`,
+  ]);
+  const table3Section = createErgGreenTable(
+    'ERG Green Table 3 — Large Spill Container Distances',
+    ['Container', 'Initial isolation', 'Day low wind', 'Day moderate', 'Day high wind', 'Night low wind', 'Night moderate', 'Night high wind'],
+    table3Rows,
+  );
+  return [table1Section, table2Section, table3Section].filter(Boolean);
+}
+
+function renderChemicalProfile(profile) {
+  const content = document.getElementById('chemical-profile-content');
+  const tabs = document.getElementById('chemical-profile-tabs');
+  const meta = document.getElementById('chemical-profile-meta');
+  const nameEl = document.getElementById('chemical-name');
+  const summaryEl = document.getElementById('chemical-summary');
+  if (!content || !tabs || !meta || !nameEl || !summaryEl) return;
+
+  const sections = [
+    { key: 'properties', title: 'Properties', render: () => [
+      createProfileSection('Chemical Properties', [
+        { label: 'Chemical formula', value: profile?.properties?.formula || 'Not available' },
+        { label: 'Physical state', value: profile?.properties?.physicalState || 'Not available' },
+        { label: 'Molecular weight', value: profile?.properties?.molecularWeight || 'Not available' },
+        { label: 'Boiling point', value: profile?.properties?.boilingPoint || 'Not available' },
+        { label: 'Melting / freezing point', value: profile?.properties?.meltingPoint || 'Not available' },
+        { label: 'Vapor pressure', value: profile?.properties?.vaporPressure || 'Not available' },
+        { label: 'Vapor density', value: profile?.properties?.vaporDensity || 'Not available' },
+        { label: 'Liquid density', value: profile?.properties?.liquidDensity || 'Not available' },
+        { label: 'Specific gravity', value: profile?.properties?.specificGravity || 'Not available' },
+        { label: 'Water solubility', value: profile?.properties?.waterSolubility || 'Not available' },
+        { label: 'Evaporation rate', value: profile?.properties?.evaporationRate || 'Not available' },
+      ]),
+      createProfileSection('Flammability & Energy', [
+        { label: 'Flash point', value: profile?.properties?.flashPoint || 'Not available' },
+        { label: 'Ignition temperature', value: profile?.properties?.ignitionTemperature || 'Not available' },
+        { label: 'LEL / UEL', value: profile?.properties?.lelUel || 'Not available' },
+        { label: 'Odor threshold', value: profile?.properties?.odorThreshold || 'Not available' },
+        { label: 'Ionization potential', value: profile?.properties?.ionizationPotential || 'Not available' },
+        { label: 'Decomposition point', value: profile?.properties?.decompositionPoint || 'Not available' },
+        { label: 'Heat of vaporization', value: profile?.properties?.heatOfVaporization || 'Not available' },
+      ]),
+      createProfileSection('Reactivity', readableProfileBullets(profile?.properties?.mixtureReactivity), true),
+      createProfileSection('Synonyms & Notes', [
+        { label: 'Synonyms', value: profile?.properties?.synonyms || ['Not available'] },
+        { label: 'Persistence / environment', value: profile?.properties?.environmentalPersistence || 'Not available' },
+        { label: 'Characteristics', value: profile?.properties?.characteristics || ['Not available'] },
+        { label: 'Commercial uses', value: profile?.properties?.commercialUses || 'Not available' },
+        { label: 'Commercial sources', value: profile?.properties?.commercialSources || 'Not available' },
+      ]),
+    ] },
+    { key: 'exposures', title: 'Exposures', render: () => [
+      createProfileSection('EXPOSURE LIMITS', [
+        { label: 'IDLH', value: profile?.exposures?.idlh || 'Not available' },
+        { label: 'OSHA PEL', value: profile?.exposures?.oshaPel || 'Not available' },
+        { label: 'NIOSH REL', value: profile?.exposures?.nioshRel || 'Not available' },
+        { label: 'ACGIH TLV', value: profile?.exposures?.acgihTlv || 'Not available' },
+      ]),
+      createProfileSection('Routes and symptoms', [
+        { label: 'Routes of exposure', value: profile?.exposures?.routes || ['Not available'] },
+        { label: 'Symptoms', value: profile?.exposures?.symptoms || ['Not available'] },
+        { label: 'Target organs', value: profile?.exposures?.targetOrgans || ['Not available'] },
+      ]),
+      createProfileSection('Acute / Chronic Notes', profile?.exposures?.acuteNotes || ['Not available'], true),
+      ...createMonitoringConcernSections(profile?.exposures?.monitoringConcerns || ['Not available']),
+    ] },
+    { key: 'ppeRespiratory', title: 'PPE / Respiratory Protection', render: () => [
+      createProfileSection('Recommended PPE', [
+        { label: 'Best Match', value: profile?.ppeRespiratory?.bestMatch || 'Not available' },
+      ]),
+      createProfileSection('PPE Options', profile?.ppeRespiratory?.recommendedPpe || ['Not available'], true),
+      createProfileSection('Glove / Suit Materials', profile?.ppeRespiratory?.gloveSuitMaterial || ['Not available'], true),
+      createProfileSection('Respiratory guidance', [
+        { label: 'Respirator recommendations', value: (profile?.ppeRespiratory?.respiratorRecommendations || ['Not available']).join(' · ') },
+        { label: 'APR / PAPR / SCBA', value: (profile?.ppeRespiratory?.aprPaprScba || ['Not available']).join(' · ') },
+        { label: 'Escape respirator', value: (profile?.ppeRespiratory?.escapeRespirator || ['Not available']).join(' · ') },
+        { label: 'Cartridge limitations', value: (profile?.ppeRespiratory?.cartridgeLimitations || ['Not available']).join(' · ') },
+      ]),
+    ] },
+    { key: 'detectors', title: 'Detectors', render: () => [
+      createProfileSection('Recommended Detector', [
+        { label: 'Best Match', value: 'Coming Soon...' },
+      ]),
+      createProfileSection('Recommended detectors', [
+        { label: 'Meters / detectors', value: (profile?.detectors?.items || ['Not available']).join(' · ') },
+        { label: 'PID relevance', value: (profile?.detectors?.pidRelevance || ['Not available']).join(' · ') },
+        { label: 'LEL relevance', value: (profile?.detectors?.lelMeterRelevance || ['Not available']).join(' · ') },
+        { label: 'Colorimetric tubes', value: (profile?.detectors?.colorimetricTubes || ['Not available']).join(' · ') },
+      ]),
+      createProfileSection('Detection notes', [
+        { label: 'Ionization potential', value: profile?.detectors?.ionizationPotential || 'Not available' },
+        { label: 'Electrochemical sensors', value: (profile?.detectors?.electrochemicalSensors || ['Not available']).join(' · ') },
+        { label: 'Detection limitations', value: (profile?.detectors?.limitations || ['Not available']).join(' · ') },
+      ]),
+    ] },
+    { key: 'reactivity', title: 'Reactivity', render: () => [
+      createProfileSection('Reactivity profile', [
+        { label: 'Incompatibilities', value: (profile?.reactivity?.incompatibilities || ['Not available']).join(' · ') },
+        { label: 'Polymerization risk', value: (profile?.reactivity?.polymerizationRisk || ['Not available']).join(' · ') },
+        { label: 'Water reactivity', value: (profile?.reactivity?.waterReactivity || ['Not available']).join(' · ') },
+        { label: 'Oxidizer / reducer concerns', value: (profile?.reactivity?.oxidizerReducerConcerns || ['Not available']).join(' · ') },
+      ]),
+      createProfileSection('Stability and decomposition', [
+        { label: 'Decomposition products', value: (profile?.reactivity?.decompositionProducts || ['Not available']).join(' · ') },
+        { label: 'Chemical mixture reactivity', value: profile?.reactivity?.chemicalMixtureReactivity || 'Not available' },
+        { label: 'Stability notes', value: profile?.reactivity?.stabilityNotes || 'Not available' },
+      ]),
+    ] },
+    { key: 'isolationErg', title: 'Isolation Distance', render: () => {
+      const isolationErg = profile?.isolationErg || {};
+      const hasGreenTable = Boolean(
+        isolationErg.ergTable1?.length
+        || isolationErg.ergTable2?.length
+        || isolationErg.ergTable3?.length,
+      );
+      const distanceRows = [
+        { label: 'ERG guide number', value: isolationErg.ergGuide || 'Not available' },
+        { label: 'Initial isolation distance', value: isolationErg.initialIsolationDistance || 'Not available' },
+        ...(!hasGreenTable ? [
+          { label: 'Protective action distance', value: isolationErg.protectiveActionDistance || 'Not available' },
+          { label: 'Small spill / large spill', value: `${isolationErg.smallSpill || 'Not available'} / ${isolationErg.largeSpill || 'Not available'}` },
+          { label: 'Day / night values', value: (isolationErg.dayNightValues || ['Not available']).join(' · ') },
+        ] : []),
+      ];
+      return [
+        createProfileSection('Isolation Distances', distanceRows),
+        createProfileSection('ERG Notes', [
+          { label: 'Note', value: isolationErg.note || 'Not available' },
+        ]),
+        ...createErgReferenceTables(isolationErg),
+      ];
+    } },
+    { key: 'medical', title: 'Medical Considerations', render: () => [
+      createProfileSection('Signs and symptoms', [
+        { label: 'Signs / symptoms', value: (profile?.medical?.signsSymptoms || ['Not available']).join(' · ') },
+        { label: 'Responders hazards', value: (profile?.medical?.responderHazards || ['Not available']).join(' · ') },
+      ]),
+      createProfileSection('Treatment', [
+        { label: 'First aid', value: (profile?.medical?.firstAid || ['Not available']).join(' · ') },
+        { label: 'EMS considerations', value: (profile?.medical?.emsConsiderations || ['Not available']).join(' · ') },
+        { label: 'Antidotes', value: (profile?.medical?.antidotes || ['Not available']).join(' · ') },
+        { label: 'Treatment notes', value: (profile?.medical?.treatmentNotes || ['Not available']).join(' · ') },
+        { label: 'Patient handling', value: (profile?.medical?.contaminatedPatientHandling || ['Not available']).join(' · ') },
+      ]),
+    ] },
+    { key: 'fire', title: 'Fire', render: () => [
+      createProfileSection('Fire behavior', [
+        { label: 'Flammability', value: profile?.fire?.flammability || 'Not available' },
+        { label: 'Flash point', value: profile?.fire?.flashPoint || 'Not available' },
+        { label: 'LEL / UEL', value: profile?.fire?.lelUel || 'Not available' },
+        { label: 'Extinguishing media', value: (profile?.fire?.extinguishingMedia || ['Not available']).join(' · ') },
+      ]),
+      createProfileSection('Fire response', [
+        { label: 'Firefighting precautions', value: (profile?.fire?.firefightingPrecautions || ['Not available']).join(' · ') },
+        { label: 'Vapor behavior', value: (profile?.fire?.vaporBehavior || ['Not available']).join(' · ') },
+        { label: 'Explosion hazards', value: (profile?.fire?.explosionHazards || ['Not available']).join(' · ') },
+        { label: 'Runoff concerns', value: (profile?.fire?.runoffConcerns || ['Not available']).join(' · ') },
+      ]),
+    ] },
+    { key: 'decon', title: 'DECON', render: () => [
+      createProfileSection('Decontamination guidance', [
+        { label: 'Preferred method', value: profile?.decon?.preferredMethod || 'Not available' },
+        { label: 'Wet vs dry', value: (profile?.decon?.wetVsDry || ['Not available']).join(' · ') },
+        { label: 'Water-reactive cautions', value: (profile?.decon?.waterReactiveCautions || ['Not available']).join(' · ') },
+      ]),
+      createProfileSection('Decon layers', [
+        { label: 'Gross decon', value: (profile?.decon?.grossDecon || ['Not available']).join(' · ') },
+        { label: 'Technical decon', value: (profile?.decon?.technicalDecon || ['Not available']).join(' · ') },
+        { label: 'Patient / victim decon', value: (profile?.decon?.patientVictimDecon || ['Not available']).join(' · ') },
+        { label: 'Equipment decon', value: (profile?.decon?.equipmentDecon || ['Not available']).join(' · ') },
+        { label: 'Runoff / containment', value: (profile?.decon?.runoffContainment || ['Not available']).join(' · ') },
+      ]),
+    ] },
+  ];
+
+  const tabsList = [
+    ['Properties', 'properties'],
+    ['Isolation Distance', 'isolationErg'],
+    ['Exposures', 'exposures'],
+    ['PPE / Respiratory', 'ppeRespiratory'],
+    ['Detectors', 'detectors'],
+    ['Reactivity', 'reactivity'],
+    ['Medical', 'medical'],
+    ['Fire', 'fire'],
+    ['DECON', 'decon'],
+  ];
+
+  nameEl.textContent = profile?.header?.name || 'Select a chemical';
+  const summaryParts = [profile?.header?.hazard, profile?.header?.un]
+    .filter(hasAvailableProfileData);
+  summaryEl.textContent = summaryParts.join(' · ');
+  summaryEl.hidden = summaryParts.length === 0;
+  meta.innerHTML = '';
+  const metaItems = [
+    ['CAS', profile?.header?.cas || 'Not available'],
+    ['UN/NA', profile?.header?.un || 'Not available'],
+    ['ERG', profile?.header?.ergGuide || 'Not available'],
+    ['IDLH', profile?.header?.idlh || 'Not available'],
+  ];
+  metaItems.filter(([, value]) => hasAvailableProfileData(value)).forEach(([label, value]) => {
+    const item = document.createElement('span');
+    item.className = 'chemical-profile-meta-item';
+    item.dataset.field = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const title = document.createElement('strong');
+    title.className = 'chemical-profile-meta-title';
+    title.textContent = label;
+    const contentValue = document.createElement('span');
+    contentValue.className = 'chemical-profile-meta-value';
+    contentValue.textContent = value;
+    item.append(title, contentValue);
+    meta.append(item);
+  });
+
+  tabs.replaceChildren();
+  const tabButtons = tabsList.map(([label, key]) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'chemical-profile-tab';
+    button.dataset.tab = key;
+    button.textContent = label;
+    button.addEventListener('click', () => {
+      renderChemicalProfile({ ...profile, activeTab: key });
+    });
+    return button;
+  });
+  tabs.append(...tabButtons);
+
+  const activeKey = profile?.activeTab || 'properties';
+  tabs.querySelectorAll('.chemical-profile-tab').forEach((button) => {
+    button.classList.toggle('active', button.dataset.tab === activeKey);
+  });
+
+  const activeSection = sections.find((section) => section.key === activeKey) || sections[0];
+  content.dataset.activeTab = activeKey;
+  const fragment = document.createDocumentFragment();
+  (activeSection.render() || []).filter(Boolean).forEach((element) => fragment.append(element));
+  content.replaceChildren(fragment);
+  content.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+}
+
 function updateChemicalCard(record) {
   if (!record) return;
-
-  document.getElementById('chemical-name').textContent = record.name;
-  document.getElementById('chemical-summary').textContent = record.summary;
-  document.getElementById('chemical-erg-guide').textContent = record.ergGuide;
-  document.getElementById('chemical-erg-heading').textContent = `ERG 2024 Guide ${record.ergGuide} — ${record.responderGuide.title}`;
-  document.getElementById('chemical-initial-isolation').textContent = record.initialIsolation;
-  document.getElementById('chemical-guide-material').textContent = `Guide ${record.ergGuide} · UN ${record.un}`;
-
-  const subheadings = new Set([
-    'Immediate precautionary measure', 'Small Fire', 'Large Fire', 'Fire Involving Tanks',
-    'Fire Involving Tanks, Rail Tank Cars or Highway Tanks', 'Small Spill', 'Large Spill',
-    'Small Liquid Spill', 'Large Liquid Spill', 'Spill', 'Fire',
-  ]);
-  const setErgList = (id, items, limit) => {
-    const list = document.getElementById(id);
-    const operationalItems = [...new Set(items || [])].slice(0, limit);
-    list.replaceChildren(...operationalItems.map((item) => {
-      const li = document.createElement('li');
-      li.textContent = item;
-      if (subheadings.has(item)) li.className = 'erg-list-subheading';
-      return li;
-    }));
-  };
-  setErgList('chemical-erg-fire-hazards', record.responderGuide.potentialHazards.fireOrExplosion, 5);
-  setErgList('chemical-erg-health-hazards', record.responderGuide.potentialHazards.health, 5);
-  setErgList('chemical-erg-public-safety', record.responderGuide.publicSafety.general, 4);
-  setErgList('chemical-erg-protective-clothing', record.responderGuide.publicSafety.protectiveClothing, 4);
-  setErgList('chemical-erg-evacuation', record.responderGuide.publicSafety.evacuation, 5);
-  setErgList('chemical-erg-fire-response', record.responderGuide.emergencyResponse.fire, 10);
-  setErgList('chemical-erg-spill-response', record.responderGuide.emergencyResponse.spillOrLeak, 8);
-
-  const tableSection = document.getElementById('chemical-erg-table-1');
-  tableSection.hidden = !record.ergTable;
-  if (record.ergTable) {
-    const entry = record.ergTable;
-    document.getElementById('chemical-erg-table-badge').textContent = entry.isWaterReactive ? 'Water-reactive' : 'TIH';
-    document.getElementById('chemical-erg-table-note').textContent = `${entry.name} (UN ${entry.un}) — distances shown exactly as stored from ERG 2024 Table 1.`;
-    const containerRows = entry.containerSpecificDistances || [];
-    const rows = containerRows.length
-      ? [
-          ['Small', 'Day', `${Number(entry.smallInitialDayFt).toLocaleString()} ft`, `${Number(entry.smallProtectiveDayMi).toLocaleString()} mi`],
-          ['Small', 'Night', `${Number(entry.smallInitialNightFt).toLocaleString()} ft`, `${Number(entry.smallProtectiveNightMi).toLocaleString()} mi`],
-          ['Large', 'By container', 'See table below', 'Select day/night wind band'],
-        ]
-      : [
-          ['Small', 'Day', `${Number(entry.smallInitialDayFt).toLocaleString()} ft`, `${Number(entry.smallProtectiveDayMi).toLocaleString()} mi`],
-          ['Small', 'Night', `${Number(entry.smallInitialNightFt).toLocaleString()} ft`, `${Number(entry.smallProtectiveNightMi).toLocaleString()} mi`],
-          ['Large', 'Day', `${Number(entry.largeInitialDayFt).toLocaleString()} ft`, `${Number(entry.largeProtectiveDayMi).toLocaleString()} mi`],
-          ['Large', 'Night', `${Number(entry.largeInitialNightFt).toLocaleString()} ft`, `${Number(entry.largeProtectiveNightMi).toLocaleString()} mi`],
-        ];
-    const body = document.getElementById('chemical-erg-table-body');
-    body.replaceChildren(...rows.map(([size, period, initial, protective]) => {
-      const row = document.createElement('tr');
-      [size, period, initial, protective]
-        .forEach((value) => {
-          const cell = document.createElement('td');
-          cell.textContent = value;
-          row.append(cell);
-        });
-      return row;
-    }));
-
-    const containerSection = document.getElementById('chemical-erg-container-distances');
-    containerSection.hidden = containerRows.length === 0;
-    document.getElementById('chemical-erg-container-body').replaceChildren(...containerRows.map((distance) => {
-      const row = document.createElement('tr');
-      [
-        distance.container,
-        `${Number(distance.initialIsolationFt).toLocaleString()} ft`,
-        `${distance.dayLowWindMi} mi`,
-        `${distance.dayModerateWindMi} mi`,
-        `${distance.dayHighWindMi} mi`,
-        `${distance.nightLowWindMi} mi`,
-        `${distance.nightModerateWindMi} mi`,
-        `${distance.nightHighWindMi} mi`,
-      ].forEach((value) => {
-        const cell = document.createElement('td');
-        cell.textContent = value;
-        row.append(cell);
-      });
-      return row;
-    }));
-  }
-
-  const additionalSection = document.getElementById('chemical-erg-additional-tables');
-  const additionalRows = record.ergTable?.additionalTables || [];
-  additionalSection.hidden = additionalRows.length === 0;
-  document.getElementById('chemical-erg-additional-table-rows').replaceChildren(
-    ...additionalRows.map((item) => {
-      const row = document.createElement('article');
-      row.className = 'erg-additional-table-row';
-      const label = document.createElement('div');
-      label.className = 'erg-additional-table-label';
-      const eyebrow = document.createElement('p');
-      eyebrow.className = 'eyebrow';
-      eyebrow.textContent = `ERG Table ${item.table}`;
-      const title = document.createElement('h4');
-      title.textContent = item.title;
-      label.append(eyebrow, title);
-      const detail = document.createElement('p');
-      detail.className = 'muted';
-      detail.textContent = item.detail;
-      row.append(label, detail);
-      return row;
-    }),
-  );
-
-  const advancedList = document.getElementById('chemical-advanced-list');
-  advancedList.innerHTML = record.advanced.map(([label, value]) => `<li><span>${label}</span><strong>${value}</strong></li>`).join('');
-
-  const sourceList = document.getElementById('chemical-source-list');
-  sourceList.innerHTML = record.sources.map((item) => `<li>${item}</li>`).join('');
-
+  const profile = record.profile || record;
+  renderChemicalProfile(profile);
 }
 
 const chemicalSearchForm = document.getElementById('chemical-search-form');
@@ -1473,6 +1874,7 @@ const facilityInventory = document.getElementById('facility-inventory');
 let chemicalSearchTimer = null;
 let latestChemicalSearch = 0;
 let activeChemical = null;
+let selectedChemicalId = null;
 let activeChemicalRecord = null;
 let activePlumeCommand = null;
 let activePpeSelection = [];
@@ -1903,13 +2305,19 @@ function syncPlumeChemicalSelection() {
 }
 
 function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {}) {
-  const changed = activeChemical?.id !== chemical?.id;
+  const nextSelectedChemicalId = chemical?.selectedChemicalId ?? chemical?.ChemicalID ?? chemical?.id ?? null;
+  const changed = String(selectedChemicalId ?? '') !== String(nextSelectedChemicalId ?? '');
   if (changed) {
     activeChemicalRecord = null;
     activePlumeCommand = null;
     activePpeSelection = [];
   }
-  activeChemical = chemical ? { id: chemical.id, name: chemical.name } : null;
+  selectedChemicalId = nextSelectedChemicalId;
+  activeChemical = chemical ? {
+    id: String(nextSelectedChemicalId),
+    selectedChemicalId: nextSelectedChemicalId,
+    name: chemical.ChemicalName || chemical.name,
+  } : null;
   const incidentProductInput = document.getElementById('incident-product');
   if (incidentProductInput) incidentProductInput.value = activeChemical?.name || '';
   if (persist) {
@@ -1949,8 +2357,11 @@ async function restoreSelectedChemical() {
     if (chemical && !chemical.error) {
       setActiveChemical(chemical, { persist: false, clearOverlay: false });
       const record = await buildFullChemicalRecord(chemical);
+      const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(saved.selectedChemicalId ?? saved.id)}/profile`);
+      const profile = profileResponse && !profileResponse.error ? profileResponse : null;
+      const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'properties' }, name: record.name } : record;
       if (activeChemical?.id === chemical.id) {
-        activeChemicalRecord = record;
+        activeChemicalRecord = combinedRecord;
         applyChemicalContainerProfile();
         restoreIncidentContainerData();
         updateActiveIncidentRecord();
@@ -1979,21 +2390,46 @@ function clearChemicalSuggestions() {
 
 async function openChemical(chemical, facilityName = '') {
   setActiveChemical(chemical);
+  const chosenChemicalId = chemical.selectedChemicalId ?? chemical.ChemicalID ?? chemical.id;
+  const chosenChemicalName = chemical.ChemicalName || chemical.name;
+  console.info('[chemical-companion] selection', {
+    selectedChemicalId: chosenChemicalId,
+    ChemicalName: chosenChemicalName,
+  });
   latestChemicalSearch += 1;
   window.clearTimeout(chemicalSearchTimer);
   setChemicalSearchStatus(`Loading ${chemical.name || 'chemical'}…`, 'loading');
   const record = await buildFullChemicalRecord(chemical);
-  if (activeChemical?.id === chemical.id) {
+  if (String(selectedChemicalId) === String(chosenChemicalId)) {
     activeChemicalRecord = record;
     applyChemicalContainerProfile();
     updateActiveIncidentRecord();
     renderIncidentCommandSnapshot();
   }
-  updateChemicalCard(record);
+  const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(chosenChemicalId)}/profile`);
+  const profile = profileResponse && !profileResponse.error ? profileResponse : null;
+  const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'properties' }, name: record.name } : record;
+  activeChemicalRecord = combinedRecord;
+  updateActiveIncidentRecord();
+  renderIncidentCommandSnapshot();
+  updateChemicalCard(combinedRecord);
   if (chemicalIdResults) chemicalIdResults.hidden = false;
-  const context = facilityName ? ` from ${facilityName}'s submitted inventory` : '';
-  setChemicalSearchStatus(`Showing Responder View and HazMat View for ${record.name}${context}.`, 'success');
+  setChemicalSearchStatus('');
   chemicalIdResults?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function companionChemicalForUi(row) {
+  const selectedId = row?.ChemicalID;
+  return {
+    ...row,
+    id: String(selectedId),
+    selectedChemicalId: selectedId,
+    name: row?.ChemicalName,
+    cas: JSON.stringify(row?.CasNumber && row.CasNumber !== 'Not available' ? [row.CasNumber] : []),
+    un: JSON.stringify(row?.UnnaNumber && row.UnnaNumber !== 'Not available' ? [row.UnnaNumber] : []),
+    ergGuide: row?.ErgNumber,
+    hazardClass: JSON.stringify([]),
+  };
 }
 
 async function openChemicalById(chemicalId, facilityName = '') {
@@ -2159,13 +2595,14 @@ async function searchChemicalId(value, { submit = false } = {}) {
   if (submit) setChemicalSearchStatus('Searching chemical and facility records…', 'loading');
   const requestId = ++latestChemicalSearch;
   const chemicalQuery = normalizeChemicalQuery(rawQuery);
+  console.info('[chemical-companion] search query', chemicalQuery);
   const [chemicalData, facilityData] = await Promise.all([
-    fetchJson(`/api/chemicals?q=${encodeURIComponent(chemicalQuery)}`),
+    fetchJson(`/api/chemicals/search?q=${encodeURIComponent(chemicalQuery)}`),
     fetchJson(`/api/facilities?q=${encodeURIComponent(rawQuery)}`),
   ]);
   if (requestId !== latestChemicalSearch) return;
 
-  const chemicals = chemicalData?.chemicals || [];
+  const chemicals = (chemicalData?.chemicals || []).map(companionChemicalForUi);
   const facilities = facilityData?.facilities || [];
 
   if (submit && chemicals.length) {
@@ -2187,7 +2624,7 @@ async function searchChemicalId(value, { submit = false } = {}) {
     chemicalSearchSuggestions.append(createSuggestion(
       'Chemical',
       chemical.name,
-      [un && `UN ${un}`, cas && `CAS ${cas}`].filter(Boolean).join(' · ') || 'Chemical reference',
+      [un && `UN ${un}`, cas && `CAS ${cas}`, chemical.matchReason].filter(Boolean).join(' · ') || 'Chemical reference',
       () => {
         if (chemicalSearchInput) chemicalSearchInput.value = chemical.name;
         if (facilityInventory) facilityInventory.hidden = true;
@@ -2255,8 +2692,11 @@ async function selectIncidentProduct(chemical) {
   setActiveChemical(chemical);
   setIncidentStatus(`Loading ${chemical.name}…`);
   const record = await buildFullChemicalRecord(chemical);
+  const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(chemical.selectedChemicalId ?? chemical.id)}/profile`);
+  const profile = profileResponse && !profileResponse.error ? profileResponse : null;
+  const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'properties' }, name: record.name } : record;
   if (activeChemical?.id !== chemical.id) return;
-  activeChemicalRecord = record;
+  activeChemicalRecord = combinedRecord;
   applyChemicalContainerProfile();
   updateActiveIncidentRecord();
   renderIncidentCommandSnapshot();
@@ -2265,10 +2705,10 @@ async function selectIncidentProduct(chemical) {
 
 async function searchIncidentProducts(value) {
   const requestId = ++latestIncidentProductSearch;
-  const data = await fetchJson(`/api/chemicals?q=${encodeURIComponent(normalizeChemicalQuery(value))}`);
+  const data = await fetchJson(`/api/chemicals/search?q=${encodeURIComponent(normalizeChemicalQuery(value))}`);
   if (requestId !== latestIncidentProductSearch || !incidentProductSuggestions) return;
   incidentProductSuggestions.replaceChildren();
-  (data?.chemicals || []).slice(0, 8).forEach((chemical) => {
+  (data?.chemicals || []).map(companionChemicalForUi).slice(0, 8).forEach((chemical) => {
     const un = parseJsonField(chemical.un, [])?.[0];
     const cas = parseJsonField(chemical.cas, [])?.[0];
     incidentProductSuggestions.append(createSuggestion(
@@ -3964,7 +4404,6 @@ function openPlumeWorkspace() {
 }
 
 document.getElementById('open-plume-btn')?.addEventListener('click', openPlumeWorkspace);
-document.getElementById('open-incident-dashboard-btn')?.addEventListener('click', () => showView('incident'));
 document.querySelectorAll('[data-command-view]').forEach((button) => {
   button.addEventListener('click', () => {
     const target = button.dataset.commandView;

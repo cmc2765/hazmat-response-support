@@ -25,10 +25,11 @@ import { fileURLToPath } from "node:url";
 import { PDFDocument, PDFTextField } from "pdf-lib";
 import { getDb } from "./db.js";
 import * as schema from "./schema.js";
+import { queryChemicalProfile, searchCompanionChemicals } from "./chemical-companion.js";
 import { runPlume } from "../../src/lib/model/plume.js";
 import { PlumeInputs } from "../../src/lib/schema/plume.js";
 import type { ThresholdBand } from "../../src/lib/schema/plume.js";
-import { getErgAdditionalTables, getErgContainerDistances } from "../../src/data/erg.js";
+import { ERG_TABLE_1, getErgAdditionalTables, getErgContainerDistances } from "../../src/data/erg.js";
 
 const app = new Hono();
 app.use(logger());
@@ -97,8 +98,81 @@ function incidentContainerSummary(incident: Record<string, unknown>, detailed = 
   return parts.map(textValue).filter(Boolean).join(" · ");
 }
 
+function incidentChemicalProfile(incident: Record<string, unknown>) {
+  const profile = incident.chemicalProfile;
+  return profile && typeof profile === "object" && !Array.isArray(profile)
+    ? (profile as Record<string, unknown>)
+    : {};
+}
+
+function profileSection(profile: Record<string, unknown>, key: string) {
+  const section = profile[key];
+  return section && typeof section === "object" && !Array.isArray(section)
+    ? (section as Record<string, unknown>)
+    : {};
+}
+
+function profileText(value: unknown, limit = 1400): string {
+  const unavailable = /^(not available|not established|n\/a)$/i;
+  const values = Array.isArray(value)
+    ? value.flatMap((item) => profileText(item, limit)).filter(Boolean)
+    : value && typeof value === "object"
+      ? Object.entries(value as Record<string, unknown>).flatMap(([key, item]) => {
+          const text = profileText(item, limit);
+          return text ? `${key.replace(/([a-z])([A-Z0-9])/g, "$1 $2")}: ${text}` : [];
+        })
+      : [textValue(value)].filter((text) => text && !unavailable.test(text));
+  return values.join("; ").slice(0, limit);
+}
+
+function chemicalIdentityForIcs(incident: Record<string, unknown>) {
+  const profile = incidentChemicalProfile(incident);
+  const header = profileSection(profile, "header");
+  return [
+    header.name || incident.chemicalName,
+    header.cas && `CAS ${profileText(header.cas)}`,
+    header.un && `UN/NA ${profileText(header.un)}`,
+    header.ergGuide && `ERG ${profileText(header.ergGuide)}`,
+    header.idlh && `IDLH ${profileText(header.idlh)}`,
+    header.hazard,
+  ].map((value) => profileText(value)).filter(Boolean).join(" · ");
+}
+
+function chemicalSafetyForIcs(incident: Record<string, unknown>) {
+  const profile = incidentChemicalProfile(incident);
+  const exposure = profileSection(profile, "exposures");
+  const reactivity = profileSection(profile, "reactivity");
+  const fire = profileSection(profile, "fire");
+  const isolation = profileSection(profile, "isolationErg");
+  return [
+    chemicalIdentityForIcs(incident),
+    profileText(exposure.symptoms) && `Symptoms: ${profileText(exposure.symptoms, 400)}`,
+    profileText(reactivity.incompatibilities) && `Incompatibilities: ${profileText(reactivity.incompatibilities, 400)}`,
+    profileText(fire.firefightingPrecautions) && `Fire: ${profileText(fire.firefightingPrecautions, 400)}`,
+    profileText(isolation.protectiveActionDistance) && `Isolation/PAD: ${profileText(isolation.protectiveActionDistance, 400)}`,
+  ].filter(Boolean).join("\n").slice(0, 1800);
+}
+
+function chemicalMitigationsForIcs(incident: Record<string, unknown>) {
+  const profile = incidentChemicalProfile(incident);
+  const ppe = profileSection(profile, "ppeRespiratory");
+  const decon = profileSection(profile, "decon");
+  const medical = profileSection(profile, "medical");
+  return [
+    profileText(ppe.bestMatch) && `PPE best match: ${profileText(ppe.bestMatch)}`,
+    profileText(ppe.respiratorRecommendations) && `Respiratory: ${profileText(ppe.respiratorRecommendations, 450)}`,
+    profileText(decon.preferredMethod) && `Decon: ${profileText(decon.preferredMethod, 350)}`,
+    profileText(medical.firstAid) && `First aid: ${profileText(medical.firstAid, 450)}`,
+  ].filter(Boolean).join("\n").slice(0, 1800);
+}
+
 function automaticIcsValue(fieldName: string, incident: Record<string, unknown>) {
   const normalized = fieldName.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const profile = incidentChemicalProfile(incident);
+  const properties = profileSection(profile, "properties");
+  const exposures = profileSection(profile, "exposures");
+  const detectors = profileSection(profile, "detectors");
+  const medical = profileSection(profile, "medical");
   if (/^(1)?incidentname\d*$/.test(normalized)) return textValue(incident.incidentName);
   if (/^(2)?incidentnumber\d*$/.test(normalized)) return textValue(incident.incidentNumber);
   if (normalized === "datefrom") return textValue(incident.startDate);
@@ -126,8 +200,7 @@ function automaticIcsValue(fieldName: string, incident: Record<string, unknown>)
   }
   if (normalized.includes("primarymaterialsorhazards") || /^19materialrow1$/.test(normalized)) {
     return [
-      incident.chemicalName,
-      incident.unNumber && `UN/NA ${textValue(incident.unNumber)}`,
+      chemicalIdentityForIcs(incident),
       incident.quantity,
       incidentContainerSummary(incident),
     ]
@@ -138,7 +211,7 @@ function automaticIcsValue(fieldName: string, incident: Record<string, unknown>)
   if (normalized.startsWith("5situationsummary")) {
     return [
       incident.notes,
-      incident.chemicalName,
+      chemicalSafetyForIcs(incident),
       incidentContainerSummary(incident, true),
       incident.address,
       incident.weather,
@@ -148,8 +221,27 @@ function automaticIcsValue(fieldName: string, incident: Record<string, unknown>)
       .join(" · ");
   }
   if (normalized.startsWith("3safetymessage")) {
-    const ppe = (incident.ppeSummary as { items?: unknown[] } | undefined)?.items;
-    return Array.isArray(ppe) ? ppe.map(textValue).filter(Boolean).join("\n") : "";
+    return chemicalMitigationsForIcs(incident) || chemicalSafetyForIcs(incident);
+  }
+  if (normalized === "idlhrow1") return profileText(exposures.idlh || incident.idlh);
+  if (normalized === "physstaterow1") return profileText(properties.physicalState);
+  if (normalized === "fprow1") return profileText(properties.flashPoint);
+  if (normalized === "itrow1") return profileText(properties.ignitionTemperature);
+  if (normalized === "vprow1") return profileText(properties.vaporPressure);
+  if (normalized === "vdrow1") return profileText(properties.vaporDensity);
+  if (normalized === "sgrow1") return profileText(properties.specificGravity);
+  if (normalized === "lelrow1") return profileText(properties.lelUel).split("/")[0]?.trim() || "";
+  if (normalized === "uelrow1") return profileText(properties.lelUel).split("/")[1]?.trim() || "";
+  if (normalized === "20lelinstruments") return profileText(detectors.lelMeterRelevance || detectors.items, 700);
+  if (normalized === "22toxicityppminstruments") return profileText(detectors.items, 700);
+  if (normalized === "specialmedicalemergencyprocedures") {
+    return [profileText(medical.firstAid), profileText(medical.treatmentNotes), profileText(medical.antidotes)]
+      .filter(Boolean).join("\n").slice(0, 1800);
+  }
+  if (/^6hazardsrisksrow1$/.test(normalized)) return chemicalSafetyForIcs(incident);
+  if (/^7mitigationsrow1$/.test(normalized)) return chemicalMitigationsForIcs(incident);
+  if (normalized === "33emergencyprocedures") {
+    return [chemicalSafetyForIcs(incident), chemicalMitigationsForIcs(incident)].filter(Boolean).join("\n").slice(0, 1800);
   }
   return "";
 }
@@ -203,9 +295,54 @@ app.get("/api/chemicals", async (c) => {
   return c.json({ chemicals: filtered });
 });
 
-app.get("/api/chemicals/:id", async (c) => {
-  const db = getDb();
+app.get("/api/chemicals/search", async (c) => {
+  const q = c.req.query("q");
+  if (!q) return c.json({ chemicals: [] });
+  return c.json({ chemicals: searchCompanionChemicals(q) });
+});
+
+app.get("/api/chemicals/:id/profile", async (c) => {
   const id = c.req.param("id");
+  if (!/^\d+$/.test(id)) return c.json({ error: "ChemicalID must be a positive integer" }, 400);
+  const profile = queryChemicalProfile(id);
+  if (!profile) return c.json({ error: "not found" }, 404);
+  const ergTable1 = ERG_TABLE_1.find((entry) =>
+    entry.un === profile.header.un
+    && entry.guide.replace(/P$/i, "") === profile.header.ergGuide.replace(/P$/i, ""),
+  );
+  const ergTable2 = ergTable1 ? getErgAdditionalTables(ergTable1) : [];
+  const ergTable3 = getErgContainerDistances(profile.header.un);
+  return c.json({
+    id,
+    selectedChemicalId: Number(id),
+    ...profile,
+    isolationErg: {
+      ...profile.isolationErg,
+      ergTable1: ergTable1 ? [ergTable1] : [],
+      ergTable2,
+      ergTable3,
+    },
+  });
+});
+
+app.get("/api/chemicals/:id", async (c) => {
+  const id = c.req.param("id");
+  const profile = queryChemicalProfile(id);
+  if (profile) {
+    return c.json({
+      id,
+      selectedChemicalId: Number(id),
+      ChemicalID: Number(id),
+      ChemicalName: profile.header.name,
+      name: profile.header.name,
+      cas: profile.header.cas,
+      un: profile.header.un,
+      ergGuide: profile.header.ergGuide,
+      hazardClass: [profile.header.hazard],
+    });
+  }
+
+  const db = getDb();
   const rows = await db.select().from(schema.chemicals).where(eq(schema.chemicals.id, id));
   if (rows.length === 0) return c.json({ error: "not found" }, 404);
   return c.json(rows[0]);

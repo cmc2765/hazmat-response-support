@@ -1267,9 +1267,13 @@ h1, h2, h3, p { margin-top: 0; }
 .chemical-id-search-card {
   z-index: 10;
   min-height: 0;
-  padding: 16px 20px;
-  margin-bottom: 16px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
   overflow: visible;
+}
+
+.chemical-id-search-card h3 {
+  margin-bottom: 8px;
 }
 
 .chemical-id-search-card > :last-child {
@@ -1299,7 +1303,7 @@ h1, h2, h3, p { margin-top: 0; }
 
 .chemical-search-form {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: start;
   gap: 10px;
 }
@@ -1375,6 +1379,10 @@ h1, h2, h3, p { margin-top: 0; }
   font-weight: 700;
 }
 
+.chemical-search-status:empty {
+  display: none;
+}
+
 .chemical-search-status[data-state="error"] { color: #a40e14; }
 .chemical-search-status[data-state="success"] { color: #17603a; }
 
@@ -1427,6 +1435,470 @@ h1, h2, h3, p { margin-top: 0; }
   max-width: none;
   margin-inline: 0;
   scroll-margin-top: 16px;
+}
+
+.chemical-profile-shell {
+  display: grid;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.chemical-profile-header-card {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  min-height: 0;
+  margin-bottom: 0;
+  padding: 10px 14px;
+  border-color: #d9bd4b;
+  background: #fff4bd;
+  box-shadow: 0 5px 14px rgba(78, 63, 0, 0.12);
+}
+
+.chemical-profile-header-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chemical-profile-header-top .eyebrow {
+  margin: 0 0 2px;
+  color: var(--red);
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 1.08rem;
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-shadow: none;
+}
+
+.chemical-profile-header-top h3 {
+  margin: 0;
+  color: #202327;
+  font-weight: 900;
+}
+
+.chemical-profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  font-size: 0.86rem;
+}
+
+.chemical-profile-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 4px 9px;
+  border: 1px solid #d2b73f;
+  border-radius: 999px;
+  background: #fffdf1;
+}
+
+.chemical-profile-meta-title {
+  color: #39320d;
+  font-weight: 900;
+}
+
+.chemical-profile-meta-value {
+  display: inline-flex;
+  align-items: center;
+  color: #202327;
+  font-weight: 800;
+}
+
+.chemical-profile-meta-item[data-field^="idlh"],
+.chemical-profile-row[data-field^="idlh"],
+.chemical-profile-list-row[data-field^="idlh"] {
+  border-color: #dc666b;
+  background: #ffd9db;
+  box-shadow: none;
+}
+
+.chemical-profile-meta-item[data-field^="idlh"] *,
+.chemical-profile-row[data-field^="idlh"] span,
+.chemical-profile-row[data-field^="idlh"] strong,
+.chemical-profile-list-row[data-field^="idlh"] strong,
+.chemical-profile-list-row[data-field^="idlh"] span {
+  color: #a40e14;
+  font-weight: 950;
+}
+
+.chemical-profile-summary {
+  margin: 0;
+  color: #514718;
+  line-height: 1.3;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.chemical-profile-plume-btn {
+  flex: 0 0 auto;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.chemical-profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 180px;
+  gap: 8px;
+  align-items: start;
+  padding: 7px;
+  border: 1px solid #d9bd4b;
+  border-radius: 14px;
+  background: #fff4bd;
+}
+
+.chemical-profile-content-card {
+  min-width: 0;
+  min-height: 0;
+  margin-bottom: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.chemical-profile-content {
+  display: grid;
+  gap: 12px;
+  max-height: 70vh;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.chemical-profile-content[data-active-tab="exposures"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+}
+
+.chemical-profile-content[data-active-tab="exposures"] > .chemical-profile-section {
+  grid-column: 1 / -1;
+}
+
+.chemical-profile-content[data-active-tab="exposures"] > .chemical-profile-section[data-section="aegl-levels"],
+.chemical-profile-content[data-active-tab="exposures"] > .chemical-profile-section[data-section="erpg-teel-levels"],
+.chemical-profile-content[data-active-tab="exposures"] > .chemical-profile-section[data-section="additional-exposure-levels"] {
+  grid-column: auto;
+  min-width: 0;
+}
+
+.chemical-profile-tabs {
+  display: grid;
+  gap: 7px;
+  position: sticky;
+  top: 12px;
+  padding: 9px;
+  border: 1px solid #d9bd4b;
+  border-radius: 11px;
+  background: linear-gradient(145deg, #fff7ce, #f4dfa0);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 10px 24px rgba(78, 63, 0, 0.16);
+}
+
+.chemical-profile-tab {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid #d2b73f;
+  border-radius: 10px;
+  color: #071f36;
+  background: #fffdf1;
+  text-align: left;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.chemical-profile-tab:hover,
+.chemical-profile-tab:focus-visible {
+  background: #fff1a8;
+  border-color: #b9960f;
+  outline: none;
+  transform: translateX(2px);
+}
+
+.chemical-profile-tab.active {
+  border-color: #b9960f;
+  background: #ffe784;
+  color: #071f36;
+  box-shadow: inset 4px 0 0 #b9960f;
+}
+
+.chemical-profile-tab[data-tab="properties"] {
+  border-color: #9f1016;
+  background: var(--red);
+  color: #fff;
+}
+
+.chemical-profile-tab[data-tab="properties"].active {
+  border-color: #7f0d12;
+  background: linear-gradient(105deg, #b70e16, var(--red));
+  color: #fff;
+  box-shadow: inset 4px 0 0 #7f0d12;
+}
+
+.chemical-profile-tab[data-tab="isolationErg"] {
+  white-space: nowrap;
+}
+
+.chemical-profile-section {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid #aeb4b9;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #e2e5e7, #cfd3d6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 6px 16px rgba(7, 31, 54, 0.12);
+}
+
+.chemical-profile-section h4 {
+  margin: 0;
+  color: #071f36;
+  font-size: 1.08rem;
+  font-weight: 900;
+  letter-spacing: 0.025em;
+}
+
+.chemical-profile-section[data-section="reactivity"] {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.chemical-profile-section[data-section="reactivity"] .chemical-profile-list {
+  gap: 10px;
+  padding-left: 22px;
+  color: #071f36;
+}
+
+.chemical-profile-section[data-section="reactivity"] .chemical-profile-list li {
+  padding-left: 4px;
+  line-height: 1.55;
+}
+
+.chemical-profile-section[data-section="recommended-ppe"],
+.chemical-profile-section[data-section="recommended-detector"],
+.chemical-profile-section[data-section="ppe-options"],
+.chemical-profile-section[data-section="glove-suit-materials"] {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.chemical-profile-section[data-section="recommended-ppe"] .chemical-profile-row,
+.chemical-profile-section[data-section="recommended-detector"] .chemical-profile-row {
+  border: 2px solid #d2b73f;
+  border-radius: 14px;
+  background: #fff4bd;
+  box-shadow: inset 4px 0 0 var(--red);
+}
+
+.chemical-profile-section[data-section="recommended-ppe"] .chemical-profile-row span,
+.chemical-profile-section[data-section="recommended-detector"] .chemical-profile-row span {
+  color: var(--red);
+  font-size: 0.88rem;
+  font-weight: 950;
+}
+
+.chemical-profile-section[data-section="ppe-options"] .chemical-profile-list,
+.chemical-profile-section[data-section="glove-suit-materials"] .chemical-profile-list {
+  padding: 0;
+  list-style: none;
+}
+
+.chemical-profile-section[data-section="ppe-options"] .chemical-profile-list li,
+.chemical-profile-section[data-section="glove-suit-materials"] .chemical-profile-list li {
+  padding: 10px 12px;
+  border: 1px solid rgba(7, 31, 54, 0.14);
+  border-radius: 9px;
+  background: rgba(244, 246, 247, 0.82);
+}
+
+.erg-profile-table {
+  grid-column: 1 / -1;
+  width: 100%;
+  border-color: #287443;
+  background: linear-gradient(145deg, #23814a, #146838);
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 7px 18px rgba(20, 104, 56, 0.22);
+}
+
+.erg-profile-table h4 {
+  color: #fff;
+}
+
+.erg-profile-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #0d542c;
+  border-radius: 9px;
+  background: #f5fbf6;
+}
+
+.erg-profile-table table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  color: #123722;
+}
+
+.erg-profile-table th,
+.erg-profile-table td {
+  padding: 9px 10px;
+  border: 1px solid #83b695;
+  text-align: left;
+  vertical-align: top;
+}
+
+.erg-profile-table th {
+  background: #168349;
+  color: #fff;
+  font-weight: 900;
+}
+
+.erg-profile-table tbody tr:nth-child(even) {
+  background: #e5f3e9;
+}
+
+.chemical-profile-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.chemical-profile-section[data-section="chemical-properties"] .chemical-profile-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.chemical-profile-row {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid rgba(7, 31, 54, 0.12);
+  border-radius: 10px;
+  background: rgba(244, 246, 247, 0.76);
+}
+
+.chemical-profile-row strong {
+  color: #071f36;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.chemical-profile-value-list {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  color: #071f36;
+  list-style: none;
+}
+
+.chemical-profile-value-list li {
+  padding: 7px 9px;
+  border-left: 3px solid #2b5d85;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.58);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.chemical-profile-value-list.compact-columns,
+.chemical-profile-list.compact-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  column-gap: 10px;
+  row-gap: 7px;
+}
+
+.chemical-profile-value-list.compact-columns li,
+.chemical-profile-list.compact-columns li {
+  min-width: 0;
+  height: 100%;
+}
+
+.chemical-profile-row span {
+  color: #071f36;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chemical-profile-list {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding-left: 22px;
+  color: #071f36;
+}
+
+.chemical-profile-list li {
+  padding-left: 3px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.chemical-profile-list-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.2fr);
+  gap: 12px;
+  align-items: center;
+  padding: 9px 11px !important;
+  border: 1px solid rgba(7, 31, 54, 0.14);
+  border-radius: 9px;
+  background: rgba(244, 246, 247, 0.82);
+}
+
+.chemical-profile-list-row strong {
+  color: #071f36;
+  font-size: 0.82rem;
+  letter-spacing: 0.025em;
+}
+
+.chemical-profile-list-row span {
+  color: #071f36;
+  font-weight: 800;
+}
+
+.chemical-profile-section[data-section$="levels"] .chemical-profile-list,
+.chemical-profile-section[data-section="primary-limits"] .chemical-profile-list,
+.chemical-profile-section[data-section="additional-exposure-levels"] .chemical-profile-list,
+.chemical-profile-section[data-section="other-monitoring-concerns"] .chemical-profile-list {
+  padding: 0;
+  list-style: none;
+}
+
+.chemical-profile-section[data-section$="levels"] .chemical-profile-list-row,
+.chemical-profile-section[data-section="additional-exposure-levels"] .chemical-profile-list-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.chemical-profile-section[data-section$="levels"] .chemical-profile-list-row span,
+.chemical-profile-section[data-section="additional-exposure-levels"] .chemical-profile-list-row span {
+  white-space: nowrap;
+}
+
+.chemical-profile-section[data-section="primary-limits"] h4,
+.chemical-profile-section[data-section="aegl-levels"] h4,
+.chemical-profile-section[data-section="erpg-teel-levels"] h4,
+.chemical-profile-section[data-section="additional-exposure-levels"] h4 {
+  white-space: nowrap;
+}
+
+.chemical-profile-empty {
+  margin: 0;
+  color: #445567;
+  font-weight: 700;
 }
 
 .erg-additional-tables {
@@ -1733,6 +2205,55 @@ h1, h2, h3, p { margin-top: 0; }
 @media (max-width: 900px) {
   .command-snapshot-grid {
     grid-template-columns: 1fr;
+  }
+
+  .chemical-profile-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .chemical-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chemical-profile-section[data-section="chemical-properties"] .chemical-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chemical-profile-content[data-active-tab="exposures"] {
+    grid-template-columns: 1fr;
+  }
+
+  .chemical-profile-content[data-active-tab="exposures"] > .chemical-profile-section[data-section] {
+    grid-column: 1;
+  }
+
+  .chemical-profile-list-row {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .chemical-profile-value-list.compact-columns,
+  .chemical-profile-list.compact-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .chemical-profile-tabs {
+    position: static;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    overflow-x: auto;
+    padding: 8px;
+    border-left: 1px solid #d9bd4b;
+    border-radius: 12px;
+  }
+
+  .chemical-profile-tab {
+    border-left: 1px solid #d2b73f;
+    border-radius: 9px;
+    white-space: nowrap;
+  }
+
+  .chemical-profile-content-card {
+    border-radius: 18px;
   }
 
   .command-snapshot-heading {

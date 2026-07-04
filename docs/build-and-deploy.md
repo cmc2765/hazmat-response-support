@@ -33,6 +33,11 @@ is no automated ingestion pipeline yet. Pulling from external government/private
 planned future phase (see project notes) and would likely live as a new `scripts/` pipeline
 writing into `src/data/` once built.
 
+The Chemical Companion reference database is committed at
+`data/ChemicalCompanionDB.db`. Docker copies it to
+`/app/data/ChemicalCompanionDB.db`; it is intentionally separate from the writable app
+database stored at `$SQLITE_PATH` (`/data/local.db` in Docker).
+
 ## Secrets
 
 Integration secrets (Safety Suite auth, weather API keys) are currently held in memory on

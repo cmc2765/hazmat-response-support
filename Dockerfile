@@ -13,6 +13,7 @@ COPY server/package.json server/package-lock.json ./server/
 RUN cd server && npm ci --omit=dev
 
 COPY src ./src
+COPY data ./data
 COPY server ./server
 
 ENV SQLITE_PATH=/data/local.db

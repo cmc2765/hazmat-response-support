@@ -375,7 +375,6 @@
           <section id="lookup" class="view">
             <article class="panel-card chemical-id-search-card">
               <h3>Search Chemical ID</h3>
-              <p class="big-label">Search chemical references or find a facility's submitted inventory.</p>
               <form id="chemical-search-form" class="chemical-search-form" role="search">
                 <div class="chemical-search-input-wrap">
                   <label class="sr-only" for="chemical-search">Chemical name, UN number, CAS number, or facility</label>
@@ -392,14 +391,8 @@
                   <div id="chemical-search-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
                 </div>
                 <button class="primary-btn" id="chemical-lookup-btn" type="submit">Search</button>
+                <button class="accent-btn" id="save-my-chemical-btn" type="button">Save to My Chemicals</button>
               </form>
-              <div class="chemical-search-types" id="chemical-search-options" aria-label="Search by chemical name, UN number, CAS number, or facility">
-                <strong>Search by:</strong>
-                <span>Chemical Name</span>
-                <span>UN Number</span>
-                <span>CAS Number</span>
-                <span>Facility</span>
-              </div>
               <p id="chemical-search-status" class="chemical-search-status" role="status" aria-live="polite"></p>
             </article>
 
@@ -422,141 +415,25 @@
                   <p class="eyebrow">Hazard summary</p>
                   <h2>Chemical ID Results</h2>
                 </div>
-                <div class="chemical-result-actions">
-                  <button class="primary-btn" id="open-incident-dashboard-btn" type="button">View Incident Dashboard</button>
-                  <button class="primary-btn" id="open-plume-btn" type="button">Open Plume Model</button>
-                  <button class="accent-btn" id="save-my-chemical-btn" type="button">Save to My Chemicals</button>
-                </div>
               </div>
-              <section id="chemical-erg-table-1" class="erg-table-card" hidden>
-                <div class="erg-table-heading">
-                  <div>
-                    <p class="eyebrow">Green-highlighted material</p>
-                    <h4>ERG Table 1 — Initial Isolation and Protective Action Distances</h4>
+              <div class="chemical-profile-shell">
+                <article class="panel-card chemical-profile-header-card">
+                  <div class="chemical-profile-header-top">
+                    <div>
+                      <p class="eyebrow">Chemical profile</p>
+                      <h3 id="chemical-name">Select a chemical</h3>
+                    </div>
                   </div>
-                  <span id="chemical-erg-table-badge" class="erg-green-badge">TIH</span>
+                  <p id="chemical-summary" class="chemical-profile-summary">Search for a chemical to load its companion-database profile.</p>
+                  <div id="chemical-profile-meta" class="chemical-profile-meta"></div>
+                  <button class="primary-btn chemical-profile-plume-btn" id="open-plume-btn" type="button">Open Plume Model</button>
+                </article>
+                <div class="chemical-profile-layout">
+                  <article class="panel-card chemical-profile-content-card">
+                    <div id="chemical-profile-content" class="chemical-profile-content"></div>
+                  </article>
+                  <nav id="chemical-profile-tabs" class="chemical-profile-tabs" aria-label="Chemical profile sections"></nav>
                 </div>
-                <p id="chemical-erg-table-note" class="muted"></p>
-                <div class="erg-table-wrap">
-                  <table>
-                    <thead>
-                      <tr><th>Spill size</th><th>Time</th><th>Initial isolation<br><small>all directions</small></th><th>Protective action<br><small>downwind</small></th></tr>
-                    </thead>
-                    <tbody id="chemical-erg-table-body"></tbody>
-                  </table>
-                </div>
-                <div id="chemical-erg-container-distances" class="erg-container-distances" hidden>
-                  <h4>Container-specific large-spill distances <small>ERG Table 3</small></h4>
-                  <p class="muted">Protective-action distance varies by container, time of day, and wind speed.</p>
-                  <div class="erg-table-wrap">
-                    <table class="erg-container-table">
-                      <thead>
-                        <tr>
-                          <th rowspan="2">Transport container</th>
-                          <th rowspan="2">Initial isolation<br><small>all directions</small></th>
-                          <th colspan="3">Day — protect downwind</th>
-                          <th colspan="3">Night — protect downwind</th>
-                        </tr>
-                        <tr>
-                          <th>Low<br><small>&lt;6 mph</small></th><th>Moderate<br><small>6–12 mph</small></th><th>High<br><small>&gt;12 mph</small></th>
-                          <th>Low<br><small>&lt;6 mph</small></th><th>Moderate<br><small>6–12 mph</small></th><th>High<br><small>&gt;12 mph</small></th>
-                        </tr>
-                      </thead>
-                      <tbody id="chemical-erg-container-body"></tbody>
-                    </table>
-                  </div>
-                  <p class="erg-table-footnote muted">Distances marked “+” may be larger under certain atmospheric conditions.</p>
-                </div>
-              </section>
-              <section id="chemical-erg-additional-tables" class="erg-additional-tables" aria-label="Additional ERG tables" hidden>
-                <div id="chemical-erg-additional-table-rows"></div>
-              </section>
-              <div class="card-grid two-up chemical-card-grid">
-              <article class="panel-card hazard-card urgent-card chemical-card-panel first-responder-card">
-                <div class="chemical-card-header">
-                  <div>
-                    <p class="eyebrow chemical-view-title">Responder View</p>
-                    <h3 id="chemical-name">ANHYDROUS AMMONIA</h3>
-                    <p id="chemical-erg-heading" class="erg-guide-heading">ERG 2024 Guide 125 — Gases - Corrosive</p>
-                  </div>
-                  <span id="chemical-erg-guide" class="erg-guide-number">125</span>
-                </div>
-                <p id="chemical-summary" class="erg-material-summary">ERG guidance for the initial phase of a transportation incident.</p>
-                <div class="erg-quick-facts" aria-label="Immediate ERG information">
-                  <div class="erg-quick-fact erg-quick-fact-primary">
-                    <span>Initial Isolation Distance</span>
-                    <strong id="chemical-initial-isolation">100 ft (small spill) / 500–1,000 ft (large spill)</strong>
-                  </div>
-                  <div class="erg-quick-fact">
-                    <span>Guide / Material</span>
-                    <strong id="chemical-guide-material">Guide 125 · UN 1005</strong>
-                  </div>
-                </div>
-                <div id="chemical-erg-content" class="erg-page">
-                  <div class="erg-page-column">
-                    <section class="erg-section erg-hazards">
-                      <h4>Hazards</h4>
-                      <h5>Fire or Explosion</h5>
-                      <ul id="chemical-erg-fire-hazards"></ul>
-                      <h5>Health</h5>
-                      <ul id="chemical-erg-health-hazards"></ul>
-                    </section>
-                    <section class="erg-section erg-public-safety">
-                      <h4>PPE &amp; Isolation</h4>
-                      <h5>Scene Control</h5>
-                      <ul id="chemical-erg-public-safety"></ul>
-                      <h5>PPE</h5>
-                      <ul id="chemical-erg-protective-clothing"></ul>
-                      <h5>Isolation &amp; Protective Actions</h5>
-                      <ul id="chemical-erg-evacuation"></ul>
-                    </section>
-                  </div>
-                  <div class="erg-page-column">
-                    <section class="erg-section erg-response">
-                      <h4>Emergency Response Protocols</h4>
-                      <h5>Fire</h5>
-                      <ul id="chemical-erg-fire-response"></ul>
-                      <h5>Spill or Leak</h5>
-                      <ul id="chemical-erg-spill-response"></ul>
-                    </section>
-                  </div>
-                </div>
-              </article>
-              <article class="panel-card chemical-card-panel specialist-card">
-                <div class="chemical-card-header">
-                  <div>
-                    <p class="eyebrow chemical-view-title">HazMat View</p>
-                    <h3>ADVANCED CHEMICAL DATA</h3>
-                  </div>
-                  <span class="status-pill">CAMEO • NIOSH</span>
-                </div>
-                <ul class="detail-list" id="chemical-advanced-list">
-                  <li><span>CAS</span><strong>[source value]</strong></li>
-                  <li><span>UN</span><strong>[source value]</strong></li>
-                  <li><span>Molecular Weight</span><strong>[source value]</strong></li>
-                  <li><span>Vapor Density</span><strong>[source value]</strong></li>
-                  <li><span>Boiling Point</span><strong>[source value]</strong></li>
-                  <li><span>Flash Point</span><strong>[source value]</strong></li>
-                  <li><span>LEL / UEL</span><strong>[source values]</strong></li>
-                  <li><span>IDLH</span><strong>[source value]</strong></li>
-                  <li><span>AEGL</span><strong>[source values]</strong></li>
-                  <li><span>ERPG</span><strong>[source values]</strong></li>
-                  <li><span>PAC</span><strong>[source values]</strong></li>
-                  <li><span>Reactivity</span><strong>[source value]</strong></li>
-                  <li><span>Incompatibilities</span><strong>[source values]</strong></li>
-                  <li><span>PPE References</span><strong>[source values]</strong></li>
-                  <li><span>Decon References</span><strong>[source values]</strong></li>
-                </ul>
-                <div class="action-box">
-                  <h4>Source references</h4>
-                  <ul id="chemical-source-list">
-                    <li>ERG 2024: guide and initial isolation values</li>
-                    <li>NIOSH Pocket Guide: IDLH and respiratory protection data</li>
-                    <li>SDS: exposure controls and reactivity guidance</li>
-                    <li>E-Plan: facility inventory and emergency-contact context</li>
-                  </ul>
-                </div>
-              </article>
               </div>
             </div>
           </section>

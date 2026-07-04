@@ -21,6 +21,9 @@ Browser ──> Hono server (server/src/app.ts) ──┬──> server/public/ 
 - **UI** — `server/public/`: plain HTML/CSS/JS, no build step.
 - **API + data** — `server/src/`: Hono routes, Drizzle ORM, SQLite. Seeded from the
   hand-curated chemical/NIOSH/ERG/threshold/facility data in `src/data/`.
+- **Chemical Companion reference database** — `data/ChemicalCompanionDB.db`. Keeping it
+  inside the repository gives local development and Codespaces the same relative path;
+  Docker includes it at `/app/data/ChemicalCompanionDB.db`.
 - **Plume model** — `src/lib/model/`: in-house Gaussian puff/plume math, called by the
   API's `POST /api/plume/run`.
 
@@ -63,7 +66,8 @@ docker compose up --build
 
 Serves the app at `http://localhost:3000`. The SQLite database lives in a named Docker
 volume (`hazmat-data`), so it survives container restarts/rebuilds. No internet access is
-required at runtime — verified with `docker run --network none`.
+required at runtime — verified with `docker run --network none`. The read-only Chemical
+Companion reference database is bundled separately at `/app/data/ChemicalCompanionDB.db`.
 
 ## License
 
