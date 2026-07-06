@@ -6,9 +6,9 @@ commit messages — open questions, things to follow up on, decisions made in co
 Add a dated entry under your section. No format police — just write it down before you forget it.
 
 ## Frontend (WADE)
-Fix the Plume Model to show correct demographics, and adjust font and colors for each plume zone.
+Continue to work out bugs from Chemical Companion integration. Perfect Chemical ID. page
+Get Chris to help integrate the Dalhgren Decon guidebook to add into Decon section
 
-Create working buttons for Street Map view, Satellite view buttons for Street Map view, Satellite view and Street/3D view on Plume Model page
 Create Live Map with layer buttons for zones, ICP, Monitor integration, traffic, live traffic cams, etc
 Create Monitoring Equipment Page
 Create ICS Forms/reports Page and add information import capability from dashboard, Begin AI-assisted ICS Form generation

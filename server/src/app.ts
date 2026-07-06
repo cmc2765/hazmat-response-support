@@ -162,6 +162,8 @@ function chemicalMitigationsForIcs(incident: Record<string, unknown>) {
     profileText(ppe.bestMatch) && `PPE best match: ${profileText(ppe.bestMatch)}`,
     profileText(ppe.respiratorRecommendations) && `Respiratory: ${profileText(ppe.respiratorRecommendations, 450)}`,
     profileText(decon.preferredMethod) && `Decon: ${profileText(decon.preferredMethod, 350)}`,
+    profileText(decon.patientVictimDecon) && `Patient decon: ${profileText(decon.patientVictimDecon, 500)}`,
+    profileText(decon.runoffContainment) && `Runoff: ${profileText(decon.runoffContainment, 300)}`,
     profileText(medical.firstAid) && `First aid: ${profileText(medical.firstAid, 450)}`,
   ].filter(Boolean).join("\n").slice(0, 1800);
 }
@@ -409,11 +411,32 @@ app.post("/api/plume/run", async (c) => {
   }
   const inputs = parsed.data;
 
+  // Chemical Companion uses numeric IDs; plume thresholds use canonical chemical slugs.
+  const directChemicalRows = await db
+    .select()
+    .from(schema.chemicals)
+    .where(eq(schema.chemicals.id, inputs.chemicalId));
+  if (!directChemicalRows.length && /^\d+$/.test(inputs.chemicalId)) {
+    const companionProfile = queryChemicalProfile(inputs.chemicalId);
+    const companionCas = companionProfile?.header.cas?.trim();
+    if (companionCas) {
+      const chemicalRows = await db.select().from(schema.chemicals).limit(500);
+      const canonicalChemical = chemicalRows.find((row) => {
+        try {
+          const casValues = JSON.parse(String(row.cas || "[]")) as string[];
+          return casValues.some((cas) => cas.trim() === companionCas);
+        } catch {
+          return false;
+        }
+      });
+      if (canonicalChemical) inputs.chemicalId = canonicalChemical.id;
+    }
+  }
+
   if (inputs.molecularWeight === undefined) {
-    const chemRows = await db
-      .select()
-      .from(schema.chemicals)
-      .where(eq(schema.chemicals.id, inputs.chemicalId));
+    const chemRows = directChemicalRows[0]?.id === inputs.chemicalId
+      ? directChemicalRows
+      : await db.select().from(schema.chemicals).where(eq(schema.chemicals.id, inputs.chemicalId));
     const mw = chemRows[0]?.molecularWeight;
     if (mw) inputs.molecularWeight = Number(mw);
   }
