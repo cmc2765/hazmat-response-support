@@ -219,6 +219,11 @@ h1, h2, h3, p { margin-top: 0; }
   margin-bottom: 16px;
 }
 
+.layout:has(#plume.active) .sidebar {
+  position: relative;
+  z-index: 3;
+}
+
 .module-nav {
   display: grid;
   gap: 10px;
@@ -363,6 +368,172 @@ h1, h2, h3, p { margin-top: 0; }
 
 .map-action-row {
   margin-bottom: 16px;
+}
+
+/* Phase 1 incident command map. */
+.live-map-command-bar,
+.live-map-layer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.live-map-command-bar > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.live-map-view-buttons {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.live-map-view-buttons button.active {
+  border-color: #0b1f33;
+  background: #0b1f33;
+  color: #fff;
+}
+
+.live-map-command-bar span,
+.live-map-status {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.live-map-layer-bar {
+  justify-content: flex-start;
+  overflow-x: auto;
+  padding-bottom: 3px;
+}
+
+.live-map-layer-bar button {
+  flex: 0 0 auto;
+  min-height: 30px;
+  padding: 4px 9px;
+  border: 1px solid #8796a5;
+  border-radius: 8px;
+  background: #eef3f7;
+  color: #0b1f33;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.live-map-layer-bar button.active {
+  border-color: #0b1f33;
+  background: #0b1f33;
+  color: #fff;
+  box-shadow: inset 0 -3px 0 #ffd323;
+}
+
+.live-map-stage {
+  position: relative;
+  min-height: 620px;
+  overflow: hidden;
+  border: 2px solid #0b1f33;
+  border-radius: 14px;
+  background: #dce3e8;
+}
+
+#live-gis-map {
+  width: 100%;
+  height: min(75dvh, 720px);
+  min-height: 620px;
+}
+
+#live-map-loading {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #0b1f33;
+  font-weight: 850;
+  pointer-events: none;
+}
+
+.live-map-stage.map-ready #live-map-loading {
+  display: none;
+}
+
+.live-map-panels {
+  position: absolute;
+  z-index: 3;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  gap: 7px;
+  width: min(320px, calc(100% - 20px));
+  pointer-events: none;
+}
+
+.live-map-panels > div:not([hidden]) {
+  display: grid;
+  gap: 5px;
+  padding: 9px;
+  border: 1px solid #9dafbf;
+  border-radius: 10px;
+  background: rgba(248, 250, 252, 0.96);
+  box-shadow: 0 5px 15px rgba(11, 31, 51, 0.2);
+  font-size: 0.75rem;
+  pointer-events: auto;
+}
+
+.live-map-panels p { margin: 0; }
+.live-radar-panel a { color: #9f1016; font-weight: 850; }
+.live-map-status { margin: 5px 0 12px; }
+
+.live-map-marker {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #0b1f33;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.65rem;
+  font-weight: 900;
+}
+
+.live-map-marker[data-layer="entry"] { background: #c1121f; }
+.live-map-marker[data-layer="decon"] { background: #168349; }
+.live-map-marker[data-layer="monitors"] { background: #6f42c1; }
+.live-map-marker[data-layer="staging"] { background: #1769aa; }
+.live-map-marker[data-layer="medical"] { background: #fff; color: #c1121f; }
+.live-map-marker[data-layer="trafficCams"] { background: #46525e; font-size: 0.75rem; }
+
+.live-map-marker-dialog {
+  width: min(460px, calc(100% - 24px));
+  border: 1px solid #0b1f33;
+  border-radius: 12px;
+}
+
+.live-map-marker-dialog form,
+.live-map-marker-dialog label,
+#live-monitor-fields {
+  display: grid;
+  gap: 6px;
+}
+
+.live-map-marker-dialog form { gap: 10px; }
+.live-map-marker-dialog h3 { margin: 0; }
+.live-map-marker-dialog form > div:last-child { display: flex; gap: 8px; }
+.live-marker-coordinates, #live-monitor-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+@media (max-width: 620px) {
+  .live-map-command-bar { align-items: flex-start; flex-direction: column; }
+  .live-map-command-bar > div:last-child { flex-wrap: wrap; }
+  .live-map-stage, #live-gis-map { min-height: 480px; }
+  #live-gis-map { height: 62dvh; }
+  .live-map-panels { position: static; width: 100%; padding: 7px; }
+  .live-map-stage { overflow: visible; }
+  .live-marker-coordinates, #live-monitor-fields { grid-template-columns: 1fr; }
 }
 
 .wind-arrow {
@@ -510,8 +681,8 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .incident-command-snapshot {
-  margin-bottom: 14px;
-  padding: 16px;
+  margin-bottom: 8px;
+  padding: 10px;
   border: 2px solid #aeb5bc;
   border-radius: 16px;
   background: #f1f3f4;
@@ -527,11 +698,12 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .command-snapshot-heading {
-  margin-bottom: 12px;
+  margin-bottom: 7px;
 }
 
 .command-snapshot-heading .box-title {
-  font-size: 3.5rem;
+  font-size: 1.45rem;
+  line-height: 1;
 }
 
 .command-snapshot-heading #update-incident-location-btn {
@@ -562,15 +734,15 @@ h1, h2, h3, p { margin-top: 0; }
 .command-snapshot-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 .command-status-card {
   display: grid;
   grid-template-rows: auto auto minmax(40px, auto) auto auto;
-  gap: 8px;
+  gap: 5px;
   min-width: 0;
-  padding: 14px;
+  padding: 9px 10px;
   border: 1px solid var(--border);
   border-top: 5px solid #6c757d;
   border-radius: 11px;
@@ -580,7 +752,11 @@ h1, h2, h3, p { margin-top: 0; }
 .command-chemical-card { border-top-color: #d71920; }
 .command-plume-card { border-top-color: #d6b615; }
 .command-ppe-card { border-top-color: #168349; }
-.command-weather-card { border-color: #2779ad; border-top-color: #1677b8; }
+.command-weather-card {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  border-color: #2779ad;
+  border-top-color: #1677b8;
+}
 
 .command-weather-refresh {
   border-color: #2779ad;
@@ -610,14 +786,18 @@ h1, h2, h3, p { margin-top: 0; }
 
 .command-status-card h4 {
   overflow-wrap: anywhere;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .command-status-card p {
   color: var(--muted);
-  font-size: 0.8rem;
-  line-height: 1.5;
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 0.72rem;
+  line-height: 1.3;
   overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .command-weather-data {
@@ -649,7 +829,7 @@ h1, h2, h3, p { margin-top: 0; }
 
 .command-status-card details {
   border-top: 1px solid #d4d8dc;
-  padding-top: 7px;
+  padding-top: 4px;
   font-size: 0.74rem;
 }
 
@@ -667,8 +847,8 @@ h1, h2, h3, p { margin-top: 0; }
 
 .command-card-action {
   align-self: end;
-  min-height: 36px;
-  padding: 7px 9px;
+  min-height: 30px;
+  padding: 4px 8px;
   font-size: 0.75rem;
   font-weight: 850;
 }
@@ -676,7 +856,7 @@ h1, h2, h3, p { margin-top: 0; }
 .incident-layout {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 10px;
   align-items: start;
 }
 
@@ -689,13 +869,13 @@ h1, h2, h3, p { margin-top: 0; }
 .incident-form-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px 10px;
-  margin-top: 8px;
+  gap: 5px 8px;
+  margin-top: 5px;
 }
 
 .incident-field {
   display: grid;
-  gap: 6px;
+  gap: 2px;
 }
 
 .incident-field-wide {
@@ -709,7 +889,7 @@ h1, h2, h3, p { margin-top: 0; }
 .incident-field > span,
 .incident-field-label {
   color: var(--muted);
-  font-size: 0.84rem;
+  font-size: 0.72rem;
   font-weight: 800;
 }
 
@@ -727,17 +907,19 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .incident-field textarea {
-  min-height: 56px;
+  min-height: 38px;
+  height: 38px;
   resize: vertical;
   font: inherit;
 }
 
 .incident-form-actions {
-  margin-top: 10px;
+  margin-top: 6px;
 }
 
 #incident-location-status {
-  margin: 12px 0 0;
+  margin: 5px 0 0;
+  font-size: 0.72rem;
 }
 
 .incident-timer {
@@ -747,9 +929,33 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .incident-input-card {
-  padding: 14px;
+  padding: 9px 12px;
   border-color: rgba(52, 211, 153, 0.45);
   box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.18);
+}
+
+.incident-input-card input,
+.incident-input-card textarea {
+  padding: 6px 9px;
+  border-radius: 7px;
+  font-size: 0.82rem;
+}
+
+.incident-input-card .chemical-card-header {
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.incident-input-card .button-row {
+  gap: 7px;
+}
+
+.incident-input-card button,
+.incident-input-card .status-pill {
+  min-height: 30px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 0.75rem;
 }
 
 .incident-guidance-card {
@@ -3045,6 +3251,20 @@ h1, h2, h3, p { margin-top: 0; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.plume-weather-source-status {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.plume-columbia-values {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+
 .plume-model-field {
   display: grid;
   align-content: start;
@@ -3085,6 +3305,10 @@ h1, h2, h3, p { margin-top: 0; }
 
 .plume-chemical-field {
   grid-column: 1 / -1;
+}
+
+.plume-chemical-search {
+  position: relative;
 }
 
 .plume-linked-input input {
@@ -3179,6 +3403,10 @@ h1, h2, h3, p { margin-top: 0; }
 .plume-demographics {
   display: none;
   margin-top: 28px;
+}
+
+.layout:has(#plume.active) {
+  gap: 28px;
 }
 
 .layout:has(#plume.active) .plume-demographics {
@@ -3412,6 +3640,7 @@ h1, h2, h3, p { margin-top: 0; }
 .plume-full-map {
   position: relative;
   min-height: 680px;
+  height: min(78dvh, calc(100dvh - 240px));
   overflow: hidden;
   border: 2px solid #111;
   border-radius: 16px;
@@ -3421,19 +3650,28 @@ h1, h2, h3, p { margin-top: 0; }
 
 .plume-map-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 250px;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  grid-column: 1 / -1;
   align-items: start;
   gap: 18px;
   width: 100%;
-  margin-inline: auto;
+  margin: 0 auto 24px;
 }
 
-@media (min-width: 981px) {
-  .layout:has(#plume.active) .plume-map-layout {
-    width: calc(100% + 268px);
-    margin-top: 12px;
-    margin-left: -268px;
-  }
+.plume-map-layout[hidden] {
+  display: none;
+}
+
+/* Keep the plume workspace in normal document flow beneath the dashboard header. */
+#plume.view.active {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.layout > .plume-map-layout {
+  max-width: none;
 }
 
 .plume-map-layout .plume-demographics {
@@ -3469,8 +3707,8 @@ h1, h2, h3, p { margin-top: 0; }
 .plume-full-map .plume-map-frame {
   display: block;
   width: 100%;
-  height: max(680px, calc(100dvh - 170px));
-  min-height: 680px;
+  height: 100%;
+  min-height: 0;
   border: 0;
   border-radius: 0;
 }

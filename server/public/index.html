@@ -116,12 +116,6 @@
                 <strong id="demographics-businesses">—</strong>
               </div>
             </div>
-            <div class="demographics-priorities">
-              <strong>Protective Action Guidance</strong>
-              <ul id="demographics-priority-list">
-                <li>Select a chemical and run the plume model to populate protective action guidance.</li>
-              </ul>
-            </div>
             <p id="demographics-source-status" class="demographics-source-status">Population estimate: U.S. Census geography. Occupancies: OpenStreetMap mapped features.</p>
           </details>
 
@@ -278,13 +272,17 @@
                       ></div>
                     </div>
                   </div>
-                  <label class="incident-field" for="incident-city">
+                  <label class="incident-field incident-field-wide" for="incident-city">
                     <span>City</span>
                     <input id="incident-city" type="text" placeholder="City" autocomplete="address-level2" />
                   </label>
                   <label class="incident-field" for="incident-state">
                     <span>State</span>
                     <input id="incident-state" type="text" placeholder="State" autocomplete="address-level1" maxlength="2" />
+                  </label>
+                  <label class="incident-field" for="incident-zip">
+                    <span>ZIP</span>
+                    <input id="incident-zip" type="text" placeholder="ZIP" autocomplete="postal-code" inputmode="numeric" maxlength="10" />
                   </label>
                   <label class="incident-field incident-field-wide" for="incident-coordinates-input">
                     <span>GPS latitude, longitude</span>
@@ -457,9 +455,12 @@
                   <div class="plume-model-section-grid plume-release-grid">
                     <label class="plume-model-field plume-chemical-field" for="plume-chemical-input">
                       <span>Chemical</span>
-                      <div class="plume-linked-input">
-                        <input id="plume-chemical-input" type="text" value="No identified chemical" readonly aria-describedby="plume-input-status" />
-                        <button class="ghost-btn" id="change-plume-chemical-btn" type="button">Identify / Change</button>
+                      <div class="plume-chemical-search">
+                        <div class="plume-linked-input">
+                          <input id="plume-chemical-input" type="text" placeholder="Name, Chemical ID, UN, or CAS" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="plume-chemical-suggestions" aria-describedby="plume-input-status" />
+                          <button class="ghost-btn" id="change-plume-chemical-btn" type="button">Browse</button>
+                        </div>
+                        <div id="plume-chemical-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
                       </div>
                     </label>
                     <label class="plume-model-field" for="plume-release-type">
@@ -509,6 +510,30 @@
                 <div class="plume-model-section">
                   <strong>Weather Data</strong>
                   <div class="plume-model-section-grid plume-weather-grid">
+                    <label class="plume-model-field" for="plume-weather-source">
+                      <span>Weather Source</span>
+                      <select id="plume-weather-source">
+                        <option value="open-meteo" selected>Open-Meteo</option>
+                        <option value="columbia-live">Columbia Weather Station</option>
+                        <option value="columbia-csv">Columbia CSV Import</option>
+                        <option value="manual">Manual Entry</option>
+                      </select>
+                    </label>
+                    <label class="plume-model-field plume-columbia-csv" for="plume-columbia-csv" hidden>
+                      <span>Upload CSV</span>
+                      <input id="plume-columbia-csv" type="file" accept=".csv,text/csv" />
+                    </label>
+                    <div class="plume-columbia-csv plume-columbia-values" hidden>
+                      <small>Station Name: <strong id="columbia-station-name">Not available</strong></small>
+                      <small>Wind Gusts: <strong id="columbia-wind-gust">Not available</strong></small>
+                      <small>Humidity: <strong id="columbia-humidity">Not available</strong></small>
+                      <small>Pressure: <strong id="columbia-pressure">Not available</strong></small>
+                    </div>
+                    <div class="plume-weather-source-status" aria-live="polite">
+                      <small><strong>Source:</strong> <span id="plume-weather-source-name">Open-Meteo</span></small>
+                      <small><strong>Source Status:</strong> <span id="plume-weather-source-state">Time unknown</span></small>
+                      <small><strong>Observation Time:</strong> <span id="plume-weather-observation-time">Not available</span></small>
+                    </div>
                     <label class="plume-model-field" for="plume-wind-speed">
                       <span>Wind speed (mph)</span>
                       <input id="plume-wind-speed" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Required" required />
@@ -608,129 +633,68 @@
           </section>
 
           <section id="map" class="view">
-            <div class="panel-card map-hero">
-              <div class="map-toolbar">
-                <div class="map-toolbar-title">
-                  <strong>LIVE HAZMAT MAP</strong>
-                  <span>Wind: 8 mph SW · Product: Ammonia</span>
-                </div>
-                <div class="map-toolbar-actions">
-                  <button class="accent-btn">Toggle Overlay</button>
-                  <button class="ghost-btn">Re-run Plume</button>
-                  <button class="ghost-btn">Add Reading</button>
-                  <button class="ghost-btn">Drop Marker</button>
-                </div>
-              </div>
-              <div class="map-toolbar-secondary">
-                <button class="ghost-btn">Show Zones</button>
-                <button class="ghost-btn">Show Sensors</button>
-                <button class="ghost-btn">Show Evacuation</button>
-                <button class="ghost-btn">Offline map cache</button>
+            <div class="live-map-command-bar">
+              <div><strong id="live-map-incident-name">Planning Map</strong><span id="live-map-mode">Planning Mode</span></div>
+              <div>
+                <button class="accent-btn" id="live-map-add-marker" type="button">Add Marker</button>
+                <button class="ghost-btn" id="live-map-save" type="button">Save Map</button>
+                <button class="ghost-btn" id="live-map-clear" type="button">Clear Draft Map</button>
               </div>
             </div>
-
-            <div class="map-placeholder" id="live-map-surface">
-              <div class="map-legend">
-                <span class="legend-item red">Red · Hot Zone</span>
-                <span class="legend-item orange">Orange · Warm Zone</span>
-                <span class="legend-item green">Green · Cold Zone</span>
-                <span class="legend-item blue">Blue · Command / Staging</span>
-                <span class="legend-item purple">Purple · Monitoring</span>
-                <span class="legend-item gray">Gray · Unknown</span>
-              </div>
-              <div class="wind-arrow">↑ Wind 8 mph SW</div>
-              <div class="map-marker hot">Hot Zone</div>
-              <div class="map-marker warm">Warm Zone</div>
-              <div class="map-marker cold">Cold Zone</div>
-              <div class="map-marker plume">Plume Polygon</div>
-              <div class="map-marker entry">Entry Team</div>
-              <div class="map-marker decon">Decon Corridor</div>
-              <div class="map-marker monitor">Monitoring Points</div>
-              <div class="map-marker command">Command Post</div>
-              <div class="map-marker staging">Staging</div>
-              <div class="map-marker ems">EMS Treatment</div>
-              <div class="map-marker rehab">Rehab</div>
-              <div class="map-marker road">Road Closure</div>
-              <div class="map-marker shelter">Shelter-in-Place</div>
-              <div class="map-marker evac">Evacuation Group</div>
-              <div class="map-marker sensitive">Sensitive Location</div>
-              <div class="map-marker resource">Tier II / Facility</div>
-              <div id="tier2-facility-layer" class="tier2-facility-layer" aria-label="Tier II facility pins"></div>
-              <div id="tier2-facility-card" class="tier2-facility-card" hidden></div>
-              <p>Operational command board with plume, protective-action overlays, resource markers, and preplan-sensitive infrastructure for field use.</p>
+            <div class="live-map-layer-bar" aria-label="Live Map layers">
+              <button type="button" data-live-layer="icp">ICP</button>
+              <button type="button" data-live-layer="entry">Entry Teams</button>
+              <button type="button" data-live-layer="decon">Decon</button>
+              <button type="button" data-live-layer="staging">Staging</button>
+              <button type="button" data-live-layer="monitors">Monitors</button>
+              <button type="button" data-live-layer="medical">Medical/Rehab</button>
+              <button type="button" data-live-layer="weatherRadar">Weather Radar</button>
+              <button type="button" data-live-layer="plume">Plume Overlay</button>
+              <button type="button" data-live-layer="trafficCams">Traffic Cameras</button>
             </div>
-
-            <div class="map-action-row">
-              <button class="ghost-btn">Layers</button>
-              <button class="ghost-btn">Measure</button>
-              <button class="ghost-btn">Share</button>
-              <button class="ghost-btn">Export</button>
-                <button class="ghost-btn">Road closure planner</button>
-              </div>
-
-              <div class="card-grid two-up">
-                <article class="panel-card">
-                  <h3>Operational layers</h3>
-                  <div class="chip-list">
-                    <li>Live plume map</li>
-                    <li>Zone drawing</li>
-                    <li>Resource placement</li>
-                    <li>Sensitive receptors</li>
-                    <li>Facility inventory</li>
-                    <li>Hydrants</li>
-                    <li>Storm drains</li>
-                    <li>Waterways</li>
-                  </div>
-                </article>
-                <article class="panel-card">
-                  <h3>Detector integration</h3>
-                  <ul class="detail-list">
-                    <li><span>MultiRAE</span><strong>Monitor 201 · North Gate</strong></li>
-                    <li><span>AreaRAE</span><strong>Monitor 302 · West perimeter</strong></li>
-                    <li><span>Honeywell Safety Suite</span><strong>ID and location synced to the map</strong></li>
-                  </ul>
-                </article>
-                <div class="chip-list">
-                  <li>Plume model</li>
-                  <li>ERG isolation / protective action distances</li>
-                  <li>Hot zone</li>
-                  <li>Warm zone</li>
-                  <li>Cold zone</li>
-                  <li>Entry corridor</li>
-                  <li>Decon corridor</li>
-                  <li>Command post</li>
-                  <li>Staging</li>
-                  <li>EMS treatment</li>
-                  <li>Rehab</li>
-                  <li>Evacuation group</li>
-                  <li>Shelter-in-place area</li>
-                  <li>Waterways / storm drains</li>
-                  <li>Schools</li>
-                  <li>Hospitals</li>
-                  <li>Nursing homes</li>
-                  <li>Daycares</li>
-                  <li>High-risk occupancies</li>
-                  <li>Hydrants</li>
-                  <li>Rail lines</li>
-                  <li>Pipelines</li>
-                  <li>Chemical facilities</li>
-                  <li>Tier II sites</li>
-                  <li>Road closures</li>
-                  <li>Safe approach routes</li>
+            <div class="live-map-stage">
+              <div id="live-gis-map" aria-label="Interactive Live HazMat incident map"></div>
+              <div id="live-map-loading">Loading map…</div>
+              <div class="live-map-panels">
+                <div data-live-panel="zones" hidden><strong>Zone placeholders</strong><p>Hot, Warm, Cold, Isolation, Evacuation, and Shelter-in-Place.</p><small>Zone drawing tools pending.</small></div>
+                <div data-live-panel="traffic" hidden>Traffic integration pending. Use approved DOT/traffic data source.</div>
+                <div data-live-panel="trafficCams" hidden>Saved traffic camera locations are shown. <a href="https://algotraffic.com/Cameras" target="_blank" rel="noopener noreferrer">Open ALGO Traffic Cameras</a></div>
+                <div data-live-panel="plume" hidden><strong id="live-plume-status">Plume Overlay Active</strong></div>
+                <div class="live-radar-panel" data-live-panel="weatherRadar" hidden>
+                  <strong id="live-radar-status">NWS Radar Overlay Active</strong>
+                  <small>Radar is for situational awareness only.</small>
+                  <span id="live-radar-fallback" hidden>NWS radar overlay unavailable. Open full radar.</span>
+                  <a href="https://radar.weather.gov/" target="_blank" rel="noopener noreferrer">Open Full NWS Radar</a>
                 </div>
-              </article>
-              <article class="panel-card">
-                <h3>Live Tactical Notes</h3>
-                <ul class="detail-list">
-                  <li><span>Drag-and-drop</span><strong>Command post, staging, EMS, and rehab markers</strong></li>
-                  <li><span>Zones</span><strong>Hot, warm, cold, evacuation, and shelter overlays</strong></li>
-                  <li><span>Planning data</span><strong>CAMEO Data Manager style facility, route, and contact planning layers</strong></li>
-                  <li><span>Monitoring</span><strong>GPS team locations and last-known sensor positions</strong></li>
-                  <li><span>Readings</span><strong>Every reading carries a timestamp</strong></li>
-                  <li><span>Tools</span><strong>Measure, share, export, and layer controls</strong></li>
-                </ul>
-              </article>
+                <div id="live-map-selected" hidden></div>
+              </div>
             </div>
+            <p class="live-map-status" id="live-map-status" role="status">Map draft is stored only on this device.</p>
+
+            <dialog id="live-map-marker-dialog" class="live-map-marker-dialog">
+              <form method="dialog" id="live-map-marker-form">
+                <h3>Add Map Marker</h3>
+                <label>Marker Type<select id="live-marker-type" required>
+                  <option data-layer="icp">ICP / Command Post</option><option data-layer="icp">HazMat Group</option>
+                  <option data-layer="entry">Entry Team</option><option data-layer="entry">Backup Team</option>
+                  <option data-layer="decon">Decon Corridor</option><option data-layer="decon">Emergency Decon</option>
+                  <option data-layer="monitors">Monitor</option><option data-layer="monitors">Air Sampling Point</option>
+                  <option data-layer="staging">Staging</option><option data-layer="medical">Medical / Rehab</option>
+                  <option data-layer="staging">Law Enforcement Perimeter</option><option data-layer="staging">Evacuation Point</option>
+                  <option data-layer="trafficCams">Traffic Camera</option>
+                  <option data-layer="staging">Custom</option>
+                </select></label>
+                <label>Marker Name<input id="live-marker-name" required /></label>
+                <div class="live-marker-coordinates"><label>Latitude<input id="live-marker-lat" type="number" min="-90" max="90" step="any" required /></label><label>Longitude<input id="live-marker-lng" type="number" min="-180" max="180" step="any" required /></label></div>
+                <div id="live-monitor-fields" hidden>
+                  <label>Monitor Type<input id="live-monitor-type" /></label><label>Reading<input id="live-monitor-reading" /></label>
+                  <label>Unit<input id="live-monitor-unit" /></label><label>Timestamp<input id="live-monitor-time" type="datetime-local" /></label>
+                  <label>Status<input id="live-monitor-status" /></label>
+                </div>
+                <label>Notes<textarea id="live-marker-notes" rows="2"></textarea></label>
+                <div><button class="primary-btn" value="add" type="submit">Add Marker</button><button class="ghost-btn" value="cancel" type="button" id="live-marker-cancel">Cancel</button></div>
+              </form>
+            </dialog>
           </section>
 
           <section id="monitor" class="view">
@@ -882,5 +846,6 @@
 
     <script src="vendor/maplibre-gl/maplibre-gl.js"></script>
     <script src="script.js"></script>
+    <script src="live-map-bootstrap.js"></script>
   </body>
 </html>

@@ -10,6 +10,7 @@ Continue to work out bugs from Chemical Companion integration. Perfect Chemical 
 Get Chris to help integrate the Dalhgren Decon guidebook to add into Decon section
 
 Create Live Map with layer buttons for zones, ICP, Monitor integration, traffic, live traffic cams, etc
+2026-07-06: Add a compact “Live NWS Radar” panel to the future Live Map page using an iframe and “Open Full Radar” link to https://radar.weather.gov/. Include the fallback “Radar unavailable. Open full radar.” Keep it visual-only; do not feed radar data into plume calculations.
 Create Monitoring Equipment Page
 Create ICS Forms/reports Page and add information import capability from dashboard, Begin AI-assisted ICS Form generation
 
