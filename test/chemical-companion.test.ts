@@ -1,7 +1,47 @@
 import { describe, expect, it } from 'vitest';
-import { normalizeChemicalProfile, queryChemicalProfile, searchCompanionChemicals } from '../server/src/chemical-companion.js';
+import { getCompanionDiagnostics, normalizeChemicalProfile, normalizeTransportationIdentifier, queryChemicalProfile, searchCompanionChemicals } from '../server/src/chemical-companion.js';
 
 describe('normalizeChemicalProfile', () => {
+  it.each(['2312', 'UN2312', 'UN 2312', 'UN-2312', 'NA2312', 'NA 2312'])(
+    'resolves transportation identifier %s to the complete Phenol, molten identity', (query) => {
+      expect(normalizeTransportationIdentifier(query)).toBe('2312');
+      expect(searchCompanionChemicals(query)[0]).toMatchObject({
+        ChemicalID: 479, ChemicalName: 'Phenol, molten', PrimaryChemicalName: 'Phenol',
+        CasNumber: '108-95-2', UnnaNumber: '2312', ErgNumber: '153',
+        HazardClass: expect.stringContaining('6.1'),
+      });
+    },
+  );
+
+  it.each([
+    ['Phenol, molten', 479], ['Phenol', 479], ['108-95-2', 479],
+    ['chlorine', 22], ['1017', 22], ['ammonia', 10], ['1005', 10],
+  ])('resolves required regression query %s', (query, id) => {
+    expect(searchCompanionChemicals(query)[0]?.ChemicalID).toBe(id);
+  });
+
+  it.each([
+    ['57-14-7', 1], ['74-93-1', 70], ['124-40-3', 140], ['100-63-0', 280],
+    ['75-20-7', 350], ['1333-74-0', 420], ['7722-64-7', 490], ['13746-89-9', 560],
+    ['110-65-6', 700], ['3054-95-3', 770], ['110-66-7', 840], ['75-61-6', 910],
+    ['144-62-7', 980], ['526-73-8', 1050], ['283-66-9', 1120], ['137-32-6', 1190],
+    ['129-66-8', 1260], ['64057-70-1', 1330], ['13147-09-6', 1400], ['16774-21-3', 1582],
+  ])('searches distributed source chemical CAS %s', (cas, id) => {
+    expect(searchCompanionChemicals(cas).some((row) => row.ChemicalID === id)).toBe(true);
+  });
+
+  it('keeps the complete source and derived index above coverage floors', () => {
+    const coverage = getCompanionDiagnostics();
+    expect(coverage.sourceChemicalTotal).toBe(1459);
+    expect(coverage.importedCanonicalTotal).toBe(coverage.sourceChemicalTotal);
+    expect(Number(coverage.sourceUnNaIdentifierTotal)).toBeGreaterThan(3000);
+    expect(Number(coverage.importedUnNaIdentifierTotal)).toBeGreaterThan(1000);
+    expect(Number(coverage.sourceCasIdentifierTotal)).toBeGreaterThan(1300);
+    expect(coverage.importedCasIdentifierTotal).toBe(coverage.sourceCasIdentifierTotal);
+    expect(Number(coverage.sourceAliasTotal)).toBeGreaterThan(13000);
+    expect(coverage.importedAliasTotal).toBe(coverage.sourceAliasTotal);
+    expect(Number(coverage.searchIndexTotal)).toBeGreaterThanOrEqual(Number(coverage.sourceChemicalTotal));
+  });
   it('loads a companion profile only from the selected ChemicalID', () => {
     const profile = queryChemicalProfile(54);
 

@@ -34,11 +34,16 @@
         </a>
       </header>
 
-      <section class="alert-banner notification-center" id="notification-center" role="status" aria-live="polite" aria-atomic="false">
-        <div class="notification-heading">
-          <strong>Tactical Alert</strong>
-          <span class="notification-live"><span aria-hidden="true"></span> Notification Center</span>
-        </div>
+      <section class="alert-banner notification-center" id="notification-center" role="status" aria-live="polite" aria-atomic="false" data-severity="normal">
+        <span class="notification-severity-icon" id="notification-severity-icon" role="img" aria-label="Tactical alert status">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M10.3 3.7 2.2 18a2 2 0 0 0 1.7 3h16.2a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0Z"></path>
+            <path d="M12 9v4"></path>
+            <path d="M12 17h.01"></path>
+          </svg>
+        </span>
+        <strong class="notification-center-title">Notification Center</strong>
+        <time class="notification-updated" id="notification-updated" aria-label="Current 24-hour time">00:00:00</time>
         <div class="notification-feed">
           <div class="notification-item notification-system">
             <span>System</span>
@@ -53,8 +58,22 @@
             <strong id="notification-monitoring">No Alerts Found</strong>
           </div>
         </div>
-        <time class="notification-updated" id="notification-updated" aria-label="Current 24-hour time">Locating time…</time>
+        <button class="notification-alert-count" id="notification-alert-count" type="button" aria-haspopup="dialog" aria-controls="notification-drawer">Alerts: 0</button>
+        <button class="notification-details-btn" id="notification-details-btn" type="button" aria-haspopup="dialog" aria-controls="notification-drawer" hidden>View Details</button>
+        <button class="notification-ack-btn" id="notification-ack-btn" type="button" hidden>Acknowledge</button>
       </section>
+
+      <div class="notification-drawer-backdrop" id="notification-drawer-backdrop" hidden></div>
+      <aside class="notification-drawer" id="notification-drawer" role="dialog" aria-modal="true" aria-labelledby="notification-drawer-title" hidden>
+        <header class="notification-drawer-header">
+          <div>
+            <p class="eyebrow">Tactical alerts</p>
+            <h2 id="notification-drawer-title">Notification History</h2>
+          </div>
+          <button class="ghost-btn" id="notification-drawer-close" type="button" aria-label="Close notification history">Close</button>
+        </header>
+        <div class="notification-drawer-body" id="notification-drawer-body"></div>
+      </aside>
 
       <main class="layout">
         <aside class="sidebar">
@@ -80,7 +99,7 @@
             </nav>
           </div>
 
-          <details class="sidebar-card plume-demographics plume-sidebar-data" id="plume-demographics" open>
+          <details class="sidebar-card plume-demographics plume-sidebar-data" id="plume-demographics">
             <summary>
               Threat Zone
               <span class="status-pill" id="demographics-zone-badge">No zone</span>
@@ -316,7 +335,8 @@
                 <p id="incident-location-status" class="muted" role="status" aria-live="polite">Enter incident details or use the device's current GPS location.</p>
               </article>
 
-              <article class="panel-card tier2-card facility-information-card">
+              <details class="panel-card tier2-card facility-information-card command-reference-panel" data-command-reference>
+                <summary>E-Plan Login</summary>
                 <div
                   class="eplan-login-form"
                   aria-label="Open E-Plan first responder login"
@@ -329,20 +349,20 @@
                   />
                   <a class="primary-btn" href="https://erplan.net/eplan/login.htm" target="eplan-program" rel="noopener noreferrer">E-Plan LogIn</a>
                 </div>
-              </article>
+              </details>
 
-              <article class="panel-card incident-guidance-card ppe-summary-card">
-                <h3>PPE Requirements</h3>
+              <details class="panel-card incident-guidance-card ppe-summary-card command-reference-panel" data-command-reference>
+                <summary>PPE Requirements</summary>
                 <div id="incident-ppe-guidance">Select or identify a chemical to populate PPE guidance.</div>
                 <div class="ppe-reference-actions" aria-label="Kappler protective suit references">
                   <a href="https://www.kappler.com/hazmatch/suit-selection-guide" target="_blank" rel="noopener noreferrer">Open Kappler HazMatch Suit Selection</a>
                   <a href="https://www.kappler.com/files" target="_blank" rel="noopener noreferrer">Kappler Suit Manuals &amp; Technical Files</a>
                 </div>
                 <p id="incident-ppe-sources" class="incident-guidance-sources" hidden></p>
-              </article>
+              </details>
 
-              <article class="panel-card incident-guidance-card medical-summary-card">
-                <h3>Medical Summary</h3>
+              <details class="panel-card incident-guidance-card medical-summary-card command-reference-panel" data-command-reference>
+                <summary>Medical Summary</summary>
                 <p class="medical-primary-source"><strong>Primary medical reference: CHEMM (HHS/ASPR)</strong></p>
                 <div class="medical-reference-actions" aria-label="CHEMM medical guidance">
                   <a href="https://chemm.hhs.gov/mmghome.htm" target="_blank" rel="noopener noreferrer">Acute Patient Care</a>
@@ -352,11 +372,11 @@
                 </div>
                 <div id="incident-medical-guidance">Select or identify a chemical to populate medical guidance.</div>
                 <p id="incident-medical-sources" class="incident-guidance-sources" hidden></p>
-              </article>
-              <article class="panel-card incident-guidance-card protective-summary-card">
-                <h3>Protective Action Guidance</h3>
+              </details>
+              <details class="panel-card incident-guidance-card protective-summary-card command-reference-panel" data-command-reference>
+                <summary>Protective Action Guidance</summary>
                 <div id="incident-protective-guidance">Select a chemical and run the plume model to populate protective action guidance.</div>
-              </article>
+              </details>
             </div>
             <div class="button-row">
               <button class="primary-btn" id="complete-incident-btn" type="button">Complete Incident</button>
@@ -446,12 +466,12 @@
           <section id="plume" class="view">
             <form class="plume-model-controls" id="plume-model-form">
               <div class="plume-model-controls-heading">
-                <p class="eyebrow">Model Inputs</p>
+                <p class="eyebrow">Plume Actions</p>
                 <p id="plume-input-status" class="muted" role="status" aria-live="polite"></p>
               </div>
               <div class="plume-model-input-grid">
                 <div class="plume-model-section">
-                  <strong>Chemical Release Data</strong>
+                  <strong>Model Inputs</strong>
                   <div class="plume-model-section-grid plume-release-grid">
                     <label class="plume-model-field plume-chemical-field" for="plume-chemical-input">
                       <span>Chemical</span>
@@ -483,12 +503,12 @@
                     <div class="container-profile" aria-label="Editable container planning profile">
                       <div class="container-bubble-grid">
                         <label class="container-bubble" for="plume-container-type"><span>Container Type</span><select id="plume-container-type"></select></label>
+                        <label class="container-bubble" for="container-model-source"><span>Release Source</span><select id="container-model-source"><option>Auto-select</option><option>Direct release</option><option>Puddle</option><option>Tank</option><option>Gas pipeline</option><option>Liquid flow</option><option>Solid release</option><option>Unknown / verify</option></select></label>
                         <label class="container-bubble" for="container-capacity"><span>Capacity</span><select id="container-capacity"><option value="Unknown / verify">Select</option><option>Small package</option><option>5 gal</option><option>30 gal</option><option>55 gal</option><option>275 gal</option><option>330 gal</option><option>500 gal</option><option>1,000 gal</option><option>5,000 gal</option><option>10,000 gal</option><option>Facility-specific / custom</option></select></label>
                         <label class="container-bubble" for="container-pressure-condition"><span>Pressure Condition</span><select id="container-pressure-condition"><option value="Unknown / verify">Select</option><option>Atmospheric / open container</option><option>Low pressure / product transfer</option><option>Pressurized liquid</option><option>Liquefied compressed gas</option><option>Compressed gas</option><option>Cryogenic / refrigerated liquid</option><option>Pipeline pressure</option><option>Pressure relief / venting</option><option>Rupture / catastrophic release</option><option>User-entered PSIG</option></select></label>
-                        <label class="container-bubble" for="container-fill-level"><span>Fill %</span><select id="container-fill-level"><option value="">Unknown / verify</option><option value="25">25%</option><option value="50">50%</option><option value="75">75%</option><option value="85" selected>85%</option><option value="100">100%</option><option value="custom">Custom</option></select></label>
+                        <label class="container-bubble" for="container-fill-level"><span>Fill %</span><select id="container-fill-level"><option value="" selected>Unknown / verify</option><option value="25">25%</option><option value="50">50%</option><option value="75">75%</option><option value="85">85%</option><option value="100">100%</option><option value="custom">Custom</option></select></label>
                         <label class="container-bubble" for="container-release-location"><span>Release Location</span><select id="container-release-location"><option value="Unknown">Select</option><option>Top</option><option>Side</option><option>Bottom</option><option>Valve / fitting</option><option>Manway</option><option>Piping</option><option>Rupture / tear</option><option>Vent / relief device</option></select></label>
                         <label class="container-bubble" for="container-release-phase"><span>Release Phase</span><select id="container-release-phase"><option value="Unknown / verify">Select</option><option>Gas / vapor</option><option>Liquid</option><option>Two-phase</option><option>Solid / powder</option><option>Puddle / pool</option><option>Aerosol / mist</option></select></label>
-                        <label class="container-bubble" for="container-model-source"><span>Model Source</span><select id="container-model-source"><option>Auto-select</option><option>Direct release</option><option>Puddle</option><option>Tank</option><option>Gas pipeline</option><option>Liquid flow</option><option>Solid release</option><option>Unknown / verify</option></select></label>
                       </div>
                       <details class="container-details">
                         <summary>Container Details</summary>
@@ -529,11 +549,6 @@
                       <small>Humidity: <strong id="columbia-humidity">Not available</strong></small>
                       <small>Pressure: <strong id="columbia-pressure">Not available</strong></small>
                     </div>
-                    <div class="plume-weather-source-status" aria-live="polite">
-                      <small><strong>Source:</strong> <span id="plume-weather-source-name">Open-Meteo</span></small>
-                      <small><strong>Source Status:</strong> <span id="plume-weather-source-state">Time unknown</span></small>
-                      <small><strong>Observation Time:</strong> <span id="plume-weather-observation-time">Not available</span></small>
-                    </div>
                     <label class="plume-model-field" for="plume-wind-speed">
                       <span>Wind speed (mph)</span>
                       <input id="plume-wind-speed" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Required" required />
@@ -560,17 +575,7 @@
                       <span>Elevation (ft)</span>
                       <input id="plume-elevation" type="text" placeholder="Unavailable" readonly />
                     </label>
-                    <label class="plume-model-field" for="plume-stability-class">
-                      <span>Stability class</span>
-                      <select id="plume-stability-class">
-                        <option value="A">A — very unstable</option>
-                        <option value="B">B — unstable</option>
-                        <option value="C">C — slightly unstable</option>
-                        <option value="D" selected>D — neutral</option>
-                        <option value="E">E — slightly stable</option>
-                        <option value="F">F — stable</option>
-                      </select>
-                    </label>
+                    <input id="plume-stability-class" type="hidden" value="D" />
                     <label class="plume-model-field" for="plume-surface-roughness">
                       <span>Surface</span>
                       <select id="plume-surface-roughness">
@@ -594,6 +599,7 @@
                   <button type="button" data-plume-layer="centerline" aria-pressed="false">Centerline</button>
                   <button type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
                   <button type="button" data-plume-layer="hazards" aria-pressed="false">Hazards</button>
+                  <button type="button" data-plume-layer="radar" aria-pressed="false">Weather Radar</button>
                 </div>
                 <small id="plume-layers-status" role="status" aria-live="polite"></small>
               </div>
@@ -845,6 +851,7 @@
     </div>
 
     <script src="vendor/maplibre-gl/maplibre-gl.js"></script>
+    <script src="weather-radar.js"></script>
     <script src="script.js"></script>
     <script src="live-map-bootstrap.js"></script>
   </body>

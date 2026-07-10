@@ -15,6 +15,8 @@
     "db:migrate": "tsx src/migrate.ts",
     "db:init-sqlite": "tsx src/init-sqlite.ts",
     "db:seed": "tsx src/seed.ts",
+    "chemicals:audit": "node --import tsx src/audit-chemical-companion.ts",
+    "chemicals:rebuild": "node --import tsx --input-type=module -e \"import { rebuildCompanionSearchIndex } from './src/chemical-companion.ts'; console.log(rebuildCompanionSearchIndex())\"",
     "db:studio": "drizzle-kit studio",
     "scrape:tier2": "tsx scripts/tier2-scraper.ts",
     "test": "vitest run",

@@ -5,10 +5,141 @@ const tacticalAlertMessage = document.getElementById('tactical-alert-message');
 const notificationWeather = document.getElementById('notification-weather');
 const notificationMonitoring = document.getElementById('notification-monitoring');
 const notificationUpdated = document.getElementById('notification-updated');
+const notificationCenter = document.getElementById('notification-center');
+const notificationAlertCount = document.getElementById('notification-alert-count');
+const notificationDetailsButton = document.getElementById('notification-details-btn');
+const notificationAcknowledgeButton = document.getElementById('notification-ack-btn');
+const notificationDrawer = document.getElementById('notification-drawer');
+const notificationDrawerBackdrop = document.getElementById('notification-drawer-backdrop');
+const notificationDrawerBody = document.getElementById('notification-drawer-body');
+const notificationDrawerClose = document.getElementById('notification-drawer-close');
 
 let tacticalClockTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
 let tacticalClockUsesGpsTimeZone = false;
 let notificationWeatherLocation = null;
+let notificationDrawerTrigger = null;
+const notificationHistoryStorageKey = 'hazmatiq_notification_history';
+const notificationSources = { tactical: 'System', weather: 'Weather', monitoring: 'Monitoring' };
+const notificationSeverityRank = { normal: 0, advisory: 1, warning: 2, critical: 3 };
+const notificationCurrentValues = {
+  tactical: tacticalAlertMessage?.textContent || 'System Normal',
+  weather: notificationWeather?.textContent || '',
+  monitoring: notificationMonitoring?.textContent || '',
+};
+let notificationHistory = [];
+
+try {
+  notificationHistory = JSON.parse(window.localStorage.getItem(notificationHistoryStorageKey) || '[]');
+  if (!Array.isArray(notificationHistory)) notificationHistory = [];
+} catch {
+  notificationHistory = [];
+}
+
+function classifyNotification(message) {
+  const text = String(message || '');
+  if (/\b(critical|danger|evacuat|life safety|alarm)\b/i.test(text)) return 'critical';
+  if (/\b(warning|alert|failed|failure|lost|disconnect|conflict|error)\b/i.test(text) && !/no alerts?/i.test(text)) return 'warning';
+  if (/\b(loading|awaiting|needed|stale|verify|unavailable)\b/i.test(text)) return 'advisory';
+  return 'normal';
+}
+
+function persistNotificationHistory() {
+  try {
+    window.localStorage.setItem(notificationHistoryStorageKey, JSON.stringify(notificationHistory.slice(0, 100)));
+  } catch {
+    // Notification display remains operational when storage is unavailable.
+  }
+}
+
+function getActiveNotifications() {
+  return notificationHistory.filter((entry) => !entry.resolved && entry.severity !== 'normal');
+}
+
+function getPrimaryNotification() {
+  return getActiveNotifications().sort((a, b) =>
+    notificationSeverityRank[b.severity] - notificationSeverityRank[a.severity]
+    || new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0] || null;
+}
+
+function renderNotificationDrawer() {
+  if (!notificationDrawerBody) return;
+  notificationDrawerBody.replaceChildren();
+  const entries = [...notificationHistory].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+  if (!entries.length) {
+    const empty = document.createElement('p');
+    empty.className = 'muted';
+    empty.textContent = 'No notification history recorded.';
+    notificationDrawerBody.append(empty);
+    return;
+  }
+  entries.forEach((entry) => {
+    const item = document.createElement('article');
+    item.className = 'notification-history-item';
+    item.dataset.severity = entry.severity;
+    const heading = document.createElement('div');
+    heading.className = 'notification-history-heading';
+    const source = document.createElement('strong');
+    source.textContent = entry.source;
+    const status = document.createElement('span');
+    status.textContent = entry.resolved ? 'Resolved' : entry.acknowledged ? 'Acknowledged' : entry.severity;
+    heading.append(source, status);
+    const message = document.createElement('p');
+    message.textContent = entry.message;
+    const time = document.createElement('time');
+    time.dateTime = entry.timestamp;
+    time.textContent = new Date(entry.timestamp).toLocaleString();
+    item.append(heading, message, time);
+    notificationDrawerBody.append(item);
+  });
+}
+
+function renderNotificationStrip() {
+  const active = getActiveNotifications();
+  const primary = getPrimaryNotification();
+  notificationCenter?.setAttribute('data-severity', primary?.severity || 'normal');
+  if (tacticalAlertMessage) tacticalAlertMessage.textContent = primary
+    ? `${primary.source}: ${primary.message}`
+    : notificationCurrentValues.tactical;
+  if (notificationAlertCount) notificationAlertCount.textContent = `Alerts: ${active.length}`;
+  if (notificationDetailsButton) notificationDetailsButton.hidden = !primary;
+  if (notificationAcknowledgeButton) notificationAcknowledgeButton.hidden = !primary || primary.acknowledged;
+  renderNotificationDrawer();
+}
+
+function recordNotification(sourceKey, message) {
+  const normalized = String(message || '').trim();
+  const source = notificationSources[sourceKey];
+  const previous = notificationHistory.find((entry) => entry.source === source && !entry.resolved);
+  if (previous?.message === normalized) return;
+  if (previous) previous.resolved = true;
+  notificationHistory.unshift({
+    id: `${Date.now()}-${sourceKey}`,
+    source,
+    message: normalized,
+    severity: classifyNotification(normalized),
+    timestamp: new Date().toISOString(),
+    acknowledged: false,
+    resolved: false,
+  });
+  notificationHistory = notificationHistory.slice(0, 100);
+  persistNotificationHistory();
+}
+
+function openNotificationDrawer(trigger) {
+  if (!notificationDrawer || !notificationDrawerBackdrop) return;
+  notificationDrawerTrigger = trigger || document.activeElement;
+  renderNotificationDrawer();
+  notificationDrawer.hidden = false;
+  notificationDrawerBackdrop.hidden = false;
+  notificationDrawerClose?.focus();
+}
+
+function closeNotificationDrawer() {
+  if (!notificationDrawer || !notificationDrawerBackdrop) return;
+  notificationDrawer.hidden = true;
+  notificationDrawerBackdrop.hidden = true;
+  notificationDrawerTrigger?.focus?.();
+}
 
 function formatConcentration(value) {
   const text = String(value ?? '').trim();
@@ -128,19 +259,60 @@ initializeTacticalClock();
 
 function updateNotificationCenter(update = {}) {
   if (Object.prototype.hasOwnProperty.call(update, 'tactical') && tacticalAlertMessage) {
-    tacticalAlertMessage.textContent = update.tactical;
+    const value = String(update.tactical ?? '').trim();
+    notificationCurrentValues.tactical = value;
+    tacticalAlertMessage.textContent = value;
+    recordNotification('tactical', value);
   }
   if (Object.prototype.hasOwnProperty.call(update, 'weather') && notificationWeather) {
-    notificationWeather.textContent = update.weather;
+    const value = String(update.weather ?? '').trim();
+    notificationCurrentValues.weather = value;
+    notificationWeather.textContent = value;
+    recordNotification('weather', value);
   }
   if (Object.prototype.hasOwnProperty.call(update, 'monitoring') && notificationMonitoring) {
     const alerts = Array.isArray(update.monitoring)
       ? update.monitoring.filter(Boolean).join(' · ')
       : String(update.monitoring ?? '').trim();
+    notificationCurrentValues.monitoring = alerts || 'No Alerts Found';
     notificationMonitoring.textContent = alerts || 'No Alerts Found';
+    recordNotification('monitoring', alerts || 'No Alerts Found');
   }
-
+  renderNotificationStrip();
 }
+
+[notificationAlertCount, notificationDetailsButton].forEach((control) => {
+  control?.addEventListener('click', () => openNotificationDrawer(control));
+});
+notificationDrawerClose?.addEventListener('click', closeNotificationDrawer);
+notificationDrawerBackdrop?.addEventListener('click', closeNotificationDrawer);
+notificationAcknowledgeButton?.addEventListener('click', () => {
+  const primary = getPrimaryNotification();
+  if (!primary) return;
+  primary.acknowledged = true;
+  persistNotificationHistory();
+  renderNotificationStrip();
+});
+document.addEventListener('keydown', (event) => {
+  if (!notificationDrawer || notificationDrawer.hidden) return;
+  if (event.key === 'Escape') {
+    closeNotificationDrawer();
+    return;
+  }
+  if (event.key !== 'Tab') return;
+  const focusable = [...notificationDrawer.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+    .filter((element) => !element.disabled && !element.hidden);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+});
 
 window.HazMatIQ = window.HazMatIQ || {};
 window.HazMatIQ.updateNotifications = updateNotificationCenter;
@@ -163,6 +335,16 @@ function showView(targetId) {
   if (targetId === 'map') window.requestAnimationFrame(initializeLiveMap);
   if (targetId === 'plume') updatePlumeModeLabel();
   if (targetId === 'plume') window.requestAnimationFrame(() => plumeMap?.resize());
+}
+
+// MapLibre needs an explicit resize when the responsive plume workspace changes size.
+const plumeWorkspace = document.getElementById('plume');
+if (plumeWorkspace && 'ResizeObserver' in window) {
+  new ResizeObserver(() => {
+    if (plumeWorkspace.classList.contains('active')) {
+      window.requestAnimationFrame(() => plumeMap?.resize());
+    }
+  }).observe(plumeWorkspace);
 }
 
 buttons.forEach((button) => {
@@ -2646,7 +2828,10 @@ async function openChemical(chemical, facilityName = '') {
     updateActiveIncidentRecord();
     renderIncidentCommandSnapshot();
   }
-  const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(chosenChemicalId)}/profile`);
+  const profileParams = new URLSearchParams();
+  if (chemical.UnnaNumber && chemical.UnnaNumber !== 'Not available') profileParams.set('identifier', chemical.UnnaNumber);
+  if (chemical.ProperShippingName) profileParams.set('shippingName', chemical.ProperShippingName);
+  const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(chosenChemicalId)}/profile${profileParams.size ? `?${profileParams}` : ''}`);
   const profile = profileResponse && !profileResponse.error ? profileResponse : null;
   const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'properties' }, name: record.name } : record;
   activeChemicalRecord = combinedRecord;
@@ -2668,7 +2853,7 @@ function companionChemicalForUi(row) {
     cas: JSON.stringify(row?.CasNumber && row.CasNumber !== 'Not available' ? [row.CasNumber] : []),
     un: JSON.stringify(row?.UnnaNumber && row.UnnaNumber !== 'Not available' ? [row.UnnaNumber] : []),
     ergGuide: row?.ErgNumber,
-    hazardClass: JSON.stringify([]),
+    hazardClass: JSON.stringify(row?.HazardClass && row.HazardClass !== 'Not available' ? [row.HazardClass] : []),
   };
 }
 
@@ -3083,8 +3268,9 @@ let currentPlumeHazardsGeoJson = null;
 let currentPlumeHazardsSignature = '';
 let plumeDistanceMarkers = [];
 let plumeMeasurementPopup = null;
+let plumeRadarController = null;
 const plumeHazardsCacheKey = 'hazmatiq_plume_hazards_cache';
-const plumeLayerState = { centerline: false, distance: false, hazards: false };
+const plumeLayerState = { centerline: false, distance: false, hazards: false, radar: false };
 const plumeLayerIds = {
   centerline: ['hazmat-threat-zone-centerline', 'hazmat-threat-zone-wind-arrow'],
   distance: ['hazmat-threat-zone-distance-line', 'hazmat-threat-zone-distance-ticks', 'hazmat-threat-zone-distance-points', 'hazmat-threat-zone-distance-labels'],
@@ -3094,12 +3280,6 @@ let threatZoneInteractionBound = false;
 let demographicsRequestToken = 0;
 let latestPlumeWeather = null;
 let plumeAutoReplotTimer = null;
-const plumeMapWorkspace = document.querySelector('.plume-map-layout');
-if (plumeMapWorkspace) {
-  plumeMapWorkspace.append(document.getElementById('plume-demographics'));
-  plumeMapWorkspace.hidden = true;
-  document.querySelector('.layout')?.append(plumeMapWorkspace);
-}
 const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
 const plumeSatelliteSourceId = 'plume-satellite-basemap';
 const plumeSatelliteLayerId = 'plume-satellite-basemap-layer';
@@ -3154,6 +3334,24 @@ function restorePlumeMapOverlays() {
   if (currentThreatZoneGeoJson?.features?.length) addThreatZoneLayers();
   if (plumeLayerState.hazards && currentPlumeHazardsGeoJson) addPlumeHazardsLayers(currentPlumeHazardsGeoJson);
   Object.entries(plumeLayerState).forEach(([layerName, visible]) => setPlumeLayerVisibility(layerName, visible));
+  syncPlumeRadarOverlay();
+}
+
+function syncPlumeRadarOverlay() {
+  if (!plumeMap || !plumeLayerState.radar) {
+    plumeRadarController?.disable();
+    return;
+  }
+  if (!window.HazMatWeatherRadar) {
+    setText('plume-layers-status', 'Weather radar controller unavailable.');
+    return;
+  }
+  plumeRadarController ||= window.HazMatWeatherRadar.createController(plumeMap, {
+    prefix: 'plume-radar',
+    beforeLayerId: 'hazmat-threat-zones-fill',
+    onRefresh: (updatedAt) => setText('plume-layers-status', `Weather radar updated ${updatedAt.toLocaleTimeString()}.`),
+  });
+  plumeRadarController.enable();
 }
 
 function updateIncidentLocationFromMap(lng, lat, action) {
@@ -3189,7 +3387,7 @@ function ensurePlumeMap(location) {
       preserveDrawingBuffer: true,
     });
     plumeMap.addControl(new window.maplibregl.NavigationControl(), 'bottom-right');
-    plumeMap.scrollZoom.disable();
+    plumeMap.scrollZoom.enable();
     // `load` waits for remote basemap resources and can leave plume modeling
     // blocked indefinitely when a tile host is slow. The style graph is enough
     // to add the locally generated GeoJSON plume layers.
@@ -3230,6 +3428,10 @@ function ensurePlumeMap(location) {
       updateIncidentLocationFromMap(lng, lat, 'Incident pin placed from map click');
     });
     plumeMap.on('error', (event) => {
+      if (plumeRadarController?.ownsSource(event?.sourceId)) {
+        setText('plume-layers-status', 'Weather radar temporarily unavailable; plume layers remain active.');
+        return;
+      }
       if (event?.error?.message) setText('plume-overlay-status', `Map layer error: ${event.error.message}`);
     });
   }
@@ -3672,6 +3874,10 @@ function addOptionalPlumeGuideLayer(layer) {
 }
 
 function setPlumeLayerVisibility(layerName, visible) {
+  if (layerName === 'radar') {
+    syncPlumeRadarOverlay();
+    return;
+  }
   (plumeLayerIds[layerName] || []).forEach((id) => {
     if (plumeMap?.getLayer(id)) plumeMap.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
   });
@@ -3748,6 +3954,7 @@ function addThreatZoneLayers() {
       },
     });
   }
+  plumeRadarController?.reorder();
 
   currentThreatZoneGuideGeoJson = buildThreatZoneGuides();
   const guideSource = plumeMap.getSource('hazmat-threat-zone-guides');
@@ -4140,7 +4347,9 @@ async function fetchWeatherSources(lat, lon) {
 async function refreshNotificationWeather({ lat, lon }) {
   notificationWeatherLocation = { lat, lon };
   const { openMeteo, nws } = await fetchWeatherSources(lat, lon);
-  updateNotificationCenter({ weather: openMeteo?.conditions || nws?.conditions || 'Live weather unavailable' });
+  const conditions = openMeteo?.conditions || nws?.conditions || 'Live weather unavailable';
+  const compactConditions = conditions.replace(/ · Feels Like [^·]+/i, '');
+  updateNotificationCenter({ weather: compactConditions });
 }
 
 function formatOpenMeteo(data) {
@@ -4523,7 +4732,8 @@ function updateContainerControlSummaries() {
   setText('container-pressure-confidence-summary', activePressureConfidence);
   setText('container-pressure-note', container.pressureNote);
   setText('container-pressure-model-source', container.modelSourceType);
-  setText('container-fill-summary', `${document.getElementById('container-fill-level')?.value || 85}% planning value`);
+  const fillLevel = document.getElementById('container-fill-level')?.value;
+  setText('container-fill-summary', fillLevel ? `${fillLevel}% planning value` : 'Unknown / verify');
   setText('container-release-summary', `${document.getElementById('container-release-location')?.value || 'Unknown'} · ${document.getElementById('container-release-phase')?.value || 'Unknown / verify'}`);
 }
 
@@ -4557,7 +4767,7 @@ function applyContainerProfile({ keepUserValues = false } = {}) {
   setSelectOptions(document.getElementById('container-size-preset'), profile.sizes.map((label) => ({ value: label, label })), profile.sizes[0]);
   setInput('container-size', profile.defaultSize);
   setInput('container-size-unit', profile.sizeUnit);
-  setInput('container-fill-level', 85);
+  setInput('container-fill-level', '');
   setInput('container-pressure-condition', profile.pressureCondition);
   setInput('container-pressure');
   setInput('container-pressure-unit', 'psig');
@@ -5064,6 +5274,7 @@ document.querySelectorAll('[data-plume-layer]').forEach((button) => {
       plumeLayerState[layerName] = false;
       setPlumeLayerVisibility(layerName, false);
       if (layerName === 'distance') clearPlumePointMeasurement();
+      if (layerName === 'radar') syncPlumeRadarOverlay();
       button.classList.remove('active');
       button.setAttribute('aria-pressed', 'false');
       setText('plume-layers-status', layerName === 'hazards' ? 'Hazards layer hidden.' : '');
@@ -5090,6 +5301,7 @@ document.querySelectorAll('[data-plume-layer]').forEach((button) => {
       button.classList.add('active');
       button.setAttribute('aria-pressed', 'true');
       if (layerName === 'distance') setText('plume-layers-status', 'Click anywhere on the map to measure from the red release pin.');
+      else if (layerName === 'radar') setText('plume-layers-status', 'High-definition NWS radar shown beneath plume zones.');
       else if (layerName !== 'hazards') setText('plume-layers-status', '');
     } catch {
       plumeLayerState[layerName] = false;
@@ -5327,14 +5539,7 @@ let liveMapMarkers = [];
 let liveMapGpsRequested = false;
 // Vector street style includes roads, buildings, parks, schools, hospitals, and POIs.
 const liveMapDetailedStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
-const liveRadarSourceId = 'nws-radar-reflectivity';
-const liveRadarLayerId = 'nws-radar-reflectivity-layer';
-const liveRadarBoundarySourceId = 'nws-radar-reflectivity-boundary';
-const liveRadarBoundaryLayerId = 'nws-radar-reflectivity-boundary-layer';
-const liveRadarTileSize = 512;
-const liveRadarServiceUrl = 'https://mapservices.weather.noaa.gov/eventdriven/rest/services/radar/radar_base_reflectivity/MapServer/export';
-const liveRadarTiles = `${liveRadarServiceUrl}?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=${liveRadarTileSize},${liveRadarTileSize}&format=png32&transparent=true&layers=show:3&f=image`;
-const liveRadarBoundaryTiles = `${liveRadarServiceUrl}?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=${liveRadarTileSize},${liveRadarTileSize}&format=png32&transparent=true&layers=show:1&f=image`;
+let liveRadarController = null;
 const livePlumeSourceId = 'live-plume-overlay';
 const livePlumeFillLayerId = 'live-plume-overlay-fill';
 const livePlumeOutlineLayerId = 'live-plume-overlay-outline';
@@ -5511,6 +5716,7 @@ function updateLivePlumeOverlay() {
       'line-opacity': 0.9,
     },
   }, firstSymbolLayer);
+  liveRadarController?.reorder();
 }
 
 window.addEventListener('hazmatiq:plume-updated', (event) => {
@@ -5526,10 +5732,7 @@ function setLiveRadarUnavailable(unavailable) {
 }
 
 function removeLiveRadarOverlay() {
-  if (liveMap.getLayer(liveRadarBoundaryLayerId)) liveMap.removeLayer(liveRadarBoundaryLayerId);
-  if (liveMap.getLayer(liveRadarLayerId)) liveMap.removeLayer(liveRadarLayerId);
-  if (liveMap.getSource(liveRadarBoundarySourceId)) liveMap.removeSource(liveRadarBoundarySourceId);
-  if (liveMap.getSource(liveRadarSourceId)) liveMap.removeSource(liveRadarSourceId);
+  liveRadarController?.disable();
   document.querySelector('.live-map-stage')?.classList.remove('radar-enhanced');
 }
 
@@ -5541,53 +5744,19 @@ function updateLiveRadarOverlay() {
     setLiveRadarUnavailable(false);
     return;
   }
-  if (liveMap.getSource(liveRadarSourceId)) return;
   setLiveRadarUnavailable(false);
   document.querySelector('.live-map-stage')?.classList.add('radar-enhanced');
-  liveMap.addSource(liveRadarSourceId, {
-    type: 'raster',
-    tiles: [liveRadarTiles],
-    tileSize: liveRadarTileSize,
-    minzoom: 2,
-    maxzoom: 17,
-    attribution: 'NOAA / National Weather Service',
+  if (!window.HazMatWeatherRadar) {
+    setLiveRadarUnavailable(true);
+    return;
+  }
+  liveRadarController ||= window.HazMatWeatherRadar.createController(liveMap, {
+    prefix: 'nws-radar',
+    beforeLayerId: livePlumeFillLayerId,
+    onAvailability: () => setLiveRadarUnavailable(false),
+    onRefresh: (updatedAt) => setText('live-radar-status', `NWS Radar Overlay Active · updated ${updatedAt.toLocaleTimeString()}`),
   });
-  liveMap.addSource(liveRadarBoundarySourceId, {
-    type: 'raster',
-    tiles: [liveRadarBoundaryTiles],
-    tileSize: liveRadarTileSize,
-    minzoom: 2,
-    maxzoom: 17,
-    attribution: 'NOAA / National Weather Service',
-  });
-  // Keep radar above the street basemap and below labels and incident markers.
-  const firstSymbolLayer = liveMap.getStyle().layers.find((layer) => layer.type === 'symbol')?.id;
-  liveMap.addLayer({
-    id: liveRadarLayerId,
-    type: 'raster',
-    source: liveRadarSourceId,
-    paint: {
-      'raster-opacity': 0.78,
-      'raster-resampling': 'nearest',
-      'raster-contrast': 0.34,
-      'raster-saturation': 0.42,
-      'raster-brightness-min': 0.08,
-      'raster-brightness-max': 0.98,
-      'raster-fade-duration': 0,
-    },
-  }, firstSymbolLayer);
-  liveMap.addLayer({
-    id: liveRadarBoundaryLayerId,
-    type: 'raster',
-    source: liveRadarBoundarySourceId,
-    paint: {
-      'raster-opacity': 0.9,
-      'raster-resampling': 'nearest',
-      'raster-contrast': 0.45,
-      'raster-saturation': 0.15,
-      'raster-fade-duration': 0,
-    },
-  }, firstSymbolLayer);
+  liveRadarController.enable();
 }
 
 function initializeLiveMap() {
@@ -5635,7 +5804,7 @@ function initializeLiveMap() {
       setText('live-map-status', 'Live Map ready.');
     });
     liveMap.on('error', (event) => {
-      if (event?.sourceId === liveRadarSourceId || event?.sourceId === liveRadarBoundarySourceId) {
+      if (liveRadarController?.ownsSource(event?.sourceId)) {
         setLiveRadarUnavailable(true);
         return;
       }
@@ -5699,6 +5868,27 @@ document.getElementById('live-map-add-marker')?.addEventListener('click', () => 
 document.getElementById('live-marker-type')?.addEventListener('change', (event) => {
   const layer = event.target.selectedOptions[0]?.dataset.layer;
   document.getElementById('live-monitor-fields').hidden = layer !== 'monitors';
+});
+
+// CSS-only rail and panel changes can alter a map container without a window resize.
+// Resize rendering canvases only; plume sources, calculations, and geometry are untouched.
+const operationalWorkspace = document.querySelector('.content-area');
+if (operationalWorkspace && window.ResizeObserver) {
+  new ResizeObserver(() => {
+    window.requestAnimationFrame(() => {
+      plumeMap?.resize();
+      liveMap?.resize();
+    });
+  }).observe(operationalWorkspace);
+}
+
+document.querySelectorAll('[data-command-reference]').forEach((panel) => {
+  panel.addEventListener('toggle', () => {
+    if (!panel.open) return;
+    document.querySelectorAll('[data-command-reference][open]').forEach((otherPanel) => {
+      if (otherPanel !== panel) otherPanel.open = false;
+    });
+  });
 });
 
 document.getElementById('live-marker-cancel')?.addEventListener('click', () => {

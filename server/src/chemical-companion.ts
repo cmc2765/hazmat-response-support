@@ -20,6 +20,25 @@ function sortedSearchWords(value: unknown): string {
   return normalizeSearchText(value).split(' ').filter(Boolean).sort().join(' ');
 }
 
+export function normalizeTransportationIdentifier(value: unknown): string | null {
+  const compact = String(value ?? '').trim().toUpperCase().replace(/[\s-]+/g, '');
+  const numeric = compact.replace(/^(?:UN|NA)/, '');
+  return /^\d{4}$/.test(numeric) ? numeric : null;
+}
+
+export function normalizeCasIdentifier(value: unknown): string | null {
+  const compact = String(value ?? '').trim().toUpperCase().replace(/^CAS\s*/i, '').replace(/[\s-]+/g, '');
+  return /^\d{5,10}$/.test(compact) ? compact : null;
+}
+
+function shippingIdentity(value: unknown): string {
+  return normalizeSearchText(value)
+    .replace(/\b(?:molten|solid|liquid|solution|anhydrous|compressed|liquefied|refrigerated)\b/g, ' ')
+    .replace(/\b(?:with|containing)\b.*$/, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function asList(value: unknown): string[] {
   const meaningful = (item: string) => Boolean(item) && !/^(?:n\/?a|null|undefined)$/i.test(item);
   if (Array.isArray(value)) return value.filter(Boolean).map(String).map((item) => item.trim()).filter(meaningful);
@@ -578,71 +597,123 @@ export function queryChemicalProfile(chemicalId: string | number) {
   }
 }
 
-export function searchCompanionChemicals(query: string) {
-  const db = new Database(dbPath);
+type SearchRecord = {
+  ChemicalID: number; ChemicalName: string; PrimaryChemicalName: string; ProperShippingName?: string;
+  CasNumber: string; UnnaNumber: string; IdentifierType: 'UN' | 'NA'; ErgNumber: string;
+  HazardClass: string; matchTerms: string[]; synonyms: string[]; sourceIdentifierId?: number;
+};
+
+let searchIndex: SearchRecord[] | null = null;
+let diagnostics: Record<string, number | string> | null = null;
+
+export function rebuildCompanionSearchIndex() {
+  const db = new Database(dbPath, { readonly: true });
   try {
-    const term = normalizeSearchText(query);
-    if (!term) return [];
-    console.info(`[chemical-companion] search query: ${query}`);
-    const words = term.split(' ').filter(Boolean);
-    const rows = db.prepare('SELECT ChemicalID, ChemicalName, CasNumber, UnnaNumber, ErgNumber, coalesce(ChemicalSynonyms, \'\') AS EmbeddedSynonyms FROM chemicals').all() as Record<string, unknown>[];
+    const chemicals = db.prepare(`SELECT ChemicalID, ChemicalName, CasNumber, UnnaNumber, ErgNumber,
+      coalesce(ChemicalClass, '') HazardClass, coalesce(ChemicalSynonyms, '') EmbeddedSynonyms FROM chemicals`).all() as Record<string, unknown>[];
     const synonymsById = new Map<number, string[]>();
     for (const row of db.prepare('SELECT ChemicalID, ChemicalSynonym FROM chemicalsynonyms').all() as Record<string, unknown>[]) {
       const id = Number(row.ChemicalID);
       synonymsById.set(id, [...(synonymsById.get(id) ?? []), String(row.ChemicalSynonym)]);
     }
-    const properNamesByUnna = new Map<string, string[]>();
-    for (const row of db.prepare('SELECT DISTINCT cast(unna AS text) AS UnnaNumber, proper_shipping_name FROM emergency_response_proper_shipping_names').all() as Record<string, unknown>[]) {
-      const unna = String(row.UnnaNumber);
-      properNamesByUnna.set(unna, [...(properNamesByUnna.get(unna) ?? []), String(row.proper_shipping_name)]);
+    const canonicalById = new Map(chemicals.map((row) => [Number(row.ChemicalID), row]));
+    const canonicalByPrimaryUn = new Map<string, number[]>();
+    for (const row of chemicals) {
+      const un = normalizeTransportationIdentifier(row.UnnaNumber);
+      if (un) canonicalByPrimaryUn.set(un, [...(canonicalByPrimaryUn.get(un) ?? []), Number(row.ChemicalID)]);
+    }
+    const shipping = db.prepare(`SELECT p.id, p.proper_shipping_name, p.unna, u.guide_text_number
+      FROM emergency_response_proper_shipping_names p
+      JOIN emergency_response_guides g ON g.id=p.guide_id
+      JOIN emergency_response_guidebooks b ON b.id=g.guide_book_id AND b.country='USA' AND b.is_latest=1
+      JOIN emergency_response_unna_numbers u ON u.unna=p.unna AND u.guide_book_id=b.id`).all() as Record<string, unknown>[];
+
+    // Seed identities through stable source UN keys, then attach physical-form siblings in the same
+    // source shipping-name family. Ambiguous families are deliberately left unlinked.
+    const identityOwners = new Map<string, Set<number>>();
+    for (const item of shipping) {
+      for (const id of canonicalByPrimaryUn.get(normalizeTransportationIdentifier(item.unna) ?? '') ?? []) {
+        const key = shippingIdentity(item.proper_shipping_name);
+        if (key) identityOwners.set(key, new Set([...(identityOwners.get(key) ?? []), id]));
+      }
     }
 
-    const ranked = rows.filter((row) => {
-      const searchable = normalizeSearchText([
-        row.ChemicalName, row.CasNumber, row.UnnaNumber, row.EmbeddedSynonyms,
-        ...(synonymsById.get(Number(row.ChemicalID)) ?? []),
-        ...(properNamesByUnna.get(String(row.UnnaNumber)) ?? []),
-      ].join(' '));
-      return words.every((word) => searchable.includes(word));
-    }).map((row) => {
-      const name = normalizeSearchText(row.ChemicalName);
-      const synonyms = [
-        ...asList(row.EmbeddedSynonyms),
-        ...(synonymsById.get(Number(row.ChemicalID)) ?? []),
-      ];
-      const normalizedSynonyms = synonyms.map(normalizeSearchText);
-      const properNamesRaw = properNamesByUnna.get(String(row.UnnaNumber)) ?? [];
-      const properNames = properNamesRaw.map(normalizeSearchText).filter(Boolean);
-      let rank = 99;
-      let matchReason = 'ERG proper shipping name fallback';
-      if (normalizeSearchText(row.CasNumber) === term) [rank, matchReason] = [0, 'Exact CAS number'];
-      else if (normalizeSearchText(row.UnnaNumber) === term) [rank, matchReason] = [1, 'Exact UNNA number'];
-      else if (name === term) [rank, matchReason] = [2, 'Exact chemical name'];
-      else if (normalizedSynonyms.includes(term)) [rank, matchReason] = [3, 'Exact synonym'];
-      else if (sortedSearchWords(name) === sortedSearchWords(term) || normalizedSynonyms.some((value) => sortedSearchWords(value) === sortedSearchWords(term))) [rank, matchReason] = [4, 'Normalized exact word match'];
-      else if (name.startsWith(term)) [rank, matchReason] = [5, 'Chemical name starts with query'];
-      else if (normalizedSynonyms.some((value) => value.startsWith(term))) [rank, matchReason] = [6, 'Synonym starts with query'];
-      else if (name.includes(term)) [rank, matchReason] = [7, 'Chemical name contains query'];
-      else if (normalizedSynonyms.some((value) => value.includes(term))) [rank, matchReason] = [8, 'Synonym contains query'];
-      else if (!properNames.some((value) => value.includes(term) || term.includes(value))) rank = 100;
+    const records: SearchRecord[] = chemicals.map((row) => {
+      const id = Number(row.ChemicalID);
+      const synonyms = [...new Set([...asList(row.EmbeddedSynonyms), ...(synonymsById.get(id) ?? [])])];
       return {
-        ChemicalID: Number(row.ChemicalID),
-        ChemicalName: normalizeValue(row.ChemicalName),
-        CasNumber: normalizeValue(row.CasNumber),
-        UnnaNumber: normalizeValue(row.UnnaNumber),
-        ErgNumber: normalizeValue(row.ErgNumber),
-        matchReason,
-        synonyms: [...new Set(synonyms)],
-        ergProperShippingNames: [...new Set(properNamesRaw)],
-        rank,
+        ChemicalID: id, ChemicalName: String(row.ChemicalName), PrimaryChemicalName: String(row.ChemicalName),
+        CasNumber: String(row.CasNumber), UnnaNumber: normalizeTransportationIdentifier(row.UnnaNumber) ?? String(row.UnnaNumber),
+        IdentifierType: 'UN', ErgNumber: String(row.ErgNumber ?? ''), HazardClass: String(row.HazardClass ?? ''),
+        matchTerms: [String(row.ChemicalName), String(row.CasNumber), String(row.UnnaNumber), ...synonyms], synonyms,
       };
-    }).filter((row) => row.rank < 100)
-      .sort((a, b) => a.rank - b.rank || a.ChemicalName.localeCompare(b.ChemicalName) || a.ChemicalID - b.ChemicalID)
-      .slice(0, 20)
-      .map(({ rank: _rank, ...row }) => row);
-    console.info('[chemical-companion] search top result', ranked[0] ?? null);
-    return ranked;
-  } finally {
-    db.close();
-  }
+    });
+    let linkedTransportation = 0;
+    const unlinked = new Set<string>();
+    for (const item of shipping) {
+      const un = normalizeTransportationIdentifier(item.unna);
+      if (!un) continue;
+      let owners = canonicalByPrimaryUn.get(un) ?? [];
+      if (!owners.length) owners = [...(identityOwners.get(shippingIdentity(item.proper_shipping_name)) ?? [])];
+      if (owners.length !== 1) { unlinked.add(un); continue; }
+      const source = canonicalById.get(owners[0]);
+      if (!source) continue;
+      const synonyms = [...new Set([...asList(source.EmbeddedSynonyms), ...(synonymsById.get(owners[0]) ?? [])])];
+      records.push({
+        ChemicalID: owners[0], ChemicalName: String(item.proper_shipping_name), PrimaryChemicalName: String(source.ChemicalName),
+        ProperShippingName: String(item.proper_shipping_name), CasNumber: String(source.CasNumber), UnnaNumber: un,
+        IdentifierType: 'UN', ErgNumber: String(item.guide_text_number ?? source.ErgNumber ?? ''),
+        HazardClass: String(source.HazardClass ?? ''), sourceIdentifierId: Number(item.id),
+        matchTerms: [String(item.proper_shipping_name), un, `UN ${un}`, `NA ${un}`, String(source.ChemicalName), String(source.CasNumber), ...synonyms], synonyms,
+      });
+      linkedTransportation++;
+    }
+    searchIndex = records;
+    diagnostics = {
+      activeDatabasePath: dbPath, sourceChemicalTotal: chemicals.length,
+      sourceUnNaIdentifierTotal: Number((db.prepare('SELECT count(*) total FROM emergency_response_unna_numbers').get() as { total: number }).total),
+      sourceCasIdentifierTotal: chemicals.filter((row) => normalizeCasIdentifier(row.CasNumber)).length,
+      sourceAliasTotal: Number((db.prepare('SELECT count(*) total FROM chemicalsynonyms').get() as { total: number }).total),
+      importedCanonicalTotal: chemicals.length, importedUnNaIdentifierTotal: linkedTransportation,
+      importedCasIdentifierTotal: chemicals.filter((row) => normalizeCasIdentifier(row.CasNumber)).length,
+      importedAliasTotal: [...synonymsById.values()].reduce((sum, values) => sum + values.length, 0),
+      searchIndexTotal: records.length, unlinkedTransportationIdentifiers: unlinked.size,
+    };
+    if (process.env.NODE_ENV !== 'production') console.info('[chemical-companion] development diagnostics', diagnostics);
+    return diagnostics;
+  } finally { db.close(); }
+}
+
+export function getCompanionDiagnostics() { return diagnostics ?? rebuildCompanionSearchIndex(); }
+
+export function searchCompanionChemicals(query: string) {
+  const term = normalizeSearchText(query);
+  if (!term) return [];
+  const exactTransportation = normalizeTransportationIdentifier(query);
+  const exactCas = normalizeCasIdentifier(query);
+  const words = term.split(' ').filter(Boolean);
+  const ranked = (searchIndex ?? (rebuildCompanionSearchIndex(), searchIndex!)).map((row) => {
+    const name = normalizeSearchText(row.ChemicalName);
+    const primaryName = normalizeSearchText(row.PrimaryChemicalName);
+    const terms = row.matchTerms.map(normalizeSearchText);
+    let rank = 100;
+    let matchReason = '';
+    if (exactTransportation && row.UnnaNumber === exactTransportation) [rank, matchReason] = [0, `Exact ${row.IdentifierType} number`];
+    else if (exactTransportation) return { ...row, rank, matchReason };
+    else if (exactCas && normalizeCasIdentifier(row.CasNumber) === exactCas && !row.ProperShippingName) [rank, matchReason] = [1, 'Exact CAS number'];
+    else if (exactCas) return { ...row, rank, matchReason };
+    else if (name === term && !row.ProperShippingName) [rank, matchReason] = [2, 'Exact chemical name'];
+    else if (primaryName === term && !row.ProperShippingName) [rank, matchReason] = [2, 'Exact chemical name'];
+    else if (row.synonyms.map(normalizeSearchText).includes(term) && !row.ProperShippingName) [rank, matchReason] = [3, 'Exact synonym'];
+    else if (name === term) [rank, matchReason] = [4, 'Exact proper shipping name'];
+    else if (sortedSearchWords(name) === sortedSearchWords(term)) [rank, matchReason] = [4, 'Normalized exact word match'];
+    else if (name.startsWith(term)) [rank, matchReason] = [5, 'Name starts with query'];
+    else if (terms.some((value) => value.includes(term)) && words.every((word) => terms.some((value) => value.includes(word)))) [rank, matchReason] = [7, 'Identifier or alias contains query'];
+    return { ...row, rank, matchReason };
+  }).filter((row) => row.rank < 100)
+    .sort((a, b) => a.rank - b.rank || a.ChemicalName.localeCompare(b.ChemicalName) || a.ChemicalID - b.ChemicalID)
+    .filter((row, index, all) => all.findIndex((other) => other.ChemicalID === row.ChemicalID && other.UnnaNumber === row.UnnaNumber && other.ChemicalName === row.ChemicalName) === index)
+    .map(({ rank: _rank, matchTerms: _terms, ...row }) => row);
+  console.info('[chemical-companion] search', { query, normalizedTransportation: exactTransportation, normalizedCas: exactCas, resultTotal: ranked.length, top: ranked[0] ?? null });
+  return ranked;
 }
