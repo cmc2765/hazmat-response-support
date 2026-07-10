@@ -7,7 +7,12 @@
   const plumeStateKey = 'hazmatiq_latest_plume_overlay';
   const radarSourceId = 'nws-radar-reflectivity';
   const radarLayerId = 'nws-radar-reflectivity-layer';
-  const radarTiles = 'https://mapservices.weather.noaa.gov/eventdriven/rest/services/radar/radar_base_reflectivity/MapServer/export?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=256,256&format=png32&transparent=true&layers=show:3&f=image';
+  const radarBoundarySourceId = 'nws-radar-reflectivity-boundary';
+  const radarBoundaryLayerId = 'nws-radar-reflectivity-boundary-layer';
+  const radarTileSize = 512;
+  const radarServiceUrl = 'https://mapservices.weather.noaa.gov/eventdriven/rest/services/radar/radar_base_reflectivity/MapServer/export';
+  const radarTiles = `${radarServiceUrl}?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=${radarTileSize},${radarTileSize}&format=png32&transparent=true&layers=show:3&f=image`;
+  const radarBoundaryTiles = `${radarServiceUrl}?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=${radarTileSize},${radarTileSize}&format=png32&transparent=true&layers=show:1&f=image`;
   const markerTypes = { icp: 'ICP / Command Post', entry: 'Entry Team', decon: 'Decon Corridor', monitors: 'Monitor', staging: 'Staging', medical: 'Medical / Rehab', trafficCams: 'Traffic Camera' };
 
   function readMapState() {
@@ -108,6 +113,14 @@
     if (fallback) fallback.hidden = !unavailable;
   }
 
+  function removeRadarOverlay(map) {
+    if (map.getLayer(radarBoundaryLayerId)) map.removeLayer(radarBoundaryLayerId);
+    if (map.getLayer(radarLayerId)) map.removeLayer(radarLayerId);
+    if (map.getSource(radarBoundarySourceId)) map.removeSource(radarBoundarySourceId);
+    if (map.getSource(radarSourceId)) map.removeSource(radarSourceId);
+    document.querySelector('.live-map-stage')?.classList.remove('radar-enhanced');
+  }
+
   function syncRadarOverlay(enabled) {
     const map = window.hazmatiqLiveMap || fallbackMap;
     if (!map) return;
@@ -116,17 +129,27 @@
       return;
     }
     if (!enabled) {
-      if (map.getLayer(radarLayerId)) map.removeLayer(radarLayerId);
-      if (map.getSource(radarSourceId)) map.removeSource(radarSourceId);
+      removeRadarOverlay(map);
       setRadarUnavailable(false);
       return;
     }
     if (map.getSource(radarSourceId)) return;
     setRadarUnavailable(false);
+    document.querySelector('.live-map-stage')?.classList.add('radar-enhanced');
     map.addSource(radarSourceId, {
       type: 'raster',
       tiles: [radarTiles],
-      tileSize: 256,
+      tileSize: radarTileSize,
+      minzoom: 2,
+      maxzoom: 17,
+      attribution: 'NOAA / National Weather Service',
+    });
+    map.addSource(radarBoundarySourceId, {
+      type: 'raster',
+      tiles: [radarBoundaryTiles],
+      tileSize: radarTileSize,
+      minzoom: 2,
+      maxzoom: 17,
       attribution: 'NOAA / National Weather Service',
     });
     const firstSymbol = map.getStyle().layers.find((layer) => layer.type === 'symbol')?.id;
@@ -134,7 +157,27 @@
       id: radarLayerId,
       type: 'raster',
       source: radarSourceId,
-      paint: { 'raster-opacity': 0.62 },
+      paint: {
+        'raster-opacity': 0.78,
+        'raster-resampling': 'nearest',
+        'raster-contrast': 0.34,
+        'raster-saturation': 0.42,
+        'raster-brightness-min': 0.08,
+        'raster-brightness-max': 0.98,
+        'raster-fade-duration': 0,
+      },
+    }, firstSymbol);
+    map.addLayer({
+      id: radarBoundaryLayerId,
+      type: 'raster',
+      source: radarBoundarySourceId,
+      paint: {
+        'raster-opacity': 0.9,
+        'raster-resampling': 'nearest',
+        'raster-contrast': 0.45,
+        'raster-saturation': 0.15,
+        'raster-fade-duration': 0,
+      },
     }, firstSymbol);
   }
 
@@ -169,7 +212,7 @@
       fallbackMap.resize();
     });
     fallbackMap.on('error', (event) => {
-      if (event?.sourceId === radarSourceId) setRadarUnavailable(true);
+      if (event?.sourceId === radarSourceId || event?.sourceId === radarBoundarySourceId) setRadarUnavailable(true);
       else setMessage(`Map error: ${event?.error?.message || 'Basemap unavailable.'}`);
     });
     navigator.geolocation?.getCurrentPosition(({ coords }) => {

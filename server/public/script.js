@@ -5329,7 +5329,12 @@ let liveMapGpsRequested = false;
 const liveMapDetailedStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
 const liveRadarSourceId = 'nws-radar-reflectivity';
 const liveRadarLayerId = 'nws-radar-reflectivity-layer';
-const liveRadarTiles = 'https://mapservices.weather.noaa.gov/eventdriven/rest/services/radar/radar_base_reflectivity/MapServer/export?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=256,256&format=png32&transparent=true&layers=show:3&f=image';
+const liveRadarBoundarySourceId = 'nws-radar-reflectivity-boundary';
+const liveRadarBoundaryLayerId = 'nws-radar-reflectivity-boundary-layer';
+const liveRadarTileSize = 512;
+const liveRadarServiceUrl = 'https://mapservices.weather.noaa.gov/eventdriven/rest/services/radar/radar_base_reflectivity/MapServer/export';
+const liveRadarTiles = `${liveRadarServiceUrl}?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=${liveRadarTileSize},${liveRadarTileSize}&format=png32&transparent=true&layers=show:3&f=image`;
+const liveRadarBoundaryTiles = `${liveRadarServiceUrl}?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=${liveRadarTileSize},${liveRadarTileSize}&format=png32&transparent=true&layers=show:1&f=image`;
 const livePlumeSourceId = 'live-plume-overlay';
 const livePlumeFillLayerId = 'live-plume-overlay-fill';
 const livePlumeOutlineLayerId = 'live-plume-overlay-outline';
@@ -5520,21 +5525,39 @@ function setLiveRadarUnavailable(unavailable) {
   if (fallback) fallback.hidden = !unavailable;
 }
 
+function removeLiveRadarOverlay() {
+  if (liveMap.getLayer(liveRadarBoundaryLayerId)) liveMap.removeLayer(liveRadarBoundaryLayerId);
+  if (liveMap.getLayer(liveRadarLayerId)) liveMap.removeLayer(liveRadarLayerId);
+  if (liveMap.getSource(liveRadarBoundarySourceId)) liveMap.removeSource(liveRadarBoundarySourceId);
+  if (liveMap.getSource(liveRadarSourceId)) liveMap.removeSource(liveRadarSourceId);
+  document.querySelector('.live-map-stage')?.classList.remove('radar-enhanced');
+}
+
 function updateLiveRadarOverlay() {
   if (!liveMap?.isStyleLoaded()) return;
   const enabled = Boolean(liveMapState?.activeLayers?.weatherRadar);
   if (!enabled) {
-    if (liveMap.getLayer(liveRadarLayerId)) liveMap.removeLayer(liveRadarLayerId);
-    if (liveMap.getSource(liveRadarSourceId)) liveMap.removeSource(liveRadarSourceId);
+    removeLiveRadarOverlay();
     setLiveRadarUnavailable(false);
     return;
   }
   if (liveMap.getSource(liveRadarSourceId)) return;
   setLiveRadarUnavailable(false);
+  document.querySelector('.live-map-stage')?.classList.add('radar-enhanced');
   liveMap.addSource(liveRadarSourceId, {
     type: 'raster',
     tiles: [liveRadarTiles],
-    tileSize: 256,
+    tileSize: liveRadarTileSize,
+    minzoom: 2,
+    maxzoom: 17,
+    attribution: 'NOAA / National Weather Service',
+  });
+  liveMap.addSource(liveRadarBoundarySourceId, {
+    type: 'raster',
+    tiles: [liveRadarBoundaryTiles],
+    tileSize: liveRadarTileSize,
+    minzoom: 2,
+    maxzoom: 17,
     attribution: 'NOAA / National Weather Service',
   });
   // Keep radar above the street basemap and below labels and incident markers.
@@ -5543,7 +5566,27 @@ function updateLiveRadarOverlay() {
     id: liveRadarLayerId,
     type: 'raster',
     source: liveRadarSourceId,
-    paint: { 'raster-opacity': 0.62 },
+    paint: {
+      'raster-opacity': 0.78,
+      'raster-resampling': 'nearest',
+      'raster-contrast': 0.34,
+      'raster-saturation': 0.42,
+      'raster-brightness-min': 0.08,
+      'raster-brightness-max': 0.98,
+      'raster-fade-duration': 0,
+    },
+  }, firstSymbolLayer);
+  liveMap.addLayer({
+    id: liveRadarBoundaryLayerId,
+    type: 'raster',
+    source: liveRadarBoundarySourceId,
+    paint: {
+      'raster-opacity': 0.9,
+      'raster-resampling': 'nearest',
+      'raster-contrast': 0.45,
+      'raster-saturation': 0.15,
+      'raster-fade-duration': 0,
+    },
   }, firstSymbolLayer);
 }
 
@@ -5592,7 +5635,7 @@ function initializeLiveMap() {
       setText('live-map-status', 'Live Map ready.');
     });
     liveMap.on('error', (event) => {
-      if (event?.sourceId === liveRadarSourceId) {
+      if (event?.sourceId === liveRadarSourceId || event?.sourceId === liveRadarBoundarySourceId) {
         setLiveRadarUnavailable(true);
         return;
       }
