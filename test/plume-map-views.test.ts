@@ -72,10 +72,12 @@ describe("plume map views", () => {
   it("keeps the plume map inside its page and Threat Zone inside the Command Dashboard", () => {
     expect(html.indexOf('id="plume-model-form"')).toBeLessThan(html.indexOf('class="plume-map-layout"'));
     expect(html.indexOf('id="plume-demographics"')).toBeLessThan(html.indexOf('class="content-area"'));
+    expect(html.match(/id="plume-demographics"/g)?.length).toBe(1);
     expect(plumeUi).not.toContain("document.querySelector('.layout')?.append(plumeMapWorkspace)");
     expect(plumeUi).not.toContain("plumeMapWorkspace.append(document.getElementById('plume-demographics'))");
     expect(styles).toContain(".plume-map-layout {\n  grid-template-columns: minmax(0, 1fr);");
-    expect(styles).toContain("grid-template-columns: minmax(0, 56fr) minmax(180px, 22fr)");
+    expect(styles).toContain("grid-template-columns: minmax(0, 56fr) minmax(200px, 24fr)");
+    expect(styles).toContain("grid-template-rows: repeat(2, minmax(0, 1fr))");
   });
 
   it("scopes the desktop three-column command layout away from Chemical ID", () => {

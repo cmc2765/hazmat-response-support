@@ -100,40 +100,16 @@
           </div>
 
           <details class="sidebar-card plume-demographics plume-sidebar-data" id="plume-demographics">
-            <summary>
-              Threat Zone
-              <span class="status-pill" id="demographics-zone-badge">No zone</span>
-            </summary>
+            <summary>Threat Zone <span class="status-pill" id="demographics-zone-badge">No zone</span></summary>
             <p id="demographics-zone-summary" class="demographics-summary">Click a red, yellow, or green plume zone to inspect potential exposures.</p>
             <div class="demographics-grid" aria-live="polite">
-              <div class="demographic-stat">
-                <span>Estimated population</span>
-                <strong id="demographics-population">—</strong>
-              </div>
-              <div class="demographic-stat">
-                <span>Estimated households</span>
-                <strong id="demographics-housing">—</strong>
-              </div>
-              <div class="demographic-stat">
-                <span>Schools / daycares</span>
-                <strong id="demographics-schools">—</strong>
-              </div>
-              <div class="demographic-stat">
-                <span>Healthcare facilities</span>
-                <strong id="demographics-healthcare">—</strong>
-              </div>
-              <div class="demographic-stat">
-                <span>Nursing homes / assisted living</span>
-                <strong id="demographics-nursing">—</strong>
-              </div>
-              <div class="demographic-stat">
-                <span>Critical infrastructure</span>
-                <strong id="demographics-critical">—</strong>
-              </div>
-              <div class="demographic-stat">
-                <span>Businesses / industrial sites</span>
-                <strong id="demographics-businesses">—</strong>
-              </div>
+              <div class="demographic-stat"><span>Estimated population</span><strong id="demographics-population">—</strong></div>
+              <div class="demographic-stat"><span>Estimated households</span><strong id="demographics-housing">—</strong></div>
+              <div class="demographic-stat"><span>Schools / daycares</span><strong id="demographics-schools">—</strong></div>
+              <div class="demographic-stat"><span>Healthcare facilities</span><strong id="demographics-healthcare">—</strong></div>
+              <div class="demographic-stat"><span>Nursing homes / assisted living</span><strong id="demographics-nursing">—</strong></div>
+              <div class="demographic-stat"><span>Critical infrastructure</span><strong id="demographics-critical">—</strong></div>
+              <div class="demographic-stat"><span>Businesses / industrial sites</span><strong id="demographics-businesses">—</strong></div>
             </div>
             <p id="demographics-source-status" class="demographics-source-status">Population estimate: U.S. Census geography. Occupancies: OpenStreetMap mapped features.</p>
           </details>
@@ -465,13 +441,10 @@
 
           <section id="plume" class="view">
             <form class="plume-model-controls" id="plume-model-form">
-              <div class="plume-model-controls-heading">
-                <p class="eyebrow">Plume Actions</p>
-                <p id="plume-input-status" class="muted" role="status" aria-live="polite"></p>
-              </div>
+              <p id="plume-input-status" class="sr-only" role="status" aria-live="polite"></p>
               <div class="plume-model-input-grid">
-                <div class="plume-model-section">
-                  <strong>Model Inputs</strong>
+                <section class="plume-model-section">
+                  <header class="plume-model-section-heading"><strong>Model Inputs</strong></header>
                   <div class="plume-model-section-grid plume-release-grid">
                     <label class="plume-model-field plume-chemical-field" for="plume-chemical-input">
                       <span>Chemical</span>
@@ -526,9 +499,9 @@
                       <small class="container-profile-footer">Planning defaults only. Verify with SDS, shipping papers, facility inventory, or container markings.</small>
                     </div>
                   </div>
-                </div>
-                <div class="plume-model-section">
-                  <strong>Weather Data</strong>
+                </section>
+                <section class="plume-model-section">
+                  <header class="plume-model-section-heading"><strong>Weather Data</strong></header>
                   <div class="plume-model-section-grid plume-weather-grid">
                     <label class="plume-model-field" for="plume-weather-source">
                       <span>Weather Source</span>
@@ -584,11 +557,10 @@
                       </select>
                     </label>
                   </div>
-                </div>
+                </section>
               </div>
               <div class="plume-model-actions">
                 <button class="ghost-btn" id="use-live-plume-weather-btn" type="button">Refresh Weather</button>
-                <button class="plume-plot-btn" id="plot-plume-btn" type="submit" disabled>Plot Plume</button>
               </div>
             </form>
 
@@ -596,9 +568,7 @@
               <div class="plume-layer-controls" aria-label="Map Layers">
                 <strong>Map Layers</strong>
                 <div>
-                  <button type="button" data-plume-layer="centerline" aria-pressed="false">Centerline</button>
                   <button type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
-                  <button type="button" data-plume-layer="hazards" aria-pressed="false">Hazards</button>
                   <button type="button" data-plume-layer="radar" aria-pressed="false">Weather Radar</button>
                 </div>
                 <small id="plume-layers-status" role="status" aria-live="polite"></small>
@@ -622,6 +592,7 @@
                   </ul>
                 </div>
               </details>
+              <button class="plume-plot-btn" id="plot-plume-btn" type="submit" form="plume-model-form" disabled>Plot Plume</button>
             </div>
 
             <div class="plume-map-layout">
