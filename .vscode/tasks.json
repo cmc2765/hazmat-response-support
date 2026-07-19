@@ -2,17 +2,31 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Prepare HazMatIQ preview",
+      "label": "HazMatIQ: Dev Server",
       "type": "shell",
-      "command": "if [ ! -d \"${workspaceFolder}/node_modules\" ]; then npm install --prefix \"${workspaceFolder}\"; fi; if [ ! -d node_modules ]; then npm install; fi; if [ ! -f local.db ]; then npm run db:init-sqlite && npm run db:seed; fi",
+      "command": "npm run dev",
       "options": {
-        "cwd": "${workspaceFolder}/server"
+        "cwd": "${workspaceFolder}"
       },
-      "problemMatcher": [],
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "hazmatiq-preview",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^> hazmat-response-support@.* dev$",
+          "endsPattern": "^\\[server\\] Hono API listening on http://localhost:3000.*$"
+        }
+      },
       "presentation": {
-        "reveal": "silent",
-        "panel": "shared",
-        "clear": false
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "runOptions": {
+        "instanceLimit": 1
       }
     }
   ]

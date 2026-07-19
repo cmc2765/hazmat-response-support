@@ -19,6 +19,14 @@ describe("plume map views", () => {
     expect(plumeUi).not.toContain("plumeMap.scrollZoom.disable()");
   });
 
+  it("uses an address control instead of plume-map attribution", () => {
+    expect(html).toContain('id="plume-map-address-form"');
+    expect(html).toContain('id="plume-map-address-input"');
+    expect(plumeUi).toContain("attributionControl: false");
+    expect(plumeUi).toContain("source: 'Manual plume address'");
+    expect(plumeUi).toContain("source: 'Incident Brief address'");
+  });
+
   it("keeps the Live Map in a single-screen flexible stage", () => {
     expect(styles).toContain(".app-shell:has(#map.active)");
     expect(styles).toContain("#map.view.active {\n    display: grid;");

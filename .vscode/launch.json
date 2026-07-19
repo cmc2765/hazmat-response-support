@@ -2,18 +2,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Preview HazMatIQ",
+      "name": "Start HazMatIQ Preview",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
-      "cwd": "${workspaceFolder}/server",
+      "cwd": "${workspaceFolder}",
       "console": "internalConsole",
       "outputCapture": "std",
-      "preLaunchTask": "Prepare HazMatIQ preview",
       "serverReadyAction": {
-        "pattern": ".*listening on http://localhost:([0-9]+)",
-        "uriFormat": "http://localhost:%s",
+        "pattern": ".*Hono API listening on http://localhost:([0-9]+).*$",
+        "uriFormat": "https://${env:CODESPACE_NAME}-%s.${env:GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}",
         "action": "openExternally"
       },
       "skipFiles": ["<node_internals>/**"]

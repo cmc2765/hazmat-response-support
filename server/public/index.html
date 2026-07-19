@@ -10,17 +10,8 @@
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <div class="brand" aria-label="HazMatIQ">
-          <span class="brand-emblem" aria-hidden="true">
-            <span class="nfpa-cell nfpa-fire"><span>1</span></span>
-            <span class="nfpa-cell nfpa-reactivity"><span>0</span></span>
-            <span class="nfpa-cell nfpa-health"><span>3</span></span>
-            <span class="nfpa-cell nfpa-special"><span>W</span></span>
-          </span>
-          <span class="brand-lockup">
-            <span class="brand-name"><span>HAZMAT</span><strong>IQ</strong></span>
-            <span class="brand-tagline">Incident intelligence</span>
-          </span>
+        <div class="brand">
+          <img class="brand-logo" src="assets/hazmatiq-logo.png" alt="HazMatIQ — Incident Intelligence" />
         </div>
         <a
           class="department-logo-link"
@@ -43,11 +34,11 @@
           </svg>
         </span>
         <strong class="notification-center-title">Notification Center</strong>
-        <time class="notification-updated" id="notification-updated" aria-label="Current 24-hour time">00:00:00</time>
         <div class="notification-feed">
           <div class="notification-item notification-system">
             <span>System</span>
-            <strong id="tactical-alert-message">System Normal</strong>
+            <time class="notification-updated" id="notification-updated" aria-label="Current 24-hour time">00:00:00</time>
+            <strong class="notification-system-message" id="tactical-alert-message">System Normal</strong>
           </div>
           <div class="notification-item">
             <span>Weather</span>
@@ -100,7 +91,10 @@
           </div>
 
           <details class="sidebar-card plume-demographics plume-sidebar-data" id="plume-demographics">
-            <summary>Threat Zone <span class="status-pill" id="demographics-zone-badge">No zone</span></summary>
+            <summary>
+              <span class="plume-sidebar-heading"><small>Plume Status</small><strong>Threat Zone</strong></span>
+              <span class="status-pill" id="demographics-zone-badge">No zone</span>
+            </summary>
             <p id="demographics-zone-summary" class="demographics-summary">Click a red, yellow, or green plume zone to inspect potential exposures.</p>
             <div class="demographics-grid" aria-live="polite">
               <div class="demographic-stat"><span>Estimated population</span><strong id="demographics-population">—</strong></div>
@@ -307,6 +301,7 @@
                 <div class="button-row incident-form-actions">
                   <button class="primary-btn" id="save-incident-brief-btn" type="button">Save Incident Brief</button>
                   <button class="ghost-btn" id="clear-incident-brief-btn" type="button">Clear</button>
+                  <button class="primary-btn" id="complete-incident-btn" type="button">Complete Incident</button>
                 </div>
                 <p id="incident-location-status" class="muted" role="status" aria-live="polite">Enter incident details or use the device's current GPS location.</p>
               </article>
@@ -353,9 +348,6 @@
                 <summary>Protective Action Guidance</summary>
                 <div id="incident-protective-guidance">Select a chemical and run the plume model to populate protective action guidance.</div>
               </details>
-            </div>
-            <div class="button-row">
-              <button class="primary-btn" id="complete-incident-btn" type="button">Complete Incident</button>
             </div>
             <dialog id="complete-incident-dialog" aria-labelledby="complete-incident-question">
               <h3 id="complete-incident-question">Are you sure you want to complete this incident?</h3>
@@ -598,6 +590,17 @@
             <div class="plume-map-layout">
               <article class="plume-full-map">
                 <div id="plume-gis-map" class="plume-map-frame" role="application" aria-label="Interactive incident plume map"></div>
+                <form class="plume-map-address-control" id="plume-map-address-form">
+                  <label class="sr-only" for="plume-map-address-input">Plume plotting address</label>
+                  <input
+                    id="plume-map-address-input"
+                    type="text"
+                    placeholder="Enter plume plotting address"
+                    autocomplete="street-address"
+                  />
+                  <button type="submit">Manual Entry</button>
+                  <span class="sr-only" id="plume-map-address-status" role="status" aria-live="polite"></span>
+                </form>
                 <div class="plume-map-legend" id="plume-map-legend" hidden>
                   <strong>Threat zones</strong>
                   <span><i class="zone-red"></i> Red · AEGL 3</span>
@@ -675,43 +678,173 @@
           </section>
 
           <section id="monitor" class="view">
-            <div class="card-grid two-up">
-              <article class="panel-card">
-                <div class="chemical-card-header">
-                  <h3>Connected Devices</h3>
-                  <button class="ghost-btn">Calibrate</button>
-                </div>
-                <ul class="detail-list">
-                  <li><span>PID</span><strong>Offline</strong></li>
-                  <li><span>Multi-gas Meter</span><strong>Standby</strong></li>
-                  <li><span>Dräger Tube Kit</span><strong>Ready</strong></li>
-                  <li><span>Radiation Meter</span><strong>Pending</strong></li>
-                  <li><span>Weather Meter</span><strong>Connected</strong></li>
-                </ul>
-              </article>
-              <article class="panel-card">
-                <h3>Readings Panel</h3>
-                <p class="big-label">Placeholder readings from Honeywell Safety Suite, detector feeds, and monitoring logs.</p>
-                <ul class="detail-list">
-                  <li><span>LEL</span><strong data-monitor-reading="LEL">0.0%</strong></li>
-                  <li><span>O₂</span><strong data-monitor-reading="O₂">20.9%</strong></li>
-                  <li><span>H₂S</span><strong data-monitor-reading="H₂S">Pending</strong></li>
-                  <li><span>PID</span><strong data-monitor-reading="PID">Demo value</strong></li>
-                </ul>
-                <div class="status-pill">Monitoring plan: confirm wind shift / repeat readings</div>
-              </article>
+            <div class="monitor-page-heading">
+              <div><p class="eyebrow">Command monitoring module</p><h2>Monitoring Equipment</h2></div>
+              <span class="monitor-simulated-label">Training Data · Simulated</span>
             </div>
 
-            <div class="panel-card">
-              <h3>Map Placement</h3>
-              <p class="big-label">Monitoring equipment can be placed directly on the active map to show location accuracy for each reading point.</p>
-              <div class="chip-list">
-                <li>PID station</li>
-                <li>Multi-gas point</li>
-                <li>Weather station</li>
-                <li>Decon monitor</li>
-              </div>
+            <p class="monitor-purpose">HazMatIQ uses FirstDue as the future system of record for apparatus, equipment, inspections, calibration, and weekly checks. HazMatIQ tracks which monitors are assigned to this incident, displays readings, and records timestamped monitoring activity for reports.</p>
+
+            <section class="monitor-status-bar" aria-label="Monitoring data status">
+              <label>Data Source
+                <select id="monitor-data-source">
+                  <option>Manual Entry</option>
+                  <option selected>Sample / Simulator</option>
+                  <option>CSV Import</option>
+                  <option>RAE / Honeywell Safety Suite</option>
+                </select>
+              </label>
+              <div><span>Connection Status</span><strong id="monitor-connection-status">Simulated</strong></div>
+              <div><span>Last Updated</span><strong id="monitor-last-updated">—</strong></div>
+              <button class="monitor-refresh-btn" id="monitor-refresh-readings" type="button">Refresh Readings</button>
+            </section>
+
+            <div class="monitor-tabs" id="monitor-tabs" role="tablist" aria-label="Monitoring Equipment sections">
+              <button class="monitor-tab active" type="button" role="tab" aria-selected="true" aria-controls="monitor-live" data-monitor-tab="monitor-live">Live Readings</button>
+              <button class="monitor-tab" type="button" role="tab" aria-selected="false" aria-controls="monitor-incident" data-monitor-tab="monitor-incident">Incident Monitors</button>
+              <button class="monitor-tab" id="monitor-inventory-tab" type="button" role="tab" aria-selected="false" aria-controls="monitor-inventory" data-monitor-tab="monitor-inventory">Monitor Inventory / FirstDue Source</button>
+              <button class="monitor-tab" type="button" role="tab" aria-selected="false" aria-controls="monitor-log" data-monitor-tab="monitor-log">Monitor Activity Log</button>
+              <button class="monitor-tab" type="button" role="tab" aria-selected="false" aria-controls="monitor-safety-suite" data-monitor-tab="monitor-safety-suite">Integration Status</button>
             </div>
+
+            <section id="monitor-live" class="monitor-tab-panel active" role="tabpanel">
+              <div class="monitor-alarm-banner"><strong>Current Monitor Status:</strong> No Active Alarms <span>Sample / Simulator</span></div>
+              <div id="monitor-live-empty" class="monitor-empty">No monitors assigned to this incident. Add monitors from the Incident Monitors tab.</div>
+              <section id="monitor-assigned-live" hidden>
+                <div class="monitor-inventory-label"><h4>Assigned Incident Monitors</h4><span>Manual / pending live feed</span></div>
+                <div class="monitor-card-grid" id="monitor-assigned-live-cards"></div>
+              </section>
+              <div class="monitor-inventory-label"><h4>Current Sample Readings</h4><span>Every reading shown below is simulated</span></div>
+              <div class="monitor-card-grid" id="monitor-live-cards"></div>
+              <dialog class="monitor-device-dialog" id="monitor-reading-dialog" aria-labelledby="monitor-reading-dialog-title">
+                <form id="monitor-reading-form"><div class="monitor-dialog-heading"><div><p class="eyebrow">Manual incident reading</p><h3 id="monitor-reading-dialog-title">Add Manual Reading</h3></div><button class="monitor-dialog-close" id="monitor-reading-close" type="button" aria-label="Close reading form">×</button></div>
+                  <input id="monitor-reading-assignment-id" type="hidden" />
+                  <div class="monitor-device-form-grid">
+                    <label>Date / Time <input id="monitor-reading-time" type="datetime-local" required /></label><label>Monitor <input id="monitor-reading-monitor" readonly /></label>
+                    <label>Sensor <select id="monitor-reading-sensor"><option>O2</option><option>LEL</option><option>CO</option><option>H2S</option><option>VOC / PID</option><option>NH3</option><option>Cl2</option><option>SO2</option><option>HCN</option><option>CO2</option><option>Radiation</option><option>Temperature</option><option>Humidity</option><option>Wind Speed</option><option>Wind Direction</option><option>Custom</option></select></label>
+                    <label>Reading Value <input id="monitor-reading-value" required /></label><label>Unit <input id="monitor-reading-unit" /></label>
+                    <label>Alarm State <select id="monitor-reading-alarm"><option>Normal</option><option>Caution</option><option>Alarm</option><option>Cleared</option><option>Offline / Stale</option><option>Unknown</option></select></label>
+                    <label>Location <input id="monitor-reading-location" /></label><label>Action Taken <input id="monitor-reading-action" /></label><label>Entered By <input id="monitor-reading-entered-by" /></label>
+                    <label class="monitor-form-span-two">Notes <textarea id="monitor-reading-notes" rows="2"></textarea></label><label class="monitor-form-span-two monitor-checkbox"><input id="monitor-reading-include" type="checkbox" checked /> Include in Incident Report</label>
+                  </div><p class="monitor-form-status" id="monitor-reading-status" role="status"></p><div class="monitor-dialog-actions"><button class="monitor-save-btn" type="submit">Save Manual Reading</button><button class="monitor-cancel-btn" id="monitor-reading-cancel" type="button">Cancel</button></div>
+                </form>
+              </dialog>
+            </section>
+
+            <section id="monitor-incident" class="monitor-tab-panel" role="tabpanel" hidden>
+              <div class="monitor-section-heading"><div><h3>Monitors Assigned to This Incident</h3><p>Select saved manual records or create a temporary incident monitor. Inventory records remain separate.</p></div><button class="monitor-add-btn" id="monitor-add-assignment" type="button">Add Monitor to Incident</button></div>
+              <div id="monitor-assignment-empty" class="monitor-empty">No monitors are assigned to this incident.</div>
+              <div class="monitor-assignment-grid" id="monitor-assignment-list"></div>
+
+              <dialog class="monitor-device-dialog" id="monitor-assignment-dialog" aria-labelledby="monitor-assignment-dialog-title">
+                <form id="monitor-assignment-form">
+                  <div class="monitor-dialog-heading"><div><p class="eyebrow">Incident use</p><h3 id="monitor-assignment-dialog-title">Add Monitor to Incident</h3></div><button class="monitor-dialog-close" id="monitor-assignment-close" type="button" aria-label="Close assignment form">×</button></div>
+                  <input id="monitor-assignment-id" type="hidden" />
+                  <div class="monitor-device-form-grid">
+                    <label>Saved Monitor <select id="monitor-assignment-monitor" required></select></label>
+                    <label>Assignment Role <select id="monitor-assignment-role"><option>Entry Team 1</option><option>Entry Team 2</option><option>Backup Team</option><option>Decon Corridor</option><option>Emergency Decon</option><option>Downwind Monitor</option><option>Perimeter Monitor</option><option>Hot/Warm Zone Boundary</option><option>Command Post</option><option>Rehab</option><option>Staging</option><option>Custom</option></select></label>
+                    <div class="monitor-form-span-two monitor-temporary-fields" id="monitor-temporary-fields" hidden><label>Temporary Device Name <input id="monitor-temporary-name" /></label><label>Manufacturer / Model <input id="monitor-temporary-model" /></label><label>Serial Number <input id="monitor-temporary-serial" /></label><label>Sensor Package <input id="monitor-temporary-sensors" /></label></div>
+                    <label>Deployment Location <input id="monitor-assignment-location" /></label>
+                    <label>Assigned To / Team <input id="monitor-assignment-team" /></label>
+                    <label>Latitude (optional) <input id="monitor-assignment-latitude" type="number" min="-90" max="90" step="any" /></label>
+                    <label>Longitude (optional) <input id="monitor-assignment-longitude" type="number" min="-180" max="180" step="any" /></label>
+                    <label class="monitor-form-span-two">Monitoring Purpose <select id="monitor-assignment-purpose"><option>Entry Team Safety</option><option>Area Monitoring</option><option>Downwind Monitoring</option><option>Perimeter Monitoring</option><option>Decon Corridor Monitoring</option><option>Leak Source Monitoring</option><option>Shelter-in-Place Verification</option><option>Evacuation Boundary Verification</option><option>Re-entry / Termination Monitoring</option><option>Other</option></select></label>
+                    <label class="monitor-form-span-two">Notes <textarea id="monitor-assignment-notes" rows="2"></textarea></label>
+                  </div>
+                  <p class="monitor-form-status" id="monitor-assignment-status" role="status"></p>
+                  <div class="monitor-dialog-actions"><button class="monitor-save-btn" type="submit">Save Assignment</button><button class="monitor-cancel-btn" id="monitor-assignment-cancel" type="button">Cancel</button></div>
+                </form>
+              </dialog>
+            </section>
+
+            <section id="monitor-inventory" class="monitor-tab-panel" role="tabpanel" aria-labelledby="monitor-inventory-tab" hidden>
+              <div class="monitor-section-heading">
+                <div><h3>Monitor Inventory / FirstDue Source</h3><p>Reference records used when assigning monitors in HazMatIQ; this is not the official inspection or calibration system.</p></div>
+                <div class="monitor-actions"><button class="monitor-add-btn" id="monitor-add-device" type="button">Add Manual Monitor</button><button type="button" id="monitor-firstdue-import">Import FirstDue Export</button><button type="button" id="monitor-inventory-export">Export HazMatIQ Monitor Inventory</button></div>
+              </div>
+              <article class="monitor-source-card"><div><h4>FirstDue Equipment Source</h4><p>FirstDue remains the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HazMatIQ can use manual monitor entries now and may later import approved FirstDue equipment records.</p></div><span class="monitor-state offline">Status: Not Connected</span></article>
+              <p class="monitor-reference-note">Calibration, inspection, and weekly-check records should continue to be maintained in FirstDue according to agency policy. HazMatIQ displays these fields only as reference data when manually entered or imported through approved access.</p>
+              <p class="monitor-form-status" id="monitor-firstdue-status" role="status"></p>
+              <section class="monitor-saved-inventory" id="monitor-saved-inventory" hidden>
+                <div class="monitor-inventory-label"><h4>Saved Monitor Inventory</h4><span>Stored on this device</span></div>
+                <div class="monitor-table-wrap"><table class="monitor-table"><thead><tr><th>Device name</th><th>Manufacturer / Model</th><th>Serial number</th><th>Sensor package</th><th>Assigned unit / cache</th><th>Primary use</th><th>Status</th><th>Calibration due (Reference Only)</th><th>Last bump test (Reference Only)</th><th>Notes</th><th>Actions</th></tr></thead><tbody id="monitor-saved-inventory-rows"></tbody></table></div>
+              </section>
+              <div class="monitor-inventory-label"><h4>Sample / Demo Inventory</h4><span>Training examples only; not real department devices</span></div>
+              <div class="monitor-table-wrap"><table class="monitor-table"><thead><tr><th>Device name</th><th>Manufacturer</th><th>Model</th><th>Serial number</th><th>Sensor package</th><th>Assigned unit/cache</th><th>Status</th><th>Notes</th></tr></thead><tbody>
+                <tr><td>AreaRAE Pro 1</td><td>RAE Systems</td><td>AreaRAE Pro</td><td>SAMPLE-ARP-01</td><td>O2, LEL, CO, H2S, PID</td><td>HazMat 1</td><td><span class="monitor-state normal">Ready</span></td><td>Sample Inventory</td></tr>
+                <tr><td>AreaRAE Pro 2</td><td>RAE Systems</td><td>AreaRAE Pro</td><td>SAMPLE-ARP-02</td><td>O2, LEL, CO, H2S, PID</td><td>Monitor Cache</td><td><span class="monitor-state normal">Ready</span></td><td>Sample Inventory</td></tr>
+                <tr><td>MultiRAE Entry 1</td><td>RAE Systems</td><td>MultiRAE</td><td>SAMPLE-MR-01</td><td>O2, LEL, CO, H2S, VOC</td><td>Entry Team 1</td><td><span class="monitor-state normal">Ready</span></td><td>Sample Inventory</td></tr>
+                <tr><td>MultiRAE Entry 2</td><td>RAE Systems</td><td>MultiRAE</td><td>SAMPLE-MR-02</td><td>O2, LEL, CO, H2S</td><td>Entry Team 2</td><td><span class="monitor-state caution">Due Soon</span></td><td>Sample Inventory</td></tr>
+                <tr><td>MiniRAE PID</td><td>RAE Systems</td><td>MiniRAE 3000</td><td>SAMPLE-PID-01</td><td>VOC / PID</td><td>PID Cache</td><td><span class="monitor-state normal">Ready</span></td><td>Sample Inventory</td></tr>
+                <tr><td>Radiation Meter</td><td>Sample</td><td>Survey Meter</td><td>SAMPLE-RAD-01</td><td>Gamma dose rate</td><td>HazMat 1</td><td><span class="monitor-state offline">Out of Service</span></td><td>Training placeholder</td></tr>
+              </tbody></table></div>
+
+              <dialog class="monitor-device-dialog" id="monitor-device-dialog" aria-labelledby="monitor-device-dialog-title">
+                <form id="monitor-device-form">
+                  <div class="monitor-dialog-heading"><div><p class="eyebrow">Local inventory</p><h3 id="monitor-device-dialog-title">Add Monitoring Device</h3></div><button class="monitor-dialog-close" id="monitor-device-dialog-close" type="button" aria-label="Close monitor form">×</button></div>
+                  <input id="monitor-device-id" type="hidden" />
+                  <div class="monitor-device-form-grid">
+                    <label>Device Name <input id="monitor-device-name" name="deviceName" required /></label>
+                    <label>Manufacturer <input id="monitor-device-manufacturer" name="manufacturer" /></label>
+                    <label>Model <input id="monitor-device-model" name="model" /></label>
+                    <label>Serial Number <input id="monitor-device-serial" name="serialNumber" /></label>
+                    <label class="monitor-form-span-two">Sensor Package <input id="monitor-device-sensors" name="sensorPackage" placeholder="O2, LEL, CO, H2S, VOC/PID, NH3, Cl2" /></label>
+                    <label>Assigned Unit / Cache <input id="monitor-device-assigned" name="assignedUnit" /></label>
+                    <label>Primary Use <select id="monitor-device-primary-use" name="primaryUse"><option>Area Monitoring</option><option>Entry Team Monitoring</option><option>Downwind Monitoring</option><option>Perimeter Monitoring</option><option>Decon Corridor Monitoring</option><option>Command Post Monitoring</option><option>PID / VOC Screening</option><option>Radiation Monitoring</option><option>Weather Monitoring</option><option>Other</option></select></label>
+                    <label>Status <select id="monitor-device-status" name="status"><option>Ready</option><option>Due Soon</option><option>Overdue</option><option>Out of Service</option><option>Training / Demo</option><option>Unknown</option></select></label>
+                    <label>Calibration Date <span class="monitor-reference-tag">Reference Only</span><input id="monitor-device-calibration-date" name="calibrationDate" type="date" /></label>
+                    <label>Calibration Due <span class="monitor-reference-tag">Reference Only</span><input id="monitor-device-calibration-due" name="calibrationDue" type="date" /></label>
+                    <label>Last Bump Test <span class="monitor-reference-tag">Reference Only</span><input id="monitor-device-bump-test" name="lastBumpTest" type="datetime-local" /></label>
+                    <label>Inspection Date <span class="monitor-reference-tag">Reference Only</span><input id="monitor-device-inspection-date" name="inspectionDate" type="date" /></label>
+                    <label>Inspection Status <span class="monitor-reference-tag">Reference Only</span><input id="monitor-device-inspection-status" name="inspectionStatus" /></label>
+                    <label class="monitor-form-span-two">Notes <textarea id="monitor-device-notes" name="notes" rows="2"></textarea></label>
+                  </div>
+                  <p class="monitor-form-status" id="monitor-device-form-status" role="status" aria-live="polite"></p>
+                  <div class="monitor-dialog-actions"><button class="monitor-save-btn" type="submit">Save Monitor</button><button class="monitor-cancel-btn" id="monitor-device-cancel" type="button">Cancel</button></div>
+                </form>
+              </dialog>
+              <dialog class="monitor-device-dialog monitor-import-dialog" id="monitor-import-dialog" aria-labelledby="monitor-import-title">
+                <form id="monitor-import-form"><div class="monitor-dialog-heading"><div><p class="eyebrow">Approved export only</p><h3 id="monitor-import-title">Import FirstDue Export</h3></div><button class="monitor-dialog-close" id="monitor-import-close" type="button" aria-label="Close import form">×</button></div>
+                  <p class="monitor-reference-note">Use only approved FirstDue exports or agency-authorized files. Nothing is saved until you review the preview and click Confirm Import.</p>
+                  <div class="monitor-device-form-grid"><label>Format <select id="monitor-import-format"><option value="csv">CSV</option><option value="json">JSON</option></select></label><label>Upload approved CSV/JSON <input id="monitor-import-file" type="file" accept=".csv,.json,text/csv,application/json" /></label><label class="monitor-form-span-two">Paste CSV or JSON <textarea id="monitor-import-text" rows="8" placeholder="Paste an approved export here"></textarea></label></div>
+                  <div class="monitor-dialog-actions monitor-import-parse-actions"><button class="monitor-save-btn" id="monitor-import-preview" type="button">Preview Import</button></div><p class="monitor-form-status" id="monitor-import-status" role="status"></p>
+                  <section id="monitor-import-preview-section" hidden><div class="monitor-inventory-label"><h4>Import Preview</h4><span id="monitor-import-preview-count"></span></div><div class="monitor-table-wrap"><table class="monitor-table"><thead><tr><th>Device</th><th>Manufacturer / Model</th><th>Serial / Source ID</th><th>Sensors</th><th>Unit / Apparatus</th><th>Status</th><th>Match</th></tr></thead><tbody id="monitor-import-preview-rows"></tbody></table></div><label class="monitor-checkbox monitor-import-confirm"><input id="monitor-import-update-matches" type="checkbox" /> Update matching saved records (serial number, source ID, or device + model)</label><div class="monitor-dialog-actions"><button class="monitor-save-btn" id="monitor-import-confirm" type="button">Confirm Import</button><button class="monitor-cancel-btn" id="monitor-import-cancel" type="button">Cancel</button></div></section>
+                </form>
+              </dialog>
+            </section>
+
+            <section id="monitor-log" class="monitor-tab-panel" role="tabpanel" hidden>
+              <div class="monitor-section-heading"><div><h3>Monitor Activity Log</h3><p>Timestamped monitoring actions and readings for incident documentation, ICS forms, and final reports.</p></div><div class="monitor-actions"><button class="monitor-add-btn" id="monitor-add-log" type="button">Add Monitor Log Entry</button><button type="button" id="monitor-log-export">Export Monitor Activity Log</button></div></div>
+              <div class="monitor-log-filters" id="monitor-log-filters" aria-label="Monitor activity filters"><button class="active" type="button" data-log-filter="all">All</button><button type="button" data-log-filter="alarms">Alarms</button><button type="button" data-log-filter="readings">Manual Readings</button><button type="button" data-log-filter="deployment">Deployment Changes</button><button type="button" data-log-filter="report">Include in Report</button></div>
+              <div id="monitor-log-empty" class="monitor-empty">No monitor activity has been recorded.</div>
+              <div class="monitor-table-wrap" id="monitor-log-table" hidden><table class="monitor-table"><thead><tr><th>Date / Time</th><th>Monitor</th><th>Assignment / Location</th><th>Entry Type</th><th>Sensor / Reading</th><th>Alarm</th><th>Action / Entered By</th><th>Report</th><th>Notes</th><th>Actions</th></tr></thead><tbody id="monitor-activity-rows"></tbody></table></div>
+              <p class="monitor-placeholder-note"><strong>Structured for ICS 214 / Incident Report export</strong>. This page does not change report generation.</p>
+              <dialog class="monitor-device-dialog" id="monitor-log-dialog" aria-labelledby="monitor-log-dialog-title">
+                <form id="monitor-log-form"><div class="monitor-dialog-heading"><div><p class="eyebrow">Incident documentation</p><h3 id="monitor-log-dialog-title">Add Monitor Log Entry</h3></div><button class="monitor-dialog-close" id="monitor-log-close" type="button" aria-label="Close log form">×</button></div><input id="monitor-log-id" type="hidden" />
+                  <div class="monitor-device-form-grid">
+                    <label>Date / Time <input id="monitor-log-time" type="datetime-local" required /></label><label>Monitor <select id="monitor-log-monitor"></select></label>
+                    <label>Assignment Role <input id="monitor-log-role" /></label><label>Location <input id="monitor-log-location" /></label>
+                    <label class="monitor-form-span-two">Entry Type <select id="monitor-log-type"><option>Monitor deployed</option><option>Monitor repositioned</option><option>Manual reading recorded</option><option>Alarm observed</option><option>Alarm cleared</option><option>Elevated reading observed</option><option>Reading trend improving</option><option>Reading trend worsening</option><option>Battery / equipment issue</option><option>Monitor removed from service</option><option>Monitor returned to service</option><option>Data source changed</option><option>Safety Suite connection status</option><option>FirstDue reference checked</option><option>General monitoring note</option><option>Monitor assignment updated</option></select></label>
+                    <label>Sensor / Reading <input id="monitor-log-sensor" /></label><label>Reading Value <input id="monitor-log-value" /></label><label>Unit <input id="monitor-log-unit" /></label><label>Alarm State <input id="monitor-log-alarm" value="No Alarm" /></label>
+                    <label>Action Taken <input id="monitor-log-action" /></label><label>Entered By <input id="monitor-log-entered-by" /></label>
+                    <label class="monitor-form-span-two">Notes <textarea id="monitor-log-notes" rows="2"></textarea></label>
+                    <label class="monitor-form-span-two monitor-checkbox"><input id="monitor-log-include" type="checkbox" checked /> Include in Incident Report</label>
+                  </div><p class="monitor-form-status" id="monitor-log-status" role="status"></p><div class="monitor-dialog-actions"><button class="monitor-save-btn" type="submit">Save Log Entry</button><button class="monitor-cancel-btn" id="monitor-log-cancel" type="button">Cancel</button></div>
+                </form>
+              </dialog>
+            </section>
+
+            <section id="monitor-safety-suite" class="monitor-tab-panel" role="tabpanel" hidden>
+              <div class="monitor-integration-grid"><article class="safety-suite-card">
+                <div><p class="eyebrow">Integration status</p><h3>Honeywell Safety Suite Integration</h3></div>
+                <span class="monitor-state caution">Pending SDK/API</span>
+                <p class="safety-suite-message">Official Honeywell Safety Suite SDK/API connection not configured. Add approved Honeywell web-service credentials or SDK access to enable live AreaRAE readings.</p>
+                <ul class="safety-suite-checklist">
+                  <li>Confirm AreaRAE monitors appear in Safety Suite</li><li>Obtain official Honeywell SDK/API documentation</li><li>Obtain approved credentials</li><li>Build secure backend adapter</li><li>Stream live readings into HazMatIQ</li><li>Save significant readings to Monitor Activity Log</li><li>Push monitor readings/locations to Live Map</li>
+                </ul>
+                <p class="monitor-placeholder-note">No live connection is attempted by this Phase 2 page.</p>
+              </article><article class="safety-suite-card"><div><p class="eyebrow">Integration status</p><h3>FirstDue Equipment / Apparatus Source</h3></div><span class="monitor-state offline">Pending approved access</span><p class="safety-suite-message">FirstDue is the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HazMatIQ should use approved FirstDue API/export access only. No scraping or login automation.</p><ul class="safety-suite-checklist"><li>Confirm approved export format</li><li>Map FirstDue equipment fields to HazMatIQ monitor records</li><li>Import approved CSV/JSON export</li><li>Keep readiness data reference-only</li><li>Keep official inspection/calibration records in FirstDue</li></ul><p class="monitor-placeholder-note">No FirstDue connection is attempted by this page.</p></article></div>
+            </section>
           </section>
 
           <section id="report" class="view">
@@ -824,6 +957,7 @@
     <script src="vendor/maplibre-gl/maplibre-gl.js"></script>
     <script src="weather-radar.js"></script>
     <script src="script.js"></script>
+    <script src="monitor-inventory.js"></script>
     <script src="live-map-bootstrap.js"></script>
   </body>
 </html>

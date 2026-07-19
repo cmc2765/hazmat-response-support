@@ -337,6 +337,30 @@ function showView(targetId) {
   if (targetId === 'plume') window.requestAnimationFrame(() => plumeMap?.resize());
 }
 
+function showMonitorPanel(targetId) {
+  const targetPanel = document.getElementById(targetId);
+  if (!targetPanel?.classList.contains('monitor-tab-panel')) return;
+  document.querySelectorAll('#monitor-tabs [data-monitor-tab]').forEach((tab) => {
+    const active = tab.dataset.monitorTab === targetId;
+    tab.classList.toggle('active', active);
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+  });
+  document.querySelectorAll('#monitor > .monitor-tab-panel').forEach((panel) => {
+    const active = panel === targetPanel;
+    panel.hidden = !active;
+    panel.classList.toggle('active', active);
+  });
+}
+
+// Register Monitoring Equipment tabs with the core page navigation so the
+// inventory remains reachable even if a later, unrelated module fails to load.
+document.getElementById('monitor-tabs')?.addEventListener('click', (event) => {
+  const tab = event.target.closest('[data-monitor-tab]');
+  if (!tab) return;
+  showMonitorPanel(tab.dataset.monitorTab);
+});
+
 // MapLibre needs an explicit resize when the responsive plume workspace changes size.
 const plumeWorkspace = document.getElementById('plume');
 if (plumeWorkspace && 'ResizeObserver' in window) {
@@ -3269,6 +3293,7 @@ let currentPlumeHazardsSignature = '';
 let plumeDistanceMarkers = [];
 let plumeMeasurementPopup = null;
 let plumeRadarController = null;
+let plumeManualLocation = null;
 const plumeHazardsCacheKey = 'hazmatiq_plume_hazards_cache';
 const plumeLayerState = { centerline: false, distance: false, hazards: false, radar: false };
 const plumeLayerIds = {
@@ -3385,6 +3410,7 @@ function ensurePlumeMap(location) {
       pitch: view.pitch,
       bearing: view.bearing,
       preserveDrawingBuffer: true,
+      attributionControl: false,
     });
     plumeMap.addControl(new window.maplibregl.NavigationControl(), 'bottom-right');
     plumeMap.scrollZoom.enable();
@@ -4272,24 +4298,66 @@ function formatTempFahrenheit(str) {
   });
 }
 
-async function getIncidentCoordinates({ requestGps = true } = {}) {
+async function getIncidentCoordinates({ requestGps = true, allowPlumeManual = false } = {}) {
+  if (allowPlumeManual && plumeManualLocation) return plumeManualLocation;
   const input = document.getElementById('incident-coordinates-input');
   const entered = parseGpsCoordinate(input?.value);
   if (entered) return { ...entered, source: 'Incident Dashboard' };
   const address = getIncidentAddressValue();
   if (address) {
-    const query = new URLSearchParams({ name: address, count: '1', language: 'en', format: 'json' });
-    const geocoded = await fetchJson(`https://geocoding-api.open-meteo.com/v1/search?${query}`);
-    const match = geocoded?.results?.[0];
-    if (match && Number.isFinite(match.latitude) && Number.isFinite(match.longitude)) {
-      if (input) input.value = `${match.latitude.toFixed(6)}, ${match.longitude.toFixed(6)}`;
-      return { lat: match.latitude, lon: match.longitude, source: 'Incident location input' };
+    const match = await geocodePlumeAddress(address);
+    if (match) {
+      if (input) input.value = `${match.lat.toFixed(6)}, ${match.lon.toFixed(6)}`;
+      return { ...match, source: 'Incident Brief address' };
     }
   }
   if (!requestGps) return null;
   const gps = await getCurrentGps();
   if (input) input.value = `${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}`;
   return { ...gps, source: 'Current device GPS' };
+}
+
+async function geocodePlumeAddress(address) {
+  const query = new URLSearchParams({
+    f: 'json',
+    SingleLine: address,
+    countryCode: 'USA',
+    maxLocations: '1',
+    forStorage: 'false',
+  });
+  const result = await fetchJson(`${arcgisGeocoderUrl}/findAddressCandidates?${query}`);
+  const candidate = result?.candidates?.[0];
+  const lat = candidate?.location?.y;
+  const lon = candidate?.location?.x;
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+  return { lat, lon, address: candidate.address || address };
+}
+
+async function useManualPlumeAddress() {
+  const input = document.getElementById('plume-map-address-input');
+  const button = document.querySelector('#plume-map-address-form button');
+  const address = input?.value.trim();
+  if (!address) {
+    setText('plume-map-address-status', 'Enter an address for plume plotting.');
+    input?.focus();
+    return;
+  }
+  if (button) button.disabled = true;
+  setText('plume-map-address-status', 'Locating address…');
+  try {
+    const location = await geocodePlumeAddress(address);
+    if (!location) {
+      setText('plume-map-address-status', 'Address not found. Enter a more specific address.');
+      return;
+    }
+    plumeManualLocation = { ...location, source: 'Manual plume address' };
+    if (input) input.value = location.address;
+    setText('plume-map-address-status', `Plume map centered on ${location.address}.`);
+    if (activePlumeCommand && !importedPlumeOverlay) await plotPlumeFromControls(plumeManualLocation);
+    else await refreshPlumeWorkspace({ requestGps: false });
+  } finally {
+    if (button) button.disabled = false;
+  }
 }
 
 async function fetchOpenMeteo(lat, lon) {
@@ -4986,7 +5054,7 @@ async function plotPlumeFromControls(locationOverride = null) {
   setText('plume-input-status', 'Validating location and model inputs…');
   setText('plume-overlay-status', 'Calculating plume zones…');
   try {
-    const location = locationOverride || await getIncidentCoordinates({ requestGps: true });
+    const location = locationOverride || await getIncidentCoordinates({ requestGps: true, allowPlumeManual: true });
     if (!location) throw new Error('Enter a location before plotting.');
     const mapReady = ensurePlumeMap(location);
     const inputs = readPlumeModelInputs(location);
@@ -5052,9 +5120,15 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   const status = document.getElementById('plume-live-status');
   if (status) status.textContent = 'Resolving incident location…';
 
+  const plumeAddressInput = document.getElementById('plume-map-address-input');
+  const incidentAddress = getIncidentAddressValue();
+  if (plumeAddressInput && !plumeAddressInput.value.trim() && incidentAddress) {
+    plumeAddressInput.value = incidentAddress;
+  }
+
   let location;
   try {
-    location = await getIncidentCoordinates({ requestGps });
+    location = await getIncidentCoordinates({ requestGps, allowPlumeManual: true });
   } catch (error) {
     if (status) status.textContent = error.message;
     setText('plume-location-source', 'Location required');
@@ -5266,6 +5340,14 @@ window.setInterval(() => {
 }, 5 * 60 * 1000);
 document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
   button.addEventListener('click', () => setPlumeMapView(button.dataset.plumeMapView));
+});
+document.getElementById('plume-map-address-form')?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  void useManualPlumeAddress();
+});
+document.getElementById('plume-map-address-input')?.addEventListener('input', () => {
+  plumeManualLocation = null;
+  setText('plume-map-address-status', '');
 });
 document.querySelectorAll('[data-plume-layer]').forEach((button) => {
   button.addEventListener('click', async () => {
@@ -5938,3 +6020,199 @@ document.getElementById('live-map-clear')?.addEventListener('click', () => {
 });
 
 renderTier2Facilities();
+
+// Monitoring Equipment Phase 1 uses local sample data only. It does not start an integration connection.
+const monitorSampleReadings = [
+  {
+    id: 'sample-entry-1', deviceId: 'sample-arae-01', deviceName: 'AreaRAE Entry Team 1',
+    manufacturer: 'RAE Systems', model: 'AreaRAE Pro', assignedTo: 'Entry Team 1', team: 'Entry Team 1',
+    location: 'Hot Zone Entry', status: 'Online', alarmState: 'No Alarm', battery: 92, signal: 88,
+    latitude: null, longitude: null, lastUpdate: null, source: 'Simulated', sourceMode: 'sample', notes: 'Training sample',
+    sensors: [
+      { gas: 'O2', value: 20.9, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'LEL', value: 0, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'CO', value: 1, unit: 'ppm', status: 'normal', alarmLevel: null },
+      { gas: 'H2S', value: 0, unit: 'ppm', status: 'normal', alarmLevel: null },
+      { gas: 'VOC / PID', value: 0.2, unit: 'ppm', status: 'normal', alarmLevel: null },
+    ],
+  },
+  {
+    id: 'sample-entry-2', deviceId: 'sample-arae-02', deviceName: 'AreaRAE Entry Team 2',
+    manufacturer: 'RAE Systems', model: 'AreaRAE Pro', assignedTo: 'Entry Team 2', team: 'Entry Team 2',
+    location: 'Backup Line', status: 'Online', alarmState: 'No Alarm', battery: 86, signal: 81,
+    latitude: null, longitude: null, lastUpdate: null, source: 'Simulated', sourceMode: 'sample', notes: 'Training sample',
+    sensors: [
+      { gas: 'O2', value: 20.8, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'LEL', value: 0, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'CO', value: 2, unit: 'ppm', status: 'normal', alarmLevel: null },
+      { gas: 'H2S', value: 0, unit: 'ppm', status: 'normal', alarmLevel: null },
+      { gas: 'NH3', value: 0.1, unit: 'ppm', status: 'normal', alarmLevel: null },
+    ],
+  },
+  {
+    id: 'sample-decon', deviceId: 'sample-arae-03', deviceName: 'AreaRAE Decon Corridor',
+    manufacturer: 'RAE Systems', model: 'AreaRAE Pro', assignedTo: 'Decon Group', team: 'Decon',
+    location: 'Decon Corridor Exit', status: 'Online', alarmState: 'No Alarm', battery: 78, signal: 75,
+    latitude: null, longitude: null, lastUpdate: null, source: 'Simulated', sourceMode: 'sample', notes: 'Training sample',
+    sensors: [
+      { gas: 'O2', value: 20.9, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'LEL', value: 0, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'VOC / PID', value: 0.4, unit: 'ppm', status: 'normal', alarmLevel: null },
+      { gas: 'Cl2', value: 0, unit: 'ppm', status: 'normal', alarmLevel: null },
+    ],
+  },
+  {
+    id: 'sample-downwind', deviceId: 'sample-arae-04', deviceName: 'AreaRAE Downwind Monitor',
+    manufacturer: 'RAE Systems', model: 'AreaRAE Pro', assignedTo: 'Monitoring Group', team: 'Recon',
+    location: 'Downwind 300 ft', status: 'Online', alarmState: 'No Alarm', battery: 74, signal: 68,
+    latitude: null, longitude: null, lastUpdate: null, source: 'Simulated', sourceMode: 'sample', notes: 'Training sample',
+    sensors: [
+      { gas: 'O2', value: 20.9, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'LEL', value: 1, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'VOC / PID', value: 1.8, unit: 'ppm', status: 'caution', alarmLevel: 'Training caution' },
+      { gas: 'NH3', value: 0.2, unit: 'ppm', status: 'normal', alarmLevel: null },
+      { gas: 'Cl2', value: 0, unit: 'ppm', status: 'normal', alarmLevel: null },
+    ],
+  },
+  {
+    id: 'sample-perimeter', deviceId: 'sample-arae-05', deviceName: 'AreaRAE Perimeter Monitor',
+    manufacturer: 'RAE Systems', model: 'AreaRAE Pro', assignedTo: 'Perimeter Group', team: 'Recon',
+    location: 'Cold Zone Boundary', status: 'Online', alarmState: 'No Alarm', battery: 81, signal: 72,
+    latitude: null, longitude: null, lastUpdate: null, source: 'Simulated', sourceMode: 'sample', notes: 'Training sample',
+    sensors: [
+      { gas: 'O2', value: 20.9, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'LEL', value: 0, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'CO', value: 1, unit: 'ppm', status: 'normal', alarmLevel: null },
+      { gas: 'H2S', value: 0, unit: 'ppm', status: 'normal', alarmLevel: null },
+    ],
+  },
+  {
+    id: 'sample-command', deviceId: 'sample-arae-06', deviceName: 'AreaRAE Command Post',
+    manufacturer: 'RAE Systems', model: 'AreaRAE Pro', assignedTo: 'HazMat Group Supervisor', team: 'Command',
+    location: 'Command Post', status: 'Online', alarmState: 'No Alarm', battery: 96, signal: 94,
+    latitude: null, longitude: null, lastUpdate: null, source: 'Simulated', sourceMode: 'sample', notes: 'Training sample',
+    sensors: [
+      { gas: 'O2', value: 20.9, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'LEL', value: 0, unit: '%', status: 'normal', alarmLevel: null },
+      { gas: 'CO', value: 0, unit: 'ppm', status: 'normal', alarmLevel: null },
+      { gas: 'VOC / PID', value: 0.1, unit: 'ppm', status: 'normal', alarmLevel: null },
+    ],
+  },
+];
+
+function formatMonitorTime(value) {
+  return new Intl.DateTimeFormat([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(value);
+}
+
+function varySampleSensor(sensor) {
+  const ranges = { O2: 0.05, LEL: 0.2, CO: 0.4, H2S: 0.1, 'VOC / PID': 0.25, NH3: 0.1, Cl2: 0.02 };
+  const range = ranges[sensor.gas] ?? 0.1;
+  const decimals = sensor.gas === 'O2' || sensor.gas === 'VOC / PID' || sensor.gas === 'NH3' || sensor.gas === 'Cl2' ? 1 : 0;
+  sensor.value = Math.max(0, Number((sensor.value + (Math.random() - 0.5) * range).toFixed(decimals)));
+}
+
+function renderSampleMonitorCards() {
+  const container = document.getElementById('monitor-live-cards');
+  if (!container) return;
+  container.replaceChildren();
+  monitorSampleReadings.forEach((monitor) => {
+    const card = document.createElement('article');
+    card.className = 'monitor-device-card';
+    card.dataset.state = monitor.status === 'Online' ? 'normal' : 'offline';
+    const header = document.createElement('header');
+    const heading = document.createElement('div');
+    const title = document.createElement('h3');
+    title.textContent = monitor.deviceName;
+    const assignment = document.createElement('p');
+    assignment.textContent = `${monitor.assignedTo} · ${monitor.location}`;
+    heading.append(title, assignment);
+    const source = document.createElement('span');
+    source.className = 'monitor-simulated-label';
+    source.textContent = 'Source: Simulated';
+    header.append(heading, source);
+
+    const meta = document.createElement('div');
+    meta.className = 'monitor-device-meta';
+    [['Status', monitor.status], ['Alarm', monitor.alarmState], ['Battery', `${monitor.battery}%`], ['Signal', `${monitor.signal}%`], ['Updated', formatMonitorTime(monitor.lastUpdate)], ['Data mode', 'Simulated'], ['Source', 'Sample / Simulator']].forEach(([label, value]) => {
+      const item = document.createElement('div');
+      const name = document.createElement('span');
+      const reading = document.createElement('strong');
+      name.textContent = label;
+      reading.textContent = value;
+      item.append(name, reading);
+      meta.append(item);
+    });
+
+    const sensors = document.createElement('div');
+    sensors.className = 'monitor-sensor-list';
+    monitor.sensors.forEach((sensor) => {
+      const chip = document.createElement('span');
+      chip.className = `monitor-sensor ${sensor.status}`;
+      const gas = document.createElement('span');
+      const value = document.createElement('strong');
+      gas.textContent = sensor.gas;
+      value.textContent = `${sensor.value} ${sensor.unit} · Simulated`;
+      chip.append(gas, value);
+      sensors.append(chip);
+    });
+    card.append(header, meta, sensors);
+    container.append(card);
+  });
+}
+
+function renderSampleMonitorLog() {
+  const body = document.getElementById('monitor-log-rows');
+  if (!body) return;
+  const samples = [
+    [monitorSampleReadings[0], 'O2', 'Baseline established'],
+    [monitorSampleReadings[3], 'VOC / PID', 'Training caution trend only'],
+    [monitorSampleReadings[2], 'Cl2', 'Decon exit check'],
+    [monitorSampleReadings[4], 'LEL', 'Perimeter verification'],
+  ];
+  body.replaceChildren();
+  samples.forEach(([monitor, gas, notes], index) => {
+    const sensor = monitor.sensors.find((entry) => entry.gas === gas);
+    const row = document.createElement('tr');
+    [
+      formatMonitorTime(new Date(monitor.lastUpdate.getTime() - index * 60000)), monitor.deviceName,
+      monitor.location, gas, `${sensor.value} ${sensor.unit} (Simulated)`, sensor.status === 'caution' ? 'Caution · Simulated' : 'Normal · Simulated', notes,
+    ].forEach((value) => {
+      const cell = document.createElement('td');
+      cell.textContent = value;
+      row.append(cell);
+    });
+    body.append(row);
+  });
+}
+
+function refreshSampleMonitorReadings({ vary = true } = {}) {
+  const now = new Date();
+  monitorSampleReadings.forEach((monitor) => {
+    monitor.lastUpdate = now;
+    if (vary) monitor.sensors.forEach(varySampleSensor);
+  });
+  setText('monitor-last-updated', `${formatMonitorTime(now)} · Simulated`);
+  renderSampleMonitorCards();
+  renderSampleMonitorLog();
+}
+
+document.querySelectorAll('.monitor-objective').forEach((objective) => {
+  objective.addEventListener('click', () => {
+    document.querySelectorAll('.monitor-objective').forEach((item) => item.classList.toggle('selected', item === objective));
+  });
+});
+
+document.getElementById('monitor-refresh-readings')?.addEventListener('click', () => {
+  const source = document.getElementById('monitor-data-source')?.value;
+  if (source === 'Sample / Simulator') refreshSampleMonitorReadings();
+});
+
+document.getElementById('monitor-data-source')?.addEventListener('change', (event) => {
+  const status = document.getElementById('monitor-connection-status');
+  const refresh = document.getElementById('monitor-refresh-readings');
+  const isSample = event.target.value === 'Sample / Simulator';
+  if (status) status.textContent = isSample ? 'Simulated' : event.target.value === 'RAE / Honeywell Safety Suite' ? 'Not Configured' : 'Awaiting Input';
+  if (refresh) refresh.disabled = !isSample;
+});
+
+refreshSampleMonitorReadings({ vary: false });

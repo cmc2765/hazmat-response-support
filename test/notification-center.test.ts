@@ -19,6 +19,9 @@ describe("compact tactical notifications", () => {
     expect(script).toContain("hourCycle: 'h23'");
     expect(script).toContain("second: '2-digit'");
     expect(script).toContain("window.setInterval(renderTacticalClock, 1000)");
+    expect(html.indexOf('class="notification-item notification-system"')).toBeLessThan(html.indexOf('id="notification-updated"'));
+    expect(styles).toContain(".notification-center .notification-updated");
+    expect(styles).toContain("color: #fff;");
     expect(styles).not.toContain(".notification-center .notification-updated { display: none; }");
   });
 
