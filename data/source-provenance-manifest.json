@@ -1,0 +1,55 @@
+{
+  "manifestVersion": "1.0.0",
+  "generatedAt": "2026-08-07",
+  "datasets": [
+    {
+      "id": "chemical-companion-sqlite",
+      "path": "data/ChemicalCompanionDB.db",
+      "fields": ["chemical-identity", "cas-identifier", "un-na-identifier", "erg-guide", "erg-distance", "ppe-suit", "medical", "protective-action"],
+      "sourceCitation": null,
+      "revision": null,
+      "licenseOrPermission": null,
+      "sha256": "e10b66d50434f7db5b69762c7bb2123ba4f14e2c33ba4a471085d8bbee5daa94",
+      "reviewState": "blocked",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "notes": ["Checksum identifies the committed file only; it does not establish accuracy, currency, or redistribution rights."]
+    },
+    {
+      "id": "erg-guides-bundle",
+      "path": "server/public/data/erg-guides-2024.json",
+      "fields": ["erg-guide", "protective-action"],
+      "sourceCitation": null,
+      "revision": "2024 (asserted by repository filename; requires source reconciliation)",
+      "licenseOrPermission": null,
+      "sha256": "f27d33a36fbfbbc5d3edce42917103567bfb7ced83f5cf199f50b82b3dd6755d",
+      "reviewState": "requires-review",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "erg-flat-table",
+      "path": "src/data/erg.ts",
+      "fields": ["un-na-identifier", "erg-guide", "erg-distance", "protective-action"],
+      "sourceCitation": null,
+      "revision": null,
+      "licenseOrPermission": null,
+      "sha256": "ad27af8604b84f57d68960ffbd8beb20e09e25a1cea477cd0be315b76f5d6209",
+      "reviewState": "blocked",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "niosh-npg-source-module",
+      "path": "src/data/all-npg.ts",
+      "fields": ["chemical-identity", "cas-identifier", "ppe-suit", "medical"],
+      "sourceCitation": "Repository seed metadata identifies CDC/NIOSH NPG; record-level citation requires review.",
+      "revision": "2024-10 (repository seed metadata; requires review)",
+      "licenseOrPermission": "Public Domain (CDC/NIOSH) (repository assertion; requires legal review)",
+      "sha256": "166cdc67934d5e8ea858ea9aa0457228a78531c52e0fccf6e7ed00e4556e6bbe",
+      "reviewState": "requires-review",
+      "reviewedBy": null,
+      "reviewedAt": null
+    }
+  ]
+}

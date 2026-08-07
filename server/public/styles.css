@@ -23,7 +23,7 @@
   --gray: #8fa2b8;
   --black: #0f172a;
   --hazmatiq-font-body: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-  --hazmatiq-font-heading: "Bahnschrift", "DIN Alternate", "Arial Narrow", "Roboto Condensed", "Segoe UI", Arial, sans-serif;
+  --hazmatiq-font-heading: "Segoe UI", "Bahnschrift", "Roboto", "Helvetica Neue", Arial, sans-serif;
   /* Optional future experiment: change --hazmatiq-font-body to this serif stack. */
   --hazmatiq-font-serif-experiment: Georgia, "Times New Roman", Times, serif;
 }
@@ -50,7 +50,7 @@ body {
   color: var(--text);
 }
 
-button, input, select, textarea {
+button, input, select, textarea, table {
   font-family: var(--hazmatiq-font-body);
 }
 
@@ -63,7 +63,16 @@ button {
   line-height: 1.2;
 }
 
+input, select, textarea, table {
+  font-weight: 400;
+}
+
 input, select, textarea {
+  line-height: 1.4;
+}
+
+input::placeholder,
+textarea::placeholder {
   font-weight: 400;
 }
 
@@ -225,9 +234,10 @@ h1, h2, h3, h4,
 .box-title,
 .notification-center-title {
   font-family: var(--hazmatiq-font-heading);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.02em;
 }
+h1 { font-weight: 800; }
 .brand-name { font-family: var(--hazmatiq-font-heading); }
 
 .topbar h1 { margin: 0; font-size: 2rem; line-height: 1.1; font-weight: 800; }
@@ -348,7 +358,7 @@ h1, h2, h3, h4,
 .my-chemicals-nav {
   color: #fff0a6 !important;
   font-style: italic;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .primary-btn { background: var(--red); font-weight: 700; }
@@ -763,7 +773,7 @@ h1, h2, h3, h4,
 .eyebrow.box-title {
   color: #a70f16;
   font-size: 0.86rem;
-  font-weight: 950;
+  font-weight: 700;
 }
 
 .command-snapshot-provenance {
@@ -810,7 +820,7 @@ h1, h2, h3, h4,
 .command-status-heading > span {
   color: var(--muted);
   font-size: 0.72rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -883,7 +893,7 @@ h1, h2, h3, h4,
 
 .command-status-card summary {
   cursor: pointer;
-  font-weight: 850;
+  font-weight: 600;
 }
 
 .command-status-card ul {
@@ -898,7 +908,7 @@ h1, h2, h3, h4,
   min-height: 26px;
   padding: 2px 7px;
   font-size: 0.75rem;
-  font-weight: 850;
+  font-weight: 600;
 }
 
 .incident-layout {
@@ -1040,11 +1050,15 @@ h1, h2, h3, h4,
 }
 
 .ppe-summary-card {
-  background: #fff0d8;
+  border-color: #8bc99a;
+  background: #e6f4ea;
+  color: #0b1f33;
 }
 
 .medical-summary-card {
-  background: #e5f3ff;
+  border-color: #8aaedb;
+  background: #e8f1ff;
+  color: #0b1f33;
 }
 
 .ppe-summary-card,
@@ -1054,9 +1068,19 @@ h1, h2, h3, h4,
 
 .protective-summary-card {
   grid-column: 1 / -1;
-  border: 1px solid #f59e0b;
-  background: #fff3e0;
-  color: #17202a;
+  border: 1px solid #f6c343;
+  background: #fff3d6;
+  color: #0b1f33;
+}
+
+.command-reference-stack .facility-information-card {
+  border-color: #9aafc4;
+  background: #e8eef5;
+  color: #0b1f33;
+}
+
+.command-reference-stack .command-reference-panel {
+  border-width: 2px;
 }
 
 .protective-summary-card .incident-guidance-list {
@@ -1103,7 +1127,7 @@ h1, h2, h3, h4,
   gap: 8px 14px;
   margin-top: 12px;
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .medical-primary-source {
@@ -1117,7 +1141,18 @@ h1, h2, h3, h4,
   gap: 5px 12px;
   margin-bottom: 10px;
   font-size: 0.74rem;
-  font-weight: 750;
+  font-weight: 600;
+}
+
+.incident-guidance-warning {
+  margin: 8px 0 0;
+  padding: 6px 8px;
+  border: 1px solid #e3c25b;
+  border-radius: 7px;
+  background: #fff6d8;
+  color: #162231;
+  font-size: 0.72rem;
+  line-height: 1.35;
 }
 
 .report-tabs,
@@ -1663,7 +1698,7 @@ h1, h2, h3, h4,
   color: #fff;
   background: var(--navy);
   font-size: 0.7rem;
-  font-weight: 900;
+  font-weight: 700;
   text-align: center;
   text-transform: uppercase;
 }
@@ -1780,7 +1815,7 @@ h1, h2, h3, h4,
   font-family: var(--hazmatiq-font-heading);
   font-size: 1.08rem;
   font-style: italic;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-shadow: none;
 }
@@ -1788,7 +1823,7 @@ h1, h2, h3, h4,
 .chemical-profile-header-top h3 {
   margin: 0;
   color: #fff;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .chemical-profile-meta {
@@ -1841,18 +1876,23 @@ h1, h2, h3, h4,
 .chemical-profile-meta-item[data-field^="idlh"],
 .chemical-profile-row[data-field^="idlh"],
 .chemical-profile-list-row[data-field^="idlh"] {
-  border-color: #dc666b;
-  background: #ffd9db;
+  border-color: var(--dark-red);
+  background: var(--red);
   box-shadow: none;
 }
 
-.chemical-profile-meta-item[data-field^="idlh"] *,
-.chemical-profile-row[data-field^="idlh"] span,
-.chemical-profile-row[data-field^="idlh"] strong,
-.chemical-profile-list-row[data-field^="idlh"] strong,
+.chemical-profile-meta-item[data-field^="idlh"] .chemical-profile-meta-title,
+.chemical-profile-row[data-field^="idlh"] > span,
+.chemical-profile-list-row[data-field^="idlh"] strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.chemical-profile-meta-item[data-field^="idlh"] .chemical-profile-meta-value,
+.chemical-profile-row[data-field^="idlh"] > strong,
 .chemical-profile-list-row[data-field^="idlh"] span {
-  color: #a40e14;
-  font-weight: 950;
+  color: #fff;
+  font-weight: 500;
 }
 
 .chemical-profile-summary {
@@ -1951,7 +1991,7 @@ h1, h2, h3, h4,
     0 5px 12px rgba(7, 31, 54, 0.2);
   text-align: center;
   font-size: 0.78rem;
-  font-weight: 850;
+  font-weight: 700;
   line-height: 1.15;
   overflow-wrap: normal;
   cursor: pointer;
@@ -1997,7 +2037,7 @@ h1, h2, h3, h4,
   margin: 0;
   color: #071f36;
   font-size: 1.08rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.025em;
 }
 
@@ -2117,7 +2157,7 @@ h1, h2, h3, h4,
 .chemical-profile-section[data-section="recommended-detector"] .chemical-profile-row span {
   color: var(--red);
   font-size: 0.88rem;
-  font-weight: 950;
+  font-weight: 700;
 }
 
 .chemical-profile-section[data-section="ppe-options"] .chemical-profile-list,
@@ -2174,7 +2214,7 @@ h1, h2, h3, h4,
 .erg-profile-table th {
   background: #168349;
   color: #fff;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .erg-profile-table tbody tr:nth-child(even) {
@@ -2254,7 +2294,8 @@ h1, h2, h3, h4,
   border-bottom: 2px solid #d2b73f;
   color: #071f36;
   font-size: 0.92rem;
-  font-weight: 950;
+  font-family: var(--hazmatiq-font-heading);
+  font-weight: 700;
 }
 
 .chemical-treatment-column ul {
@@ -2350,7 +2391,7 @@ h1, h2, h3, h4,
 .chemical-profile-section[data-section="stability-and-decomposition"] .chemical-profile-row > span {
   color: var(--navy);
   font-size: 0.84rem;
-  font-weight: 950;
+  font-weight: 700;
 }
 
 .chemical-profile-section[data-section="stability-and-decomposition"] .chemical-profile-row strong,
@@ -2460,7 +2501,7 @@ h1, h2, h3, h4,
 .chemical-profile-content[data-active-tab="decon"] .chemical-profile-row > span,
 .chemical-profile-content[data-active-tab="decon"] .chemical-profile-list-row strong {
   color: var(--muted);
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .chemical-profile-content[data-active-tab="decon"] .chemical-profile-row strong,
@@ -2680,7 +2721,8 @@ h1, h2, h3, h4,
   margin-bottom: 8px;
   color: var(--text);
   font-size: clamp(1.3rem, 1.8vw, 1.75rem);
-  font-weight: 950;
+  font-family: var(--hazmatiq-font-heading);
+  font-weight: 800;
   line-height: 1.05;
   letter-spacing: 0.055em;
   white-space: nowrap;
@@ -2726,7 +2768,7 @@ h1, h2, h3, h4,
   color: #111;
   background: #f58220;
   font-size: 1.45rem;
-  font-weight: 950;
+  font-weight: 800;
   text-align: center;
 }
 
@@ -2756,7 +2798,7 @@ h1, h2, h3, h4,
 .erg-quick-fact span {
   color: #7a240d;
   font-size: 0.78rem;
-  font-weight: 950;
+  font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
@@ -2792,7 +2834,7 @@ h1, h2, h3, h4,
   color: #111;
   background: #f58220;
   font-size: 1.08rem;
-  font-weight: 950;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-align: center;
   text-transform: uppercase;
@@ -2803,7 +2845,8 @@ h1, h2, h3, h4,
   padding: 8px 12px 2px;
   color: #8c2d0b;
   font-size: 0.9rem;
-  font-weight: 950;
+  font-family: var(--hazmatiq-font-heading);
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -2820,7 +2863,7 @@ h1, h2, h3, h4,
 .erg-list-subheading {
   margin: 3px 0 -2px -16px;
   list-style: none;
-  font-weight: 950;
+  font-weight: 700;
 }
 
 .erg-table-card {
@@ -2850,7 +2893,7 @@ h1, h2, h3, h4,
   color: #fff;
   background: #168349;
   font-size: 0.78rem;
-  font-weight: 900;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -3064,11 +3107,130 @@ h1, h2, h3, h4,
   text-align: left;
 }
 
-.plume-mode-label {
-  margin-top: 2px !important;
+.plume-weather-verification {
+  display: flex;
+  grid-column: 1 / -1;
+  flex-wrap: wrap;
+  gap: 4px 12px;
   color: var(--muted);
-  font-size: 0.7rem;
-  font-weight: 800;
+}
+
+.plume-weather-verification strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.plume-input-review {
+  grid-column: 1 / -1;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #0b1f33;
+}
+
+.plume-input-review > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 6px 8px;
+  color: #0b1f33;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.plume-review-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0 8px 7px;
+}
+
+.plume-review-list > div {
+  display: grid;
+  grid-template-columns: minmax(95px, 0.8fr) minmax(0, 1.2fr);
+  gap: 8px;
+  padding: 4px 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.plume-review-list dt {
+  color: #334155;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.plume-review-list dd {
+  min-width: 0;
+  margin: 0;
+  color: #0b1f33;
+  font-size: 0.72rem;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+.plume-status-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 2px 6px;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  background: #e8eef5;
+  color: #0b1f33;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.plume-status-badge[data-state="verified"] {
+  border-color: #8bc99a;
+  background: #e6f4ea;
+}
+
+.plume-status-badge[data-state="warning"],
+.plume-status-badge[data-state="verify"] {
+  border-color: #f6c343;
+  background: #fff3d6;
+}
+
+.plume-status-badge[data-state="missing"] {
+  border-color: #e57373;
+  background: #fde2e2;
+}
+
+#plume-input-status[data-state="error"] {
+  padding: 5px 8px;
+  border: 1px solid #e57373;
+  border-radius: 7px;
+  background: #fde2e2;
+  color: #7f1d1d;
+  font-weight: 600;
+}
+
+.plume-safety-disclaimer {
+  margin-top: 7px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fffaf0;
+  color: var(--text);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.plume-safety-disclaimer summary {
+  padding: 7px 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.plume-safety-disclaimer > div {
+  padding: 0 10px 8px;
+}
+
+.plume-safety-disclaimer p {
+  margin: 5px 0 0;
 }
 
 .plume-model-input-grid {
@@ -3587,6 +3749,18 @@ h1, h2, h3, h4,
   line-height: 1.35;
 }
 
+.demographics-estimate-warning {
+  margin: 10px 0 0;
+  padding: 7px 8px;
+  border: 1px solid #d6b615;
+  border-radius: 8px;
+  background: #fff3d6;
+  color: #17202a;
+  font-size: 0.66rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 #demographics-zone-badge {
   justify-content: center;
   min-width: 92px;
@@ -3721,6 +3895,19 @@ h1, h2, h3, h4,
 
 .plume-summary-panel {
   min-width: 110px;
+}
+
+.plume-toolbar-status {
+  max-width: 280px;
+  margin: 0;
+  color: #7f1d1d;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.plume-toolbar-status:empty {
+  display: none;
 }
 
 .plume-summary-panel > summary {
@@ -3891,42 +4078,6 @@ h1, h2, h3, h4,
   font-size: 0.75rem;
   font-weight: 800;
   white-space: nowrap;
-}
-
-.plume-map-legend {
-  position: absolute;
-  z-index: 2;
-  top: 16px;
-  right: 16px;
-  display: grid;
-  gap: 6px;
-  padding: 10px 12px;
-  border: 1px solid #7b8085;
-  border-radius: 8px;
-  background: rgba(250, 251, 252, 0.96);
-  box-shadow: 0 5px 16px rgba(15, 23, 42, 0.2);
-}
-
-.plume-map-legend span {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 0.75rem;
-}
-
-.plume-map-legend i {
-  width: 13px;
-  height: 13px;
-  border-radius: 3px;
-}
-
-.plume-map-legend .zone-red { background: #d71920; }
-.plume-map-legend .zone-yellow { background: #ffd323; }
-.plume-map-legend .zone-green { background: #18a567; }
-.plume-map-legend .zone-centerline {
-  height: 3px;
-  border-radius: 0;
-  background: #17202a;
 }
 
 .plume-layer-controls {
@@ -4666,6 +4817,10 @@ textarea {
   grid-area: 1 / 1;
 }
 
+.command-reference-stack {
+  display: contents;
+}
+
 /* Incident Command Dashboard: balanced desktop command / workspace / intelligence shell. */
 @media (min-width: 981px) {
   .app-shell:has(#incident.active) {
@@ -4701,7 +4856,7 @@ textarea {
   .layout:has(#incident.active) #incident.active {
     display: grid;
     grid-template-columns: minmax(520px, 56fr) minmax(220px, 22fr);
-    grid-template-rows: auto repeat(4, minmax(44px, auto));
+    grid-template-rows: auto minmax(0, 1fr);
     gap: 8px;
     min-width: 0;
     min-height: 0;
@@ -4755,7 +4910,7 @@ textarea {
 
   .layout:has(#incident.active) .incident-input-card {
     grid-column: 1;
-    grid-row: 2 / 6;
+    grid-row: 2;
     align-self: start;
     min-width: 0;
     min-height: max-content;
@@ -4763,24 +4918,52 @@ textarea {
     overflow: visible;
   }
 
-  .layout:has(#incident.active) .facility-information-card { grid-column: 2; grid-row: 2; }
-  .layout:has(#incident.active) .ppe-summary-card { grid-column: 2; grid-row: 3; }
-  .layout:has(#incident.active) .medical-summary-card { grid-column: 2; grid-row: 4; }
-  .layout:has(#incident.active) .protective-summary-card { grid-column: 2; grid-row: 5; }
+  .layout:has(#incident.active) .command-reference-stack {
+    display: flex;
+    grid-column: 2;
+    grid-row: 2;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
 
+  .layout:has(#incident.active) .command-reference-panel {
+    flex: 0 0 44px;
+    align-self: stretch;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .layout:has(#incident.active) .command-reference-panel[open] {
+    display: block;
+    flex: 1 1 0;
+    overflow: hidden;
+  }
+
+  .layout:has(#incident.active) .command-reference-content {
+    width: 100%;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .command-reference-panel {
   min-width: 0;
   margin: 0;
   padding: 0;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .command-reference-panel > summary {
-  position: sticky;
-  z-index: 1;
-  top: 0;
+  position: relative;
+  flex: 0 0 auto;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -4789,7 +4972,8 @@ textarea {
   background: inherit;
   cursor: pointer;
   font-size: 0.88rem;
-  font-weight: 900;
+  color: #0b1f33;
+  font-weight: 700;
   overflow-wrap: anywhere;
   list-style: none;
 }
@@ -4798,7 +4982,27 @@ textarea {
 .command-reference-panel > summary::before { content: "▸"; flex: 0 0 auto; }
 .command-reference-panel[open] > summary::before { content: "▾"; }
 .command-reference-panel[open] > summary { border-bottom: 1px solid var(--border); }
-.command-reference-panel > :not(summary) { margin: 10px 12px; }
+.command-reference-content {
+  padding: 10px 12px;
+  color: #0b1f33;
+  font-weight: 400;
+}
+
+.command-reference-content strong {
+  color: #0b1f33;
+  font-weight: 600;
+}
+
+.command-reference-panel .eplan-login-form {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.command-reference-panel .eplan-login-form .primary-btn {
+  width: 100%;
+  min-width: 0;
+  color: #0b1f33;
+  justify-self: stretch;
+}
 
 @media (max-width: 980px) {
   .command-reference-panel { padding: 0; }
@@ -4913,7 +5117,7 @@ textarea {
   color: #fff;
   font-family: var(--hazmatiq-font-heading);
   font-size: 1.25rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.15;
   text-align: center;
 }
@@ -5547,7 +5751,7 @@ textarea {
 
   #plume.view.active {
     display: grid;
-    grid-template-columns: minmax(0, 56fr) minmax(200px, 24fr);
+    grid-template-columns: minmax(0, 64fr) minmax(190px, 16fr);
     grid-template-rows: repeat(2, minmax(0, 1fr));
     gap: 8px;
     width: 100%;
@@ -5820,6 +6024,193 @@ textarea {
   .layout:has(#plume.active) #plume-demographics[open] .demographics-grid {
     min-height: 0;
     overflow-y: auto;
+  }
+}
+
+/* Plume Model map-first layout. The form remains unchanged and is visually
+   reordered through display: contents so its existing submit ownership and
+   handlers continue to work. */
+#plume.view.active {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  overflow: visible;
+}
+
+#plume .plume-model-controls,
+#plume .plume-model-input-grid,
+#plume .plume-model-actions,
+#plume .plume-lower-summary-grid {
+  display: contents;
+}
+
+#plume .plume-safety-disclaimer { order: 1; }
+#plume .plume-import-row { order: 2; }
+#plume .plume-map-layout { order: 3; }
+#plume #plume-demographics { order: 4; }
+#plume .plume-model-section:first-child { order: 5; }
+#plume .plume-model-section:nth-child(2) { order: 6; }
+#plume #use-live-plume-weather-btn { order: 7; }
+
+#plume .plume-map-layout,
+#plume .plume-full-map,
+#plume .plume-map-frame {
+  width: 100%;
+  min-width: 0;
+}
+
+#plume .plume-full-map {
+  min-height: 420px;
+  height: clamp(420px, 65dvh, 700px);
+}
+
+#plume #plume-demographics {
+  display: block;
+  position: static;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  overflow: visible;
+  border-color: var(--border);
+  background: var(--panel);
+  color: var(--text);
+}
+
+#plume #plume-demographics > summary {
+  background: var(--panel-2);
+  color: #0b1f33;
+}
+
+#plume #plume-demographics .demographics-summary,
+#plume #plume-demographics .demographics-source-status {
+  color: var(--text);
+}
+
+#plume .plume-model-section,
+#plume #plume-demographics,
+#plume .plume-lower-card-content {
+  min-width: 0;
+}
+
+@media (min-width: 981px) {
+  .app-shell:has(#plume.active) {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .layout:has(#plume.active) {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    align-items: start;
+  }
+
+  .layout:has(#plume.active) > .sidebar {
+    display: block;
+    position: sticky;
+    top: 8px;
+    max-height: calc(100dvh - 16px);
+  }
+
+  .layout:has(#plume.active) > .content-area {
+    overflow: visible;
+  }
+
+  #plume.view.active {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto auto auto minmax(0, auto) auto;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  #plume .plume-safety-disclaimer,
+  #plume .plume-import-row,
+  #plume .plume-map-layout {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  #plume .plume-import-row {
+    position: relative;
+    inset: auto;
+    align-self: auto;
+    grid-template-columns: minmax(240px, 1fr) auto auto auto;
+    width: auto;
+    margin: 0;
+    padding: 6px;
+  }
+
+  #plume .plume-map-layout {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  #plume .plume-full-map,
+  #plume .plume-map-frame {
+    height: clamp(560px, 65dvh, 700px);
+    min-height: 560px;
+  }
+
+  #plume #plume-demographics,
+  #plume .plume-model-section:first-child,
+  #plume .plume-model-section:nth-child(2) {
+    grid-row: 4;
+    height: 440px;
+    max-height: 440px;
+    box-sizing: border-box;
+  }
+
+  #plume #plume-demographics { grid-column: 1; }
+  #plume .plume-model-section:first-child { grid-column: 2; }
+  #plume .plume-model-section:nth-child(2) {
+    grid-column: 3;
+    padding: 8px;
+  }
+
+  #plume .plume-lower-card-content,
+  #plume section.plume-model-section > .plume-model-section-grid {
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+
+  #plume #plume-demographics[open] {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  #plume #plume-demographics > summary {
+    grid-column: auto;
+    margin: 0;
+  }
+
+  #plume #use-live-plume-weather-btn {
+    grid-column: 3;
+    grid-row: 5;
+    position: static;
+    align-self: start;
+    justify-self: stretch;
+    margin: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  #plume .plume-model-section,
+  #plume #plume-demographics {
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+  }
+
+  #plume .plume-lower-card-content,
+  #plume section.plume-model-section > .plume-model-section-grid {
+    overflow: visible;
   }
 }
 

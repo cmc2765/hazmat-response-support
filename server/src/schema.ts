@@ -4,7 +4,7 @@
 import { sqliteTable, text, integer, index, uniqueIndex } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 
-// ─── Chemicals (CAMEO + ERG + custom) ────────────────────────────────────
+// ─── Legacy application source-layer cache (not the identity master) ─────
 export const chemicals = sqliteTable(
   "chemicals",
   {
@@ -33,6 +33,97 @@ export const chemicals = sqliteTable(
     casIdx: index("idx_chemicals_cas").on(t.cas),
     unIdx: index("idx_chemicals_un").on(t.un),
     ergIdx: index("idx_chemicals_erg").on(t.ergGuide),
+  }),
+);
+
+// Chemical Companion is the master identity store. These operational tables retain
+// source-layer records and reviewed links without copying them into the master table.
+export const transportationIdentifiers = sqliteTable(
+  "transportation_identifier",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    identifierType: text("identifier_type").notNull(),
+    identifierValue: text("identifier_value").notNull(),
+    normalizedIdentifierValue: text("normalized_identifier_value").notNull(),
+    properShippingName: text("proper_shipping_name"),
+    hazardClass: text("hazard_class"),
+    packingGroup: text("packing_group"),
+    ergGuide: text("erg_guide"),
+    source: text("source").notNull(),
+    sourceRecordId: text("source_record_id").notNull(),
+    sourceStatus: text("source_status").notNull(),
+    reviewStatus: text("review_status").notNull().default("requires_review"),
+    notes: text("notes"),
+    updatedAt: text("updated_at").notNull().default(sql`(datetime('now'))`),
+  },
+  (t) => ({
+    identifierIdx: index("idx_transport_identifier_value").on(t.normalizedIdentifierValue),
+    sourceRecordIdx: uniqueIndex("uq_transport_source_record").on(t.source, t.sourceRecordId),
+  }),
+);
+
+export const chemicalTransportLinks = sqliteTable(
+  "chemical_transport_link",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    masterChemicalId: integer("master_chemical_id").notNull(),
+    transportationIdentifierId: integer("transportation_identifier_id").notNull(),
+    linkType: text("link_type").notNull(),
+    confidence: text("confidence"),
+    reviewStatus: text("review_status").notNull().default("requires_review"),
+    reviewedBy: text("reviewed_by"),
+    reviewedAt: text("reviewed_at"),
+    notes: text("notes"),
+  },
+  (t) => ({
+    masterIdx: index("idx_transport_link_master").on(t.masterChemicalId),
+    transportIdx: index("idx_transport_link_identifier").on(t.transportationIdentifierId),
+    linkIdx: uniqueIndex("uq_chemical_transport_link").on(t.masterChemicalId, t.transportationIdentifierId),
+  }),
+);
+
+export const chemicalSourceLinks = sqliteTable(
+  "chemical_source_link",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    masterChemicalId: integer("master_chemical_id").notNull(),
+    sourceName: text("source_name").notNull(),
+    sourceRecordId: text("source_record_id").notNull(),
+    sourceIdentifierType: text("source_identifier_type"),
+    sourceIdentifierValue: text("source_identifier_value"),
+    matchBasis: text("match_basis").notNull(),
+    confidence: text("confidence"),
+    reviewStatus: text("review_status").notNull().default("requires_review"),
+    sourceVersion: text("source_version"),
+    importedAt: text("imported_at").notNull().default(sql`(datetime('now'))`),
+    notes: text("notes"),
+  },
+  (t) => ({
+    masterIdx: index("idx_source_link_master").on(t.masterChemicalId),
+    sourceIdx: uniqueIndex("uq_chemical_source_link").on(t.masterChemicalId, t.sourceName, t.sourceRecordId),
+  }),
+);
+
+export const chemicalSourceFacts = sqliteTable(
+  "chemical_source_fact",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    masterChemicalId: integer("master_chemical_id").notNull(),
+    sourceName: text("source_name").notNull(),
+    sourceRecordId: text("source_record_id").notNull(),
+    factCategory: text("fact_category").notNull(),
+    factName: text("fact_name").notNull(),
+    factValue: text("fact_value").notNull(),
+    factUnits: text("fact_units"),
+    sourceStatus: text("source_status").notNull(),
+    sourceVersion: text("source_version"),
+    limitations: text("limitations"),
+    importedAt: text("imported_at").notNull().default(sql`(datetime('now'))`),
+    notes: text("notes"),
+  },
+  (t) => ({
+    masterIdx: index("idx_source_fact_master").on(t.masterChemicalId),
+    categoryIdx: index("idx_source_fact_category").on(t.factCategory),
   }),
 );
 
@@ -181,6 +272,10 @@ export const incidents = sqliteTable(
 );
 
 export type ChemicalRow = typeof chemicals.$inferSelect;
+export type TransportationIdentifierRow = typeof transportationIdentifiers.$inferSelect;
+export type ChemicalTransportLinkRow = typeof chemicalTransportLinks.$inferSelect;
+export type ChemicalSourceLinkRow = typeof chemicalSourceLinks.$inferSelect;
+export type ChemicalSourceFactRow = typeof chemicalSourceFacts.$inferSelect;
 export type NpgRow = typeof npgRecords.$inferSelect;
 export type ErgRow = typeof ergTable1.$inferSelect;
 export type ThresholdRow = typeof thresholds.$inferSelect;

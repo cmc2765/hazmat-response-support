@@ -1,0 +1,18 @@
+{
+  "manifestVersion": "1.0.0",
+  "targets": [
+    { "id": "weather", "status": "not-tested", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "cws", "status": "blocked", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "safety-suite", "status": "blocked", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "firstdue", "status": "blocked", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "viewport-1440", "status": "not-tested", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "viewport-1366", "status": "not-tested", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "viewport-1280", "status": "not-tested", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "viewport-1024-landscape", "status": "not-tested", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "viewport-tablet-portrait", "status": "not-tested", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "keyboard-screen-reader", "status": "not-tested", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "zoom-200-percent", "status": "not-tested", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "offline-incident-drill", "status": "not-tested", "evidence": [], "approvedBy": null, "approvedAt": null },
+    { "id": "sync-conflict-recovery", "status": "not-tested", "evidence": [], "approvedBy": null, "approvedAt": null }
+  ]
+}

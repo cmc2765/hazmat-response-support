@@ -308,19 +308,6 @@ app.get("/api/chemicals/:id/profile", async (c) => {
   if (!/^\d+$/.test(id)) return c.json({ error: "ChemicalID must be a positive integer" }, 400);
   const profile = queryChemicalProfile(id);
   if (!profile) return c.json({ error: "not found" }, 404);
-  const identifier = c.req.query("identifier");
-  const shippingName = c.req.query("shippingName");
-  const identifierMatch = identifier
-    ? searchCompanionChemicals(identifier).find((row) => row.ChemicalID === Number(id)
-      && (!shippingName || row.ProperShippingName === shippingName))
-    : undefined;
-  if (identifierMatch) {
-    profile.header.name = identifierMatch.ChemicalName;
-    profile.header.un = identifierMatch.UnnaNumber;
-    profile.header.ergGuide = identifierMatch.ErgNumber;
-    profile.header.hazard = identifierMatch.HazardClass;
-    profile.isolationErg.ergGuide = identifierMatch.ErgNumber;
-  }
   const ergTable1 = ERG_TABLE_1.find((entry) =>
     entry.un === profile.header.un
     && entry.guide.replace(/P$/i, "") === profile.header.ergGuide.replace(/P$/i, ""),
@@ -330,6 +317,21 @@ app.get("/api/chemicals/:id/profile", async (c) => {
   return c.json({
     id,
     selectedChemicalId: Number(id),
+    masterRecord: {
+      sourceName: "Chemical Companion",
+      sourceRecordId: id,
+      sourceStatus: "Imported Source",
+      reviewStatus: "master-record",
+    },
+    sourceLinks: [{
+      sourceName: "ERG",
+      sourceRecordId: profile.header.un || null,
+      sourceIdentifierType: "UN/NA",
+      sourceIdentifierValue: profile.header.un || null,
+      matchBasis: "Chemical Companion master record fields",
+      reviewStatus: ergTable1 ? "source-displayed" : "needs review",
+      sourceVersion: "2024 repository dataset",
+    }],
     ...profile,
     isolationErg: {
       ...profile.isolationErg,

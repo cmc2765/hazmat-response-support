@@ -17,8 +17,11 @@
     "db:seed": "tsx src/seed.ts",
     "chemicals:audit": "node --import tsx src/audit-chemical-companion.ts",
     "chemicals:rebuild": "node --import tsx --input-type=module -e \"import { rebuildCompanionSearchIndex } from './src/chemical-companion.ts'; console.log(rebuildCompanionSearchIndex())\"",
+    "chemicals:export-unlinked": "node --import tsx src/export-unlinked-chemical-companion.ts",
     "db:studio": "drizzle-kit studio",
     "scrape:tier2": "tsx scripts/tier2-scraper.ts",
+    "plume:validation": "node --import tsx src/validate-plume-model.ts",
+    "plume:validation:gate": "node --import tsx src/validate-plume-model.ts --require-validated",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."

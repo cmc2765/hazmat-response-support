@@ -90,24 +90,6 @@
             </nav>
           </div>
 
-          <details class="sidebar-card plume-demographics plume-sidebar-data" id="plume-demographics">
-            <summary>
-              <span class="plume-sidebar-heading"><small>Plume Status</small><strong>Threat Zone</strong></span>
-              <span class="status-pill" id="demographics-zone-badge">No zone</span>
-            </summary>
-            <p id="demographics-zone-summary" class="demographics-summary">Click a red, yellow, or green plume zone to inspect potential exposures.</p>
-            <div class="demographics-grid" aria-live="polite">
-              <div class="demographic-stat"><span>Estimated population</span><strong id="demographics-population">—</strong></div>
-              <div class="demographic-stat"><span>Estimated households</span><strong id="demographics-housing">—</strong></div>
-              <div class="demographic-stat"><span>Schools / daycares</span><strong id="demographics-schools">—</strong></div>
-              <div class="demographic-stat"><span>Healthcare facilities</span><strong id="demographics-healthcare">—</strong></div>
-              <div class="demographic-stat"><span>Nursing homes / assisted living</span><strong id="demographics-nursing">—</strong></div>
-              <div class="demographic-stat"><span>Critical infrastructure</span><strong id="demographics-critical">—</strong></div>
-              <div class="demographic-stat"><span>Businesses / industrial sites</span><strong id="demographics-businesses">—</strong></div>
-            </div>
-            <p id="demographics-source-status" class="demographics-source-status">Population estimate: U.S. Census geography. Occupancies: OpenStreetMap mapped features.</p>
-          </details>
-
         </aside>
 
         <section class="content-area">
@@ -306,48 +288,62 @@
                 <p id="incident-location-status" class="muted" role="status" aria-live="polite">Enter incident details or use the device's current GPS location.</p>
               </article>
 
-              <details class="panel-card tier2-card facility-information-card command-reference-panel" data-command-reference>
-                <summary>E-Plan Login</summary>
-                <div
-                  class="eplan-login-form"
-                  aria-label="Open E-Plan first responder login"
-                >
-                  <img
-                    class="eplan-logo"
-                    src="https://erplan.net/eplan/media/eplanlogo.gif"
-                    alt="E-Plan"
-                    referrerpolicy="no-referrer"
-                  />
-                  <a class="primary-btn" href="https://erplan.net/eplan/login.htm" target="eplan-program" rel="noopener noreferrer">E-Plan LogIn</a>
+              <div class="command-reference-stack">
+              <details class="panel-card incident-guidance-card protective-summary-card command-reference-panel" data-command-reference>
+                <summary>Protective Actions</summary>
+                <div class="command-reference-content">
+                  <div id="incident-protective-guidance">Select a chemical and run the plume model to populate protective action guidance.</div>
+                  <p class="incident-guidance-warning">Verify all medical guidance, protective actions, isolation distances, and evacuation/shelter decisions with official sources, agency SOPs, field observations, and Incident Command.</p>
                 </div>
               </details>
 
               <details class="panel-card incident-guidance-card ppe-summary-card command-reference-panel" data-command-reference>
                 <summary>PPE Requirements</summary>
-                <div id="incident-ppe-guidance">Select or identify a chemical to populate PPE guidance.</div>
-                <div class="ppe-reference-actions" aria-label="Kappler protective suit references">
-                  <a href="https://www.kappler.com/hazmatch/suit-selection-guide" target="_blank" rel="noopener noreferrer">Open Kappler HazMatch Suit Selection</a>
-                  <a href="https://www.kappler.com/files" target="_blank" rel="noopener noreferrer">Kappler Suit Manuals &amp; Technical Files</a>
+                <div class="command-reference-content">
+                  <div id="incident-ppe-guidance">Select or identify a chemical to populate PPE guidance.</div>
+                  <div class="ppe-reference-actions" aria-label="Kappler protective suit references">
+                    <a href="https://www.kappler.com/hazmatch/suit-selection-guide" target="_blank" rel="noopener noreferrer">Open Kappler HazMatch Suit Selection</a>
+                    <a href="https://www.kappler.com/files" target="_blank" rel="noopener noreferrer">Kappler Suit Manuals &amp; Technical Files</a>
+                  </div>
+                  <p id="incident-ppe-sources" class="incident-guidance-sources" hidden></p>
+                  <p class="incident-guidance-warning">PPE and suit recommendations are decision-support guidance only. Verify with SDS, ERG, NIOSH/CAMEO/CHEMM where applicable, manufacturer compatibility charts, agency SOPs, and Incident Command before entry.</p>
+                  <p class="incident-guidance-warning">Suit compatibility not verified from current source unless a chemical-specific imported source is shown.</p>
                 </div>
-                <p id="incident-ppe-sources" class="incident-guidance-sources" hidden></p>
               </details>
 
               <details class="panel-card incident-guidance-card medical-summary-card command-reference-panel" data-command-reference>
                 <summary>Medical Summary</summary>
-                <p class="medical-primary-source"><strong>Primary medical reference: CHEMM (HHS/ASPR)</strong></p>
-                <div class="medical-reference-actions" aria-label="CHEMM medical guidance">
-                  <a href="https://chemm.hhs.gov/mmghome.htm" target="_blank" rel="noopener noreferrer">Acute Patient Care</a>
-                  <a href="https://chemm.hhs.gov/toxidrome_cards.htm" target="_blank" rel="noopener noreferrer">Toxidrome Cards</a>
-                  <a href="https://chemm.hhs.gov/guidance.htm" target="_blank" rel="noopener noreferrer">PRISM Decontamination</a>
-                  <a href="https://chemm.hhs.gov/medical_countermeasures.htm" target="_blank" rel="noopener noreferrer">Medical Countermeasures</a>
+                <div class="command-reference-content">
+                  <p class="medical-primary-source"><strong>External medical verification reference: CHEMM (HHS/ASPR)</strong></p>
+                  <div class="medical-reference-actions" aria-label="CHEMM medical guidance">
+                    <a href="https://chemm.hhs.gov/mmghome.htm" target="_blank" rel="noopener noreferrer">Acute Patient Care</a>
+                    <a href="https://chemm.hhs.gov/toxidrome_cards.htm" target="_blank" rel="noopener noreferrer">Toxidrome Cards</a>
+                    <a href="https://chemm.hhs.gov/guidance.htm" target="_blank" rel="noopener noreferrer">PRISM Decontamination</a>
+                    <a href="https://chemm.hhs.gov/medical_countermeasures.htm" target="_blank" rel="noopener noreferrer">Medical Countermeasures</a>
+                  </div>
+                  <div id="incident-medical-guidance">Select or identify a chemical to populate medical guidance.</div>
+                  <p id="incident-medical-sources" class="incident-guidance-sources" hidden></p>
+                  <p class="incident-guidance-warning">Verify all medical guidance, protective actions, isolation distances, and evacuation/shelter decisions with official sources, agency SOPs, field observations, and Incident Command.</p>
                 </div>
-                <div id="incident-medical-guidance">Select or identify a chemical to populate medical guidance.</div>
-                <p id="incident-medical-sources" class="incident-guidance-sources" hidden></p>
               </details>
-              <details class="panel-card incident-guidance-card protective-summary-card command-reference-panel" data-command-reference>
-                <summary>Protective Action Guidance</summary>
-                <div id="incident-protective-guidance">Select a chemical and run the plume model to populate protective action guidance.</div>
+              <details class="panel-card tier2-card facility-information-card command-reference-panel" data-command-reference>
+                <summary>E-Plan Login</summary>
+                <div class="command-reference-content">
+                  <div
+                    class="eplan-login-form"
+                    aria-label="Open E-Plan first responder login"
+                  >
+                    <img
+                      class="eplan-logo"
+                      src="https://erplan.net/eplan/media/eplanlogo.gif"
+                      alt="E-Plan"
+                      referrerpolicy="no-referrer"
+                    />
+                    <a class="primary-btn" href="https://erplan.net/eplan/login.htm" target="eplan-program" rel="noopener noreferrer">E-Plan LogIn</a>
+                  </div>
+                </div>
               </details>
+              </div>
             </div>
             <dialog id="complete-incident-dialog" aria-labelledby="complete-incident-question">
               <h3 id="complete-incident-question">Are you sure you want to complete this incident?</h3>
@@ -433,7 +429,6 @@
 
           <section id="plume" class="view">
             <form class="plume-model-controls" id="plume-model-form">
-              <p id="plume-input-status" class="sr-only" role="status" aria-live="polite"></p>
               <div class="plume-model-input-grid">
                 <section class="plume-model-section">
                   <header class="plume-model-section-heading"><strong>Model Inputs</strong></header>
@@ -490,6 +485,18 @@
                       </details>
                       <small class="container-profile-footer">Planning defaults only. Verify with SDS, shipping papers, facility inventory, or container markings.</small>
                     </div>
+                    <details class="plume-input-review">
+                      <summary>Model Inputs Summary</summary>
+                      <dl class="plume-review-list">
+                        <div><dt>Chemical</dt><dd id="plume-review-chemical">No Current Data Exists</dd></div>
+                        <div><dt>Release Type</dt><dd id="plume-review-release">Continuous release</dd></div>
+                        <div><dt>Container Type</dt><dd id="plume-review-container">No Current Data Exists</dd></div>
+                        <div><dt>Capacity / Quantity</dt><dd id="plume-review-quantity">No Current Data Exists</dd></div>
+                        <div><dt>Pressure Condition</dt><dd id="plume-review-pressure">No Current Data Exists</dd></div>
+                        <div><dt>Release Phase</dt><dd id="plume-review-phase">No Current Data Exists</dd></div>
+                        <div><dt>Model Source</dt><dd id="plume-review-model-source">Auto-select</dd></div>
+                      </dl>
+                    </details>
                   </div>
                 </section>
                 <section class="plume-model-section">
@@ -548,6 +555,24 @@
                         <option value="urban">Urban / obstructed</option>
                       </select>
                     </label>
+                    <div class="plume-weather-verification" aria-label="Weather verification">
+                      <small>Source <strong id="plume-weather-source-name">Open-Meteo</strong></small>
+                      <small>Status <strong id="plume-weather-source-state">Awaiting verification</strong></small>
+                      <small>Observation <strong id="plume-weather-observation-time">Not available</strong></small>
+                    </div>
+                    <details class="plume-input-review plume-weather-review">
+                      <summary>Weather Summary <span class="plume-status-badge" id="plume-weather-badge" data-state="missing">Weather Missing</span></summary>
+                      <dl class="plume-review-list">
+                        <div><dt>Weather Source</dt><dd id="plume-review-weather-source">Open-Meteo</dd></div>
+                        <div><dt>Observation Time</dt><dd id="plume-review-observation-time">No Current Data Exists</dd></div>
+                        <div><dt>Source Status</dt><dd id="plume-review-source-status">Needs Verification</dd></div>
+                        <div><dt>Wind</dt><dd id="plume-review-wind">No Current Data Exists</dd></div>
+                        <div><dt>Wind Gusts</dt><dd id="plume-review-gusts">No Current Data Exists</dd></div>
+                        <div><dt>Temperature</dt><dd id="plume-review-temperature">No Current Data Exists</dd></div>
+                        <div><dt>Humidity</dt><dd id="plume-review-humidity">No Current Data Exists</dd></div>
+                        <div><dt>Elevation</dt><dd id="plume-review-elevation">No Current Data Exists</dd></div>
+                      </dl>
+                    </details>
                   </div>
                 </section>
               </div>
@@ -555,6 +580,16 @@
                 <button class="ghost-btn" id="use-live-plume-weather-btn" type="button">Refresh Weather</button>
               </div>
             </form>
+
+            <details class="plume-safety-disclaimer">
+              <summary>Planning limitations and verification requirements</summary>
+              <div>
+                <p>HazMatIQ is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.</p>
+                <p>Plume results are planning estimates only and are not a substitute for field monitoring, official modeling, or Incident Command decision-making.</p>
+                <p>Missing, outdated, or unverified data should be treated as No Current Data Exists until confirmed by an approved source.</p>
+                <p>Weather data source and observation time must be verified. Stale or manually entered weather can significantly affect plume output.</p>
+              </div>
+            </details>
 
             <div class="plume-import-row">
               <div class="plume-layer-controls" aria-label="Map Layers">
@@ -574,16 +609,24 @@
                 <summary>Summary</summary>
                 <div class="plume-summary-content">
                   <ul class="detail-list">
-                    <li><span>Incident Name</span><strong id="plume-summary-incident-name">Planning Mode</strong></li>
-                    <li><span>GPS Location</span><strong id="plume-gps-summary">Awaiting coordinates</strong></li>
-                    <li><span>Open-Meteo</span><strong id="open-meteo-summary">Awaiting live data</strong></li>
-                    <li><span>Model Result</span><strong id="backend-model-summary">Run plume model to view result.</strong></li>
-                    <li><span>Weather Station</span><strong id="nws-station-summary">NWS observation station unavailable</strong></li>
-                    <li><span>Weather Station Details</span><strong id="nws-weather-summary">NWS live observation unavailable</strong></li>
-                    <li><span>Observation Time</span><strong id="nws-observation-summary">Observation time unavailable</strong></li>
+                    <li><span>Incident Name</span><strong id="plume-summary-incident-name"></strong></li>
+                    <li><span>Mode</span><strong id="plume-mode-summary"></strong></li>
+                    <li><span>Chemical</span><strong id="plume-product-summary"></strong></li>
+                    <li><span>GPS Location</span><strong id="plume-gps-summary"></strong></li>
+                    <li><span>Location Source</span><strong id="plume-location-source"></strong></li>
+                    <li><span>Open-Meteo</span><strong id="open-meteo-summary"></strong></li>
+                    <li><span>Release / Container</span><strong id="plume-release-summary"></strong></li>
+                    <li><span>Weather Inputs</span><strong id="plume-weather-input-summary"></strong></li>
+                    <li><span>Model</span><strong id="selected-model-summary"></strong></li>
+                    <li><span>Model Result</span><strong id="backend-model-summary"></strong></li>
+                    <li><span>Model Timestamp</span><strong id="plume-model-time-summary"></strong></li>
+                    <li><span>Weather Station</span><strong id="nws-station-summary"></strong></li>
+                    <li><span>Weather Station Details</span><strong id="nws-weather-summary"></strong></li>
+                    <li><span>Observation Time</span><strong id="nws-observation-summary"></strong></li>
                   </ul>
                 </div>
               </details>
+              <p class="plume-toolbar-status" id="plume-input-status" role="status" aria-live="polite"></p>
               <button class="plume-plot-btn" id="plot-plume-btn" type="submit" form="plume-model-form" disabled>Plot Plume</button>
             </div>
 
@@ -601,14 +644,37 @@
                   <button type="submit">Manual Entry</button>
                   <span class="sr-only" id="plume-map-address-status" role="status" aria-live="polite"></span>
                 </form>
-                <div class="plume-map-legend" id="plume-map-legend" hidden>
-                  <strong>Threat zones</strong>
-                  <span><i class="zone-red"></i> Red · AEGL 3</span>
-                  <span><i class="zone-yellow"></i> Yellow · AEGL 2</span>
-                  <span><i class="zone-green"></i> Green · AEGL 1</span>
-                  <span><i class="zone-centerline"></i> Downwind centerline</span>
-                </div>
               </article>
+            </div>
+
+            <div class="plume-lower-summary-grid">
+              <details class="panel-card plume-demographics plume-sidebar-data" id="plume-demographics" open>
+                <summary>
+                  <span class="plume-sidebar-heading"><small>Plume Status</small><strong>Threat Zone</strong></span>
+                  <span class="status-pill" id="demographics-zone-badge">No zone</span>
+                </summary>
+                <div class="plume-lower-card-content">
+                  <p id="demographics-zone-summary" class="demographics-summary">Click a red, yellow, or green plume zone to inspect potential exposures.</p>
+                  <div class="demographics-grid" aria-live="polite">
+                    <div class="demographic-stat"><span>Nearby Census geography population</span><strong id="demographics-population">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Impacted households estimate</span><strong id="demographics-housing">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Visible / footprint structures</span><strong id="demographics-structures">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Nearby Census geography households</span><strong id="demographics-census-households">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Household estimate method</span><strong id="demographics-household-method">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Confidence / status</span><strong id="demographics-household-status">Needs Verification</strong></div>
+                    <div class="demographic-stat"><span>Limitations</span><strong id="demographics-household-limitations">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Schools / daycares</span><strong id="demographics-schools">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Healthcare facilities</span><strong id="demographics-healthcare">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Nursing homes / assisted living</span><strong id="demographics-nursing">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Critical infrastructure</span><strong id="demographics-critical">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Businesses / industrial sites</span><strong id="demographics-businesses">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Critical receptors</span><strong id="demographics-critical-receptors">No Current Data Exists</strong></div>
+                    <div class="demographic-stat"><span>Protective action summary</span><strong id="demographics-protective-action">No Current Data Exists</strong></div>
+                  </div>
+                  <p class="demographics-estimate-warning">Household and population counts are planning estimates. Census geographies may extend beyond the visible plume area. Verify affected structures using map review, field reconnaissance, local GIS, and Incident Command.</p>
+                  <p id="demographics-source-status" class="demographics-source-status">Population estimate: U.S. Census geography. Occupancies: OpenStreetMap mapped features.</p>
+                </div>
+              </details>
             </div>
           </section>
 

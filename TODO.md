@@ -5,6 +5,11 @@ Claude to update this file too — "add X to the TODO" or "mark Y done" both wor
 
 ## Up next
 
+- [ ] **Published-case plume validation gate.** The offline harness and four required
+  placeholder categories exist, but there are no published expected-distance fixtures.
+  Obtain and independently review authorized ammonia railcar, chlorine cylinder,
+  continuous-release, and puff-release cases before adding model complexity. See
+  `docs/model-validation.md`.
 - [ ] **ERG database rework.** Redesign the ERG schema using a normalized,
   lookup-table-plus-join-table pattern (inspired by reviewing the ERDSS/Chemical Companion
   app's schema — see "Schema design direction" below) instead of flat string fields.
@@ -16,6 +21,20 @@ Claude to update this file too — "add X to the TODO" or "mark Y done" both wor
   changes how a plume actually travels; right now the model assumes flat ground. Needs
   a terrain/elevation data source (e.g. open elevation API or a vendored dataset) feeding
   into `src/lib/model/plume.ts` and `briggs.ts`.
+  **Blocked until the published flat-ground validation gate passes.** See
+  `docs/terrain-modeling-readiness.md`.
+
+## Stabilization guardrails added 2026-07-29
+
+- Normalized ERG tables are staged alongside, not instead of, `erg_table_1`; production
+  cutover is blocked by ingestion and regression gates in `docs/erg-normalization-plan.md`.
+- Chemical Companion linkage totals are tracked without force-linking uncertain UN/NA
+  rows; the individual review inventory is still required. See
+  `docs/chemical-companion-linkage-gaps.md`.
+- General apparatus/PPE, ePCR, NERIS, and broad agency storage are blocked until ADR
+  0001 is decided.
+- Live CWS and Safety Suite connections are blocked pending approved endpoint artifacts.
+- Regional offline/cache behavior is planning-only; no datasets have been downloaded.
 
 ## Schema design direction (decided 2026-06-28)
 

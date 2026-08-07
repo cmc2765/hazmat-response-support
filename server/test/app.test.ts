@@ -40,6 +40,20 @@ describe("API routes", () => {
     expect(body.chemicals.some((c) => c.id === "ammonia")).toBe(true);
   });
 
+  it("keeps Chemical Companion master identity fields authoritative in profiles", async () => {
+    const res = await app.request("/api/chemicals/479/profile?identifier=2312&shippingName=Phenol%2C%20molten");
+    expect(res.status).toBe(200);
+    const body = await res.json() as {
+      masterRecord: { sourceName: string; sourceRecordId: string };
+      header: { name: string; un: string; ergGuide: string };
+    };
+    expect(body.masterRecord).toEqual(expect.objectContaining({
+      sourceName: "Chemical Companion",
+      sourceRecordId: "479",
+    }));
+    expect(body.header).toMatchObject({ name: "Phenol", un: "1671", ergGuide: "153" });
+  });
+
   it("GET /api/erg/:un returns the Table 1 row matching the requested guide", async () => {
     const res = await app.request("/api/erg/1005?guide=125");
     expect(res.status).toBe(200);

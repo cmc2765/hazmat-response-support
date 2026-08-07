@@ -3,19 +3,19 @@ import { getCompanionDiagnostics, normalizeChemicalProfile, normalizeTransportat
 
 describe('normalizeChemicalProfile', () => {
   it.each(['2312', 'UN2312', 'UN 2312', 'UN-2312', 'NA2312', 'NA 2312'])(
-    'resolves transportation identifier %s to the complete Phenol, molten identity', (query) => {
+    'keeps unresolved transportation identifier %s separate from master identity', (query) => {
       expect(normalizeTransportationIdentifier(query)).toBe('2312');
       expect(searchCompanionChemicals(query)[0]).toMatchObject({
-        ChemicalID: 479, ChemicalName: 'Phenol, molten', PrimaryChemicalName: 'Phenol',
-        CasNumber: '108-95-2', UnnaNumber: '2312', ErgNumber: '153',
-        HazardClass: expect.stringContaining('6.1'),
+        ChemicalID: null, ChemicalName: 'Phenol, molten', UnnaNumber: '2312', ErgNumber: '153',
+        recordType: 'transportation-identifier', reviewStatus: 'requires_review', guidanceEligible: false,
+        sourceBadges: ['Transportation Identifier', 'Linked ERG', 'Requires Review'],
       });
     },
   );
 
   it.each([
-    ['Phenol, molten', 479], ['Phenol', 479], ['108-95-2', 479],
-    ['chlorine', 22], ['1017', 22], ['ammonia', 10], ['1005', 10],
+    ['Phenol', 479], ['108-95-2', 479], ['chlorine', 22], ['1017', 22],
+    ['ammonia', 10], ['1005', 10],
   ])('resolves required regression query %s', (query, id) => {
     expect(searchCompanionChemicals(query)[0]?.ChemicalID).toBe(id);
   });
@@ -35,12 +35,31 @@ describe('normalizeChemicalProfile', () => {
     expect(coverage.sourceChemicalTotal).toBe(1459);
     expect(coverage.importedCanonicalTotal).toBe(coverage.sourceChemicalTotal);
     expect(Number(coverage.sourceUnNaIdentifierTotal)).toBeGreaterThan(3000);
-    expect(Number(coverage.importedUnNaIdentifierTotal)).toBeGreaterThan(1000);
+    expect(coverage.importedUnNaIdentifierTotal).toBe(0);
+    expect(coverage.reviewedTransportationLinkTotal).toBe(0);
+    expect(coverage.transportationIdentifierTotal).toBe(1980);
+    expect(coverage.unlinkedTransportationIdentifiers).toBe(1980);
     expect(Number(coverage.sourceCasIdentifierTotal)).toBeGreaterThan(1300);
     expect(coverage.importedCasIdentifierTotal).toBe(coverage.sourceCasIdentifierTotal);
     expect(Number(coverage.sourceAliasTotal)).toBeGreaterThan(13000);
     expect(coverage.importedAliasTotal).toBe(coverage.sourceAliasTotal);
     expect(Number(coverage.searchIndexTotal)).toBeGreaterThanOrEqual(Number(coverage.sourceChemicalTotal));
+  });
+
+  it('ranks a Chemical Companion master above the separate transport record for a shared UN', () => {
+    const results = searchCompanionChemicals('1017');
+    expect(results[0]).toMatchObject({
+      ChemicalID: 22,
+      ChemicalName: 'Chlorine',
+      recordType: 'master-chemical',
+      guidanceEligible: true,
+      sourceBadges: ['Chemical Companion Master'],
+    });
+    expect(results).toContainEqual(expect.objectContaining({
+      ChemicalID: null,
+      recordType: 'transportation-identifier',
+      reviewStatus: 'requires_review',
+    }));
   });
   it('loads a companion profile only from the selected ChemicalID', () => {
     const profile = queryChemicalProfile(54);

@@ -1,0 +1,132 @@
+[
+  {
+    "id": "ammonia-railcar-release",
+    "category": "ammonia-railcar-release",
+    "chemical": {
+      "id": "ammonia",
+      "name": "Ammonia, anhydrous",
+      "molecularWeight": 17.03
+    },
+    "release": {
+      "type": "continuous",
+      "containerType": "Rail tank car",
+      "releaseRateKgPerSec": null,
+      "totalMassKg": null,
+      "durationSec": null
+    },
+    "weather": {
+      "windSpeedMps": null,
+      "windDirectionDeg": null,
+      "temperatureC": null
+    },
+    "stabilityClass": null,
+    "surfaceRoughness": null,
+    "threshold": {
+      "kind": "AEGL",
+      "level": 3,
+      "valuePpm": null
+    },
+    "expectedDistanceM": null,
+    "expectedSource": null,
+    "toleranceFraction": 0.2,
+    "warning": "Do not use this case for validation until published expected distances and source references are added."
+  },
+  {
+    "id": "chlorine-cylinder-release",
+    "category": "chlorine-cylinder-release",
+    "chemical": {
+      "id": "chlorine",
+      "name": "Chlorine",
+      "molecularWeight": 70.9
+    },
+    "release": {
+      "type": "puff",
+      "containerType": "Three damaged 150-pound cylinders modeled by ALOHA as one instantaneous direct source",
+      "releaseRateKgPerSec": null,
+      "totalMassKg": 204.1165665,
+      "durationSec": null
+    },
+    "weather": {
+      "windSpeedMps": 2.68224,
+      "windDirectionDeg": 90,
+      "temperatureC": 22.2222222
+    },
+    "stabilityClass": "C",
+    "surfaceRoughness": "rural",
+    "threshold": {
+      "kind": "AEGL",
+      "level": 3,
+      "valuePpm": 20
+    },
+    "expectedDistanceM": 1356.9696,
+    "expectedDistanceRelation": "minimum",
+    "comparisonCompatibility": "requires-model-mapping",
+    "expectedSource": "NOAA/EPA, ALOHA Example Scenarios (September 2016), Example 3, pp. 40-47: https://response.restoration.noaa.gov/sites/default/files/ALOHA_Examples.pdf",
+    "toleranceFraction": 0.2,
+    "warning": "Published ALOHA comparison candidate. ALOHA models an instantaneous heavy-gas direct source; the current Gaussian puff implementation requires an evaluation time, so no time value may be inferred from the 60-minute AEGL averaging duration."
+  },
+  {
+    "id": "published-continuous-release",
+    "category": "continuous-release",
+    "chemical": {
+      "id": null,
+      "name": null,
+      "molecularWeight": null
+    },
+    "release": {
+      "type": "continuous",
+      "containerType": null,
+      "releaseRateKgPerSec": null,
+      "totalMassKg": null,
+      "durationSec": null
+    },
+    "weather": {
+      "windSpeedMps": null,
+      "windDirectionDeg": null,
+      "temperatureC": null
+    },
+    "stabilityClass": null,
+    "surfaceRoughness": null,
+    "threshold": {
+      "kind": null,
+      "level": null,
+      "valuePpm": null
+    },
+    "expectedDistanceM": null,
+    "expectedSource": null,
+    "toleranceFraction": 0.2,
+    "warning": "Do not use this case for validation until published expected distances and source references are added."
+  },
+  {
+    "id": "published-puff-release",
+    "category": "puff-release",
+    "chemical": {
+      "id": null,
+      "name": null,
+      "molecularWeight": null
+    },
+    "release": {
+      "type": "puff",
+      "containerType": null,
+      "releaseRateKgPerSec": null,
+      "totalMassKg": null,
+      "durationSec": null
+    },
+    "weather": {
+      "windSpeedMps": null,
+      "windDirectionDeg": null,
+      "temperatureC": null
+    },
+    "stabilityClass": null,
+    "surfaceRoughness": null,
+    "threshold": {
+      "kind": null,
+      "level": null,
+      "valuePpm": null
+    },
+    "expectedDistanceM": null,
+    "expectedSource": null,
+    "toleranceFraction": 0.2,
+    "warning": "Do not use this case for validation until published expected distances and source references are added."
+  }
+]
