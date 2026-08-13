@@ -426,24 +426,32 @@
           <section id="guided-response" class="view">
             <header class="panel-card guided-response-heading">
               <div class="guided-response-brand">
-                <img class="guided-response-logo" src="assets/hazmatiq-logo.png" alt="HazMatIQ — Incident Intelligence" />
+                <img class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png" alt="HazMatIQ — Incident Intelligence" />
                 <div>
                   <h2>Guided Response</h2>
-                  <p>Source-backed response planning from Chemical Companion, ERG, NIOSH, and CAMEO.</p>
+                  <p>Source-backed planning from Chemical Companion, ERG, NIOSH, and CAMEO.</p>
                 </div>
+              </div>
+            </header>
+            <div id="guided-response-content" class="guided-response-content"></div>
+            <section class="panel-card guided-command-actions" aria-labelledby="guided-command-actions-title">
+              <div>
+                <h3 id="guided-command-actions-title">Command Actions</h3>
+                <p id="guided-response-mode-status">Planning Mode — tactical decision records save locally and are not attached to an incident.</p>
               </div>
               <div class="guided-response-actions" aria-label="Guided response actions">
                 <button class="primary-btn" id="guided-open-plume-btn" type="button">Open Plume Model</button>
+                <button class="ghost-btn" id="guided-back-btn" type="button">Back to Chemical ID</button>
+                <button class="ghost-btn" id="guided-save-record-btn" type="button">Save Tactical Decision Record</button>
                 <button class="ghost-btn" id="guided-save-incident-btn" type="button">Save to Incident</button>
                 <button class="ghost-btn" id="guided-save-chemical-btn" type="button">Add to My Chemicals</button>
-                <button class="ghost-btn" id="guided-back-btn" type="button">Back to Chemical ID</button>
               </div>
               <p class="guided-response-action-status" id="guided-response-action-status" role="status" aria-live="polite"></p>
-            </header>
-            <div id="guided-response-content" class="guided-response-content"></div>
+            </section>
             <aside class="guided-response-disclaimers" aria-label="Guided response disclaimers">
-              <p>HazMatIQ Guided Response is decision-support information only. Verify chemical identity, IDLH, exposure limits, ERG distances, PPE, suit compatibility, decon, medical guidance, and plume modeling inputs with approved sources, agency SOPs, field observations, and Incident Command before operational use.</p>
+              <p>Guided Response provides decision-support planning only. Tactical decisions must be verified with Chemical Companion, ERG, NIOSH, CAMEO, agency SOPs, field monitoring, responder safety conditions, and Incident Command before operational use.</p>
               <p>Missing, outdated, unsupported, or unverified values must be treated as No Current Data Exists.</p>
+              <p>Mitigation strategy must be approved by Incident Command and adjusted based on field monitoring, weather, plume behavior, responder safety, and changing incident conditions.</p>
             </aside>
           </section>
 

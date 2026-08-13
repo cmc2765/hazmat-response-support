@@ -28,10 +28,11 @@ describe("Guided Response workflow", () => {
 
   it("provides the new view, required actions, and compact disclaimers", () => {
     expect(html).toContain('id="guided-response" class="view"');
-    expect(guidedHtml).toContain('class="guided-response-logo" src="assets/hazmatiq-logo.png"');
+    expect(guidedHtml).toContain('class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png"');
     expect(guidedHtml).toMatch(/class="guided-response-logo"[^>]*>\s*<div>\s*<h2>Guided Response<\/h2>/s);
     for (const id of [
       "guided-open-plume-btn",
+      "guided-save-record-btn",
       "guided-save-incident-btn",
       "guided-save-chemical-btn",
       "guided-back-btn",
@@ -43,7 +44,7 @@ describe("Guided Response workflow", () => {
     expect(script).toContain("function renderGuidedResponse()");
     expect(script).toContain("No chemical selected. Return to Chemical ID and select a Chemical Companion master record.");
     expect(script).toContain("Chemical-specific response guidance requires a verified Chemical Companion master link.");
-    expect(script).toContain("sectionPlumeButton.addEventListener('click', openPlumeWorkspace)");
+    expect(script).toContain("document.getElementById('guided-open-plume-btn')?.addEventListener('click', openPlumeWorkspace)");
   });
 
   it("uses a wrapping responsive card layout", () => {
@@ -51,6 +52,20 @@ describe("Guided Response workflow", () => {
     expect(styles).toContain('url("assets/guided-response-hero.png")');
     expect(styles).toContain("grid-template-columns: repeat(2, minmax(0, 1fr))");
     expect(styles).toContain("@media (max-width: 900px)");
+  });
+
+  it("keeps the Guided Response title box compact", () => {
+    expect(styles).toContain("padding: 5px 12px");
+    expect(styles).toContain("height: 62px");
+    expect(styles).toContain("min-height: 36px");
+  });
+
+  it("makes the upper-left HazMatIQ identity prominent and symmetrical", () => {
+    expect(styles).toContain("width: clamp(265px, 26vw, 360px)");
+    expect(styles).toContain("font-size: clamp(1.85rem, 2.5vw, 2.4rem)");
+    expect(styles).toContain("align-self: start");
+    expect(styles).toContain("justify-self: start");
+    expect(styles).toContain("text-align: center");
   });
 
   it("renders the four-box tactical decision flow with downward arrows", () => {
@@ -65,13 +80,61 @@ describe("Guided Response workflow", () => {
     }
   });
 
-  it("prioritizes a source-backed SCBA decision and fail-closed manufacturer panels", () => {
-    expect(script).toContain("const explicitScba = respiratoryValues.some");
-    expect(script).toContain("const sourceBackedIdlh = guidedHasValue(idlh)");
+  it("uses larger, bolder typography throughout the tactical decision flow", () => {
+    expect(styles).toMatch(/\.guided-tactical-section-heading h3[^}]*font-size: 1\.5rem;[^}]*font-weight: 900;/s);
+    expect(styles).toMatch(/\.guided-flow-box h4[^}]*font-size: 1\.1rem;[^}]*font-weight: 900;/s);
+    expect(styles).toMatch(/\.guided-flow-status[^}]*font-size: 0\.9rem;[^}]*font-weight: 800;/s);
+    expect(styles).toMatch(/\.guided-flow-box dl > div[^}]*font-size: 0\.84rem;/s);
+  });
+
+  it("does not place a selected-chemical box inside the title box", () => {
+    expect(script).not.toContain("createGuidedResponseCard('Selected Chemical'");
+    expect(script).not.toContain("guided-header-summary");
+    expect(styles).not.toContain(".guided-header-summary");
+  });
+
+  it("promotes Tactical Decision Flow to the full-width first content section", () => {
+    expect(script).toContain("const flow = document.createElement('section')");
+    expect(script).toContain("container.append(flow, createMitigationDecisionSupport(decisionRecord))");
+    expect(styles).toContain("flex-direction: column");
+    expect(styles).not.toContain("transform: rotate(-90deg)");
+  });
+
+  it("prioritizes a source-backed SCBA decision and omits manufacturer lists", () => {
+    expect(script).toContain("const explicitScba = respiratoryGuidanceValues.some");
+    expect(script).not.toContain("const sourceBackedIdlh = guidedHasValue(idlh)");
     expect(script).toContain("'SCBA MANDATED'");
-    expect(script).toContain("'RESPIRATOR SELECTION REQUIRES VERIFICATION'");
-    expect(script).toContain("['3M', 'MSA', 'North']");
-    expect(script).toContain("Manufacturer-specific respiratory options not verified from current source.");
+    expect(script).toContain("'SCBA STRONGLY INDICATED'");
+    expect(script).toContain("'RESPIRATOR / CARTRIDGE SELECTION REQUIRES VERIFICATION'");
+    const renderer = script.slice(script.indexOf("function renderGuidedResponse()"), script.indexOf("const chemicalSearchForm"));
+    expect(renderer).not.toContain("createGuidedManufacturerPanel");
+    expect(renderer).not.toContain("respiratorRecommendations are not displayed");
+  });
+
+  it("uses one fail-closed protection level and a controlled Level C cartridge status", () => {
+    for (const level of [
+      "Level A Vapor Protective Suit",
+      "Level B Chemical Protective Suit",
+      "Level C Chemical Protective Suit",
+      "Level D / No chemical protective ensemble required",
+      "Requires IC / HazMat Specialist Review",
+    ]) expect(script).toContain(level);
+    expect(script).toContain("const explicitProtectionLevels = guidedExplicitProtectionLevels(ppeSourceValues)");
+    expect(script).toContain("explicitProtectionLevels.length > 1");
+    expect(script).toContain("Cartridge selection requires verification with approved source data and agency SOP.");
+    expect(script).toContain("Level C requires verified contaminant, concentration, oxygen, and cartridge/canister.");
+  });
+
+  it("keeps the Tactical Decision Flow Life Safety box compact and ordered", () => {
+    const lifeFlow = script.slice(
+      script.indexOf("const lifeFlow = createTacticalFlowBox"),
+      script.indexOf("const mitigationFlow = createTacticalFlowBox"),
+    );
+    const labels = ["SCBA Decision", "Protection Level", "Suit Status", "Cartridge Status", "Entry Limitation"];
+    labels.forEach((label, index) => {
+      expect(lifeFlow.indexOf(`label: '${label}'`)).toBeGreaterThan(index ? lifeFlow.indexOf(`label: '${labels[index - 1]}'`) : -1);
+    });
+    expect(lifeFlow).not.toContain("respiratorRecommendations");
   });
 
   it("builds an export-ready decision record and keeps mitigation under IC approval", () => {
@@ -80,14 +143,39 @@ describe("Guided Response workflow", () => {
     expect(script).toContain("verifyIsolate: {");
     expect(script).toContain("lifeSafety: {");
     expect(script).toContain("mitigation: {");
-    expect(script).toContain("const tacticalPosture = 'Requires IC decision'");
+    expect(script).toContain("? 'Defensive'");
+    expect(script).toContain("mitigationDecisionSupport: {");
+    expect(script).toContain("readyForIncidentExport: true");
     expect(script).toContain("Final mitigation strategy must be approved by Incident Command.");
     expect(script).not.toContain("const tacticalPosture = 'Offensive'");
   });
 
   it("uses section-level source summaries instead of badges on every populated row", () => {
-    expect(script).toContain("guided-section-sources");
-    expect(script).toContain("Sources: ${sources.length ? sources.join(', ') : noCurrentDataText}");
-    expect(script).toContain("guidedHasValue(displayed) && !['Needs Verification'].includes(sourceBadge) ? '' : sourceBadge");
+    expect(script).toContain("guided-flow-sources");
+    expect(script).toContain("Sources reviewed: ${sources.length ? sources.join(', ') : noCurrentDataText}");
+    const renderer = script.slice(script.indexOf("function renderGuidedResponse()"), script.indexOf("const chemicalSearchForm"));
+    expect(renderer).not.toContain("guided-source-badge");
+  });
+
+  it("removes the repeating Chemical Profile card grid from the active renderer", () => {
+    const renderer = script.slice(script.indexOf("function renderGuidedResponse()"), script.indexOf("const chemicalSearchForm"));
+    for (const removed of [
+      "Confirm Chemical Identity",
+      "Immediate Hazards",
+      "PPE / Respiratory",
+      "Isolation / Protective Actions",
+      "Medical / First Aid",
+      "Decon / Spill / Fire",
+      "Plume Readiness",
+    ]) expect(renderer).not.toContain(removed);
+    expect(renderer).not.toContain("guided-response-main");
+  });
+
+  it("saves a compact tactical record locally and can attach it to an active incident", () => {
+    expect(script).toContain("function saveGuidedResponseTacticalRecord");
+    expect(script).toContain("guidedResponseTacticalStorageKey");
+    expect(script).toContain("guidedResponseTacticalRecord: record");
+    expect(script).toContain("Planning Mode — tactical decision record saved locally, not attached to an incident.");
+    expect(script).toContain("Active Incident Mode — tactical decision record saved to this incident.");
   });
 });
