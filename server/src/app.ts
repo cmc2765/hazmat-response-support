@@ -27,7 +27,7 @@ import { getDb } from "./db.js";
 import * as schema from "./schema.js";
 import { queryChemicalProfile, searchCompanionChemicals } from "./chemical-companion.js";
 import { runPlume } from "../../src/lib/model/plume.js";
-import { PlumeInputs } from "../../src/lib/schema/plume.js";
+import { PlumeCalculationEvidence, PlumeInputs } from "../../src/lib/schema/plume.js";
 import type { ThresholdBand } from "../../src/lib/schema/plume.js";
 import { ERG_TABLE_1, getErgAdditionalTables, getErgContainerDistances } from "../../src/data/erg.js";
 
@@ -424,7 +424,18 @@ app.post("/api/plume/run", async (c) => {
   if (!parsed.success) {
     return c.json({ error: "invalid plume inputs", issues: parsed.error.issues }, 400);
   }
+  const evidenceParsed = PlumeCalculationEvidence.safeParse(
+    body && typeof body === "object" ? (body as Record<string, unknown>).calculationEvidence : undefined,
+  );
+  if (!evidenceParsed.success) {
+    return c.json({
+      error: "approved plume source records, formula, and limitations are required",
+      display: "No Current Data Exists",
+      issues: evidenceParsed.error.issues,
+    }, 400);
+  }
   const inputs = parsed.data;
+  const calculationEvidence = evidenceParsed.data;
 
   // Chemical Companion uses numeric IDs; plume thresholds use canonical chemical slugs.
   const directChemicalRows = await db
@@ -453,7 +464,17 @@ app.post("/api/plume/run", async (c) => {
       ? directChemicalRows
       : await db.select().from(schema.chemicals).where(eq(schema.chemicals.id, inputs.chemicalId));
     const mw = chemRows[0]?.molecularWeight;
-    if (mw) inputs.molecularWeight = Number(mw);
+    if (mw) {
+      inputs.molecularWeight = Number(mw);
+      calculationEvidence.sourceData.push({
+        sourceName: "HazMatIQ chemical master",
+        sourceRecordId: chemRows[0].id,
+        fields: ["molecularWeight"],
+        values: { molecularWeight: Number(mw) },
+        approved: true,
+        sourceLocator: `chemicals:${chemRows[0].id}`,
+      });
+    }
   }
 
   const thresholdRows = await db
@@ -467,8 +488,15 @@ app.post("/api/plume/run", async (c) => {
     label: `${r.kind}-${r.level}`,
   }));
 
-  const result = runPlume(inputs, { thresholds });
-  return c.json(result);
+  try {
+    const result = runPlume(inputs, { thresholds, calculationEvidence });
+    return c.json(result);
+  } catch (error) {
+    return c.json({
+      error: error instanceof Error ? error.message : "plume calculation blocked",
+      display: "No Current Data Exists",
+    }, 422);
+  }
 });
 
 // Proxy live weather so browser CORS rules cannot block plume inputs.

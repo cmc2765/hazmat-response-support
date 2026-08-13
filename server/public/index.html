@@ -408,7 +408,10 @@
                   </div>
                   <p id="chemical-summary" class="chemical-profile-summary">Search for a chemical to load its companion-database profile.</p>
                   <div id="chemical-profile-meta" class="chemical-profile-meta"></div>
-                  <button class="primary-btn chemical-profile-plume-btn" id="open-plume-btn" type="button">Open Plume Model</button>
+                  <div class="chemical-profile-actions">
+                    <button class="ghost-btn" id="open-guided-response-btn" type="button">Guided Response</button>
+                    <button class="primary-btn" id="open-plume-btn" type="button">Open Plume Model</button>
+                  </div>
                 </article>
                 <div class="chemical-profile-layout">
                   <article class="panel-card chemical-profile-content-card">
@@ -418,6 +421,30 @@
                 </div>
               </div>
             </div>
+          </section>
+
+          <section id="guided-response" class="view">
+            <header class="panel-card guided-response-heading">
+              <div class="guided-response-brand">
+                <img class="guided-response-logo" src="assets/hazmatiq-logo.png" alt="HazMatIQ — Incident Intelligence" />
+                <div>
+                  <h2>Guided Response</h2>
+                  <p>Source-backed response planning from Chemical Companion, ERG, NIOSH, and CAMEO.</p>
+                </div>
+              </div>
+              <div class="guided-response-actions" aria-label="Guided response actions">
+                <button class="primary-btn" id="guided-open-plume-btn" type="button">Open Plume Model</button>
+                <button class="ghost-btn" id="guided-save-incident-btn" type="button">Save to Incident</button>
+                <button class="ghost-btn" id="guided-save-chemical-btn" type="button">Add to My Chemicals</button>
+                <button class="ghost-btn" id="guided-back-btn" type="button">Back to Chemical ID</button>
+              </div>
+              <p class="guided-response-action-status" id="guided-response-action-status" role="status" aria-live="polite"></p>
+            </header>
+            <div id="guided-response-content" class="guided-response-content"></div>
+            <aside class="guided-response-disclaimers" aria-label="Guided response disclaimers">
+              <p>HazMatIQ Guided Response is decision-support information only. Verify chemical identity, IDLH, exposure limits, ERG distances, PPE, suit compatibility, decon, medical guidance, and plume modeling inputs with approved sources, agency SOPs, field observations, and Incident Command before operational use.</p>
+              <p>Missing, outdated, unsupported, or unverified values must be treated as No Current Data Exists.</p>
+            </aside>
           </section>
 
           <section id="my-chemicals" class="view">

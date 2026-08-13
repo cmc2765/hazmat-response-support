@@ -78,33 +78,22 @@ describe('normalizeChemicalProfile', () => {
     expect(profile?.ppeRespiratory.bestMatch).toContain('Frontline® 300');
   });
 
-  it('keeps the Best Match status visible when Kappler has no chemical-specific suit record', () => {
+  it('fails closed when Kappler has no chemical-specific suit record', () => {
     const profile = queryChemicalProfile(54);
 
-    expect(profile?.ppeRespiratory.bestMatch).toBe('Kappler HazMatch — no chemical-specific suit record');
+    expect(profile?.ppeRespiratory.bestMatch).toBe('No Current Data Exists');
   });
 
-  it('combines Chemical Companion, NIOSH, and ERG decon guidance for hydrofluoric acid', () => {
+  it('displays only direct Chemical Companion decon records for hydrofluoric acid', () => {
     const profile = queryChemicalProfile(58);
 
-    expect(profile?.decon.preferredMethod).toContain('Designated HazMat personnel method: Water');
-    expect(profile?.decon.hazmatPersonnelProcedure).toEqual(expect.arrayContaining([
-      expect.stringContaining('low-pressure water'),
-      expect.stringContaining('controlled assisted doffing'),
-    ]));
-    expect(profile?.decon.technicalDecon).toEqual(expect.arrayContaining([
-      expect.stringContaining('Technical people decon'),
-      expect.stringContaining('Technical equipment decon'),
-    ]));
-    expect(profile?.decon.patientVictimDecon).toEqual(expect.arrayContaining([
-      expect.stringContaining('calcium gluconate gel'),
-      expect.stringContaining('water flush ≥30 min'),
-    ]));
-    expect(profile?.decon.sourceBasis).toEqual(expect.arrayContaining([
+    expect(profile?.decon.preferredMethod).toBe('Air');
+    expect(profile?.decon.hazmatPersonnelProcedure).not.toContain(expect.stringContaining('controlled assisted doffing'));
+    expect(profile?.decon.patientVictimDecon).not.toContain(expect.stringContaining('water flush ≥30 min'));
+    expect(profile?.decon.sourceBasis).toEqual([
       'Chemical Companion decontamination method matrix',
-      'NIOSH Pocket Guide first-aid data',
-      'PHMSA ERG 2024 Guide 157',
-    ]));
+      'Chemical Companion decontamination notes',
+    ]);
   });
 
   it.each([
@@ -182,11 +171,8 @@ describe('normalizeChemicalProfile', () => {
     expect(profile.exposures.oshaPel).toBe('0.5 ppm');
     expect(profile.exposures.nioshRel).toBe('0.03 ppm');
     expect(profile.exposures.acgihTlv).toBe('0.01 ppm');
-    expect(profile.exposures.routes[0]).toMatch(/^Most likely: Inhalation/);
-    expect(profile.exposures.routes).toEqual(expect.arrayContaining([
-      expect.stringMatching(/^Also possible: Skin contact/),
-    ]));
-    expect(profile.ppeRespiratory.recommendedPpe).toContain('Respiratory protection');
+    expect(profile.exposures.routes).toEqual(['No Current Data Exists']);
+    expect(profile.ppeRespiratory.recommendedPpe).not.toContain('Respiratory protection');
     expect(profile.detectors.items[0]).toContain('PID');
     expect(profile.reactivity.incompatibilities[0]).toBe('Oxidizers');
     expect(profile.isolationErg.ergGuide).toBe('132');
@@ -210,14 +196,12 @@ describe('normalizeChemicalProfile', () => {
     expect(profile.exposures.acgihTlv).toBe('0.5 ppm');
   });
 
-  it('explains the standalone calcium note for hydrofluoric acid', () => {
+  it('preserves standalone medical source text without expanding it', () => {
     const profile = normalizeChemicalProfile({ ChemicalName: 'Hydrofluoric acid' }, {
       emsParadigms: [{ EmsParadigm: 'Calcium' }, { EmsParadigm: 'NA' }],
     });
 
-    expect(profile.exposures.acuteNotes).toEqual([
-      expect.stringContaining('Calcium gluconate — indicated for hydrofluoric acid skin exposure'),
-    ]);
+    expect(profile.exposures.acuteNotes).toEqual(['Calcium']);
     expect(profile.medical.emsConsiderations).toEqual(profile.exposures.acuteNotes);
     expect(profile.medical.emsConsiderations).not.toContain('NA');
   });

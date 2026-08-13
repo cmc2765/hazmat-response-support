@@ -21,9 +21,33 @@ const thresholds: ThresholdBand[] = [
   { kind: "AEGL", level: 2, valuePpm: 160, label: "AEGL-2" },
 ];
 
+const evidence = (releaseKind: "plume" | "puff", valueOverrides: Record<string, unknown> = {}) => ({
+  modelName: "HazMatIQ Gaussian plume/puff screening model",
+  formulaReference: "Gaussian plume and puff equations in src/lib/model/plume.ts",
+  sourceData: [{
+    sourceName: "Test fixture",
+    sourceRecordId: `plume-test-${releaseKind}`,
+    fields: [
+      "chemicalId", "releaseKind", "releaseHeightM", "windSpeedMps", "windDirDeg",
+      "stabilityClass", "surfaceRoughness", "tempC", "molecularWeight", "thresholds",
+      releaseKind === "plume" ? "releaseRateKgPerSec" : "totalMassKg",
+      ...(releaseKind === "puff" ? ["durationSec"] : []),
+    ],
+    values: {
+      ...inputs,
+      releaseKind,
+      ...(releaseKind === "puff" ? { totalMassKg: 1000, durationSec: 60 } : {}),
+      thresholds,
+      ...valueOverrides,
+    },
+    approved: true as const,
+  }],
+  limitations: ["Synthetic test fixture; not for operational use."],
+});
+
 describe("plume runPlume", () => {
   it("produces a non-empty centerline", () => {
-    const r = runPlume(inputs, { thresholds, emissionRateKgPerSec: 1 });
+    const r = runPlume(inputs, { thresholds, emissionRateKgPerSec: 1, calculationEvidence: evidence("plume") });
     expect(r.centerline.length).toBeGreaterThan(0);
   });
 
@@ -34,6 +58,7 @@ describe("plume runPlume", () => {
         thresholds,
         emissionRateKgPerSec: 10,
         molecularWeight: 17.03,
+        calculationEvidence: evidence("plume", { releaseRateKgPerSec: 10 }),
       },
     );
     for (const iso of r.isopleths) {
@@ -48,7 +73,7 @@ describe("plume runPlume", () => {
   });
 
   it("AEGL-1 (low threshold) reaches further downwind than AEGL-2", () => {
-    const r = runPlume(inputs, { thresholds, emissionRateKgPerSec: 1 });
+    const r = runPlume(inputs, { thresholds, emissionRateKgPerSec: 1, calculationEvidence: evidence("plume") });
     const aegl1 = r.isopleths.find((i) => i.thresholdLevel === 1);
     const aegl2 = r.isopleths.find((i) => i.thresholdLevel === 2);
     expect(aegl1).toBeDefined();
@@ -59,14 +84,35 @@ describe("plume runPlume", () => {
   it("puff model also produces polygons", () => {
     const r = runPlume(
       { ...inputs, releaseKind: "puff", durationSec: 60, totalMassKg: 1000 },
-      { thresholds, totalMassKg: 1000 },
+      { thresholds, totalMassKg: 1000, calculationEvidence: evidence("puff") },
     );
     expect(r.isopleths.length).toBe(thresholds.length);
   });
 
   it("disclaimer names ALOHA", () => {
-    const r = runPlume(inputs, { thresholds, emissionRateKgPerSec: 1 });
+    const r = runPlume(inputs, { thresholds, emissionRateKgPerSec: 1, calculationEvidence: evidence("plume") });
     expect(r.disclaimer.toLowerCase()).toContain("aloha");
+  });
+
+  it("labels outputs as calculated and displays method, sources, and limitations", () => {
+    const r = runPlume(inputs, { thresholds, calculationEvidence: evidence("plume") });
+    expect(r.status).toBe("Calculated estimate");
+    expect(r.calculation.modelName).toBeTruthy();
+    expect(r.calculation.formulaReference).toBeTruthy();
+    expect(r.calculation.sourceData).not.toHaveLength(0);
+    expect(r.calculation.limitations).not.toHaveLength(0);
+  });
+
+  it("never substitutes defaults for missing source evidence or molecular weight", () => {
+    expect(() => runPlume(inputs, { thresholds } as never)).toThrow();
+    expect(() => runPlume(
+      { ...inputs, molecularWeight: undefined },
+      { thresholds, calculationEvidence: evidence("plume") },
+    )).toThrow(/Molecular weight is required/);
+    expect(() => runPlume(inputs, {
+      thresholds,
+      calculationEvidence: evidence("plume", { windSpeedMps: 99 }),
+    })).toThrow(/do not match approved source records for: windSpeedMps/);
   });
 });
 

@@ -26,6 +26,31 @@ export const PlumeInputs = z.object({
 });
 export type PlumeInputs = z.infer<typeof PlumeInputs>;
 
+export const PlumeSourceRecord = z.object({
+  sourceName: z.string().min(1),
+  sourceRecordId: z.string().min(1),
+  fields: z.array(z.string().min(1)).min(1),
+  values: z.record(z.unknown()),
+  approved: z.literal(true),
+  sourceVersion: z.string().min(1).optional(),
+  sourceLocator: z.string().min(1).optional(),
+}).superRefine((record, context) => {
+  for (const field of record.fields) {
+    if (!(field in record.values)) {
+      context.addIssue({ code: z.ZodIssueCode.custom, path: ["values", field], message: "source value is required" });
+    }
+  }
+});
+export type PlumeSourceRecord = z.infer<typeof PlumeSourceRecord>;
+
+export const PlumeCalculationEvidence = z.object({
+  modelName: z.string().min(1),
+  formulaReference: z.string().min(1),
+  sourceData: z.array(PlumeSourceRecord).min(1),
+  limitations: z.array(z.string().min(1)).min(1),
+});
+export type PlumeCalculationEvidence = z.infer<typeof PlumeCalculationEvidence>;
+
 export const ThresholdBand = z.object({
   kind: z.enum(["AEGL", "ERPG", "TEEL"]),
   level: z.number().int().min(0).max(3),
@@ -70,12 +95,14 @@ export const CenterlinePoint = z.object({
 export type CenterlinePoint = z.infer<typeof CenterlinePoint>;
 
 export const PlumeResult = z.object({
+  status: z.literal("Calculated estimate"),
   modelVersion: z.string(),
   inputs: PlumeInputs,
   isopleths: z.array(Isopleth),
   centerline: z.array(CenterlinePoint),
   thresholdsUsed: z.array(ThresholdBand),
   computedAt: z.string(),
+  calculation: PlumeCalculationEvidence,
   disclaimer: z.string(),
 });
 export type PlumeResult = z.infer<typeof PlumeResult>;

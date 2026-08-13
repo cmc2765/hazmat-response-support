@@ -82,6 +82,9 @@ export function getPlumeValidationCaseBlockers(validationCase: PlumeValidationCa
   if (validationCase.release.type === "puff" && !isPositiveNumber(validationCase.release.totalMassKg)) {
     blockers.push("total released mass");
   }
+  if (validationCase.release.type === "puff" && !isPositiveNumber(validationCase.release.durationSec)) {
+    blockers.push("puff evaluation time");
+  }
   if (!isPositiveNumber(validationCase.weather.windSpeedMps)) blockers.push("wind speed");
   if (validationCase.weather.windDirectionDeg === null || !Number.isFinite(validationCase.weather.windDirectionDeg)) {
     blockers.push("wind direction");
@@ -160,6 +163,26 @@ export function runPlumeValidationCase(validationCase: PlumeValidationCase): Plu
   const result = runPlume(inputs, {
     thresholds: [threshold],
     molecularWeight,
+    calculationEvidence: {
+      modelName: "HazMatIQ Gaussian plume/puff screening model",
+      formulaReference: "HazMatIQ model version 0.1.0-plume-skeleton; Gaussian plume and puff equations",
+      sourceData: [{
+        sourceName: validationCase.expectedSource!,
+        sourceRecordId: validationCase.id,
+        fields: [
+          "chemicalId", "releaseKind", "releaseHeightM", "windSpeedMps", "windDirDeg",
+          "stabilityClass", "surfaceRoughness", "tempC", "molecularWeight", "thresholds",
+          validationCase.release.type === "continuous" ? "releaseRateKgPerSec" : "totalMassKg",
+          ...(validationCase.release.type === "puff" ? ["durationSec"] : []),
+        ],
+        values: {
+          ...inputs,
+          thresholds: [threshold],
+        },
+        approved: true,
+      }],
+      limitations: ["Validation-case calculation; applicability is limited to the cited comparison conditions."],
+    },
     ...(validationCase.release.type === "continuous"
       ? { emissionRateKgPerSec: releaseRateKgPerSec }
       : { totalMassKg }),

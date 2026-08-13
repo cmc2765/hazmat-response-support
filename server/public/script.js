@@ -370,7 +370,8 @@ document.addEventListener('hazmatiq:telemetry', (event) => {
 });
 
 function showView(targetId) {
-  buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
+  buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId
+    || (targetId === 'guided-response' && btn.dataset.view === 'lookup')));
   views.forEach((view) => view.classList.toggle('active', view.id === targetId));
   const plumeMapWorkspace = document.querySelector('.plume-map-layout');
   if (plumeMapWorkspace) plumeMapWorkspace.hidden = targetId !== 'plume';
@@ -380,6 +381,7 @@ function showView(targetId) {
   }
   if (targetId === 'report') renderIncidentLists();
   if (targetId === 'my-chemicals') renderSavedChemicals();
+  if (targetId === 'guided-response') renderGuidedResponse();
   if (targetId === 'map') window.requestAnimationFrame(initializeLiveMap);
   if (targetId === 'plume') updatePlumeModeLabel();
   if (targetId === 'plume') window.requestAnimationFrame(() => plumeMap?.resize());
@@ -2352,8 +2354,6 @@ function renderChemicalProfile(profile) {
     ['UN/NA', profile?.header?.un || noCurrentDataText],
     ['ERG', profile?.header?.ergGuide || noCurrentDataText],
     ['IDLH', formatIdlh(profile?.header?.idlh) || noCurrentDataText],
-    ['Identifier Status', profile?.header ? readinessStatus.imported : readinessStatus.missing],
-    ['Sources', (profile?.sourceLabels || []).join(' / ') || noCurrentDataText],
   ];
   metaItems.forEach(([label, value]) => {
     const item = document.createElement('span');
@@ -2417,6 +2417,535 @@ function updateChemicalCard(record) {
     ])],
   };
   renderChemicalProfile(profile);
+}
+
+function guidedDisplayValue(value, missingText = noCurrentDataText) {
+  const values = Array.isArray(value) ? value.flatMap((item) => {
+    const displayed = guidedDisplayValue(item, '');
+    return displayed ? [displayed] : [];
+  }) : null;
+  if (values) return values.length ? values.join(' · ') : missingText;
+  const text = String(value ?? '').trim();
+  return !text || /^(?:n\/?a|not available|null|undefined)$/i.test(text) ? missingText : text;
+}
+
+function guidedValueIsMissing(value) {
+  return !value || value === noCurrentDataText || /^Data unavailable from current source$/i.test(value);
+}
+
+function guidedSourceBadge(sourceName) {
+  const source = String(sourceName || '').replace(/^Linked\s+/i, '').trim();
+  if (/^Chemical Companion(?: Master)?$/i.test(source)) return 'Chemical Companion Master';
+  if (/^ERG(?: 2024)?$/i.test(source) || /PHMSA ERG/i.test(source)) return 'Linked ERG';
+  if (/^NIOSH(?: NPG)?$/i.test(source) || /NIOSH Pocket Guide/i.test(source)) return 'Linked NIOSH';
+  if (/^CAMEO(?: Chemicals)?$/i.test(source)) return 'Linked CAMEO';
+  return '';
+}
+
+function guidedProfileSources(profile) {
+  const recordSources = (profile?.safetyCritical?.records || []).map((record) => record.sourceName);
+  return [...new Set([
+    'Chemical Companion Master',
+    ...(activeChemicalRecord?.summarySources || []),
+    ...(profile?.sourceLinks || []).map((link) => link?.sourceName),
+    ...recordSources,
+  ].map(guidedSourceBadge).filter(Boolean))];
+}
+
+function guidedBadgeFor(profile, field, displayedValue, fallbackSource = 'Chemical Companion') {
+  if (guidedValueIsMissing(displayedValue)) return noCurrentDataText;
+  if (/^(?:Not listed by current source|Data unavailable from current source)$/i.test(displayedValue)) return displayedValue;
+  const record = (profile?.safetyCritical?.records || []).find((item) => item.field === field
+    && guidedDisplayValue(item.value) !== noCurrentDataText);
+  return guidedSourceBadge(record?.sourceName || fallbackSource) || 'Needs Verification';
+}
+
+function createGuidedResponseCard(title, rows, { action, sources = [] } = {}) {
+  const card = document.createElement('article');
+  card.className = 'panel-card guided-response-card';
+  const heading = document.createElement('h3');
+  heading.textContent = title;
+  const sourceLine = document.createElement('p');
+  sourceLine.className = 'guided-section-sources';
+  sourceLine.textContent = `Sources: ${sources.length ? sources.join(', ') : noCurrentDataText}`;
+  const list = document.createElement('dl');
+  list.className = 'guided-response-list';
+  rows.forEach(({ label, value, badge }) => {
+    const row = document.createElement('div');
+    row.className = 'guided-response-row';
+    const term = document.createElement('dt');
+    term.textContent = label;
+    const detail = document.createElement('dd');
+    const text = document.createElement('span');
+    text.textContent = guidedDisplayValue(value);
+    detail.append(text);
+    if (badge) {
+      const marker = document.createElement('small');
+      marker.className = 'guided-source-badge';
+      marker.textContent = badge;
+      detail.append(marker);
+    }
+    row.append(term, detail);
+    list.append(row);
+  });
+  card.append(heading, sourceLine, list);
+  if (action) card.append(action);
+  return card;
+}
+
+function guidedHasValue(value) {
+  const displayed = guidedDisplayValue(value);
+  return !guidedValueIsMissing(displayed)
+    && !/^(?:Not listed by current source|Data unavailable from current source)$/i.test(displayed);
+}
+
+function guidedMissingBadge(value) {
+  const displayed = guidedDisplayValue(value);
+  return guidedHasValue(displayed) ? '' : displayed;
+}
+
+function guidedSourceText(profile, fields) {
+  const fieldSet = new Set(fields);
+  const sources = (profile?.safetyCritical?.records || [])
+    .filter((record) => fieldSet.has(record.field) && guidedHasValue(record.value))
+    .map((record) => guidedSourceBadge(record.sourceName))
+    .filter(Boolean);
+  return [...new Set(sources.length ? sources : ['Chemical Companion Master'])];
+}
+
+function createGuidedManufacturerPanel({ scbaMandated, levelCRelevant, levelD }) {
+  if (levelD) return null;
+  const section = document.createElement('section');
+  section.className = 'guided-manufacturer-section';
+  const heading = document.createElement('h3');
+  heading.textContent = 'Manufacturer Platform Summary';
+  const sourceLine = document.createElement('p');
+  sourceLine.className = 'guided-section-sources';
+  sourceLine.textContent = `Manufacturer data: ${noCurrentDataText}`;
+  const grid = document.createElement('div');
+  grid.className = 'guided-manufacturer-grid';
+  ['3M', 'MSA', 'North'].forEach((manufacturer) => {
+    const box = document.createElement('section');
+    box.className = 'guided-manufacturer-box';
+    const title = document.createElement('h4');
+    title.textContent = manufacturer;
+    const message = document.createElement('p');
+    message.textContent = scbaMandated
+      ? 'Manufacturer-specific SCBA options not verified from current source.'
+      : levelCRelevant
+        ? 'Cartridge selection requires verification.'
+        : 'Manufacturer-specific respiratory options not verified from current source.';
+    const note = document.createElement('small');
+    note.textContent = scbaMandated
+      ? 'SCBA platform status only; APR, PAPR, and cartridge lists are hidden.'
+      : levelCRelevant
+        ? 'Verify approved cartridge/canister data and locally authorized equipment before selection.'
+        : 'Verify locally authorized equipment and chemical compatibility before selection.';
+    box.append(title, message, note);
+    grid.append(box);
+  });
+  section.append(heading, sourceLine, grid);
+  return section;
+}
+
+function guidedSourceItems(value) {
+  return (Array.isArray(value) ? value.flat() : [value])
+    .map((item) => String(item ?? '').trim())
+    .filter((item) => guidedHasValue(item));
+}
+
+function guidedExplicitProtectionLevels(values) {
+  const levels = new Set();
+  values.forEach((value) => {
+    const text = String(value);
+    if (/\blevel\s*a\b/i.test(text)) levels.add('Level A Vapor Protective Suit');
+    if (/\blevel\s*b\b/i.test(text)) levels.add('Level B Chemical Protective Suit');
+    if (/\blevel\s*c\b/i.test(text)) levels.add('Level C Chemical Protective Suit');
+    if (/\blevel\s*d\b/i.test(text)) levels.add('Level D / No chemical protective ensemble required');
+  });
+  return [...levels];
+}
+
+function createTacticalFlowBox(title, status, rows) {
+  const box = document.createElement('section');
+  box.className = 'guided-flow-box';
+  const heading = document.createElement('h4');
+  heading.textContent = title;
+  const statusBox = document.createElement('strong');
+  statusBox.className = 'guided-flow-status';
+  statusBox.textContent = status;
+  const list = document.createElement('dl');
+  rows.forEach(({ label, value }) => {
+    const row = document.createElement('div');
+    const term = document.createElement('dt');
+    term.textContent = label;
+    const detail = document.createElement('dd');
+    detail.textContent = guidedDisplayValue(value);
+    row.append(term, detail);
+    list.append(row);
+  });
+  box.append(heading, statusBox, list);
+  return box;
+}
+
+function createTacticalFlowArrow() {
+  const arrow = document.createElement('div');
+  arrow.className = 'guided-flow-arrow';
+  arrow.setAttribute('aria-hidden', 'true');
+  arrow.textContent = '↓';
+  return arrow;
+}
+
+function guidedRouteFirstAid(values, route) {
+  const rows = Array.isArray(values) ? values : [];
+  const pattern = new RegExp(`^(?:${route})\\s*:`, 'i');
+  const matches = rows.filter((value) => pattern.test(String(value || '').trim()));
+  return matches.length ? matches : [noCurrentDataText];
+}
+
+function renderGuidedResponse() {
+  const container = document.getElementById('guided-response-content');
+  const status = document.getElementById('guided-response-action-status');
+  const saveIncidentButton = document.getElementById('guided-save-incident-btn');
+  if (!container) return;
+  container.replaceChildren();
+  if (status) status.textContent = '';
+  if (saveIncidentButton) {
+    saveIncidentButton.disabled = !hasActiveIncident();
+    saveIncidentButton.title = hasActiveIncident() ? '' : 'Start or select an active incident to save this guided response.';
+    if (!hasActiveIncident() && status) status.textContent = 'Start or select an active incident to save this guided response.';
+  }
+
+  const profile = activeChemicalRecord?.profile;
+  if (!activeChemical || !profile) {
+    const empty = document.createElement('article');
+    empty.className = 'panel-card guided-response-empty';
+    empty.textContent = 'No chemical selected. Return to Chemical ID and select a Chemical Companion master record.';
+    container.append(empty);
+    return;
+  }
+
+  const unresolved = isUnreviewedTransportationRecord(activeChemicalRecord) || !activeChemical.selectedChemicalId;
+  if (unresolved) {
+    const blocked = document.createElement('article');
+    blocked.className = 'panel-card guided-response-empty guided-response-blocked';
+    blocked.textContent = 'Chemical-specific response guidance requires a verified Chemical Companion master link.';
+    container.append(blocked);
+    return;
+  }
+
+  const sources = guidedProfileSources(profile);
+  const sourceStatus = (source) => sources.includes(source) ? source : noCurrentDataText;
+  const safetyValue = (field, fallback) => {
+    const record = (profile.safetyCritical?.records || []).find((item) => item.field === field
+      && guidedDisplayValue(item.value) !== noCurrentDataText);
+    return guidedDisplayValue(record?.value ?? fallback);
+  };
+  const row = (label, value, field, fallbackSource) => {
+    const displayed = guidedDisplayValue(value);
+    const sourceBadge = guidedBadgeFor(profile, field, displayed, fallbackSource);
+    return {
+      label,
+      value: displayed,
+      badge: guidedHasValue(displayed) && !['Needs Verification'].includes(sourceBadge) ? '' : sourceBadge,
+    };
+  };
+
+  const idlh = guidedDisplayValue(profile.exposures?.idlh);
+  const respiratorReferenceValues = guidedSourceItems(profile.ppeRespiratory?.respiratorRecommendations);
+  const respiratoryGuidanceValues = guidedSourceItems(profile.ppeRespiratory?.aprPaprScba);
+  const respiratoryValues = [...respiratoryGuidanceValues, ...respiratorReferenceValues];
+  const explicitlyStrongScba = respiratoryGuidanceValues.some((value) => /\bSCBA\b.*\bstrongly\s+(?:indicated|recommended)\b|\bstrongly\s+(?:indicated|recommended)\b.*\bSCBA\b/i.test(value));
+  const explicitScba = respiratoryGuidanceValues.some((value) => /\bSCBA\b/i.test(value) && !/\bstrongly\s+(?:indicated|recommended)\b/i.test(value));
+  const sourceBackedIdlh = guidedHasValue(idlh);
+  const hasRespiratoryGuidance = respiratoryValues.length > 0;
+  const scbaDecision = explicitScba || sourceBackedIdlh
+    ? 'SCBA MANDATED'
+    : explicitlyStrongScba
+      ? 'SCBA STRONGLY INDICATED'
+    : hasRespiratoryGuidance
+      ? 'RESPIRATOR / CARTRIDGE SELECTION REQUIRES VERIFICATION'
+      : noCurrentDataText;
+  const suitValue = guidedDisplayValue(profile.ppeRespiratory?.gloveSuitMaterial);
+  const suitSourceBacked = guidedHasValue(suitValue);
+  const ppeSourceValues = [
+    ...guidedSourceItems(profile.ppeRespiratory?.recommendedPpe),
+    ...guidedSourceItems(profile.ppeRespiratory?.gloveSuitMaterial),
+    ...respiratoryGuidanceValues,
+  ];
+  const explicitProtectionLevels = guidedExplicitProtectionLevels(ppeSourceValues);
+  const cartridgeItems = guidedSourceItems(profile.ppeRespiratory?.cartridgeLimitations);
+  const missingPlumeInputs = getMissingPlumeRequiredInputs();
+  const hasApprovedPpeData = ppeSourceValues.length > 0 || respiratorReferenceValues.length > 0;
+  const candidateProtectionLevel = explicitProtectionLevels.length === 1 ? explicitProtectionLevels[0] : '';
+  const candidateConflictsWithScba = scbaDecision === 'SCBA MANDATED'
+    && /Level C|Level D/.test(candidateProtectionLevel);
+  const candidateNeedsSuitVerification = candidateProtectionLevel
+    && !/Level D/.test(candidateProtectionLevel)
+    && !suitSourceBacked;
+  const protectionLevel = !hasApprovedPpeData
+    ? noCurrentDataText
+    : !candidateProtectionLevel
+      || explicitProtectionLevels.length > 1
+      || candidateConflictsWithScba
+      || candidateNeedsSuitVerification
+      || missingPlumeInputs.length > 0
+      ? 'Requires IC / HazMat Specialist Review'
+      : candidateProtectionLevel;
+  const levelD = /Level D/.test(protectionLevel);
+  const levelCRelevant = /Level C/.test(protectionLevel)
+    || (scbaDecision !== 'SCBA MANDATED'
+      && !levelD
+      && (cartridgeItems.length > 0 || respiratoryValues.some((value) => /\b(?:APR|PAPR|cartridge|canister)\b/i.test(value))));
+  const cartridgeStatus = scbaDecision === 'SCBA MANDATED'
+    ? 'Hidden due to SCBA'
+    : levelD
+      ? 'Not needed'
+      : levelCRelevant && cartridgeItems.length === 1
+        ? `Source-backed: ${cartridgeItems[0]}`
+        : levelCRelevant
+          ? 'Cartridge selection requires verification with approved source data and agency SOP.'
+          : noCurrentDataText;
+  const suitStatus = levelD
+    ? 'Not needed by current source-backed Level D guidance'
+    : suitSourceBacked
+      ? 'Source-backed suit / skin record available; requires incident verification'
+      : 'Suit compatibility not verified from current source.';
+  const respiratoryBasis = sourceBackedIdlh
+    ? `Source-backed IDLH: ${idlh}`
+    : respiratoryGuidanceValues[0]
+      || (hasRespiratoryGuidance ? 'Approved-source respiratory records exist; selection requires verification.' : noCurrentDataText);
+  const entryLimitation = respiratoryGuidanceValues.find((value) => /\bSCBA\b/i.test(value))
+    || 'Requires IC decision';
+  const missingCriticalValues = [
+    idlh,
+    safetyValue('lel', noCurrentDataText),
+    safetyValue('uel', noCurrentDataText),
+    profile.fire?.flashPoint,
+    profile.isolationErg?.initialIsolationDistance,
+    profile.isolationErg?.protectiveActionDistance,
+    profile.ppeRespiratory?.respiratorRecommendations,
+    suitValue,
+  ].filter((value) => !guidedHasValue(value));
+  const weatherVerified = !missingPlumeInputs.some((value) => /wind|temperature|weather/i.test(value));
+  const mitigationSourceValues = {
+    spillControl: profile.spillResponse || noCurrentDataText,
+    releaseControl: profile.releaseControl || noCurrentDataText,
+    neutralization: profile.neutralization || noCurrentDataText,
+    vaporControl: profile.vaporControl || noCurrentDataText,
+    fireControl: profile.fire?.firefightingPrecautions || noCurrentDataText,
+    runoff: profile.decon?.runoffContainment || noCurrentDataText,
+  };
+  const mitigationIncomplete = Object.values(mitigationSourceValues).some((value) => !guidedHasValue(value));
+  const tacticalPosture = 'Requires IC decision';
+  const defensiveConsideration = mitigationIncomplete || scbaDecision === 'SCBA MANDATED' || missingPlumeInputs.length
+    ? 'Defensive posture should be considered because safety or mitigation data remains incomplete.'
+    : 'Evaluate defensive posture using source guidance, monitoring, and incident conditions.';
+  const nonInterventionTriggers = guidedHasValue(profile.fire?.explosionHazards)
+    ? profile.fire.explosionHazards
+    : noCurrentDataText;
+
+  const summary = createGuidedResponseCard('Chemical Summary', [
+    { label: 'Chemical name', value: profile.header?.name },
+    { label: 'Master status', value: 'Chemical Companion master record' },
+    { label: 'Chemical Companion record ID', value: activeChemical.selectedChemicalId },
+    { label: 'CAS', value: profile.header?.cas },
+    { label: 'UN/NA', value: profile.header?.un },
+    { label: 'ERG guide', value: profile.header?.ergGuide, badge: guidedMissingBadge(profile.header?.ergGuide) },
+    { label: 'Source status', value: sources },
+    { label: 'Review status', value: 'Chemical Companion master selected' },
+  ], { sources });
+
+  const identity = createGuidedResponseCard('1 — Confirm Chemical Identity', [
+    { label: 'Preferred chemical name', value: profile.header?.name },
+    { label: 'Synonyms', value: profile.properties?.synonyms },
+    { label: 'CAS', value: profile.header?.cas, badge: guidedMissingBadge(profile.header?.cas) },
+    { label: 'UN/NA', value: profile.header?.un, badge: guidedMissingBadge(profile.header?.un) },
+    { label: 'ERG guide', value: profile.header?.ergGuide, badge: guidedMissingBadge(profile.header?.ergGuide) },
+    { label: 'Chemical Companion', value: 'Master chemical source' },
+    { label: 'ERG link status', value: sourceStatus('Linked ERG'), badge: sourceStatus('Linked ERG') },
+    { label: 'NIOSH link status', value: sourceStatus('Linked NIOSH'), badge: sourceStatus('Linked NIOSH') },
+    { label: 'CAMEO link status', value: sourceStatus('Linked CAMEO'), badge: sourceStatus('Linked CAMEO') },
+    { label: 'Transportation identifier review', value: 'Chemical Companion master link verified' },
+  ], { sources: ['Chemical Companion Master', ...sources.filter((source) => source !== 'Chemical Companion Master')] });
+
+  const immediateHazards = createGuidedResponseCard('2 — Immediate Hazards', [
+    row('IDLH', profile.exposures?.idlh, 'idlh'),
+    row('LEL', safetyValue('lel', noCurrentDataText), 'lel'),
+    row('UEL', safetyValue('uel', noCurrentDataText), 'uel'),
+    row('Flash point', profile.fire?.flashPoint, 'flash_point'),
+    row('Vapor density', profile.properties?.vaporDensity, 'physical_property'),
+    row('Water reactivity', profile.reactivity?.waterReactivity, 'reactivity'),
+    row('Major health hazard', profile.exposures?.symptoms, 'medical'),
+    row('Major fire hazard', profile.fire?.flammability, 'fire_hazard'),
+    row('Major reactivity concern', profile.reactivity?.incompatibilities, 'reactivity'),
+  ], { sources: guidedSourceText(profile, ['idlh', 'lel', 'uel', 'flash_point', 'medical']) });
+
+  const ppeRows = [
+    { label: 'Respiratory Decision', value: scbaDecision, badge: scbaDecision === noCurrentDataText ? noCurrentDataText : '' },
+    { label: 'Recommended Protection Level', value: protectionLevel, badge: /Requires/.test(protectionLevel) ? 'Requires Review' : guidedMissingBadge(protectionLevel) },
+    { label: 'Suit / Skin Protection', value: suitStatus, badge: suitSourceBacked || levelD ? '' : noCurrentDataText },
+  ];
+  if (scbaDecision === 'SCBA MANDATED') {
+    ppeRows.push({
+      label: 'Entry respirator display',
+      value: 'SCBA is mandated. APR, PAPR, and cartridge respirator recommendations are not displayed for entry because they are not appropriate for IDLH, unknown, or SCBA-required atmospheres.',
+    });
+  }
+  if (levelCRelevant) {
+    ppeRows.push({ label: 'Level C Respirator / Cartridge Verification', value: cartridgeStatus, badge: /requires verification/i.test(cartridgeStatus) ? 'Needs Verification' : '' });
+  }
+  ppeRows.push(
+    { label: 'Source-backed respiratory basis', value: respiratoryBasis, badge: guidedMissingBadge(respiratoryBasis) },
+    { label: 'Limitations / Verification Notes', value: 'APR/PAPR use requires known contaminant, known concentration, adequate oxygen, non-IDLH atmosphere, and approved cartridge/canister selection.' },
+  );
+  const ppe = createGuidedResponseCard('3 — PPE / Respiratory', ppeRows, { sources: guidedSourceText(profile, ['respiratory_protection', 'ppe', 'suit_compatibility', 'idlh']) });
+  ppe.classList.add('guided-ppe-card');
+  const respiratoryDecisionRow = ppe.querySelector('.guided-response-row');
+  respiratoryDecisionRow?.classList.add('guided-respiratory-decision');
+  const manufacturers = createGuidedManufacturerPanel({
+    scbaMandated: scbaDecision === 'SCBA MANDATED',
+    levelCRelevant,
+    levelD,
+  });
+  if (manufacturers) ppe.append(manufacturers);
+
+  const isolation = createGuidedResponseCard('4 — Isolation / Protective Actions', [
+    row('ERG guide', profile.isolationErg?.ergGuide, 'isolation_distance', 'ERG'),
+    row('Initial isolation distance', profile.isolationErg?.initialIsolationDistance, 'isolation_distance', 'ERG'),
+    row('Protective action distance', profile.isolationErg?.protectiveActionDistance, 'protective_action_distance', 'ERG'),
+    row('Evacuation guidance', noCurrentDataText, 'protective_action_distance', 'ERG'),
+    row('Shelter-in-place guidance', noCurrentDataText, 'protective_action_distance', 'ERG'),
+    row('Limitations', profile.isolationErg?.note, 'protective_action_distance', 'ERG'),
+  ], { sources: guidedSourceText(profile, ['isolation_distance', 'protective_action_distance']) });
+
+  const firstAid = profile.medical?.firstAid || [];
+  const medical = createGuidedResponseCard('5 — Medical / First Aid', [
+    row('Signs / symptoms', profile.medical?.signsSymptoms, 'medical'),
+    row('Inhalation first aid', guidedRouteFirstAid(firstAid, 'Inhalation|Breathing'), 'medical'),
+    row('Skin first aid', guidedRouteFirstAid(firstAid, 'Skin'), 'medical'),
+    row('Eye first aid', guidedRouteFirstAid(firstAid, 'Eye'), 'medical'),
+    row('Ingestion first aid', guidedRouteFirstAid(firstAid, 'Ingestion'), 'medical'),
+    row('EMS precautions', profile.medical?.emsConsiderations, 'medical'),
+    row('Hospital notification notes', profile.medical?.treatmentNotes, 'medical'),
+  ], { sources: guidedSourceText(profile, ['medical']) });
+
+  const deconFire = createGuidedResponseCard('6 — Decon / Spill / Fire', [
+    row('Emergency decon', profile.decon?.grossDecon, 'decon'),
+    row('Technical decon', profile.decon?.technicalDecon, 'decon'),
+    row('Water-reactive warning', profile.decon?.waterReactiveCautions, 'decon'),
+    row('Spill response', noCurrentDataText, 'decon'),
+    row('Firefighting guidance', profile.fire?.firefightingPrecautions, 'fire_hazard'),
+    row('Runoff / environmental warning', profile.decon?.runoffContainment, 'decon'),
+  ], { sources: guidedSourceText(profile, ['decon', 'fire_hazard']) });
+
+  const mitigation = createGuidedResponseCard('8 — Mitigation Decision Support', [
+    { label: 'Tactical posture', value: tacticalPosture, badge: 'Requires Review' },
+    row('Spill control', mitigationSourceValues.spillControl, 'decon'),
+    row('Release control', mitigationSourceValues.releaseControl, 'decon'),
+    row('Neutralization', mitigationSourceValues.neutralization, 'decon'),
+    row('Vapor control', mitigationSourceValues.vaporControl, 'decon'),
+    row('Fire control', mitigationSourceValues.fireControl, 'fire_hazard'),
+    row('Environmental / runoff concerns', mitigationSourceValues.runoff, 'decon'),
+    { label: 'Offensive suitability', value: 'Not established from current source; requires Incident Command decision.', badge: 'Requires Review' },
+    { label: 'Defensive considerations', value: defensiveConsideration, badge: 'Needs Verification' },
+    { label: 'Non-intervention triggers', value: nonInterventionTriggers, badge: guidedMissingBadge(nonInterventionTriggers) },
+    { label: 'Entry limitations', value: scbaDecision === 'SCBA MANDATED' ? 'IDLH/unknown-atmosphere entry limitations apply.' : noCurrentDataText, badge: scbaDecision === 'SCBA MANDATED' ? 'Needs Verification' : noCurrentDataText },
+    { label: 'IC approval', value: 'Final mitigation strategy must be approved by Incident Command.' },
+  ], { sources: guidedSourceText(profile, ['decon', 'fire_hazard', 'reactivity']) });
+
+  const sectionPlumeButton = document.createElement('button');
+  sectionPlumeButton.className = 'primary-btn guided-card-action';
+  sectionPlumeButton.type = 'button';
+  sectionPlumeButton.textContent = 'Open Plume Model';
+  sectionPlumeButton.addEventListener('click', openPlumeWorkspace);
+  const plume = createGuidedResponseCard('7 — Plume Readiness', [
+    row('Selected chemical', profile.header?.name, 'plume_model_input'),
+    { label: 'Verified chemical identity status', value: 'Chemical Companion master selected', badge: 'Chemical Companion Master' },
+    { label: 'ERG / source status', value: sources, badge: sources.includes('Linked ERG') ? 'Linked ERG' : 'Needs Verification' },
+    { label: 'Plume-ready status', value: missingPlumeInputs.length ? 'Needs Verification' : 'Inputs present; verify before calculation', badge: 'Needs Verification' },
+    { label: 'Missing plume inputs', value: missingPlumeInputs.length ? missingPlumeInputs : noCurrentDataText, badge: missingPlumeInputs.length ? 'Needs Verification' : noCurrentDataText },
+  ], { action: sectionPlumeButton, sources: ['Chemical Companion Master', ...(sources.includes('Linked ERG') ? ['Linked ERG'] : [])] });
+
+  const decisionRecord = {
+    chemicalId: activeChemical.selectedChemicalId,
+    chemicalName: profile.header?.name,
+    generatedAt: new Date().toISOString(),
+    tacticalDecisionFlow: {
+      identifyAnalyze: {
+        status: missingCriticalValues.length ? 'Needs Verification' : 'Verified Chemical Companion master record',
+        summary: guidedDisplayValue(profile.header?.hazard),
+        missingData: missingCriticalValues.length,
+        sourceSummary: sources,
+      },
+      verifyIsolate: {
+        status: guidedHasValue(profile.isolationErg?.initialIsolationDistance) ? 'ERG isolation available' : noCurrentDataText,
+        ergGuide: guidedDisplayValue(profile.isolationErg?.ergGuide),
+        isolationStatus: guidedHasValue(profile.isolationErg?.initialIsolationDistance) ? 'Available' : noCurrentDataText,
+        protectiveActionStatus: guidedHasValue(profile.isolationErg?.protectiveActionDistance) ? 'Available' : noCurrentDataText,
+        weatherStatus: weatherVerified ? 'Weather inputs present; verification required' : 'Weather needs verification',
+        sourceSummary: guidedSourceText(profile, ['isolation_distance', 'protective_action_distance']),
+      },
+      lifeSafety: {
+        status: scbaDecision,
+        scbaDecision,
+        idlh,
+        ppeSummary: guidedDisplayValue(profile.ppeRespiratory?.recommendedPpe),
+        suitStatus: guidedHasValue(suitValue) ? suitValue : 'Suit compatibility not verified from current source.',
+        manufacturerOptionsStatus: 'Manufacturer-specific respiratory options not verified from current source.',
+        sourceSummary: guidedSourceText(profile, ['idlh', 'respiratory_protection', 'ppe', 'suit_compatibility']),
+      },
+      mitigation: {
+        status: mitigationIncomplete ? 'Requires IC decision' : 'Source guidance available; requires IC decision',
+        tacticalPosture,
+        containControlStatus: guidedDisplayValue(mitigationSourceValues.spillControl),
+        neutralizationStatus: guidedDisplayValue(mitigationSourceValues.neutralization),
+        offensiveDefensiveStatus: defensiveConsideration,
+        nonInterventionTriggers: guidedDisplayValue(nonInterventionTriggers),
+        sourceSummary: guidedSourceText(profile, ['decon', 'fire_hazard', 'reactivity']),
+        icApprovalRequired: true,
+      },
+    },
+  };
+  window.HazMatIQ.guidedResponseDecisionRecord = decisionRecord;
+
+  const main = document.createElement('div');
+  main.className = 'guided-response-main';
+  main.append(summary, identity, immediateHazards, ppe, manufacturers, isolation, medical, deconFire, plume, mitigation);
+
+  const flow = document.createElement('aside');
+  flow.className = 'panel-card guided-tactical-flow';
+  const flowTitle = document.createElement('h3');
+  flowTitle.textContent = 'Tactical Decision Flow';
+  const identifyFlow = createTacticalFlowBox('Identify / Analyze', decisionRecord.tacticalDecisionFlow.identifyAnalyze.status, [
+    { label: 'Identity', value: 'Chemical Companion master selected' },
+    { label: 'CAS / UN / ERG', value: `${guidedDisplayValue(profile.header?.cas)} / ${guidedDisplayValue(profile.header?.un)} / ${guidedDisplayValue(profile.header?.ergGuide)}` },
+    { label: 'Major hazard', value: profile.header?.hazard },
+    { label: 'Missing critical data', value: missingCriticalValues.length },
+  ]);
+  const verifyFlow = createTacticalFlowBox('Verify and Isolate', decisionRecord.tacticalDecisionFlow.verifyIsolate.status, [
+    { label: 'ERG guide', value: profile.isolationErg?.ergGuide },
+    { label: 'Initial isolation', value: decisionRecord.tacticalDecisionFlow.verifyIsolate.isolationStatus },
+    { label: 'Protective action', value: decisionRecord.tacticalDecisionFlow.verifyIsolate.protectiveActionStatus },
+    { label: 'Plume readiness', value: missingPlumeInputs.length ? 'Needs Verification' : 'Inputs present; verify before calculation' },
+    { label: 'Weather', value: decisionRecord.tacticalDecisionFlow.verifyIsolate.weatherStatus },
+  ]);
+  const lifeFlow = createTacticalFlowBox('Life Safety', scbaDecision, [
+    { label: 'First decision', value: scbaDecision },
+    { label: 'IDLH', value: idlh },
+    { label: 'Respiratory protection', value: profile.ppeRespiratory?.respiratorRecommendations },
+    { label: 'Suit status', value: decisionRecord.tacticalDecisionFlow.lifeSafety.suitStatus },
+    { label: 'Decon safety', value: profile.decon?.waterReactiveCautions },
+  ]);
+  const mitigationFlow = createTacticalFlowBox('Mitigation', decisionRecord.tacticalDecisionFlow.mitigation.status, [
+    { label: 'Tactical posture', value: tacticalPosture },
+    { label: 'Contain / control', value: mitigationSourceValues.spillControl },
+    { label: 'Neutralization', value: mitigationSourceValues.neutralization },
+    { label: 'Defensive consideration', value: defensiveConsideration },
+    { label: 'IC approval', value: 'Final mitigation strategy must be approved by Incident Command.' },
+  ]);
+  flow.append(flowTitle, identifyFlow, createTacticalFlowArrow(), verifyFlow, createTacticalFlowArrow(), lifeFlow, createTacticalFlowArrow(), mitigationFlow);
+  container.append(main, flow);
 }
 
 const chemicalSearchForm = document.getElementById('chemical-search-form');
@@ -5754,6 +6283,23 @@ function openPlumeWorkspace() {
 }
 
 document.getElementById('open-plume-btn')?.addEventListener('click', openPlumeWorkspace);
+document.getElementById('open-guided-response-btn')?.addEventListener('click', () => showView('guided-response'));
+document.getElementById('guided-open-plume-btn')?.addEventListener('click', openPlumeWorkspace);
+document.getElementById('guided-back-btn')?.addEventListener('click', () => showView('lookup'));
+document.getElementById('guided-save-chemical-btn')?.addEventListener('click', () => {
+  saveCurrentChemical();
+  const status = document.getElementById('guided-response-action-status');
+  if (status) status.textContent = activeChemical ? `${activeChemical.name} added to My Chemicals.` : 'No chemical selected.';
+});
+document.getElementById('guided-save-incident-btn')?.addEventListener('click', () => {
+  const status = document.getElementById('guided-response-action-status');
+  if (!hasActiveIncident()) {
+    if (status) status.textContent = 'Start or select an active incident to save this guided response.';
+    return;
+  }
+  updateActiveIncidentRecord();
+  if (status) status.textContent = `${activeChemical?.name || 'Chemical'} saved to the active incident.`;
+});
 document.querySelectorAll('[data-command-view]').forEach((button) => {
   button.addEventListener('click', () => {
     const target = button.dataset.commandView;
