@@ -2,6 +2,7 @@ import type { PlumeCalculationEvidence, PlumeInputs, PlumeResult, ThresholdBand 
 import { mgM3ToPpm, ppmToMgM3 } from "@/lib/schema";
 import { pickRoughness } from "./briggs";
 import {
+  BASELINE_PLUME_MODEL_METADATA,
   MODEL_VERSION,
   PLUME_DISCLAIMER,
   PLUME_FORMULA_REFERENCE,
@@ -11,7 +12,7 @@ import {
 
 export interface RunPlumeOptions {
   thresholds: ThresholdBand[];
-  calculationEvidence: PlumeCalculationEvidence;
+  calculationEvidence?: PlumeCalculationEvidence;
   saturatedConcentrationPpm?: number;
   emissionRateKgPerSec?: number;
   totalMassKg?: number;
@@ -94,11 +95,14 @@ export function runPlume(inputs: PlumeInputs, opts: RunPlumeOptions): PlumeResul
     isPlume ? "releaseRateKgPerSec" : "totalMassKg",
     ...(isPlume ? [] : ["durationSec"]),
   ];
-  const evidencedFields = new Set(opts.calculationEvidence.sourceData
-    .filter((record) => record.approved === true)
-    .flatMap((record) => record.fields.filter((field) => field in record.values)));
-  const missingEvidence = requiredEvidence.filter((field) => !evidencedFields.has(field));
-  if (missingEvidence.length) throw new Error(`Missing approved plume source records for: ${missingEvidence.join(", ")}`);
+  const calculationEvidence = opts.calculationEvidence;
+  if (calculationEvidence) {
+    const evidencedFields = new Set(calculationEvidence.sourceData
+      .filter((record) => record.approved === true)
+      .flatMap((record) => record.fields.filter((field) => field in record.values)));
+    const missingEvidence = requiredEvidence.filter((field) => !evidencedFields.has(field));
+    if (missingEvidence.length) throw new Error(`Missing approved plume source records for: ${missingEvidence.join(", ")}`);
+  }
   if (mw === undefined) throw new Error("Molecular weight is required; no default may be inferred.");
   if (isPlume && Q === undefined) throw new Error("Release rate is required for a continuous plume; no default may be inferred.");
   if (!isPlume && M === undefined) throw new Error("Total mass is required for a puff; no default may be inferred.");
@@ -110,12 +114,14 @@ export function runPlume(inputs: PlumeInputs, opts: RunPlumeOptions): PlumeResul
     thresholds: opts.thresholds,
     ...(isPlume ? { releaseRateKgPerSec: Q } : { totalMassKg: M }),
   };
-  const mismatchedEvidence = requiredEvidence.filter((field) => !opts.calculationEvidence.sourceData.some((record) =>
-    record.approved === true
-    && record.fields.includes(field)
-    && JSON.stringify(record.values[field]) === JSON.stringify(calculatedInputValues[field])));
-  if (mismatchedEvidence.length) {
-    throw new Error(`Plume inputs do not match approved source records for: ${mismatchedEvidence.join(", ")}`);
+  if (calculationEvidence) {
+    const mismatchedEvidence = requiredEvidence.filter((field) => !calculationEvidence.sourceData.some((record) =>
+      record.approved === true
+      && record.fields.includes(field)
+      && JSON.stringify(record.values[field]) === JSON.stringify(calculatedInputValues[field])));
+    if (mismatchedEvidence.length) {
+      throw new Error(`Plume inputs do not match approved source records for: ${mismatchedEvidence.join(", ")}`);
+    }
   }
   const puffSigmaY = isPlume
     ? undefined
@@ -157,29 +163,56 @@ export function runPlume(inputs: PlumeInputs, opts: RunPlumeOptions): PlumeResul
       pts.push([x, y]);
     }
     const polygon = buildClosedPolygon(pts);
+    const finalX = xSamples * xStep;
+    const finalCenterlineKgM3 = isPlume
+      ? gaussianPlumeC(inputs, finalX, 0, 0, Q!)
+      : gaussianPuffC(inputs, finalX, 0, 0, M!, inputs.durationSec!);
     return {
       thresholdKind: band.kind,
       thresholdLevel: band.level,
       polygon,
       maxDownwindM: maxXReached,
       maxCrosswindM: maxY,
+      rangeTruncated: finalCenterlineKgM3 * 1e6 >= target,
     };
   });
+
+  const rangeTruncated = isopleths.some((isopleth) => isopleth.rangeTruncated);
+  const resultLimitations = [
+    ...BASELINE_PLUME_MODEL_METADATA.limitations,
+    ...(rangeTruncated ? [
+      `One or more AEGL isopleths reach the ${maxRange} m computational boundary; the reported distance is a lower bound, not a modeled endpoint.`,
+    ] : []),
+    `Downwind isopleths are sampled every ${Number(xStep.toFixed(3))} m; displayed distances must not imply finer precision.`,
+  ];
 
   return {
     status: "Calculated estimate",
     modelVersion: MODEL_VERSION,
+    modelName: BASELINE_PLUME_MODEL_METADATA.modelName,
+    modelStatus: BASELINE_PLUME_MODEL_METADATA.modelStatus,
+    validationStatus: BASELINE_PLUME_MODEL_METADATA.validationStatus,
+    validated: false,
     inputs,
     isopleths,
     centerline,
     thresholdsUsed: opts.thresholds,
+    computationalRangeM: maxRange,
+    samplingIntervalM: xStep,
     computedAt,
-    calculation: {
-      ...opts.calculationEvidence,
-      modelName: PLUME_MODEL_NAME,
-      formulaReference: PLUME_FORMULA_REFERENCE,
-      limitations: [...new Set([...PLUME_MODEL_LIMITATIONS, ...opts.calculationEvidence.limitations])],
+    modelMetadata: {
+      ...BASELINE_PLUME_MODEL_METADATA,
+      limitations: [...BASELINE_PLUME_MODEL_METADATA.limitations],
     },
+    ...(calculationEvidence ? {
+      calculation: {
+        ...calculationEvidence,
+        modelName: PLUME_MODEL_NAME,
+        formulaReference: PLUME_FORMULA_REFERENCE,
+        limitations: [...new Set([...PLUME_MODEL_LIMITATIONS, ...calculationEvidence.limitations])],
+      },
+    } : {}),
+    limitations: resultLimitations,
     disclaimer: PLUME_DISCLAIMER,
   };
 }

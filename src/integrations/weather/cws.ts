@@ -73,9 +73,10 @@ export function normalize(raw: CwsRawPayload, instanceId: string): Observation |
   const windSpeed = raw.windSpeedMps ?? raw.windSpeed;
   const windDir = raw.windDirDeg ?? raw.windDirection;
   if (typeof windSpeed !== "number" || typeof windDir !== "number") return null;
+  if (!raw.ts || !Number.isFinite(Date.parse(raw.ts))) return null;
   return {
     source: `cws:${instanceId}`,
-    ts: raw.ts ?? new Date().toISOString(),
+    ts: raw.ts,
     lat: raw.lat,
     lng: raw.lon,
     windSpeedMps: windSpeed,

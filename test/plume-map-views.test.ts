@@ -102,7 +102,7 @@ describe("plume map views", () => {
 
   it("keeps the map face clear and populates results only from the Summary control", () => {
     expect(html).not.toContain('id="plume-result-summary-card"');
-    expect(html).not.toContain("Plume Result Summary");
+    expect(html).toContain("Plume Result Summary");
     expect(html).toContain('id="plume-incident-data-panel"');
     expect(html).toContain("Model Inputs Summary");
     expect(html).toContain("Weather Summary");
@@ -118,6 +118,39 @@ describe("plume map views", () => {
     expect(plumeUi).toContain("Cannot plot plume yet. Missing: Incident Location.");
     expect(plumeUi).toContain("getMissingPlumeRequiredInputs()");
     expect(plumeUi).toContain("const saveMode = savePlumeResult(activePlumeCommand, workflowRecord");
+  });
+
+  it("plots baseline output as an explicitly unvalidated planning estimate", () => {
+    expect(plumeUi).toContain("plume plotted for planning. Verify with field monitoring, weather observations, official modeling, and Incident Command.");
+    expect(plumeUi).toContain("Planning Estimate — ${rangeTruncated ? 'at least ' : ''}${Math.round(maxDownwindM * 3.28084).toLocaleString()}");
+    expect(plumeUi).toContain("Not independently validated");
+    expect(plumeUi).toContain("validated: false");
+    expect(plumeUi).toContain("generatedAt: createdAt");
+    expect(html).toContain('id="plume-model-status-summary"');
+    expect(html).toContain('id="plume-validation-status-summary"');
+    expect(html).toContain('id="plume-limitations-summary"');
+    expect(html).toContain("Baseline plume model has not been independently validated against published comparison cases unless validation results are shown.");
+  });
+
+  it("uses only verified AEGL zones with the required safety colors and weather freshness bands", () => {
+    expect(plumeUi).toContain("const threatZoneColorNames = { 3: 'red', 2: 'orange', 1: 'yellow' }");
+    expect(plumeUi).toContain("zone.thresholdKind === 'AEGL'");
+    expect(plumeUi).toContain("if (ageMinutes <= 10) return { status: 'Current'");
+    expect(plumeUi).toContain("if (ageMinutes <= 30) return { status: 'Recent / verify'");
+    expect(plumeUi).toContain("if (ageMinutes <= 60) return { status: 'Stale'");
+    expect(plumeUi).toContain("return { status: 'Expired'");
+    expect(html).toContain('id="plume-weather-age"');
+    expect(html).toContain('id="plume-endpoint-duration"');
+    expect(html).toContain('id="plume-wind-direction" type="number"');
+  });
+
+  it("saves a structured plumeResult and preserves tactical safety boundaries", () => {
+    for (const key of ["chemical:", "endpoint:", "weather:", "release:", "model:", "output:", "tacticalDecisionFlow:", "disclaimers:"]) {
+      expect(plumeUi).toContain(key);
+    }
+    expect(plumeUi).toContain("lifeSafetyImpact: 'Plume output does not select or downgrade PPE");
+    expect(plumeUi).toContain("mitigationImpact: 'Plume output alone does not justify offensive mitigation");
+    expect(plumeUi).toContain("plumeResult,");
   });
 
   it("shows connected Threat Zone receptor and protective-action summaries", () => {

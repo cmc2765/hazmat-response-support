@@ -51,6 +51,16 @@ describe("plume runPlume", () => {
     expect(r.centerline.length).toBeGreaterThan(0);
   });
 
+  it("permits a baseline planning estimate without independent validation evidence", () => {
+    const result = runPlume(inputs, { thresholds });
+    expect(result.isopleths.length).toBeGreaterThan(0);
+    expect(result.modelStatus).toBe("Planning Estimate");
+    expect(result.validationStatus).toBe("Not independently validated");
+    expect(result.validated).toBe(false);
+    expect(result.calculation).toBeUndefined();
+    expect(result.limitations).toContain("Not independently validated against published ALOHA comparison cases");
+  });
+
   it("produces a closed polygon for each threshold", () => {
     const r = runPlume(
       { ...inputs, releaseRateKgPerSec: 10 },
@@ -81,6 +91,14 @@ describe("plume runPlume", () => {
     expect(aegl1!.maxDownwindM).toBeGreaterThan(aegl2!.maxDownwindM);
   });
 
+  it("flags an isopleth that reaches the computational range boundary", () => {
+    const result = runPlume({ ...inputs, releaseRateKgPerSec: 1000 }, { thresholds, maxRangeM: 100 });
+    expect(result.isopleths.some((isopleth) => isopleth.rangeTruncated)).toBe(true);
+    expect(result.computationalRangeM).toBe(100);
+    expect(result.samplingIntervalM).toBeCloseTo(100 / 60);
+    expect(result.limitations.join(" ")).toMatch(/lower bound, not a modeled endpoint/i);
+  });
+
   it("puff model also produces polygons", () => {
     const r = runPlume(
       { ...inputs, releaseKind: "puff", durationSec: 60, totalMassKg: 1000 },
@@ -97,14 +115,13 @@ describe("plume runPlume", () => {
   it("labels outputs as calculated and displays method, sources, and limitations", () => {
     const r = runPlume(inputs, { thresholds, calculationEvidence: evidence("plume") });
     expect(r.status).toBe("Calculated estimate");
-    expect(r.calculation.modelName).toBeTruthy();
-    expect(r.calculation.formulaReference).toBeTruthy();
-    expect(r.calculation.sourceData).not.toHaveLength(0);
-    expect(r.calculation.limitations).not.toHaveLength(0);
+    expect(r.calculation!.modelName).toBeTruthy();
+    expect(r.calculation!.formulaReference).toBeTruthy();
+    expect(r.calculation!.sourceData).not.toHaveLength(0);
+    expect(r.calculation!.limitations).not.toHaveLength(0);
   });
 
-  it("never substitutes defaults for missing source evidence or molecular weight", () => {
-    expect(() => runPlume(inputs, { thresholds } as never)).toThrow();
+  it("keeps strict evidence matching when source evidence is supplied and never defaults molecular weight", () => {
     expect(() => runPlume(
       { ...inputs, molecularWeight: undefined },
       { thresholds, calculationEvidence: evidence("plume") },

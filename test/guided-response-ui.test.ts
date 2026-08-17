@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 const html = readFileSync(new URL("../server/public/index.html", import.meta.url), "utf8");
 const script = readFileSync(new URL("../server/public/script.js", import.meta.url), "utf8");
+const builder = readFileSync(new URL("../server/public/guided-response-decision-builder.js", import.meta.url), "utf8");
 const styles = readFileSync(new URL("../server/public/styles.css", import.meta.url), "utf8");
 const guidedHtml = html.slice(
   html.indexOf('<section id="guided-response"'),
@@ -101,11 +102,10 @@ describe("Guided Response workflow", () => {
   });
 
   it("prioritizes a source-backed SCBA decision and omits manufacturer lists", () => {
-    expect(script).toContain("const explicitScba = respiratoryGuidanceValues.some");
-    expect(script).not.toContain("const sourceBackedIdlh = guidedHasValue(idlh)");
-    expect(script).toContain("'SCBA MANDATED'");
-    expect(script).toContain("'SCBA STRONGLY INDICATED'");
-    expect(script).toContain("'RESPIRATOR / CARTRIDGE SELECTION REQUIRES VERIFICATION'");
+    expect(builder).toContain("const mandatoryScba = scbaFacts.filter");
+    expect(builder).toContain("'SCBA MANDATED'");
+    expect(builder).toContain("'SCBA STRONGLY INDICATED'");
+    expect(builder).toContain("'RESPIRATOR / CARTRIDGE SELECTION REQUIRES VERIFICATION'");
     const renderer = script.slice(script.indexOf("function renderGuidedResponse()"), script.indexOf("const chemicalSearchForm"));
     expect(renderer).not.toContain("createGuidedManufacturerPanel");
     expect(renderer).not.toContain("respiratorRecommendations are not displayed");
@@ -118,11 +118,11 @@ describe("Guided Response workflow", () => {
       "Level C Chemical Protective Suit",
       "Level D / No chemical protective ensemble required",
       "Requires IC / HazMat Specialist Review",
-    ]) expect(script).toContain(level);
-    expect(script).toContain("const explicitProtectionLevels = guidedExplicitProtectionLevels(ppeSourceValues)");
-    expect(script).toContain("explicitProtectionLevels.length > 1");
-    expect(script).toContain("Cartridge selection requires verification with approved source data and agency SOP.");
-    expect(script).toContain("Level C requires verified contaminant, concentration, oxygen, and cartridge/canister.");
+    ]) expect(builder).toContain(level);
+    expect(builder).toContain("const levels = explicitProtectionLevels(decisionFacts)");
+    expect(builder).toContain("levels.length > 1");
+    expect(builder).toContain("Cartridge selection requires verification with approved source data and agency SOP.");
+    expect(builder).toContain("Level C Chemical Protective Suit + APR/PAPR verification required");
   });
 
   it("keeps the Tactical Decision Flow Life Safety box compact and ordered", () => {
@@ -130,7 +130,7 @@ describe("Guided Response workflow", () => {
       script.indexOf("const lifeFlow = createTacticalFlowBox"),
       script.indexOf("const mitigationFlow = createTacticalFlowBox"),
     );
-    const labels = ["SCBA Decision", "Protection Level", "Suit Status", "Cartridge Status", "Entry Limitation"];
+    const labels = ["SCBA Decision", "Protection Level", "Direct Guidance", "Downgrade Conditions", "Cartridge Status"];
     labels.forEach((label, index) => {
       expect(lifeFlow.indexOf(`label: '${label}'`)).toBeGreaterThan(index ? lifeFlow.indexOf(`label: '${labels[index - 1]}'`) : -1);
     });
@@ -139,12 +139,12 @@ describe("Guided Response workflow", () => {
 
   it("builds an export-ready decision record and keeps mitigation under IC approval", () => {
     expect(script).toContain("tacticalDecisionFlow: {");
-    expect(script).toContain("identifyAnalyze: {");
-    expect(script).toContain("verifyIsolate: {");
-    expect(script).toContain("lifeSafety: {");
-    expect(script).toContain("mitigation: {");
-    expect(script).toContain("? 'Defensive'");
-    expect(script).toContain("mitigationDecisionSupport: {");
+    expect(script).toContain("identifyAnalyze: decisions.identifyAnalyze");
+    expect(script).toContain("verifyIsolate: decisions.verifyIsolate");
+    expect(script).toContain("lifeSafety: decisions.lifeSafety");
+    expect(script).toContain("mitigation: decisions.mitigation");
+    expect(builder).toContain("? 'Defensive'");
+    expect(script).toContain("mitigationDecisionSupport: decisions.mitigationDecisionSupport");
     expect(script).toContain("readyForIncidentExport: true");
     expect(script).toContain("Final mitigation strategy must be approved by Incident Command.");
     expect(script).not.toContain("const tacticalPosture = 'Offensive'");

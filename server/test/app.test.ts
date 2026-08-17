@@ -82,8 +82,9 @@ describe("API routes", () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        chemicalId: "ammonia",
+        chemicalId: "10",
         releaseKind: "plume",
+        releaseRateKgPerSec: 1,
         windSpeedMps: 3,
         windDirDeg: 270,
         stabilityClass: "D",
@@ -91,10 +92,87 @@ describe("API routes", () => {
       }),
     });
     expect(res.status).toBe(200);
-    const body = (await res.json()) as { isopleths: unknown[]; disclaimer: string };
+    const body = (await res.json()) as {
+      isopleths: unknown[];
+      disclaimer: string;
+      modelStatus: string;
+      validationStatus: string;
+      validated: boolean;
+      limitations: string[];
+      endpoint: { endpointSource: string; selectedDurationMinutes: number; aegl1: number; aegl2: number; aegl3: number };
+      plumeStatus: string;
+      masterChemicalId: string;
+    };
     expect(Array.isArray(body.isopleths)).toBe(true);
     expect(body.isopleths.length).toBeGreaterThan(0);
     expect(typeof body.disclaimer).toBe("string");
+    expect(body.modelStatus).toBe("Planning Estimate");
+    expect(body.validationStatus).toBe("Not independently validated");
+    expect(body.validated).toBe(false);
+    expect(body.limitations).not.toHaveLength(0);
+    expect(body.endpoint).toMatchObject({ endpointSource: "EPA AEGL", selectedDurationMinutes: 60, aegl1: 30, aegl2: 160, aegl3: 1100 });
+    expect(body.plumeStatus).toBe("Planning Estimate");
+    expect(body.masterChemicalId).toBe("10");
+  });
+
+  it("blocks toxic plume plotting when no reviewed EPA AEGL record exists", async () => {
+    const res = await app.request("/api/plume/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chemicalId: "479",
+        releaseKind: "plume",
+        releaseRateKgPerSec: 1,
+        windSpeedMps: 3,
+        windDirDeg: 270,
+        stabilityClass: "D",
+        tempC: 20,
+      }),
+    });
+    expect(res.status).toBe(422);
+    expect(await res.json()).toMatchObject({
+      error: "AEGL value not available for this chemical. Toxic plume endpoint cannot be plotted from AEGL.",
+      endpointStatus: "No Current Data Exists for AEGL.",
+      plumeStatus: "Blocked Missing AEGL / LOC",
+    });
+  });
+
+  it("blocks canonical slugs that are not verified Chemical Companion master links", async () => {
+    const res = await app.request("/api/plume/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chemicalId: "ammonia",
+        releaseKind: "plume",
+        releaseRateKgPerSec: 1,
+        windSpeedMps: 3,
+        windDirDeg: 270,
+        stabilityClass: "D",
+        tempC: 20,
+      }),
+    });
+    expect(res.status).toBe(422);
+    expect(await res.json()).toMatchObject({ plumeStatus: "Blocked Missing Chemical Link" });
+  });
+
+  it("does not permit an unsupported independently validated claim", async () => {
+    const res = await app.request("/api/plume/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chemicalId: "ammonia",
+        releaseKind: "plume",
+        windSpeedMps: 3,
+        windDirDeg: 270,
+        stabilityClass: "D",
+        tempC: 20,
+        validated: true,
+      }),
+    });
+    expect(res.status).toBe(400);
+    expect((await res.json()) as { error: string }).toEqual(expect.objectContaining({
+      error: "Cannot mark plume output as independently validated. Published comparison cases, formula documentation, validation tolerances, and limitations are required.",
+    }));
   });
 
   it("POST /api/plume/run rejects invalid inputs", async () => {

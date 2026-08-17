@@ -495,6 +495,21 @@
                         </select>
                       </div>
                     </label>
+                    <label class="plume-model-field" id="plume-puff-duration-field" for="plume-puff-duration" hidden>
+                      <span>Puff evaluation time (seconds)</span>
+                      <input id="plume-puff-duration" type="number" min="1" step="1" inputmode="numeric" placeholder="Required for puff" />
+                    </label>
+                    <label class="plume-model-field" for="plume-endpoint-duration">
+                      <span>EPA AEGL duration</span>
+                      <select id="plume-endpoint-duration">
+                        <option value="10">10 minutes</option>
+                        <option value="30">30 minutes</option>
+                        <option value="60" selected>60 minutes</option>
+                        <option value="240">4 hours</option>
+                        <option value="480">8 hours</option>
+                      </select>
+                      <small id="plume-endpoint-status">AEGL lookup occurs after verified Chemical Companion/CAS linkage.</small>
+                    </label>
                     <div class="container-profile" aria-label="Editable container planning profile">
                       <div class="container-bubble-grid">
                         <label class="container-bubble" for="plume-container-type"><span>Container Type</span><select id="plume-container-type"></select></label>
@@ -540,7 +555,8 @@
                     <label class="plume-model-field" for="plume-weather-source">
                       <span>Weather Source</span>
                       <select id="plume-weather-source">
-                        <option value="open-meteo" selected>Open-Meteo</option>
+                        <option value="auto-live" selected>Best Current Live Source</option>
+                        <option value="open-meteo">Open-Meteo</option>
                         <option value="columbia-live">Columbia Weather Station</option>
                         <option value="columbia-csv">Columbia CSV Import</option>
                         <option value="manual">Manual Entry</option>
@@ -549,6 +565,11 @@
                     <label class="plume-model-field plume-columbia-csv" for="plume-columbia-csv" hidden>
                       <span>Upload CSV</span>
                       <input id="plume-columbia-csv" type="file" accept=".csv,text/csv" />
+                    </label>
+                    <label class="plume-model-field plume-manual-weather" for="plume-manual-observation-time" hidden>
+                      <span>Manual observation time</span>
+                      <input id="plume-manual-observation-time" type="datetime-local" />
+                      <small>Selecting Manual Entry and recording the observation time confirms this planning input; verify before operational use.</small>
                     </label>
                     <div class="plume-columbia-csv plume-columbia-values" hidden>
                       <small>Station Name: <strong id="columbia-station-name">Not available</strong></small>
@@ -561,18 +582,8 @@
                       <input id="plume-wind-speed" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Required" required />
                     </label>
                     <label class="plume-model-field" for="plume-wind-direction">
-                      <span>Wind from</span>
-                      <select id="plume-wind-direction" required>
-                        <option value="" selected>Select direction</option>
-                        <option value="0">North</option>
-                        <option value="45">NE</option>
-                        <option value="90">East</option>
-                        <option value="135">SE</option>
-                        <option value="180">South</option>
-                        <option value="225">SW</option>
-                        <option value="270">West</option>
-                        <option value="315">NW</option>
-                      </select>
+                      <span>Wind from (degrees)</span>
+                      <input id="plume-wind-direction" type="number" min="0" max="360" step="0.1" inputmode="decimal" placeholder="Required" required />
                     </label>
                     <label class="plume-model-field" for="plume-temperature">
                       <span>Air Temp (°F)</span>
@@ -591,14 +602,15 @@
                       </select>
                     </label>
                     <div class="plume-weather-verification" aria-label="Weather verification">
-                      <small>Source <strong id="plume-weather-source-name">Open-Meteo</strong></small>
+                      <small>Source <strong id="plume-weather-source-name">Best Current Live Source</strong></small>
                       <small>Status <strong id="plume-weather-source-state">Awaiting verification</strong></small>
                       <small>Observation <strong id="plume-weather-observation-time">Not available</strong></small>
+                      <small>Age <strong id="plume-weather-age">Unknown</strong></small>
                     </div>
                     <details class="plume-input-review plume-weather-review">
                       <summary>Weather Summary <span class="plume-status-badge" id="plume-weather-badge" data-state="missing">Weather Missing</span></summary>
                       <dl class="plume-review-list">
-                        <div><dt>Weather Source</dt><dd id="plume-review-weather-source">Open-Meteo</dd></div>
+                        <div><dt>Weather Source</dt><dd id="plume-review-weather-source">Best Current Live Source</dd></div>
                         <div><dt>Observation Time</dt><dd id="plume-review-observation-time">No Current Data Exists</dd></div>
                         <div><dt>Source Status</dt><dd id="plume-review-source-status">Needs Verification</dd></div>
                         <div><dt>Wind</dt><dd id="plume-review-wind">No Current Data Exists</dd></div>
@@ -621,8 +633,10 @@
               <div>
                 <p>HazMatIQ is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.</p>
                 <p>Plume results are planning estimates only and are not a substitute for field monitoring, official modeling, or Incident Command decision-making.</p>
+                <p>Plume results are planning estimates unless validation results are shown for this chemical, release scenario, and endpoint.</p>
                 <p>Missing, outdated, or unverified data should be treated as No Current Data Exists until confirmed by an approved source.</p>
                 <p>Weather data source and observation time must be verified. Stale or manually entered weather can significantly affect plume output.</p>
+                <p>Baseline plume model has not been independently validated against published comparison cases unless validation results are shown.</p>
               </div>
             </details>
 
@@ -641,12 +655,14 @@
                 <button class="ghost-btn" type="button" data-plume-map-view="street-3d" aria-pressed="false">Street 3D</button>
               </div>
               <details class="plume-summary-panel" id="plume-incident-data-panel">
-                <summary>Summary</summary>
+                <summary>Plume Result Summary</summary>
                 <div class="plume-summary-content">
                   <ul class="detail-list">
                     <li><span>Incident Name</span><strong id="plume-summary-incident-name"></strong></li>
                     <li><span>Mode</span><strong id="plume-mode-summary"></strong></li>
                     <li><span>Chemical</span><strong id="plume-product-summary"></strong></li>
+                    <li><span>AEGL / LOC Endpoint</span><strong id="plume-endpoint-summary"></strong></li>
+                    <li><span>Zone Meaning</span><strong id="plume-zone-meaning-summary"></strong></li>
                     <li><span>GPS Location</span><strong id="plume-gps-summary"></strong></li>
                     <li><span>Location Source</span><strong id="plume-location-source"></strong></li>
                     <li><span>Open-Meteo</span><strong id="open-meteo-summary"></strong></li>
@@ -654,6 +670,9 @@
                     <li><span>Weather Inputs</span><strong id="plume-weather-input-summary"></strong></li>
                     <li><span>Model</span><strong id="selected-model-summary"></strong></li>
                     <li><span>Model Result</span><strong id="backend-model-summary"></strong></li>
+                    <li><span>Model Status</span><strong id="plume-model-status-summary"></strong></li>
+                    <li><span>Validation Status</span><strong id="plume-validation-status-summary"></strong></li>
+                    <li><span>Model Limitations</span><strong id="plume-limitations-summary"></strong></li>
                     <li><span>Model Timestamp</span><strong id="plume-model-time-summary"></strong></li>
                     <li><span>Weather Station</span><strong id="nws-station-summary"></strong></li>
                     <li><span>Weather Station Details</span><strong id="nws-weather-summary"></strong></li>
@@ -1057,6 +1076,7 @@
 
     <script src="vendor/maplibre-gl/maplibre-gl.js"></script>
     <script src="weather-radar.js"></script>
+    <script src="guided-response-decision-builder.js"></script>
     <script src="script.js"></script>
     <script src="monitor-inventory.js"></script>
     <script src="live-map-bootstrap.js"></script>

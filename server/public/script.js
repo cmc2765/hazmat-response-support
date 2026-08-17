@@ -11,6 +11,9 @@ const plumeSummaryFieldIds = new Set([
   'plume-weather-input-summary',
   'selected-model-summary',
   'backend-model-summary',
+  'plume-model-status-summary',
+  'plume-validation-status-summary',
+  'plume-limitations-summary',
   'plume-model-time-summary',
   'nws-station-summary',
   'nws-weather-summary',
@@ -515,6 +518,7 @@ const plumePlanningNotices = [
   'Plume results are planning estimates only and are not a substitute for field monitoring, official modeling, or Incident Command decision-making.',
   'Missing, outdated, or unverified data should be treated as No Current Data Exists until confirmed by an approved source.',
   'Weather data source and observation time must be verified. Stale or manually entered weather can significantly affect plume output.',
+  'Baseline plume model has not been independently validated against published comparison cases unless validation results are shown.',
 ];
 const icsFormCatalog = [
   ['201', 'ICS 201 Incident Briefing'],
@@ -2592,7 +2596,7 @@ function createTacticalFlowBox(title, status, rows, sources, icApprovalRequired 
   if (icApprovalRequired) {
     const approval = document.createElement('p');
     approval.className = 'guided-flow-approval';
-    approval.textContent = 'Requires IC approval';
+    approval.textContent = 'Execution Note: Incident Command approval required before operational action.';
     box.append(approval);
   }
   return box;
@@ -2700,142 +2704,41 @@ function renderGuidedResponse() {
   if (saveRecordButton) saveRecordButton.disabled = false;
   if (saveIncidentButton) saveIncidentButton.disabled = !activeIncident;
 
-  const sources = guidedProfileSources(profile);
-  const safetyValue = (field, fallback) => {
-    const record = (profile.safetyCritical?.records || []).find((item) => item.field === field
-      && guidedDisplayValue(item.value) !== noCurrentDataText);
-    return guidedDisplayValue(record?.value ?? fallback);
-  };
-  const idlh = guidedDisplayValue(profile.exposures?.idlh);
-  const respiratorReferenceValues = guidedSourceItems(profile.ppeRespiratory?.respiratorRecommendations);
-  const respiratoryGuidanceValues = guidedSourceItems(profile.ppeRespiratory?.aprPaprScba);
-  const respiratoryValues = [...respiratoryGuidanceValues, ...respiratorReferenceValues];
-  const explicitlyStrongScba = respiratoryGuidanceValues.some((value) => /\bSCBA\b.*\bstrongly\s+(?:indicated|recommended)\b|\bstrongly\s+(?:indicated|recommended)\b.*\bSCBA\b/i.test(value));
-  const explicitScba = respiratoryGuidanceValues.some((value) => /\bSCBA\b/i.test(value)
-    && !/\bstrongly\s+(?:indicated|recommended)\b/i.test(value)
-    && !/\b(?:no|not)\b[^.]{0,24}\bSCBA\b|\bSCBA\b[^.]{0,16}\bnot\b/i.test(value));
-  const hasRespiratoryGuidance = respiratoryValues.length > 0;
-  const scbaDecision = explicitScba
-    ? 'SCBA MANDATED'
-    : explicitlyStrongScba
-      ? 'SCBA STRONGLY INDICATED'
-    : hasRespiratoryGuidance
-      ? 'RESPIRATOR / CARTRIDGE SELECTION REQUIRES VERIFICATION'
-      : noCurrentDataText;
-  const suitValue = guidedDisplayValue(profile.ppeRespiratory?.gloveSuitMaterial);
-  const suitSourceBacked = guidedHasValue(suitValue);
-  const ppeSourceValues = [
-    ...guidedSourceItems(profile.ppeRespiratory?.recommendedPpe),
-    ...guidedSourceItems(profile.ppeRespiratory?.gloveSuitMaterial),
-    ...respiratoryGuidanceValues,
-  ];
-  const explicitProtectionLevels = guidedExplicitProtectionLevels(ppeSourceValues);
-  const cartridgeItems = guidedSourceItems(profile.ppeRespiratory?.cartridgeLimitations);
   const missingPlumeInputs = getMissingPlumeRequiredInputs();
-  const hasApprovedPpeData = ppeSourceValues.length > 0 || respiratorReferenceValues.length > 0;
-  const candidateProtectionLevel = explicitProtectionLevels.length === 1 ? explicitProtectionLevels[0] : '';
-  const candidateConflictsWithScba = scbaDecision === 'SCBA MANDATED'
-    && /Level C|Level D/.test(candidateProtectionLevel);
-  const candidateNeedsSuitVerification = candidateProtectionLevel
-    && !/Level D/.test(candidateProtectionLevel)
-    && !suitSourceBacked;
-  const protectionLevel = !hasApprovedPpeData
-    ? noCurrentDataText
-    : !candidateProtectionLevel
-      || explicitProtectionLevels.length > 1
-      || candidateConflictsWithScba
-      || candidateNeedsSuitVerification
-      || missingPlumeInputs.length > 0
-      ? 'Requires IC / HazMat Specialist Review'
-      : candidateProtectionLevel;
-  const levelD = /Level D/.test(protectionLevel);
-  const levelCRelevant = /Level C/.test(protectionLevel)
-    || (scbaDecision !== 'SCBA MANDATED'
-      && !levelD
-      && (cartridgeItems.length > 0 || respiratoryValues.some((value) => /\b(?:APR|PAPR|cartridge|canister)\b/i.test(value))));
-  const cartridgeStatus = scbaDecision === 'SCBA MANDATED'
-    ? 'Hidden due to SCBA'
-    : levelD
-      ? 'Not needed'
-      : levelCRelevant && cartridgeItems.length === 1
-        ? `Source-backed: ${cartridgeItems[0]}`
-        : levelCRelevant
-          ? 'Cartridge selection requires verification with approved source data and agency SOP.'
-          : noCurrentDataText;
-  const suitStatus = levelD
-    ? 'Not needed by current source-backed Level D guidance'
-    : suitSourceBacked
-      ? 'Source-backed suit / skin record available; requires incident verification'
-      : 'Suit compatibility not verified from current source.';
-  const entryLimitation = respiratoryGuidanceValues.find((value) => /\bSCBA\b/i.test(value))
-    || 'Requires IC decision';
-  const criticalDecisionFields = [
-    ['IDLH', idlh],
-    ['LEL', safetyValue('lel', noCurrentDataText)],
-    ['UEL', safetyValue('uel', noCurrentDataText)],
-    ['flash point', profile.fire?.flashPoint],
-    ['initial isolation', profile.isolationErg?.initialIsolationDistance],
-    ['protective action', profile.isolationErg?.protectiveActionDistance],
-    ['respiratory protection', profile.ppeRespiratory?.respiratorRecommendations],
-    ['suit compatibility', suitValue],
-  ];
-  const missingCriticalFields = criticalDecisionFields
-    .filter(([, value]) => !guidedHasValue(value))
-    .map(([label]) => label);
-  const mitigationSourceValues = {
-    spillControl: profile.spillResponse || noCurrentDataText,
-    releaseControl: profile.releaseControl || noCurrentDataText,
-    neutralization: profile.neutralization || noCurrentDataText,
-    vaporControl: profile.vaporControl || noCurrentDataText,
-    fireControl: profile.fire?.firefightingPrecautions || noCurrentDataText,
-    runoff: profile.decon?.runoffContainment || noCurrentDataText,
-  };
-  const mitigationIncomplete = Object.values(mitigationSourceValues).some((value) => !guidedHasValue(value));
-  const tacticalPosture = mitigationIncomplete || scbaDecision === 'SCBA MANDATED' || missingPlumeInputs.length
-    ? 'Defensive'
-    : 'Requires IC / HazMat Specialist Review';
-  const defensiveConsideration = mitigationIncomplete || scbaDecision === 'SCBA MANDATED' || missingPlumeInputs.length
-    ? 'Defensive posture should be considered because safety or mitigation data remains incomplete.'
-    : 'Evaluate defensive posture using source guidance, monitoring, and incident conditions.';
-  const nonInterventionTriggers = guidedHasValue(profile.fire?.explosionHazards)
-    ? profile.fire.explosionHazards
-    : noCurrentDataText;
-
+  const savedPlumeWorkflow = activeIncident?.plumeModelResults || readPlanningState().plumeModelResults || null;
+  const savedPlumeResult = savedPlumeWorkflow?.plumeResult || savedPlumeWorkflow;
   const identityStatus = 'Verified Chemical Companion Master Record';
-  const confidenceStatus = missingCriticalFields.length ? 'Requires Review' : identityStatus;
-  const ergAvailable = guidedHasValue(profile.isolationErg?.ergGuide)
-    || guidedHasValue(profile.isolationErg?.initialIsolationDistance)
-    || guidedHasValue(profile.isolationErg?.protectiveActionDistance);
-  const isolationStatus = guidedHasValue(profile.isolationErg?.initialIsolationDistance)
-    ? 'Isolation Guidance Available'
-    : noCurrentDataText;
-  const protectiveActionStatus = guidedHasValue(profile.isolationErg?.protectiveActionDistance)
-    ? 'Isolation Guidance Available'
-    : 'Protective Action Requires Verification';
-  const weatherStatus = 'Weather Requires Verification';
-  const plumeReadiness = 'Plume Estimate Needed';
-  const mitigationAvailability = (value) => guidedHasValue(value)
-    ? 'Source-Backed Guidance Available — Requires IC Review'
-    : noCurrentDataText;
-  const spillReleaseControl = guidedHasValue(mitigationSourceValues.spillControl)
-    || guidedHasValue(mitigationSourceValues.releaseControl)
-    ? 'Source-Backed Guidance Available — Requires IC Review'
-    : noCurrentDataText;
-  const neutralizationStatus = guidedHasValue(mitigationSourceValues.neutralization)
-    ? 'Neutralization Requires Source-Backed Verification'
-    : noCurrentDataText;
-  const entryDecision = 'Requires IC / HazMat Specialist Review';
-  const missingDataWarnings = [
-    ...missingCriticalFields.map((field) => `${field}: ${noCurrentDataText}`),
-    ...missingPlumeInputs.map((value) => `Verify plume input: ${value}`),
-  ];
-  const requiredVerification = [
-    ...missingCriticalFields,
-    ...missingPlumeInputs,
-    'field monitoring',
-    'current weather and observation time',
-    'Incident Command approval',
-  ];
+  const buildDecisions = window.HazMatIQGuidedResponse?.buildGuidedResponseDecisions;
+  if (!buildDecisions) {
+    const unavailable = document.createElement('article');
+    unavailable.className = 'panel-card guided-response-empty guided-response-blocked';
+    unavailable.textContent = 'Guided Response decision logic did not load. No tactical guidance is displayed.';
+    container.append(unavailable);
+    return;
+  }
+  const decisions = buildDecisions({
+    masterLinked: true,
+    masterChemicalId: activeChemical.selectedChemicalId,
+    chemicalName: profile.header?.name,
+    transportationIdentifier: profile.header?.un,
+  }, {
+    profile,
+    approvedSources: [...guidedProfileSources(profile), ...(activeChemicalRecord.summarySources || [])],
+    responderGuide: activeChemicalRecord.responderGuide,
+    ppeReference: activeChemicalRecord.ppeReference,
+    ppeComponents: activeChemicalRecord.ppeComponents,
+  }, {
+    missingInputs: missingPlumeInputs,
+    status: savedPlumeResult?.model?.confidenceStatus || (missingPlumeInputs.length ? 'Requires Verification' : 'Existing plume inputs complete'),
+    endpointSelected: savedPlumeResult?.endpoint?.endpointSource
+      ? `${savedPlumeResult.endpoint.endpointSource} ${savedPlumeResult.endpoint.selectedDuration}-minute`
+      : '',
+    zoneMeaning: savedPlumeResult?.endpoint?.endpointSource
+      ? 'Red AEGL-3 · Orange AEGL-2 · Yellow AEGL-1'
+      : '',
+  }, {
+    status: savedPlumeResult?.weather?.sourceStatus || 'Requires Verification',
+  });
 
   const now = new Date().toISOString();
   const decisionRecord = {
@@ -2852,79 +2755,16 @@ function renderGuidedResponse() {
       masterRecordStatus: identityStatus,
     },
     tacticalDecisionFlow: {
-      identifyAnalyze: {
-        status: identityStatus,
-        tacticalQuestion: 'Is the chemical identity verified enough to guide response actions?',
-        decisionSummary: `Chemical Companion master link is verified; overall confidence is ${confidenceStatus}.`,
-        missingData: missingCriticalFields,
-        actionPrompt: missingCriticalFields.length
-          ? 'Continue to isolation and life-safety decisions, treating missing values as No Current Data Exists. Return to Chemical Profile for full data review.'
-          : 'Continue to isolation and life-safety decisions.',
-        sourceSummary: sources,
-      },
-      verifyIsolate: {
-        status: ergAvailable ? 'Isolation Guidance Available' : 'Protective Action Requires Verification',
-        tacticalQuestion: 'What isolation, protective action, and perimeter controls are supported by the available data?',
-        decisionSummary: ergAvailable
-          ? 'Use linked ERG guidance as the initial planning basis; verify current conditions and adjust with monitoring and Incident Command.'
-          : 'Initial area-control guidance requires approved-source verification.',
-        ergGuide: guidedDisplayValue(profile.isolationErg?.ergGuide),
-        isolationStatus,
-        protectiveActionStatus,
-        evacuationShelterConsideration: protectiveActionStatus,
-        weatherStatus,
-        plumeReadiness,
-        fieldMonitoringRequirement: 'Required — adjust perimeter based on monitoring and Incident Command.',
-        actionPrompt: ergAvailable
-          ? 'Establish initial isolation using source-backed ERG guidance; verify wind, weather observation time, and field conditions.'
-          : 'Verify ERG protective-action guidance before setting chemical-specific distances.',
-        sourceSummary: guidedSourceText(profile, ['isolation_distance', 'protective_action_distance']),
-      },
-      lifeSafety: {
-        status: scbaDecision,
-        tacticalQuestion: 'Is SCBA mandated, and what protection level is appropriate?',
-        decisionSummary: scbaDecision === noCurrentDataText
-          ? 'No source-backed respiratory decision is available; entry protection requires specialist review.'
-          : `Source-backed respiratory review status: ${scbaDecision}.`,
-        scbaDecision,
-        protectionLevel,
-        suitStatus,
-        cartridgeStatus,
-        entryLimitation,
-        actionPrompt: scbaDecision === 'SCBA MANDATED'
-          ? 'SCBA required before entry. Do not downgrade until monitoring, concentration, oxygen, suit compatibility, SOP, and IC approval support downgrade.'
-          : 'Entry protection requires IC / HazMat Specialist review. Level C requires verified contaminant, concentration, oxygen, and cartridge/canister.',
-        sourceSummary: guidedSourceText(profile, ['idlh', 'respiratory_protection', 'ppe', 'suit_compatibility']),
-      },
-      mitigation: {
-        status: tacticalPosture,
-        tacticalQuestion: 'What source-backed tactical posture is supportable under current conditions?',
-        decisionSummary: defensiveConsideration,
-        tacticalPosture,
-        containmentStatus: spillReleaseControl,
-        neutralizationStatus,
-        offensiveDefensiveStatus: defensiveConsideration,
-        nonInterventionTriggers: guidedDisplayValue(nonInterventionTriggers),
-        vaporControlStatus: mitigationAvailability(mitigationSourceValues.vaporControl),
-        fireControlStatus: mitigationAvailability(mitigationSourceValues.fireControl),
-        runoffEnvironmentalConcern: mitigationAvailability(mitigationSourceValues.runoff),
-        actionPrompt: 'Operate defensively until monitoring and source review support entry. Consider non-intervention when responder risk exceeds benefit.',
-        sourceSummary: guidedSourceText(profile, ['decon', 'fire_hazard', 'reactivity']),
-        icApprovalRequired: true,
-      },
+      identifyAnalyze: decisions.identifyAnalyze,
+      verifyIsolate: decisions.verifyIsolate,
+      lifeSafety: decisions.lifeSafety,
+      mitigation: decisions.mitigation,
     },
-    mitigationDecisionSupport: {
-      tacticalPosture,
-      entryDecision,
-      spillReleaseControl,
-      neutralization: neutralizationStatus,
-      vaporFireControl: guidedHasValue(mitigationSourceValues.vaporControl) || guidedHasValue(mitigationSourceValues.fireControl)
-        ? 'Source-Backed Guidance Available — Requires IC Review'
-        : noCurrentDataText,
-      environmentalRunoff: mitigationAvailability(mitigationSourceValues.runoff),
-      requiredVerification,
-    },
-    missingDataWarnings,
+    mitigationDecisionSupport: decisions.mitigationDecisionSupport,
+    evidenceObjects: decisions.evidenceObjects,
+    missingDataWarnings: decisions.missingDataWarnings,
+    sourceSummaries: decisions.sourceSummaries,
+    executionNotes: decisions.executionNotes,
     disclaimers: [
       'Guided Response provides decision-support planning only.',
       'Missing, outdated, unsupported, or unverified values must be treated as No Current Data Exists.',
@@ -2943,54 +2783,68 @@ function renderGuidedResponse() {
   const flowSubtitle = document.createElement('p');
   flowSubtitle.textContent = 'Source-backed response planning using Chemical Companion, ERG, NIOSH, and CAMEO.';
   flowHeading.append(flowTitle, flowSubtitle);
-  const identifyFlow = createTacticalFlowBox('Identify / Analyze', decisionRecord.tacticalDecisionFlow.identifyAnalyze.status, [
-    { label: 'Tactical question', value: decisionRecord.tacticalDecisionFlow.identifyAnalyze.tacticalQuestion },
-    { label: 'Decision summary', value: decisionRecord.tacticalDecisionFlow.identifyAnalyze.decisionSummary },
-    { label: 'Selected chemical', value: profile.header?.name },
-    { label: 'Master record', value: identityStatus },
-    { label: 'Transportation ID', value: profile.header?.un },
-    { label: 'Major hazard', value: profile.header?.hazard },
-    { label: 'Missing-data warning', value: missingCriticalFields.length ? `Verify: ${missingCriticalFields.join(', ')}.` : 'None identified in the current decision set.' },
-    { label: 'Overall confidence', value: confidenceStatus },
-    { label: 'Action prompt', value: decisionRecord.tacticalDecisionFlow.identifyAnalyze.actionPrompt },
-  ], decisionRecord.tacticalDecisionFlow.identifyAnalyze.sourceSummary);
-  const verifyFlow = createTacticalFlowBox('Verify and Isolate', decisionRecord.tacticalDecisionFlow.verifyIsolate.status, [
-    { label: 'Tactical question', value: decisionRecord.tacticalDecisionFlow.verifyIsolate.tacticalQuestion },
-    { label: 'Decision summary', value: decisionRecord.tacticalDecisionFlow.verifyIsolate.decisionSummary },
-    { label: 'ERG guide status', value: ergAvailable ? 'Isolation Guidance Available' : noCurrentDataText },
-    { label: 'Initial isolation', value: isolationStatus },
-    { label: 'Protective action', value: protectiveActionStatus },
-    { label: 'Evacuate / shelter', value: protectiveActionStatus },
-    { label: 'Weather', value: weatherStatus },
-    { label: 'Plume readiness', value: plumeReadiness },
-    { label: 'Field monitoring', value: decisionRecord.tacticalDecisionFlow.verifyIsolate.fieldMonitoringRequirement },
-    { label: 'Missing-data warning', value: !ergAvailable || missingPlumeInputs.length ? 'Isolation, protective-action, weather, or plume inputs require verification.' : 'Weather and field conditions still require verification.' },
-    { label: 'Action prompt', value: decisionRecord.tacticalDecisionFlow.verifyIsolate.actionPrompt },
-  ], decisionRecord.tacticalDecisionFlow.verifyIsolate.sourceSummary, true);
-  const lifeFlow = createTacticalFlowBox('Life Safety', scbaDecision, [
-    { label: 'SCBA Decision', value: scbaDecision },
-    { label: 'Tactical question', value: decisionRecord.tacticalDecisionFlow.lifeSafety.tacticalQuestion },
-    { label: 'Decision summary', value: decisionRecord.tacticalDecisionFlow.lifeSafety.decisionSummary },
-    { label: 'Protection Level', value: protectionLevel },
-    { label: 'Suit Status', value: suitStatus },
-    { label: 'Cartridge Status', value: cartridgeStatus },
-    { label: 'Entry Limitation', value: entryLimitation },
-    { label: 'Missing-data warning', value: hasApprovedPpeData ? 'Verify current atmosphere, task, suit compatibility, and SOP.' : noCurrentDataText },
-    { label: 'Action prompt', value: decisionRecord.tacticalDecisionFlow.lifeSafety.actionPrompt },
-  ], decisionRecord.tacticalDecisionFlow.lifeSafety.sourceSummary, true);
+  const identifyDecision = decisionRecord.tacticalDecisionFlow.identifyAnalyze;
+  const verifyDecision = decisionRecord.tacticalDecisionFlow.verifyIsolate;
+  const lifeDecision = decisionRecord.tacticalDecisionFlow.lifeSafety;
+  const mitigationDecision = decisionRecord.tacticalDecisionFlow.mitigation;
+  const missingText = (decision) => decision.missingData.length
+    ? decision.missingData.map((field) => `${field}: ${noCurrentDataText}`).join(' · ')
+    : 'No missing values identified in this decision.';
+  const actionText = (decision) => decision.tacticalActions.length
+    ? decision.tacticalActions.join(' · ')
+    : noCurrentDataText;
+  const identifyFlow = createTacticalFlowBox('Identify / Analyze', identifyDecision.status, [
+    { label: 'Primary Decision', value: identifyDecision.primaryDecision },
+    { label: 'Direct Guidance', value: identifyDecision.directGuidance },
+    { label: 'Selected Chemical', value: identifyDecision.specificValues.chemicalName },
+    { label: 'Master Record', value: identifyDecision.specificValues.masterChemicalId },
+    { label: 'Transportation ID', value: identifyDecision.specificValues.transportationIdentifier },
+    { label: 'Major Hazard', value: identifyDecision.specificValues.majorHazardClass },
+    { label: 'Missing Data', value: missingText(identifyDecision) },
+    { label: 'Confidence', value: identifyDecision.confidence },
+    { label: 'Tactical Actions', value: actionText(identifyDecision) },
+  ], identifyDecision.sourceSummary);
+  const verifyFlow = createTacticalFlowBox('Verify and Isolate', verifyDecision.status, [
+    { label: 'Primary Tactical Question', value: 'What isolation, protective action, and perimeter controls are supported by verified data?' },
+    { label: 'Primary Decision', value: verifyDecision.primaryDecision },
+    { label: 'Direct Guidance', value: verifyDecision.directGuidance },
+    { label: 'ERG Guide', value: verifyDecision.specificValues.ergGuide },
+    { label: 'Initial Isolation', value: verifyDecision.specificValues.initialIsolation },
+    { label: 'Large Spill Isolation', value: verifyDecision.specificValues.largeSpillIsolation },
+    { label: 'Protective Action', value: verifyDecision.specificValues.protectiveAction },
+    { label: 'Day / Night Protective Action', value: verifyDecision.specificValues.dayNightProtectiveAction },
+    { label: 'Evacuate / Shelter', value: verifyDecision.specificValues.evacuationShelter },
+    { label: 'Wind / Weather Verification', value: verifyDecision.specificValues.weatherStatus },
+    { label: 'Plume Estimate', value: verifyDecision.specificValues.plumeStatus },
+    { label: 'AEGL / LOC Endpoint', value: verifyDecision.specificValues.endpointSelected },
+    { label: 'Zone Meaning', value: verifyDecision.specificValues.zoneMeaning },
+    { label: 'Field Monitoring', value: verifyDecision.specificValues.fieldMonitoringRequirement },
+    { label: 'Missing Data', value: missingText(verifyDecision) },
+    { label: 'Tactical Actions', value: actionText(verifyDecision) },
+  ], verifyDecision.sourceSummary, true);
+  const lifeFlow = createTacticalFlowBox('Life Safety', lifeDecision.status, [
+    { label: 'SCBA Decision', value: lifeDecision.specificValues.scbaDecision },
+    { label: 'Protection Level', value: lifeDecision.specificValues.protectionLevel },
+    { label: 'Direct Guidance', value: lifeDecision.directGuidance },
+    { label: 'Downgrade Conditions', value: lifeDecision.specificValues.downgradeConditions },
+    { label: 'Cartridge Status', value: lifeDecision.specificValues.cartridgeStatus },
+    { label: 'Plume Planning Impact', value: lifeDecision.specificValues.plumePlanningImpact },
+    { label: 'Source-backed Limitations', value: lifeDecision.limitations },
+    { label: 'Missing Data', value: missingText(lifeDecision) },
+    { label: 'Tactical Actions', value: actionText(lifeDecision) },
+  ], lifeDecision.sourceSummary, true);
   const mitigationFlow = createTacticalFlowBox('Mitigation', decisionRecord.tacticalDecisionFlow.mitigation.status, [
-    { label: 'Tactical question', value: decisionRecord.tacticalDecisionFlow.mitigation.tacticalQuestion },
-    { label: 'Decision summary', value: decisionRecord.tacticalDecisionFlow.mitigation.decisionSummary },
-    { label: 'Tactical posture', value: tacticalPosture },
-    { label: 'Contain / control', value: spillReleaseControl },
-    { label: 'Offensive suitability', value: 'Requires IC / HazMat Specialist Review' },
-    { label: 'Defensive consideration', value: defensiveConsideration },
-    { label: 'Non-intervention', value: nonInterventionTriggers },
-    { label: 'Neutralization', value: neutralizationStatus },
+    { label: 'Primary Decision', value: mitigationDecision.primaryDecision },
+    { label: 'Direct Guidance', value: mitigationDecision.directGuidance },
+    { label: 'Tactical Posture', value: mitigationDecision.specificValues.tacticalPosture },
+    { label: 'Entry / Non-entry', value: mitigationDecision.specificValues.entryDecision },
+    { label: 'Contain / Control', value: mitigationDecision.specificValues.spillReleaseControl },
+    { label: 'Non-intervention', value: mitigationDecision.specificValues.nonInterventionConsiderations },
+    { label: 'Neutralization', value: mitigationDecision.specificValues.neutralization },
     { label: 'Vapor / fire control', value: decisionRecord.mitigationDecisionSupport.vaporFireControl },
     { label: 'Runoff / environment', value: decisionRecord.mitigationDecisionSupport.environmentalRunoff },
-    { label: 'Missing-data warning', value: mitigationIncomplete ? 'One or more mitigation categories have No Current Data Exists.' : 'Current conditions and field monitoring still require verification.' },
-    { label: 'Action prompt', value: decisionRecord.tacticalDecisionFlow.mitigation.actionPrompt },
+    { label: 'Missing Data', value: missingText(mitigationDecision) },
+    { label: 'Tactical Actions', value: actionText(mitigationDecision) },
   ], decisionRecord.tacticalDecisionFlow.mitigation.sourceSummary, true);
   flow.append(flowHeading, identifyFlow, createTacticalFlowArrow(), verifyFlow, createTacticalFlowArrow(), lifeFlow, createTacticalFlowArrow(), mitigationFlow);
   container.append(flow, createMitigationDecisionSupport(decisionRecord));
@@ -3478,7 +3332,7 @@ function syncPlumeChemicalSelection() {
   const plumeChemicalInput = document.getElementById('plume-chemical-input');
   const plotButton = document.getElementById('plot-plume-btn');
   if (plumeChemicalInput) plumeChemicalInput.value = activeChemical?.name || 'No identified chemical';
-  if (plotButton) plotButton.disabled = !activeChemical;
+  if (plotButton) plotButton.disabled = false;
   setText('plume-input-status', '');
   updatePlumeInputSummaries();
 }
@@ -4072,8 +3926,8 @@ const plumeMapViews = {
 };
 let activePlumeMapView = 'satellite';
 let plumeMapViewToken = 0;
-const threatZoneColors = { 3: '#d71920', 2: '#ffd323', 1: '#18a567' };
-const threatZoneColorNames = { 3: 'red', 2: 'yellow', 1: 'green' };
+const threatZoneColors = { 3: '#d71920', 2: '#f28c18', 1: '#ffd323' };
+const threatZoneColorNames = { 3: 'red', 2: 'orange', 1: 'yellow' };
 
 function updatePlumeMapViewButtons() {
   document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
@@ -4309,15 +4163,9 @@ function clearPlumePointMeasurement() {
 }
 
 function plumeResultToGeoJson(result, origin) {
-  const validZones = (result?.isopleths || []).filter((zone) => zone.polygon?.length >= 2 && Number(zone.thresholdLevel) >= 1);
-  const fallbackThresholdKind = ['AEGL', 'ERPG', 'TEEL'].reduce((preferredKind, kind) => {
-    const levelCount = new Set(validZones.filter((zone) => zone.thresholdKind === kind).map((zone) => zone.thresholdLevel)).size;
-    const preferredLevelCount = new Set(validZones.filter((zone) => zone.thresholdKind === preferredKind).map((zone) => zone.thresholdLevel)).size;
-    return levelCount > preferredLevelCount ? kind : preferredKind;
-  }, 'AEGL');
-  const thresholdKind = validZones.some((zone) => zone.thresholdKind === 'AEGL') ? 'AEGL' : fallbackThresholdKind;
-  const preferredZones = thresholdKind ? validZones.filter((zone) => zone.thresholdKind === thresholdKind) : validZones;
-  const uniqueZones = [...preferredZones.reduce((zonesByLevel, zone) => {
+  const validZones = (result?.isopleths || []).filter((zone) =>
+    zone.thresholdKind === 'AEGL' && zone.polygon?.length >= 2 && Number(zone.thresholdLevel) >= 1);
+  const uniqueZones = [...validZones.reduce((zonesByLevel, zone) => {
     const threatRank = Math.max(1, Math.min(3, Number(zone.thresholdLevel) || 1));
     if (!zonesByLevel.has(threatRank)) zonesByLevel.set(threatRank, zone);
     return zonesByLevel;
@@ -4335,7 +4183,7 @@ function plumeResultToGeoJson(result, origin) {
         properties: {
           label: `${zone.thresholdKind}-${zone.thresholdLevel}`,
           zoneId: `modeled-${index}`,
-          source: 'HazMatIQ plume model using CAMEO chemical data',
+          source: `EPA AEGL ${result.endpoint?.selectedDurationMinutes || result.inputs?.endpointDurationMinutes || 60}-minute endpoint · HazMatIQ Planning Estimate`,
           thresholdKind: zone.thresholdKind,
           thresholdLevel: zone.thresholdLevel,
           threatRank,
@@ -5195,6 +5043,7 @@ async function fetchOpenMeteo(lat, lon) {
     wind_speed_unit: 'mph',
     precipitation_unit: 'inch',
     timezone: 'auto',
+    timeformat: 'unixtime',
   });
   return fetchJson(`https://api.open-meteo.com/v1/forecast?${parameters}`);
 }
@@ -5270,7 +5119,9 @@ function formatOpenMeteo(data) {
     rh: Number(current.relative_humidity_2m),
     precipitationIn: Number(current.precipitation),
     pressureInHg,
-    observedAt: current.time,
+    observedAt: Number.isFinite(Number(current.time))
+      ? new Date(Number(current.time) * 1000).toISOString()
+      : current.time,
   };
 }
 
@@ -5287,6 +5138,9 @@ function formatNws(data) {
   const feelsLikeF = Number.isFinite(apparentC) ? (apparentC * 9) / 5 + 32 : null;
   const windSpeedMph = Number.isFinite(windMps) ? windMps * 2.23694 : null;
   const gustMph = Number.isFinite(gustMps) ? gustMps * 2.23694 : null;
+  const rh = Number(observation.relativeHumidity?.value);
+  const pressurePa = Number(observation.barometricPressure?.value);
+  const elevationM = Number(data.station?.elevation?.value);
   const tempF = Number.isFinite(tempC) ? `${((tempC * 9) / 5 + 32).toFixed(1)}°F` : 'temperature unavailable';
   const feelsLike = Number.isFinite(feelsLikeF) ? ` · Feels Like ${feelsLikeF.toFixed(1)}°F` : '';
   const wind = Number.isFinite(windMps) ? `${(windMps * 2.23694).toFixed(1)} mph` : 'wind unavailable';
@@ -5300,6 +5154,9 @@ function formatNws(data) {
     windSpeedMph,
     windDirDeg: Number(observation.windDirection?.value),
     gustMph,
+    rh: Number.isFinite(rh) ? rh : null,
+    pressureInHg: Number.isFinite(pressurePa) ? pressurePa * 0.000295299830714 : null,
+    elevationFt: Number.isFinite(elevationM) ? elevationM * 3.28084 : null,
     description: observation.textDescription || 'No description',
   };
 }
@@ -5374,7 +5231,7 @@ async function refreshCommandWeather({ requestGps = false } = {}) {
 
   const { openMeteo, nws } = await fetchWeatherSources(location.lat, location.lon);
   if (token !== commandWeatherRequestToken) return;
-  latestPlumeWeather = openMeteo;
+  latestPlumeWeather = selectPlumeWeather(openMeteo, nws);
   updateCommandWeatherState(openMeteo, nws, location);
   setText('open-meteo-location', openMeteo?.location || 'Open-Meteo unavailable');
   setText('open-meteo-conditions', openMeteo?.conditions || 'Open-Meteo unavailable');
@@ -5392,8 +5249,7 @@ function setPlumeInputValue(id, value) {
 function applyLiveWeatherToPlumeInputs(weather) {
   if (!weather) return false;
   setPlumeInputValue('plume-wind-speed', Number(weather.windSpeedMph).toFixed(1));
-  const compassBearing = Math.round(Number(weather.windDirDeg) / 45) % 8 * 45;
-  setPlumeInputValue('plume-wind-direction', compassBearing);
+  setPlumeInputValue('plume-wind-direction', Number(weather.windDirDeg).toFixed(1));
   setPlumeInputValue('plume-temperature', Number(weather.temperatureF).toFixed(1));
   return true;
 }
@@ -5423,18 +5279,27 @@ function normalizeColumbiaWeatherData(data = {}, sourceMode = 'csv') {
   };
 }
 
-function getWeatherFreshnessStatus(observationTime) {
-  if (!observationTime || !Number.isFinite(Date.parse(observationTime))) return 'Time unknown';
+function getWeatherFreshness(observationTime) {
+  if (!observationTime || !Number.isFinite(Date.parse(observationTime))) {
+    return { status: 'Time Unknown', ageMinutes: null };
+  }
   const ageMinutes = Math.max(0, (Date.now() - Date.parse(observationTime)) / 60000);
-  if (ageMinutes <= 10) return 'Live / current';
-  if (ageMinutes <= 30) return 'Recent / verify';
-  return 'Stale / verify before modeling';
+  if (ageMinutes <= 10) return { status: 'Current', ageMinutes };
+  if (ageMinutes <= 30) return { status: 'Recent / verify', ageMinutes };
+  if (ageMinutes <= 60) return { status: 'Stale', ageMinutes };
+  return { status: 'Expired', ageMinutes };
+}
+
+function getWeatherFreshnessStatus(observationTime) {
+  return getWeatherFreshness(observationTime).status;
 }
 
 function updatePlumeWeatherSourceStatus(source, observationTime = '', message = '') {
+  const freshness = getWeatherFreshness(observationTime);
   setText('plume-weather-source-name', source || 'Not available');
-  setText('plume-weather-source-state', message || getWeatherFreshnessStatus(observationTime));
+  setText('plume-weather-source-state', message || freshness.status);
   setText('plume-weather-observation-time', observationTime || 'Not available');
+  setText('plume-weather-age', freshness.ageMinutes === null ? 'Unknown' : `${Math.round(freshness.ageMinutes)} minutes`);
   updatePlumeInputSummaries();
 }
 
@@ -5451,9 +5316,7 @@ function applyColumbiaWeatherToPlumeInputs(weather) {
   setPlumeInputValue('plume-wind-speed', weather.windSpeed);
   setPlumeInputValue('plume-temperature', weather.temperature);
   setPlumeInputValue('plume-elevation', weather.elevation);
-  if (direction && [...direction.options].some((option) => option.value === weather.windDirection)) {
-    direction.value = weather.windDirection;
-  }
+  if (direction && Number.isFinite(Number(weather.windDirection))) direction.value = weather.windDirection;
   const importedValue = (value, unit = '') => value ? `${value}${unit ? ` ${unit}` : ''}` : 'Not available';
   setText('columbia-station-name', importedValue(weather.stationName));
   setText('columbia-wind-gust', importedValue(weather.windGust, weather.windSpeedUnit));
@@ -5476,17 +5339,24 @@ function parseColumbiaWeatherCsv(csvText) {
   return normalizeColumbiaWeatherData(row, 'csv');
 }
 
-function selectPlumeWeather(openMeteo, nws) {
+function selectPlumeWeather(openMeteo, nws, cws = null) {
   const isReading = (value) => value !== null && value !== '' && Number.isFinite(Number(value));
   const isComplete = (weather) => weather
     && isReading(weather.temperatureF)
     && isReading(weather.windSpeedMph) && Number(weather.windSpeedMph) > 0
     && isReading(weather.windDirDeg);
-  const observationAge = (weather) => Date.now() - Date.parse(weather?.observedAt || '');
-  const nwsIsCurrent = isComplete(nws) && observationAge(nws) >= 0 && observationAge(nws) <= 2 * 60 * 60 * 1000;
-  if (nwsIsCurrent) return { ...nws, source: nws.station || 'National Weather Service' };
-  if (isComplete(openMeteo)) return { ...openMeteo, source: 'Open-Meteo current conditions', displayStation: 'Open-Meteo' };
-  if (isComplete(nws)) return { ...nws, source: nws.station || 'National Weather Service' };
+  const candidate = [
+    isComplete(cws) ? { ...cws, source: cws.stationName || 'Columbia Weather Station', sourcePriority: 1 } : null,
+    isComplete(nws) ? { ...nws, source: nws.station || 'National Weather Service', sourcePriority: 2 } : null,
+    isComplete(openMeteo) ? { ...openMeteo, source: 'Open-Meteo current conditions', displayStation: 'Open-Meteo', sourcePriority: 3 } : null,
+  ].filter(Boolean).map((weather) => ({ ...weather, ...getWeatherFreshness(weather.observedAt) }))
+    .filter((weather) => weather.status !== 'Expired' && weather.status !== 'Time Unknown')
+    .sort((left, right) => {
+      const freshnessPriority = { Current: 0, 'Recent / verify': 1, Stale: 2 };
+      return freshnessPriority[left.status] - freshnessPriority[right.status]
+        || left.sourcePriority - right.sourcePriority;
+    })[0];
+  if (candidate) return candidate;
   return null;
 }
 
@@ -5724,6 +5594,8 @@ function restoreIncidentContainerData() {
 
 function updatePlumeReleaseQuantityLabel() {
   const releaseKind = document.getElementById('plume-release-type')?.value;
+  const puffDurationField = document.getElementById('plume-puff-duration-field');
+  if (puffDurationField) puffDurationField.hidden = releaseKind !== 'puff';
   const unitSelect = document.getElementById('plume-release-unit');
   setText('plume-release-quantity-label', releaseKind === 'puff' ? 'Total released mass' : 'Release rate');
   if (!unitSelect) return;
@@ -5762,7 +5634,10 @@ function readPlumeModelInputs(location) {
   return {
     chemicalId: activeChemical.id,
     releaseKind,
-    ...(releaseKind === 'puff' ? { totalMassKg: releaseQuantityKg } : { releaseRateKgPerSec: releaseQuantityKg }),
+    ...(releaseKind === 'puff' ? {
+      totalMassKg: releaseQuantityKg,
+      durationSec: Number(document.getElementById('plume-puff-duration')?.value),
+    } : { releaseRateKgPerSec: releaseQuantityKg }),
     windSpeedMps: windSpeedMph * 0.44704,
     windDirDeg,
     stabilityClass,
@@ -5770,6 +5645,7 @@ function readPlumeModelInputs(location) {
     tempC: (temperatureF - 32) * (5 / 9),
     lat: location.lat,
     lng: location.lon,
+    endpointDurationMinutes: Number(document.getElementById('plume-endpoint-duration')?.value),
   };
 }
 
@@ -5791,8 +5667,9 @@ async function runBackendPlume(inputs) {
       return { summary: 'No supported exposure thresholds were returned for this chemical.', result: null };
     }
     const maxDownwindM = Math.max(0, ...(result.isopleths || []).map((item) => item.maxDownwindM));
+    const rangeTruncated = (result.isopleths || []).some((item) => item.rangeTruncated);
     return {
-      summary: `${Math.round(maxDownwindM * 3.28084).toLocaleString()} ft maximum modeled downwind extent · ${result.modelVersion}`,
+      summary: `Planning Estimate — ${rangeTruncated ? 'at least ' : ''}${Math.round(maxDownwindM * 3.28084).toLocaleString()} ft ${rangeTruncated ? 'to computational boundary' : 'maximum modeled downwind extent'} · ${result.validationStatus || 'Not independently validated'}`,
       result,
     };
   } catch {
@@ -5862,12 +5739,12 @@ function updatePlumeInputSummaries() {
   const observationTime = plumeSummaryValue(document.getElementById('plume-weather-observation-time')?.textContent);
   const sourceStatus = plumeSummaryValue(document.getElementById('plume-weather-source-state')?.textContent);
   const windSpeed = controlValue('plume-wind-speed');
-  const windDirection = controlValue('plume-wind-direction', { selectedLabel: true });
+  const windDirection = controlValue('plume-wind-direction');
   const wind = windSpeed === noCurrentDataText || windDirection === noCurrentDataText
     ? noCurrentDataText
     : `${windSpeed} mph from ${windDirection}`;
   const weatherDetail = (liveKey, domId, unit = '') => {
-    const liveValue = sourceMode === 'open-meteo' ? latestPlumeWeather?.[liveKey] : null;
+    const liveValue = ['auto-live', 'open-meteo'].includes(sourceMode) ? latestPlumeWeather?.[liveKey] : null;
     if (liveValue !== null && liveValue !== undefined && liveValue !== '') return `${liveValue}${unit}`;
     const element = document.getElementById(domId);
     return plumeSummaryValue(element?.value ?? element?.textContent);
@@ -5892,14 +5769,22 @@ function updatePlumeInputSummaries() {
 
 function getMissingPlumeRequiredInputs() {
   const missing = [];
-  if (!activeChemical) missing.push('Chemical');
-  if (!['plume', 'puff'].includes(document.getElementById('plume-release-type')?.value)) missing.push('Release Type');
+  if (!activeChemical || !/^\d+$/.test(String(activeChemical.selectedChemicalId ?? activeChemical.id ?? ''))) missing.push('Verified Chemical Link');
+  const releaseType = document.getElementById('plume-release-type')?.value;
+  if (!['plume', 'puff'].includes(releaseType)) missing.push('Release Type');
   if (!(Number(document.getElementById('plume-release-quantity')?.value) > 0)) missing.push('Release Quantity');
+  if (releaseType === 'puff' && !(Number(document.getElementById('plume-puff-duration')?.value) > 0)) missing.push('Puff Evaluation Time');
   if (!(Number(document.getElementById('plume-wind-speed')?.value) > 0)) missing.push('Wind Speed');
   const windDirection = document.getElementById('plume-wind-direction')?.value;
   if (windDirection === '' || !Number.isFinite(Number(windDirection))) missing.push('Wind Direction');
   if (!Number.isFinite(Number(document.getElementById('plume-temperature')?.value))
     || document.getElementById('plume-temperature')?.value === '') missing.push('Temperature');
+  const sourceMode = document.getElementById('plume-weather-source')?.value;
+  const observationTime = document.getElementById('plume-weather-observation-time')?.textContent?.trim();
+  const freshness = getWeatherFreshness(observationTime);
+  if (sourceMode === 'columbia-live') missing.push('Configured Live Weather Source');
+  if (sourceMode !== 'manual' && ['Expired', 'Time Unknown'].includes(freshness.status)) missing.push('Current Weather Observation');
+  if (sourceMode === 'manual' && !document.getElementById('plume-manual-observation-time')?.value) missing.push('Manual Weather Observation Time');
   return missing;
 }
 
@@ -5913,63 +5798,61 @@ function showPlumeValidation(message) {
 function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
   const profileHeader = activeChemicalRecord?.profile?.header || {};
   const maxDownwindM = Math.max(0, ...(modeled.result.isopleths || []).map((zone) => Number(zone.maxDownwindM) || 0));
+  const rangeTruncated = (modeled.result.isopleths || []).some((zone) => zone.rangeTruncated);
   const metric = (id) => {
     const value = document.getElementById(id)?.textContent?.trim();
     return value && !['—', '…', 'Unavailable'].includes(value) ? value : noCurrentDataText;
   };
-  const sourceLabels = [...new Set([
-    ...(activeChemicalRecord?.summarySources || []),
-  ].filter(Boolean))];
   const activeIncident = getActiveIncident();
   const createdAt = modeled.result.computedAt || new Date().toISOString();
   const weatherSourceMode = document.getElementById('plume-weather-source')?.value;
   const weatherValue = (property, fallbackId = '') => {
-    const value = weatherSourceMode === 'open-meteo' ? latestPlumeWeather?.[property] : null;
+    const value = ['auto-live', 'open-meteo'].includes(weatherSourceMode) ? latestPlumeWeather?.[property] : null;
     if (value !== null && value !== undefined && value !== '') return value;
     return fallbackId ? controlValue(fallbackId) : noCurrentDataText;
   };
   const planningDefault = document.getElementById('container-pressure-confidence-summary')?.textContent?.trim() || 'Planning default';
-  return {
+  const weatherObservationTime = document.getElementById('plume-weather-observation-time')?.textContent?.trim() || '';
+  const weatherFreshness = getWeatherFreshness(weatherObservationTime);
+  const outputStatus = weatherSourceMode === 'manual' || weatherFreshness.status !== 'Current'
+    ? 'Needs Verification'
+    : (modeled.result.plumeStatus || 'Planning Estimate');
+  const endpoint = modeled.result.endpoint || {};
+  const threatZones = (currentThreatZoneGeoJson?.features || []).map((feature) => feature.properties || {});
+  const plumeResult = {
     id: `plume-workflow-${Date.now()}`,
+    generatedAt: createdAt,
     mode: activeIncident ? 'active-incident' : 'planning',
-    incidentId: activeIncident?.incidentId || null,
-    incidentName: activeIncident?.incidentName || 'Planning Mode',
-    createdAt,
-    updatedAt: createdAt,
-    exportReady: true,
-    reportReady: true,
-    includeInIncidentReport: true,
     chemical: {
-      chemicalId: activeChemical?.selectedChemicalId ?? activeChemical?.id ?? noCurrentDataText,
+      masterChemicalId: modeled.result.masterChemicalId || (activeChemical?.selectedChemicalId ?? activeChemical?.id ?? noCurrentDataText),
       chemicalName: activeChemical?.name || noCurrentDataText,
       casNumber: profileHeader.cas || activeChemicalRecord?.cas || noCurrentDataText,
       unNumber: profileHeader.un || activeChemicalRecord?.un || noCurrentDataText,
-      ergGuide: profileHeader.ergGuide || activeChemicalRecord?.ergGuide || noCurrentDataText,
-      sourceLabels: sourceLabels.length ? sourceLabels : [noCurrentDataText],
-      status: sourceLabels.length ? readinessStatus.imported : readinessStatus.verify,
+      sourceStatus: modeled.result.chemicalIdentity?.sourceStatus || 'Verified Chemical Companion Master Record',
     },
-    location: {
-      latitude: location.lat,
-      longitude: location.lon,
-      source: location.source || noCurrentDataText,
-      address: location.address || getIncidentAddressValue() || noCurrentDataText,
+    endpoint: {
+      endpointType: 'AEGL',
+      endpointSource: endpoint.endpointSource || noCurrentDataText,
+      selectedLevel: 'AEGL-1 / AEGL-2 / AEGL-3 zones',
+      selectedDuration: endpoint.selectedDurationMinutes || inputs.endpointDurationMinutes,
+      value: { aegl1: endpoint.aegl1, aegl2: endpoint.aegl2, aegl3: endpoint.aegl3 },
+      units: endpoint.units || 'ppm',
+      endpointStatus: endpoint.endpointStatus || noCurrentDataText,
     },
     release: {
-      status: readinessStatus.manual,
-      type: controlValue('plume-release-type', { selectedLabel: true }),
+      releaseType: controlValue('plume-release-type', { selectedLabel: true }),
       quantity: controlValue('plume-release-quantity'),
-      unit: controlValue('plume-release-unit', { selectedLabel: true }),
       containerType: controlValue('plume-container-type', { selectedLabel: true }),
-      containerCapacity: controlValue('container-capacity', { selectedLabel: true }),
-      pressureCondition: controlValue('container-pressure-condition', { selectedLabel: true }),
-      releaseLocation: controlValue('container-release-location', { selectedLabel: true }),
       releasePhase: controlValue('container-release-phase', { selectedLabel: true }),
-      modelSource: controlValue('container-model-source', { selectedLabel: true }),
-      planningDefault: `${planningDefault} — verify before operational use.`,
+      pressureCondition: controlValue('container-pressure-condition', { selectedLabel: true }),
+      releaseRate: inputs.releaseRateKgPerSec ?? null,
+      duration: inputs.durationSec ?? null,
+      sourceStatus: `${planningDefault} — operator-entered release inputs require verification.`,
     },
     weather: {
       source: document.getElementById('plume-weather-source-name')?.textContent?.trim() || controlValue('plume-weather-source', { selectedLabel: true }),
-      observationTime: document.getElementById('plume-weather-observation-time')?.textContent?.trim() || noCurrentDataText,
+      observationTime: weatherObservationTime || noCurrentDataText,
+      ageMinutes: weatherFreshness.ageMinutes === null ? null : Number(weatherFreshness.ageMinutes.toFixed(1)),
       sourceStatus: document.getElementById('plume-weather-source-state')?.textContent?.trim() || noCurrentDataText,
       windSpeed: controlValue('plume-wind-speed'),
       windDirection: inputs.windDirDeg,
@@ -5977,25 +5860,63 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
       temperature: controlValue('plume-temperature'),
       humidity: weatherValue('rh', 'columbia-humidity'),
       pressure: weatherValue('pressureInHg', 'columbia-pressure'),
-      stability: inputs.stabilityClass || noCurrentDataText,
+      stabilityClass: inputs.stabilityClass || noCurrentDataText,
       elevation: weatherValue('elevationFt', 'plume-elevation'),
-      surface: controlValue('plume-surface-roughness', { selectedLabel: true }),
-      status: weatherSourceMode === 'manual' ? readinessStatus.manual : readinessStatus.verify,
+      elevationSource: Number.isFinite(Number(latestPlumeWeather?.elevationFt))
+        ? latestPlumeWeather.source
+        : (document.getElementById('plume-elevation')?.value ? 'Open-Meteo location elevation' : noCurrentDataText),
+      limitations: weatherSourceMode === 'manual'
+        ? ['Manual Weather Entry — verify before operational use.']
+        : weatherFreshness.status === 'Current' ? [] : [`Weather ${weatherFreshness.status} — verify before operational use.`],
     },
-    plumeOutput: {
-      status: readinessStatus.planning,
-      modelName: modeled.result.modelVersion || noCurrentDataText,
+    model: {
+      modelName: modeled.result.modelName || modeled.result.modelMetadata?.modelName || noCurrentDataText,
+      formulaName: 'Gaussian plume / puff screening equations',
+      formulaVersion: modeled.result.modelVersion,
+      validationStatus: modeled.result.validationStatus || 'Not independently validated',
+      validated: false,
+      limitations: modeled.result.limitations || modeled.result.modelMetadata?.limitations || [],
+      confidenceStatus: outputStatus,
+    },
+    output: {
       resultSummary: modeled.summary,
-      threatDistance: {
-        meters: maxDownwindM,
-        feet: Math.round(maxDownwindM * 3.28084),
-      },
-      thresholds: modeled.result.thresholdsUsed || [],
-      threatZones: (currentThreatZoneGeoJson?.features || []).map((feature) => feature.properties || {}),
+      maxDistance: { meters: maxDownwindM, feet: Math.round(maxDownwindM * 3.28084), rangeTruncated, qualifier: rangeTruncated ? 'at least; computational boundary reached' : 'modeled sampled endpoint' },
+      redZone: threatZones.find((zone) => Number(zone.threatRank) === 3) || null,
+      orangeZone: threatZones.find((zone) => Number(zone.threatRank) === 2) || null,
+      yellowZone: threatZones.find((zone) => Number(zone.threatRank) === 1) || null,
+      threatZones,
       geometry: currentThreatZoneGeoJson,
       mapCenter: [location.lon, location.lat],
-      confidence: 'Planning estimate — verify before operational use.',
-      limitations: [modeled.result.disclaimer, ...plumePlanningNotices].filter(Boolean),
+    },
+    tacticalDecisionFlow: {
+      verifyIsolateImpact: 'Use source-backed ERG initial isolation first; AEGL zones are planning support and require field monitoring and Incident Command verification.',
+      lifeSafetyImpact: 'Plume output does not select or downgrade PPE; use approved PPE source logic.',
+      mitigationImpact: 'Plume output alone does not justify offensive mitigation; uncertainty favors verification and defensive posture.',
+    },
+    disclaimers: {
+      plumeEstimate: 'Plume results are planning estimates unless validation results are shown for this chemical, release scenario, and endpoint.',
+      weatherVerification: 'Weather data source and observation time must be verified. Stale or manually entered weather can significantly affect plume output.',
+      validationStatus: 'Plume output does not replace field monitoring, official modeling, agency SOPs, or Incident Command.',
+    },
+  };
+  return {
+    ...plumeResult,
+    plumeResult,
+    incidentId: activeIncident?.incidentId || null,
+    incidentName: activeIncident?.incidentName || 'Planning Mode',
+    createdAt,
+    updatedAt: createdAt,
+    exportReady: true,
+    reportReady: true,
+    includeInIncidentReport: true,
+    location: { latitude: location.lat, longitude: location.lon, source: location.source || noCurrentDataText, address: location.address || getIncidentAddressValue() || noCurrentDataText },
+    plumeOutput: {
+      ...plumeResult.output,
+      modelStatus: plumeResult.model.confidenceStatus,
+      validationStatus: plumeResult.model.validationStatus,
+      endpoint: plumeResult.endpoint,
+      limitations: plumeResult.model.limitations,
+      generatedAt: createdAt,
     },
     threatZone: {
       status: readinessStatus.planning,
@@ -6028,6 +5949,7 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
       plumeEstimate: plumePlanningNotices[1],
       dataVerification: plumePlanningNotices[2],
       weatherVerification: plumePlanningNotices[3],
+      validationStatus: plumeResult.disclaimers.validationStatus,
     },
   };
 }
@@ -6116,7 +6038,11 @@ async function plotPlumeFromControls(locationOverride = null) {
     setText('backend-model-summary', modeled.summary);
     if (!modeled.result) {
       await clearThreatZones(modeled.summary);
-      showPlumeValidation(`Cannot plot plume. ${modeled.summary}`);
+      if (/AEGL value not available/i.test(modeled.summary)) {
+        setText('plume-endpoint-status', 'No Current Data Exists for AEGL. Toxic plume endpoint cannot be plotted from AEGL.');
+        setText('plume-model-status-summary', 'Blocked Missing AEGL / LOC');
+      }
+      showPlumeValidation(`Cannot plot plume yet. ${modeled.summary}`);
       return;
     }
 
@@ -6158,11 +6084,17 @@ async function plotPlumeFromControls(locationOverride = null) {
     });
     const saveMode = savePlumeResult(activePlumeCommand, workflowRecord, await capturePlumeMapImage());
     renderIncidentCommandSnapshot();
-    setText('plume-input-status', '');
-    document.getElementById('plume-input-status')?.removeAttribute('data-state');
+    setText('plume-input-status', `${workflowRecord.model.confidenceStatus} — plume plotted for planning. Verify with field monitoring, weather observations, official modeling, and Incident Command.`);
+    document.getElementById('plume-input-status')?.setAttribute('data-state', 'planning');
     setText('plume-mode-summary', saveMode === 'active-incident' ? 'Active Incident Mode' : 'Planning Mode');
+    setText('plume-model-status-summary', workflowRecord.model.confidenceStatus);
+    setText('plume-validation-status-summary', modeled.result.validationStatus || 'Not independently validated');
+    setText('plume-limitations-summary', (modeled.result.limitations || modeled.result.modelMetadata?.limitations || []).join(' · '));
     setText('plume-release-summary', `${releaseType} · ${releaseQuantity} ${releaseUnit} · ${controlValue('plume-container-type', { selectedLabel: true })}`);
     setText('plume-weather-input-summary', `${workflowRecord.weather.source} · ${windSpeed} mph from ${windDirection}° · stability ${stability}`);
+    setText('plume-endpoint-summary', `EPA AEGL · ${modeled.result.endpoint.selectedDurationMinutes}-minute endpoint · AEGL-1 ${modeled.result.endpoint.aegl1} / AEGL-2 ${modeled.result.endpoint.aegl2} / AEGL-3 ${modeled.result.endpoint.aegl3} ${modeled.result.endpoint.units}`);
+    setText('plume-zone-meaning-summary', 'Red: AEGL-3 · Orange: AEGL-2 · Yellow: AEGL-1');
+    setText('plume-endpoint-status', `EPA final AEGL values linked by Chemical Companion master record and CAS ${modeled.result.endpoint.casNumber}.`);
     setText('plume-model-time-summary', new Date(workflowRecord.createdAt).toLocaleString());
     updatePlumeModeLabel();
     setText('plume-live-status', `Plume plotted ${formatCentralZuluHtml()}.`);
@@ -6171,7 +6103,7 @@ async function plotPlumeFromControls(locationOverride = null) {
     showPlumeValidation(message);
     setText('plume-overlay-status', message);
   } finally {
-    if (plotButton) plotButton.disabled = !activeChemical;
+    if (plotButton) plotButton.disabled = false;
   }
 }
 
@@ -6234,11 +6166,18 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
 
   const weatherNotification = openMeteo?.conditions || nws?.conditions || 'Live weather unavailable';
   updateNotificationCenter({ weather: weatherNotification });
-  latestPlumeWeather = selectPlumeWeather(openMeteo, nws);
+  const weatherSourceMode = document.getElementById('plume-weather-source')?.value;
+  const selectedLiveWeather = selectPlumeWeather(openMeteo, nws);
+  const openMeteoFreshness = openMeteo ? getWeatherFreshness(openMeteo.observedAt) : null;
+  latestPlumeWeather = weatherSourceMode === 'open-meteo'
+    ? (openMeteo && !['Expired', 'Time Unknown'].includes(openMeteoFreshness.status)
+      ? { ...openMeteo, ...openMeteoFreshness, source: 'Open-Meteo current conditions' }
+      : null)
+    : selectedLiveWeather;
   updateCommandWeatherState(openMeteo, nws, location);
-  if (latestPlumeWeather && document.getElementById('plume-weather-source')?.value === 'open-meteo') {
+  if (latestPlumeWeather && ['auto-live', 'open-meteo'].includes(weatherSourceMode)) {
     applyLiveWeatherToPlumeInputs(latestPlumeWeather);
-    updatePlumeWeatherSourceStatus('Open-Meteo', openMeteo?.observedAt || '');
+    updatePlumeWeatherSourceStatus(latestPlumeWeather.source, latestPlumeWeather.observedAt || '');
   }
   else setText('plume-input-status', 'Live weather is unavailable. Enter weather observations manually before plotting.');
   setText('backend-model-summary', 'Run plume model to view result.');
@@ -6454,15 +6393,25 @@ document.getElementById('plume-weather-source')?.addEventListener('change', (eve
   document.querySelectorAll('.plume-columbia-csv').forEach((field) => {
     field.hidden = source !== 'columbia-csv';
   });
+  document.querySelectorAll('.plume-manual-weather').forEach((field) => {
+    field.hidden = source !== 'manual';
+  });
   if (source === 'columbia-live') {
     updatePlumeWeatherSourceStatus('Columbia Weather Station', '', 'Columbia Weather Station selected. Live station connection not configured yet.');
   } else if (source === 'columbia-csv') {
     updatePlumeWeatherSourceStatus('Columbia CSV Import', '', 'Time unknown');
   } else if (source === 'manual') {
-    updatePlumeWeatherSourceStatus('Manual Entry', '', 'Time unknown');
+    const manualTime = document.getElementById('plume-manual-observation-time')?.value;
+    updatePlumeWeatherSourceStatus('Manual Entry', manualTime ? new Date(manualTime).toISOString() : '', 'Manual Weather Entry — verify before operational use.');
+  } else if (source === 'auto-live') {
+    updatePlumeWeatherSourceStatus(latestPlumeWeather?.source || 'Best Current Live Source', latestPlumeWeather?.observedAt || '');
   } else {
-    updatePlumeWeatherSourceStatus('Open-Meteo', latestPlumeWeather?.observedAt || '');
+    updatePlumeWeatherSourceStatus('Open-Meteo', latestPlumeWeather?.source?.includes('Open-Meteo') ? latestPlumeWeather.observedAt : '');
   }
+});
+document.getElementById('plume-manual-observation-time')?.addEventListener('change', (event) => {
+  const value = event.target.value;
+  updatePlumeWeatherSourceStatus('Manual Entry', value ? new Date(value).toISOString() : '', 'Manual Weather Entry — verify before operational use.');
 });
 document.getElementById('plume-columbia-csv')?.addEventListener('change', async (event) => {
   const file = event.target.files?.[0];

@@ -14,7 +14,7 @@ export const PlumeInputs = z.object({
   releaseRateKgPerSec: z.number().positive().optional(),
   durationSec: z.number().positive().optional(),
   releaseHeightM: z.number().default(0),
-  windSpeedMps: z.number().nonnegative(),
+  windSpeedMps: z.number().positive(),
   windDirDeg: z.number().min(0).max(360),
   stabilityClass: StabilityClass,
   surfaceRoughness: z.enum(["urban", "rural"]).default("rural"),
@@ -23,6 +23,9 @@ export const PlumeInputs = z.object({
   molecularWeight: z.number().positive().optional(),
   lat: z.number().optional(),
   lng: z.number().optional(),
+  endpointDurationMinutes: z.union([
+    z.literal(10), z.literal(30), z.literal(60), z.literal(240), z.literal(480),
+  ]).optional(),
 });
 export type PlumeInputs = z.infer<typeof PlumeInputs>;
 
@@ -51,11 +54,23 @@ export const PlumeCalculationEvidence = z.object({
 });
 export type PlumeCalculationEvidence = z.infer<typeof PlumeCalculationEvidence>;
 
+export const BaselinePlumeModelMetadata = z.object({
+  modelName: z.literal("HazMatIQ Baseline Plume Planning Model"),
+  modelStatus: z.literal("Planning Estimate"),
+  validationStatus: z.literal("Not independently validated"),
+  formulaStatus: z.literal("Existing application plume calculation"),
+  formulaReference: z.string().min(1),
+  limitations: z.array(z.string().min(1)).min(1),
+});
+export type BaselinePlumeModelMetadata = z.infer<typeof BaselinePlumeModelMetadata>;
+
 export const ThresholdBand = z.object({
   kind: z.enum(["AEGL", "ERPG", "TEEL"]),
   level: z.number().int().min(0).max(3),
   valuePpm: z.number().nonnegative(),
   label: z.string(),
+  durationMinutes: z.number().positive().optional(),
+  source: z.string().min(1).optional(),
 });
 export type ThresholdBand = z.infer<typeof ThresholdBand>;
 
@@ -85,6 +100,7 @@ export const Isopleth = z.object({
   polygon: z.array(z.tuple([z.number(), z.number()])),
   maxDownwindM: z.number().nonnegative(),
   maxCrosswindM: z.number().nonnegative(),
+  rangeTruncated: z.boolean(),
 });
 export type Isopleth = z.infer<typeof Isopleth>;
 
@@ -97,12 +113,20 @@ export type CenterlinePoint = z.infer<typeof CenterlinePoint>;
 export const PlumeResult = z.object({
   status: z.literal("Calculated estimate"),
   modelVersion: z.string(),
+  modelName: z.string(),
+  modelStatus: z.literal("Planning Estimate"),
+  validationStatus: z.literal("Not independently validated"),
+  validated: z.literal(false),
   inputs: PlumeInputs,
   isopleths: z.array(Isopleth),
   centerline: z.array(CenterlinePoint),
   thresholdsUsed: z.array(ThresholdBand),
+  computationalRangeM: z.number().positive(),
+  samplingIntervalM: z.number().positive(),
   computedAt: z.string(),
-  calculation: PlumeCalculationEvidence,
+  modelMetadata: BaselinePlumeModelMetadata,
+  calculation: PlumeCalculationEvidence.optional(),
+  limitations: z.array(z.string().min(1)).min(1),
   disclaimer: z.string(),
 });
 export type PlumeResult = z.infer<typeof PlumeResult>;

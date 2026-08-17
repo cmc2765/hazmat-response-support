@@ -28,7 +28,8 @@ import * as schema from "./schema.js";
 import { queryChemicalProfile, searchCompanionChemicals } from "./chemical-companion.js";
 import { runPlume } from "../../src/lib/model/plume.js";
 import { PlumeCalculationEvidence, PlumeInputs } from "../../src/lib/schema/plume.js";
-import type { ThresholdBand } from "../../src/lib/schema/plume.js";
+import { aeglThresholdBands, selectVerifiedAeglEndpoint } from "../../src/lib/model/plume-endpoints.js";
+import { determinePlumeStatus } from "../../src/lib/model/plume-status.js";
 import { ERG_TABLE_1, getErgAdditionalTables, getErgContainerDistances } from "../../src/data/erg.js";
 
 const app = new Hono();
@@ -424,77 +425,112 @@ app.post("/api/plume/run", async (c) => {
   if (!parsed.success) {
     return c.json({ error: "invalid plume inputs", issues: parsed.error.issues }, 400);
   }
-  const evidenceParsed = PlumeCalculationEvidence.safeParse(
-    body && typeof body === "object" ? (body as Record<string, unknown>).calculationEvidence : undefined,
-  );
-  if (!evidenceParsed.success) {
+  const bodyRecord = body && typeof body === "object" ? body as Record<string, unknown> : {};
+  const validatedModeRequested = bodyRecord.modelMode === "validated-operational"
+    || bodyRecord.validated === true
+    || bodyRecord.validationStatus === "Independently validated";
+  if (validatedModeRequested) {
     return c.json({
-      error: "approved plume source records, formula, and limitations are required",
+      error: "Cannot mark plume output as independently validated. Published comparison cases, formula documentation, validation tolerances, and limitations are required.",
       display: "No Current Data Exists",
-      issues: evidenceParsed.error.issues,
     }, 400);
   }
+  const evidenceParsed = PlumeCalculationEvidence.safeParse(bodyRecord.calculationEvidence);
   const inputs = parsed.data;
-  const calculationEvidence = evidenceParsed.data;
+  const calculationEvidence = evidenceParsed.success ? evidenceParsed.data : undefined;
 
-  // Chemical Companion uses numeric IDs; plume thresholds use canonical chemical slugs.
-  const directChemicalRows = await db
-    .select()
-    .from(schema.chemicals)
-    .where(eq(schema.chemicals.id, inputs.chemicalId));
-  if (!directChemicalRows.length && /^\d+$/.test(inputs.chemicalId)) {
-    const companionProfile = queryChemicalProfile(inputs.chemicalId);
-    const companionCas = companionProfile?.header.cas?.trim();
-    if (companionCas) {
-      const chemicalRows = await db.select().from(schema.chemicals).limit(500);
-      const canonicalChemical = chemicalRows.find((row) => {
-        try {
-          const casValues = JSON.parse(String(row.cas || "[]")) as string[];
-          return casValues.some((cas) => cas.trim() === companionCas);
-        } catch {
-          return false;
-        }
-      });
-      if (canonicalChemical) inputs.chemicalId = canonicalChemical.id;
-    }
+  // A numeric Chemical Companion master ID is required. Transportation-only
+  // identifiers and canonical slugs cannot independently establish identity.
+  const masterChemicalId = inputs.chemicalId;
+  const companionProfile = /^\d+$/.test(masterChemicalId)
+    ? queryChemicalProfile(masterChemicalId)
+    : null;
+  const companionCas = companionProfile?.header.cas?.trim() || "";
+  if (!companionProfile || !companionCas) {
+    return c.json({
+      error: "Chemical-specific plume guidance requires a verified Chemical Companion master link and CAS number.",
+      display: "No Current Data Exists",
+      plumeStatus: determinePlumeStatus({ hasChemicalLink: false, hasAeglEndpoint: false, hasWeather: true, hasReleaseInputs: true }),
+    }, 422);
   }
 
+  const chemicalRows = await db.select().from(schema.chemicals).limit(500);
+  const canonicalChemical = chemicalRows.find((row) => {
+    try {
+      const casValues = JSON.parse(String(row.cas || "[]")) as string[];
+      return casValues.some((cas) => cas.trim() === companionCas);
+    } catch {
+      return false;
+    }
+  });
+  if (!canonicalChemical) {
+    return c.json({
+      error: "Chemical Companion record has no verified canonical chemical/CAS link for plume modeling.",
+      display: "No Current Data Exists",
+      plumeStatus: determinePlumeStatus({ hasChemicalLink: false, hasAeglEndpoint: false, hasWeather: true, hasReleaseInputs: true }),
+    }, 422);
+  }
+
+  const endpoint = selectVerifiedAeglEndpoint(
+    canonicalChemical.id,
+    companionCas,
+    inputs.endpointDurationMinutes ?? 60,
+  );
+  if (!endpoint) {
+    return c.json({
+      error: "AEGL value not available for this chemical. Toxic plume endpoint cannot be plotted from AEGL.",
+      display: "No Current Data Exists for AEGL.",
+      endpointStatus: "No Current Data Exists for AEGL.",
+      plumeStatus: determinePlumeStatus({ hasChemicalLink: true, hasAeglEndpoint: false, hasWeather: true, hasReleaseInputs: true }),
+    }, 422);
+  }
+
+  inputs.chemicalId = canonicalChemical.id;
   if (inputs.molecularWeight === undefined) {
-    const chemRows = directChemicalRows[0]?.id === inputs.chemicalId
-      ? directChemicalRows
-      : await db.select().from(schema.chemicals).where(eq(schema.chemicals.id, inputs.chemicalId));
-    const mw = chemRows[0]?.molecularWeight;
+    const mw = canonicalChemical.molecularWeight;
     if (mw) {
       inputs.molecularWeight = Number(mw);
-      calculationEvidence.sourceData.push({
-        sourceName: "HazMatIQ chemical master",
-        sourceRecordId: chemRows[0].id,
+      calculationEvidence?.sourceData.push({
+        sourceName: "Chemical Companion / CAMEO-linked chemical record",
+        sourceRecordId: masterChemicalId,
         fields: ["molecularWeight"],
         values: { molecularWeight: Number(mw) },
         approved: true,
-        sourceLocator: `chemicals:${chemRows[0].id}`,
+        sourceLocator: `chemical-companion:${masterChemicalId}; chemicals:${canonicalChemical.id}`,
       });
     }
   }
 
-  const thresholdRows = await db
-    .select()
-    .from(schema.thresholds)
-    .where(eq(schema.thresholds.chemicalId, inputs.chemicalId));
-  const thresholds: ThresholdBand[] = thresholdRows.map((r) => ({
-    kind: r.kind as ThresholdBand["kind"],
-    level: r.level,
-    valuePpm: Number(r.valuePpm),
-    label: `${r.kind}-${r.level}`,
-  }));
+  const thresholds = aeglThresholdBands(endpoint);
 
   try {
     const result = runPlume(inputs, { thresholds, calculationEvidence });
-    return c.json(result);
-  } catch (error) {
     return c.json({
-      error: error instanceof Error ? error.message : "plume calculation blocked",
+      ...result,
+      plumeStatus: determinePlumeStatus({
+        hasChemicalLink: true,
+        hasAeglEndpoint: true,
+        hasWeather: true,
+        hasReleaseInputs: true,
+        validationCasesPassed: false,
+      }),
+      masterChemicalId,
+      chemicalIdentity: {
+        chemicalName: companionProfile.header.name,
+        casNumber: companionCas,
+        sourceStatus: "Verified Chemical Companion Master Record",
+      },
+      endpoint,
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "plume calculation blocked";
+    const missingRelease = /release rate|total mass|evaluation time/i.test(message);
+    return c.json({
+      error: message,
       display: "No Current Data Exists",
+      plumeStatus: missingRelease
+        ? determinePlumeStatus({ hasChemicalLink: true, hasAeglEndpoint: true, hasWeather: true, hasReleaseInputs: false })
+        : "Not Independently Validated",
     }, 422);
   }
 });
@@ -516,6 +552,7 @@ app.get("/api/weather/current", async (c) => {
     wind_speed_unit: "mph",
     precipitation_unit: "inch",
     timezone: "auto",
+    timeformat: "unixtime",
   }).toString();
 
   const getJson = async (url: string, headers?: Record<string, string>) => {
