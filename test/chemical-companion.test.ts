@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getCompanionDiagnostics, normalizeChemicalProfile, normalizeTransportationIdentifier, queryChemicalProfile, searchCompanionChemicals } from '../server/src/chemical-companion.js';
+import { getCompanionDiagnostics, groupChemicalSearchResults, normalizeChemicalProfile, normalizeTransportationIdentifier, queryChemicalProfile, searchCompanionChemicals } from '../server/src/chemical-companion.js';
 
 describe('normalizeChemicalProfile', () => {
   it.each(['2312', 'UN2312', 'UN 2312', 'UN-2312', 'NA2312', 'NA 2312'])(
@@ -59,6 +59,48 @@ describe('normalizeChemicalProfile', () => {
       ChemicalID: null,
       recordType: 'transportation-identifier',
       reviewStatus: 'requires_review',
+      resultType: 'Transportation Identifier — Requires Review',
+      guidanceEligible: false,
+    }));
+  });
+
+  it('groups repeated Chemical Companion master names only when verified CAS identity also matches', () => {
+    const results = searchCompanionChemicals('Trimethoxysilane');
+    const exactMasters = results.filter((row) => row.ChemicalName === 'Trimethoxysilane' && row.recordType === 'master-chemical');
+    expect(exactMasters).toHaveLength(1);
+    expect(exactMasters[0]).toMatchObject({
+      resultType: 'Chemical Companion Master',
+      sourceStatus: 'Verified',
+      groupedRecordCount: 2,
+      groupedMasterChemicalIds: [1060, 1062],
+    });
+    expect(exactMasters[0].linkedIdentifiers).toEqual(expect.arrayContaining([
+      expect.objectContaining({ type: 'UN/NA', value: '9269' }),
+      expect.objectContaining({ type: 'UN/NA', value: '3286' }),
+    ]));
+  });
+
+  it('groups an approved attributable transport link under its master result', () => {
+    const base = {
+      CasNumber: '7782-50-5', IdentifierType: 'UN' as const, ErgNumber: '124', HazardClass: '',
+      matchTerms: ['Chlorine'], synonyms: [], sourceBadges: [], rank: 0, matchReason: 'Exact match',
+    };
+    const grouped = groupChemicalSearchResults([
+      {
+        ...base, ChemicalID: 22, ChemicalName: 'Chlorine', PrimaryChemicalName: 'Chlorine', UnnaNumber: '1017',
+        recordType: 'master-chemical', reviewStatus: 'master-record', guidanceEligible: true,
+      },
+      {
+        ...base, ChemicalID: null, ChemicalName: 'Chlorine', PrimaryChemicalName: 'Chlorine', ProperShippingName: 'Chlorine',
+        CasNumber: 'Not available', UnnaNumber: '1017', sourceIdentifierId: 1, recordType: 'transportation-identifier',
+        reviewStatus: 'requires_review', guidanceEligible: false, masterChemicalId: 22,
+        linkType: 'exact_chemical_match', linkReviewStatus: 'approved', reviewedBy: 'reviewer:1', reviewedAt: '2026-08-17T00:00:00.000Z',
+      },
+    ]);
+    expect(grouped).toHaveLength(1);
+    expect(grouped[0]).toMatchObject({ ChemicalID: 22, masterChemicalId: 22, guidanceEligible: true });
+    expect(grouped[0].linkedIdentifiers).toContainEqual(expect.objectContaining({
+      type: 'Transport', value: '1017', reviewStatus: 'verified',
     }));
   });
   it('loads a companion profile only from the selected ChemicalID', () => {

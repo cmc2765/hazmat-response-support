@@ -100,13 +100,6 @@
     if (loading) loading.textContent = message;
   }
 
-  function setRadarUnavailable(unavailable) {
-    const status = document.getElementById('live-radar-status');
-    const fallback = document.getElementById('live-radar-fallback');
-    if (status) status.hidden = unavailable;
-    if (fallback) fallback.hidden = !unavailable;
-  }
-
   function removeRadarOverlay(map) {
     radarController?.disable();
     document.querySelector('.live-map-stage')?.classList.remove('radar-enhanced');
@@ -121,21 +114,21 @@
     }
     if (!enabled) {
       removeRadarOverlay(map);
-      setRadarUnavailable(false);
       return;
     }
-    setRadarUnavailable(false);
     document.querySelector('.live-map-stage')?.classList.add('radar-enhanced');
     if (!window.HazMatWeatherRadar) {
-      setRadarUnavailable(true);
+      setMessage('Weather radar unavailable.');
       return;
     }
     radarController ||= window.HazMatWeatherRadar.createController(map, {
-      prefix: 'nws-radar',
+      prefix: 'live-weather-radar',
       beforeLayerId: 'live-plume-overlay-fill',
-      onAvailability: () => setRadarUnavailable(false),
+      providerId: 'BEST_AVAILABLE',
+      onFallback: () => setMessage('Primary radar unavailable. NOAA/NWS fallback active.'),
     });
-    radarController.enable();
+    radarController.setOpacity(0.58);
+    void radarController.enable();
   }
 
   function startFallbackMap() {
@@ -169,7 +162,12 @@
       fallbackMap.resize();
     });
     fallbackMap.on('error', (event) => {
-      if (radarController?.ownsSource(event?.sourceId)) setRadarUnavailable(true);
+      if (radarController?.ownsSource(event?.sourceId)) {
+        setMessage('Radar tile failed. Switching to NOAA/NWS fallback.');
+        if (radarController.getState().activeProvider?.id !== window.HazMatRadarProviders?.IDS?.NOAA) {
+          void radarController.fallback();
+        }
+      }
       else setMessage(`Map error: ${event?.error?.message || 'Basemap unavailable.'}`);
     });
     navigator.geolocation?.getCurrentPosition(({ coords }) => {
@@ -191,8 +189,6 @@
       enabled = !enabled;
       radarButton.classList.toggle('active', enabled);
       radarButton.setAttribute('aria-pressed', String(enabled));
-      const panel = document.querySelector('[data-live-panel="weatherRadar"]');
-      if (panel) panel.hidden = !enabled;
     }
     const state = readMapState();
     state.activeLayers.weatherRadar = enabled;

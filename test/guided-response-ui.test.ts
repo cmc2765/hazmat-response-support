@@ -9,8 +9,25 @@ const guidedHtml = html.slice(
   html.indexOf('<section id="guided-response"'),
   html.indexOf('<section id="my-chemicals"'),
 );
+const lookupHtml = html.slice(
+  html.indexOf('<section id="lookup"'),
+  html.indexOf('<section id="guided-response"'),
+);
 
 describe("Guided Response workflow", () => {
+  it("uses the bright logo-free Chemical ID hero with live search controls", () => {
+    expect(styles).toContain('url("assets/chemical-id-search-background.png")');
+    expect(lookupHtml).toContain('class="chemical-id-search-content"');
+    expect(lookupHtml).toContain('id="chemical-search"');
+    expect(lookupHtml).toContain('id="chemical-lookup-btn"');
+    expect(lookupHtml).toContain('id="save-my-chemical-btn"');
+    expect(lookupHtml).not.toContain("hazmatiq-logo");
+    expect(styles).toContain(".layout:has(#lookup.active) #lookup.active");
+    expect(styles).toContain("grid-template-rows: minmax(clamp(420px, 52dvh, 600px), 1fr) auto auto;");
+    expect(styles).toContain(".layout:has(#lookup.active) .chemical-id-search-card");
+    expect(styles).toContain("height: 100%;");
+  });
+
   it("does not render a Sources bubble in the populated Chemical Profile header", () => {
     const metaItems = script.slice(
       script.indexOf("const metaItems = ["),
@@ -81,10 +98,10 @@ describe("Guided Response workflow", () => {
     }
   });
 
-  it("uses larger, bolder typography throughout the tactical decision flow", () => {
-    expect(styles).toMatch(/\.guided-tactical-section-heading h3[^}]*font-size: 1\.5rem;[^}]*font-weight: 900;/s);
-    expect(styles).toMatch(/\.guided-flow-box h4[^}]*font-size: 1\.1rem;[^}]*font-weight: 900;/s);
-    expect(styles).toMatch(/\.guided-flow-status[^}]*font-size: 0\.9rem;[^}]*font-weight: 800;/s);
+  it("uses readable, restrained typography throughout the tactical decision flow", () => {
+    expect(styles).toMatch(/\.guided-tactical-section-heading h3[^}]*font-size: 1\.5rem;[^}]*font-weight: 700;/s);
+    expect(styles).toMatch(/\.guided-flow-box h4[^}]*font-size: 1\.1rem;[^}]*font-weight: 700;/s);
+    expect(styles).toMatch(/\.guided-flow-status[^}]*font-size: 0\.9rem;[^}]*font-weight: 700;/s);
     expect(styles).toMatch(/\.guided-flow-box dl > div[^}]*font-size: 0\.84rem;/s);
   });
 

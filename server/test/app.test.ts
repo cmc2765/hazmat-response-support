@@ -28,6 +28,22 @@ describe("API routes", () => {
     expect(res.status).toBe(200);
   });
 
+  it("reports radar provider capabilities without exposing credentials", async () => {
+    const res = await app.request("/api/radar/providers");
+    expect(res.status).toBe(200);
+    const body = await res.json() as {
+      defaultProviderId: string;
+      providers: Record<string, { status: string; configured: boolean }>;
+    };
+    expect(Object.keys(body.providers).sort()).toEqual([
+      "NOAA_MRMS_OFFICIAL_FALLBACK",
+      "RAINVIEWER_VISUAL_PROTOTYPE",
+    ]);
+    expect(body.providers.NOAA_MRMS_OFFICIAL_FALLBACK).toMatchObject({ status: "Official Fallback", configured: true });
+    expect(["Disabled", "Visual Prototype"]).toContain(body.providers.RAINVIEWER_VISUAL_PROTOTYPE.status);
+    expect(JSON.stringify(body)).not.toMatch(/apiKey|clientSecret|accessToken/i);
+  });
+
   it("GET /api/manifest reports the seeded chemical count", async () => {
     const res = await app.request("/api/manifest");
     const body = (await res.json()) as { sources: { cameo: { recordCount: number } } };
@@ -115,7 +131,34 @@ describe("API routes", () => {
     expect(body.masterChemicalId).toBe("10");
   });
 
-  it("blocks toxic plume plotting when no reviewed EPA AEGL record exists", async () => {
+  it("POST /api/plume/run plots Hydrazine with its reviewed final EPA AEGL endpoint", async () => {
+    const res = await app.request("/api/plume/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chemicalId: "54",
+        releaseKind: "plume",
+        releaseRateKgPerSec: 1,
+        windSpeedMps: 3,
+        windDirDeg: 270,
+        stabilityClass: "D",
+        tempC: 20,
+      }),
+    });
+    expect(res.status).toBe(200);
+    const body = await res.json() as {
+      isopleths: unknown[];
+      endpoint: { selectedDurationMinutes: number; aegl1: number; aegl2: number; aegl3: number };
+      chemicalIdentity: { chemicalName: string; casNumber: string };
+      masterChemicalId: string;
+    };
+    expect(body.isopleths).toHaveLength(3);
+    expect(body.endpoint).toMatchObject({ selectedDurationMinutes: 60, aegl1: 0.1, aegl2: 13, aegl3: 35 });
+    expect(body.chemicalIdentity).toMatchObject({ chemicalName: "Hydrazine", casNumber: "302-01-2" });
+    expect(body.masterChemicalId).toBe("54");
+  });
+
+  it("falls back to an ERG protective-action overlay when AEGL is unavailable", async () => {
     const res = await app.request("/api/plume/run", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -127,13 +170,86 @@ describe("API routes", () => {
         windDirDeg: 270,
         stabilityClass: "D",
         tempC: 20,
+        ergSpillSize: "large",
+        ergPeriod: "night",
+      }),
+    });
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({
+      mode: "erg-protective-action",
+      modelStatus: "Not a modeled plume",
+      ergOverlay: {
+        un: "1671",
+        guide: "153",
+        spillSize: "large",
+        period: "night",
+        initialIsolationFt: 150,
+        protectiveActionMi: 0.3,
+        source: "PHMSA Emergency Response Guidebook 2024 Table 1",
+      },
+    });
+  });
+
+  it("selects ERG fallback mode without requiring plume-only release inputs", async () => {
+    const res = await app.request("/api/plume/availability?chemicalId=479&endpointDurationMinutes=60&ergSpillSize=large&ergPeriod=night");
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({
+      mode: "erg-protective-action",
+      modelStatus: "Not a modeled plume",
+      ergOverlay: {
+        un: "1671",
+        spillSize: "large",
+        period: "night",
+        initialIsolationFt: 150,
+        protectiveActionMi: 0.3,
+      },
+    });
+  });
+
+  it("selects AEGL mode before requiring release and weather inputs", async () => {
+    const res = await app.request("/api/plume/availability?chemicalId=54&endpointDurationMinutes=60");
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({ mode: "aegl-plume" });
+  });
+
+  it("returns ERG isolation data on explicit request even when AEGL is available", async () => {
+    const res = await app.request("/api/plume/availability?chemicalId=10&ergSpillSize=large&ergPeriod=night&ergOnly=true");
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({
+      mode: "erg-protective-action",
+      ergOverlay: { un: "1005", spillSize: "large", period: "night" },
+    });
+  });
+
+  it("returns the manual/IC review state when neither AEGL nor ERG distances exist", async () => {
+    const res = await app.request("/api/plume/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chemicalId: "693",
+        releaseKind: "plume",
+        releaseRateKgPerSec: 1,
+        windSpeedMps: 3,
+        windDirDeg: 270,
+        stabilityClass: "D",
+        tempC: 20,
       }),
     });
     expect(res.status).toBe(422);
     expect(await res.json()).toMatchObject({
-      error: "AEGL value not available for this chemical. Toxic plume endpoint cannot be plotted from AEGL.",
-      endpointStatus: "No Current Data Exists for AEGL.",
-      plumeStatus: "Blocked Missing AEGL / LOC",
+      mode: "no-distance-data",
+      error: "No Current Data Exists. Establish isolation using agency SOPs, field observations, monitoring, and Incident Command.",
+      display: "No Current Data Exists",
+    });
+  });
+
+  it("preflights the manual/IC review state without requiring model inputs", async () => {
+    const res = await app.request("/api/plume/availability?chemicalId=693&endpointDurationMinutes=60");
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({
+      mode: "no-distance-data",
+      error: "No Current Data Exists. Establish isolation using agency SOPs, field observations, monitoring, and Incident Command.",
+      display: "No Current Data Exists",
     });
   });
 

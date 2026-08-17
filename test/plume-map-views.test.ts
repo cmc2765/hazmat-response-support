@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 const plumeUi = readFileSync(new URL("../server/public/script.js", import.meta.url), "utf8");
 const radarUi = readFileSync(new URL("../server/public/weather-radar.js", import.meta.url), "utf8");
+const radarProviders = readFileSync(new URL("../server/public/weather-radar-providers.js", import.meta.url), "utf8");
 const liveMapBootstrap = readFileSync(new URL("../server/public/live-map-bootstrap.js", import.meta.url), "utf8");
 const styles = readFileSync(new URL("../server/public/styles.css", import.meta.url), "utf8");
 const html = readFileSync(new URL("../server/public/index.html", import.meta.url), "utf8");
@@ -102,14 +103,19 @@ describe("plume map views", () => {
 
   it("keeps the map face clear and populates results only from the Summary control", () => {
     expect(html).not.toContain('id="plume-result-summary-card"');
-    expect(html).toContain("Plume Result Summary");
+    expect(html).toContain("Plume Summary");
     expect(html).toContain('id="plume-incident-data-panel"');
     expect(html).toContain("Model Inputs Summary");
     expect(html).toContain("Weather Summary");
     expect(styles).not.toContain(".plume-result-summary-card");
     expect(plumeUi).toContain("plumeSummaryPanel?.addEventListener('toggle'");
-    expect(plumeUi).toContain("if (plumeSummaryPanel.open) renderPlumeSummaryOnRequest()");
+    expect(plumeUi).toContain("if (plumeSummaryPanel.open) {");
+    expect(plumeUi).toContain("renderPlumeSummaryOnRequest();");
     expect(plumeUi).toContain("if (!plumeSummaryPanel?.open) return;");
+    expect(plumeUi).toContain("function constrainPlumeSummaryToMap()");
+    expect(plumeUi).toContain("Math.min(mapHeight, visiblePageHeight)");
+    expect(styles).toContain("#plume #plume-incident-data-panel .plume-summary-content");
+    expect(styles).toContain("overflow-y: auto;");
     expect(html.match(/id="plot-plume-btn"/g)?.length).toBe(1);
   });
 
@@ -121,7 +127,7 @@ describe("plume map views", () => {
   });
 
   it("plots baseline output as an explicitly unvalidated planning estimate", () => {
-    expect(plumeUi).toContain("plume plotted for planning. Verify with field monitoring, weather observations, official modeling, and Incident Command.");
+    expect(plumeUi).not.toContain("plume plotted for planning. Verify with field monitoring, weather observations, official modeling, and Incident Command.");
     expect(plumeUi).toContain("Planning Estimate — ${rangeTruncated ? 'at least ' : ''}${Math.round(maxDownwindM * 3.28084).toLocaleString()}");
     expect(plumeUi).toContain("Not independently validated");
     expect(plumeUi).toContain("validated: false");
@@ -144,6 +150,50 @@ describe("plume map views", () => {
     expect(html).toContain('id="plume-wind-direction" type="number"');
   });
 
+  it("uses a distinct ERG fallback overlay and a manual-review no-data mode", () => {
+    expect(html).toContain('id="plume-erg-spill-size"');
+    expect(html).toContain('id="plume-erg-period"');
+    expect(plumeUi).toContain("function ergOverlayToGeoJson(result, origin)");
+    expect(plumeUi).toContain("overlayMode: 'erg-protective-action'");
+    expect(plumeUi).toContain("color: '#ff7a00'");
+    expect(plumeUi).toContain('ERG Initial Isolation / Protective Action Overlay — not a modeled plume.');
+    expect(plumeUi).toContain('Bright orange: ERG Initial Isolation / Protective Action guide area — not a toxic concentration zone');
+    expect(plumeUi).toContain('No Current Data Exists');
+    expect(plumeUi).toContain('Manual / Incident Command review required');
+  });
+
+  it("provides independent ERG isolation and Weather Data toolbar toggles", () => {
+    expect(html).toContain('id="toggle-erg-isolation-btn"');
+    expect(html).toContain('id="toggle-plume-weather-btn"');
+    expect(html).toContain('id="plume-weather-data-panel" aria-labelledby="plume-weather-data-heading" hidden');
+    expect(plumeUi).toContain("async function toggleErgIsolationOverlay()");
+    expect(plumeUi).toContain("features.filter((feature) => feature.properties?.zoneId === 'erg-initial-isolation')");
+    expect(plumeUi).toContain("clearErgIsolationOverlay('ERG Initial Isolation Distance hidden.')");
+    expect(plumeUi).toContain("panel.hidden = !willOpen");
+    expect(styles).toContain("#plume .plume-layer-controls .plume-erg-layer-btn");
+    expect(styles).toContain("#plume .plume-layer-controls .plume-weather-layer-btn");
+  });
+
+  it("places Plot Plume before the ERG and Weather controls at matching toolbar size", () => {
+    const plotIndex = html.indexOf('id="plot-plume-btn"');
+    const ergIndex = html.indexOf('id="toggle-erg-isolation-btn"');
+    const weatherIndex = html.indexOf('id="toggle-plume-weather-btn"');
+
+    expect(plotIndex).toBeGreaterThan(-1);
+    expect(plotIndex).toBeLessThan(ergIndex);
+    expect(ergIndex).toBeLessThan(weatherIndex);
+    expect(styles).toContain("#plume .plume-layer-controls .plume-plot-btn");
+    expect(styles).toContain("grid-template-columns: repeat(5, minmax(92px, 1fr));");
+  });
+
+  it("uses a compact full-width Model Inputs workspace", () => {
+    expect(styles).toContain("#plume.view.active {\n    grid-template-columns: minmax(0, 1fr);");
+    expect(styles).toContain("#plume .plume-model-section:first-child {\n    grid-column: 1 / -1;");
+    expect(styles).toContain("max-height: 310px;");
+    expect(styles).toContain("grid-template-columns: repeat(6, minmax(0, 1fr));");
+    expect(styles).toContain("grid-template-columns: repeat(7, minmax(0, 1fr));");
+  });
+
   it("saves a structured plumeResult and preserves tactical safety boundaries", () => {
     for (const key of ["chemical:", "endpoint:", "weather:", "release:", "model:", "output:", "tacticalDecisionFlow:", "disclaimers:"]) {
       expect(plumeUi).toContain(key);
@@ -156,10 +206,14 @@ describe("plume map views", () => {
   it("shows connected Threat Zone receptor and protective-action summaries", () => {
     expect(html).toContain('id="demographics-critical-receptors"');
     expect(html).toContain('id="demographics-protective-action"');
-    expect(plumeUi).toContain("occupancy.education + occupancy.healthcare + occupancy.nursing + occupancy.critical");
+    expect(plumeUi).toContain("occupancy.education + healthcareFacilities + occupancy.critical");
   });
 
-  it("separates mapped structures and Census geography totals from impacted-household estimates", () => {
+  it("uses five selected-area metrics and keeps Census totals in collapsed context", () => {
+    for (const metric of ["residentialHomes", "currentPopulation", "criticalInfrastructure", "healthcareFacilities", "schools"]) {
+      expect(html).toContain(`data-threat-metric="${metric}"`);
+    }
+    expect(html.match(/data-threat-metric=/g)).toHaveLength(5);
     for (const id of [
       "demographics-structures",
       "demographics-census-households",
@@ -167,16 +221,17 @@ describe("plume map views", () => {
       "demographics-household-status",
       "demographics-household-limitations",
     ]) expect(html).toContain(`id="${id}"`);
-    expect(html).toContain("Census geographies may extend beyond the visible plume area");
+    expect(html).toContain('class="threat-zone-estimate-details" hidden');
+    expect(html).toContain("Census geographies and facility datasets may be incomplete or extend beyond the selected area");
     expect(plumeUi).toContain("householdEstimate: null");
-    expect(plumeUi).toContain("exact: 'Exact field-verified count'");
     expect(plumeUi).toContain("building: 'Building-footprint estimate'");
-    expect(plumeUi).toContain("areaWeighted: 'Area-weighted Census estimate'");
-    expect(plumeUi).toContain("censusTotal: 'Census geography total'");
-    expect(plumeUi).toContain("visual: 'Visual map estimate'");
-    expect(plumeUi).toContain("structure count only");
-    expect(plumeUi).toContain("not clipped to plume zone");
-    expect(plumeUi).toContain("setDemographicMetric('demographics-housing', noCurrentDataText)");
+    expect(plumeUi).toContain("setThreatZoneMetric('currentPopulation', null, '', '', false)");
+    expect(plumeUi).toContain("Nearby Census totals are context only and are not selected-zone counts.");
+    expect(plumeUi).toContain("window.HazMatIQ.threatZoneImpactSummary");
+    expect(plumeUi).toContain("if (panel) panel.open = true");
+    expect(styles).toContain("#plume.view.active #plume-demographics[open]");
+    expect(styles).toContain("#plume #plume-demographics .plume-threat-zone-content");
+    expect(styles).toContain("position: absolute;");
     expect(plumeUi).toContain("householdEstimateMethod:");
     expect(plumeUi).toContain("householdEstimateStatus:");
   });
@@ -189,45 +244,65 @@ describe("plume map views", () => {
     expect(plumeUi).toContain("Transportation Identifier");
   });
 
-  it("uses one shared high-definition radar controller in both maps", () => {
-    expect(plumeUi).toContain("HazMatWeatherRadar.createController(plumeMap");
+  it("uses the provider radar controller only on Live Map", () => {
+    expect(plumeUi).not.toContain("HazMatWeatherRadar.createController(plumeMap");
     expect(plumeUi).toContain("HazMatWeatherRadar.createController(liveMap");
     expect(liveMapBootstrap).toContain("HazMatWeatherRadar.createController(map");
-    expect(liveMapBootstrap).not.toContain("radar_base_reflectivity/MapServer/export");
-    expect(radarUi).toContain("const IMAGE_SIZE = 1024");
+    expect(html).not.toContain('data-plume-layer="radar"');
+    expect(html).toContain('class="plume-live-radar-link"');
+    expect(html).toContain('data-live-layer="weatherRadar"');
+    expect(html).not.toContain('class="live-radar-panel"');
+    expect(html).not.toContain('id="live-radar-provider"');
+    expect(html).not.toContain('id="live-radar-opacity"');
+    expect(radarProviders).toContain("radar_base_reflectivity_time/ImageServer");
+    expect(radarUi).toContain("const DEFAULT_OPACITY = 0.58");
     expect(radarUi).toContain("'raster-resampling': 'linear'");
+    expect(plumeUi).toContain("liveRadarController.setOpacity(0.58)");
+  });
+
+  it("keeps only one primary radar and the official NOAA fallback in the runtime registry", () => {
+    expect(radarProviders).toContain("RAINVIEWER_VISUAL_PROTOTYPE");
+    expect(radarProviders).toContain("NOAA_MRMS_OFFICIAL_FALLBACK");
+    for (const removed of ["RADRVIEW_SELF_HOSTED", "LIBREWXR_SELF_HOSTED", "TOMORROW_IO_VISUAL", "AERIS_MAPSGL_VISUAL", "MAPBOX_WEATHER_VISUAL", "AWN_EXTERNAL"]) {
+      expect(radarProviders).not.toContain(removed);
+    }
+    expect(radarProviders).toContain("getFrames");
+    expect(radarProviders).toContain("getLatestFrame");
+    expect(radarUi).toContain("await activate(registry.IDS.NOAA, false)");
   });
 
   it("keeps radar below plume geometry and never removes plume sources during refresh", () => {
-    expect(plumeUi).toContain("beforeLayerId: 'hazmat-threat-zones-fill'");
     expect(plumeUi).toContain("beforeLayerId: livePlumeFillLayerId");
     expect(radarUi).toContain("layer.id.includes('plume') && layer.type === 'fill'");
     expect(radarUi).not.toContain("removeSource('hazmat-threat-zones'");
     expect(radarUi).not.toContain("removeSource('live-plume-overlay'");
-    expect(radarUi).toContain("setTiles([tiles(3)])");
+    expect(radarUi).toContain("source?.setTiles");
   });
 
   it("does not apply radar enhancement filters to the entire map canvas", () => {
     expect(styles).not.toContain("radar-enhanced #live-gis-map canvas");
   });
 
-  it("uses a map-first Plume Model layout with three supporting cards below it", () => {
+  it("places adjacent Plume Summary and Threat Zone controls above the plume map", () => {
     expect(html.indexOf('id="plume-model-form"')).toBeLessThan(html.indexOf('class="plume-map-layout"'));
-    expect(html.indexOf('id="plume-demographics"')).toBeGreaterThan(html.indexOf('class="plume-map-layout"'));
+    expect(html.indexOf('id="plume-demographics"')).toBeLessThan(html.indexOf('class="plume-map-layout"'));
+    expect(html.indexOf('id="plume-incident-data-panel"')).toBeLessThan(html.indexOf('id="plume-demographics"'));
     expect(html.match(/id="plume-demographics"/g)?.length).toBe(1);
-    expect(html).toContain('class="plume-lower-summary-grid"');
+    expect(html).not.toContain('class="plume-lower-summary-grid"');
+    expect(html).not.toContain('id="plume-demographics" open');
+    expect(html).toContain('<summary>Plume Summary</summary>');
+    expect(html).toContain('<summary>Threat Zone</summary>');
     expect(html).not.toContain('id="plume-map-legend"');
     expect(html).not.toContain("<strong>Threat zones</strong>");
     expect(plumeUi).not.toContain("document.querySelector('.layout')?.append(plumeMapWorkspace)");
     expect(plumeUi).not.toContain("plumeMapWorkspace.append(document.getElementById('plume-demographics'))");
-    expect(styles).toContain("grid-template-columns: repeat(3, minmax(0, 1fr))");
-    expect(styles).toContain("#plume #plume-demographics { grid-column: 1; }");
-    expect(styles).toContain("#plume .plume-model-section:first-child { grid-column: 2; }");
-    expect(styles).toContain("grid-column: 3;");
+    expect(styles).toContain("#plume #plume-incident-data-panel > summary");
+    expect(styles).toContain("background: var(--yellow);");
+    expect(styles).toContain("#plume #plume-demographics > summary");
+    expect(styles).toContain("background: var(--red);");
     expect(styles).toContain("height: clamp(560px, 65dvh, 700px)");
-    expect(styles).toContain("#plume #plume-demographics { order: 4; }");
-    expect(styles).toContain("#plume .plume-model-section:first-child { order: 5; }");
-    expect(styles).toContain("#plume .plume-model-section:nth-child(2) { order: 6; }");
+    expect(styles).toContain("#plume #plume-demographics .plume-threat-zone-content");
+    expect(styles).toContain("overflow-y: auto;");
     expect(styles).toContain("overflow: visible;");
     expect(plumeUi).toContain("document.getElementById('plume-model-form')?.addEventListener('submit'");
     expect(plumeUi).toContain("document.querySelectorAll('[data-plume-layer]')");
@@ -236,7 +311,7 @@ describe("plume map views", () => {
   it("scopes the desktop three-column command layout away from Chemical ID", () => {
     expect(styles).toContain(".layout:has(#incident.active) > .content-area");
     expect(styles).toContain("grid-template-columns: minmax(520px, 56fr) minmax(220px, 22fr)");
-    expect(styles).not.toContain(".layout:has(#lookup.active)");
+    expect(styles).not.toMatch(/\.layout:has\(#lookup\.active\)[^{]*\{[^}]*grid-template-columns:\s*minmax\(520px, 56fr\)/s);
     expect(plumeUi).toContain("new ResizeObserver");
   });
 

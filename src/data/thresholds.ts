@@ -29,6 +29,11 @@ export const THRESHOLDS: ThresholdSet[] = [
     teel: { "0": 0.5, "1": 1, "2": 3, "3": 20 },
   },
   {
+    chemicalId: "hydrazine",
+    aegl: { "1": 0.1, "2": 13, "3": 35 },
+    notes: "1-hr final EPA AEGL values; CAS 302-01-2.",
+  },
+  {
     chemicalId: "anhydrous-hydrogen-chloride",
     aegl: { "1": 1.8, "2": 22, "3": 100 },
     erpg: { "1": 3, "2": 20, "3": 100 },

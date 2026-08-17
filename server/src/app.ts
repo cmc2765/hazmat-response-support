@@ -31,10 +31,28 @@ import { PlumeCalculationEvidence, PlumeInputs } from "../../src/lib/schema/plum
 import { aeglThresholdBands, selectVerifiedAeglEndpoint } from "../../src/lib/model/plume-endpoints.js";
 import { determinePlumeStatus } from "../../src/lib/model/plume-status.js";
 import { ERG_TABLE_1, getErgAdditionalTables, getErgContainerDistances } from "../../src/data/erg.js";
+import { molecularWeightOf } from "../../src/data/molecular-weight.js";
 
 const app = new Hono();
 app.use(logger());
 app.use("/*", serveStatic({ root: "./public" }));
+
+function backendEnvironment(...names: string[]) {
+  for (const name of names) {
+    const value = process.env[name]?.trim();
+    if (value) return value;
+  }
+  return "";
+}
+
+function enabledEnvironment(...names: string[]) {
+  return /^(1|true|yes|on)$/i.test(backendEnvironment(...names));
+}
+
+function radarProviderConfiguration() {
+  const rainViewerEnabled = enabledEnvironment("ENABLE_RAINVIEWER_RADAR", "VITE_ENABLE_RAINVIEWER_RADAR");
+  return { rainViewerEnabled };
+}
 
 const icsFormDirectory = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -418,6 +436,107 @@ app.get("/api/thresholds", async (c) => {
 });
 
 // ─── Plume model ────────────────────────────────────────────────────────
+app.get("/api/plume/availability", async (c) => {
+  const masterChemicalId = c.req.query("chemicalId")?.trim() || "";
+  const companionProfile = /^\d+$/.test(masterChemicalId)
+    ? queryChemicalProfile(masterChemicalId)
+    : null;
+  const companionCas = companionProfile?.header.cas?.trim() || "";
+  if (!companionProfile || !companionCas) {
+    return c.json({
+      error: "Chemical-specific plume guidance requires a verified Chemical Companion master link and CAS number.",
+      display: "No Current Data Exists",
+    }, 422);
+  }
+
+  const db = getDb();
+  const chemicalRows = await db.select().from(schema.chemicals).limit(500);
+  const canonicalChemical = chemicalRows.find((row) => {
+    try {
+      const casValues = JSON.parse(String(row.cas || "[]")) as string[];
+      return casValues.some((cas) => cas.trim() === companionCas);
+    } catch {
+      return false;
+    }
+  });
+  if (!canonicalChemical) {
+    return c.json({
+      error: "Chemical Companion record has no verified canonical chemical/CAS link for plume modeling.",
+      display: "No Current Data Exists",
+    }, 422);
+  }
+
+  const requestedDuration = Number(c.req.query("endpointDurationMinutes")) || 60;
+  const endpoint = selectVerifiedAeglEndpoint(canonicalChemical.id, companionCas, requestedDuration);
+  const ergOnlyRequested = c.req.query("ergOnly") === "true";
+  if (endpoint && !ergOnlyRequested) {
+    return c.json({
+      mode: "aegl-plume",
+      display: "AEGL / LOC Plume Model",
+      endpointStatus: "Source-backed AEGL / LOC endpoint available; complete release and weather inputs are required.",
+    });
+  }
+
+  const canonicalUns = (() => {
+    try {
+      return JSON.parse(String(canonicalChemical.un || "[]")) as string[];
+    } catch {
+      return [];
+    }
+  })();
+  const ergRows = (await Promise.all(canonicalUns.map((un) =>
+    db.select().from(schema.ergTable1).where(eq(schema.ergTable1.un, un))))).flat();
+  const canonicalGuide = String(canonicalChemical.ergGuide || "").replace(/P$/i, "");
+  const ergRow = ergRows.find((row) => row.guide.replace(/P$/i, "") === canonicalGuide)
+    ?? ergRows[0];
+  if (ergRow) {
+    const spillSize = c.req.query("ergSpillSize") === "small" ? "small" : "large";
+    const period = c.req.query("ergPeriod") === "day" ? "day" : "night";
+    const initialIsolationFt = Number(ergRow[`${spillSize}Initial${period === "day" ? "Day" : "Night"}Ft`]);
+    const protectiveActionMi = Number(ergRow[`${spillSize}Protective${period === "day" ? "Day" : "Night"}Mi`]);
+    if (initialIsolationFt > 0 || protectiveActionMi > 0) {
+      return c.json({
+        mode: "erg-protective-action",
+        display: "ERG Initial Isolation / Protective Action Overlay",
+        endpointStatus: "AEGL / LOC unavailable; using source-backed ERG distances.",
+        plumeStatus: "ERG Protective Action Guide",
+        modelStatus: "Not a modeled plume",
+        validationStatus: "PHMSA ERG 2024 source-backed distance overlay",
+        masterChemicalId,
+        chemicalIdentity: {
+          chemicalName: companionProfile.header.name,
+          casNumber: companionCas,
+          sourceStatus: "Verified Chemical Companion Master Record",
+        },
+        ergOverlay: {
+          un: ergRow.un,
+          guide: ergRow.guide,
+          materialName: ergRow.name,
+          spillSize,
+          period,
+          initialIsolationFt,
+          protectiveActionMi,
+          source: "PHMSA Emergency Response Guidebook 2024 Table 1",
+          sourceUrl: "https://www.phmsa.dot.gov/training/hazmat/erg/emergency-response-guidebook-erg",
+          limitations: [
+            "This is an ERG initial-isolation/protective-action guide overlay, not a dispersion model or toxic concentration contour.",
+            "Verify the UN/NA identification, spill size, day/night condition, wind direction, current ERG, field observations, monitoring, agency SOPs, and Incident Command.",
+          ],
+        },
+      });
+    }
+  }
+
+  return c.json({
+    mode: "no-distance-data",
+    error: ergOnlyRequested
+      ? "No Current ERG Isolation Distance Exists. Establish isolation using agency SOPs, field observations, monitoring, and Incident Command."
+      : "No Current Data Exists. Establish isolation using agency SOPs, field observations, monitoring, and Incident Command.",
+    display: "No Current Data Exists",
+    endpointStatus: "No approved AEGL / LOC or ERG distance data is available.",
+  });
+});
+
 app.post("/api/plume/run", async (c) => {
   const db = getDb();
   const body = await c.req.json().catch(() => null);
@@ -477,24 +596,83 @@ app.post("/api/plume/run", async (c) => {
     inputs.endpointDurationMinutes ?? 60,
   );
   if (!endpoint) {
+    const canonicalUns = (() => {
+      try {
+        return JSON.parse(String(canonicalChemical.un || "[]")) as string[];
+      } catch {
+        return [];
+      }
+    })();
+    const ergRows = (await Promise.all(canonicalUns.map((un) =>
+      db.select().from(schema.ergTable1).where(eq(schema.ergTable1.un, un))))).flat();
+    const canonicalGuide = String(canonicalChemical.ergGuide || "").replace(/P$/i, "");
+    const ergRow = ergRows.find((row) => row.guide.replace(/P$/i, "") === canonicalGuide)
+      ?? ergRows[0];
+    if (ergRow) {
+      const spillSize = bodyRecord.ergSpillSize === "small" ? "small" : "large";
+      const period = bodyRecord.ergPeriod === "day" ? "day" : "night";
+      const initialIsolationFt = Number(ergRow[`${spillSize}Initial${period === "day" ? "Day" : "Night"}Ft`]);
+      const protectiveActionMi = Number(ergRow[`${spillSize}Protective${period === "day" ? "Day" : "Night"}Mi`]);
+      if (initialIsolationFt > 0 || protectiveActionMi > 0) {
+        return c.json({
+          mode: "erg-protective-action",
+          display: "ERG Initial Isolation / Protective Action Overlay",
+          endpointStatus: "AEGL / LOC unavailable; using source-backed ERG distances.",
+          plumeStatus: "ERG Protective Action Guide",
+          modelStatus: "Not a modeled plume",
+          validationStatus: "PHMSA ERG 2024 source-backed distance overlay",
+          masterChemicalId,
+          inputs: {
+            chemicalId: canonicalChemical.id,
+            windDirDeg: inputs.windDirDeg,
+            lat: inputs.lat,
+            lng: inputs.lng,
+          },
+          chemicalIdentity: {
+            chemicalName: companionProfile.header.name,
+            casNumber: companionCas,
+            sourceStatus: "Verified Chemical Companion Master Record",
+          },
+          ergOverlay: {
+            un: ergRow.un,
+            guide: ergRow.guide,
+            materialName: ergRow.name,
+            spillSize,
+            period,
+            initialIsolationFt,
+            protectiveActionMi,
+            source: "PHMSA Emergency Response Guidebook 2024 Table 1",
+            sourceUrl: "https://www.phmsa.dot.gov/training/hazmat/erg/emergency-response-guidebook-erg",
+            limitations: [
+              "This is an ERG initial-isolation/protective-action guide overlay, not a dispersion model or toxic concentration contour.",
+              "Verify the UN/NA identification, spill size, day/night condition, wind direction, current ERG, field observations, monitoring, agency SOPs, and Incident Command.",
+            ],
+          },
+          isopleths: [],
+        });
+      }
+    }
     return c.json({
-      error: "AEGL value not available for this chemical. Toxic plume endpoint cannot be plotted from AEGL.",
-      display: "No Current Data Exists for AEGL.",
-      endpointStatus: "No Current Data Exists for AEGL.",
+      mode: "no-distance-data",
+      error: "No Current Data Exists. Establish isolation using agency SOPs, field observations, monitoring, and Incident Command.",
+      display: "No Current Data Exists",
+      endpointStatus: "No approved AEGL / LOC or ERG distance data is available.",
       plumeStatus: determinePlumeStatus({ hasChemicalLink: true, hasAeglEndpoint: false, hasWeather: true, hasReleaseInputs: true }),
     }, 422);
   }
 
   inputs.chemicalId = canonicalChemical.id;
   if (inputs.molecularWeight === undefined) {
-    const mw = canonicalChemical.molecularWeight;
-    if (mw) {
-      inputs.molecularWeight = Number(mw);
+    const mw = canonicalChemical.molecularWeight
+      ? Number(canonicalChemical.molecularWeight)
+      : molecularWeightOf(canonicalChemical.id);
+    if (mw !== undefined) {
+      inputs.molecularWeight = mw;
       calculationEvidence?.sourceData.push({
         sourceName: "Chemical Companion / CAMEO-linked chemical record",
         sourceRecordId: masterChemicalId,
         fields: ["molecularWeight"],
-        values: { molecularWeight: Number(mw) },
+        values: { molecularWeight: mw },
         approved: true,
         sourceLocator: `chemical-companion:${masterChemicalId}; chemicals:${canonicalChemical.id}`,
       });
@@ -507,6 +685,7 @@ app.post("/api/plume/run", async (c) => {
     const result = runPlume(inputs, { thresholds, calculationEvidence });
     return c.json({
       ...result,
+      mode: "aegl-plume",
       plumeStatus: determinePlumeStatus({
         hasChemicalLink: true,
         hasAeglEndpoint: true,
@@ -533,6 +712,24 @@ app.post("/api/plume/run", async (c) => {
         : "Not Independently Validated",
     }, 422);
   }
+});
+
+// Live Map exposes one visual primary and one official fallback.
+app.get("/api/radar/providers", (c) => {
+  const config = radarProviderConfiguration();
+  c.header("Cache-Control", "no-store");
+  return c.json({
+    defaultProviderId: config.rainViewerEnabled
+      ? "RAINVIEWER_VISUAL_PROTOTYPE"
+      : "NOAA_MRMS_OFFICIAL_FALLBACK",
+    providers: {
+      NOAA_MRMS_OFFICIAL_FALLBACK: { status: "Official Fallback", configured: true },
+      RAINVIEWER_VISUAL_PROTOTYPE: {
+        status: config.rainViewerEnabled ? "Visual Prototype" : "Disabled",
+        configured: config.rainViewerEnabled,
+      },
+    },
+  });
 });
 
 // Proxy live weather so browser CORS rules cannot block plume inputs.

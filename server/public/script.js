@@ -491,6 +491,12 @@ const systemModeStorageKey = 'hazmatiq_system_mode';
 const plumePlanningStorageKey = 'hazmatiq_plume_planning_session';
 const guidedResponseTacticalStorageKey = 'hazmatiq_guided_response_tactical_record';
 const noCurrentDataText = 'No Current Data Exists';
+const responderText = window.HazMatResponderText || {
+  normalizeResponderText: (value) => String(value ?? '').replace(/\s+/g, ' ').trim(),
+  normalizeSectionHeading: (value) => String(value ?? '').replace(/\s+/g, ' ').trim(),
+  normalizeBulletList: (items) => items.flat(Infinity).map((value) => String(value ?? '').trim()).filter(Boolean),
+  formatResponderGuidance: (items) => items.flat(Infinity).map((value) => String(value ?? '').trim()).filter(Boolean),
+};
 const readinessStatus = Object.freeze({
   verified: 'Verified Source',
   imported: 'Imported Source',
@@ -897,17 +903,17 @@ function appendIncidentSummarySection(container, title, entries) {
   const section = document.createElement('section');
   section.className = 'report-summary-block';
   const heading = document.createElement('h3');
-  heading.textContent = title;
+  heading.textContent = responderText.normalizeSectionHeading(title);
   const list = document.createElement('dl');
   applicable.forEach(([label, value]) => {
     const row = document.createElement('div');
     row.className = 'report-summary-row';
     const term = document.createElement('dt');
-    term.textContent = label;
+    term.textContent = responderText.normalizeSectionHeading(label);
     const description = document.createElement('dd');
     if (Array.isArray(value)) {
       const bullets = document.createElement('ul');
-      value.forEach((item) => {
+      responderText.formatResponderGuidance(value).forEach((item) => {
         const bullet = document.createElement('li');
         bullet.textContent = item;
         bullets.append(bullet);
@@ -1840,7 +1846,7 @@ function normalizeDataSourceOutput(value) {
   if (Array.isArray(value)) {
     return value.map(normalizeDataSourceOutput).filter(Boolean).join(' · ');
   }
-  return String(value)
+  return responderText.normalizeResponderText(String(value)
     .normalize('NFKC')
     .replace(/\\(?:r\\n|[nrt])/g, ' · ')
     .replace(/[\r\n\t]+/g, ' · ')
@@ -1849,12 +1855,12 @@ function normalizeDataSourceOutput(value) {
     .replace(/[ \f\v]+/g, ' ')
     .replace(/\s+([,.;:!?])/g, '$1')
     .trim()
-    .replace(/^[·,;:\s]+|[·,;:\s]+$/g, '');
+    .replace(/^[·,;:\s]+|[·,;:\s]+$/g, ''));
 }
 
 function profileDisplayParts(value) {
   const values = Array.isArray(value) ? value : [value];
-  return values
+  const parts = values
     .flatMap((item) => {
       const text = normalizeDataSourceOutput(item);
       if (!text) return [];
@@ -1865,6 +1871,7 @@ function profileDisplayParts(value) {
     })
     .map((item) => item.trim())
     .filter(hasAvailableProfileData);
+  return responderText.formatResponderGuidance(parts);
 }
 
 function shouldUseCompactColumns(items) {
@@ -1875,7 +1882,8 @@ function shouldUseCompactColumns(items) {
 }
 
 function titleCaseProfileLabel(value) {
-  return String(value || '').replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
+  const heading = responderText.normalizeSectionHeading(value);
+  return heading.replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
 }
 
 function createHybridDeconLink() {
@@ -1917,7 +1925,11 @@ function createProfileSection(title, rows, list = false) {
   heading.textContent = titleCaseProfileLabel(title);
   section.append(heading);
   if (list) {
-    const items = (Array.isArray(rows) ? rows : [rows]).filter(hasAvailableProfileData);
+    const rawItems = (Array.isArray(rows) ? rows : [rows]).filter(hasAvailableProfileData);
+    const textItems = rawItems.filter((item) => !item || typeof item !== 'object');
+    const items = textItems.length === rawItems.length
+      ? responderText.formatResponderGuidance(textItems)
+      : rawItems;
     if (!items.length) return null;
     const listEl = document.createElement('ul');
     listEl.className = 'chemical-profile-list';
@@ -2014,10 +2026,20 @@ function patientHandlingSteps(values) {
     .map((value) => String(value || '').trim())
     .filter(hasAvailableProfileData))];
   const hasSpecificDeconInstruction = steps.some((step) => /decontaminate with enhanced ventilation or water/i.test(step));
-  return steps.filter((step) => !(
+  const filtered = steps.filter((step) => !(
     hasSpecificDeconInstruction
     && /^Remove from hazardous area, decontaminate, and treat symptomatically\.?$/i.test(step)
   ));
+  const formatted = responderText.formatResponderGuidance(filtered);
+  const preferredOrder = [
+    'If damp, remove clothing immediately.',
+    'If wearing bulky clothing or denim, remove outer layer.',
+    'Add fans if available to enhance ventilation effectiveness.',
+  ];
+  return formatted.length === preferredOrder.length
+    && preferredOrder.every((instruction) => formatted.includes(instruction))
+    ? preferredOrder
+    : formatted;
 }
 
 const primaryLimitLabels = {
@@ -2429,8 +2451,11 @@ function guidedDisplayValue(value, missingText = noCurrentDataText) {
     const displayed = guidedDisplayValue(item, '');
     return displayed ? [displayed] : [];
   }) : null;
-  if (values) return values.length ? values.join(' · ') : missingText;
-  const text = String(value ?? '').trim();
+  if (values) {
+    const guidance = responderText.formatResponderGuidance(values);
+    return guidance.length ? guidance.join(' · ') : missingText;
+  }
+  const text = responderText.normalizeResponderText(value);
   return !text || /^(?:n\/?a|not available|null|undefined)$/i.test(text) ? missingText : text;
 }
 
@@ -2469,7 +2494,7 @@ function createGuidedResponseCard(title, rows, { action, sources = [] } = {}) {
   const card = document.createElement('article');
   card.className = 'panel-card guided-response-card';
   const heading = document.createElement('h3');
-  heading.textContent = title;
+  heading.textContent = responderText.normalizeSectionHeading(title);
   const sourceLine = document.createElement('p');
   sourceLine.className = 'guided-section-sources';
   sourceLine.textContent = `Sources: ${sources.length ? sources.join(', ') : noCurrentDataText}`;
@@ -2479,7 +2504,7 @@ function createGuidedResponseCard(title, rows, { action, sources = [] } = {}) {
     const row = document.createElement('div');
     row.className = 'guided-response-row';
     const term = document.createElement('dt');
-    term.textContent = label;
+    term.textContent = responderText.normalizeSectionHeading(label);
     const detail = document.createElement('dd');
     const text = document.createElement('span');
     text.textContent = guidedDisplayValue(value);
@@ -2575,7 +2600,7 @@ function createTacticalFlowBox(title, status, rows, sources, icApprovalRequired 
   const box = document.createElement('section');
   box.className = 'guided-flow-box';
   const heading = document.createElement('h4');
-  heading.textContent = title;
+  heading.textContent = responderText.normalizeSectionHeading(title);
   const statusBox = document.createElement('strong');
   statusBox.className = 'guided-flow-status';
   statusBox.textContent = status;
@@ -2583,7 +2608,7 @@ function createTacticalFlowBox(title, status, rows, sources, icApprovalRequired 
   rows.forEach(({ label, value }) => {
     const row = document.createElement('div');
     const term = document.createElement('dt');
-    term.textContent = label;
+    term.textContent = responderText.normalizeSectionHeading(label);
     const detail = document.createElement('dd');
     detail.textContent = guidedDisplayValue(value);
     row.append(term, detail);
@@ -2871,7 +2896,7 @@ const selectedChemicalStorageKey = 'hazmatiq.selectedChemical';
 function replaceCommandList(id, items, emptyMessage) {
   const list = document.getElementById(id);
   if (!list) return;
-  const rows = (items || []).filter(Boolean);
+  const rows = responderText.formatResponderGuidance((items || []).filter(Boolean));
   list.replaceChildren(...(rows.length ? rows : [emptyMessage]).map((textValue) => {
     const item = document.createElement('li');
     item.textContent = textValue;
@@ -3083,7 +3108,7 @@ function renderGuidanceBox(bodyId, sourceId, summary, fallback) {
   if (summary?.items?.length) {
     const list = document.createElement('ul');
     list.className = 'incident-guidance-list';
-    summary.items.forEach((item) => {
+    responderText.formatResponderGuidance(summary.items).forEach((item) => {
       const row = document.createElement('li');
       row.textContent = normalizeDataSourceOutput(item);
       list.append(row);
@@ -3184,7 +3209,7 @@ function appendGuidanceSection(container, title, items, fallback) {
   const section = document.createElement('li');
   section.append(Object.assign(document.createElement('strong'), { textContent: title }));
   const list = document.createElement('ul');
-  (items.length ? items : [fallback]).forEach((text) => {
+  responderText.formatResponderGuidance(items.length ? items : [fallback]).forEach((text) => {
     const row = document.createElement('li');
     row.textContent = text;
     list.append(row);
@@ -3368,6 +3393,7 @@ function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {
   }
   if (changed && clearOverlay) {
     importedPlumeOverlay = null;
+    clearErgIsolationOverlay();
     void clearThreatZones(activeChemical
       ? 'Chemical changed. Confirm inputs and select Plot Plume.'
       : 'Identify a chemical before plotting a plume.');
@@ -3424,7 +3450,7 @@ function clearChemicalSuggestions() {
 
 async function openChemical(chemical, facilityName = '') {
   if (chemical.recordType === 'transportation-identifier' || !chemical.guidanceEligible) {
-    setChemicalSearchStatus('Transportation identifier requires review before chemical-specific guidance is used.', 'error');
+    setChemicalSearchStatus(chemical.reviewWarning || 'This transport identifier has not been verified against a Chemical Companion master chemical record. Do not use it for IDLH, PPE, plume, decon, or medical guidance until reviewed.', 'error');
     return;
   }
   setActiveChemical(chemical);
@@ -3480,14 +3506,21 @@ function isUnreviewedTransportationRecord(chemical) {
 }
 
 function chemicalSearchDetail(chemical) {
+  return [
+    chemical.matchReason,
+    `Source Status: ${chemical.sourceStatus || (isUnreviewedTransportationRecord(chemical) ? 'Requires Review' : 'Verified')}`,
+  ].filter(Boolean).join(' · ') || 'No Current Data Exists';
+}
+
+function chemicalSearchIdentifiers(chemical) {
+  if (Array.isArray(chemical.linkedIdentifiers) && chemical.linkedIdentifiers.length) return chemical.linkedIdentifiers;
   const un = parseJsonField(chemical.un, [])?.[0];
   const cas = parseJsonField(chemical.cas, [])?.[0];
   return [
-    ...(chemical.sourceBadges || []),
-    un && `UN ${un}`,
-    cas && `CAS ${cas}`,
-    chemical.matchReason,
-  ].filter(Boolean).join(' · ') || 'No Current Data Exists';
+    cas && { type: 'CAS', label: `CAS ${cas}` },
+    un && { type: isUnreviewedTransportationRecord(chemical) ? 'Transport' : 'UN/NA', label: `UN ${un}` },
+    chemical.ergGuide && { type: 'ERG', label: `ERG ${chemical.ergGuide}` },
+  ].filter(Boolean);
 }
 
 async function openChemicalById(chemicalId, facilityName = '') {
@@ -3622,11 +3655,13 @@ async function openFacility(facilityId) {
   facilityInventory?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-function createSuggestion(kind, title, detail, onSelect) {
+function createSuggestion(kind, title, detail, onSelect, { identifiers = [], warning = '' } = {}) {
+  const option = document.createElement('div');
+  option.className = 'chemical-suggestion';
+  option.setAttribute('role', 'option');
   const button = document.createElement('button');
   button.type = 'button';
-  button.className = 'chemical-suggestion';
-  button.setAttribute('role', 'option');
+  button.className = 'chemical-suggestion-select';
 
   const type = document.createElement('span');
   type.className = 'chemical-suggestion-type';
@@ -3637,9 +3672,40 @@ function createSuggestion(kind, title, detail, onSelect) {
   const subtext = document.createElement('small');
   subtext.textContent = detail;
   text.append(heading, subtext);
+  if (identifiers.length) {
+    const renderChips = (items) => {
+      const chips = document.createElement('span');
+      chips.className = 'chemical-identifier-chips';
+      items.forEach((identifier) => {
+        const chip = document.createElement('span');
+        chip.className = 'chemical-identifier-chip';
+        chip.dataset.identifierType = identifier.type;
+        chip.textContent = identifier.label;
+        chips.append(chip);
+      });
+      return chips;
+    };
+    if (identifiers.length > 5) {
+      text.append(renderChips(identifiers.slice(0, 3)));
+      const linkedDetails = document.createElement('details');
+      linkedDetails.className = 'chemical-linked-identifiers';
+      const linkedSummary = document.createElement('summary');
+      linkedSummary.textContent = 'View linked identifiers';
+      linkedDetails.append(linkedSummary, renderChips(identifiers.slice(3)));
+      linkedDetails.addEventListener('click', (event) => event.stopPropagation());
+      option.append(linkedDetails);
+    } else text.append(renderChips(identifiers));
+  }
+  if (warning) {
+    const warningText = document.createElement('small');
+    warningText.className = 'chemical-transport-warning';
+    warningText.textContent = warning;
+    text.append(warningText);
+  }
   button.append(type, text);
   button.addEventListener('click', onSelect);
-  return button;
+  option.prepend(button);
+  return option;
 }
 
 async function searchChemicalId(value, { submit = false } = {}) {
@@ -3678,7 +3744,7 @@ async function searchChemicalId(value, { submit = false } = {}) {
   chemicalSearchSuggestions.replaceChildren();
   chemicals.slice(0, 5).forEach((chemical) => {
     chemicalSearchSuggestions.append(createSuggestion(
-      isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier' : 'Chemical Companion Master',
+      chemical.resultType || (isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier — Requires Review' : 'Chemical Companion Master'),
       chemical.name,
       chemicalSearchDetail(chemical),
       () => {
@@ -3686,8 +3752,12 @@ async function searchChemicalId(value, { submit = false } = {}) {
         if (facilityInventory) facilityInventory.hidden = true;
         clearChemicalSuggestions();
         if (isUnreviewedTransportationRecord(chemical)) {
-          setChemicalSearchStatus('Transportation identifier requires review before chemical-specific guidance is used.', 'error');
+          setChemicalSearchStatus(chemical.reviewWarning || 'This transport identifier has not been verified against a Chemical Companion master chemical record. Do not use it for IDLH, PPE, plume, decon, or medical guidance until reviewed.', 'error');
         } else openChemical(chemical);
+      },
+      {
+        identifiers: chemicalSearchIdentifiers(chemical),
+        warning: isUnreviewedTransportationRecord(chemical) ? chemical.reviewWarning : '',
       },
     ));
   });
@@ -3898,14 +3968,15 @@ let plumeSourceMarker = null;
 let importedPlumeOverlay = null;
 let currentThreatZoneGeoJson = null;
 let currentThreatZoneGuideGeoJson = null;
+let currentErgIsolationGeoJson = null;
+let ergIsolationVisible = false;
 let currentPlumeHazardsGeoJson = null;
 let currentPlumeHazardsSignature = '';
 let plumeDistanceMarkers = [];
 let plumeMeasurementPopup = null;
-let plumeRadarController = null;
 let plumeManualLocation = null;
 const plumeHazardsCacheKey = 'hazmatiq_plume_hazards_cache';
-const plumeLayerState = { centerline: false, distance: false, hazards: false, radar: false };
+const plumeLayerState = { centerline: false, distance: false, hazards: false };
 const plumeLayerIds = {
   centerline: ['hazmat-threat-zone-centerline', 'hazmat-threat-zone-wind-arrow'],
   distance: ['hazmat-threat-zone-distance-line', 'hazmat-threat-zone-distance-ticks', 'hazmat-threat-zone-distance-points', 'hazmat-threat-zone-distance-labels'],
@@ -3914,6 +3985,7 @@ const plumeLayerIds = {
 let threatZoneInteractionBound = false;
 let demographicsRequestToken = 0;
 let latestThreatZoneHouseholdEstimate = null;
+let threatZoneImpactSummary = null;
 let latestPlumeWeather = null;
 let plumeAutoReplotTimer = null;
 const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
@@ -3968,26 +4040,89 @@ function restorePlumeMapOverlays() {
   // while isStyleLoaded() remains false waiting on remote basemap tiles.
   if (!plumeMap?.getStyle()) return;
   if (currentThreatZoneGeoJson?.features?.length) addThreatZoneLayers();
+  if (ergIsolationVisible && currentErgIsolationGeoJson?.features?.length) addErgIsolationLayer();
   if (plumeLayerState.hazards && currentPlumeHazardsGeoJson) addPlumeHazardsLayers(currentPlumeHazardsGeoJson);
   Object.entries(plumeLayerState).forEach(([layerName, visible]) => setPlumeLayerVisibility(layerName, visible));
-  syncPlumeRadarOverlay();
 }
 
-function syncPlumeRadarOverlay() {
-  if (!plumeMap || !plumeLayerState.radar) {
-    plumeRadarController?.disable();
+function addErgIsolationLayer() {
+  if (!plumeMap?.getStyle() || !currentErgIsolationGeoJson?.features?.length) return;
+  const sourceId = 'hazmat-erg-isolation';
+  const fillId = 'hazmat-erg-isolation-fill';
+  const lineId = 'hazmat-erg-isolation-line';
+  const source = plumeMap.getSource(sourceId);
+  if (source) source.setData(currentErgIsolationGeoJson);
+  else plumeMap.addSource(sourceId, { type: 'geojson', data: currentErgIsolationGeoJson });
+  if (!plumeMap.getLayer(fillId)) {
+    plumeMap.addLayer({
+      id: fillId,
+      type: 'fill',
+      source: sourceId,
+      paint: { 'fill-color': '#ff7a00', 'fill-opacity': 0.24 },
+    });
+  }
+  if (!plumeMap.getLayer(lineId)) {
+    plumeMap.addLayer({
+      id: lineId,
+      type: 'line',
+      source: sourceId,
+      paint: { 'line-color': '#ff7a00', 'line-width': 4, 'line-opacity': 0.96 },
+    });
+  }
+}
+
+function clearErgIsolationOverlay(message = '') {
+  currentErgIsolationGeoJson = null;
+  ergIsolationVisible = false;
+  const source = plumeMap?.getSource('hazmat-erg-isolation');
+  if (source) source.setData({ type: 'FeatureCollection', features: [] });
+  const button = document.getElementById('toggle-erg-isolation-btn');
+  button?.classList.remove('active');
+  button?.setAttribute('aria-pressed', 'false');
+  if (message) setText('plume-layers-status', message);
+}
+
+async function toggleErgIsolationOverlay() {
+  if (ergIsolationVisible) {
+    clearErgIsolationOverlay('ERG Initial Isolation Distance hidden.');
     return;
   }
-  if (!window.HazMatWeatherRadar) {
-    setText('plume-layers-status', 'Weather radar controller unavailable.');
-    return;
+  const button = document.getElementById('toggle-erg-isolation-btn');
+  button?.setAttribute('disabled', '');
+  setText('plume-layers-status', 'Loading ERG Initial Isolation Distance…');
+  try {
+    if (!activeChemical) throw new Error('Select a verified chemical before displaying an ERG isolation distance.');
+    const query = new URLSearchParams({
+      chemicalId: String(activeChemical.selectedChemicalId ?? activeChemical.id),
+      endpointDurationMinutes: document.getElementById('plume-endpoint-duration')?.value || '60',
+      ergSpillSize: document.getElementById('plume-erg-spill-size')?.value || 'large',
+      ergPeriod: document.getElementById('plume-erg-period')?.value || 'night',
+      ergOnly: 'true',
+    });
+    const response = await fetch(`/api/plume/availability?${query}`);
+    const result = await response.json().catch(() => null);
+    if (!response.ok || result?.mode !== 'erg-protective-action' || !result.ergOverlay) {
+      throw new Error(result?.error || 'No Current ERG Isolation Distance Exists.');
+    }
+    const location = await getIncidentCoordinates({ requestGps: true, allowPlumeManual: true });
+    if (!location) throw new Error('Enter an incident location before displaying the ERG isolation distance.');
+    await ensurePlumeMap(location);
+    const allErgFeatures = ergOverlayToGeoJson({ ...result, inputs: { windDirDeg: 0 } }, location);
+    currentErgIsolationGeoJson = {
+      type: 'FeatureCollection',
+      features: allErgFeatures.features.filter((feature) => feature.properties?.zoneId === 'erg-initial-isolation'),
+    };
+    if (!currentErgIsolationGeoJson.features.length) throw new Error('The ERG record has no Initial Isolation Distance for this selection.');
+    ergIsolationVisible = true;
+    addErgIsolationLayer();
+    button?.classList.add('active');
+    button?.setAttribute('aria-pressed', 'true');
+    setText('plume-layers-status', `ERG Initial Isolation Distance shown: ${Number(result.ergOverlay.initialIsolationFt).toLocaleString()} ft (${result.ergOverlay.spillSize} spill, ${result.ergOverlay.period}).`);
+  } catch (error) {
+    clearErgIsolationOverlay(error instanceof Error ? error.message : 'ERG isolation distance could not be displayed.');
+  } finally {
+    button?.removeAttribute('disabled');
   }
-  plumeRadarController ||= window.HazMatWeatherRadar.createController(plumeMap, {
-    prefix: 'plume-radar',
-    beforeLayerId: 'hazmat-threat-zones-fill',
-    onRefresh: (updatedAt) => setText('plume-layers-status', `Weather radar updated ${updatedAt.toLocaleTimeString()}.`),
-  });
-  plumeRadarController.enable();
 }
 
 function updateIncidentLocationFromMap(lng, lat, action) {
@@ -4054,7 +4189,11 @@ function ensurePlumeMap(location) {
         ? plumeMap.queryRenderedFeatures(event.point, { layers: ['hazmat-threat-zones-fill'] })
         : [];
       if (renderedZones.length) {
-        const selected = [...renderedZones].sort((a, b) => Number(b.properties?.threatRank || 0) - Number(a.properties?.threatRank || 0))[0];
+        const selected = [...renderedZones].sort((a, b) => {
+          const rankDifference = Number(b.properties?.threatRank || 0) - Number(a.properties?.threatRank || 0);
+          if (rankDifference) return rankDifference;
+          return (threatZoneAreaSquareMeters(a) || Infinity) - (threatZoneAreaSquareMeters(b) || Infinity);
+        })[0];
         const sourceFeature = currentThreatZoneGeoJson?.features.find(
           (feature) => String(feature.properties?.zoneId) === String(selected.properties?.zoneId),
         ) || selected;
@@ -4065,10 +4204,6 @@ function ensurePlumeMap(location) {
       updateIncidentLocationFromMap(lng, lat, 'Incident pin placed from map click');
     });
     plumeMap.on('error', (event) => {
-      if (plumeRadarController?.ownsSource(event?.sourceId)) {
-        setText('plume-layers-status', 'Weather radar temporarily unavailable; plume layers remain active.');
-        return;
-      }
       if (event?.error?.message) setText('plume-overlay-status', `Map layer error: ${event.error.message}`);
     });
   }
@@ -4198,6 +4333,76 @@ function plumeResultToGeoJson(result, origin) {
   };
 }
 
+function ergOverlayToGeoJson(result, origin) {
+  const erg = result?.ergOverlay;
+  if (!erg) return { type: 'FeatureCollection', features: [] };
+  const isolationM = Number(erg.initialIsolationFt) * 0.3048;
+  const protectiveM = Number(erg.protectiveActionMi) * 1609.344;
+  const windFromDeg = Number(result.inputs?.windDirDeg);
+  const source = `${erg.source} · UN ${erg.un} · Guide ${erg.guide} · ${erg.spillSize} spill · ${erg.period}`;
+  const features = [];
+
+  if (protectiveM > 0 && Number.isFinite(windFromDeg)) {
+    const halfWidthM = protectiveM / 2;
+    const localRing = [
+      [0, -halfWidthM],
+      [protectiveM, -halfWidthM],
+      [protectiveM, halfWidthM],
+      [0, halfWidthM],
+      [0, -halfWidthM],
+    ];
+    features.push({
+      type: 'Feature',
+      properties: {
+        label: `ERG Protective Action Zone — ${erg.protectiveActionMi} mi`,
+        zoneId: 'erg-protective-action',
+        source,
+        overlayMode: 'erg-protective-action',
+        overlayType: 'ERG Protective Action Zone',
+        threatRank: 2,
+        colorName: 'orange',
+        color: '#ff7a00',
+        fillOpacity: 0.3,
+        maxDownwindM: protectiveM,
+        windFromDeg,
+      },
+      geometry: {
+        type: 'Polygon',
+        coordinates: [localRing.map((point) => localMetersToLngLat(point, origin, windFromDeg))],
+      },
+    });
+  }
+
+  if (isolationM > 0) {
+    const circle = Array.from({ length: 65 }, (_, index) => {
+      const angle = (index / 64) * Math.PI * 2;
+      return localMetersToLngLat(
+        [Math.cos(angle) * isolationM, Math.sin(angle) * isolationM],
+        origin,
+        Number.isFinite(windFromDeg) ? windFromDeg : 0,
+      );
+    });
+    features.push({
+      type: 'Feature',
+      properties: {
+        label: `ERG Initial Isolation Zone — ${Number(erg.initialIsolationFt).toLocaleString()} ft`,
+        zoneId: 'erg-initial-isolation',
+        source,
+        overlayMode: 'erg-protective-action',
+        overlayType: 'ERG Initial Isolation Zone',
+        threatRank: 2,
+        colorName: 'orange',
+        color: '#ff9d00',
+        fillOpacity: 0.42,
+        maxDownwindM: isolationM,
+      },
+      geometry: { type: 'Polygon', coordinates: [circle] },
+    });
+  }
+
+  return { type: 'FeatureCollection', features };
+}
+
 function forEachCoordinate(geojson, callback) {
   const visit = (coordinates) => {
     if (typeof coordinates?.[0] === 'number') callback(coordinates);
@@ -4223,6 +4428,31 @@ function sampleClosedRing(ring, maxPoints = 70) {
   const sampled = ring.slice(0, -1).filter((_, index) => index % step === 0);
   sampled.push(sampled[0]);
   return sampled;
+}
+
+function threatZoneAreaSquareMeters(feature) {
+  const ring = getThreatZoneRing(feature);
+  if (ring.length < 4) return null;
+  const earthRadiusM = 6371008.8;
+  const latitudeOrigin = ring.reduce((total, point) => total + Number(point[1] || 0), 0) / ring.length * Math.PI / 180;
+  const projected = ring.map(([longitude, latitude]) => [
+    Number(longitude) * Math.PI / 180 * earthRadiusM * Math.cos(latitudeOrigin),
+    Number(latitude) * Math.PI / 180 * earthRadiusM,
+  ]);
+  const area = Math.abs(projected.reduce((sum, point, index) => {
+    const next = projected[(index + 1) % projected.length];
+    return sum + point[0] * next[1] - next[0] * point[1];
+  }, 0)) / 2;
+  return Number.isFinite(area) && area > 0 ? area : null;
+}
+
+function formatThreatZoneArea(squareMeters) {
+  if (!Number.isFinite(squareMeters)) return noCurrentDataText;
+  const acres = squareMeters / 4046.8564224;
+  const squareMiles = squareMeters / 2589988.110336;
+  return squareMiles >= 0.1
+    ? `${squareMiles.toFixed(2)} sq mi (${Math.round(acres).toLocaleString()} acres)`
+    : `${acres.toFixed(acres < 10 ? 1 : 0)} acres`;
 }
 
 async function fetchExternalJson(url, options = {}, timeoutMs = 25000) {
@@ -4314,6 +4544,7 @@ async function fetchMappedZoneOccupancies(ring) {
     const names = [...new Set(rows.map(getMappedFeatureName).filter(Boolean))].slice(0, 3);
     return [`${label}: ${names.length ? names.join(', ') : `${rows.length} mapped site${rows.length === 1 ? '' : 's'}`}`];
   };
+  const featureLabels = (rows) => rows.map((row) => getMappedFeatureName(row) || `${row.type}/${row.id}`);
   return {
     residentialStructures: residentialStructures.length,
     businesses: commercial.length,
@@ -4321,6 +4552,9 @@ async function fetchMappedZoneOccupancies(ring) {
     healthcare: healthcare.length,
     nursing: nursing.length,
     critical: critical.length,
+    educationFeatures: featureLabels(education),
+    healthcareFeatures: featureLabels([...healthcare, ...nursing]),
+    infrastructureFeatures: featureLabels(critical),
     priorities: [
       ...describe('Schools / daycare', education),
       ...describe('Healthcare facilities', healthcare),
@@ -4336,20 +4570,55 @@ function setDemographicMetric(id, value) {
   if (element) element.textContent = value;
 }
 
-function resetDemographics(message = 'Click a red, yellow, or green plume zone to inspect potential exposures.') {
+function setThreatZoneMetric(metric, value, method, confidence, available) {
+  const card = document.querySelector(`[data-threat-metric="${metric}"]`);
+  if (!card) return;
+  card.hidden = !available;
+  if (!available) return;
+  const valueElement = card.querySelector('strong');
+  const note = card.querySelector('small');
+  if (valueElement) valueElement.textContent = Number.isFinite(Number(value)) ? Number(value).toLocaleString() : String(value);
+  if (note) note.textContent = [method, confidence].filter(Boolean).join(' · ');
+}
+
+function setThreatZoneDetail(detail, value, available) {
+  const row = document.querySelector(`[data-threat-detail="${detail}"]`);
+  if (!row) return;
+  row.hidden = !available;
+  if (available) row.querySelector('dd').textContent = value;
+}
+
+function resetDemographics(message = 'Select a plume zone or protective-action area to view affected-area estimates.') {
   demographicsRequestToken += 1;
   latestThreatZoneHouseholdEstimate = null;
+  threatZoneImpactSummary = {
+    selectedArea: null,
+    primaryMetrics: {},
+    estimateDetails: {},
+    disclaimer: 'Threat Zone impact values are planning estimates based on the selected plume or protective-action area.',
+    readyForIncidentExport: false,
+  };
+  window.HazMatIQ ||= {};
+  window.HazMatIQ.threatZoneImpactSummary = threatZoneImpactSummary;
   const badge = document.getElementById('demographics-zone-badge');
   if (badge) {
     badge.textContent = 'No zone';
     delete badge.dataset.zoneColor;
   }
   setText('demographics-zone-summary', message);
-  ['population', 'housing', 'structures', 'census-households', 'household-method', 'household-status',
-    'household-limitations', 'schools', 'healthcare', 'nursing', 'critical', 'businesses',
-    'critical-receptors', 'protective-action']
-    .forEach((metric) => setDemographicMetric(`demographics-${metric}`, noCurrentDataText));
-  setText('demographics-source-status', noCurrentDataText);
+  setText('threat-zone-selected-area', 'Unknown');
+  setText('threat-zone-basis', noCurrentDataText);
+  setText('threat-zone-area', noCurrentDataText);
+  setText('threat-zone-method', noCurrentDataText);
+  setText('threat-zone-confidence', noCurrentDataText);
+  setText('threat-zone-generated', noCurrentDataText);
+  document.querySelectorAll('[data-threat-metric], [data-threat-detail]').forEach((element) => { element.hidden = true; });
+  const details = document.querySelector('.threat-zone-estimate-details');
+  if (details) {
+    details.open = false;
+    details.hidden = true;
+  }
+  setText('demographics-source-status', 'Select an affected area to load available selected-zone data.');
 }
 
 function formatZoneDistance(meters) {
@@ -4364,18 +4633,36 @@ async function inspectThreatZone(feature) {
   const token = ++demographicsRequestToken;
   const properties = feature.properties || {};
   const colorName = properties.colorName || 'zone';
+  const panel = document.getElementById('plume-demographics');
+  if (panel) panel.open = true;
   const badge = document.getElementById('demographics-zone-badge');
   if (badge) {
     badge.textContent = `${colorName.toUpperCase()} ZONE`;
     badge.dataset.zoneColor = colorName;
   }
-  const details = [properties.label, formatZoneDistance(properties.maxDownwindM), properties.source].filter(Boolean);
-  setText('demographics-zone-summary', details.join(' · '));
-  ['population', 'housing', 'structures', 'census-households', 'household-method', 'household-status',
-    'household-limitations', 'schools', 'healthcare', 'nursing', 'critical', 'businesses']
-    .forEach((metric) => setDemographicMetric(`demographics-${metric}`, '…'));
-  setDemographicMetric('demographics-critical-receptors', '…');
-  setDemographicMetric('demographics-protective-action', activeChemicalRecord?.commandFacts?.protectiveAction || noCurrentDataText);
+  const isErgIsolation = properties.zoneId === 'erg-initial-isolation';
+  const isErgProtective = properties.zoneId === 'erg-protective-action';
+  const selectedAreaLabel = isErgIsolation
+    ? 'ERG Initial Isolation'
+    : isErgProtective
+      ? 'ERG Protective Action'
+      : `${colorName.charAt(0).toUpperCase()}${colorName.slice(1)} Zone`;
+  const basis = isErgIsolation
+    ? 'ERG isolation'
+    : isErgProtective
+      ? 'ERG protective action'
+      : properties.thresholdKind === 'AEGL' ? 'AEGL plume' : 'Planning estimate';
+  const generatedAt = new Date().toISOString();
+  const areaSquareMeters = threatZoneAreaSquareMeters(feature);
+  const areaDisplay = formatThreatZoneArea(areaSquareMeters);
+  setText('demographics-zone-summary', [properties.label || selectedAreaLabel, formatZoneDistance(properties.maxDownwindM)].filter(Boolean).join(' · '));
+  setText('threat-zone-selected-area', selectedAreaLabel);
+  setText('threat-zone-basis', basis);
+  setText('threat-zone-area', areaDisplay);
+  setText('threat-zone-method', 'Loading selected-area data…');
+  setText('threat-zone-confidence', 'Needs Verification');
+  setText('threat-zone-generated', new Date(generatedAt).toLocaleString());
+  document.querySelectorAll('[data-threat-metric], [data-threat-detail]').forEach((element) => { element.hidden = true; });
   setText('demographics-source-status', 'Loading U.S. Census and OpenStreetMap planning data…');
   if (plumeMap?.getLayer('hazmat-threat-zones-selection')) {
     plumeMap.setFilter('hazmat-threat-zones-selection', ['==', ['get', 'zoneId'], String(properties.zoneId)]);
@@ -4392,12 +4679,13 @@ async function inspectThreatZone(feature) {
   const residentialStructures = occupancy?.residentialStructures ?? null;
   const nearbyCensusHouseholds = census?.housing ?? null;
   const householdEstimateMethod = residentialStructures !== null
-    ? `${householdEstimateLabels.building} — structure count only`
+    ? householdEstimateLabels.building
     : nearbyCensusHouseholds !== null
-      ? `${householdEstimateLabels.censusTotal} — not clipped to plume zone`
+      ? 'Nearby Census geography context only'
       : noCurrentDataText;
-  const householdEstimateStatus = residentialStructures !== null || nearbyCensusHouseholds !== null
-    ? readinessStatus.verify
+  const householdEstimateStatus = residentialStructures !== null
+    ? 'Needs Verification'
+    : nearbyCensusHouseholds !== null ? 'Context Only'
     : readinessStatus.missing;
   const householdLimitations = residentialStructures !== null
     ? 'Mapped residential footprints are not household units; apartments, unmapped buildings, and mixed uses are not inferred.'
@@ -4413,30 +4701,83 @@ async function inspectThreatZone(feature) {
     source: [census ? '2020 Census blocks' : null, occupancy ? 'OpenStreetMap mapped footprints' : null].filter(Boolean).join(' · ') || noCurrentDataText,
     limitations: householdLimitations,
   };
+  const healthcareFacilities = occupancy ? occupancy.healthcare + occupancy.nursing : null;
+  setThreatZoneMetric('residentialHomes', residentialStructures, 'Building-footprint estimate', 'Needs Verification', residentialStructures !== null);
+  // Intersecting Census block totals are context only; they are not displayed as selected-area population.
+  setThreatZoneMetric('currentPopulation', null, '', '', false);
+  setThreatZoneMetric('criticalInfrastructure', occupancy?.critical, 'Local GIS count', 'Needs Verification', Boolean(occupancy));
+  setThreatZoneMetric('healthcareFacilities', healthcareFacilities, 'Local GIS count', 'Needs Verification', Boolean(occupancy));
+  setThreatZoneMetric('schools', occupancy?.education, 'Local GIS count', 'Needs Verification', Boolean(occupancy));
 
-  setDemographicMetric('demographics-population', census ? `${census.population.toLocaleString()} nearby geography total` : noCurrentDataText);
-  setDemographicMetric('demographics-housing', noCurrentDataText);
-  setDemographicMetric('demographics-structures', residentialStructures === null ? noCurrentDataText : residentialStructures.toLocaleString());
-  setDemographicMetric('demographics-census-households', nearbyCensusHouseholds === null
-    ? noCurrentDataText
-    : `${nearbyCensusHouseholds.toLocaleString()} geography total`);
-  setDemographicMetric('demographics-household-method', householdEstimateMethod);
-  setDemographicMetric('demographics-household-status', householdEstimateStatus);
-  setDemographicMetric('demographics-household-limitations', householdLimitations);
-  setDemographicMetric('demographics-schools', occupancy ? occupancy.education.toLocaleString() : noCurrentDataText);
-  setDemographicMetric('demographics-healthcare', occupancy ? occupancy.healthcare.toLocaleString() : noCurrentDataText);
-  setDemographicMetric('demographics-nursing', occupancy ? occupancy.nursing.toLocaleString() : noCurrentDataText);
-  setDemographicMetric('demographics-critical', occupancy ? occupancy.critical.toLocaleString() : noCurrentDataText);
-  setDemographicMetric('demographics-businesses', occupancy ? occupancy.businesses.toLocaleString() : noCurrentDataText);
-  setDemographicMetric('demographics-critical-receptors', occupancy
-    ? (occupancy.education + occupancy.healthcare + occupancy.nursing + occupancy.critical).toLocaleString()
-    : noCurrentDataText);
+  setThreatZoneDetail('censusPopulation', census ? `${census.population.toLocaleString()} nearby geography total — context only` : '', Boolean(census));
+  setThreatZoneDetail('censusHouseholds', census ? `${census.housing.toLocaleString()} nearby geography total — context only` : '', Boolean(census));
+  setThreatZoneDetail('buildingFootprints', residentialStructures?.toLocaleString() || '0', residentialStructures !== null);
+  setThreatZoneDetail('nursing', occupancy?.nursing.toLocaleString() || '0', Boolean(occupancy));
+  setThreatZoneDetail('businesses', occupancy?.businesses.toLocaleString() || '0', Boolean(occupancy));
+  setThreatZoneDetail('criticalReceptors', occupancy
+    ? (occupancy.education + healthcareFacilities + occupancy.critical).toLocaleString() : '', Boolean(occupancy));
+  const protectiveAction = activeChemicalRecord?.commandFacts?.protectiveAction;
+  setThreatZoneDetail('protectiveAction', protectiveAction || '', Boolean(protectiveAction && protectiveAction !== noCurrentDataText));
+  setThreatZoneDetail('householdMethod', householdEstimateMethod, householdEstimateMethod !== noCurrentDataText);
+  setThreatZoneDetail('householdStatus', householdEstimateStatus, householdEstimateStatus !== readinessStatus.missing);
+  setThreatZoneDetail('householdLimitations', householdLimitations, householdLimitations !== noCurrentDataText);
+  setThreatZoneDetail('legacyHousing', '', false);
+  const estimateDetails = document.querySelector('.threat-zone-estimate-details');
+  if (estimateDetails) estimateDetails.hidden = !estimateDetails.querySelector('[data-threat-detail]:not([hidden])');
+
+  const primaryMethod = occupancy ? 'Selected-zone OpenStreetMap intersection' : census ? 'Nearby Census geography context only' : noCurrentDataText;
+  const confidence = occupancy ? 'Planning Estimate' : census ? 'Context Only' : 'No Current Data Exists';
+  setText('threat-zone-method', primaryMethod);
+  setText('threat-zone-confidence', confidence);
+
+  const metric = (value, method, sourceStatus, metricConfidence, limitations) => ({
+    value,
+    method,
+    sourceStatus,
+    confidence: metricConfidence,
+    limitations,
+  });
+  threatZoneImpactSummary = {
+    selectedArea: {
+      id: String(properties.zoneId || feature.id || 'unknown'),
+      label: selectedAreaLabel,
+      basis,
+      geometryStatus: areaSquareMeters ? 'Selected-area polygon available' : noCurrentDataText,
+      area: areaSquareMeters ? { squareMeters: areaSquareMeters, display: areaDisplay } : null,
+      generatedAt,
+    },
+    primaryMetrics: {
+      residentialHomes: metric(residentialStructures, residentialStructures !== null ? 'Building-footprint estimate' : noCurrentDataText, occupancy ? 'OpenStreetMap selected-zone features' : noCurrentDataText, residentialStructures !== null ? 'Needs Verification' : noCurrentDataText, householdLimitations),
+      currentPopulation: metric(null, census ? 'Nearby Census geography context only' : noCurrentDataText, census ? '2020 Census blocks' : noCurrentDataText, census ? 'Context Only' : noCurrentDataText, 'Census block totals are not clipped to the selected zone and are not shown as current population.'),
+      criticalInfrastructure: metric(occupancy?.critical ?? null, occupancy ? 'Local GIS count' : noCurrentDataText, occupancy ? 'OpenStreetMap selected-zone features' : noCurrentDataText, occupancy ? 'Needs Verification' : noCurrentDataText, 'Mapped feature coverage may be incomplete.'),
+      healthcareFacilities: metric(healthcareFacilities, occupancy ? 'Local GIS count' : noCurrentDataText, occupancy ? 'OpenStreetMap selected-zone features' : noCurrentDataText, occupancy ? 'Needs Verification' : noCurrentDataText, 'Mapped feature coverage may be incomplete.'),
+      schools: metric(occupancy?.education ?? null, occupancy ? 'Local GIS count' : noCurrentDataText, occupancy ? 'OpenStreetMap selected-zone features' : noCurrentDataText, occupancy ? 'Needs Verification' : noCurrentDataText, 'Mapped feature coverage may be incomplete.'),
+    },
+    estimateDetails: {
+      censusGeographies: census ? [`${census.blocks} intersecting 2020 Census block${census.blocks === 1 ? '' : 's'}`] : [],
+      censusPopulationTotal: census?.population ?? null,
+      censusHouseholdTotal: census?.housing ?? null,
+      overlapPercentage: null,
+      buildingFootprintsCounted: residentialStructures,
+      residentialParcelsCounted: null,
+      infrastructureFeatures: occupancy?.infrastructureFeatures || [],
+      healthcareFeatures: occupancy?.healthcareFeatures || [],
+      schoolFeatures: occupancy?.educationFeatures || [],
+      receptorSourceStatus: occupancy ? 'OpenStreetMap selected-zone intersection; verify completeness' : noCurrentDataText,
+      dataVersion: census ? '2020 Census blocks' : noCurrentDataText,
+      notes: [householdLimitations, 'Nearby Census totals are context only and are not selected-zone counts.'],
+    },
+    disclaimer: 'Threat Zone impact values are planning estimates based on the selected plume or protective-action area. Census geographies and facility datasets may be incomplete or extend beyond the selected area. Verify residential homes, population, critical infrastructure, healthcare facilities, and schools with local GIS, field reconnaissance, field monitoring, and Incident Command.',
+    readyForIncidentExport: true,
+  };
+  window.HazMatIQ ||= {};
+  window.HazMatIQ.threatZoneImpactSummary = threatZoneImpactSummary;
 
   const sources = [
     census ? `2020 Census: ${census.blocks} intersecting block${census.blocks === 1 ? '' : 's'}; geography totals are not clipped to the plume` : 'Census unavailable',
     occupancy ? 'OpenStreetMap mapped footprints/features; coverage may be incomplete' : 'OpenStreetMap occupancy lookup unavailable',
   ];
-  setText('demographics-source-status', `${sources.join(' · ')}. Impacted household count remains ${noCurrentDataText} without an approved household-estimation method. Verify through local GIS, dispatch, field reconnaissance, and Incident Command.`);
+  setText('demographics-source-status', `${sources.join(' · ')}. Only available selected-zone feature counts are shown above; nearby Census totals remain context only.`);
 }
 
 async function renderThreatZones(geojson, label) {
@@ -4453,8 +4794,8 @@ async function renderThreatZones(geojson, label) {
           ...feature.properties,
           zoneId: String(feature.properties?.zoneId ?? `zone-${index}`),
           threatRank,
-          colorName: threatZoneColorNames[threatRank],
-          color: threatZoneColors[threatRank],
+          colorName: feature.properties?.colorName || threatZoneColorNames[threatRank],
+          color: feature.properties?.color || threatZoneColors[threatRank],
         },
       };
     }),
@@ -4549,10 +4890,6 @@ function addOptionalPlumeGuideLayer(layer) {
 }
 
 function setPlumeLayerVisibility(layerName, visible) {
-  if (layerName === 'radar') {
-    syncPlumeRadarOverlay();
-    return;
-  }
   (plumeLayerIds[layerName] || []).forEach((id) => {
     if (plumeMap?.getLayer(id)) plumeMap.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
   });
@@ -4589,7 +4926,7 @@ function addThreatZoneLayers() {
       source: 'hazmat-threat-zones',
       paint: {
         'fill-color': ['coalesce', ['get', 'color'], '#d71920'],
-        'fill-opacity': 0.2,
+        'fill-opacity': ['coalesce', ['get', 'fillOpacity'], 0.2],
       },
     });
   }
@@ -4629,8 +4966,6 @@ function addThreatZoneLayers() {
       },
     });
   }
-  plumeRadarController?.reorder();
-
   currentThreatZoneGuideGeoJson = buildThreatZoneGuides();
   const guideSource = plumeMap.getSource('hazmat-threat-zone-guides');
   if (guideSource) {
@@ -4913,6 +5248,18 @@ function clearPlumeSummaryDisplay() {
   });
 }
 
+function constrainPlumeSummaryToMap() {
+  const content = plumeSummaryPanel?.querySelector('.plume-summary-content');
+  if (!content || !plumeSummaryPanel?.open) return;
+  requestAnimationFrame(() => {
+    const map = document.getElementById('plume-gis-map');
+    const contentTop = content.getBoundingClientRect().top;
+    const visiblePageHeight = Math.max(0, window.innerHeight - contentTop - 12);
+    const mapHeight = map?.getBoundingClientRect().height || visiblePageHeight;
+    content.style.maxHeight = `${Math.min(mapHeight, visiblePageHeight)}px`;
+  });
+}
+
 plumeSummaryPanel = document.getElementById('plume-incident-data-panel');
 plumeSummaryFieldIds.forEach((id) => {
   const initialValue = document.getElementById(id)?.textContent?.trim();
@@ -4920,9 +5267,13 @@ plumeSummaryFieldIds.forEach((id) => {
 });
 clearPlumeSummaryDisplay();
 plumeSummaryPanel?.addEventListener('toggle', () => {
-  if (plumeSummaryPanel.open) renderPlumeSummaryOnRequest();
+  if (plumeSummaryPanel.open) {
+    renderPlumeSummaryOnRequest();
+    constrainPlumeSummaryToMap();
+  }
   else clearPlumeSummaryDisplay();
 });
+window.addEventListener('resize', constrainPlumeSummaryToMap);
 
 function setText(id, value) {
   if (plumeSummaryFieldIds.has(id)) {
@@ -5646,6 +5997,8 @@ function readPlumeModelInputs(location) {
     lat: location.lat,
     lng: location.lon,
     endpointDurationMinutes: Number(document.getElementById('plume-endpoint-duration')?.value),
+    ergSpillSize: document.getElementById('plume-erg-spill-size')?.value || 'large',
+    ergPeriod: document.getElementById('plume-erg-period')?.value || 'night',
   };
 }
 
@@ -5663,6 +6016,13 @@ async function runBackendPlume(inputs) {
       const detail = result?.error || 'Backend plume model unavailable for the current inputs.';
       return { summary: detail, result: null };
     }
+    if (result?.mode === 'erg-protective-action' && result.ergOverlay) {
+      const erg = result.ergOverlay;
+      return {
+        summary: `ERG 2024 protective-action guide — isolate ${Number(erg.initialIsolationFt).toLocaleString()} ft; protect ${erg.protectiveActionMi} mi downwind (${erg.spillSize} spill, ${erg.period})`,
+        result,
+      };
+    }
     if (!result?.isopleths?.some((item) => item.polygon?.length >= 2)) {
       return { summary: 'No supported exposure thresholds were returned for this chemical.', result: null };
     }
@@ -5674,6 +6034,36 @@ async function runBackendPlume(inputs) {
     };
   } catch {
     return { summary: 'The plume model service could not be reached. Verify connectivity and try again.', result: null };
+  }
+}
+
+async function getPlumeModeAvailability() {
+  if (!activeChemical) return { summary: 'Identify a chemical before selecting plume guidance.', result: null };
+  const query = new URLSearchParams({
+    chemicalId: String(activeChemical.selectedChemicalId ?? activeChemical.id),
+    endpointDurationMinutes: document.getElementById('plume-endpoint-duration')?.value || '60',
+    ergSpillSize: document.getElementById('plume-erg-spill-size')?.value || 'large',
+    ergPeriod: document.getElementById('plume-erg-period')?.value || 'night',
+  });
+  try {
+    const response = await fetch(`/api/plume/availability?${query}`);
+    const result = await response.json().catch(() => null);
+    if (!response.ok) {
+      return { summary: result?.error || 'Plume guidance availability could not be verified.', result: null };
+    }
+    if (result?.mode === 'erg-protective-action' && result.ergOverlay) {
+      const erg = result.ergOverlay;
+      return {
+        summary: `ERG 2024 protective-action guide — isolate ${Number(erg.initialIsolationFt).toLocaleString()} ft; protect ${erg.protectiveActionMi} mi downwind (${erg.spillSize} spill, ${erg.period})`,
+        result,
+      };
+    }
+    if (result?.mode === 'no-distance-data') {
+      return { summary: result.error, result: null };
+    }
+    return { summary: result?.display || 'AEGL / LOC Plume Model', result };
+  } catch {
+    return { summary: 'The plume guidance service could not be reached. Verify connectivity and try again.', result: null };
   }
 }
 
@@ -5785,6 +6175,14 @@ function getMissingPlumeRequiredInputs() {
   if (sourceMode === 'columbia-live') missing.push('Configured Live Weather Source');
   if (sourceMode !== 'manual' && ['Expired', 'Time Unknown'].includes(freshness.status)) missing.push('Current Weather Observation');
   if (sourceMode === 'manual' && !document.getElementById('plume-manual-observation-time')?.value) missing.push('Manual Weather Observation Time');
+  return missing;
+}
+
+function getMissingErgOverlayInputs() {
+  const missing = [];
+  if (!activeChemical || !/^\d+$/.test(String(activeChemical.selectedChemicalId ?? activeChemical.id ?? ''))) missing.push('Verified Chemical Link');
+  const windDirection = document.getElementById('plume-wind-direction')?.value;
+  if (windDirection === '' || !Number.isFinite(Number(windDirection))) missing.push('Wind Direction');
   return missing;
 }
 
@@ -5954,6 +6352,61 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
   };
 }
 
+function buildErgOverlayWorkflowRecord({ location, modeled, command }) {
+  const createdAt = new Date().toISOString();
+  const erg = modeled.result.ergOverlay;
+  const record = {
+    id: `erg-overlay-${Date.now()}`,
+    generatedAt: createdAt,
+    mode: 'erg-protective-action',
+    chemical: {
+      masterChemicalId: modeled.result.masterChemicalId,
+      chemicalName: activeChemical?.name || noCurrentDataText,
+      casNumber: modeled.result.chemicalIdentity?.casNumber || noCurrentDataText,
+      unNumber: erg.un,
+    },
+    endpoint: {
+      endpointType: 'ERG 2024 protective-action distance',
+      endpointSource: erg.source,
+      selectedLevel: `${erg.spillSize} spill · ${erg.period}`,
+      endpointStatus: modeled.result.endpointStatus,
+    },
+    model: {
+      modelName: 'No dispersion model — ERG source-distance overlay',
+      validationStatus: 'Not a modeled plume or toxic concentration contour',
+      confidenceStatus: 'ERG Protective Action Guide',
+      limitations: erg.limitations,
+    },
+    output: {
+      resultSummary: modeled.summary,
+      initialIsolationFt: erg.initialIsolationFt,
+      protectiveActionMi: erg.protectiveActionMi,
+      geometry: currentThreatZoneGeoJson,
+      mapCenter: [location.lon, location.lat],
+    },
+    commandSummary: command,
+    disclaimers: {
+      decisionSupport: plumePlanningNotices[0],
+      sourceBoundary: erg.limitations.join(' '),
+    },
+  };
+  return {
+    ...record,
+    plumeResult: record,
+    createdAt,
+    updatedAt: createdAt,
+    exportReady: true,
+    reportReady: true,
+    includeInIncidentReport: true,
+    location: {
+      latitude: location.lat,
+      longitude: location.lon,
+      source: location.source || noCurrentDataText,
+      address: location.address || getIncidentAddressValue() || noCurrentDataText,
+    },
+  };
+}
+
 // Planning results stay separate from official incident documentation.
 function savePlumeResult(command, workflowRecord, mapImage = '') {
   const savedAt = new Date().toISOString();
@@ -6001,7 +6454,12 @@ function saveLatestPlumeOverlay({ location, releaseType, windSpeed, windDirectio
     stabilityClass,
     plumeGeometry: currentThreatZoneGeoJson,
     threatZones: (currentThreatZoneGeoJson?.features || []).map((feature) => feature.properties || {}),
-    source: 'Plume Model',
+    source: currentThreatZoneGeoJson?.features?.some((feature) => feature.properties?.overlayMode === 'erg-protective-action')
+      ? 'PHMSA ERG 2024 Protective Action Guide'
+      : 'Plume Model',
+    overlayMode: currentThreatZoneGeoJson?.features?.some((feature) => feature.properties?.overlayMode === 'erg-protective-action')
+      ? 'erg-protective-action'
+      : 'aegl-plume',
     notes,
   };
   window.HazMatIQ.latestPlumeOverlay = overlay;
@@ -6016,12 +6474,25 @@ function saveLatestPlumeOverlay({ location, releaseType, windSpeed, windDirectio
 async function plotPlumeFromControls(locationOverride = null) {
   const plotButton = document.getElementById('plot-plume-btn');
   if (plotButton) plotButton.disabled = true;
-  setText('plume-input-status', 'Validating location and model inputs…');
+  setText('plume-input-status', 'Checking source-backed plume and ERG guidance…');
   document.getElementById('plume-input-status')?.setAttribute('data-state', 'working');
   setText('plume-overlay-status', 'Calculating plume zones…');
   try {
-    const missingInputs = getMissingPlumeRequiredInputs();
-    if (missingInputs.length) throw new Error(`Cannot plot plume yet. Missing: ${missingInputs.join(', ')}.`);
+    const availability = await getPlumeModeAvailability();
+    if (!availability.result) {
+      setText('backend-model-summary', availability.summary);
+      await clearThreatZones(availability.summary);
+      if (/No Current Data Exists/i.test(availability.summary)) {
+        setText('plume-endpoint-status', 'No approved AEGL / LOC or ERG isolation/protective-action distance is available.');
+        setText('plume-model-status-summary', 'No Model / No Distance Available');
+        setText('plume-validation-status-summary', 'Manual / Incident Command review required');
+        setText('plume-zone-meaning-summary', 'No Current Data Exists');
+        showPlumeValidation(availability.summary);
+      } else {
+        showPlumeValidation(`Cannot select plume guidance yet. ${availability.summary}`);
+      }
+      return;
+    }
     let location = locationOverride;
     if (!location) {
       try {
@@ -6032,22 +6503,93 @@ async function plotPlumeFromControls(locationOverride = null) {
     }
     if (!location) throw new Error('Cannot plot plume yet. Missing: Incident Location.');
     const mapReady = ensurePlumeMap(location);
-    const inputs = readPlumeModelInputs(location);
+    let inputs = null;
+    let modeled = availability;
+    if (availability.result?.mode === 'aegl-plume') {
+      const missingInputs = getMissingPlumeRequiredInputs();
+      if (missingInputs.length) throw new Error(`Cannot plot plume yet. Missing: ${missingInputs.join(', ')}.`);
+      inputs = readPlumeModelInputs(location);
+      modeled = await runBackendPlume(inputs);
+    } else if (availability.result?.mode === 'erg-protective-action') {
+      const missingInputs = getMissingErgOverlayInputs();
+      if (missingInputs.length) throw new Error(`Cannot display ERG protective-action guidance yet. Missing: ${missingInputs.join(', ')}.`);
+      inputs = {
+        chemicalId: activeChemical.id,
+        windDirDeg: Number(document.getElementById('plume-wind-direction')?.value),
+        lat: location.lat,
+        lng: location.lon,
+      };
+      modeled.result.inputs = inputs;
+    }
     if (hasActiveIncident()) saveIncidentBrief({ quiet: true });
-    const modeled = await runBackendPlume(inputs);
     setText('backend-model-summary', modeled.summary);
     if (!modeled.result) {
       await clearThreatZones(modeled.summary);
-      if (/AEGL value not available/i.test(modeled.summary)) {
-        setText('plume-endpoint-status', 'No Current Data Exists for AEGL. Toxic plume endpoint cannot be plotted from AEGL.');
-        setText('plume-model-status-summary', 'Blocked Missing AEGL / LOC');
+      if (/No Current Data Exists/i.test(modeled.summary)) {
+        setText('plume-endpoint-status', 'No approved AEGL / LOC or ERG isolation/protective-action distance is available.');
+        setText('plume-model-status-summary', 'No Model / No Distance Available');
+        setText('plume-validation-status-summary', 'Manual / Incident Command review required');
+        setText('plume-zone-meaning-summary', 'No Current Data Exists');
+        showPlumeValidation(modeled.summary);
+      } else {
+        showPlumeValidation(`Cannot plot plume yet. ${modeled.summary}`);
       }
-      showPlumeValidation(`Cannot plot plume yet. ${modeled.summary}`);
       return;
     }
 
     importedPlumeOverlay = null;
     await mapReady;
+    if (modeled.result.mode === 'erg-protective-action') {
+      const erg = modeled.result.ergOverlay;
+      const geojson = ergOverlayToGeoJson(modeled.result, location);
+      const rendered = await renderThreatZones(
+        geojson,
+        'ERG Initial Isolation / Protective Action Overlay — not a modeled plume.',
+      );
+      if (!rendered) throw new Error('The ERG record did not return a displayable isolation or protective-action distance.');
+      const releaseType = document.getElementById('plume-release-type')?.selectedOptions?.[0]?.textContent;
+      const windSpeed = document.getElementById('plume-wind-speed')?.value;
+      const windDirection = document.getElementById('plume-wind-direction')?.value;
+      const stability = document.getElementById('plume-stability-class')?.value;
+      activePlumeCommand = {
+        title: `${activeChemical.name} ERG protective-action overlay`,
+        summary: modeled.summary,
+        source: `${erg.source} · UN ${erg.un} · Guide ${erg.guide}`,
+        details: [
+          `ERG selection: ${erg.spillSize} spill · ${erg.period}`,
+          `Initial isolation: ${Number(erg.initialIsolationFt).toLocaleString()} ft`,
+          `Protective action: ${erg.protectiveActionMi} mi downwind`,
+          `Wind direction input: ${windDirection}°`,
+          ...erg.limitations,
+        ],
+      };
+      const workflowRecord = buildErgOverlayWorkflowRecord({ location, modeled, command: activePlumeCommand });
+      saveLatestPlumeOverlay({
+        location,
+        releaseType,
+        windSpeed,
+        windDirection,
+        stabilityClass: stability,
+        notes: activePlumeCommand.summary,
+      });
+      const saveMode = savePlumeResult(activePlumeCommand, workflowRecord, await capturePlumeMapImage());
+      renderIncidentCommandSnapshot();
+      setText('plume-input-status', 'ERG protective-action guide displayed. Verify spill size, day/night condition, wind direction, current ERG, field observations, and Incident Command.');
+      document.getElementById('plume-input-status')?.setAttribute('data-state', 'planning');
+      setText('plume-mode-summary', saveMode === 'active-incident' ? 'Active Incident Mode' : 'Planning Mode');
+      setText('selected-model-summary', 'ERG Initial Isolation / Protective Action Overlay');
+      setText('plume-model-status-summary', 'ERG Protective Action Guide — Not a Modeled Plume');
+      setText('plume-validation-status-summary', modeled.result.validationStatus);
+      setText('plume-limitations-summary', erg.limitations.join(' · '));
+      setText('plume-endpoint-summary', `PHMSA ERG 2024 Table 1 · UN ${erg.un} · Guide ${erg.guide} · ${erg.spillSize} spill · ${erg.period}`);
+      setText('plume-zone-meaning-summary', 'Bright orange: ERG Initial Isolation / Protective Action guide area — not a toxic concentration zone');
+      setText('plume-endpoint-status', modeled.result.endpointStatus);
+      setText('plume-model-time-summary', new Date(workflowRecord.createdAt).toLocaleString());
+      updatePlumeModeLabel();
+      setText('plume-live-status', `ERG protective-action overlay displayed ${formatCentralZuluHtml()}.`);
+      return;
+    }
+
     const geojson = plumeResultToGeoJson(modeled.result, location);
     const label = '';
     const rendered = await renderThreatZones(geojson, label);
@@ -6084,8 +6626,8 @@ async function plotPlumeFromControls(locationOverride = null) {
     });
     const saveMode = savePlumeResult(activePlumeCommand, workflowRecord, await capturePlumeMapImage());
     renderIncidentCommandSnapshot();
-    setText('plume-input-status', `${workflowRecord.model.confidenceStatus} — plume plotted for planning. Verify with field monitoring, weather observations, official modeling, and Incident Command.`);
-    document.getElementById('plume-input-status')?.setAttribute('data-state', 'planning');
+    setText('plume-input-status', '');
+    document.getElementById('plume-input-status')?.removeAttribute('data-state');
     setText('plume-mode-summary', saveMode === 'active-incident' ? 'Active Incident Mode' : 'Planning Mode');
     setText('plume-model-status-summary', workflowRecord.model.confidenceStatus);
     setText('plume-validation-status-summary', modeled.result.validationStatus || 'Not independently validated');
@@ -6440,6 +6982,19 @@ window.setInterval(() => {
 document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
   button.addEventListener('click', () => setPlumeMapView(button.dataset.plumeMapView));
 });
+document.getElementById('toggle-erg-isolation-btn')?.addEventListener('click', () => {
+  void toggleErgIsolationOverlay();
+});
+document.getElementById('toggle-plume-weather-btn')?.addEventListener('click', () => {
+  const button = document.getElementById('toggle-plume-weather-btn');
+  const panel = document.getElementById('plume-weather-data-panel');
+  if (!button || !panel) return;
+  const willOpen = panel.hidden;
+  panel.hidden = !willOpen;
+  button.classList.toggle('active', willOpen);
+  button.setAttribute('aria-pressed', String(willOpen));
+  setText('plume-layers-status', willOpen ? 'Weather Data controls opened above the map.' : 'Weather Data controls hidden.');
+});
 document.getElementById('plume-map-address-form')?.addEventListener('submit', (event) => {
   event.preventDefault();
   void useManualPlumeAddress();
@@ -6455,7 +7010,6 @@ document.querySelectorAll('[data-plume-layer]').forEach((button) => {
       plumeLayerState[layerName] = false;
       setPlumeLayerVisibility(layerName, false);
       if (layerName === 'distance') clearPlumePointMeasurement();
-      if (layerName === 'radar') syncPlumeRadarOverlay();
       button.classList.remove('active');
       button.setAttribute('aria-pressed', 'false');
       setText('plume-layers-status', layerName === 'hazards' ? 'Hazards layer hidden.' : '');
@@ -6482,7 +7036,6 @@ document.querySelectorAll('[data-plume-layer]').forEach((button) => {
       button.classList.add('active');
       button.setAttribute('aria-pressed', 'true');
       if (layerName === 'distance') setText('plume-layers-status', 'Click anywhere on the map to measure from the red release pin.');
-      else if (layerName === 'radar') setText('plume-layers-status', 'High-definition NWS radar shown beneath plume zones.');
       else if (layerName !== 'hazards') setText('plume-layers-status', '');
     } catch {
       plumeLayerState[layerName] = false;
@@ -6905,13 +7458,6 @@ window.addEventListener('hazmatiq:plume-updated', (event) => {
   if (liveMapState?.activeLayers?.plume) updateLivePlumeOverlay();
 });
 
-function setLiveRadarUnavailable(unavailable) {
-  const status = document.getElementById('live-radar-status');
-  const fallback = document.getElementById('live-radar-fallback');
-  if (status) status.hidden = unavailable;
-  if (fallback) fallback.hidden = !unavailable;
-}
-
 function removeLiveRadarOverlay() {
   liveRadarController?.disable();
   document.querySelector('.live-map-stage')?.classList.remove('radar-enhanced');
@@ -6922,22 +7468,22 @@ function updateLiveRadarOverlay() {
   const enabled = Boolean(liveMapState?.activeLayers?.weatherRadar);
   if (!enabled) {
     removeLiveRadarOverlay();
-    setLiveRadarUnavailable(false);
     return;
   }
-  setLiveRadarUnavailable(false);
   document.querySelector('.live-map-stage')?.classList.add('radar-enhanced');
   if (!window.HazMatWeatherRadar) {
-    setLiveRadarUnavailable(true);
+    setText('live-map-status', 'Weather radar is unavailable.');
     return;
   }
   liveRadarController ||= window.HazMatWeatherRadar.createController(liveMap, {
-    prefix: 'nws-radar',
+    prefix: 'live-weather-radar',
     beforeLayerId: livePlumeFillLayerId,
-    onAvailability: () => setLiveRadarUnavailable(false),
-    onRefresh: (updatedAt) => setText('live-radar-status', `NWS Radar Overlay Active · updated ${updatedAt.toLocaleTimeString()}`),
+    providerId: 'BEST_AVAILABLE',
+    onAvailability: (_, provider) => setText('live-map-status', `${provider.displayName} active.`),
+    onFallback: () => setText('live-map-status', 'Primary radar unavailable. NOAA/NWS fallback active.'),
   });
-  liveRadarController.enable();
+  liveRadarController.setOpacity(0.58);
+  void liveRadarController.enable();
 }
 
 function initializeLiveMap() {
@@ -6986,7 +7532,10 @@ function initializeLiveMap() {
     });
     liveMap.on('error', (event) => {
       if (liveRadarController?.ownsSource(event?.sourceId)) {
-        setLiveRadarUnavailable(true);
+        setText('live-map-status', 'Radar tile failed. Switching to NOAA/NWS fallback.');
+        if (liveRadarController.getState().activeProvider?.id !== window.HazMatRadarProviders?.IDS?.NOAA) {
+          void liveRadarController.fallback();
+        }
         return;
       }
       const message = event?.error?.message || 'Basemap could not load.';
@@ -7008,6 +7557,9 @@ function initializeLiveMap() {
     getCurrentGps().then((gps) => {
       liveMap.jumpTo({ center: [gps.lon, gps.lat], zoom: Math.max(liveMap.getZoom(), 15) });
       saveLiveMapState(`Map centered on current GPS: ${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}.`);
+      void fetchWeatherSources(gps.lat, gps.lon).then(({ openMeteo, nws }) => {
+        latestPlumeWeather = selectPlumeWeather(openMeteo, nws);
+      }).catch(() => {});
     }).catch((error) => {
       setText('live-map-status', `${error.message} Showing the saved map location.`);
     });

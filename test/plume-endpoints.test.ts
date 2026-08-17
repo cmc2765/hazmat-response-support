@@ -25,6 +25,24 @@ describe("verified EPA AEGL endpoint selection", () => {
       [3, 50], [2, 2.8], [1, 0.5],
     ]);
   });
+
+  it("selects final EPA Hydrazine AEGL values by its canonical ID and CAS", () => {
+    expect(selectVerifiedAeglEndpoint("hydrazine", "302-01-2", 60)).toMatchObject({
+      endpointSource: "EPA AEGL",
+      endpointStatus: "Final",
+      selectedDurationMinutes: 60,
+      aegl1: 0.1,
+      aegl2: 13,
+      aegl3: 35,
+      units: "ppm",
+    });
+    expect(selectVerifiedAeglEndpoint("hydrazine", "302-01-2", 480)).toMatchObject({
+      aegl1: 0.1,
+      aegl2: 1.6,
+      aegl3: 4.4,
+    });
+    expect(selectVerifiedAeglEndpoint("hydrazine", "57-14-7", 60)).toBeNull();
+  });
 });
 
 describe("plume status precedence", () => {

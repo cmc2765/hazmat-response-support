@@ -96,9 +96,27 @@
           <section id="overview" class="view active">
             <article class="panel-card incident-overview-card">
               <div class="incident-overview-actions">
-                <button class="module-btn overview-action-btn overview-action-incident" data-view="incident" data-incident-action="new">Start New Incident</button>
-                <button class="module-btn overview-action-btn overview-action-planning" data-view="planning-tools">Planning Tools</button>
-                <button class="module-btn overview-action-btn overview-action-training" data-view="incident" data-incident-action="training">Training / Demo Mode</button>
+                <button class="module-btn overview-action-btn overview-action-incident" data-view="incident" data-incident-action="new">
+                  <span class="overview-action-copy">
+                    <span class="overview-action-title">New Incident</span>
+                    <span class="overview-action-description">Begin a New Incident Response</span>
+                    <span class="overview-action-arrow" aria-hidden="true">&#8594;</span>
+                  </span>
+                </button>
+                <button class="module-btn overview-action-btn overview-action-planning" data-view="planning-tools">
+                  <span class="overview-action-copy">
+                    <span class="overview-action-title">Planning Tools</span>
+                    <span class="overview-action-description">Access tools for pre-incident planning, resources, and scenario preparation.</span>
+                    <span class="overview-action-arrow" aria-hidden="true">&#8594;</span>
+                  </span>
+                </button>
+                <button class="module-btn overview-action-btn overview-action-training" data-view="incident" data-incident-action="training">
+                  <span class="overview-action-copy">
+                    <span class="overview-action-title">Training Mode</span>
+                    <span class="overview-action-description">Practice response procedures and test your knowledge in a safe environment.</span>
+                    <span class="overview-action-arrow" aria-hidden="true">&#8594;</span>
+                  </span>
+                </button>
               </div>
             </article>
           </section>
@@ -356,26 +374,28 @@
 
           <section id="lookup" class="view">
             <article class="panel-card chemical-id-search-card">
-              <h3>Search Chemical ID</h3>
-              <form id="chemical-search-form" class="chemical-search-form" role="search">
-                <div class="chemical-search-input-wrap">
-                  <label class="sr-only" for="chemical-search">Chemical name, UN number, CAS number, or facility</label>
-                  <input
-                    id="chemical-search"
-                    type="search"
-                    role="combobox"
-                    placeholder="Chemical name, UN number, CAS number, or facility"
-                    autocomplete="off"
-                    aria-controls="chemical-search-suggestions"
-                    aria-expanded="false"
-                    aria-haspopup="listbox"
-                  />
-                  <div id="chemical-search-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
-                </div>
-                <button class="primary-btn" id="chemical-lookup-btn" type="submit">Search</button>
-                <button class="accent-btn" id="save-my-chemical-btn" type="button">Save to My Chemicals</button>
-              </form>
-              <p id="chemical-search-status" class="chemical-search-status" role="status" aria-live="polite"></p>
+              <div class="chemical-id-search-content">
+                <h3>Search Chemical ID</h3>
+                <form id="chemical-search-form" class="chemical-search-form" role="search">
+                  <div class="chemical-search-input-wrap">
+                    <label class="sr-only" for="chemical-search">Chemical name, UN number, CAS number, or facility</label>
+                    <input
+                      id="chemical-search"
+                      type="search"
+                      role="combobox"
+                      placeholder="Chemical name, UN number, CAS number, or facility"
+                      autocomplete="off"
+                      aria-controls="chemical-search-suggestions"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                    />
+                    <div id="chemical-search-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
+                  </div>
+                  <button class="primary-btn" id="chemical-lookup-btn" type="submit">Search</button>
+                  <button class="accent-btn" id="save-my-chemical-btn" type="button">Save to My Chemicals</button>
+                </form>
+                <p id="chemical-search-status" class="chemical-search-status" role="status" aria-live="polite"></p>
+              </div>
             </article>
 
             <article id="facility-inventory" class="panel-card facility-inventory" hidden>
@@ -510,6 +530,20 @@
                       </select>
                       <small id="plume-endpoint-status">AEGL lookup occurs after verified Chemical Companion/CAS linkage.</small>
                     </label>
+                    <label class="plume-model-field" for="plume-erg-spill-size">
+                      <span>ERG fallback spill size</span>
+                      <select id="plume-erg-spill-size">
+                        <option value="large" selected>Large spill — conservative default</option>
+                        <option value="small">Small spill</option>
+                      </select>
+                    </label>
+                    <label class="plume-model-field" for="plume-erg-period">
+                      <span>ERG fallback condition</span>
+                      <select id="plume-erg-period">
+                        <option value="night" selected>Night — conservative default</option>
+                        <option value="day">Day</option>
+                      </select>
+                    </label>
                     <div class="container-profile" aria-label="Editable container planning profile">
                       <div class="container-bubble-grid">
                         <label class="container-bubble" for="plume-container-type"><span>Container Type</span><select id="plume-container-type"></select></label>
@@ -549,8 +583,8 @@
                     </details>
                   </div>
                 </section>
-                <section class="plume-model-section">
-                  <header class="plume-model-section-heading"><strong>Weather Data</strong></header>
+                <section class="plume-model-section plume-weather-section" id="plume-weather-data-panel" aria-labelledby="plume-weather-data-heading" hidden>
+                  <header class="plume-model-section-heading"><strong id="plume-weather-data-heading">Weather Data</strong></header>
                   <div class="plume-model-section-grid plume-weather-grid">
                     <label class="plume-model-field" for="plume-weather-source">
                       <span>Weather Source</span>
@@ -621,10 +655,10 @@
                       </dl>
                     </details>
                   </div>
+                  <div class="plume-model-actions">
+                    <button class="ghost-btn" id="use-live-plume-weather-btn" type="button">Refresh Weather</button>
+                  </div>
                 </section>
-              </div>
-              <div class="plume-model-actions">
-                <button class="ghost-btn" id="use-live-plume-weather-btn" type="button">Refresh Weather</button>
               </div>
             </form>
 
@@ -644,8 +678,11 @@
               <div class="plume-layer-controls" aria-label="Map Layers">
                 <strong>Map Layers</strong>
                 <div>
+                  <button class="plume-plot-btn" id="plot-plume-btn" type="submit" form="plume-model-form" disabled>Plot Plume</button>
+                  <button class="plume-erg-layer-btn" id="toggle-erg-isolation-btn" type="button" aria-pressed="false">ERG Isolation Distance</button>
+                  <button class="plume-weather-layer-btn" id="toggle-plume-weather-btn" type="button" aria-pressed="false" aria-controls="plume-weather-data-panel">Weather Data</button>
                   <button type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
-                  <button type="button" data-plume-layer="radar" aria-pressed="false">Weather Radar</button>
+                  <button class="plume-live-radar-link" type="button" data-view="map">View Radar on Live Map</button>
                 </div>
                 <small id="plume-layers-status" role="status" aria-live="polite"></small>
               </div>
@@ -655,7 +692,7 @@
                 <button class="ghost-btn" type="button" data-plume-map-view="street-3d" aria-pressed="false">Street 3D</button>
               </div>
               <details class="plume-summary-panel" id="plume-incident-data-panel">
-                <summary>Plume Result Summary</summary>
+                <summary>Plume Summary</summary>
                 <div class="plume-summary-content">
                   <ul class="detail-list">
                     <li><span>Incident Name</span><strong id="plume-summary-incident-name"></strong></li>
@@ -680,8 +717,50 @@
                   </ul>
                 </div>
               </details>
+              <details class="plume-summary-panel plume-threat-zone-panel plume-demographics" id="plume-demographics">
+                <summary>Threat Zone</summary>
+                <div class="plume-summary-content plume-lower-card-content plume-threat-zone-content">
+                  <div class="plume-threat-zone-status"><span class="status-pill" id="demographics-zone-badge">No zone</span></div>
+                  <section class="threat-zone-summary" aria-labelledby="threat-zone-summary-heading">
+                    <h3 id="threat-zone-summary-heading">Threat Zone Summary</h3>
+                    <p id="demographics-zone-summary" class="demographics-summary">Select a plume zone or protective-action area to view affected-area estimates.</p>
+                    <dl class="threat-zone-summary-list">
+                      <div><dt>Selected Area</dt><dd id="threat-zone-selected-area">Unknown</dd></div>
+                      <div><dt>Basis</dt><dd id="threat-zone-basis">No Current Data Exists</dd></div>
+                      <div><dt>Area</dt><dd id="threat-zone-area">No Current Data Exists</dd></div>
+                      <div><dt>Method</dt><dd id="threat-zone-method">No Current Data Exists</dd></div>
+                      <div><dt>Confidence</dt><dd id="threat-zone-confidence">No Current Data Exists</dd></div>
+                      <div><dt>Generated</dt><dd id="threat-zone-generated">No Current Data Exists</dd></div>
+                    </dl>
+                  </section>
+                  <div class="demographics-grid threat-zone-primary-metrics" aria-live="polite">
+                    <article class="demographic-stat" data-threat-metric="residentialHomes" hidden><span>Residential Homes</span><strong id="demographics-structures"></strong><small id="threat-zone-residential-method"></small></article>
+                    <article class="demographic-stat" data-threat-metric="currentPopulation" hidden><span>Current Population</span><strong id="demographics-current-population"></strong><small id="threat-zone-population-method"></small></article>
+                    <article class="demographic-stat" data-threat-metric="criticalInfrastructure" hidden><span>Critical Infrastructure</span><strong id="demographics-critical"></strong><small id="threat-zone-critical-method"></small></article>
+                    <article class="demographic-stat" data-threat-metric="healthcareFacilities" hidden><span>Healthcare Facilities</span><strong id="demographics-healthcare"></strong><small id="threat-zone-healthcare-method"></small></article>
+                    <article class="demographic-stat" data-threat-metric="schools" hidden><span>Schools</span><strong id="demographics-schools"></strong><small id="threat-zone-schools-method"></small></article>
+                  </div>
+                  <details class="threat-zone-estimate-details" hidden>
+                    <summary>Estimate Details</summary>
+                    <dl>
+                      <div data-threat-detail="censusPopulation" hidden><dt>Nearby Census population</dt><dd id="demographics-population"></dd></div>
+                      <div data-threat-detail="censusHouseholds" hidden><dt>Nearby Census households</dt><dd id="demographics-census-households"></dd></div>
+                      <div data-threat-detail="buildingFootprints" hidden><dt>Building footprints counted</dt><dd id="threat-zone-detail-buildings"></dd></div>
+                      <div data-threat-detail="nursing" hidden><dt>Nursing / assisted living</dt><dd id="demographics-nursing"></dd></div>
+                      <div data-threat-detail="businesses" hidden><dt>Businesses / industrial sites</dt><dd id="demographics-businesses"></dd></div>
+                      <div data-threat-detail="criticalReceptors" hidden><dt>Critical receptors</dt><dd id="demographics-critical-receptors"></dd></div>
+                      <div data-threat-detail="protectiveAction" hidden><dt>Protective action</dt><dd id="demographics-protective-action"></dd></div>
+                      <div data-threat-detail="householdMethod" hidden><dt>Residential estimate method</dt><dd id="demographics-household-method"></dd></div>
+                      <div data-threat-detail="householdStatus" hidden><dt>Confidence / status</dt><dd id="demographics-household-status"></dd></div>
+                      <div data-threat-detail="householdLimitations" hidden><dt>Limitations</dt><dd id="demographics-household-limitations"></dd></div>
+                      <div data-threat-detail="legacyHousing" hidden><dt>Impacted households</dt><dd id="demographics-housing"></dd></div>
+                    </dl>
+                  </details>
+                  <p class="demographics-estimate-warning">Threat Zone impact values are planning estimates based on the selected plume or protective-action area. Census geographies and facility datasets may be incomplete or extend beyond the selected area. Verify residential homes, population, critical infrastructure, healthcare facilities, and schools with local GIS, field reconnaissance, field monitoring, and Incident Command.</p>
+                  <p id="demographics-source-status" class="demographics-source-status">Population estimate: U.S. Census geography. Occupancies: OpenStreetMap mapped features.</p>
+                </div>
+              </details>
               <p class="plume-toolbar-status" id="plume-input-status" role="status" aria-live="polite"></p>
-              <button class="plume-plot-btn" id="plot-plume-btn" type="submit" form="plume-model-form" disabled>Plot Plume</button>
             </div>
 
             <div class="plume-map-layout">
@@ -701,35 +780,6 @@
               </article>
             </div>
 
-            <div class="plume-lower-summary-grid">
-              <details class="panel-card plume-demographics plume-sidebar-data" id="plume-demographics" open>
-                <summary>
-                  <span class="plume-sidebar-heading"><small>Plume Status</small><strong>Threat Zone</strong></span>
-                  <span class="status-pill" id="demographics-zone-badge">No zone</span>
-                </summary>
-                <div class="plume-lower-card-content">
-                  <p id="demographics-zone-summary" class="demographics-summary">Click a red, yellow, or green plume zone to inspect potential exposures.</p>
-                  <div class="demographics-grid" aria-live="polite">
-                    <div class="demographic-stat"><span>Nearby Census geography population</span><strong id="demographics-population">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Impacted households estimate</span><strong id="demographics-housing">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Visible / footprint structures</span><strong id="demographics-structures">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Nearby Census geography households</span><strong id="demographics-census-households">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Household estimate method</span><strong id="demographics-household-method">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Confidence / status</span><strong id="demographics-household-status">Needs Verification</strong></div>
-                    <div class="demographic-stat"><span>Limitations</span><strong id="demographics-household-limitations">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Schools / daycares</span><strong id="demographics-schools">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Healthcare facilities</span><strong id="demographics-healthcare">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Nursing homes / assisted living</span><strong id="demographics-nursing">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Critical infrastructure</span><strong id="demographics-critical">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Businesses / industrial sites</span><strong id="demographics-businesses">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Critical receptors</span><strong id="demographics-critical-receptors">No Current Data Exists</strong></div>
-                    <div class="demographic-stat"><span>Protective action summary</span><strong id="demographics-protective-action">No Current Data Exists</strong></div>
-                  </div>
-                  <p class="demographics-estimate-warning">Household and population counts are planning estimates. Census geographies may extend beyond the visible plume area. Verify affected structures using map review, field reconnaissance, local GIS, and Incident Command.</p>
-                  <p id="demographics-source-status" class="demographics-source-status">Population estimate: U.S. Census geography. Occupancies: OpenStreetMap mapped features.</p>
-                </div>
-              </details>
-            </div>
           </section>
 
           <section id="map" class="view">
@@ -760,12 +810,6 @@
                 <div data-live-panel="traffic" hidden>Traffic integration pending. Use approved DOT/traffic data source.</div>
                 <div data-live-panel="trafficCams" hidden>Saved traffic camera locations are shown. <a href="https://algotraffic.com/Cameras" target="_blank" rel="noopener noreferrer">Open ALGO Traffic Cameras</a></div>
                 <div data-live-panel="plume" hidden><strong id="live-plume-status">Plume Overlay Active</strong></div>
-                <div class="live-radar-panel" data-live-panel="weatherRadar" hidden>
-                  <strong id="live-radar-status">NWS Radar Overlay Active</strong>
-                  <small>Radar is for situational awareness only.</small>
-                  <span id="live-radar-fallback" hidden>NWS radar overlay unavailable. Open full radar.</span>
-                  <a href="https://radar.weather.gov/" target="_blank" rel="noopener noreferrer">Open Full NWS Radar</a>
-                </div>
                 <div id="live-map-selected" hidden></div>
               </div>
             </div>
@@ -1075,6 +1119,8 @@
     </div>
 
     <script src="vendor/maplibre-gl/maplibre-gl.js"></script>
+    <script src="responder-text.js"></script>
+    <script src="weather-radar-providers.js"></script>
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
     <script src="script.js"></script>

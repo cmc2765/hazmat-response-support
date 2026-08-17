@@ -92,6 +92,26 @@ export const VERIFIED_EPA_AEGL_ENDPOINTS: readonly AeglEndpointRecord[] = [
     importedAt: "2026-08-17",
     limitations: [...COMMON_LIMITATIONS],
   },
+  {
+    chemicalId: "hydrazine",
+    chemicalName: "Hydrazine",
+    casNumber: "302-01-2",
+    endpointSource: "EPA AEGL",
+    endpointStatus: "Final",
+    exposureDurations: [10, 30, 60, 240, 480],
+    valuesByDurationMinutes: {
+      10: { aegl1: 0.1, aegl2: 23, aegl3: 64 },
+      30: { aegl1: 0.1, aegl2: 16, aegl3: 45 },
+      60: { aegl1: 0.1, aegl2: 13, aegl3: 35 },
+      240: { aegl1: 0.1, aegl2: 3.1, aegl3: 8.9 },
+      480: { aegl1: 0.1, aegl2: 1.6, aegl3: 4.4 },
+    },
+    units: "ppm",
+    sourceVersion: "EPA AEGL final values; Hydrazine Final AEGL Technical Support Document",
+    sourceUrlOrCitationKey: "https://www.epa.gov/aegl/hydrazine-results-aeglprogram",
+    importedAt: "2026-08-17",
+    limitations: [...COMMON_LIMITATIONS],
+  },
 ] as const;
 
 export function selectVerifiedAeglEndpoint(

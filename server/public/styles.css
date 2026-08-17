@@ -19,11 +19,18 @@
   --soft-card: #f8fafc;
   --green: #34d399;
   --blue: #5aa9ff;
+  --planning-blue: #1683dc;
   --purple: #b388ff;
   --gray: #8fa2b8;
   --black: #0f172a;
   --hazmatiq-font-body: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
   --hazmatiq-font-heading: "Segoe UI", "Bahnschrift", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --hazmatiq-text-body: 0.9375rem;
+  --hazmatiq-text-small: 0.8rem;
+  --hazmatiq-text-section: 1.125rem;
+  --hazmatiq-card-padding: 14px;
+  --hazmatiq-gap-small: 8px;
+  --hazmatiq-gap-card: 10px;
   /* Optional future experiment: change --hazmatiq-font-body to this serif stack. */
   --hazmatiq-font-serif-experiment: Georgia, "Times New Roman", Times, serif;
 }
@@ -45,7 +52,8 @@ body {
   margin: 0;
   font-family: var(--hazmatiq-font-body);
   font-weight: 400;
-  line-height: 1.4;
+  font-size: var(--hazmatiq-text-body);
+  line-height: 1.5;
   background: var(--bg);
   color: var(--text);
 }
@@ -236,6 +244,7 @@ h1, h2, h3, h4,
   font-family: var(--hazmatiq-font-heading);
   font-weight: 700;
   letter-spacing: 0.02em;
+  line-height: 1.25;
 }
 h1 { font-weight: 800; }
 .brand-name { font-family: var(--hazmatiq-font-heading); }
@@ -512,7 +521,7 @@ h1 { font-weight: 800; }
   right: 10px;
   display: grid;
   gap: 7px;
-  width: min(320px, calc(100% - 20px));
+  width: min(390px, calc(100% - 20px));
   pointer-events: none;
 }
 
@@ -529,13 +538,7 @@ h1 { font-weight: 800; }
 }
 
 .live-map-panels p { margin: 0; }
-.live-radar-panel {
-  border-color: #0b1f33 !important;
-  box-shadow:
-    inset 0 0 0 2px rgba(255, 211, 35, 0.36),
-    0 5px 15px rgba(11, 31, 51, 0.2) !important;
-}
-.live-radar-panel a { color: #9f1016; font-weight: 850; }
+.live-map-marker { position: relative; z-index: 5; }
 .live-map-status { margin: 5px 0 12px; }
 
 .live-map-marker {
@@ -627,7 +630,7 @@ h1 { font-weight: 800; }
   border-radius: 16px;
   padding: 18px;
   background: linear-gradient(135deg, #040a12, #0d1520);
-  font-family: "Courier New", Courier, monospace;
+  font-family: var(--hazmatiq-font-body);
 }
 
 .console-topbar,
@@ -1610,18 +1613,65 @@ h1 { font-weight: 800; }
 
 .chemical-id-search-card {
   z-index: 10;
-  min-height: 0;
-  padding: 12px 16px;
+  min-height: clamp(420px, 52dvh, 600px);
+  display: grid;
+  align-content: center;
+  padding: clamp(24px, 4vw, 52px);
   margin-bottom: 12px;
   overflow: visible;
+  border-color: rgba(148, 163, 184, 0.72);
+  background-color: #f8fbff;
+  background-image:
+    linear-gradient(rgba(238, 247, 255, 0.18), rgba(238, 247, 255, 0.18)),
+    url("assets/chemical-id-search-background.png");
+  background-position: center, center right;
+  background-size: cover, cover;
+  background-repeat: no-repeat;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+}
+
+.chemical-id-search-content {
+  position: relative;
+  z-index: 1;
+  width: min(980px, 76%);
+  margin-inline: auto;
+  padding: clamp(18px, 2.5vw, 28px);
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  backdrop-filter: blur(5px);
 }
 
 .chemical-id-search-card h3 {
-  margin-bottom: 8px;
+  margin: 0 0 14px;
+  color: var(--navy);
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  text-align: center;
 }
 
 .chemical-id-search-card > :last-child {
   margin-bottom: 0;
+}
+
+@media (min-width: 720px) {
+  .layout:has(#lookup.active) > .content-area,
+  .layout:has(#lookup.active) #lookup.active {
+    min-height: 100%;
+  }
+
+  .layout:has(#lookup.active) #lookup.active {
+    display: grid;
+    grid-template-rows: minmax(clamp(420px, 52dvh, 600px), 1fr) auto auto;
+    align-content: stretch;
+  }
+
+  .layout:has(#lookup.active) .chemical-id-search-card {
+    height: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    margin-bottom: 0;
+  }
 }
 
 .chemical-search-types {
@@ -1647,13 +1697,41 @@ h1 { font-weight: 800; }
 
 .chemical-search-form {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  align-items: start;
+  grid-template-columns: minmax(280px, 1fr) minmax(112px, auto) minmax(190px, auto);
+  align-items: stretch;
   gap: 10px;
 }
 
 .chemical-search-input-wrap {
   position: relative;
+}
+
+.chemical-id-search-card #chemical-search,
+.chemical-id-search-card .chemical-search-form > button {
+  min-height: 54px;
+  box-sizing: border-box;
+}
+
+.chemical-id-search-card #chemical-search {
+  width: 100%;
+  padding-inline: 16px;
+  border: 2px solid #9fb1c3;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.98);
+  color: var(--text);
+  font-size: 1rem;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+}
+
+.chemical-id-search-card #chemical-search:focus {
+  outline: 3px solid rgba(246, 195, 67, 0.42);
+  border-color: var(--navy);
+}
+
+.chemical-id-search-card .chemical-search-form > button {
+  padding-inline: 18px;
+  border-radius: 12px;
+  white-space: nowrap;
 }
 
 .chemical-search-suggestions {
@@ -1674,7 +1752,14 @@ h1 { font-weight: 800; }
 .chemical-suggestion {
   width: 100%;
   display: grid;
-  grid-template-columns: 76px minmax(0, 1fr);
+  border-radius: 8px;
+  color: var(--text);
+}
+
+.chemical-suggestion-select {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(118px, 160px) minmax(0, 1fr);
   gap: 10px;
   align-items: center;
   padding: 10px;
@@ -1687,7 +1772,7 @@ h1 { font-weight: 800; }
 }
 
 .chemical-suggestion:hover,
-.chemical-suggestion:focus-visible {
+.chemical-suggestion:focus-within {
   outline: none;
   background: rgba(90, 169, 255, 0.16);
 }
@@ -1711,6 +1796,50 @@ h1 { font-weight: 800; }
 .chemical-suggestion small {
   margin-top: 3px;
   color: var(--muted);
+}
+
+.chemical-identifier-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.chemical-identifier-chip {
+  display: inline-flex;
+  max-width: 100%;
+  padding: 3px 7px;
+  border: 1px solid #b9c8d6;
+  border-radius: 999px;
+  background: #eef4fa;
+  color: #173b5c;
+  font-size: 0.68rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.chemical-linked-identifiers {
+  margin: 0 10px 9px min(170px, 28%);
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.chemical-linked-identifiers > summary {
+  color: #174f7d;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.chemical-transport-warning {
+  margin-top: 7px;
+  padding: 6px 8px;
+  border-left: 3px solid var(--red);
+  background: var(--soft-red);
+  color: #7f1d1d !important;
+  line-height: 1.35;
 }
 
 .chemical-search-help,
@@ -2212,7 +2341,7 @@ h1 { font-weight: 800; }
   margin: 0;
   color: #0b2942;
   font-size: 1.5rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.015em;
 }
 
@@ -2237,7 +2366,7 @@ h1 { font-weight: 800; }
   margin: 0 0 8px;
   color: #0b2942;
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.01em;
 }
 
@@ -2249,7 +2378,7 @@ h1 { font-weight: 800; }
   background: #e6eef4;
   color: #123d5c;
   font-size: 0.9rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.35;
 }
 
@@ -4990,12 +5119,47 @@ input, select, textarea {
   .topbar, .hero-card { flex-direction: column; align-items: flex-start; }
   .hero-stats, .card-grid, .workflow-grid, .mode-row, .workflow-stages, .compact-grid, .incident-layout { grid-template-columns: 1fr; }
   .facility-chemical-list { grid-template-columns: 1fr; }
+
+  .chemical-id-search-card {
+    min-height: 400px;
+    background-image:
+      linear-gradient(rgba(238, 247, 255, 0.26), rgba(238, 247, 255, 0.26)),
+      url("assets/chemical-id-search-background.png");
+  }
+
+  .chemical-id-search-content {
+    width: min(760px, 88%);
+  }
+
+  .chemical-search-form {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .chemical-search-form #save-my-chemical-btn {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 620px) {
   .chemical-search-form { grid-template-columns: 1fr; }
-  .chemical-search-form .primary-btn { width: 100%; }
-  .chemical-suggestion { grid-template-columns: 68px minmax(0, 1fr); }
+  .chemical-search-form #save-my-chemical-btn { grid-column: auto; }
+  .chemical-search-form .primary-btn,
+  .chemical-search-form .accent-btn { width: 100%; }
+  .chemical-suggestion-select { grid-template-columns: 100px minmax(0, 1fr); }
+  .chemical-linked-identifiers { margin-left: 10px; }
+
+  .chemical-id-search-card {
+    min-height: 0;
+    padding: 18px;
+    background-position: center, 68% center;
+  }
+
+  .chemical-id-search-content {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.92);
+  }
 }
 
 /* HazMatIQ red / yellow command theme */
@@ -5222,19 +5386,21 @@ textarea {
   background: var(--panel-2);
 }
 
-/* Command dashboard navy treatment */
+/* Command dashboard polished treatment using the Planning Tools blue. */
 .sidebar .sidebar-card {
-  background: linear-gradient(145deg, #164a75, #0d3457);
-  border-color: #2b5d85;
+  background: #083b66;
+  border: 2px solid var(--planning-blue);
   color: #fff;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 10px 28px rgba(13, 52, 87, 0.24);
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 4px 0 0 rgba(111, 196, 255, 0.72),
+    0 10px 28px rgba(7, 59, 105, 0.34),
+    0 0 0 1px rgba(22, 131, 220, 0.24);
 }
 
 .sidebar .muted,
 .sidebar-card.compact li {
-  color: #d9e3ed;
+  color: #dceeff;
 }
 
 .sidebar .module-btn {
@@ -5247,13 +5413,19 @@ textarea {
   border-color: #cbd5e1;
   color: #071f36;
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.2;
   text-align: left;
 }
 
 .sidebar-card h2 {
+  font-family: var(--hazmatiq-font-heading);
   font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(7, 59, 105, 0.45);
 }
 
 .sidebar-card > .muted {
@@ -5592,6 +5764,138 @@ textarea {
   }
 }
 
+/* Compact CAMEO/MARPLOT-style selected-area impact summary. */
+.layout:has(#plume.active) #plume #plume-demographics[open] {
+  position: static;
+  z-index: auto;
+  inset: auto;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: 100%;
+  max-width: 100%;
+  height: min(440px, 70dvh);
+  max-height: 440px;
+  margin: 0;
+  overflow: hidden;
+}
+
+#plume #plume-demographics .plume-lower-card-content {
+  min-height: 0;
+  padding: 8px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.threat-zone-summary h3 {
+  margin: 0 0 4px;
+  color: #0b1f33;
+  font-size: 0.88rem;
+}
+
+.threat-zone-summary-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px 10px;
+  margin: 0 0 8px;
+  padding: 7px;
+  border: 1px solid #cbd5df;
+  border-radius: 8px;
+  background: #eef2f5;
+}
+
+.threat-zone-summary-list div {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 5px;
+  min-width: 0;
+}
+
+.threat-zone-summary-list dt {
+  color: #526272;
+  font-size: 0.62rem;
+  font-weight: 800;
+}
+
+.threat-zone-summary-list dd {
+  min-width: 0;
+  margin: 0;
+  color: #0b1f33;
+  font-size: 0.65rem;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+#plume .threat-zone-primary-metrics {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+#plume .threat-zone-primary-metrics .demographic-stat {
+  min-height: 72px;
+  background: #f2f4f6;
+  color: #0b1f33;
+}
+
+#plume .threat-zone-primary-metrics .demographic-stat[hidden] {
+  display: none;
+}
+
+#plume .threat-zone-primary-metrics .demographic-stat strong {
+  color: #0b1f33;
+  font-size: 1.2rem;
+}
+
+#plume .threat-zone-primary-metrics .demographic-stat small {
+  margin-top: 3px;
+  color: #526272;
+  font-size: 0.61rem;
+  line-height: 1.25;
+}
+
+.threat-zone-estimate-details {
+  margin-top: 7px;
+  border: 1px solid #cbd5df;
+  border-radius: 8px;
+  background: #f7f9fb;
+}
+
+.threat-zone-estimate-details[hidden] { display: none; }
+
+.threat-zone-estimate-details > summary {
+  padding: 6px 8px;
+  color: #0b1f33;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 850;
+}
+
+.threat-zone-estimate-details dl {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px 8px;
+}
+
+.threat-zone-estimate-details dl div {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.8fr) minmax(0, 1.2fr);
+  gap: 7px;
+  font-size: 0.65rem;
+}
+
+.threat-zone-estimate-details dl div[hidden] { display: none; }
+.threat-zone-estimate-details dt { color: #526272; }
+.threat-zone-estimate-details dd { margin: 0; color: #0b1f33; overflow-wrap: anywhere; }
+
+@media (max-width: 520px) {
+  .threat-zone-summary-list,
+  #plume .threat-zone-primary-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+
 .incident-overview-card {
   width: 100%;
   min-height: 0;
@@ -5603,45 +5907,153 @@ textarea {
 
 .incident-overview-actions {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, minmax(150px, 1fr));
+  gap: 24px;
 }
 
 .incident-overview-actions .overview-action-btn {
-  min-height: 118px;
-  padding: 24px 20px;
-  background: #c9141b;
-  border: 2px solid #e32027;
-  color: #fff;
+  --overview-accent: #d71920;
+  --overview-accent-rgb: 215, 25, 32;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 0;
+  padding: clamp(18px, 2.3vw, 34px);
+  overflow: hidden;
+  background: #eef2f5;
+  border: 5px solid var(--overview-accent);
+  border-radius: 18px;
+  color: #071524;
   font-family: var(--hazmatiq-font-heading);
-  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.15;
-  text-align: center;
+  text-align: left;
+  box-shadow:
+    0 0 0 1px rgba(var(--overview-accent-rgb), 0.28),
+    0 10px 24px rgba(11, 31, 51, 0.16);
+  touch-action: manipulation;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.incident-overview-actions .overview-action-btn::before,
+.incident-overview-actions .overview-action-btn::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.incident-overview-actions .overview-action-btn::before {
+  z-index: -2;
+  background-image: url("assets/home-card-scenes.png");
+  background-repeat: no-repeat;
+  background-size: 100% 300%;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.incident-overview-actions .overview-action-btn::after {
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(250, 252, 253, 0.98) 0%, rgba(250, 252, 253, 0.92) 31%, rgba(250, 252, 253, 0.28) 58%, transparent 76%);
+}
+
+.overview-action-copy {
+  display: grid;
+  width: min(54%, 620px);
+  max-width: calc(100% - 24px);
+  gap: 8px;
+}
+
+.overview-action-title,
+.overview-action-description,
+.overview-action-arrow {
+  display: block;
+}
+
+.overview-action-title {
+  padding-left: 24px;
+  border-left: 8px solid var(--overview-accent);
+  font-size: clamp(1.9rem, 3.25vw, 3.6rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.overview-action-incident .overview-action-copy {
+  transform: translateY(clamp(8px, 1.2vw, 18px));
+}
+
+.overview-action-incident .overview-action-title {
+  font-size: clamp(1.8rem, 2.9vw, 3.3rem);
+  white-space: nowrap;
+}
+
+.overview-action-description {
+  max-width: 31rem;
+  padding-left: 32px;
+  font-family: var(--hazmatiq-font-body);
+  font-size: clamp(0.95rem, 1.35vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.overview-action-arrow {
+  padding-left: 32px;
+  font-family: var(--hazmatiq-font-body);
+  font-size: clamp(1.8rem, 2.8vw, 3rem);
+  font-weight: 400;
+  line-height: 0.75;
+  color: var(--overview-accent);
+  transition: transform 0.2s ease;
 }
 
 .incident-overview-actions .overview-action-planning {
-  background: #ffd323;
-  border-color: #e0b800;
-  color: #111;
+  --overview-accent: var(--planning-blue);
+  --overview-accent-rgb: 22, 131, 220;
+}
+
+.incident-overview-actions .overview-action-incident::before {
+  background-position: center top;
+}
+
+.incident-overview-actions .overview-action-planning::before {
+  background-position: center center;
 }
 
 .incident-overview-actions .overview-action-training {
-  background: #168349;
-  border-color: #1da35b;
-  color: #fff;
+  --overview-accent: #53b719;
+  --overview-accent-rgb: 83, 183, 25;
 }
 
-.incident-overview-actions .overview-action-planning:hover,
-.incident-overview-actions .overview-action-planning:focus-visible {
-  background: #ffe15c;
-  border-color: #111;
+.incident-overview-actions .overview-action-training::before {
+  background-position: center bottom;
 }
 
-.incident-overview-actions .overview-action-training:hover,
-.incident-overview-actions .overview-action-training:focus-visible {
-  background: #1da35b;
-  border-color: #fff;
+.incident-overview-actions .overview-action-btn:hover::before,
+.incident-overview-actions .overview-action-btn:focus-visible::before {
+  transform: scale(1.07);
+  filter: saturate(1.22) contrast(1.08) brightness(1.04);
+}
+
+.incident-overview-actions .overview-action-btn:hover,
+.incident-overview-actions .overview-action-btn:focus-visible {
+  transform: translateY(-4px) scale(1.008);
+  box-shadow:
+    0 0 0 4px rgba(var(--overview-accent-rgb), 0.28),
+    0 18px 38px rgba(var(--overview-accent-rgb), 0.34);
+}
+
+.incident-overview-actions .overview-action-btn:hover .overview-action-arrow,
+.incident-overview-actions .overview-action-btn:focus-visible .overview-action-arrow {
+  transform: translateX(8px);
+}
+
+.incident-overview-actions .overview-action-btn:focus-visible {
+  outline: 4px solid var(--yellow);
+  outline-offset: 3px;
 }
 
 .planning-tools-card {
@@ -5837,13 +6249,22 @@ textarea {
   }
 }
 
-.incident-overview-actions .overview-action-incident:hover,
-.incident-overview-actions .overview-action-incident:focus-visible {
-  background: #e32027;
-  border-color: var(--yellow);
-}
-
 @media (min-width: 720px) {
+  .incident-overview-actions {
+    min-height: min(790px, max(480px, calc(100dvh - 200px)));
+  }
+
+  .app-shell:has(#overview.active) .sidebar-card {
+    display: flex;
+    flex-direction: column;
+    min-height: min(790px, max(480px, calc(100dvh - 200px)));
+    margin-bottom: 0;
+  }
+
+  .app-shell:has(#overview.active) .sidebar .module-nav {
+    gap: 18px;
+  }
+
   .app-shell:has(#overview.active) {
     min-height: 100dvh;
     height: auto;
@@ -5858,6 +6279,13 @@ textarea {
   .app-shell:has(#overview.active) .content-area,
   .app-shell:has(#overview.active) #overview {
     min-height: 0;
+  }
+
+  .app-shell:has(#overview.active) .content-area,
+  .app-shell:has(#overview.active) #overview,
+  .app-shell:has(#overview.active) .incident-overview-card,
+  .app-shell:has(#overview.active) .incident-overview-actions {
+    height: 100%;
   }
 }
 
@@ -5877,6 +6305,24 @@ textarea {
 
 /* Short tablet and laptop screens retain every menu option above the fold. */
 @media (min-width: 720px) and (max-height: 850px) {
+  .incident-overview-actions {
+    gap: 14px;
+  }
+
+  .app-shell:has(#overview.active) .sidebar .module-nav {
+    gap: 14px;
+  }
+
+  .incident-overview-actions .overview-action-btn {
+    padding: 12px 24px;
+    border-width: 4px;
+  }
+
+  .overview-action-copy { gap: 4px; }
+  .overview-action-title { font-size: clamp(1.65rem, 2.65vw, 2.6rem); }
+  .overview-action-description { font-size: clamp(0.82rem, 1.12vw, 1rem); line-height: 1.2; }
+  .overview-action-arrow { font-size: 1.8rem; }
+
   .sidebar-card.compact,
   .app-shell:has(#overview.active) .footer-note {
     display: none;
@@ -5885,10 +6331,16 @@ textarea {
   .sidebar-card { padding: 12px; margin-bottom: 0; }
   .sidebar-card h2 { margin-bottom: 4px; font-size: 1.35rem; }
   .sidebar-card .muted { margin-bottom: 8px; font-size: 0.84rem; }
-  .sidebar .module-nav { gap: 6px; }
+  .sidebar .module-nav { gap: 8px; }
   .sidebar .module-btn { min-height: 42px; padding: 7px 11px; font-size: 0.9rem; }
   .brand-emblem { width: 48px; height: 48px; flex-basis: 48px; }
   .department-logo { width: 68px; height: 68px; }
+}
+
+@media (min-width: 720px) and (max-height: 700px) {
+  .overview-action-arrow {
+    display: none;
+  }
 }
 
 /* Mobile command layout */
@@ -5904,8 +6356,20 @@ textarea {
   .sidebar-card.compact { display: none; }
   .sidebar .module-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
   .sidebar .module-btn { min-height: 44px; padding: 7px 8px; font-size: 0.76rem; line-height: 1.15; }
-  .incident-overview-actions { grid-template-columns: 1fr; gap: 8px; }
-  .incident-overview-actions .overview-action-btn { min-height: 78px; }
+  .incident-overview-actions { grid-template-columns: 1fr; gap: 14px; }
+  .incident-overview-actions .overview-action-btn {
+    min-height: clamp(180px, 54vw, 220px);
+    padding: 22px 18px;
+    border-width: 4px;
+    border-radius: 14px;
+  }
+  .incident-overview-actions .overview-action-btn::after {
+    background: linear-gradient(90deg, rgba(250, 252, 253, 0.98) 0%, rgba(250, 252, 253, 0.91) 50%, rgba(250, 252, 253, 0.28) 80%, transparent 100%);
+  }
+  .overview-action-copy { width: 72%; gap: 8px; }
+  .overview-action-title { padding-left: 14px; border-left-width: 6px; font-size: clamp(1.55rem, 8vw, 2.2rem); }
+  .overview-action-description { padding-left: 20px; font-size: 0.9rem; line-height: 1.25; }
+  .overview-action-arrow { padding-left: 20px; font-size: 2rem; }
   .facility-preplan-grid { grid-template-columns: 1fr; }
   .facility-preplan-btn { min-height: 0; }
   .footer-note { display: none; }
@@ -6397,10 +6861,10 @@ textarea {
 
   #plume .plume-import-row #plot-plume-btn {
     align-self: stretch;
-    min-width: 92px;
-    min-height: 32px;
+    min-width: 0;
+    min-height: 30px;
     margin: 0;
-    padding: 5px 10px;
+    padding: 4px 8px;
     border-radius: 8px;
     background: #c1121f;
     color: #fff;
@@ -6542,13 +7006,13 @@ textarea {
   display: contents;
 }
 
-#plume .plume-safety-disclaimer { order: 1; }
-#plume .plume-import-row { order: 2; }
-#plume .plume-map-layout { order: 3; }
-#plume #plume-demographics { order: 4; }
-#plume .plume-model-section:first-child { order: 5; }
-#plume .plume-model-section:nth-child(2) { order: 6; }
-#plume #use-live-plume-weather-btn { order: 7; }
+#plume .plume-model-section:first-child { order: 1; }
+#plume #plume-demographics { order: 2; }
+#plume .plume-safety-disclaimer { order: 3; }
+#plume .plume-import-row { order: 4; }
+#plume .plume-model-section:nth-child(2) { order: 5; }
+#plume #use-live-plume-weather-btn { order: 6; }
+#plume .plume-map-layout { order: 7; }
 
 #plume .plume-map-layout,
 #plume .plume-full-map,
@@ -6617,7 +7081,7 @@ textarea {
   }
 
   #plume.view.active {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: auto auto auto minmax(0, auto) auto;
     height: auto;
     min-height: 0;
@@ -6654,18 +7118,26 @@ textarea {
   }
 
   #plume #plume-demographics,
-  #plume .plume-model-section:first-child,
-  #plume .plume-model-section:nth-child(2) {
-    grid-row: 4;
+  #plume .plume-model-section:first-child {
+    grid-row: 1;
+    width: 100%;
     height: 440px;
     max-height: 440px;
     box-sizing: border-box;
+    overflow: hidden;
   }
 
-  #plume #plume-demographics { grid-column: 1; }
-  #plume .plume-model-section:first-child { grid-column: 2; }
+  #plume .plume-model-section:first-child { grid-column: 1; }
+  #plume #plume-demographics {
+    grid-column: 2;
+    max-width: 100%;
+  }
+
   #plume .plume-model-section:nth-child(2) {
-    grid-column: 3;
+    grid-column: 1 / -1;
+    grid-row: auto;
+    height: auto;
+    max-height: none;
     padding: 8px;
   }
 
@@ -6689,8 +7161,8 @@ textarea {
   }
 
   #plume #use-live-plume-weather-btn {
-    grid-column: 3;
-    grid-row: 5;
+    grid-column: 1 / -1;
+    grid-row: auto;
     position: static;
     align-self: start;
     justify-self: stretch;
@@ -7165,4 +7637,439 @@ textarea {
   .monitor-device-form-grid { grid-template-columns: 1fr; }
   .monitor-temporary-fields { grid-template-columns: 1fr; }
   .monitor-form-span-two { grid-column: auto; }
+}
+
+/* Plume toolbar overlays and balanced lower workspace. */
+#plume .plume-weather-section[hidden] {
+  display: none !important;
+}
+
+#plume .plume-import-row {
+  grid-template-columns: minmax(420px, 1fr) auto auto auto;
+}
+
+#plume .plume-layer-controls > div {
+  grid-template-columns: repeat(5, minmax(92px, 1fr));
+}
+
+#plume .plume-layer-controls .plume-plot-btn {
+  min-width: 0;
+  min-height: 30px;
+  padding: 4px 8px;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+#plume .plume-layer-controls .plume-erg-layer-btn {
+  border: 2px solid #c65300;
+  background: #f47b20;
+  color: #fff;
+}
+
+#plume .plume-layer-controls .plume-erg-layer-btn:hover,
+#plume .plume-layer-controls .plume-erg-layer-btn.active {
+  border-color: #7a3000;
+  background: #c65300;
+  box-shadow: 0 0 0 3px rgba(244, 123, 32, 0.28);
+}
+
+#plume .plume-layer-controls .plume-weather-layer-btn {
+  border: 2px solid #174f7d;
+  background: #2474ad;
+  color: #fff;
+}
+
+#plume .plume-layer-controls .plume-weather-layer-btn:hover,
+#plume .plume-layer-controls .plume-weather-layer-btn.active {
+  border-color: #0b3457;
+  background: #164f7a;
+  box-shadow: 0 0 0 3px rgba(36, 116, 173, 0.24);
+}
+
+#plume .plume-weather-section {
+  order: 3;
+  grid-column: 1 / -1;
+  max-height: none;
+  overflow: visible;
+  border: 2px solid #2474ad;
+  box-shadow: 0 8px 22px rgba(22, 79, 122, 0.16);
+}
+
+#plume .plume-weather-section .plume-model-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+#plume .plume-model-section:first-child { order: 1; }
+#plume #plume-demographics { order: 2; }
+#plume .plume-safety-disclaimer { order: 3; }
+#plume .plume-import-row { order: 4; }
+#plume .plume-weather-section { order: 5; }
+#plume .plume-map-layout { order: 6; }
+
+@media (min-width: 981px) {
+  #plume.view.active {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto auto auto auto;
+  }
+
+  #plume .plume-safety-disclaimer {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  #plume .plume-import-row {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  #plume .plume-weather-section {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    height: auto;
+    max-height: none;
+  }
+
+  #plume .plume-map-layout {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  #plume #plume-demographics,
+  #plume .plume-model-section:first-child {
+    grid-row: 1;
+    width: 100%;
+    height: 440px;
+    max-height: 440px;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  #plume .plume-model-section:first-child { grid-column: 1; }
+  #plume #plume-demographics {
+    grid-column: 2;
+    max-width: 100%;
+  }
+
+  #plume #plume-demographics[open] {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  #plume #plume-demographics .plume-lower-card-content,
+  #plume .plume-model-section:first-child > .plume-model-section-grid {
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+}
+
+@media (max-width: 1180px) {
+  #plume .plume-import-row {
+    grid-template-columns: 1fr;
+  }
+
+  #plume .plume-layer-controls > div {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  #plume .plume-layer-controls > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #plume .plume-weather-section {
+    padding: 8px;
+  }
+}
+
+/* Keep the open Threat Zone card inside its 50% grid cell. This intentionally
+   overrides the legacy full-workspace details expansion. */
+.layout:has(#plume.active) #plume.view.active #plume-demographics[open] {
+  position: static;
+  z-index: auto;
+  inset: auto;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+  width: 100%;
+  max-width: 100%;
+  height: min(440px, 70dvh);
+  max-height: 440px;
+  margin: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 980px) {
+  .layout:has(#plume.active) #plume.view.active #plume-demographics[open] {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+/* Shared responder typography: final constraints intentionally follow the
+   page-specific themes so spacing and type remain consistent. */
+.chemical-profile-section,
+.guided-response-card,
+.guided-flow-box,
+.guided-mitigation-card,
+.incident-input-card,
+.incident-guidance-card,
+.command-status-card,
+.plume-model-section,
+.threat-zone-summary,
+.threat-zone-estimate-details,
+.report-summary-block {
+  font-family: var(--hazmatiq-font-body);
+  line-height: 1.5;
+}
+
+.chemical-profile-section,
+.guided-response-card,
+.guided-flow-box,
+.guided-mitigation-card,
+.incident-input-card,
+.incident-guidance-card,
+.command-status-card,
+.report-summary-block {
+  padding: var(--hazmatiq-card-padding);
+}
+
+.chemical-profile-section h4,
+.guided-response-card h3,
+.guided-flow-box h4,
+.guided-mitigation-card h4,
+.incident-input-card h3,
+.incident-guidance-card h3,
+.command-status-card h3,
+.threat-zone-summary h3,
+.report-summary-block h3 {
+  margin-top: 0;
+  margin-bottom: var(--hazmatiq-gap-small);
+  font-family: var(--hazmatiq-font-heading);
+  font-weight: 700;
+}
+
+.chemical-profile-value-list,
+.chemical-profile-list,
+.chemical-treatment-column ul,
+.incident-guidance-list,
+.report-summary-block ul {
+  gap: 6px;
+  line-height: 1.5;
+}
+
+.chemical-profile-value-list li,
+.chemical-profile-list li,
+.chemical-treatment-column li,
+.incident-guidance-list li,
+.report-summary-block li {
+  overflow-wrap: anywhere;
+}
+
+.guided-respiratory-decision dd > span,
+.guided-protection-level dd > span,
+.guided-flow-box dt,
+.guided-flow-sources,
+.guided-flow-approval {
+  font-weight: 700;
+}
+
+.guided-section-sources,
+.guided-manufacturer-box small,
+.guided-mitigation-card small,
+.guided-response-disclaimers,
+.threat-zone-summary-list dt,
+#plume .threat-zone-primary-metrics .demographic-stat small,
+.threat-zone-estimate-details,
+.threat-zone-summary-list dd,
+.threat-zone-estimate-details > summary,
+.threat-zone-estimate-details dl div {
+  font-size: var(--hazmatiq-text-small);
+  line-height: 1.45;
+}
+
+/* Compact Plume workspace: full-width inputs with adjacent, downward-opening
+   Plume Summary and Threat Zone controls in the map toolbar. */
+#plume .plume-import-row {
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  align-items: start;
+}
+
+#plume .plume-summary-panel {
+  position: relative;
+  min-width: 124px;
+  order: 0;
+}
+
+#plume #plume-incident-data-panel > summary {
+  border-color: #b79400;
+  background: var(--yellow);
+  color: #1c1714;
+}
+
+#plume #plume-incident-data-panel > summary:hover,
+#plume #plume-incident-data-panel[open] > summary {
+  border-color: #806800;
+  background: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(246, 195, 67, 0.3);
+}
+
+#plume #plume-incident-data-panel .plume-summary-content {
+  box-sizing: border-box;
+  max-height: min(560px, calc(100dvh - 110px));
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+#plume #plume-demographics,
+.layout:has(#plume.active) #plume.view.active #plume-demographics[open] {
+  position: relative;
+  z-index: auto;
+  inset: auto;
+  grid-column: auto;
+  grid-row: auto;
+  align-self: start;
+  width: auto;
+  min-width: 124px;
+  max-width: none;
+  height: auto;
+  max-height: none;
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  order: 0;
+}
+
+#plume #plume-demographics > summary {
+  min-height: 32px;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 5px 12px;
+  border: 1px solid #8f0d14;
+  border-radius: 12px;
+  background: var(--red);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  list-style: none;
+}
+
+#plume #plume-demographics > summary::-webkit-details-marker {
+  display: none;
+}
+
+#plume #plume-demographics > summary:hover,
+#plume #plume-demographics[open] > summary {
+  border-color: #60080d;
+  background: #a80f16;
+  color: #fff;
+}
+
+#plume #plume-demographics .plume-threat-zone-content {
+  position: absolute;
+  z-index: 8;
+  top: calc(100% + 6px);
+  right: 0;
+  width: min(720px, calc(100vw - 36px));
+  max-height: min(560px, 70dvh);
+  min-height: 0;
+  padding: 12px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid #8f0d14;
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: 0 10px 28px rgba(13, 52, 87, 0.24);
+  scrollbar-gutter: stable;
+}
+
+#plume .plume-threat-zone-status {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 6px;
+}
+
+@media (min-width: 981px) {
+  #plume.view.active {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto auto;
+  }
+
+  #plume .plume-model-section:first-child {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: 100%;
+    height: auto;
+    max-height: 310px;
+    overflow: hidden;
+  }
+
+  #plume .plume-model-section:first-child > .plume-model-section-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  #plume .plume-model-section:first-child .plume-chemical-field {
+    grid-column: span 2;
+  }
+
+  #plume .plume-model-section:first-child .plume-release-grid > label[for="plume-release-quantity"] {
+    grid-column: span 2;
+  }
+
+  #plume .plume-model-section:first-child .container-profile,
+  #plume .plume-model-section:first-child .plume-input-review {
+    grid-column: 1 / -1;
+  }
+
+  #plume .plume-model-section:first-child .container-bubble-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1180px) {
+  #plume .plume-import-row {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  #plume .plume-layer-controls {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  #plume .plume-import-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #plume .plume-layer-controls,
+  #plume .plume-map-view-controls,
+  #plume .plume-toolbar-status {
+    grid-column: 1 / -1;
+  }
+
+  #plume .plume-summary-panel {
+    width: 100%;
+  }
+
+  #plume .plume-summary-panel > summary {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #plume #plume-demographics .plume-threat-zone-content {
+    right: auto;
+    left: 0;
+    width: min(720px, calc(100vw - 32px));
+  }
 }

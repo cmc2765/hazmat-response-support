@@ -5,6 +5,7 @@
 export const MOLECULAR_WEIGHTS: Record<string, number> = {
   ammonia: 17.03,
   chlorine: 70.90,
+  hydrazine: 32.05,
   "anhydrous-hydrogen-chloride": 36.46,
   "sulfur-dioxide": 64.07,
   "hydrogen-fluoride": 20.01,
