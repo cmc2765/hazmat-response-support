@@ -36,7 +36,7 @@ describe("responder display-text normalization", () => {
   });
 
   it("wires the browser formatter before the application and fixes the known patient sequence", () => {
-    expect(html.indexOf('src="responder-text.js"')).toBeLessThan(html.indexOf('src="script.js"'));
+    expect(html.indexOf('src="responder-text.js"')).toBeLessThan(html.indexOf('src="script.js'));
     expect(browserScript).toContain("'If damp, remove clothing immediately.'");
     expect(browserScript).toContain("'If wearing bulky clothing or denim, remove outer layer.'");
     expect(browserScript).toContain("'Add fans if available to enhance ventilation effectiveness.'");

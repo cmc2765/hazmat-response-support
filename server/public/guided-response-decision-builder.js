@@ -69,125 +69,94 @@
     };
   }
 
-  function explicitProtectionLevels(sourceValues) {
-    const levels = new Set();
-    sourceValues.forEach((value) => {
-      if (/\blevel\s*a\b/i.test(value)) levels.add('Level A Vapor Protective Suit + SCBA');
-      if (/\blevel\s*b\b/i.test(value)) levels.add('Level B Chemical Protective Suit + SCBA');
-      if (/\blevel\s*c\b/i.test(value)) levels.add('Level C Chemical Protective Suit + APR/PAPR verification required');
-      if (/\blevel\s*d\b/i.test(value)) levels.add('Level D / No chemical protective ensemble required');
-    });
-    return [...levels];
-  }
-
   function buildLifeSafety(selectedChemical, linkedSources, sources) {
     const profile = linkedSources.profile || {};
-    const ergPpe = unique(linkedSources.responderGuide?.publicSafety?.protectiveClothing);
-    const nioshPpe = unique([
-      linkedSources.ppeComponents?.niosh?.respiratory,
-      linkedSources.ppeComponents?.niosh?.skin,
-      linkedSources.ppeComponents?.niosh?.eye,
-    ]);
-    const mappedPpe = unique(linkedSources.ppeReference);
-    const companionPpe = unique([
-      profile.ppeRespiratory?.aprPaprScba,
-      profile.ppeRespiratory?.recommendedPpe,
-      profile.ppeRespiratory?.gloveSuitMaterial,
-    ]);
-    const decisionFacts = unique([ergPpe, nioshPpe, mappedPpe, companionPpe]);
-    const scbaFacts = decisionFacts.filter((value) => /\bSCBA\b|self-contained breathing apparatus/i.test(value));
-    const negativeScba = scbaFacts.filter((value) => /\b(?:no|not)\b[^.]{0,30}\bSCBA\b|\bSCBA\b[^.]{0,20}\bnot\b/i.test(value));
-    const conditionalScba = scbaFacts.filter((value) => /\b(?:if|when|escape only|strongly indicated|strongly recommended)\b/i.test(value));
-    const mandatoryScba = scbaFacts.filter((value) => !negativeScba.includes(value) && !conditionalScba.includes(value));
-    const scbaConflict = negativeScba.length > 0 && (mandatoryScba.length > 0 || conditionalScba.length > 0);
-    const scbaDecision = scbaConflict
-      ? REVIEW
-      : mandatoryScba.length
-        ? 'SCBA MANDATED'
-        : conditionalScba.length
-          ? 'SCBA STRONGLY INDICATED'
-          : decisionFacts.some((value) => /\b(?:respirator|APR|PAPR|cartridge|canister)\b/i.test(value))
-            ? 'RESPIRATOR / CARTRIDGE SELECTION REQUIRES VERIFICATION'
-            : NO_DATA;
-
-    const levels = explicitProtectionLevels(decisionFacts);
-    const protectionConflict = levels.length > 1
-      || (scbaDecision === 'SCBA MANDATED' && levels.some((level) => /Level C|Level D/.test(level)))
-      || (levels.some((level) => /Level A|Level B/.test(level))
-        && !/^SCBA (?:MANDATED|STRONGLY INDICATED)$/.test(scbaDecision));
-    const protectionLevel = protectionConflict
-      ? REVIEW
-      : levels.length === 1
-        ? levels[0]
-        : NO_DATA;
-    const cartridgeStatus = scbaDecision === 'SCBA MANDATED'
+    const recommendation = profile.ppeRecommendation || {
+      selectedLevel: 'NO_CURRENT_DATA_EXISTS',
+      displayLabel: NO_DATA,
+      recommendationStatus: 'NO_CURRENT_DATA',
+      respiratoryProtection: NO_DATA,
+      skinProtection: NO_DATA,
+      cartridgeRequirement: NO_DATA,
+      scbaRequired: false,
+      aprAllowed: false,
+      levelCAllowed: false,
+      levelCBlockedReason: 'No approved PPE recommendation object is available.',
+      decisionReasons: [],
+      verificationRequirements: ['Obtain approved chemical-specific PPE source data.'],
+      sourcesReviewed: [],
+      sourceConflicts: [],
+      limitations: ['Missing PPE data is not guessed.'],
+      generatedAt: new Date().toISOString(),
+    };
+    const scbaDecision = recommendation.scbaRequired
+      ? 'SCBA MANDATED'
+      : recommendation.selectedLevel === 'LEVEL_C_APR_APPROPRIATE_CARTRIDGE'
+        ? 'SCBA NOT SELECTED — LEVEL C CONDITIONS VERIFIED'
+        : recommendation.selectedLevel === 'LEVEL_D_NO_CHEMICAL_PROTECTION'
+          ? 'NO CHEMICAL RESPIRATORY PROTECTION REQUIRED FOR VERIFIED TASK / AREA'
+          : recommendation.displayLabel || NO_DATA;
+    const protectionLevel = recommendation.displayLabel || NO_DATA;
+    const cartridgeStatus = recommendation.scbaRequired
       ? 'Not displayed — SCBA is mandated.'
-      : /Level C/.test(protectionLevel)
-        ? 'Cartridge selection requires verification with approved source data and agency SOP.'
-        : NO_DATA;
-    const downgradeConditions = scbaDecision === 'SCBA MANDATED'
-      ? ['Air monitoring', 'Verified concentration', 'Oxygen verification', 'Suit compatibility', 'Agency SOP', 'Incident Command approval']
+      : recommendation.cartridgeRequirement || NO_DATA;
+    const requiredVerification = unique(recommendation.verificationRequirements);
+    const missingData = ['NO_CURRENT_DATA_EXISTS', 'REQUIRES_REVIEW', 'BLOCKED_PENDING_VERIFIED_CHEMICAL_LINK'].includes(recommendation.selectedLevel)
+      ? requiredVerification
       : [];
-    const missingData = [];
-    if (scbaDecision === NO_DATA) missingData.push('SCBA / respiratory decision');
-    if (protectionLevel === NO_DATA) missingData.push('OSHA protection level');
-    if (!unique(profile.ppeRespiratory?.gloveSuitMaterial).length) missingData.push('Suit compatibility');
-    const conflicts = [
-      ...(scbaConflict ? ['Conflicting SCBA source facts'] : []),
-      ...(protectionConflict ? [`Conflicting protection levels: ${levels.join(', ')}`] : []),
-    ];
-    const supportingSources = sourceSummary(sources, [
-      mappedPpe.length || companionPpe.length ? 'Chemical Companion' : '',
-      ergPpe.length ? 'ERG' : '',
-      nioshPpe.length ? 'NIOSH' : '',
-      values(linkedSources.approvedSources).some((source) => canonicalSource(source) === 'CAMEO') && mappedPpe.length ? 'CAMEO' : '',
-    ]);
-    const entryGuidance = scbaDecision === 'SCBA MANDATED'
-      ? `Entry requires ${protectionLevel === NO_DATA ? 'a verified chemical protective ensemble' : protectionLevel}. Downgrade only after ${downgradeConditions.join(', ').toLowerCase()} support downgrade.`
-      : scbaDecision === NO_DATA
-        ? 'Do not select entry respiratory protection until approved-source data is verified.'
-        : 'Verify contaminant, concentration, oxygen, respiratory equipment, suit compatibility, agency SOP, and Incident Command approval before entry.';
-    const directGuidance = conflicts.length
-      ? `${REVIEW}: ${conflicts.join('; ')}.`
-      : `${scbaDecision}. ${protectionLevel === NO_DATA ? 'Protection Level: No Current Data Exists.' : `Protection Level: ${protectionLevel}.`} ${entryGuidance}`;
+    const supportingSources = unique(recommendation.sourcesReviewed);
+    const entryGuidance = recommendation.scbaRequired
+      ? `Entry requires ${protectionLevel}. Do not downgrade based on plume output; resolve all listed verification requirements before entry.`
+      : recommendation.levelCAllowed
+        ? 'Level C remains conditional on continued air monitoring, adequate oxygen, concentration below limits, and verified cartridge suitability.'
+        : 'Do not select Level C unless every atmospheric, monitoring, exposure-limit, and cartridge requirement is verified.';
+    const directGuidance = `${protectionLevel}. ${recommendation.respiratoryProtection || NO_DATA} ${entryGuidance}`;
 
     const evidence = {
       chemicalName: text(selectedChemical.chemicalName) || NO_DATA,
       masterChemicalId: selectedChemical.masterChemicalId ?? null,
       scbaDecision,
       protectionLevel,
-      sourceBacked: decisionFacts.length > 0 && !conflicts.length,
+      sourceBacked: recommendation.recommendationStatus === 'SOURCE_BACKED_RECOMMENDATION',
       supportingSources,
-      sourceFactsUsed: decisionFacts,
-      triggerReasons: unique([
-        mandatoryScba.length ? 'Explicit approved-source SCBA direction' : '',
-        conditionalScba.length ? 'Conditional approved-source SCBA direction' : '',
-        levels.length ? 'Explicit approved-source protection-level direction' : '',
-        ...conflicts,
-      ]),
+      sourceFactsUsed: unique(recommendation.decisionReasons),
+      triggerReasons: unique(recommendation.decisionReasons),
       idlhValue: text(profile.exposures?.idlh) || NO_DATA,
       idlhSource: text(profile.exposures?.idlh) ? 'Chemical Companion / linked NIOSH data' : NO_DATA,
-      respiratoryBasis: join(scbaFacts),
-      skinVaporBasis: join(decisionFacts.filter((value) => /skin|vapor|encapsulat|suit/i.test(value))),
-      cwaOrCbrnBasis: join(decisionFacts.filter((value) => /CWA|CBRN|chemical warfare/i.test(value))),
-      unknownConcentrationBasis: join(decisionFacts.filter((value) => /unknown (?:release|concentration)|IDLH/i.test(value))),
-      downgradeConditions,
-      limitations: unique([missingData.map((field) => `${field}: ${NO_DATA}`), ...conflicts]),
+      respiratoryBasis: recommendation.respiratoryProtection || NO_DATA,
+      skinVaporBasis: recommendation.skinProtection || NO_DATA,
+      levelCAllowed: Boolean(recommendation.levelCAllowed),
+      levelCBlockedReason: recommendation.levelCBlockedReason || '',
+      requiredVerification,
+      limitations: unique(recommendation.limitations),
+      ppeRecommendation: recommendation,
       executionNote: EXECUTION_NOTE,
-      generatedAt: new Date().toISOString(),
+      generatedAt: recommendation.generatedAt || new Date().toISOString(),
     };
 
     return {
       decision: directDecision({
-        status: conflicts.length ? REVIEW : scbaDecision,
-        primaryDecision: scbaDecision,
+        status: recommendation.recommendationStatus || REVIEW,
+        primaryDecision: protectionLevel,
         directGuidance,
         tacticalActions: [entryGuidance],
-        specificValues: { scbaDecision, protectionLevel, cartridgeStatus, downgradeConditions },
+        specificValues: {
+          scbaDecision,
+          protectionLevel,
+          recommendedProtectionLevel: protectionLevel,
+          whySelected: unique(recommendation.decisionReasons),
+          requiredVerification,
+          cartridgeStatus,
+          levelCAllowed: Boolean(recommendation.levelCAllowed),
+          levelCBlockedReason: recommendation.levelCBlockedReason || '',
+          downgradeConditions: requiredVerification,
+        },
         missingData,
         sourceSummary: supportingSources,
         limitations: evidence.limitations,
-        confidence: conflicts.length ? 'Conflicting source facts — specialist review required' : (decisionFacts.length ? 'Source-backed' : 'No verified decision data'),
+        confidence: recommendation.recommendationStatus === 'SOURCE_BACKED_RECOMMENDATION'
+          ? 'Source-backed'
+          : recommendation.displayLabel || NO_DATA,
         requiresICApprovalForExecution: true,
       }),
       evidence,
@@ -211,6 +180,7 @@
       : (text(plumeState?.status) || 'Requires Verification');
     const endpointSelected = text(plumeState?.endpointSelected) || NO_DATA;
     const zoneMeaning = text(plumeState?.zoneMeaning) || NO_DATA;
+    const plumeConfidence = text(plumeState?.confidenceLevel || plumeState?.confidenceStatus) || 'Insufficient Data';
     const missingData = [];
     if (!ergGuide) missingData.push('ERG guide');
     if (!initialIsolation) missingData.push('Initial isolation distance');
@@ -218,6 +188,7 @@
     if (evacuationShelter === NO_DATA) missingData.push('Evacuation / shelter-in-place guidance');
     if (/(?:requires|needs) verification|manual|stale|recent/i.test(weatherStatus)) missingData.push('Current wind / weather verification');
     if (endpointSelected === NO_DATA) missingData.push('AEGL / LOC endpoint');
+    if (/planning|insufficient|review|unvalidated/i.test(plumeConfidence)) missingData.push('Plume confidence / field verification');
     const primaryDecision = initialIsolation
       ? `Initial small-spill isolation: ${initialIsolation} in all directions${largeSpillIsolation ? `; large-spill isolation: ${largeSpillIsolation} in all directions` : ''}.`
       : protectiveAction !== NO_DATA
@@ -244,6 +215,7 @@
         evacuationShelter,
         weatherStatus,
         plumeStatus,
+        plumeConfidence,
         endpointSelected,
         zoneMeaning,
         fieldMonitoringRequirement: 'Required — confirm and adjust the perimeter using air monitoring and visual conditions.',
@@ -281,6 +253,8 @@
       values(plumeState?.missingInputs).length ? 'plume inputs are incomplete' : '',
       /(?:requires|needs) verification|manual|stale|recent/i.test(text(weatherState?.status)) ? 'wind / weather is not verified' : '',
       !text(plumeState?.endpointSelected) ? 'AEGL / LOC endpoint is missing' : '',
+      /planning|insufficient|review|unvalidated/i.test(text(plumeState?.confidenceLevel || plumeState?.confidenceStatus))
+        ? 'plume confidence requires field verification' : '',
       lifeSafety.missingData.includes('Suit compatibility') ? 'suit compatibility is not verified' : '',
     ]);
     const tacticalPosture = defensiveTriggers.length ? 'Defensive' : REVIEW;

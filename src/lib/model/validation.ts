@@ -7,8 +7,12 @@ export const PLUME_VALIDATION_PLACEHOLDER_WARNING =
 export type PlumeValidationCategory =
   | "ammonia-railcar-release"
   | "chlorine-cylinder-release"
-  | "continuous-release"
-  | "puff-release";
+  | "dense-gas"
+  | "neutral-gas"
+  | "low-wind-stable"
+  | "moderate-wind-neutral"
+  | "urban-roughness"
+  | "rural-roughness";
 
 export interface PlumeValidationCase {
   id: string;

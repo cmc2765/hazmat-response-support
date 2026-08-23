@@ -118,6 +118,14 @@ describe("API routes", () => {
       endpoint: { endpointSource: string; selectedDurationMinutes: number; aegl1: number; aegl2: number; aegl3: number };
       plumeStatus: string;
       masterChemicalId: string;
+      modelMode: string;
+      modelModeLabel: string;
+      modelFamily: string;
+      sourceStrength: { status: string; sourceStrengthValue: number };
+      weather: { freshness: string; usableForPlanning: boolean };
+      confidenceLevel: string;
+      fieldVerificationRequirements: string[];
+      textSummary: string;
     };
     expect(Array.isArray(body.isopleths)).toBe(true);
     expect(body.isopleths.length).toBeGreaterThan(0);
@@ -129,6 +137,13 @@ describe("API routes", () => {
     expect(body.endpoint).toMatchObject({ endpointSource: "EPA AEGL", selectedDurationMinutes: 60, aegl1: 30, aegl2: 160, aegl3: 1100 });
     expect(body.plumeStatus).toBe("Planning Estimate");
     expect(body.masterChemicalId).toBe("10");
+    expect(body.modelMode).toBe("HAZMATIQ_PLANNING_ESTIMATE");
+    expect(body.modelModeLabel).toBe("HazMatIQ Planning Estimate");
+    expect(body.sourceStrength.sourceStrengthValue).toBe(1);
+    expect(body.weather.usableForPlanning).toBe(true);
+    expect(body.confidenceLevel).not.toMatch(/validated/i);
+    expect(body.fieldVerificationRequirements.join(" ")).toMatch(/field monitoring/i);
+    expect(body.textSummary).toMatch(/Ammonia|7664-41-7/i);
   });
 
   it("POST /api/plume/run plots Hydrazine with its reviewed final EPA AEGL endpoint", async () => {

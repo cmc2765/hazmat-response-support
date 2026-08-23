@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HazMatIQ Prototype</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=chemical-intel-7" />
+    <link rel="stylesheet" href="chemical-intel.css?v=chemical-intel-7" />
   </head>
   <body>
     <div class="app-shell">
@@ -308,7 +309,11 @@
 
               <div class="command-reference-stack">
               <details class="panel-card incident-guidance-card protective-summary-card command-reference-panel" data-command-reference>
-                <summary>Protective Actions</summary>
+                <summary class="incident-image-bubble" aria-label="Protective Actions">
+                  <img class="incident-image-bubble__bg" src="assets/incident-dashboard/cards/protective_actions_incident_command_dashboard.png" alt="" loading="eager" draggable="false" />
+                  <span class="incident-image-bubble__overlay" aria-hidden="true"></span>
+                  <span class="incident-image-bubble__title sr-only">Protective Actions</span>
+                </summary>
                 <div class="command-reference-content">
                   <div id="incident-protective-guidance">Select a chemical and run the plume model to populate protective action guidance.</div>
                   <p class="incident-guidance-warning">Verify all medical guidance, protective actions, isolation distances, and evacuation/shelter decisions with official sources, agency SOPs, field observations, and Incident Command.</p>
@@ -316,21 +321,31 @@
               </details>
 
               <details class="panel-card incident-guidance-card ppe-summary-card command-reference-panel" data-command-reference>
-                <summary>PPE Requirements</summary>
+                <summary class="incident-image-bubble" aria-label="PPE Requirements">
+                  <img class="incident-image-bubble__bg" src="assets/incident-dashboard/cards/hazmat_ppe_requirements_dashboard.png" alt="" loading="eager" draggable="false" />
+                  <span class="incident-image-bubble__overlay" aria-hidden="true"></span>
+                  <span class="incident-image-bubble__title sr-only">PPE Requirements</span>
+                </summary>
                 <div class="command-reference-content">
                   <div id="incident-ppe-guidance">Select or identify a chemical to populate PPE guidance.</div>
-                  <div class="ppe-reference-actions" aria-label="Kappler protective suit references">
-                    <a href="https://www.kappler.com/hazmatch/suit-selection-guide" target="_blank" rel="noopener noreferrer">Open Kappler HazMatch Suit Selection</a>
-                    <a href="https://www.kappler.com/files" target="_blank" rel="noopener noreferrer">Kappler Suit Manuals &amp; Technical Files</a>
-                  </div>
+                  <details class="ppe-source-details">
+                    <summary>Manufacturer Details</summary>
+                    <div class="ppe-reference-actions" aria-label="Kappler protective suit references">
+                      <a href="https://www.kappler.com/hazmatch/suit-selection-guide" target="_blank" rel="noopener noreferrer">Open Kappler HazMatch Suit Selection</a>
+                      <a href="https://www.kappler.com/files" target="_blank" rel="noopener noreferrer">Kappler Suit Manuals &amp; Technical Files</a>
+                    </div>
+                  </details>
                   <p id="incident-ppe-sources" class="incident-guidance-sources" hidden></p>
-                  <p class="incident-guidance-warning">PPE and suit recommendations are decision-support guidance only. Verify with SDS, ERG, NIOSH/CAMEO/CHEMM where applicable, manufacturer compatibility charts, agency SOPs, and Incident Command before entry.</p>
-                  <p class="incident-guidance-warning">Suit compatibility not verified from current source unless a chemical-specific imported source is shown.</p>
+                  <p class="incident-guidance-warning">PPE recommendations are source-backed planning guidance and must be verified by Incident Command, air monitoring, oxygen concentration, concentration below IDLH/exposure limits, suit compatibility, cartridge suitability, and agency SOPs before entry.</p>
                 </div>
               </details>
 
               <details class="panel-card incident-guidance-card medical-summary-card command-reference-panel" data-command-reference>
-                <summary>Medical Summary</summary>
+                <summary class="incident-image-bubble" aria-label="Medical Summary">
+                  <img class="incident-image-bubble__bg" src="assets/incident-dashboard/cards/emergency_medical_summary_dashboard.png" alt="" loading="eager" draggable="false" />
+                  <span class="incident-image-bubble__overlay" aria-hidden="true"></span>
+                  <span class="incident-image-bubble__title sr-only">Medical Summary</span>
+                </summary>
                 <div class="command-reference-content">
                   <p class="medical-primary-source"><strong>External medical verification reference: CHEMM (HHS/ASPR)</strong></p>
                   <div class="medical-reference-actions" aria-label="CHEMM medical guidance">
@@ -345,7 +360,11 @@
                 </div>
               </details>
               <details class="panel-card tier2-card facility-information-card command-reference-panel" data-command-reference>
-                <summary>E-Plan Login</summary>
+                <summary class="incident-image-bubble" aria-label="E-Plan Login">
+                  <img class="incident-image-bubble__bg" src="assets/incident-dashboard/cards/secure_e_plan_login_dashboard.png" alt="" loading="eager" draggable="false" />
+                  <span class="incident-image-bubble__overlay" aria-hidden="true"></span>
+                  <span class="incident-image-bubble__title sr-only">E-Plan Login</span>
+                </summary>
                 <div class="command-reference-content">
                   <div
                     class="eplan-login-form"
@@ -374,8 +393,15 @@
 
           <section id="lookup" class="view">
             <article class="panel-card chemical-id-search-card">
+              <div class="chemical-search-brand">
+                <img src="assets/hazmatiq-logo-transparent.png" alt="HazMatIQ — Incident Intelligence" />
+                <img class="chemical-search-brand__white-hazmat" src="assets/hazmatiq-logo-transparent.png" alt="" aria-hidden="true" />
+                <img class="chemical-search-brand__white-subtitle" src="assets/hazmatiq-logo-transparent.png" alt="" aria-hidden="true" />
+              </div>
+              <div class="chemical-search-hero-copy">
+                <h1>Chemical ID</h1>
+              </div>
               <div class="chemical-id-search-content">
-                <h3>Search Chemical ID</h3>
                 <form id="chemical-search-form" class="chemical-search-form" role="search">
                   <div class="chemical-search-input-wrap">
                     <label class="sr-only" for="chemical-search">Chemical name, UN number, CAS number, or facility</label>
@@ -394,7 +420,22 @@
                   <button class="primary-btn" id="chemical-lookup-btn" type="submit">Search</button>
                   <button class="accent-btn" id="save-my-chemical-btn" type="button">Save to My Chemicals</button>
                 </form>
+                <div class="chemical-search-examples" aria-label="Chemical search examples">
+                  <span>Examples:</span><button type="button" data-chemical-example="Chlorine">Chlorine</button><button type="button" data-chemical-example="Ammonia">Ammonia</button><button type="button" data-chemical-example="Diesel Fuel">Diesel Fuel</button><button type="button" data-chemical-example="Sodium Hydroxide">Sodium Hydroxide</button><button type="button" data-chemical-example="UN1017">UN1017</button><button type="button" data-chemical-example="1005">1005</button>
+                </div>
                 <p id="chemical-search-status" class="chemical-search-status" role="status" aria-live="polite"></p>
+              </div>
+              <div class="chemical-search-assurance-grid">
+                <article><span>⚡</span><div><strong>Fast &amp; Accurate</strong><small>Real-time data from trusted sources</small></div></article>
+                <article><span>✓</span><div><strong>Response Ready</strong><small>Information you need, when you need it</small></div></article>
+                <article><span>◇</span><div><strong>Field Proven</strong><small>Built for responders, by responders</small></div></article>
+                <article><span>↻</span><div><strong>Always Updated</strong><small>Continuous updates from reliable authorities</small></div></article>
+              </div>
+              <div class="chemical-search-trust-grid">
+                <article><span>◇</span><div><strong>Verified Sources</strong><small>Trusted data from government &amp; industry</small></div></article>
+                <article><span>⇩</span><div><strong>Offline Ready</strong><small>Critical info available when you need it</small></div></article>
+                <article><span>⌘</span><div><strong>Export &amp; Share</strong><small>Reports, ICS forms &amp; incident data</small></div></article>
+                <article><span>▣</span><div><strong>Secure &amp; Reliable</strong><small>Built with security &amp; data integrity</small></div></article>
               </div>
             </article>
 
@@ -419,27 +460,101 @@
                 </div>
               </div>
               <div class="chemical-profile-shell">
+                <header class="chemical-profile-toolbar">
+                  <button class="ghost-btn" id="chemical-profile-back-btn" type="button">← Back to Search</button>
+                  <strong>Chemical Profile</strong>
+                  <div class="chemical-profile-toolbar-actions">
+                    <button class="chemical-action-button chem-compare" id="open-chemcompare-btn" type="button">CHEM COMPARE</button>
+                    <button class="ghost-btn" id="open-guided-response-btn" type="button">Guided Response</button>
+                    <button class="primary-btn" id="open-plume-btn" type="button">Plot Plume</button>
+                    <div class="chemical-profile-export-menu">
+                      <button class="ghost-btn" id="profile-export-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="profile-export-options">⇧ Export / Print</button>
+                      <div id="profile-export-options" class="chemical-profile-export-options" role="menu" hidden>
+                        <button id="profile-print-btn" type="button" role="menuitem">Print / Save as PDF</button>
+                        <button id="profile-download-btn" type="button" role="menuitem">Save Profile Data (.json)</button>
+                      </div>
+                    </div>
+                    <button class="ghost-btn" id="profile-save-chemical-btn" type="button">Save to My Chemicals</button>
+                  </div>
+                </header>
                 <article class="panel-card chemical-profile-header-card">
+                  <figure id="chemical-nfpa-placard" class="chemical-nfpa-placard" data-state="missing">
+                    <figcaption>NFPA 704</figcaption>
+                    <div class="nfpa-704-diamond" aria-hidden="true">
+                      <span class="nfpa-704-cell nfpa-704-flammability" id="nfpa-704-flammability"><b>—</b></span>
+                      <span class="nfpa-704-cell nfpa-704-instability" id="nfpa-704-instability"><b>—</b></span>
+                      <span class="nfpa-704-cell nfpa-704-health" id="nfpa-704-health"><b>—</b></span>
+                      <span class="nfpa-704-cell nfpa-704-special" id="nfpa-704-special"><b>—</b></span>
+                    </div>
+                    <small id="nfpa-704-source">No Current Data Exists</small>
+                  </figure>
                   <div class="chemical-profile-header-top">
                     <div>
                       <p class="eyebrow">Chemical profile</p>
                       <h3 id="chemical-name">Select a chemical</h3>
                     </div>
+                    <span id="chemical-profile-status" class="chemical-profile-status-chip">Needs Verification</span>
                   </div>
                   <p id="chemical-summary" class="chemical-profile-summary">Search for a chemical to load its companion-database profile.</p>
                   <div id="chemical-profile-meta" class="chemical-profile-meta"></div>
-                  <div class="chemical-profile-actions">
-                    <button class="ghost-btn" id="open-guided-response-btn" type="button">Guided Response</button>
-                    <button class="primary-btn" id="open-plume-btn" type="button">Open Plume Model</button>
-                  </div>
+                  <aside class="chemical-hazard-overview" aria-labelledby="chemical-hazard-overview-title">
+                    <strong id="chemical-hazard-overview-title">Hazard Overview</strong>
+                    <ul id="chemical-hazard-overview-list"></ul>
+                  </aside>
                 </article>
                 <div class="chemical-profile-layout">
+                  <nav id="chemical-profile-tabs" class="chemical-profile-tabs" aria-label="Chemical profile sections"></nav>
                   <article class="panel-card chemical-profile-content-card">
                     <div id="chemical-profile-content" class="chemical-profile-content"></div>
                   </article>
-                  <nav id="chemical-profile-tabs" class="chemical-profile-tabs" aria-label="Chemical profile sections"></nav>
                 </div>
               </div>
+            </div>
+          </section>
+
+          <section id="chem-compare" class="view chemcompare-page" aria-labelledby="chemcompare-title">
+            <div class="chemcompare-shell">
+              <header class="chemcompare-header">
+                <div>
+                  <h1 id="chemcompare-title">ChemCompare</h1>
+                  <p>Compare critical chemical hazards and response factors.</p>
+                </div>
+                <button class="ghost-btn" id="chemcompare-back-btn" type="button">Back to Chemical Profile</button>
+              </header>
+
+              <div class="chemcompare-split">
+                <section class="chemcompare-column" aria-labelledby="chemcompare-base-title">
+                  <h2 id="chemcompare-base-title">Original Chemical</h2>
+                  <div id="chemcompare-base-summary" class="chemcompare-summary"></div>
+                </section>
+
+                <section class="chemcompare-column" aria-labelledby="chemcompare-second-title">
+                  <div class="chemcompare-column-heading">
+                    <h2 id="chemcompare-second-title">Select Chemical to Compare</h2>
+                    <button class="ghost-btn chemcompare-clear" id="chemcompare-clear-btn" type="button" hidden>Change Chemical</button>
+                  </div>
+                  <div class="chemcompare-search-wrap">
+                    <label class="sr-only" for="chemcompare-search">Second chemical name, UN number, or CAS number</label>
+                    <input
+                      id="chemcompare-search"
+                      class="chemcompare-search-input"
+                      type="search"
+                      role="combobox"
+                      placeholder="Name, UN/NA, or CAS"
+                      autocomplete="off"
+                      aria-controls="chemcompare-search-suggestions"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                    />
+                    <div id="chemcompare-search-suggestions" class="chemical-search-suggestions chemcompare-search-suggestions" role="listbox" hidden></div>
+                  </div>
+                  <p id="chemcompare-search-status" class="chemical-search-status" role="status" aria-live="polite"></p>
+                  <div id="chemcompare-second-summary" class="chemcompare-summary"></div>
+                </section>
+              </div>
+
+              <section id="chemcompare-results" class="chemcompare-results" aria-label="Chemical comparison"></section>
+              <aside class="chemcompare-warning">ChemCompare displays source-backed chemical profile values for planning and training. Missing values are not guessed. PPE, isolation, and exposure guidance must be verified with approved sources, monitoring, agency SOPs, and Incident Command.</aside>
             </div>
           </section>
 
@@ -518,6 +633,14 @@
                     <label class="plume-model-field" id="plume-puff-duration-field" for="plume-puff-duration" hidden>
                       <span>Puff evaluation time (seconds)</span>
                       <input id="plume-puff-duration" type="number" min="1" step="1" inputmode="numeric" placeholder="Required for puff" />
+                    </label>
+                    <label class="plume-model-field" id="plume-release-duration-field" for="plume-release-duration">
+                      <span>Release duration (seconds)</span>
+                      <input id="plume-release-duration" type="number" min="1" step="1" inputmode="numeric" placeholder="Required for source assessment" />
+                    </label>
+                    <label class="plume-model-field" for="plume-release-height">
+                      <span>Release height (ft)</span>
+                      <input id="plume-release-height" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Required — use 0 only if verified at ground" />
                     </label>
                     <label class="plume-model-field" for="plume-endpoint-duration">
                       <span>EPA AEGL duration</span>
@@ -662,6 +785,17 @@
               </div>
             </form>
 
+            <section class="plume-readiness-grid" aria-label="Plume model readiness and evidence">
+              <article><span>Model Mode</span><strong id="plume-model-mode-badge">Cannot Plot — Missing Required Data</strong></article>
+              <article><span>Validation</span><strong id="plume-validation-badge">Not independently validated</strong></article>
+              <article><span>Confidence</span><strong id="plume-confidence-badge">Insufficient Data</strong></article>
+              <article><span>Source Strength</span><strong id="plume-source-strength-badge">Missing Required Inputs</strong><small id="plume-source-strength-detail">Enter and verify release information.</small></article>
+              <article><span>Weather Quality</span><strong id="plume-weather-quality-badge">Time Unknown</strong><small id="plume-weather-quality-detail">Wind speed, direction, source, and time are required.</small></article>
+              <article><span>Endpoint / LOC</span><strong id="plume-endpoint-badge">No Current Data Exists</strong><small id="plume-endpoint-detail">Chemical/CAS verification and endpoint lookup required.</small></article>
+              <article><span>Field Verification</span><strong id="plume-field-verification-badge">Required</strong><small>Use field monitoring to establish actual boundaries. Never downgrade PPE or authorize offensive tactics from plume output alone.</small></article>
+              <article><span>Official ALOHA Import</span><strong id="plume-aloha-import-badge">Not Configured</strong><small id="plume-aloha-import-detail">Imported official output is displayed, not recalculated.</small></article>
+            </section>
+
             <details class="plume-safety-disclaimer">
               <summary>Planning limitations and verification requirements</summary>
               <div>
@@ -675,6 +809,12 @@
             </details>
 
             <div class="plume-import-row">
+              <div class="plume-aloha-import-control">
+                <label for="plume-aloha-import"><strong>Import model output</strong></label>
+                <input id="plume-aloha-import" type="file" accept=".kml,.geojson,.json,.txt,application/vnd.google-earth.kml+xml,application/geo+json,text/plain" />
+                <label><input id="plume-aloha-source-confirmed" type="checkbox" /> Confirm this file is official ALOHA output</label>
+                <small id="plume-aloha-import-status" role="status">KML and GeoJSON geometry supported; TXT summary may be attached. KMZ requires extraction before import.</small>
+              </div>
               <div class="plume-layer-controls" aria-label="Map Layers">
                 <strong>Map Layers</strong>
                 <div>
@@ -711,6 +851,7 @@
                     <li><span>Validation Status</span><strong id="plume-validation-status-summary"></strong></li>
                     <li><span>Model Limitations</span><strong id="plume-limitations-summary"></strong></li>
                     <li><span>Model Timestamp</span><strong id="plume-model-time-summary"></strong></li>
+                    <li><span>Text Summary</span><strong id="plume-text-summary"></strong></li>
                     <li><span>Weather Station</span><strong id="nws-station-summary"></strong></li>
                     <li><span>Weather Station Details</span><strong id="nws-weather-summary"></strong></li>
                     <li><span>Observation Time</span><strong id="nws-observation-summary"></strong></li>
@@ -1119,11 +1260,13 @@
     </div>
 
     <script src="vendor/maplibre-gl/maplibre-gl.js"></script>
+    <script src="chemical-profile-text.js?v=chemical-intel-7"></script>
     <script src="responder-text.js"></script>
     <script src="weather-radar-providers.js"></script>
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=chemical-intel-7"></script>
+    <script src="chem-compare.js?v=chemcompare-1"></script>
     <script src="monitor-inventory.js"></script>
     <script src="live-map-bootstrap.js"></script>
   </body>

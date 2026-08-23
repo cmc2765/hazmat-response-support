@@ -2,6 +2,8 @@ import Database from 'better-sqlite3';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ALL_NPG } from '../../src/data/all-npg.js';
+import { CHEMICALS } from '../../src/data/chemicals.js';
+import { buildPpeRecommendation } from '../../src/lib/ppe/ppeRecommendationEngine.js';
 import {
   SAFETY_DATA_STATUS,
   primarySafetyValue,
@@ -137,6 +139,13 @@ function findCompanionChemicalRow(db: Database.Database, chemicalId: string | nu
 
 export function normalizeChemicalProfile(chemical: Record<string, unknown>, related: Record<string, unknown> = {}) {
   const relatedData = related as Record<string, unknown>;
+  const nfpaHazard = asObject(Array.isArray(relatedData.nfpaHazards) ? relatedData.nfpaHazards[0] : relatedData.nfpaHazards);
+  const nfpaRating = (value: unknown) => {
+    const rating = Number(value);
+    return Number.isInteger(rating) && rating >= 0 && rating <= 4
+      ? String(rating)
+      : SAFETY_DATA_STATUS.NO_CURRENT_DATA;
+  };
   const synonymRows = Array.isArray(relatedData.synonyms)
     ? relatedData.synonyms.filter((item): item is Record<string, unknown> => typeof item === 'object' && item !== null)
     : [];
@@ -231,6 +240,17 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
     idlh,
     hazard: normalizeValue(chemical.ErgWarning || chemical.ChemicalClass || chemical.hazardClass),
     sources: [...new Set(['Chemical Companion', ...sources])].filter(Boolean),
+    nfpa704: {
+      health: nfpaRating(nfpaHazard.health),
+      flammability: nfpaRating(nfpaHazard.flammability),
+      instability: nfpaRating(nfpaHazard.instability),
+      special: normalizeValue(nfpaHazard.special),
+      healthDescription: normalizeValue(nfpaHazard.healthDescription),
+      flammabilityDescription: normalizeValue(nfpaHazard.flammabilityDescription),
+      instabilityDescription: normalizeValue(nfpaHazard.instabilityDescription),
+      specialDescription: normalizeValue(nfpaHazard.specialDescription),
+      source: 'Chemical Companion NFPA hazard record',
+    },
   };
 
   const properties = {
@@ -476,6 +496,22 @@ export function queryChemicalProfile(chemicalId: string | number) {
   const fireGuidance = db.prepare(`SELECT f.name, f.text, f.type FROM chemicals_fire_extinguishment_phrases c JOIN fire_extinguishment_phrases f ON f.id=c.fire_extinguishment_phrase_id WHERE c.chemical_id=? ORDER BY f.precedence`).all(id);
   const deconNotes = db.prepare(`SELECT n.note FROM chemicals_decontamination_notes c JOIN decontamination_notes n ON n.id=c.note_id WHERE c.chemical_id=? ORDER BY c.id`).all(id);
   const cartridges = db.prepare(`SELECT r.CartridgeColor, r.ChemicalCategory FROM respiratorycartridgeidentifiers_chemicals c JOIN respiratorycartridgeidentifiers r ON r.RespiratoryCartridgeIdentifierId=c.RespiratoryCartridgeIdentifierId WHERE c.ChemicalId=?`).all(id);
+  const nfpaHazard = db.prepare(`
+    SELECT n.NfpaHealthHazardID AS health,
+           n.NfpaFlammabilityHazardID AS flammability,
+           n.NfpaReactivityHazardID AS instability,
+           s.NfpaSpecialConcernAbbreviation AS special,
+           h.NfpaHealthHazard AS healthDescription,
+           f.NfpaFlammabilityHazard AS flammabilityDescription,
+           r.NfpaReactivityHazard AS instabilityDescription,
+           s.NfpaSpecialConcern AS specialDescription
+    FROM chemicals_nfpahazards n
+    LEFT JOIN nfpahealthhazards h ON h.NfpaHealthHazardID = n.NfpaHealthHazardID
+    LEFT JOIN nfpaflammabilityhazards f ON f.NfpaFlammabilityHazardID = n.NfpaFlammabilityHazardID
+    LEFT JOIN nfpareactivityhazards r ON r.NfpaReactivityHazardID = n.NfpaReactivityHazardID
+    LEFT JOIN nfpaspecialconcerns s ON s.NfpaSpecialConcernID = n.NfpaSpecialConcernID
+    WHERE n.ChemicalID = ?
+  `).get(id);
   const npg = ALL_NPG.find((record) => record.cas === String(chemicalRow.CasNumber ?? '').trim());
   const guideNumber = String(chemicalRow.ErgNumber ?? '').trim();
   const ergGuides = (ergGuideData as { guides: Record<string, { emergencyResponse?: { firstAid?: string[] } }> }).guides;
@@ -509,16 +545,54 @@ export function queryChemicalProfile(chemicalId: string | number) {
     extinction: (db.prepare('SELECT extinction_advice FROM chemicals_extinction WHERE ChemicalID=?').get(id) as Record<string, unknown> | undefined)?.extinction_advice,
     deconNotes,
     cartridges,
+    nfpaHazards: nfpaHazard ? [nfpaHazard] : [],
     npg,
     ergFirstAid: ergGuides[guideNumber]?.emergencyResponse?.firstAid ?? [],
     sources: ['Chemical Companion'],
   });
+  const supportingChemical = CHEMICALS.find((record) => record.cas?.includes(String(chemicalRow.CasNumber ?? '').trim()));
+  const supportingSources = supportingChemical?.sources?.map((source) => source.source) ?? [];
+  const npgRecord = npg as unknown as Record<string, unknown> | undefined;
+  const npgHealth = asObject(npgRecord?.health);
+  const npgPpe = asObject(npgRecord?.ppe);
+  const ergGuide = (ergGuideData as {
+    guides: Record<string, { publicSafety?: { protectiveClothing?: string[] } }>;
+  }).guides[guideNumber];
+  const approvedSafetyRecords = profile.safetyCritical.records.filter((record) => record.approved !== false);
+  const ppeRecommendation = buildPpeRecommendation({
+    masterLinked: true,
+    chemicalId: id,
+    chemicalName: profile.header.name,
+    approvedSourceFacts: {
+      'Chemical Companion': [
+        profile.ppeRespiratory.aprPaprScba,
+        profile.ppeRespiratory.skinEyeProtection,
+        approvedSafetyRecords
+          .filter((record) => /^Chemical Companion$/i.test(record.sourceName)
+            && /^(?:respiratory_protection|ppe|suit_compatibility)$/.test(record.field))
+          .map((record) => record.value),
+      ],
+      NIOSH: [npgHealth.respiratorSelection, npgPpe.respiratory, npgPpe.skin, npgPpe.eye],
+      CAMEO: supportingSources.some((source) => /CAMEO/i.test(source)) ? supportingChemical?.ppe : [],
+      ERG: ergGuide?.publicSafety?.protectiveClothing ?? [],
+      'Manual Review': approvedSafetyRecords
+        .filter((record) => /manual review/i.test(record.sourceName))
+        .map((record) => record.value),
+    },
+    hiddenRawOptions: {
+      manufacturerMatches: [profile.ppeRespiratory.bestMatch, profile.ppeRespiratory.recommendedPpe],
+      suitAndGloveMaterials: profile.ppeRespiratory.gloveSuitMaterial,
+      respiratorOptions: profile.ppeRespiratory.respiratorRecommendations,
+      cartridgeOptions: profile.ppeRespiratory.cartridgeLimitations,
+    },
+  });
+  const profileWithRecommendation = { ...profile, ppeRecommendation };
   console.info('[chemical-companion] profile loaded', {
     selectedChemicalId: id,
     ChemicalName: chemicalRow.ChemicalName,
-    sections: Object.keys(profile).filter((key) => !['header', 'sources'].includes(key)),
+    sections: Object.keys(profileWithRecommendation).filter((key) => !['header', 'sources'].includes(key)),
   });
-  return profile;
+  return profileWithRecommendation;
   } finally {
     db.close();
   }

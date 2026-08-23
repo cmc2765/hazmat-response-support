@@ -26,18 +26,22 @@ The offline framework is implemented in:
 - `test/model-validation/plume-validation.test.ts`
 - `test/model-validation/plume-validation-cases.example.json`
 
-The fixture contains four required categories:
+The fixture contains eight required categories:
 
 1. ammonia railcar release
 2. chlorine cylinder release
-3. continuous release
-4. puff release
+3. dense-gas case
+4. neutral-gas case
+5. low-wind stable case
+6. moderate-wind neutral case
+7. urban-roughness case
+8. rural-roughness case
 
 Every case supports chemical identity, release type, container, quantity or release
 rate, weather, stability, surface roughness, threshold, expected distance, published
 source, tolerance, actual output, and pass/fail status.
 
-Three fixtures are source-empty placeholders and contain this warning:
+Seven fixtures are source-empty placeholders and contain a blocking warning:
 
 > Do not use this case for validation until published expected distances and source references are added.
 
@@ -54,11 +58,11 @@ exit status until the status is `validated`.
 
 | Metric | Count |
 |---|---:|
-| Total validation cases | 4 |
+| Total validation cases | 8 |
 | Runnable validation cases | 0 |
 | Published candidates blocked on compatibility | 1 |
-| Source-empty placeholder cases | 3 |
-| Total skipped cases | 4 |
+| Source-empty placeholder cases | 7 |
+| Total skipped cases | 8 |
 | Passed cases | 0 |
 | Failed cases | 0 |
 

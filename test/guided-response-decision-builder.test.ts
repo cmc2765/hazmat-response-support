@@ -45,7 +45,7 @@ describe("Guided Response tactical decision builder", () => {
     expect(record.verifyIsolate.specificValues.protectiveAction).toContain("Small spill, day: 0.1 kilometers");
     expect(record.verifyIsolate.status).not.toMatch(/Guidance Available/i);
     expect(record.lifeSafety.specificValues.scbaDecision).toBe("SCBA MANDATED");
-    expect(record.lifeSafety.specificValues.protectionLevel).toBe("Level A Vapor Protective Suit + SCBA");
+    expect(record.lifeSafety.specificValues.protectionLevel).toBe("Vapor Protective Level A w/ SCBA");
     expect(record.lifeSafety.specificValues.cartridgeStatus).toBe("Not displayed — SCBA is mandated.");
     expect(record.lifeSafety.executionNote).toMatch(/Incident Command approval required/);
     expect(record.evidenceObjects.lifeSafetyDecisionEvidence.sourceBacked).toBe(true);
@@ -56,7 +56,7 @@ describe("Guided Response tactical decision builder", () => {
     expect(record.verifyIsolate.specificValues.initialIsolation).toBe("60 meters");
     expect(record.verifyIsolate.specificValues.protectiveAction).toContain("Small spill, night: 1.5 kilometers");
     expect(record.lifeSafety.specificValues.scbaDecision).toBe("SCBA MANDATED");
-    expect(record.lifeSafety.specificValues.protectionLevel).toBe("Level A Vapor Protective Suit + SCBA");
+    expect(record.lifeSafety.specificValues.protectionLevel).toBe("Vapor Protective Level A w/ SCBA");
     expect(record.mitigation.specificValues.tacticalPosture).toBe("Defensive");
     expect(record.mitigationDecisionSupport.spillReleaseControl).toMatch(/Stop leak if you can do it without risk/i);
   });

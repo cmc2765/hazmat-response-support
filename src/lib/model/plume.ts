@@ -80,6 +80,25 @@ function yAtThreshold(
   return sy * Math.sqrt(-2 * Math.log((targetMgM3 / 1e6) / c0KgM3));
 }
 
+function solveDownwindThresholdCrossing(
+  concentrationKgM3: (x: number) => number,
+  targetMgM3: number,
+  insideX: number,
+  outsideX: number,
+): number {
+  const targetKgM3 = targetMgM3 / 1e6;
+  let low = insideX;
+  let high = outsideX;
+  // Bisection changes only contour precision, not the underlying dispersion
+  // equation. Forty iterations is comfortably below map-coordinate precision.
+  for (let iteration = 0; iteration < 40; iteration++) {
+    const middle = (low + high) / 2;
+    if (concentrationKgM3(middle) >= targetKgM3) low = middle;
+    else high = middle;
+  }
+  return (low + high) / 2;
+}
+
 export function runPlume(inputs: PlumeInputs, opts: RunPlumeOptions): PlumeResult {
   const computedAt = new Date().toISOString();
   const isPlume = inputs.releaseKind === "plume";
@@ -153,14 +172,27 @@ export function runPlume(inputs: PlumeInputs, opts: RunPlumeOptions): PlumeResul
     const pts: Array<[number, number]> = [];
     let maxY = 0;
     let maxXReached = 0;
+    let previousInsideX: number | null = null;
+    const centerlineConcentration = (x: number) => isPlume
+      ? gaussianPlumeC(inputs, x, 0, 0, Q!)
+      : gaussianPuffC(inputs, x, 0, 0, M!, inputs.durationSec!);
     for (let i = 1; i <= xSamples; i++) {
       const x = i * xStep;
-      const c0 = isPlume ? gaussianPlumeC(inputs, x, 0, 0, Q!) : gaussianPuffC(inputs, x, 0, 0, M!, inputs.durationSec!);
-      if (c0 * 1e6 < target) continue;
+      const c0 = centerlineConcentration(x);
+      if (c0 * 1e6 < target) {
+        if (previousInsideX !== null) {
+          const endpointX = solveDownwindThresholdCrossing(centerlineConcentration, target, previousInsideX, x);
+          pts.push([endpointX, 0]);
+          maxXReached = endpointX;
+          break;
+        }
+        continue;
+      }
       const y = yAtThreshold(inputs, x, c0, target, puffSigmaY);
       if (y > maxY) maxY = y;
       maxXReached = Math.max(maxXReached, x);
       pts.push([x, y]);
+      previousInsideX = x;
     }
     const polygon = buildClosedPolygon(pts);
     const finalX = xSamples * xStep;
@@ -183,7 +215,7 @@ export function runPlume(inputs: PlumeInputs, opts: RunPlumeOptions): PlumeResul
     ...(rangeTruncated ? [
       `One or more AEGL isopleths reach the ${maxRange} m computational boundary; the reported distance is a lower bound, not a modeled endpoint.`,
     ] : []),
-    `Downwind isopleths are sampled every ${Number(xStep.toFixed(3))} m; displayed distances must not imply finer precision.`,
+    `Crosswind widths are sampled every ${Number(xStep.toFixed(3))} m; non-truncated downwind threshold crossings are refined by bisection but must not imply accuracy beyond model assumptions and input quality.`,
   ];
 
   return {

@@ -90,14 +90,15 @@ describe("plume map views", () => {
     expect(plumeUi).toContain("safetyDisclaimers: {");
     expect(plumeUi).toContain("protectiveActionSummary");
     expect(html).toContain("External medical verification reference: CHEMM");
-    expect(html).toContain("PPE and suit recommendations are decision-support guidance only.");
+    expect(html).toContain("PPE recommendations are source-backed planning guidance");
     expect(html).toContain("Verify all medical guidance, protective actions, isolation distances");
   });
 
   it("keeps imported plume overlays export-ready and distinct from backend estimates", () => {
     expect(plumeUi).toContain("const importedWorkflowRecord = {");
-    expect(plumeUi).toContain("source: 'Operator-imported ALOHA / MARPLOT KML'");
-    expect(plumeUi).toContain("savePlumeResult(activePlumeCommand, importedWorkflowRecord, await capturePlumeMapImage())");
+    expect(plumeUi).toContain("modelMode: official ? 'OFFICIAL_ALOHA_IMPORT' : 'REQUIRES_SOURCE_REVIEW'");
+    expect(plumeUi).toContain("HazMatIQ displays this imported output and does not recalculate or validate it.");
+    expect(plumeUi).toContain("savePlumeResult(activePlumeCommand, importedWorkflowRecord, geojson ? await capturePlumeMapImage() : '')");
     expect(plumeUi).toContain("HazMatIQ Plume Model · ${readinessStatus.planning}");
   });
 
@@ -319,8 +320,23 @@ describe("plume map views", () => {
     expect(styles).toContain(".layout:has(#incident.active) .incident-command-snapshot");
     expect(styles).toContain("grid-column: 1 / -1");
     for (const label of ['E-Plan Login', 'PPE Requirements', 'Medical Summary', 'Protective Actions']) {
-      expect(html).toContain(`<summary>${label}</summary>`);
+      expect(html).toContain(`aria-label="${label}"`);
     }
+    for (const image of [
+      'protective_actions_incident_command_dashboard.png',
+      'hazmat_ppe_requirements_dashboard.png',
+      'emergency_medical_summary_dashboard.png',
+      'secure_e_plan_login_dashboard.png',
+    ]) expect(html).toContain(`assets/incident-dashboard/cards/${image}`);
+    expect(html.match(/class="incident-image-bubble__bg"/g)?.length).toBe(4);
+    expect(html.match(/class="incident-image-bubble__bg"[^>]*alt=""[^>]*draggable="false"/g)?.length).toBe(4);
+    expect(html.match(/class="incident-image-bubble__bg"[^>]*loading="eager"/g)?.length).toBe(4);
+    expect(styles).toContain("border: 2px solid var(--red);");
+    expect(styles).toContain("z-index: 0;");
+    expect(styles).not.toContain("background: #0b1f33;\n  box-shadow: 0 10px 24px");
+    expect(styles).toContain('.command-reference-panel[open] .command-reference-content');
+    expect(styles).toContain('right: calc(100% + 8px);');
+    expect(styles).toContain('width: min(720px, 235%);');
     expect(html.match(/data-command-reference/g)?.length).toBe(4);
     expect(plumeUi).toContain("document.querySelectorAll('[data-command-reference][open]')");
   });

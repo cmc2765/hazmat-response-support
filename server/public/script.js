@@ -15,6 +15,7 @@ const plumeSummaryFieldIds = new Set([
   'plume-validation-status-summary',
   'plume-limitations-summary',
   'plume-model-time-summary',
+  'plume-text-summary',
   'nws-station-summary',
   'nws-weather-summary',
   'nws-observation-summary',
@@ -497,6 +498,15 @@ const responderText = window.HazMatResponderText || {
   normalizeBulletList: (items) => items.flat(Infinity).map((value) => String(value ?? '').trim()).filter(Boolean),
   formatResponderGuidance: (items) => items.flat(Infinity).map((value) => String(value ?? '').trim()).filter(Boolean),
 };
+const chemicalProfileText = window.HazMatChemicalProfileText || {
+  NO_DATA: noCurrentDataText,
+  isEmpty: (value) => !String(value ?? '').trim() || /^(?:none|n\/?a|not available|no data|null|undefined|unknown|no current data exists)\.?$/i.test(String(value).trim()),
+  normalizeChemicalProfileText: (value) => responderText.normalizeResponderText(value),
+  normalizeGuidanceItems: (items) => responderText.formatResponderGuidance(items),
+  normalizeEmptyState: (value) => String(value ?? '').trim() || noCurrentDataText,
+  normalizeHeading: (value) => responderText.normalizeSectionHeading(value),
+  normalizeSourceLabel: (value) => responderText.normalizeResponderText(value),
+};
 const readinessStatus = Object.freeze({
   verified: 'Verified Source',
   imported: 'Imported Source',
@@ -517,7 +527,7 @@ const householdEstimateLabels = Object.freeze({
   censusTotal: 'Census geography total',
   visual: 'Visual map estimate',
 });
-const ppeSuitWarning = 'PPE and suit recommendations are decision-support guidance only. Verify with SDS, ERG, NIOSH/CAMEO/CHEMM where applicable, manufacturer compatibility charts, agency SOPs, and Incident Command before entry.';
+const ppeSuitWarning = 'PPE recommendations are source-backed planning guidance and must be verified by Incident Command, air monitoring, oxygen concentration, concentration below IDLH/exposure limits, suit compatibility, cartridge suitability, and agency SOPs before entry.';
 const medicalProtectiveWarning = 'Verify all medical guidance, protective actions, isolation distances, and evacuation/shelter decisions with official sources, agency SOPs, field observations, and Incident Command.';
 const plumePlanningNotices = [
   'HazMatIQ is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.',
@@ -1841,6 +1851,13 @@ function hasAvailableProfileData(value) {
   return true;
 }
 
+function hasMeaningfulChemicalProfileData(value) {
+  if (Array.isArray(value)) return value.some(hasMeaningfulChemicalProfileData);
+  if (value === null || value === undefined) return false;
+  if (typeof value === 'object') return Object.values(value).some(hasMeaningfulChemicalProfileData);
+  return hasAvailableProfileData(value) && !chemicalProfileText.isEmpty(value);
+}
+
 function normalizeDataSourceOutput(value) {
   if (value === null || value === undefined) return '';
   if (Array.isArray(value)) {
@@ -1871,7 +1888,8 @@ function profileDisplayParts(value) {
     })
     .map((item) => item.trim())
     .filter(hasAvailableProfileData);
-  return responderText.formatResponderGuidance(parts);
+  const normalized = chemicalProfileText.normalizeGuidanceItems(parts);
+  return normalized.filter(hasMeaningfulChemicalProfileData);
 }
 
 function shouldUseCompactColumns(items) {
@@ -1882,8 +1900,44 @@ function shouldUseCompactColumns(items) {
 }
 
 function titleCaseProfileLabel(value) {
-  const heading = responderText.normalizeSectionHeading(value);
+  const heading = chemicalProfileText.normalizeHeading(value);
   return heading.replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
+}
+
+const chemicalProfileIconPaths = Object.freeze({
+  overview: '<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>',
+  properties: '<path d="M9 3h6M10 3v5l-5.5 9.2A2.5 2.5 0 0 0 6.7 21h10.6a2.5 2.5 0 0 0 2.2-3.8L14 8V3"/><path d="M7.5 16h9"/>',
+  isolation: '<circle cx="12" cy="12" r="8"/><path d="m15 9-2 4-4 2 2-4 4-2Z"/>',
+  exposures: '<path d="M4 18h16M6 15l3-3 3 2 5-7 2 2"/><path d="M6 6v3M12 4v4M18 5v3"/>',
+  ppe: '<path d="M12 3 5 6v5c0 4.6 2.9 8 7 10 4.1-2 7-5.4 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-5"/>',
+  detectors: '<circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5.5 5.5a9 9 0 0 0 0 13M18.5 5.5a9 9 0 0 1 0 13"/>',
+  reactivity: '<path d="m13 2-8 12h7l-1 8 8-12h-7l1-8Z"/>',
+  medical: '<path d="M9 4h6v5h5v6h-5v5H9v-5H4V9h5V4Z"/>',
+  fire: '<path d="M12 22c4 0 7-2.7 7-6.5 0-3-1.8-5.2-4.2-7.7-.3 2-1.2 3.2-2.2 4.1.2-3.5-1.7-6.7-4.2-9.2.1 3.4-1.7 5.3-2.8 7.1C4.5 11.5 5 14 5 15.5 5 19.3 8 22 12 22Z"/>',
+  decon: '<path d="M12 3s5 5.5 5 10a5 5 0 0 1-10 0c0-4.5 5-10 5-10Z"/><path d="M4 19h16"/>',
+  sources: '<path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H11v17H7.5A3.5 3.5 0 0 0 4 22V5.5ZM20 5.5A3.5 3.5 0 0 0 16.5 2H13v17h3.5A3.5 3.5 0 0 1 20 22V5.5Z"/>',
+});
+
+function chemicalProfileIconKey(value) {
+  const text = String(value || '').toLowerCase();
+  if (/medical|ems|treatment|patient|symptom|first aid/.test(text)) return 'medical';
+  if (/fire|flamm|explosion/.test(text)) return 'fire';
+  if (/decon|runoff/.test(text)) return 'decon';
+  if (/ppe|respirat|glove|suit/.test(text)) return 'ppe';
+  if (/detector|monitor|aegl|exposure|limit/.test(text)) return 'detectors';
+  if (/react|stability|decomposition/.test(text)) return 'reactivity';
+  if (/isolation|erg/.test(text)) return 'isolation';
+  if (/source/.test(text)) return 'sources';
+  if (/propert|chemical|summary|synonym/.test(text)) return 'properties';
+  return chemicalProfileIconPaths[text] ? text : 'overview';
+}
+
+function createChemicalProfileIcon(value) {
+  const icon = document.createElement('span');
+  icon.className = 'chemical-profile-icon';
+  icon.setAttribute('aria-hidden', 'true');
+  icon.innerHTML = `<svg viewBox="0 0 24 24" focusable="false">${chemicalProfileIconPaths[chemicalProfileIconKey(value)]}</svg>`;
+  return icon;
 }
 
 function createHybridDeconLink() {
@@ -1922,13 +1976,15 @@ function createProfileSection(title, rows, list = false) {
   section.className = 'chemical-profile-section';
   section.dataset.section = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const heading = document.createElement('h4');
-  heading.textContent = titleCaseProfileLabel(title);
+  const headingText = document.createElement('span');
+  headingText.textContent = titleCaseProfileLabel(title);
+  heading.append(createChemicalProfileIcon(title), headingText);
   section.append(heading);
   if (list) {
-    const rawItems = (Array.isArray(rows) ? rows : [rows]).filter(hasAvailableProfileData);
+    const rawItems = (Array.isArray(rows) ? rows : [rows]).filter(hasMeaningfulChemicalProfileData);
     const textItems = rawItems.filter((item) => !item || typeof item !== 'object');
     const items = textItems.length === rawItems.length
-      ? responderText.formatResponderGuidance(textItems)
+      ? chemicalProfileText.normalizeGuidanceItems(textItems).filter(hasMeaningfulChemicalProfileData)
       : rawItems;
     if (!items.length) return null;
     const listEl = document.createElement('ul');
@@ -1952,7 +2008,7 @@ function createProfileSection(title, rows, list = false) {
     section.append(listEl);
   } else {
     const entries = (Array.isArray(rows) ? rows : [rows])
-      .filter((entry) => entry && hasAvailableProfileData(entry.value));
+      .filter((entry) => entry && hasMeaningfulChemicalProfileData(entry.value));
     if (!entries.length) return null;
     const grid = document.createElement('div');
     grid.className = 'chemical-profile-grid';
@@ -2012,9 +2068,120 @@ function createProfileSection(title, rows, list = false) {
   return section;
 }
 
+const ppeLevelTiles = Object.freeze([
+  ['LEVEL_A_VAPOR_PROTECTIVE_SCBA', 'Vapor Protective Level A w/ SCBA', 'level-a'],
+  ['LEVEL_B_SCBA', 'Level B w/ SCBA', 'level-b'],
+  ['LEVEL_C_APR_APPROPRIATE_CARTRIDGE', 'Level C w/ APR — Appropriate Cartridge Required', 'level-c'],
+  ['LEVEL_D_NO_CHEMICAL_PROTECTION', 'Level D — No Chemical Protection Required', 'level-d'],
+]);
+
+function appendPpeRecommendationList(container, title, values, emptyText = noCurrentDataText) {
+  const section = document.createElement('section');
+  section.className = 'ppe-recommendation-list-section';
+  const heading = document.createElement('h5');
+  heading.textContent = title;
+  const items = (Array.isArray(values) ? values : [values]).filter(hasAvailableProfileData);
+  const list = document.createElement('ul');
+  (items.length ? items : [emptyText]).forEach((value) => {
+    const item = document.createElement('li');
+    item.textContent = normalizeDataSourceOutput(value);
+    list.append(item);
+  });
+  section.append(heading, list);
+  container.append(section);
+}
+
+function createPpeRecommendationCard(recommendation = {}) {
+  const section = document.createElement('section');
+  section.className = 'chemical-profile-section ppe-recommendation-card';
+  section.dataset.section = 'ppe-recommendation';
+  section.dataset.recommendationStatus = recommendation.recommendationStatus || 'NO_CURRENT_DATA';
+
+  const heading = document.createElement('h4');
+  const headingText = document.createElement('span');
+  headingText.textContent = 'PPE Recommendation';
+  heading.append(createChemicalProfileIcon('ppe'), headingText);
+
+  const status = document.createElement('div');
+  status.className = 'ppe-recommendation-status';
+  const statusLabel = document.createElement('span');
+  statusLabel.textContent = recommendation.recommendationStatus === 'SOURCE_BACKED_RECOMMENDATION'
+    ? 'Source-backed recommendation'
+    : (recommendation.recommendationStatus === 'BLOCKED' ? 'Blocked' : 'Safety review status');
+  const badge = document.createElement('strong');
+  badge.textContent = recommendation.displayLabel || noCurrentDataText;
+  status.append(statusLabel, badge);
+
+  const tileGrid = document.createElement('div');
+  tileGrid.className = 'ppe-level-options';
+  ppeLevelTiles.forEach(([level, label, accent]) => {
+    const tile = document.createElement('article');
+    tile.className = `ppe-level-option ${accent}`;
+    tile.dataset.level = level;
+    const selected = recommendation.selectedLevel === level;
+    let tileState = selected ? 'Recommended' : 'Not Recommended';
+    if (recommendation.selectedLevel === 'NO_CURRENT_DATA_EXISTS') tileState = noCurrentDataText;
+    else if (recommendation.selectedLevel === 'REQUIRES_REVIEW') tileState = level === 'LEVEL_C_APR_APPROPRIATE_CARTRIDGE' ? 'Blocked' : 'Conditional';
+    else if (recommendation.selectedLevel === 'BLOCKED_PENDING_VERIFIED_CHEMICAL_LINK') tileState = 'Blocked';
+    else if (level === 'LEVEL_C_APR_APPROPRIATE_CARTRIDGE' && !recommendation.levelCAllowed) tileState = 'Blocked';
+    tile.dataset.state = tileState.toLowerCase().replace(/\s+/g, '-');
+    const tileTitle = document.createElement('strong');
+    tileTitle.textContent = label;
+    const tileStatus = document.createElement('span');
+    tileStatus.textContent = tileState;
+    tile.append(tileTitle, tileStatus);
+    tileGrid.append(tile);
+  });
+
+  const summary = document.createElement('dl');
+  summary.className = 'ppe-recommendation-summary';
+  [
+    ['Respiratory', recommendation.respiratoryProtection],
+    ['Skin / Suit', recommendation.skinProtection],
+    ['Eye / Face', recommendation.eyeFaceProtection],
+    ['Cartridge', recommendation.cartridgeRequirement],
+  ].forEach(([label, value]) => {
+    const row = document.createElement('div');
+    const term = document.createElement('dt');
+    term.textContent = label;
+    const detail = document.createElement('dd');
+    detail.textContent = normalizeDataSourceOutput(value || noCurrentDataText);
+    row.append(term, detail);
+    summary.append(row);
+  });
+
+  const support = document.createElement('div');
+  support.className = 'ppe-recommendation-support';
+  appendPpeRecommendationList(support, 'Why', recommendation.decisionReasons);
+  appendPpeRecommendationList(support, 'Verification Required', recommendation.verificationRequirements);
+  appendPpeRecommendationList(support, 'Limitations', recommendation.limitations);
+  appendPpeRecommendationList(support, 'Sources Reviewed', recommendation.sourcesReviewed);
+
+  const rawDetails = document.createElement('details');
+  rawDetails.className = 'ppe-source-details';
+  const rawSummary = document.createElement('summary');
+  rawSummary.textContent = 'Source Details / Manufacturer Details';
+  const rawContent = document.createElement('div');
+  rawContent.className = 'ppe-source-details-content';
+  const rawGroups = Object.entries(recommendation.hiddenRawOptions || {});
+  if (rawGroups.some(([, values]) => Array.isArray(values) && values.length)) {
+    rawGroups.forEach(([group, values]) => {
+      if (!Array.isArray(values) || !values.length) return;
+      appendPpeRecommendationList(rawContent, titleCaseProfileLabel(group.replace(/([a-z])([A-Z])/g, '$1 $2')), values);
+    });
+  } else rawContent.textContent = noCurrentDataText;
+  rawDetails.append(rawSummary, rawContent);
+
+  const disclaimer = document.createElement('p');
+  disclaimer.className = 'ppe-recommendation-disclaimer';
+  disclaimer.textContent = ppeSuitWarning;
+  section.append(heading, status, tileGrid, summary, support, rawDetails, disclaimer);
+  return section;
+}
+
 function readableProfileBullets(value) {
   const text = String(value || '').trim();
-  if (!text || text === 'Not available') return ['Not available'];
+  if (!hasMeaningfulChemicalProfileData(text)) return [];
   return text
     .split(/(?<=[.!?])\s+(?=[A-Z0-9])|;\s+/)
     .map((sentence) => sentence.trim())
@@ -2030,7 +2197,8 @@ function patientHandlingSteps(values) {
     hasSpecificDeconInstruction
     && /^Remove from hazardous area, decontaminate, and treat symptomatically\.?$/i.test(step)
   ));
-  const formatted = responderText.formatResponderGuidance(filtered);
+  const formatted = chemicalProfileText.normalizeGuidanceItems(responderText.formatResponderGuidance(filtered))
+    .filter(hasMeaningfulChemicalProfileData);
   const preferredOrder = [
     'If damp, remove clothing immediately.',
     'If wearing bulky clothing or denim, remove outer layer.',
@@ -2040,6 +2208,59 @@ function patientHandlingSteps(values) {
     && preferredOrder.every((instruction) => formatted.includes(instruction))
     ? preferredOrder
     : formatted;
+}
+
+function deconGuidanceItems(values) {
+  return chemicalProfileText.normalizeGuidanceItems(Array.isArray(values) ? values : [values])
+    .filter((value) => !/skin is damaged|visible signs of eczema/i.test(String(value)));
+}
+
+function createChemicalProfileEmptyState() {
+  const state = document.createElement('section');
+  state.className = 'chemical-profile-empty-state';
+  const title = document.createElement('strong');
+  title.textContent = noCurrentDataText;
+  state.append(title);
+  return state;
+}
+
+function chemicalProfileSources(profile) {
+  return [...new Set([
+    ...(profile?.sourceLabels || []),
+    ...(profile?.sources || []),
+    ...(profile?.header?.sources || []),
+    ...(profile?.sourceLinks || []).map((link) => link?.sourceName),
+  ]
+    .filter(Boolean)
+    .map(chemicalProfileText.normalizeSourceLabel)
+    .filter(hasMeaningfulChemicalProfileData))];
+}
+
+function createChemicalProfileSourceSummary(profile, expanded = false) {
+  const sources = chemicalProfileSources(profile);
+  const details = document.createElement('details');
+  details.className = 'chemical-profile-source-summary';
+  details.open = expanded;
+  const summary = document.createElement('summary');
+  summary.textContent = 'Source Summary / Data Status / Confidence';
+  details.append(summary);
+  const statusGrid = document.createElement('dl');
+  statusGrid.className = 'chemical-profile-source-status-grid';
+  [
+    ['Source Summary', sources.length ? sources.join(', ') : noCurrentDataText],
+    ['Data Status', sources.length ? 'Verified source data' : 'Requires review'],
+    ['Confidence', sources.length ? 'Source-backed' : 'No current source confidence'],
+  ].forEach(([label, value]) => {
+    const row = document.createElement('div');
+    const term = document.createElement('dt');
+    const description = document.createElement('dd');
+    term.textContent = label;
+    description.textContent = value;
+    row.append(term, description);
+    statusGrid.append(row);
+  });
+  details.append(statusGrid);
+  return details;
 }
 
 const primaryLimitLabels = {
@@ -2074,6 +2295,10 @@ function monitoringConcernEntries(values) {
   }).filter(({ value }) => !/^(?:not relevant|not established|not available)$/i.test(value));
 }
 
+function groupedAeglProfileEntries(values) {
+  return chemicalProfileText.groupAeglByTimeframe?.(Array.isArray(values) ? values : [values]) || [];
+}
+
 function createMonitoringConcernSections(values) {
   const entries = monitoringConcernEntries(values);
   const groups = [
@@ -2084,6 +2309,12 @@ function createMonitoringConcernSections(values) {
   ];
   const assigned = new Set();
   const sections = groups.map(([title, pattern]) => {
+    if (title === 'AEGL Levels') {
+      entries.forEach((entry, index) => {
+        if (pattern.test(entry.key)) assigned.add(index);
+      });
+      return createProfileSection(title, groupedAeglProfileEntries(values), true);
+    }
     const rows = entries.filter((entry, index) => {
       if (!pattern.test(entry.key)) return false;
       assigned.add(index);
@@ -2169,6 +2400,63 @@ function createErgReferenceTables(isolationErg) {
   return [table1Section, table2Section, table3Section].filter(Boolean);
 }
 
+function renderNfpa704Placard(nfpa704, chemicalName) {
+  const placard = document.getElementById('chemical-nfpa-placard');
+  if (!placard) return;
+  const rating = (value) => /^[0-4]$/.test(String(value ?? '').trim()) ? String(value).trim() : '—';
+  const special = chemicalProfileText.isEmpty(nfpa704?.special) ? '—' : String(nfpa704.special).trim();
+  const values = {
+    health: rating(nfpa704?.health),
+    flammability: rating(nfpa704?.flammability),
+    instability: rating(nfpa704?.instability),
+    special,
+  };
+  const descriptions = {
+    health: nfpa704?.healthDescription,
+    flammability: nfpa704?.flammabilityDescription,
+    instability: nfpa704?.instabilityDescription,
+    special: nfpa704?.specialDescription,
+  };
+  Object.entries(values).forEach(([field, value]) => {
+    const cell = document.getElementById(`nfpa-704-${field}`);
+    if (!cell) return;
+    const displayedValue = cell.querySelector('b');
+    if (displayedValue) displayedValue.textContent = value;
+    const description = descriptions[field];
+    cell.title = hasMeaningfulChemicalProfileData(description) ? String(description) : '';
+  });
+  const hasRecord = [values.health, values.flammability, values.instability].some((value) => value !== '—')
+    || values.special !== '—';
+  placard.dataset.state = hasRecord ? 'available' : 'missing';
+  placard.setAttribute('aria-label', hasRecord
+    ? `NFPA 704 for ${chemicalName}: health ${values.health}, flammability ${values.flammability}, instability ${values.instability}, special ${values.special}.`
+    : `NFPA 704 for ${chemicalName}: ${noCurrentDataText}.`);
+  const source = document.getElementById('nfpa-704-source');
+  if (source) source.textContent = hasRecord ? '' : noCurrentDataText;
+}
+
+function renderChemicalHazardOverview(profile) {
+  const list = document.getElementById('chemical-hazard-overview-list');
+  if (!list) return;
+  const candidates = [
+    profile?.header?.hazard,
+    profile?.fire?.flammability,
+    profile?.reactivity?.waterReactivity,
+    profile?.reactivity?.oxidizerReducerConcerns,
+  ]
+    .flat(2)
+    .flatMap(profileDisplayParts)
+    .filter(hasMeaningfulChemicalProfileData);
+  const items = [...new Map(candidates.map((value) => [String(value).toLowerCase(), value])).values()].slice(0, 4);
+  list.replaceChildren(...(items.length ? items : [noCurrentDataText]).map((value) => {
+    const item = document.createElement('li');
+    const textValue = document.createElement('span');
+    textValue.textContent = value;
+    item.append(createChemicalProfileIcon(value), textValue);
+    return item;
+  }));
+}
+
 function renderChemicalProfile(profile) {
   const content = document.getElementById('chemical-profile-content');
   const tabs = document.getElementById('chemical-profile-tabs');
@@ -2178,6 +2466,31 @@ function renderChemicalProfile(profile) {
   if (!content || !tabs || !meta || !nameEl || !summaryEl) return;
 
   const sections = [
+    { key: 'overview', title: 'Overview', render: () => [
+      createProfileSection('Chemical Summary', [
+        { label: 'Primary hazard', value: profile?.header?.hazard || 'Not available' },
+        { label: 'Physical state', value: profile?.properties?.physicalState || 'Not available' },
+        { label: 'IDLH', value: formatIdlh(profile?.header?.idlh) || 'Not available' },
+        { label: 'ERG guide', value: profile?.header?.ergGuide || 'Not available' },
+      ]),
+      createProfileSection('Frontline Considerations', [
+        { label: 'EMS considerations', value: profile?.medical?.emsConsiderations || ['Not available'] },
+        { label: 'PPE / respiratory', value: profile?.ppeRecommendation?.displayLabel || 'Not available' },
+        { label: 'Initial isolation', value: profile?.isolationErg?.initialIsolationDistance || 'Not available' },
+      ]),
+      createProfileSection('Isolation Distances (ERG)', [
+        { label: 'Initial isolation', value: profile?.isolationErg?.initialIsolationDistance || 'Not available' },
+        { label: 'Protective action', value: profile?.isolationErg?.protectiveActionDistance || ['Not available'] },
+      ]),
+      createProfileSection('AEGL Values', groupedAeglProfileEntries(profile?.exposures?.monitoringConcerns || []), true),
+      createProfileSection('EMS Considerations', profile?.medical?.emsConsiderations || ['Not available'], true),
+      createProfileSection('Fire Considerations', [
+        profile?.fire?.flammability,
+        profile?.fire?.firefightingPrecautions,
+        profile?.fire?.explosionHazards,
+        profile?.fire?.runoffConcerns,
+      ], true),
+    ] },
     { key: 'properties', title: 'Properties', render: () => [
       createProfileSection('Chemical Properties', [
         { label: 'Chemical formula', value: profile?.properties?.formula || 'Not available' },
@@ -2201,7 +2514,6 @@ function renderChemicalProfile(profile) {
         { label: 'Decomposition point', value: profile?.properties?.decompositionPoint || 'Not available' },
         { label: 'Heat of vaporization', value: profile?.properties?.heatOfVaporization || 'Not available' },
       ]),
-      createProfileSection('Reactivity', readableProfileBullets(profile?.properties?.mixtureReactivity), true),
       createProfileSection('Synonyms & Notes', [
         { label: 'Synonyms', value: profile?.properties?.synonyms || ['Not available'] },
         { label: 'Persistence / environment', value: profile?.properties?.environmentalPersistence || 'Not available' },
@@ -2209,6 +2521,7 @@ function renderChemicalProfile(profile) {
         { label: 'Commercial uses', value: profile?.properties?.commercialUses || 'Not available' },
         { label: 'Commercial sources', value: profile?.properties?.commercialSources || 'Not available' },
       ]),
+      createProfileSection('Reactivity', readableProfileBullets(profile?.properties?.mixtureReactivity), true),
     ] },
     { key: 'exposures', title: 'Exposures', render: () => [
       createProfileSection('EXPOSURE LIMITS', [
@@ -2221,45 +2534,13 @@ function renderChemicalProfile(profile) {
       ...createMonitoringConcernSections(profile?.exposures?.monitoringConcerns || ['Not available']),
     ] },
     { key: 'ppeRespiratory', title: 'PPE / Respiratory Protection', render: () => [
-      createProfileSection('Source Status', [
-        {
-          label: 'PPE guidance',
-          value: hasAvailableProfileData(profile?.ppeRespiratory) ? readinessStatus.imported : readinessStatus.missing,
-        },
-        {
-          label: 'Suit compatibility',
-          value: hasAvailableProfileData(profile?.ppeRespiratory?.gloveSuitMaterial)
-            ? readinessStatus.verify
-            : 'Suit compatibility not verified from current source.',
-        },
-        { label: 'Entry warning', value: ppeSuitWarning },
-      ]),
-      createProfileSection('Recommended PPE', [
-        { label: 'Imported match', value: profile?.ppeRespiratory?.bestMatch || noCurrentDataText },
-      ]),
-      createProfileSection('PPE Options', profile?.ppeRespiratory?.recommendedPpe || ['Not available'], true),
-      createProfileSection('Glove / Suit Materials', profile?.ppeRespiratory?.gloveSuitMaterial || ['Not available'], true),
-      createProfileSection('Respiratory guidance', [
-        { label: 'Respirator recommendations', value: (profile?.ppeRespiratory?.respiratorRecommendations || ['Not available']).join(' · ') },
-        { label: 'APR / PAPR / SCBA', value: (profile?.ppeRespiratory?.aprPaprScba || ['Not available']).join(' · ') },
-        { label: 'Escape respirator', value: (profile?.ppeRespiratory?.escapeRespirator || ['Not available']).join(' · ') },
-        { label: 'Cartridge limitations', value: (profile?.ppeRespiratory?.cartridgeLimitations || ['Not available']).join(' · ') },
-      ]),
+      createPpeRecommendationCard(profile?.ppeRecommendation),
     ] },
     { key: 'detectors', title: 'Detectors', render: () => [
-      createProfileSection('Recommended Detector', [
-        { label: 'Best Match', value: 'Coming Soon...' },
-      ]),
-      createProfileSection('Recommended detectors', [
-        { label: 'Meters / detectors', value: (profile?.detectors?.items || ['Not available']).join(' · ') },
-        { label: 'PID relevance', value: (profile?.detectors?.pidRelevance || ['Not available']).join(' · ') },
-        { label: 'LEL relevance', value: (profile?.detectors?.lelMeterRelevance || ['Not available']).join(' · ') },
-        { label: 'Colorimetric tubes', value: (profile?.detectors?.colorimetricTubes || ['Not available']).join(' · ') },
-      ]),
-      createProfileSection('Detection notes', [
-        { label: 'Ionization potential', value: profile?.detectors?.ionizationPotential || 'Not available' },
-        { label: 'Electrochemical sensors', value: (profile?.detectors?.electrochemicalSensors || ['Not available']).join(' · ') },
-        { label: 'Detection limitations', value: (profile?.detectors?.limitations || ['Not available']).join(' · ') },
+      createProfileSection('Available Monitoring Equipment', [
+        { label: 'Air monitoring', value: 'AreaRAE · MultiRAE · ToxiRAE' },
+        { label: 'Spectrometry', value: 'Rigaku · HAZMATID Elite' },
+        { label: 'Liquid sample testing', value: 'CHEMMstrip and/or pH paper' },
       ]),
     ] },
     { key: 'reactivity', title: 'Reactivity', render: () => [
@@ -2303,13 +2584,6 @@ function renderChemicalProfile(profile) {
       ];
     } },
     { key: 'medical', title: 'Medical Considerations', render: () => [
-      createProfileSection('Source Status', [
-        {
-          label: 'Medical guidance',
-          value: hasAvailableProfileData(profile?.medical) ? readinessStatus.imported : readinessStatus.missing,
-        },
-        { label: 'Verification warning', value: medicalProtectiveWarning },
-      ]),
       createProfileSection('Treatment', [
         { label: 'First aid', value: profile?.medical?.firstAid || ['Not available'] },
         { label: 'EMS considerations', value: profile?.medical?.emsConsiderations || ['Not available'] },
@@ -2344,43 +2618,56 @@ function renderChemicalProfile(profile) {
       createHybridDeconLink(),
       createProfileSection('Decontamination guidance', [
         { label: 'Preferred method', value: profile?.decon?.preferredMethod || 'Not available' },
-        { label: 'HazMat personnel procedure', value: (profile?.decon?.hazmatPersonnelProcedure || ['Not available']).join(' · ') },
+        { label: 'HazMat personnel procedure', value: deconGuidanceItems(profile?.decon?.hazmatPersonnelProcedure || ['Not available']) },
         { label: 'Water-reactive cautions', value: (profile?.decon?.waterReactiveCautions || ['Not available']).join(' · ') },
       ]),
-      createProfileSection('Decon layers', [
-        { label: 'Gross decon', value: (profile?.decon?.grossDecon || ['Not available']).join(' · ') },
-        { label: 'Technical decon', value: (profile?.decon?.technicalDecon || ['Not available']).join(' · ') },
-        { label: 'Patient / victim decon', value: (profile?.decon?.patientVictimDecon || ['Not available']).join(' · ') },
-        { label: 'Equipment decon', value: (profile?.decon?.equipmentDecon || ['Not available']).join(' · ') },
-        { label: 'Runoff / containment', value: (profile?.decon?.runoffContainment || ['Not available']).join(' · ') },
-        { label: 'Source basis', value: (profile?.decon?.sourceBasis || ['Not available']).join(' · ') },
-      ]),
+    ] },
+    { key: 'sources', title: 'Sources', render: () => [
+      createChemicalProfileSourceSummary(profile, true),
+      createProfileSection('Source Traceability', chemicalProfileSources(profile), true),
     ] },
   ];
 
+  const renderSectionGroups = (...keys) => keys.flatMap((key) =>
+    sections.find((section) => section.key === key)?.render() || []);
+  sections.push(
+    {
+      key: 'ppeMonitoring',
+      title: 'PPE & Monitoring',
+      render: () => renderSectionGroups('ppeRespiratory', 'detectors'),
+    },
+    {
+      key: 'response',
+      title: 'Response',
+      render: () => renderSectionGroups('isolationErg', 'reactivity', 'fire'),
+    },
+  );
+
   const tabsList = [
+    ['Overview', 'overview'],
     ['Properties', 'properties'],
-    ['Isolation Distance', 'isolationErg'],
     ['Exposures', 'exposures'],
-    ['PPE / Respiratory', 'ppeRespiratory'],
-    ['Detectors', 'detectors'],
-    ['Reactivity', 'reactivity'],
+    ['PPE & Monitoring', 'ppeMonitoring'],
+    ['Response', 'response'],
     ['Medical', 'medical'],
-    ['Fire', 'fire'],
-    ['DECON', 'decon'],
+    ['Decon', 'decon'],
+    ['Sources', 'sources'],
   ];
 
   nameEl.textContent = profile?.header?.name || 'Select a chemical';
-  const summaryParts = [profile?.header?.hazard, profile?.header?.un]
-    .filter(hasAvailableProfileData);
+  renderNfpa704Placard(profile?.header?.nfpa704, nameEl.textContent);
+  renderChemicalHazardOverview(profile);
+  const summaryParts = [
+    hasMeaningfulChemicalProfileData(profile?.header?.cas) ? `CAS: ${profile.header.cas}` : '',
+    profile?.header?.hazard,
+  ].filter(hasMeaningfulChemicalProfileData);
   summaryEl.textContent = summaryParts.join(' · ');
   summaryEl.hidden = summaryParts.length === 0;
   meta.innerHTML = '';
   const metaItems = [
-    ['CAS', profile?.header?.cas || noCurrentDataText],
     ['UN/NA', profile?.header?.un || noCurrentDataText],
-    ['ERG', profile?.header?.ergGuide || noCurrentDataText],
-    ['IDLH', formatIdlh(profile?.header?.idlh) || noCurrentDataText],
+    ['ERG Guide', profile?.header?.ergGuide || noCurrentDataText],
+    ['PPE Recommendation', profile?.ppeRecommendation?.displayLabel || noCurrentDataText],
   ];
   metaItems.forEach(([label, value]) => {
     const item = document.createElement('span');
@@ -2395,6 +2682,12 @@ function renderChemicalProfile(profile) {
     item.append(title, contentValue);
     meta.append(item);
   });
+  const statusEl = document.getElementById('chemical-profile-status');
+  if (statusEl) {
+    const hasSources = chemicalProfileSources(profile).length > 0;
+    statusEl.textContent = hasSources ? 'Verified' : 'Requires Review';
+    statusEl.dataset.state = hasSources ? 'verified' : 'review';
+  }
 
   tabs.replaceChildren();
   const tabButtons = tabsList.map(([label, key]) => {
@@ -2402,7 +2695,9 @@ function renderChemicalProfile(profile) {
     button.type = 'button';
     button.className = 'chemical-profile-tab';
     button.dataset.tab = key;
-    button.textContent = label;
+    const tabLabel = document.createElement('span');
+    tabLabel.textContent = label;
+    button.append(createChemicalProfileIcon(key), tabLabel);
     button.addEventListener('click', () => {
       renderChemicalProfile({ ...profile, activeTab: key });
     });
@@ -2410,7 +2705,7 @@ function renderChemicalProfile(profile) {
   });
   tabs.append(...tabButtons);
 
-  const activeKey = profile?.activeTab || 'properties';
+  const activeKey = profile?.activeTab || 'overview';
   tabs.querySelectorAll('.chemical-profile-tab').forEach((button) => {
     button.classList.toggle('active', button.dataset.tab === activeKey);
   });
@@ -2418,7 +2713,10 @@ function renderChemicalProfile(profile) {
   const activeSection = sections.find((section) => section.key === activeKey) || sections[0];
   content.dataset.activeTab = activeKey;
   const fragment = document.createDocumentFragment();
-  (activeSection.render() || []).filter(Boolean).forEach((element) => fragment.append(element));
+  const renderedSections = (activeSection.render() || []).filter(Boolean);
+  renderedSections.forEach((element) => fragment.append(element));
+  if (activeKey !== 'sources') fragment.append(createChemicalProfileSourceSummary(profile, activeKey === 'overview'));
+  if (!renderedSections.length) fragment.append(createChemicalProfileEmptyState());
   content.replaceChildren(fragment);
   content.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 }
@@ -2437,6 +2735,15 @@ function updateChemicalCard(record) {
     .filter(Boolean);
   const profile = {
     ...(record.profile || record),
+    header: {
+      ...(record.profile?.header || {}),
+      hazardClass: hasMeaningfulChemicalProfileData(record.profile?.header?.hazardClass)
+        ? record.profile.header.hazardClass
+        : (hasMeaningfulChemicalProfileData(record.dotClass) ? record.dotClass : undefined),
+      packingGroup: hasMeaningfulChemicalProfileData(record.profile?.header?.packingGroup)
+        ? record.profile.header.packingGroup
+        : (hasMeaningfulChemicalProfileData(record.packingGroup) ? record.packingGroup : undefined),
+    },
     sourceLabels: [...new Set([
       'Chemical Companion Master',
       ...(record.summarySources || record.profile?.sourceLabels || []).map(linkedSourceBadge),
@@ -2755,6 +3062,7 @@ function renderGuidedResponse() {
   }, {
     missingInputs: missingPlumeInputs,
     status: savedPlumeResult?.model?.confidenceStatus || (missingPlumeInputs.length ? 'Requires Verification' : 'Existing plume inputs complete'),
+    confidenceLevel: savedPlumeResult?.model?.confidenceLevel || savedPlumeResult?.confidenceLevel || savedPlumeResult?.model?.confidenceStatus || 'Insufficient Data',
     endpointSelected: savedPlumeResult?.endpoint?.endpointSource
       ? `${savedPlumeResult.endpoint.endpointSource} ${savedPlumeResult.endpoint.selectedDuration}-minute`
       : '',
@@ -2779,6 +3087,7 @@ function renderGuidedResponse() {
       majorHazardClass: guidedDisplayValue(profile.header?.hazard),
       masterRecordStatus: identityStatus,
     },
+    ppeRecommendation: profile.ppeRecommendation,
     tacticalDecisionFlow: {
       identifyAnalyze: decisions.identifyAnalyze,
       verifyIsolate: decisions.verifyIsolate,
@@ -2848,10 +3157,12 @@ function renderGuidedResponse() {
     { label: 'Tactical Actions', value: actionText(verifyDecision) },
   ], verifyDecision.sourceSummary, true);
   const lifeFlow = createTacticalFlowBox('Life Safety', lifeDecision.status, [
-    { label: 'SCBA Decision', value: lifeDecision.specificValues.scbaDecision },
-    { label: 'Protection Level', value: lifeDecision.specificValues.protectionLevel },
+    { label: 'Is SCBA Mandated?', value: lifeDecision.specificValues.scbaDecision },
+    { label: 'Recommended Protection Level', value: lifeDecision.specificValues.recommendedProtectionLevel },
+    { label: 'Why This Level', value: lifeDecision.specificValues.whySelected },
+    { label: 'Verify Before Entry', value: lifeDecision.specificValues.requiredVerification },
+    { label: 'Level C Status', value: lifeDecision.specificValues.levelCAllowed ? 'Allowed only while all verified conditions remain satisfied.' : `Blocked — ${lifeDecision.specificValues.levelCBlockedReason}` },
     { label: 'Direct Guidance', value: lifeDecision.directGuidance },
-    { label: 'Downgrade Conditions', value: lifeDecision.specificValues.downgradeConditions },
     { label: 'Cartridge Status', value: lifeDecision.specificValues.cartridgeStatus },
     { label: 'Plume Planning Impact', value: lifeDecision.specificValues.plumePlanningImpact },
     { label: 'Source-backed Limitations', value: lifeDecision.limitations },
@@ -3042,18 +3353,21 @@ function shortGuidance(value) {
 }
 
 function buildIncidentPpeSummary(record) {
-  const reference = buildPpeStartingReference(record);
-  if (!reference) return null;
-  const verifiedDetails = reference.details.filter((detail) => !/not specified|no chemical-specific|not available/i.test(detail));
+  const recommendation = record?.profile?.ppeRecommendation;
+  if (!recommendation) return null;
   return {
     items: [
-      `PPE status: ${reference.status}`,
-      `PPE guidance: ${reference.title}`,
-      ...verifiedDetails.slice(0, 4),
+      `Selected chemical: ${recommendation.chemicalName || record.name || noCurrentDataText}`,
+      `Recommended protection level: ${recommendation.displayLabel || noCurrentDataText}`,
+      `Respiratory: ${recommendation.respiratoryProtection || noCurrentDataText}`,
+      `Skin / suit: ${recommendation.skinProtection || noCurrentDataText}`,
+      `Verification required: ${(recommendation.verificationRequirements || []).join('; ') || noCurrentDataText}`,
+      `Recommendation status: ${recommendation.recommendationStatus || noCurrentDataText}`,
     ].filter(Boolean).map(shortGuidance),
-    sources: record.summarySources,
-    status: reference.status,
-    suitStatus: reference.suitStatus,
+    sources: recommendation.sourcesReviewed || [],
+    status: recommendation.recommendationStatus || readinessStatus.verify,
+    suitStatus: recommendation.skinProtection || noCurrentDataText,
+    ppeRecommendation: recommendation,
     warning: ppeSuitWarning,
   };
 }
@@ -3310,29 +3624,16 @@ function renderIncidentCommandSnapshot() {
     setText('command-protective-status', activeChemicalRecord ? readinessStatus.imported : readinessStatus.missing);
     renderProtectiveActionGuidance('command-protective-guidance');
 
-    const ppeCorrelation = correlatePpeSources(activeChemicalRecord?.ppeSources || []);
-    const startingPpe = buildPpeStartingReference(activeChemicalRecord);
-    const hasPpeSelection = activePpeSelection.length > 0;
-    const hasConsensus = ppeCorrelation.unanimous && ppeCorrelation.selection.length > 0;
-    const coverage = `${ppeCorrelation.available.length}/${requiredPpeConsensusSources.length} sources`;
-    setText('command-ppe-status', hasConsensus ? readinessStatus.imported : (hasPpeSelection ? readinessStatus.manual : (startingPpe ? readinessStatus.verify : readinessStatus.missing)));
-    setText('command-ppe-title', hasConsensus
-      ? ppeCorrelation.selection.join(' · ')
-      : (hasPpeSelection ? activePpeSelection.join(' · ') : (startingPpe?.title || noCurrentDataText)));
-    setText('command-ppe-summary', hasConsensus
-      ? 'Strict text match across every required backend source.'
-      : (hasPpeSelection
-        ? 'Operator-entered selection; the backend does not currently prove full source agreement.'
-        : (startingPpe?.summary || 'No source-attributed PPE guidance is available for this chemical.')));
-    const correlatedDetails = hasConsensus
-      ? ppeCorrelation.selection.map((item) => `${item} — all required sources`)
-      : (hasPpeSelection
-        ? [
-          ...activePpeSelection.map((item) => `${item} — operator entered`),
-          ...(startingPpe?.details || []),
-        ]
-        : (startingPpe?.details || ppeCorrelation.groupedItems.map((group) => `${group.text} — ${group.sources.join(', ')}`))).slice(0, 8);
-    replaceCommandList('command-ppe-details', correlatedDetails, 'No source-attributed PPE guidance loaded.');
+    const recommendation = activeChemicalRecord?.profile?.ppeRecommendation;
+    setText('command-ppe-status', recommendation?.recommendationStatus || readinessStatus.missing);
+    setText('command-ppe-title', recommendation?.displayLabel || noCurrentDataText);
+    setText('command-ppe-summary', recommendation?.respiratoryProtection || 'No source-attributed PPE recommendation is available for this chemical.');
+    replaceCommandList('command-ppe-details', recommendation ? [
+      `Skin / suit: ${recommendation.skinProtection}`,
+      `Cartridge: ${recommendation.cartridgeRequirement}`,
+      `Verification required: ${(recommendation.verificationRequirements || []).join('; ') || noCurrentDataText}`,
+      `Sources reviewed: ${(recommendation.sourcesReviewed || []).join(', ') || noCurrentDataText}`,
+    ] : [], 'No source-attributed PPE recommendation loaded.');
   }
 
   setText('command-weather-status', activeWeatherCommand ? 'Live' : 'Awaiting location');
@@ -3419,7 +3720,7 @@ async function restoreSelectedChemical() {
       const record = await buildFullChemicalRecord(chemical);
       const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(saved.selectedChemicalId ?? saved.id)}/profile`);
       const profile = profileResponse && !profileResponse.error ? profileResponse : null;
-      const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'properties' }, name: record.name } : record;
+      const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'overview' }, name: record.name } : record;
       if (activeChemical?.id === chemical.id) {
         activeChemicalRecord = combinedRecord;
         applyChemicalContainerProfile();
@@ -3475,14 +3776,18 @@ async function openChemical(chemical, facilityName = '') {
   if (chemical.ProperShippingName) profileParams.set('shippingName', chemical.ProperShippingName);
   const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(chosenChemicalId)}/profile${profileParams.size ? `?${profileParams}` : ''}`);
   const profile = profileResponse && !profileResponse.error ? profileResponse : null;
-  const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'properties' }, name: record.name } : record;
+  const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'overview' }, name: record.name } : record;
   activeChemicalRecord = combinedRecord;
   updateActiveIncidentRecord();
   renderIncidentCommandSnapshot();
   updateChemicalCard(combinedRecord);
   if (chemicalIdResults) chemicalIdResults.hidden = false;
   setChemicalSearchStatus('');
-  chemicalIdResults?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (window.matchMedia('(max-width: 1199px)').matches) {
+    chemicalIdResults?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    document.getElementById('lookup')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 function companionChemicalForUi(row) {
@@ -3567,6 +3872,45 @@ function saveCurrentChemical() {
   setChemicalSearchStatus(`${savedChemical.chemicalName} saved to My Chemicals.`, 'success');
 }
 
+function exportCurrentChemicalProfile() {
+  if (!activeChemical || !activeChemicalRecord) {
+    setChemicalSearchStatus('Select a verified Chemical Companion record before exporting.', 'error');
+    return;
+  }
+  const exportedAt = new Date().toISOString();
+  const payload = {
+    exportedAt,
+    selectedChemicalId: activeChemical.selectedChemicalId ?? activeChemical.id,
+    chemical: activeChemicalRecord,
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  const filename = String(activeChemicalRecord.name || 'chemical-profile')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+  link.href = url;
+  link.download = `${filename || 'chemical-profile'}-${exportedAt.slice(0, 10)}.json`;
+  link.click();
+  URL.revokeObjectURL(url);
+  setChemicalSearchStatus(`${activeChemicalRecord.name} profile exported.`, 'success');
+}
+
+function printCurrentChemicalProfile() {
+  if (!activeChemical || !activeChemicalRecord) {
+    setChemicalSearchStatus('Select a verified Chemical Companion record before printing.', 'error');
+    return;
+  }
+  document.body.classList.add('printing-chemical-profile');
+  window.print();
+  window.setTimeout(() => document.body.classList.remove('printing-chemical-profile'), 0);
+}
+
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-chemical-profile');
+});
+
 function renderSavedChemicals() {
   const list = document.getElementById('my-chemicals-list');
   if (!list) return;
@@ -3605,6 +3949,42 @@ function renderSavedChemicals() {
 }
 
 document.getElementById('save-my-chemical-btn')?.addEventListener('click', saveCurrentChemical);
+document.getElementById('profile-save-chemical-btn')?.addEventListener('click', saveCurrentChemical);
+const profileExportMenu = document.querySelector('.chemical-profile-export-menu');
+const profileExportButton = document.getElementById('profile-export-btn');
+const profileExportOptions = document.getElementById('profile-export-options');
+
+function setProfileExportMenuOpen(open) {
+  if (!profileExportButton || !profileExportOptions) return;
+  profileExportOptions.hidden = !open;
+  profileExportButton.setAttribute('aria-expanded', String(open));
+}
+
+profileExportButton?.addEventListener('click', () => {
+  setProfileExportMenuOpen(profileExportOptions?.hidden ?? true);
+});
+document.getElementById('profile-print-btn')?.addEventListener('click', () => {
+  setProfileExportMenuOpen(false);
+  printCurrentChemicalProfile();
+});
+document.getElementById('profile-download-btn')?.addEventListener('click', () => {
+  setProfileExportMenuOpen(false);
+  exportCurrentChemicalProfile();
+});
+document.addEventListener('click', (event) => {
+  if (profileExportMenu && !profileExportMenu.contains(event.target)) setProfileExportMenuOpen(false);
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && profileExportButton?.getAttribute('aria-expanded') === 'true') {
+    setProfileExportMenuOpen(false);
+    profileExportButton.focus();
+  }
+});
+document.getElementById('chemical-profile-back-btn')?.addEventListener('click', () => {
+  if (chemicalIdResults) chemicalIdResults.hidden = true;
+  document.querySelector('.chemical-id-search-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('chemical-search')?.focus({ preventScroll: true });
+});
 
 async function openFacility(facilityId) {
   latestChemicalSearch += 1;
@@ -3753,6 +4133,7 @@ async function searchChemicalId(value, { submit = false } = {}) {
         clearChemicalSuggestions();
         if (isUnreviewedTransportationRecord(chemical)) {
           setChemicalSearchStatus(chemical.reviewWarning || 'This transport identifier has not been verified against a Chemical Companion master chemical record. Do not use it for IDLH, PPE, plume, decon, or medical guidance until reviewed.', 'error');
+          window.HazMatIQ?.openChemCompareWithBase?.(chemical);
         } else openChemical(chemical);
       },
       {
@@ -3802,6 +4183,13 @@ chemicalSearchForm?.addEventListener('submit', (event) => {
   searchChemicalId(chemicalSearchInput?.value, { submit: true });
 });
 
+document.querySelectorAll('[data-chemical-example]').forEach((button) => {
+  button.addEventListener('click', () => {
+    if (chemicalSearchInput) chemicalSearchInput.value = button.dataset.chemicalExample || '';
+    searchChemicalId(button.dataset.chemicalExample, { submit: true });
+  });
+});
+
 const incidentProductInput = document.getElementById('incident-product');
 const incidentProductSuggestions = document.getElementById('incident-product-suggestions');
 const plumeChemicalInput = document.getElementById('plume-chemical-input');
@@ -3830,7 +4218,7 @@ async function selectIncidentProduct(chemical) {
   const record = await buildFullChemicalRecord(chemical);
   const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(chemical.selectedChemicalId ?? chemical.id)}/profile`);
   const profile = profileResponse && !profileResponse.error ? profileResponse : null;
-  const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'properties' }, name: record.name } : record;
+  const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'overview' }, name: record.name } : record;
   if (activeChemical?.id !== chemical.id) return;
   activeChemicalRecord = combinedRecord;
   applyChemicalContainerProfile();
@@ -3880,7 +4268,7 @@ async function selectPlumeChemical(chemical) {
   const profile = profileResponse && !profileResponse.error ? profileResponse : null;
   if (String(activeChemical?.id) !== String(chosenId)) return;
   activeChemicalRecord = profile
-    ? { ...record, profile: { ...profile, activeTab: 'properties' }, name: record.name }
+    ? { ...record, profile: { ...profile, activeTab: 'overview' }, name: record.name }
     : record;
   applyChemicalContainerProfile();
   restoreIncidentContainerData();
@@ -4325,6 +4713,9 @@ function plumeResultToGeoJson(result, origin) {
           colorName: threatZoneColorNames[threatRank],
           color: threatZoneColors[threatRank],
           maxDownwindM: zone.maxDownwindM,
+          rangeTruncated: zone.rangeTruncated === true,
+          modelMode: result.modelMode || 'HAZMATIQ_PLANNING_ESTIMATE',
+          overlayMode: 'modeled-concentration-contour',
           windFromDeg: result.inputs.windDirDeg,
         },
         geometry: { type: 'Polygon', coordinates: [coordinates] },
@@ -5947,6 +6338,8 @@ function updatePlumeReleaseQuantityLabel() {
   const releaseKind = document.getElementById('plume-release-type')?.value;
   const puffDurationField = document.getElementById('plume-puff-duration-field');
   if (puffDurationField) puffDurationField.hidden = releaseKind !== 'puff';
+  const releaseDurationField = document.getElementById('plume-release-duration-field');
+  if (releaseDurationField) releaseDurationField.hidden = releaseKind === 'puff';
   const unitSelect = document.getElementById('plume-release-unit');
   setText('plume-release-quantity-label', releaseKind === 'puff' ? 'Total released mass' : 'Release rate');
   if (!unitSelect) return;
@@ -5971,12 +6364,15 @@ function readPlumeModelInputs(location) {
   const temperatureF = Number(document.getElementById('plume-temperature')?.value);
   const stabilityClass = document.getElementById('plume-stability-class')?.value;
   const surfaceRoughness = document.getElementById('plume-surface-roughness')?.value;
+  const releaseHeightFtValue = document.getElementById('plume-release-height')?.value;
+  const releaseHeightFt = Number(releaseHeightFtValue);
 
   if (!['plume', 'puff'].includes(releaseKind)) throw new Error('Select a valid release type.');
   if (!Number.isFinite(releaseQuantity) || releaseQuantity <= 0) throw new Error('Enter a release quantity greater than zero.');
   if (!Number.isFinite(windSpeedMph) || windSpeedMph <= 0) throw new Error('Enter a wind speed greater than zero.');
   if (!Number.isFinite(windDirDeg) || windDirDeg < 0 || windDirDeg > 360) throw new Error('Enter the direction the wind is coming from, between 0 and 360 degrees.');
   if (!Number.isFinite(temperatureF)) throw new Error('Enter the current air temperature.');
+  if (releaseHeightFtValue === '' || !Number.isFinite(releaseHeightFt) || releaseHeightFt < 0) throw new Error('Enter a verified release height (0 ft is valid only for a ground-level release).');
 
   const releaseQuantityKg = releaseKind === 'puff'
     ? releaseQuantity * 0.45359237
@@ -5993,10 +6389,23 @@ function readPlumeModelInputs(location) {
     windDirDeg,
     stabilityClass,
     surfaceRoughness,
+    releaseHeightM: releaseHeightFt * 0.3048,
     tempC: (temperatureF - 32) * (5 / 9),
     lat: location.lat,
     lng: location.lon,
     endpointDurationMinutes: Number(document.getElementById('plume-endpoint-duration')?.value),
+    releaseDurationSec: releaseKind === 'puff'
+      ? Number(document.getElementById('plume-puff-duration')?.value)
+      : Number(document.getElementById('plume-release-duration')?.value) || null,
+    sourceType: controlValue('container-model-source', { selectedLabel: true }),
+    containerType: controlValue('plume-container-type', { selectedLabel: true }),
+    containerCapacity: controlValue('container-capacity', { selectedLabel: true }),
+    releasePhase: controlValue('container-release-phase', { selectedLabel: true }),
+    pressureCondition: controlValue('container-pressure-condition', { selectedLabel: true }),
+    weatherSourceMode: document.getElementById('plume-weather-source')?.value || '',
+    weatherSource: document.getElementById('plume-weather-source-name')?.textContent?.trim() || '',
+    weatherObservationTime: document.getElementById('plume-weather-observation-time')?.textContent?.trim() || '',
+    terrainElevationM: Number(String(document.getElementById('plume-elevation')?.value || '').replace(/,/g, '')) * 0.3048 || null,
     ergSpillSize: document.getElementById('plume-erg-spill-size')?.value || 'large',
     ergPeriod: document.getElementById('plume-erg-period')?.value || 'night',
   };
@@ -6107,6 +6516,32 @@ function setPlumeStatusBadge(id, text, state) {
   badge.dataset.state = state;
 }
 
+function updatePlumeEvidenceStatus(result = null) {
+  if (!result) {
+    setText('plume-model-mode-badge', 'Cannot Plot — Missing Required Data');
+    setText('plume-confidence-badge', 'Insufficient Data');
+    return;
+  }
+  setText('plume-model-mode-badge', result.modelModeLabel || result.display || 'HazMatIQ Planning Estimate');
+  setText('plume-validation-badge', result.validationStatus || result.validation?.validationStatus || 'Not independently validated');
+  setText('plume-confidence-badge', result.confidenceLevel || result.plumeStatus || 'Requires Review');
+  setText('plume-source-strength-badge', result.sourceStrength?.status || (result.mode === 'erg-protective-action' ? 'Not Applicable — ERG Overlay' : 'Requires Review'));
+  setText('plume-source-strength-detail', result.sourceStrength
+    ? `${result.sourceStrength.sourceStrengthMethod}. Missing: ${result.sourceStrength.missingInputs?.join(', ') || 'none'}.`
+    : 'No dispersion source-strength calculation is used for an ERG overlay.');
+  setText('plume-weather-quality-badge', result.weather?.freshness || (result.mode === 'erg-protective-action' ? 'Verify Wind Direction' : 'Time Unknown'));
+  setText('plume-weather-quality-detail', result.weather
+    ? `${result.weather.status}. ${result.weather.limitations?.join(' ') || 'Source and time recorded.'}`
+    : 'Verify wind direction and current field conditions.');
+  setText('plume-endpoint-badge', result.endpoint?.endpointSource || (result.mode === 'erg-protective-action' ? 'PHMSA ERG 2024' : 'No Current Data Exists'));
+  setText('plume-endpoint-detail', result.endpoint
+    ? `${result.endpoint.selectedDurationMinutes}-minute AEGL endpoint linked to CAS ${result.endpoint.casNumber}.`
+    : (result.endpointStatus || 'No verified endpoint is available.'));
+  setText('plume-aloha-import-badge', result.alohaImport?.status || 'Not Configured');
+  setText('plume-aloha-import-detail', result.alohaImport?.display || 'Imported official output is displayed, not recalculated.');
+  setText('plume-text-summary', result.textSummary || result.endpointStatus || 'No Current Data Exists');
+}
+
 function updatePlumeInputSummaries() {
   const releaseQuantity = controlValue('plume-release-quantity');
   const releaseUnit = controlValue('plume-release-unit', { selectedLabel: true });
@@ -6164,6 +6599,9 @@ function getMissingPlumeRequiredInputs() {
   if (!['plume', 'puff'].includes(releaseType)) missing.push('Release Type');
   if (!(Number(document.getElementById('plume-release-quantity')?.value) > 0)) missing.push('Release Quantity');
   if (releaseType === 'puff' && !(Number(document.getElementById('plume-puff-duration')?.value) > 0)) missing.push('Puff Evaluation Time');
+  if (releaseType === 'plume' && !(Number(document.getElementById('plume-release-duration')?.value) > 0)) missing.push('Release Duration');
+  const releaseHeight = document.getElementById('plume-release-height')?.value;
+  if (releaseHeight === '' || !Number.isFinite(Number(releaseHeight)) || Number(releaseHeight) < 0) missing.push('Release Height');
   if (!(Number(document.getElementById('plume-wind-speed')?.value) > 0)) missing.push('Wind Speed');
   const windDirection = document.getElementById('plume-wind-direction')?.value;
   if (windDirection === '' || !Number.isFinite(Number(windDirection))) missing.push('Wind Direction');
@@ -6212,9 +6650,10 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
   const planningDefault = document.getElementById('container-pressure-confidence-summary')?.textContent?.trim() || 'Planning default';
   const weatherObservationTime = document.getElementById('plume-weather-observation-time')?.textContent?.trim() || '';
   const weatherFreshness = getWeatherFreshness(weatherObservationTime);
-  const outputStatus = weatherSourceMode === 'manual' || weatherFreshness.status !== 'Current'
-    ? 'Needs Verification'
-    : (modeled.result.plumeStatus || 'Planning Estimate');
+  const outputStatus = modeled.result.confidenceLevel
+    || (weatherSourceMode === 'manual' || weatherFreshness.status !== 'Current'
+      ? 'Needs Verification'
+      : (modeled.result.plumeStatus || 'Planning Estimate'));
   const endpoint = modeled.result.endpoint || {};
   const threatZones = (currentThreatZoneGeoJson?.features || []).map((feature) => feature.properties || {});
   const plumeResult = {
@@ -6268,6 +6707,9 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
         : weatherFreshness.status === 'Current' ? [] : [`Weather ${weatherFreshness.status} — verify before operational use.`],
     },
     model: {
+      modelMode: modeled.result.modelMode || 'HAZMATIQ_PLANNING_ESTIMATE',
+      modelModeLabel: modeled.result.modelModeLabel || 'HazMatIQ Planning Estimate',
+      modelFamily: modeled.result.modelFamily || 'Gaussian neutral gas',
       modelName: modeled.result.modelName || modeled.result.modelMetadata?.modelName || noCurrentDataText,
       formulaName: 'Gaussian plume / puff screening equations',
       formulaVersion: modeled.result.modelVersion,
@@ -6275,6 +6717,7 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
       validated: false,
       limitations: modeled.result.limitations || modeled.result.modelMetadata?.limitations || [],
       confidenceStatus: outputStatus,
+      confidenceLevel: modeled.result.confidenceLevel || outputStatus,
     },
     output: {
       resultSummary: modeled.summary,
@@ -6286,6 +6729,11 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
       geometry: currentThreatZoneGeoJson,
       mapCenter: [location.lon, location.lat],
     },
+    sourceStrength: modeled.result.sourceStrength || null,
+    terrain: modeled.result.terrain || null,
+    assumptions: modeled.result.assumptions || [],
+    fieldVerificationRequirements: modeled.result.fieldVerificationRequirements || [],
+    textSummary: modeled.result.textSummary || modeled.summary,
     tacticalDecisionFlow: {
       verifyIsolateImpact: 'Use source-backed ERG initial isolation first; AEGL zones are planning support and require field monitoring and Incident Command verification.',
       lifeSafetyImpact: 'Plume output does not select or downgrade PPE; use approved PPE source logic.',
@@ -6372,6 +6820,8 @@ function buildErgOverlayWorkflowRecord({ location, modeled, command }) {
       endpointStatus: modeled.result.endpointStatus,
     },
     model: {
+      modelMode: modeled.result.modelMode || 'ERG_ISOLATION_PROTECTIVE_ACTION_OVERLAY',
+      modelModeLabel: modeled.result.modelModeLabel || 'ERG Isolation / Protective Action Overlay — Not a Plume Model',
       modelName: 'No dispersion model — ERG source-distance overlay',
       validationStatus: 'Not a modeled plume or toxic concentration contour',
       confidenceStatus: 'ERG Protective Action Guide',
@@ -6384,6 +6834,10 @@ function buildErgOverlayWorkflowRecord({ location, modeled, command }) {
       geometry: currentThreatZoneGeoJson,
       mapCenter: [location.lon, location.lat],
     },
+    confidenceLevel: modeled.result.confidenceLevel || 'ERG Protective Action Guide',
+    assumptions: modeled.result.assumptions || [],
+    fieldVerificationRequirements: modeled.result.fieldVerificationRequirements || [],
+    textSummary: modeled.result.textSummary || modeled.summary,
     commandSummary: command,
     disclaimers: {
       decisionSupport: plumePlanningNotices[0],
@@ -6480,6 +6934,7 @@ async function plotPlumeFromControls(locationOverride = null) {
   try {
     const availability = await getPlumeModeAvailability();
     if (!availability.result) {
+      updatePlumeEvidenceStatus(null);
       setText('backend-model-summary', availability.summary);
       await clearThreatZones(availability.summary);
       if (/No Current Data Exists/i.test(availability.summary)) {
@@ -6524,6 +6979,7 @@ async function plotPlumeFromControls(locationOverride = null) {
     if (hasActiveIncident()) saveIncidentBrief({ quiet: true });
     setText('backend-model-summary', modeled.summary);
     if (!modeled.result) {
+      updatePlumeEvidenceStatus(null);
       await clearThreatZones(modeled.summary);
       if (/No Current Data Exists/i.test(modeled.summary)) {
         setText('plume-endpoint-status', 'No approved AEGL / LOC or ERG isolation/protective-action distance is available.');
@@ -6536,6 +6992,8 @@ async function plotPlumeFromControls(locationOverride = null) {
       }
       return;
     }
+
+    updatePlumeEvidenceStatus(modeled.result);
 
     importedPlumeOverlay = null;
     await mapReady;
@@ -6642,6 +7100,7 @@ async function plotPlumeFromControls(locationOverride = null) {
     setText('plume-live-status', `Plume plotted ${formatCentralZuluHtml()}.`);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'The plume could not be plotted.';
+    updatePlumeEvidenceStatus(null);
     showPlumeValidation(message);
     setText('plume-overlay-status', message);
   } finally {
@@ -6724,8 +7183,10 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   else setText('plume-input-status', 'Live weather is unavailable. Enter weather observations manually before plotting.');
   setText('backend-model-summary', 'Run plume model to view result.');
   const imported = importedPlumeOverlay;
-  if (imported) {
+  if (imported?.geojson) {
     await renderThreatZones(imported.geojson, imported.label);
+  } else if (imported) {
+    await clearThreatZones(`${imported.label} (summary only; no geometry)`);
   } else {
     await clearThreatZones('Confirm the model inputs, then select Plot Plume.');
   }
@@ -6755,7 +7216,7 @@ function kmlToGeoJson(kmlText) {
       properties: {
         zoneId: `imported-${index}`,
         label: zoneLabel,
-        source: 'Imported ALOHA / MARPLOT KML',
+        source: 'Imported external KML — source requires review',
         threatRank,
         colorName: threatZoneColorNames[threatRank],
         color: threatZoneColors[threatRank],
@@ -6769,15 +7230,43 @@ function kmlToGeoJson(kmlText) {
 
 async function importModelOverlay(file) {
   const textContent = await file.text();
-  const geojson = kmlToGeoJson(textContent);
-  const label = `Imported ALOHA / MARPLOT KML · ${file.name}`;
-  importedPlumeOverlay = { geojson, label };
-  await renderThreatZones(geojson, label);
+  const extension = file.name.split('.').pop()?.toLowerCase();
+  const official = document.getElementById('plume-aloha-source-confirmed')?.checked === true;
+  const officialLabel = 'Official ALOHA Output Imported — displayed by HazMatIQ';
+  const externalLabel = 'External model output imported — source requires review';
+  let geojson = null;
+  if (extension === 'kml') geojson = kmlToGeoJson(textContent);
+  else if (extension === 'geojson' || extension === 'json') {
+    const parsed = JSON.parse(textContent);
+    const features = parsed?.type === 'FeatureCollection' ? parsed.features : parsed?.type === 'Feature' ? [parsed] : [];
+    if (!features.length || features.some((feature) => !['Polygon', 'MultiPolygon'].includes(feature?.geometry?.type))) {
+      throw new Error('GeoJSON import requires polygon or multipolygon features.');
+    }
+    geojson = { type: 'FeatureCollection', features };
+  } else if (extension !== 'txt') {
+    throw new Error('Supported imports are KML, GeoJSON/JSON, and TXT. Extract KMZ before import.');
+  }
+  const label = `${official ? officialLabel : externalLabel} · ${file.name}`;
+  if (geojson) {
+    geojson.features.forEach((feature, index) => {
+      feature.id ??= index;
+      feature.properties = {
+        ...(feature.properties || {}),
+        zoneId: feature.properties?.zoneId || `imported-${index}`,
+        source: official ? officialLabel : externalLabel,
+        modelMode: official ? 'OFFICIAL_ALOHA_IMPORT' : 'REQUIRES_SOURCE_REVIEW',
+      };
+    });
+    importedPlumeOverlay = { geojson, label, official };
+    await renderThreatZones(geojson, label);
+  } else {
+    importedPlumeOverlay = { geojson: null, label, official, summaryText: textContent.trim() };
+  }
   activePlumeCommand = {
     title: 'Imported plume overlay',
-    summary: file.name,
-    source: 'Source: operator-imported ALOHA / MARPLOT KML; not calculated by the HazMatIQ backend.',
-    details: [`Imported file: ${file.name}`, `Imported: ${new Date().toLocaleString()}`],
+    summary: extension === 'txt' ? textContent.trim().slice(0, 500) || file.name : file.name,
+    source: `Source: ${official ? 'operator-confirmed official ALOHA output' : 'operator-imported external output requiring source review'}; not calculated or validated by HazMatIQ.`,
+    details: [`Imported file: ${file.name}`, `Imported: ${new Date().toLocaleString()}`, `Geometry: ${geojson ? 'available' : 'not included'}`],
   };
   const importedAt = new Date().toISOString();
   const importedWorkflowRecord = {
@@ -6791,9 +7280,13 @@ async function importModelOverlay(file) {
     includeInIncidentReport: true,
     plumeOutput: {
       status: readinessStatus.imported,
-      source: 'Operator-imported ALOHA / MARPLOT KML',
+      modelMode: official ? 'OFFICIAL_ALOHA_IMPORT' : 'REQUIRES_SOURCE_REVIEW',
+      modelModeLabel: official ? officialLabel : externalLabel,
+      source: official ? 'Operator-confirmed official ALOHA output' : 'External imported output — source requires review',
       sourceFileName: file.name,
       geometry: geojson,
+      summaryText: extension === 'txt' ? textContent.trim() : null,
+      limitations: ['HazMatIQ displays this imported output and does not recalculate or validate it.'],
     },
     disclaimers: {
       decisionSupport: plumePlanningNotices[0],
@@ -6801,9 +7294,14 @@ async function importModelOverlay(file) {
       dataVerification: plumePlanningNotices[2],
     },
   };
-  savePlumeResult(activePlumeCommand, importedWorkflowRecord, await capturePlumeMapImage());
+  savePlumeResult(activePlumeCommand, importedWorkflowRecord, geojson ? await capturePlumeMapImage() : '');
   renderIncidentCommandSnapshot();
   setText('backend-model-summary', label);
+  setText('plume-model-mode-badge', official ? officialLabel : externalLabel);
+  setText('plume-aloha-import-badge', official ? 'Imported' : 'Requires Source Review');
+  setText('plume-aloha-import-detail', `File: ${file.name}. HazMatIQ did not recalculate or validate this output.`);
+  setText('plume-text-summary', activePlumeCommand.summary);
+  setText('plume-aloha-import-status', label);
 }
 
 function openPlumeWorkspace() {
@@ -6963,6 +7461,18 @@ document.getElementById('plume-columbia-csv')?.addEventListener('change', async 
     applyColumbiaWeatherToPlumeInputs(weather);
   } catch {
     updatePlumeWeatherSourceStatus('Columbia CSV Import', '', 'Time unknown');
+  }
+});
+document.getElementById('plume-aloha-import')?.addEventListener('change', async (event) => {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  setText('plume-aloha-import-status', `Importing ${file.name}…`);
+  try {
+    await importModelOverlay(file);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'The model output could not be imported.';
+    setText('plume-aloha-import-status', message);
+    setText('plume-aloha-import-badge', 'Import Failed');
   }
 });
 document.getElementById('plume-model-form')?.addEventListener('submit', async (event) => {

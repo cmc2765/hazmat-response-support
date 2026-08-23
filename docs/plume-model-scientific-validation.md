@@ -11,7 +11,7 @@ must block a toxic endpoint plot when identity, AEGL, release, location, or weat
 requirements are absent.
 
 No result is “Validated for this chemical/release scenario.” The validation runner
-currently reports zero runnable comparison cases and four skipped cases. Skipped cases
+currently reports zero runnable comparison cases and eight skipped cases. Skipped cases
 do not count as passed.
 
 ## Model and formula approach
@@ -25,8 +25,12 @@ do not count as passed.
 - Endpoint geometry: sampled concentration isopleths calculated from a selected,
   duration-specific EPA AEGL value.
 
-This work did not change the plume or puff equations. Internal tests verify arithmetic
-and structural invariants; those tests are not independent scientific validation.
+The dispersion equations are unchanged. The contour builder now refines the downwind
+threshold crossing with bisection instead of ending at the last coarse sample. This is
+a numerical geometry correction: it removes the artificial flat tail and reduces
+endpoint under-reporting without changing the concentration formula. Internal tests
+verify arithmetic and structural invariants; those tests are not independent scientific
+validation.
 
 ## Source requirements
 
@@ -90,7 +94,8 @@ endpoint does not validate the release estimate, weather, or dispersion result.
 - Idealized point source, Gaussian dispersion, level terrain, and constant meteorology.
 - No dense-gas/slumping behavior, terrain channeling, building wakes, deposition,
   chemical reaction, fire, or thermodynamic source-term model.
-- Fixed sampling range and resolution can truncate or quantize reported extent.
+- A fixed computational range can truncate reported extent. Crosswind widths remain
+  sampled; non-truncated downwind threshold crossings are refined by bisection.
 - Surface roughness is a rural/urban selection; elevation is displayed but is not yet
   used in the dispersion equations.
 - Stability class is currently a supported model input but the UI uses its existing
@@ -108,8 +113,12 @@ claim ALOHA equivalence.
 |---|---|---|---|---|---:|---:|---|
 | Ammonia railcar | Continuous | Missing | AEGL-3 value missing in fixture | Missing | 20% configured | Not run | Skipped |
 | Chlorine cylinder | Instantaneous heavy-gas ALOHA example | Present | AEGL-3, 60 min, 20 ppm | Published lower bound exists in NOAA/EPA ALOHA Example 3 | 20% configured | Not run | Skipped: no compatible puff evaluation time/model mapping |
-| Published continuous release | Continuous | Missing | Missing | Missing | 20% configured | Not run | Skipped |
-| Published puff release | Puff | Missing | Missing | Missing | 20% configured | Not run | Skipped |
+| Dense-gas case | Source pending | Missing | Missing | Missing | 20% configured | Not run | Skipped |
+| Neutral-gas case | Source pending | Missing | Missing | Missing | 20% configured | Not run | Skipped |
+| Low-wind stable case | Continuous | Missing | Missing | Missing | 20% configured | Not run | Skipped |
+| Moderate-wind neutral case | Continuous | Missing | Missing | Missing | 20% configured | Not run | Skipped |
+| Urban roughness case | Continuous | Missing | Missing | Missing | 20% configured | Not run | Skipped |
+| Rural roughness case | Continuous | Missing | Missing | Missing | 20% configured | Not run | Skipped |
 
 The configured 20% screening tolerance is enforced only after a case is complete and
 model-compatible. It is not evidence that 20% accuracy has been achieved. A published
@@ -118,8 +127,9 @@ minimum after tolerance; an exact-distance case uses absolute fractional differe
 
 ## Validation work required before GO
 
-1. Obtain authorized, reproducible comparison cases for ammonia railcar, chlorine
-   cylinder, continuous, and puff releases with all source-term and weather inputs.
+1. Obtain authorized, reproducible reference outputs for all eight registered cases:
+   ammonia railcar, chlorine cylinder, dense gas, neutral gas, low-wind stable,
+   moderate-wind neutral, urban roughness, and rural roughness.
 2. Document whether each reference used Gaussian or dense-gas behavior and map inputs
    without inference.
 3. Establish and review scenario-appropriate tolerance criteria before execution.

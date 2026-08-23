@@ -91,6 +91,17 @@ describe("plume runPlume", () => {
     expect(aegl1!.maxDownwindM).toBeGreaterThan(aegl2!.maxDownwindM);
   });
 
+  it("terminates non-truncated modeled contours at a solved zero-width downwind tip", () => {
+    const result = runPlume(inputs, { thresholds, maxRangeM: 5000 });
+    for (const zone of result.isopleths.filter((item) => !item.rangeTruncated && item.polygon.length)) {
+      const farthestX = Math.max(...zone.polygon.map(([x]) => x));
+      const farthestPoints = zone.polygon.filter(([x]) => Math.abs(x - farthestX) < 1e-6);
+      expect(farthestX).toBeCloseTo(zone.maxDownwindM, 6);
+      expect(farthestPoints.length).toBeGreaterThanOrEqual(2);
+      expect(farthestPoints.every(([, y]) => Math.abs(y) < 1e-6)).toBe(true);
+    }
+  });
+
   it("flags an isopleth that reaches the computational range boundary", () => {
     const result = runPlume({ ...inputs, releaseRateKgPerSec: 1000 }, { thresholds, maxRangeM: 100 });
     expect(result.isopleths.some((isopleth) => isopleth.rangeTruncated)).toBe(true);

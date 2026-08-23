@@ -66,8 +66,8 @@
     "warning": "Published ALOHA comparison candidate. ALOHA models an instantaneous heavy-gas direct source; the current Gaussian puff implementation requires an evaluation time, so no time value may be inferred from the 60-minute AEGL averaging duration."
   },
   {
-    "id": "published-continuous-release",
-    "category": "continuous-release",
+    "id": "published-neutral-gas-release",
+    "category": "neutral-gas",
     "chemical": {
       "id": null,
       "name": null,
@@ -98,8 +98,8 @@
     "warning": "Do not use this case for validation until published expected distances and source references are added."
   },
   {
-    "id": "published-puff-release",
-    "category": "puff-release",
+    "id": "published-dense-gas-release",
+    "category": "dense-gas",
     "chemical": {
       "id": null,
       "name": null,
@@ -128,5 +128,61 @@
     "expectedSource": null,
     "toleranceFraction": 0.2,
     "warning": "Do not use this case for validation until published expected distances and source references are added."
+  },
+  {
+    "id": "published-low-wind-stable-case",
+    "category": "low-wind-stable",
+    "chemical": { "id": null, "name": null, "molecularWeight": null },
+    "release": { "type": "continuous", "containerType": null, "releaseRateKgPerSec": null, "totalMassKg": null, "durationSec": null },
+    "weather": { "windSpeedMps": null, "windDirectionDeg": null, "temperatureC": null },
+    "stabilityClass": "F",
+    "surfaceRoughness": "rural",
+    "threshold": { "kind": null, "level": null, "valuePpm": null },
+    "expectedDistanceM": null,
+    "expectedSource": null,
+    "toleranceFraction": 0.2,
+    "warning": "Official ALOHA reference output unavailable; case must remain skipped and cannot count as validation."
+  },
+  {
+    "id": "published-moderate-wind-neutral-case",
+    "category": "moderate-wind-neutral",
+    "chemical": { "id": null, "name": null, "molecularWeight": null },
+    "release": { "type": "continuous", "containerType": null, "releaseRateKgPerSec": null, "totalMassKg": null, "durationSec": null },
+    "weather": { "windSpeedMps": null, "windDirectionDeg": null, "temperatureC": null },
+    "stabilityClass": "D",
+    "surfaceRoughness": "rural",
+    "threshold": { "kind": null, "level": null, "valuePpm": null },
+    "expectedDistanceM": null,
+    "expectedSource": null,
+    "toleranceFraction": 0.2,
+    "warning": "Official ALOHA reference output unavailable; case must remain skipped and cannot count as validation."
+  },
+  {
+    "id": "published-urban-roughness-case",
+    "category": "urban-roughness",
+    "chemical": { "id": null, "name": null, "molecularWeight": null },
+    "release": { "type": "continuous", "containerType": null, "releaseRateKgPerSec": null, "totalMassKg": null, "durationSec": null },
+    "weather": { "windSpeedMps": null, "windDirectionDeg": null, "temperatureC": null },
+    "stabilityClass": null,
+    "surfaceRoughness": "urban",
+    "threshold": { "kind": null, "level": null, "valuePpm": null },
+    "expectedDistanceM": null,
+    "expectedSource": null,
+    "toleranceFraction": 0.2,
+    "warning": "Official ALOHA reference output unavailable; case must remain skipped and cannot count as validation."
+  },
+  {
+    "id": "published-rural-roughness-case",
+    "category": "rural-roughness",
+    "chemical": { "id": null, "name": null, "molecularWeight": null },
+    "release": { "type": "continuous", "containerType": null, "releaseRateKgPerSec": null, "totalMassKg": null, "durationSec": null },
+    "weather": { "windSpeedMps": null, "windDirectionDeg": null, "temperatureC": null },
+    "stabilityClass": null,
+    "surfaceRoughness": "rural",
+    "threshold": { "kind": null, "level": null, "valuePpm": null },
+    "expectedDistanceM": null,
+    "expectedSource": null,
+    "toleranceFraction": 0.2,
+    "warning": "Official ALOHA reference output unavailable; case must remain skipped and cannot count as validation."
   }
 ]

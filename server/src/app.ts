@@ -30,8 +30,29 @@ import { runPlume } from "../../src/lib/model/plume.js";
 import { PlumeCalculationEvidence, PlumeInputs } from "../../src/lib/schema/plume.js";
 import { aeglThresholdBands, selectVerifiedAeglEndpoint } from "../../src/lib/model/plume-endpoints.js";
 import { determinePlumeStatus } from "../../src/lib/model/plume-status.js";
+import { PLUME_MODEL_MODES, plumeModelModeLabel } from "../../src/lib/model/plumeModelModes.js";
+import { selectPlumeModelFamily } from "../../src/lib/model/plumeModelSelector.js";
+import { validatePlumeWeather } from "../../src/lib/model/plumeWeatherValidation.js";
+import { validateSourceStrength } from "../../src/lib/model/sourceStrengthValidation.js";
 import { ERG_TABLE_1, getErgAdditionalTables, getErgContainerDistances } from "../../src/data/erg.js";
 import { molecularWeightOf } from "../../src/data/molecular-weight.js";
+
+const planningModelMode = PLUME_MODEL_MODES.HAZMATIQ_PLANNING_ESTIMATE;
+const ergModelMode = PLUME_MODEL_MODES.ERG_ISOLATION_PROTECTIVE_ACTION_OVERLAY;
+
+function numericValue(value: unknown): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  const match = String(value ?? "").match(/-?\d+(?:\.\d+)?/);
+  return match ? Number(match[0]) : null;
+}
+
+function plumeBlockedFields(display = "Cannot Plot — Missing Required Data") {
+  return {
+    modelMode: PLUME_MODEL_MODES.BLOCKED_MISSING_REQUIRED_DATA,
+    modelModeLabel: display,
+    confidenceLevel: "Insufficient Data",
+  };
+}
 
 const app = new Hono();
 app.use(logger());
@@ -446,6 +467,8 @@ app.get("/api/plume/availability", async (c) => {
     return c.json({
       error: "Chemical-specific plume guidance requires a verified Chemical Companion master link and CAS number.",
       display: "No Current Data Exists",
+      modelMode: PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS,
+      modelModeLabel: plumeModelModeLabel(PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS),
     }, 422);
   }
 
@@ -463,16 +486,22 @@ app.get("/api/plume/availability", async (c) => {
     return c.json({
       error: "Chemical Companion record has no verified canonical chemical/CAS link for plume modeling.",
       display: "No Current Data Exists",
+      modelMode: PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS,
+      modelModeLabel: plumeModelModeLabel(PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS),
     }, 422);
   }
 
-  const requestedDuration = Number(c.req.query("endpointDurationMinutes")) || 60;
+  const requestedDurationValue = Number(c.req.query("endpointDurationMinutes"));
+  const requestedDuration = ([10, 30, 60, 240, 480] as const)
+    .find((duration) => duration === requestedDurationValue) ?? 60;
   const endpoint = selectVerifiedAeglEndpoint(canonicalChemical.id, companionCas, requestedDuration);
   const ergOnlyRequested = c.req.query("ergOnly") === "true";
   if (endpoint && !ergOnlyRequested) {
     return c.json({
       mode: "aegl-plume",
       display: "AEGL / LOC Plume Model",
+      modelMode: planningModelMode,
+      modelModeLabel: plumeModelModeLabel(planningModelMode),
       endpointStatus: "Source-backed AEGL / LOC endpoint available; complete release and weather inputs are required.",
     });
   }
@@ -498,6 +527,8 @@ app.get("/api/plume/availability", async (c) => {
       return c.json({
         mode: "erg-protective-action",
         display: "ERG Initial Isolation / Protective Action Overlay",
+        modelMode: ergModelMode,
+        modelModeLabel: plumeModelModeLabel(ergModelMode),
         endpointStatus: "AEGL / LOC unavailable; using source-backed ERG distances.",
         plumeStatus: "ERG Protective Action Guide",
         modelStatus: "Not a modeled plume",
@@ -533,6 +564,8 @@ app.get("/api/plume/availability", async (c) => {
       ? "No Current ERG Isolation Distance Exists. Establish isolation using agency SOPs, field observations, monitoring, and Incident Command."
       : "No Current Data Exists. Establish isolation using agency SOPs, field observations, monitoring, and Incident Command.",
     display: "No Current Data Exists",
+    modelMode: PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS,
+    modelModeLabel: plumeModelModeLabel(PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS),
     endpointStatus: "No approved AEGL / LOC or ERG distance data is available.",
   });
 });
@@ -542,7 +575,7 @@ app.post("/api/plume/run", async (c) => {
   const body = await c.req.json().catch(() => null);
   const parsed = PlumeInputs.safeParse(body);
   if (!parsed.success) {
-    return c.json({ error: "invalid plume inputs", issues: parsed.error.issues }, 400);
+    return c.json({ error: "invalid plume inputs", issues: parsed.error.issues, ...plumeBlockedFields() }, 400);
   }
   const bodyRecord = body && typeof body === "object" ? body as Record<string, unknown> : {};
   const validatedModeRequested = bodyRecord.modelMode === "validated-operational"
@@ -552,6 +585,7 @@ app.post("/api/plume/run", async (c) => {
     return c.json({
       error: "Cannot mark plume output as independently validated. Published comparison cases, formula documentation, validation tolerances, and limitations are required.",
       display: "No Current Data Exists",
+      ...plumeBlockedFields(),
     }, 400);
   }
   const evidenceParsed = PlumeCalculationEvidence.safeParse(bodyRecord.calculationEvidence);
@@ -569,6 +603,9 @@ app.post("/api/plume/run", async (c) => {
     return c.json({
       error: "Chemical-specific plume guidance requires a verified Chemical Companion master link and CAS number.",
       display: "No Current Data Exists",
+      modelMode: PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS,
+      modelModeLabel: plumeModelModeLabel(PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS),
+      confidenceLevel: "Insufficient Data",
       plumeStatus: determinePlumeStatus({ hasChemicalLink: false, hasAeglEndpoint: false, hasWeather: true, hasReleaseInputs: true }),
     }, 422);
   }
@@ -586,6 +623,9 @@ app.post("/api/plume/run", async (c) => {
     return c.json({
       error: "Chemical Companion record has no verified canonical chemical/CAS link for plume modeling.",
       display: "No Current Data Exists",
+      modelMode: PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS,
+      modelModeLabel: plumeModelModeLabel(PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS),
+      confidenceLevel: "Insufficient Data",
       plumeStatus: determinePlumeStatus({ hasChemicalLink: false, hasAeglEndpoint: false, hasWeather: true, hasReleaseInputs: true }),
     }, 422);
   }
@@ -615,13 +655,19 @@ app.post("/api/plume/run", async (c) => {
       const protectiveActionMi = Number(ergRow[`${spillSize}Protective${period === "day" ? "Day" : "Night"}Mi`]);
       if (initialIsolationFt > 0 || protectiveActionMi > 0) {
         return c.json({
+          id: `erg-overlay-${masterChemicalId}-${Date.now()}`,
+          generatedAt: new Date().toISOString(),
           mode: "erg-protective-action",
           display: "ERG Initial Isolation / Protective Action Overlay",
+          modelMode: ergModelMode,
+          modelModeLabel: plumeModelModeLabel(ergModelMode),
+          confidenceLevel: "ERG Protective Action Guide",
           endpointStatus: "AEGL / LOC unavailable; using source-backed ERG distances.",
           plumeStatus: "ERG Protective Action Guide",
           modelStatus: "Not a modeled plume",
           validationStatus: "PHMSA ERG 2024 source-backed distance overlay",
           masterChemicalId,
+          releaseScenario: "ERG source-distance lookup; no dispersion source term calculated",
           inputs: {
             chemicalId: canonicalChemical.id,
             windDirDeg: inputs.windDirDeg,
@@ -633,6 +679,35 @@ app.post("/api/plume/run", async (c) => {
             casNumber: companionCas,
             sourceStatus: "Verified Chemical Companion Master Record",
           },
+          chemical: {
+            masterChemicalId,
+            canonicalChemicalId: canonicalChemical.id,
+            chemicalName: companionProfile.header.name,
+            casNumber: companionCas,
+            identityStatus: "Verified Chemical Companion Master Record",
+          },
+          sourceStrength: {
+            status: "No Current Data Exists",
+            sourceStrengthValue: null,
+            sourceStrengthUnits: "No Current Data Exists",
+            sourceStrengthMethod: "No dispersion calculation — source-backed ERG distance lookup",
+            missingInputs: [],
+            sourceStrengthLimitations: ["ERG distances are not calculated from operator-entered source strength."],
+          },
+          weather: {
+            status: Number.isFinite(inputs.windDirDeg) ? "Requires Review" : "Missing Required Inputs",
+            freshness: "Time Unknown",
+            windDirectionDeg: inputs.windDirDeg,
+            usableForPlanning: Number.isFinite(inputs.windDirDeg),
+            eligibleForValidatedModel: false,
+            limitations: ["ERG overlay orientation uses wind direction; verify current conditions."],
+          },
+          endpoint: {
+            endpointType: "ERG 2024 initial isolation / protective action",
+            endpointSource: "PHMSA Emergency Response Guidebook 2024 Table 1",
+            endpointStatus: "AEGL / LOC unavailable; using source-backed ERG distances.",
+          },
+          terrain: { status: "Not applied to ERG distance overlay", terrainAppliedToDispersion: false },
           ergOverlay: {
             un: ergRow.un,
             guide: ergRow.guide,
@@ -649,6 +724,20 @@ app.post("/api/plume/run", async (c) => {
             ],
           },
           isopleths: [],
+          threatZones: [],
+          zones: [],
+          mapOverlay: null,
+          validation: { validationStatus: "Not a modeled plume", alohaComparisonCasesPassed: false },
+          textSummary: `${companionProfile.header.name}: ERG isolation/protective-action overlay displayed because no verified AEGL/LOC endpoint is available. This rectangle is not a concentration plume.`,
+          assumptions: [`Operator selected ${spillSize} spill and ${period} condition.`],
+          fieldVerificationRequirements: [
+            "Verify chemical and UN/NA identity.", "Verify spill size and day/night condition.",
+            "Verify wind direction and establish boundaries with field monitoring and Incident Command.",
+          ],
+          disclaimers: [
+            "This is an ERG protective-action guide overlay, not a toxic concentration contour.",
+            "Verify with the current ERG, field observations, monitoring, agency SOPs, and Incident Command.",
+          ],
         });
       }
     }
@@ -656,6 +745,9 @@ app.post("/api/plume/run", async (c) => {
       mode: "no-distance-data",
       error: "No Current Data Exists. Establish isolation using agency SOPs, field observations, monitoring, and Incident Command.",
       display: "No Current Data Exists",
+      modelMode: PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS,
+      modelModeLabel: plumeModelModeLabel(PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS),
+      confidenceLevel: "Insufficient Data",
       endpointStatus: "No approved AEGL / LOC or ERG distance data is available.",
       plumeStatus: determinePlumeStatus({ hasChemicalLink: true, hasAeglEndpoint: false, hasWeather: true, hasReleaseInputs: true }),
     }, 422);
@@ -680,12 +772,107 @@ app.post("/api/plume/run", async (c) => {
   }
 
   const thresholds = aeglThresholdBands(endpoint);
+  const weather = validatePlumeWeather({
+    windSpeedMps: inputs.windSpeedMps,
+    windDirectionDeg: inputs.windDirDeg,
+    source: typeof bodyRecord.weatherSource === "string" ? bodyRecord.weatherSource : null,
+    sourceMode: typeof bodyRecord.weatherSourceMode === "string" ? bodyRecord.weatherSourceMode : null,
+    observationTime: typeof bodyRecord.weatherObservationTime === "string" ? bodyRecord.weatherObservationTime : null,
+  });
+  const sourceStrength = validateSourceStrength({
+    chemicalId: masterChemicalId,
+    releaseKind: inputs.releaseKind,
+    sourceType: typeof bodyRecord.sourceType === "string" ? bodyRecord.sourceType : null,
+    containerType: typeof bodyRecord.containerType === "string" ? bodyRecord.containerType : inputs.containerType,
+    containerCapacity: bodyRecord.containerCapacity as string | number | null,
+    releaseRateKgPerSec: inputs.releaseRateKgPerSec,
+    totalMassKg: inputs.totalMassKg,
+    releaseDurationSec: numericValue(bodyRecord.releaseDurationSec),
+    evaluationTimeSec: inputs.durationSec,
+    phase: typeof bodyRecord.releasePhase === "string" ? bodyRecord.releasePhase : null,
+    pressureCondition: typeof bodyRecord.pressureCondition === "string" ? bodyRecord.pressureCondition : null,
+    latitude: inputs.lat,
+    longitude: inputs.lng,
+    weatherAvailable: weather.usableForPlanning,
+  });
+  const vaporDensityAir = numericValue(companionProfile.properties.vaporDensity);
+  const modelSelection = selectPlumeModelFamily({
+    releaseKind: inputs.releaseKind,
+    sourceType: typeof bodyRecord.sourceType === "string" ? bodyRecord.sourceType : null,
+    vaporDensityAir,
+  });
 
   try {
     const result = runPlume(inputs, { thresholds, calculationEvidence });
+    const confidenceLevel = weather.status === "Requires Review" || modelSelection.status === "Requires Review"
+      ? "Requires Review"
+      : "Planning Only";
+    const assumptions = [...new Set([
+      ...modelSelection.assumptions,
+      "Chemical identity and AEGL endpoint are linked by exact Chemical Companion master record and CAS number.",
+      "Constant wind, stability, and roughness are applied across the displayed footprint.",
+      "Terrain elevation, buildings, chemical reactions, deposition, and topographic channeling are not calculated.",
+    ])];
+    const limitations = [...new Set([
+      ...result.limitations,
+      ...modelSelection.limitations,
+      ...sourceStrength.sourceStrengthLimitations,
+      ...weather.limitations,
+    ])];
+    const fieldVerificationRequirements = [
+      "Confirm chemical identity, CAS number, release phase, container, and source strength.",
+      "Verify wind speed, wind direction, observation source, and observation time at the incident.",
+      "Use field monitoring to establish and continuously reassess actual hot, warm, and cold zone boundaries.",
+      "Do not use this output alone to downgrade PPE or authorize offensive tactics.",
+    ];
     return c.json({
       ...result,
+      id: `plume-${masterChemicalId}-${Date.parse(result.computedAt)}`,
+      generatedAt: result.computedAt,
       mode: "aegl-plume",
+      modelMode: planningModelMode,
+      modelModeLabel: plumeModelModeLabel(planningModelMode),
+      modelFamily: modelSelection.modelFamily,
+      releaseScenario: sourceStrength.releaseScenario,
+      chemical: {
+        masterChemicalId,
+        canonicalChemicalId: canonicalChemical.id,
+        chemicalName: companionProfile.header.name,
+        casNumber: companionCas,
+        identityStatus: "Verified Chemical Companion Master Record",
+      },
+      sourceStrength,
+      weather,
+      terrain: {
+        status: "Flat-ground assumption",
+        elevationM: numericValue(bodyRecord.terrainElevationM),
+        terrainAppliedToDispersion: false,
+        surfaceRoughness: inputs.surfaceRoughness,
+        limitations: ["Elevation and topographic effects are recorded when available but are not applied to dispersion."],
+      },
+      threatZones: result.isopleths,
+      zones: result.isopleths,
+      mapOverlay: null,
+      validation: {
+        validationStatus: "Not independently validated",
+        alohaComparisonCasesPassed: false,
+        officialAlohaReferenceAvailable: false,
+        regressionStatus: "Run automated regression tests before release",
+      },
+      confidenceLevel,
+      assumptions,
+      limitations,
+      fieldVerificationRequirements,
+      disclaimers: [result.disclaimer, "Planning estimate only; verify with official modeling, field monitoring, agency SOPs, and Incident Command."],
+      alohaImport: {
+        status: "Not Configured",
+        display: "Official ALOHA Import: Not Configured",
+      },
+      liveMonitoring: {
+        configured: false,
+        behavior: "Recalculate after a material weather-input change; preserve prior result with timestamps.",
+        autoApplyTacticalChanges: false,
+      },
       plumeStatus: determinePlumeStatus({
         hasChemicalLink: true,
         hasAeglEndpoint: true,
@@ -700,6 +887,7 @@ app.post("/api/plume/run", async (c) => {
         sourceStatus: "Verified Chemical Companion Master Record",
       },
       endpoint,
+      textSummary: `${companionProfile.header.name} (${companionCas}) — ${sourceStrength.releaseScenario}; ${modelSelection.modelFamily}; EPA AEGL ${endpoint.selectedDurationMinutes}-minute endpoints. Output: ${plumeModelModeLabel(planningModelMode)} (${confidenceLevel}). Verify source strength and weather, and use field monitoring to establish actual boundaries.`,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "plume calculation blocked";
@@ -707,6 +895,7 @@ app.post("/api/plume/run", async (c) => {
     return c.json({
       error: message,
       display: "No Current Data Exists",
+      ...plumeBlockedFields(),
       plumeStatus: missingRelease
         ? determinePlumeStatus({ hasChemicalLink: true, hasAeglEndpoint: true, hasWeather: true, hasReleaseInputs: false })
         : "Not Independently Validated",

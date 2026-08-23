@@ -112,12 +112,43 @@ describe('normalizeChemicalProfile', () => {
     expect(queryChemicalProfile('Hydrazine')).toBeNull();
   });
 
+  it('loads the selected chemical NFPA 704 ratings from the companion NFPA tables', () => {
+    const profile = queryChemicalProfile(22);
+
+    expect(profile?.header.name).toBe('Chlorine');
+    expect(profile?.header.nfpa704).toMatchObject({
+      health: '4',
+      flammability: '0',
+      instability: '0',
+      special: 'OX',
+      source: 'Chemical Companion NFPA hazard record',
+    });
+  });
+
   it('populates the PPE Best Match from a known Kappler HazMatch suit record', () => {
     const profile = queryChemicalProfile(10);
 
     expect(profile?.header.name).toBe('Ammonia (anhydrous)');
     expect(profile?.ppeRespiratory.bestMatch).toMatch(/^Kappler USA, Inc\. — /);
     expect(profile?.ppeRespiratory.bestMatch).toContain('Frontline® 300');
+  });
+
+  it('attaches one export-ready source-backed PPE recommendation without deleting raw options', () => {
+    const profile = queryChemicalProfile(10);
+
+    expect(profile?.ppeRecommendation).toMatchObject({
+      chemicalId: 10,
+      chemicalName: 'Ammonia (anhydrous)',
+      selectedLevel: 'LEVEL_A_VAPOR_PROTECTIVE_SCBA',
+      displayLabel: 'Vapor Protective Level A w/ SCBA',
+      recommendationStatus: 'SOURCE_BACKED_RECOMMENDATION',
+      scbaRequired: true,
+      aprAllowed: false,
+      levelCAllowed: false,
+    });
+    expect(profile?.ppeRecommendation.sourcesReviewed).toEqual(expect.arrayContaining(['Chemical Companion', 'NIOSH', 'CAMEO', 'ERG']));
+    expect(profile?.ppeRecommendation.hiddenRawOptions.manufacturerMatches.length).toBeGreaterThan(0);
+    expect(profile?.ppeRespiratory.respiratorRecommendations.length).toBeGreaterThan(0);
   });
 
   it('fails closed when Kappler has no chemical-specific suit record', () => {
@@ -200,6 +231,7 @@ describe('normalizeChemicalProfile', () => {
       gloves: [{ Thickness: 'Nitrile' }],
       boots: [{ Thickness: 'Rubber' }],
       detectors: [{ detector_name: 'PID', type: 'PID' }],
+      nfpaHazards: [{ health: 3, flammability: 3, instability: 2, special: 'W' }],
       decon: [{ notes: 'Soap and water' }],
       protocols: [{ DecontaminationProtocol: 'Technical decon' }],
     });
@@ -218,6 +250,7 @@ describe('normalizeChemicalProfile', () => {
     expect(profile.detectors.items[0]).toContain('PID');
     expect(profile.reactivity.incompatibilities[0]).toBe('Oxidizers');
     expect(profile.isolationErg.ergGuide).toBe('132');
+    expect(profile.header.nfpa704).toMatchObject({ health: '3', flammability: '3', instability: '2', special: 'W' });
     expect(profile.sources).toEqual(expect.arrayContaining(['Chemical Companion']));
   });
 

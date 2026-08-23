@@ -4,7 +4,11 @@ import { describe, expect, it } from "vitest";
 const html = readFileSync(new URL("../server/public/index.html", import.meta.url), "utf8");
 const script = readFileSync(new URL("../server/public/script.js", import.meta.url), "utf8");
 const builder = readFileSync(new URL("../server/public/guided-response-decision-builder.js", import.meta.url), "utf8");
-const styles = readFileSync(new URL("../server/public/styles.css", import.meta.url), "utf8");
+const ppeEngine = readFileSync(new URL("../src/lib/ppe/ppeRecommendationEngine.ts", import.meta.url), "utf8");
+const styles = [
+  readFileSync(new URL("../server/public/styles.css", import.meta.url), "utf8"),
+  readFileSync(new URL("../server/public/chemical-intel.css", import.meta.url), "utf8"),
+].join("\n");
 const guidedHtml = html.slice(
   html.indexOf('<section id="guided-response"'),
   html.indexOf('<section id="my-chemicals"'),
@@ -15,17 +19,17 @@ const lookupHtml = html.slice(
 );
 
 describe("Guided Response workflow", () => {
-  it("uses the bright logo-free Chemical ID hero with live search controls", () => {
-    expect(styles).toContain('url("assets/chemical-id-search-background.png")');
+  it("uses the branded Chemical ID hero with live search controls", () => {
+    expect(styles).toContain('url("assets/chemical-id-search-background-v2.png")');
     expect(lookupHtml).toContain('class="chemical-id-search-content"');
     expect(lookupHtml).toContain('id="chemical-search"');
     expect(lookupHtml).toContain('id="chemical-lookup-btn"');
     expect(lookupHtml).toContain('id="save-my-chemical-btn"');
-    expect(lookupHtml).not.toContain("hazmatiq-logo");
+    expect(lookupHtml).toContain('assets/hazmatiq-logo-transparent.png');
     expect(styles).toContain(".layout:has(#lookup.active) #lookup.active");
-    expect(styles).toContain("grid-template-rows: minmax(clamp(420px, 52dvh, 600px), 1fr) auto auto;");
-    expect(styles).toContain(".layout:has(#lookup.active) .chemical-id-search-card");
-    expect(styles).toContain("height: 100%;");
+    expect(styles).toMatch(/\.layout:has\(#lookup\.active\) #lookup\.active\s*\{[^}]*flex-direction: column;/s);
+    expect(styles).toMatch(/\.layout:has\(#lookup\.active\) #lookup\.active > \.chemical-id-search-card[^}]*min-height: 280px;/s);
+    expect(styles).toMatch(/#lookup\.active:has\(#chemical-id-results:not\(\[hidden\]\)\) > #chemical-id-results[^}]*width: 100%;/s);
   });
 
   it("does not render a Sources bubble in the populated Chemical Profile header", () => {
@@ -34,6 +38,55 @@ describe("Guided Response workflow", () => {
       script.indexOf("metaItems.forEach"),
     );
     expect(metaItems).not.toContain("['Sources'");
+  });
+
+  it("places Synonyms and Notes to the right of Flammability in an equal Properties row", () => {
+    const properties = script.slice(
+      script.indexOf("{ key: 'properties'"),
+      script.indexOf("{ key: 'exposures'"),
+    );
+    expect(properties.indexOf("createProfileSection('Synonyms & Notes'")).toBeGreaterThan(
+      properties.indexOf("createProfileSection('Flammability & Energy'"),
+    );
+    expect(properties.indexOf("createProfileSection('Synonyms & Notes'")).toBeLessThan(
+      properties.indexOf("createProfileSection('Reactivity'"),
+    );
+    expect(styles).toMatch(/data-active-tab="properties"[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/s);
+    expect(styles).toContain('[data-section="synonyms-notes"]');
+    expect(styles).toMatch(/data-section="synonyms-notes"[^}]*grid-column: 3;/s);
+  });
+
+  it("uses bright white, enlarged Chemical Profile titles and field labels", () => {
+    expect(styles).toMatch(/chemical-profile-section h4[^}]*color: #fff;[^}]*font-size: 1\.05rem;[^}]*font-weight: 850;/s);
+    expect(styles).toMatch(/chemical-profile-row > span[^}]*chemical-profile-list-row strong[^}]*color: #fff;[^}]*font-size: 0\.88rem;[^}]*font-weight: 850;/s);
+    expect(styles).toMatch(/chemical-profile-meta-title[^}]*color: #fff;[^}]*font-size: 0\.7rem;[^}]*font-weight: 800;/s);
+  });
+
+  it("centers and emphasizes the Chemical Profile transport metadata", () => {
+    expect(script).toContain("['PPE Recommendation', profile?.ppeRecommendation?.displayLabel || noCurrentDataText]");
+    expect(script).not.toContain("['Hazard Class', formatHazardClassSummary");
+    expect(script).not.toContain("['Packing Group', profile?.header?.packingGroup");
+    expect(styles).toMatch(/chemical-profile-meta-item[^}]*display: grid;[^}]*grid-template-rows: auto minmax\(2\.4rem, 1fr\);/s);
+    expect(styles).toMatch(/data-field="un-na"[^}]*color: #ffd34f;[^}]*font-size: 1\.35rem;[^}]*font-weight: 900;/s);
+    expect(styles).toMatch(/data-field="erg-guide"[^}]*color: #ff8a1c;[^}]*font-size: 1\.35rem;[^}]*font-weight: 900;/s);
+    expect(styles).toMatch(/data-field="ppe-recommendation"[^}]*grid-column: span 2;/s);
+  });
+
+  it("provides green Guided Response and print/download profile actions", () => {
+    expect(styles).toMatch(/#open-guided-response-btn[^}]*border-color: #70d59b;[^}]*background: #2e7d4f;/s);
+    expect(html).toContain('id="profile-export-btn"');
+    expect(html).toContain('id="profile-print-btn"');
+    expect(html).toContain('id="profile-download-btn"');
+    expect(script).toContain('function printCurrentChemicalProfile()');
+    expect(script).toContain("document.body.classList.add('printing-chemical-profile')");
+    expect(script).toContain('exportCurrentChemicalProfile()');
+    expect(styles).toContain('body.printing-chemical-profile #chemical-id-results');
+  });
+
+  it("removes the Chemical ID subtitle and makes the Response reactivity profile full width", () => {
+    expect(lookupHtml).not.toContain('Powered by Chemical Companion');
+    expect(styles).toMatch(/data-active-tab="response"[^}]*data-section="reactivity-profile"[^}]*grid-column: 1 \/ -1;[^}]*width: 100%;/s);
+    expect(styles).toMatch(/data-section="reactivity-profile"[^}]*chemical-profile-grid[^}]*grid-template-columns: minmax\(0, 1fr\);/s);
   });
 
   it("places Guided Response immediately before Open Plume Model", () => {
@@ -80,7 +133,7 @@ describe("Guided Response workflow", () => {
 
   it("makes the upper-left HazMatIQ identity prominent and symmetrical", () => {
     expect(styles).toContain("width: clamp(265px, 26vw, 360px)");
-    expect(styles).toContain("font-size: clamp(1.85rem, 2.5vw, 2.4rem)");
+    expect(styles).toContain("font-size: clamp(2.35rem, 3.5vw, 3.25rem)");
     expect(styles).toContain("align-self: start");
     expect(styles).toContain("justify-self: start");
     expect(styles).toContain("text-align: center");
@@ -119,10 +172,9 @@ describe("Guided Response workflow", () => {
   });
 
   it("prioritizes a source-backed SCBA decision and omits manufacturer lists", () => {
-    expect(builder).toContain("const mandatoryScba = scbaFacts.filter");
+    expect(builder).toContain("const recommendation = profile.ppeRecommendation");
     expect(builder).toContain("'SCBA MANDATED'");
-    expect(builder).toContain("'SCBA STRONGLY INDICATED'");
-    expect(builder).toContain("'RESPIRATOR / CARTRIDGE SELECTION REQUIRES VERIFICATION'");
+    expect(builder).toContain("recommendation.scbaRequired");
     const renderer = script.slice(script.indexOf("function renderGuidedResponse()"), script.indexOf("const chemicalSearchForm"));
     expect(renderer).not.toContain("createGuidedManufacturerPanel");
     expect(renderer).not.toContain("respiratorRecommendations are not displayed");
@@ -130,16 +182,46 @@ describe("Guided Response workflow", () => {
 
   it("uses one fail-closed protection level and a controlled Level C cartridge status", () => {
     for (const level of [
-      "Level A Vapor Protective Suit",
-      "Level B Chemical Protective Suit",
-      "Level C Chemical Protective Suit",
-      "Level D / No chemical protective ensemble required",
+      "Vapor Protective Level A w/ SCBA",
+      "Level B w/ SCBA",
+      "Level C w/ APR — Appropriate Cartridge Required",
+      "Level D — No Chemical Protection Required",
       "Requires IC / HazMat Specialist Review",
-    ]) expect(builder).toContain(level);
-    expect(builder).toContain("const levels = explicitProtectionLevels(decisionFacts)");
-    expect(builder).toContain("levels.length > 1");
-    expect(builder).toContain("Cartridge selection requires verification with approved source data and agency SOP.");
-    expect(builder).toContain("Level C Chemical Protective Suit + APR/PAPR verification required");
+    ]) expect(ppeEngine).toContain(level);
+    expect(ppeEngine).toContain("failedLevelCChecks");
+    expect(ppeEngine).toContain("conditions.cartridgeVerified === true");
+    expect(ppeEngine).toContain("conditions.concentrationBelowLimits === true");
+    expect(script).toContain("const ppeLevelTiles");
+    expect(script).toContain("Source Details / Manufacturer Details");
+  });
+
+  it("uses the same concise PPE recommendation in Profile, Incident Dashboard, and Guided Response", () => {
+    const profilePpeRenderer = script.slice(
+      script.indexOf("{ key: 'ppeRespiratory'"),
+      script.indexOf("{ key: 'detectors'"),
+    );
+    const incidentPpeRenderer = script.slice(
+      script.indexOf('function buildIncidentPpeSummary'),
+      script.indexOf('function buildIncidentMedicalSummary'),
+    );
+    expect(profilePpeRenderer).toContain('createPpeRecommendationCard(profile?.ppeRecommendation)');
+    expect(profilePpeRenderer).not.toContain('recommendedPpe');
+    expect(profilePpeRenderer).not.toContain('respiratorRecommendations');
+    expect(incidentPpeRenderer).toContain('record?.profile?.ppeRecommendation');
+    expect(builder).toContain('profile.ppeRecommendation');
+    expect(script).toContain('ppeRecommendation: profile.ppeRecommendation');
+    expect(script).toContain('PPE recommendations are source-backed planning guidance');
+  });
+
+  it("renders exactly four PPE option tiles and keeps raw options collapsed", () => {
+    const tileDefinitions = script.slice(
+      script.indexOf('const ppeLevelTiles'),
+      script.indexOf('function appendPpeRecommendationList'),
+    );
+    expect(tileDefinitions.match(/'LEVEL_[A-D]_[^']+'/g)).toHaveLength(4);
+    expect(script).toContain("const rawDetails = document.createElement('details')");
+    expect(script).not.toContain('rawDetails.open = true');
+    expect(styles).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
   });
 
   it("keeps the Tactical Decision Flow Life Safety box compact and ordered", () => {
@@ -147,7 +229,7 @@ describe("Guided Response workflow", () => {
       script.indexOf("const lifeFlow = createTacticalFlowBox"),
       script.indexOf("const mitigationFlow = createTacticalFlowBox"),
     );
-    const labels = ["SCBA Decision", "Protection Level", "Direct Guidance", "Downgrade Conditions", "Cartridge Status"];
+    const labels = ["Is SCBA Mandated?", "Recommended Protection Level", "Why This Level", "Verify Before Entry", "Level C Status", "Direct Guidance", "Cartridge Status"];
     labels.forEach((label, index) => {
       expect(lifeFlow.indexOf(`label: '${label}'`)).toBeGreaterThan(index ? lifeFlow.indexOf(`label: '${labels[index - 1]}'`) : -1);
     });
