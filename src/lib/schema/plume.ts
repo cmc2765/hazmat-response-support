@@ -13,16 +13,16 @@ export const PlumeInputs = z.object({
   totalMassKg: z.number().positive().optional(),
   releaseRateKgPerSec: z.number().positive().optional(),
   durationSec: z.number().positive().optional(),
-  releaseHeightM: z.number().default(0),
+  releaseHeightM: z.number().nonnegative().default(0),
   windSpeedMps: z.number().positive(),
   windDirDeg: z.number().min(0).max(360),
   stabilityClass: StabilityClass,
   surfaceRoughness: z.enum(["urban", "rural"]).default("rural"),
-  tempC: z.number(),
+  tempC: z.number().gt(-273.15),
   rh: z.number().min(0).max(100).optional(),
   molecularWeight: z.number().positive().optional(),
-  lat: z.number().optional(),
-  lng: z.number().optional(),
+  lat: z.number().min(-90).max(90).optional(),
+  lng: z.number().min(-180).max(180).optional(),
   endpointDurationMinutes: z.union([
     z.literal(10), z.literal(30), z.literal(60), z.literal(240), z.literal(480),
   ]).optional(),
@@ -67,7 +67,7 @@ export type BaselinePlumeModelMetadata = z.infer<typeof BaselinePlumeModelMetada
 export const ThresholdBand = z.object({
   kind: z.enum(["AEGL", "ERPG", "TEEL"]),
   level: z.number().int().min(0).max(3),
-  valuePpm: z.number().nonnegative(),
+  valuePpm: z.number().positive(),
   label: z.string(),
   durationMinutes: z.number().positive().optional(),
   source: z.string().min(1).optional(),
@@ -77,7 +77,7 @@ export type ThresholdBand = z.infer<typeof ThresholdBand>;
 export const ThresholdBandMgM3 = z.object({
   kind: z.enum(["AEGL", "ERPG", "TEEL"]),
   level: z.number().int().min(0).max(3),
-  valueMgM3: z.number().nonnegative(),
+  valueMgM3: z.number().positive(),
   label: z.string(),
 });
 export type ThresholdBandMgM3 = z.infer<typeof ThresholdBandMgM3>;

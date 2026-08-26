@@ -4,6 +4,7 @@ export const PLUME_WEATHER_FRESHNESS = [
   "Stale",
   "Expired",
   "Time Unknown",
+  "Future / Invalid",
 ] as const;
 
 export type PlumeWeatherFreshness = typeof PLUME_WEATHER_FRESHNESS[number];
@@ -36,11 +37,13 @@ export function plumeWeatherFreshness(observationTime?: string | null, now: stri
   const observed = Date.parse(String(observationTime || ""));
   const current = now instanceof Date ? now.getTime() : Date.parse(now);
   if (!Number.isFinite(observed) || !Number.isFinite(current)) return { status: "Time Unknown", ageMinutes: null };
-  const ageMinutes = Math.max(0, (current - observed) / 60_000);
-  if (ageMinutes <= 10) return { status: "Current", ageMinutes };
-  if (ageMinutes <= 30) return { status: "Recent / Verify", ageMinutes };
-  if (ageMinutes <= 60) return { status: "Stale", ageMinutes };
-  return { status: "Expired", ageMinutes };
+  const ageMinutes = (current - observed) / 60_000;
+  if (ageMinutes < -5) return { status: "Future / Invalid", ageMinutes };
+  const nonnegativeAgeMinutes = Math.max(0, ageMinutes);
+  if (nonnegativeAgeMinutes <= 10) return { status: "Current", ageMinutes: nonnegativeAgeMinutes };
+  if (nonnegativeAgeMinutes <= 30) return { status: "Recent / Verify", ageMinutes: nonnegativeAgeMinutes };
+  if (nonnegativeAgeMinutes <= 60) return { status: "Stale", ageMinutes: nonnegativeAgeMinutes };
+  return { status: "Expired", ageMinutes: nonnegativeAgeMinutes };
 }
 
 export function validatePlumeWeather(input: PlumeWeatherValidationInput): PlumeWeatherValidationResult {
@@ -50,17 +53,20 @@ export function validatePlumeWeather(input: PlumeWeatherValidationInput): PlumeW
   const validWindSpeed = typeof input.windSpeedMps === "number" && Number.isFinite(input.windSpeedMps) && input.windSpeedMps > 0;
   const validWindDirection = typeof input.windDirectionDeg === "number"
     && Number.isFinite(input.windDirectionDeg) && input.windDirectionDeg >= 0 && input.windDirectionDeg <= 360;
-  const hasSource = Boolean(input.source?.trim());
+  const source = input.source?.trim() || "";
+  const hasSource = Boolean(source) && !/^(no current data exists|unavailable|unknown|not available)$/i.test(source);
   if (validWindSpeed) providedInputs.push("windSpeedMps"); else missingInputs.push("windSpeedMps");
   if (validWindDirection) providedInputs.push("windDirectionDeg"); else missingInputs.push("windDirectionDeg");
   if (hasSource) providedInputs.push("weatherSource"); else missingInputs.push("weatherSource");
 
   const manual = /manual/i.test(input.sourceMode || "") || /manual/i.test(input.source || "");
   const freshness = plumeWeatherFreshness(input.observationTime, input.now);
-  if (input.observationTime) providedInputs.push("observationTime");
-  else if (!manual) missingInputs.push("observationTime");
+  const hasUsableObservationTime = !["Time Unknown", "Future / Invalid"].includes(freshness.status);
+  if (hasUsableObservationTime) providedInputs.push("observationTime");
+  else missingInputs.push("observationTime");
   const windComplete = validWindSpeed && validWindDirection;
-  const usableForPlanning = windComplete;
+  const usableForPlanning = windComplete && hasSource && hasUsableObservationTime
+    && freshness.status !== "Expired";
   const eligibleForValidatedModel = windComplete && hasSource && !manual
     && ["Current", "Recent / Verify"].includes(freshness.status);
   const limitations = [
@@ -68,9 +74,10 @@ export function validatePlumeWeather(input: PlumeWeatherValidationInput): PlumeW
     freshness.status === "Time Unknown" ? "Weather observation time is unknown." : "",
     freshness.status === "Stale" ? "Weather is stale and may be used only for a planning estimate." : "",
     freshness.status === "Expired" ? "Weather is expired and requires replacement or Incident Command review." : "",
+    freshness.status === "Future / Invalid" ? "Weather observation time is implausibly in the future." : "",
     manual ? "Manual weather may be used only for a planning estimate." : "",
   ].filter(Boolean);
-  const status = !windComplete
+  const status = !windComplete || !hasSource || !hasUsableObservationTime
     ? "Missing Required Inputs"
     : eligibleForValidatedModel
       ? "Complete"

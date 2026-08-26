@@ -62,4 +62,9 @@ describe("ChemCompare workspace", () => {
     expect(styles).toContain(".chemical-action-button.chem-compare");
     expect(styles).toMatch(/\.chemcompare-label\s*\{[^}]*background: #eadcae;[^}]*color: #111;/s);
   });
+
+  it("renders compared chemical names in dark navy on a high-contrast light background", () => {
+    expect(styles).toMatch(/\.chemcompare-summary-heading h3\s*\{[^}]*background: #d7dce1;[^}]*color: #071f36;/s);
+    expect(styles).toMatch(/\.chemcompare-value-title\s*\{[^}]*background: #d7dce1;[^}]*color: #071f36;/s);
+  });
 });

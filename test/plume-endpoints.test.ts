@@ -3,7 +3,7 @@ import { aeglThresholdBands, selectVerifiedAeglEndpoint } from "@/lib/model/plum
 import { determinePlumeStatus } from "@/lib/model/plume-status";
 
 describe("verified EPA AEGL endpoint selection", () => {
-  it("requires an exact canonical chemical ID and CAS match", () => {
+  it("requires canonical identity and CAS instead of inheriting an endpoint by CAS alone", () => {
     expect(selectVerifiedAeglEndpoint("ammonia", "7664-41-7", 60)).toMatchObject({
       endpointSource: "EPA AEGL",
       endpointStatus: "Final",
@@ -16,6 +16,8 @@ describe("verified EPA AEGL endpoint selection", () => {
     expect(selectVerifiedAeglEndpoint("ammonia", "7782-50-5", 60)).toBeNull();
     expect(selectVerifiedAeglEndpoint("Ammonia, anhydrous", "7664-41-7", 60)).toBeNull();
     expect(selectVerifiedAeglEndpoint("1005", "7664-41-7", 60)).toBeNull();
+    expect(selectVerifiedAeglEndpoint("ammonia", "7664-41-7", 60, "10")).toMatchObject({ aegl2: 160 });
+    expect(selectVerifiedAeglEndpoint("ammonia", "7664-41-7", 60, "999")).toBeNull();
   });
 
   it("does not infer an unsupported duration and maps levels 3/2/1", () => {
@@ -42,6 +44,30 @@ describe("verified EPA AEGL endpoint selection", () => {
       aegl3: 4.4,
     });
     expect(selectVerifiedAeglEndpoint("hydrazine", "57-14-7", 60)).toBeNull();
+  });
+
+  it("selects final EPA endpoints for supported toxic inhalation hazards", () => {
+    expect(selectVerifiedAeglEndpoint("hydrogen-sulfide", "7783-06-4", 60)).toMatchObject({
+      aegl1: 0.51, aegl2: 27, aegl3: 50,
+    });
+    expect(selectVerifiedAeglEndpoint("sulfur-dioxide", "7446-09-5", 480)).toMatchObject({
+      aegl1: 0.2, aegl2: 0.75, aegl3: 9.6,
+    });
+  });
+
+  it("links anhydrous hydrogen chloride to final EPA AEGL values without leaking them to the solution master", () => {
+    expect(selectVerifiedAeglEndpoint("anhydrous-hydrogen-chloride", "7647-01-0", 60, "56")).toMatchObject({
+      endpointSource: "EPA AEGL",
+      endpointStatus: "Final",
+      sourceUrlOrCitationKey: "https://www.epa.gov/aegl/hydrogen-chloride-results-aegl-program",
+      selectedDurationMinutes: 60,
+      aegl1: 1.8,
+      aegl2: 22,
+      aegl3: 100,
+      units: "ppm",
+    });
+    expect(selectVerifiedAeglEndpoint("hydrochloric-acid", "7647-01-0", 60, "965")).toBeNull();
+    expect(selectVerifiedAeglEndpoint("Hydrogen Chloride, anhydrous", "7647-01-0", 60)).toBeNull();
   });
 });
 

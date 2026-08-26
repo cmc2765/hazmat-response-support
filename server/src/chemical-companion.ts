@@ -3,6 +3,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ALL_NPG } from '../../src/data/all-npg.js';
 import { CHEMICALS } from '../../src/data/chemicals.js';
+import {
+  REVIEWED_TRANSPORTATION_LINKS,
+  REVIEWED_MASTER_ALIASES,
+  reviewedSourceLinksForMaster,
+} from './chemical-companion/reviewed-source-links.js';
 import { buildPpeRecommendation } from '../../src/lib/ppe/ppeRecommendationEngine.js';
 import {
   SAFETY_DATA_STATUS,
@@ -86,7 +91,7 @@ function relatedStrings(value: unknown): string[] {
     if (typeof item === 'string') return asList(item);
     if (!item || typeof item !== 'object') return [];
     return Object.entries(item as Record<string, unknown>)
-      .filter(([key, field]) => !/^(chemical|revision|.*id$)/i.test(key) && field !== null && field !== '')
+      .filter(([key, field]) => !/^(?:chemicalid|revision(?:_id)?|.*id)$/i.test(key) && field !== null && field !== '')
       .flatMap(([, field]) => asList(field));
   });
 }
@@ -101,6 +106,66 @@ function available(values: string[]): string[] {
 
 function cleanDeconText(value: unknown): string {
   return normalizeValue(value).replace(/,\s*\d+\s*$/, '').trim();
+}
+
+function deconStateKinds(physicalStates: string[]): Set<string> {
+  const kinds = new Set<string>();
+  physicalStates.forEach((state) => {
+    if (/solid/i.test(state)) kinds.add('solid');
+    if (/liquid/i.test(state)) kinds.add('liquid');
+    if (/gas|vapor/i.test(state)) kinds.add('gas');
+  });
+  return kinds;
+}
+
+function deconRowMatchesPhysicalState(row: Record<string, unknown>, physicalStates: string[]): boolean {
+  const kinds = deconStateKinds(physicalStates);
+  if (!kinds.size) return true;
+  const state = String(row.state ?? '');
+  return (kinds.has('solid') && /solid/i.test(state))
+    || (kinds.has('liquid') && /liquid/i.test(state))
+    || (kinds.has('gas') && /gas/i.test(state));
+}
+
+function deconMethodOrder(method: string): number {
+  // This is presentation order, not an invented effectiveness ranking. The
+  // database supplies applicable routes but does not assign preference scores.
+  if (/water\s*\/\s*detergent/i.test(method)) return 0;
+  if (/^water$/i.test(method)) return 1;
+  if (/^dry$/i.test(method)) return 2;
+  if (/^air$/i.test(method)) return 8;
+  if (/no decon/i.test(method)) return 9;
+  return 4;
+}
+
+function deconMatrixSummary(rows: Record<string, unknown>[], physicalStates: string[], target: 'People' | 'Objects'): string[] {
+  const scoped = rows.filter((row) => new RegExp(target, 'i').test(String(row.type ?? '')) && deconRowMatchesPhysicalState(row, physicalStates));
+  const grouped = new Map<string, string[]>();
+  scoped.forEach((row) => {
+    const state = normalizeValue(row.state);
+    const method = cleanDeconText(row.method);
+    if (state === 'Not available' || method === 'Not available') return;
+    grouped.set(state, [...new Set([...(grouped.get(state) ?? []), method])]);
+  });
+  return [...grouped.entries()].map(([state, methods]) => {
+    const ordered = [...methods].sort((a, b) => deconMethodOrder(a) - deconMethodOrder(b) || a.localeCompare(b));
+    return `${state} — ${target}: ${ordered.join(' / ')}`;
+  });
+}
+
+function technicalDeconSteps(rows: Record<string, unknown>[], physicalStates: string[]): string[] {
+  return rows
+    .filter((row) => /objects/i.test(String(row.type ?? '')) && deconRowMatchesPhysicalState(row, physicalStates))
+    .map((row) => {
+      const method = cleanDeconText(row.method);
+      const information = cleanDeconText(row.method_info);
+      const notes = cleanDeconText(row.notes);
+      const stateNotes = cleanDeconText(row.state_notes);
+      const process = [information, notes].filter((value) => value !== 'Not available').join('; ')
+        || 'Process detail unavailable from current source';
+      const context = stateNotes === 'Not available' ? '' : `; State context: ${stateNotes}`;
+      return `${normalizeValue(row.state)} — ${method}: ${process}${context}`;
+    });
 }
 
 function formatPpeRow(kind: string, row: Record<string, unknown>): string {
@@ -381,13 +446,12 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
     runoffConcerns: available(persistence),
   };
 
-  const directDeconMethods = deconRows
-    .map((row: Record<string, unknown>) => cleanDeconText(row.method))
-    .filter((value: string) => value !== 'Not available');
+  const personnelDeconMatrix = deconMatrixSummary(deconRows, physicalStates, 'People');
+  const objectDeconMatrix = deconMatrixSummary(deconRows, physicalStates, 'Objects');
   const decon = {
-    preferredMethod: safetyDisplayValue(directDeconMethods[0]),
-    hazmatPersonnelProcedure: available(deconNotes),
-    wetVsDry: available(deconRows.map((row: Record<string, unknown>) => {
+    preferredMethod: available(personnelDeconMatrix),
+    hazmatPersonnelProcedure: available([...personnelDeconMatrix, ...deconNotes]),
+    wetVsDry: available(deconRows.filter((row: Record<string, unknown>) => deconRowMatchesPhysicalState(row, physicalStates)).map((row: Record<string, unknown>) => {
       const method = cleanDeconText(row.method);
       const note = cleanDeconText(row.notes);
       return `${normalizeValue(row.state)} — ${normalizeValue(row.type)}: ${method}${note !== 'Not available' ? ` (${note})` : ''}`;
@@ -396,14 +460,19 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
     grossDecon: available(deconNotes),
     technicalDecon: available([
       ...protocols.flatMap((row: Record<string, unknown>) => [normalizeValue(row.DecontaminationProtocol), normalizeValue(row.DecontaminationProtocolInfo)]),
-      ...deconRows.map((row: Record<string, unknown>) => cleanDeconText(row.notes)),
+      ...objectDeconMatrix,
+      ...technicalDeconSteps(deconRows, physicalStates),
     ]),
     patientVictimDecon: available(deconNotes),
-    equipmentDecon: available(deconRows.filter((row: Record<string, unknown>) => /objects/i.test(String(row.type ?? ''))).flatMap((row: Record<string, unknown>) => [cleanDeconText(row.method), cleanDeconText(row.notes)])),
+    equipmentDecon: available([
+      ...objectDeconMatrix,
+      ...technicalDeconSteps(deconRows, physicalStates),
+    ]),
     runoffContainment: available(relatedStrings(relatedData.deconRunoffContainment)),
     sourceBasis: available([
       deconRows.length ? 'Chemical Companion decontamination method matrix' : '',
       deconNotes.length ? 'Chemical Companion decontamination notes' : '',
+      protocols.length ? 'Chemical Companion decontamination protocols' : '',
     ]),
   };
 
@@ -610,7 +679,7 @@ type SearchRecord = {
   CasNumber: string; UnnaNumber: string; IdentifierType: 'UN' | 'NA'; ErgNumber: string;
   HazardClass: string; matchTerms: string[]; synonyms: string[]; sourceIdentifierId?: number;
   recordType: 'master-chemical' | 'transportation-identifier';
-  reviewStatus: 'master-record' | 'requires_review';
+  reviewStatus: 'master-record' | 'approved' | 'requires_review';
   guidanceEligible: boolean;
   sourceBadges: string[];
   masterChemicalId?: number;
@@ -754,14 +823,20 @@ export function rebuildCompanionSearchIndex() {
 
     const records: SearchRecord[] = chemicals.map((row) => {
       const id = Number(row.ChemicalID);
-      const synonyms = [...new Set([...asList(row.EmbeddedSynonyms), ...(synonymsById.get(id) ?? [])])];
+      const reviewedAliases = REVIEWED_MASTER_ALIASES.find((link) => link.masterChemicalId === id
+        && link.casNumber === String(row.CasNumber).trim())?.aliases ?? [];
+      const synonyms = [...new Set([...asList(row.EmbeddedSynonyms), ...(synonymsById.get(id) ?? []), ...reviewedAliases])];
+      const linkedSources = reviewedSourceLinksForMaster(id);
+      const linkedSourceBadges = linkedSources.map((link) => link.sourceName === 'EPA AEGL'
+        ? 'Linked EPA AEGL'
+        : link.sourceName === 'CAMEO Chemicals' ? 'Linked CAMEO' : link.sourceName === 'ERG' ? 'Linked ERG' : '');
       return {
-        ChemicalID: id, ChemicalName: String(row.ChemicalName), PrimaryChemicalName: String(row.ChemicalName),
+        ChemicalID: id, ChemicalName: String(row.ChemicalName).trim(), PrimaryChemicalName: String(row.ChemicalName).trim(),
         CasNumber: String(row.CasNumber), UnnaNumber: normalizeTransportationIdentifier(row.UnnaNumber) ?? String(row.UnnaNumber),
         IdentifierType: 'UN', ErgNumber: String(row.ErgNumber ?? ''), HazardClass: String(row.HazardClass ?? ''),
         matchTerms: [String(row.ChemicalName), String(row.CasNumber), String(row.UnnaNumber), ...synonyms], synonyms,
         recordType: 'master-chemical', reviewStatus: 'master-record', guidanceEligible: true,
-        sourceBadges: ['Chemical Companion Master'],
+        sourceBadges: ['Chemical Companion Master', ...linkedSourceBadges.filter(Boolean)],
       };
     });
     const transportationIdentifiers = new Set<string>();
@@ -769,15 +844,28 @@ export function rebuildCompanionSearchIndex() {
       const un = normalizeTransportationIdentifier(item.unna);
       if (!un) continue;
       transportationIdentifiers.add(un);
+      const reviewedLink = REVIEWED_TRANSPORTATION_LINKS.find((link) => link.sourceIdentifierId === Number(item.id)
+        && link.identifierValue === un
+        && normalizeSearchText(link.properShippingName) === normalizeSearchText(item.proper_shipping_name));
       records.push({
         ChemicalID: null, ChemicalName: String(item.proper_shipping_name),
-        PrimaryChemicalName: 'Transportation identifier requires review',
+        PrimaryChemicalName: reviewedLink ? String(item.proper_shipping_name).trim() : 'Transportation identifier requires review',
         ProperShippingName: String(item.proper_shipping_name), CasNumber: 'Not available', UnnaNumber: un,
         IdentifierType: 'UN', ErgNumber: String(item.guide_text_number ?? ''),
         HazardClass: 'Not available', sourceIdentifierId: Number(item.id),
         matchTerms: [String(item.proper_shipping_name), un, `UN ${un}`, `NA ${un}`], synonyms: [],
         recordType: 'transportation-identifier', reviewStatus: 'requires_review', guidanceEligible: false,
-        sourceBadges: ['Transportation Identifier', 'Linked ERG', 'Requires Review'],
+        sourceBadges: reviewedLink
+          ? ['Transportation Identifier', 'Linked ERG']
+          : ['Transportation Identifier', 'Linked ERG', 'Requires Review'],
+        ...(reviewedLink ? {
+          reviewStatus: 'approved' as const,
+          masterChemicalId: reviewedLink.masterChemicalId,
+          linkType: reviewedLink.linkType,
+          linkReviewStatus: reviewedLink.reviewStatus,
+          reviewedBy: reviewedLink.reviewedBy,
+          reviewedAt: reviewedLink.reviewedAt,
+        } : {}),
       });
     }
     searchIndex = records;
@@ -791,8 +879,8 @@ export function rebuildCompanionSearchIndex() {
       importedAliasTotal: [...synonymsById.values()].reduce((sum, values) => sum + values.length, 0),
       searchIndexTotal: records.length,
       transportationIdentifierTotal: transportationIdentifiers.size,
-      reviewedTransportationLinkTotal: 0,
-      unlinkedTransportationIdentifiers: transportationIdentifiers.size,
+      reviewedTransportationLinkTotal: REVIEWED_TRANSPORTATION_LINKS.length,
+      unlinkedTransportationIdentifiers: Math.max(0, transportationIdentifiers.size - REVIEWED_TRANSPORTATION_LINKS.length),
     };
     if (process.env.NODE_ENV !== 'production') console.info('[chemical-companion] development diagnostics', diagnostics);
     return diagnostics;
@@ -816,7 +904,9 @@ export function searchCompanionChemicals(query: string) {
     if (exactTransportation && row.UnnaNumber === exactTransportation) {
       [rank, matchReason] = row.recordType === 'master-chemical'
         ? [0, `Exact Chemical Companion master ${row.IdentifierType} number`]
-        : [1, `Exact ${row.IdentifierType} transportation identifier · Requires Review`];
+        : [1, hasApprovedMasterLink(row)
+          ? `Exact reviewed ${row.IdentifierType} transportation identifier`
+          : `Exact ${row.IdentifierType} transportation identifier · Requires Review`];
     }
     else if (exactTransportation) return { ...row, rank, matchReason };
     else if (exactCas && normalizeCasIdentifier(row.CasNumber) === exactCas && !row.ProperShippingName) [rank, matchReason] = [1, 'Exact CAS number'];
@@ -824,7 +914,8 @@ export function searchCompanionChemicals(query: string) {
     else if (name === term && row.recordType === 'master-chemical') [rank, matchReason] = [2, 'Exact Chemical Companion master name'];
     else if (primaryName === term && row.recordType === 'master-chemical') [rank, matchReason] = [2, 'Exact Chemical Companion master name'];
     else if (row.synonyms.map(normalizeSearchText).includes(term) && row.recordType === 'master-chemical') [rank, matchReason] = [3, 'Exact master synonym'];
-    else if (name === term && row.recordType === 'transportation-identifier') [rank, matchReason] = [8, 'Exact transportation shipping name · Requires Review'];
+    else if (name === term && row.recordType === 'transportation-identifier') [rank, matchReason] = [8,
+      hasApprovedMasterLink(row) ? 'Exact reviewed transportation shipping name' : 'Exact transportation shipping name · Requires Review'];
     else if (sortedSearchWords(name) === sortedSearchWords(term)) [rank, matchReason] = [row.recordType === 'master-chemical' ? 4 : 8, 'Normalized exact word match'];
     else if (name.startsWith(term)) [rank, matchReason] = [row.recordType === 'master-chemical' ? 5 : 9, 'Name starts with query'];
     else if (terms.some((value) => value.includes(term)) && words.every((word) => terms.some((value) => value.includes(word)))) [rank, matchReason] = [row.recordType === 'master-chemical' ? 7 : 10, 'Identifier or alias contains query'];

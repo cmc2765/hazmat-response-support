@@ -10,6 +10,10 @@ import { FACILITIES } from "../../src/data/facilities.js";
 import { THRESHOLDS } from "../../src/data/thresholds.js";
 import { ERG_TABLE_1 } from "../../src/data/erg.js";
 import { MOLECULAR_WEIGHTS } from "../../src/data/molecular-weight.js";
+import {
+  REVIEWED_CHEMICAL_SOURCE_LINKS,
+  REVIEWED_TRANSPORTATION_LINKS,
+} from "./chemical-companion/reviewed-source-links.js";
 
 const db = getDb();
 
@@ -35,6 +39,59 @@ async function seed() {
     });
   }
   console.log(`[seed] chemicals: ${ALL_CHEMICALS.length} upserted`);
+
+  // Reviewed identity links are additive provenance records. They do not alter
+  // Chemical Companion master values or collapse distinct material forms.
+  for (const link of REVIEWED_CHEMICAL_SOURCE_LINKS) {
+    await db.insert(schema.chemicalSourceLinks).values({
+      masterChemicalId: link.masterChemicalId,
+      sourceName: link.sourceName,
+      sourceRecordId: link.sourceRecordId,
+      sourceIdentifierType: link.sourceIdentifierType,
+      sourceIdentifierValue: link.sourceIdentifierValue,
+      matchBasis: link.matchBasis,
+      confidence: "verified",
+      reviewStatus: link.reviewStatus,
+      sourceVersion: "reviewed 2026-08-24",
+      importedAt: "2026-08-24",
+      notes: `Source URL: ${link.sourceUrl}`,
+    }).onConflictDoUpdate({
+      target: [schema.chemicalSourceLinks.masterChemicalId, schema.chemicalSourceLinks.sourceName, schema.chemicalSourceLinks.sourceRecordId],
+      set: { reviewStatus: link.reviewStatus, matchBasis: link.matchBasis, notes: `Source URL: ${link.sourceUrl}` },
+    });
+  }
+
+  for (const link of REVIEWED_TRANSPORTATION_LINKS) {
+    const [identifier] = await db.insert(schema.transportationIdentifiers).values({
+      identifierType: "UN",
+      identifierValue: link.identifierValue,
+      normalizedIdentifierValue: link.identifierValue,
+      properShippingName: link.properShippingName,
+      ergGuide: link.ergGuide,
+      source: "Chemical Companion ERG",
+      sourceRecordId: `shipping:${link.sourceIdentifierId}`,
+      sourceStatus: "verified",
+      reviewStatus: link.reviewStatus,
+      notes: link.notes,
+    }).onConflictDoUpdate({
+      target: [schema.transportationIdentifiers.source, schema.transportationIdentifiers.sourceRecordId],
+      set: { reviewStatus: link.reviewStatus, notes: link.notes },
+    }).returning({ id: schema.transportationIdentifiers.id });
+    await db.insert(schema.chemicalTransportLinks).values({
+      masterChemicalId: link.masterChemicalId,
+      transportationIdentifierId: identifier.id,
+      linkType: link.linkType,
+      confidence: "verified",
+      reviewStatus: link.reviewStatus,
+      reviewedBy: link.reviewedBy,
+      reviewedAt: link.reviewedAt,
+      notes: link.notes,
+    }).onConflictDoUpdate({
+      target: [schema.chemicalTransportLinks.masterChemicalId, schema.chemicalTransportLinks.transportationIdentifierId],
+      set: { reviewStatus: link.reviewStatus, reviewedBy: link.reviewedBy, reviewedAt: link.reviewedAt, notes: link.notes },
+    });
+  }
+  console.log(`[seed] reviewed chemical/source links: ${REVIEWED_CHEMICAL_SOURCE_LINKS.length}; transport links: ${REVIEWED_TRANSPORTATION_LINKS.length}`);
 
   // ─── NPG ──────────────────────────────────────────────────────────────
   for (const n of NPG) {

@@ -88,7 +88,7 @@ describe("Chemical Profile UI system", () => {
   });
 
   it("includes the complete profile workflow and hero actions", () => {
-    for (const tab of ["Overview", "Properties", "Exposures", "PPE & Monitoring", "Response", "Medical", "Decon", "Sources"]) {
+    for (const tab of ["Overview", "Properties", "Exposure", "PPE", "Response", "Medical", "Decon", "Sources"]) {
       expect(script).toContain(`['${tab}'`);
     }
     for (const actionId of ["open-guided-response-btn", "open-plume-btn", "profile-save-chemical-btn", "chemical-profile-back-btn"]) {
@@ -101,10 +101,10 @@ describe("Chemical Profile UI system", () => {
     expect(script).toContain("createProfileSection('AEGL Values', groupedAeglProfileEntries(");
   });
 
-  it("uses yellow selection, matte cards, and the non-railcar bundled search asset", () => {
+  it("uses yellow selection, matte cards, and the correctly configured PPE hero asset", () => {
     expect(styles).toMatch(/\.chemical-profile-tab\.active\s*\{[^}]*background: #f6c343;/s);
     expect(styles).toContain("Chemical Profile visual system");
-    expect(styles).toContain('url("assets/chemical-id-search-background-v2.png")');
+    expect(styles).toContain('url("assets/hazard-id-level-b-hero-v2.png")');
   });
 
   it("keeps the dashboard shell and stacks the full-width profile below search", () => {
@@ -134,8 +134,22 @@ describe("Chemical Profile UI system", () => {
     }
     expect(detectors).not.toContain("profile?.detectors?.items");
     expect(medical).not.toContain("createProfileSection('Source Status'");
-    expect(decon).toContain("createProfileSection('Decontamination guidance'");
+    expect(decon).toContain("createProfileSection('Personnel / Product Decon'");
+    expect(decon).toContain("createProfileSection('Technical Decon'");
+    expect(decon).toContain('createHybridDeconLink()');
     expect(decon).not.toContain("createProfileSection('Decon layers'");
+    expect(styles).toMatch(/data-active-tab="decon"[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/s);
+    expect(script).toContain('Consider FirstLine Hybrid Decon only when product-specific guidance is available');
+  });
+
+  it("orders Medical chronologically in an equal Routes/Symptoms and Treatment split", () => {
+    const medical = script.slice(script.indexOf("{ key: 'medical'"), script.indexOf("{ key: 'fire'"));
+    expect(medical.indexOf("createProfileSection('Routes and symptoms'")).toBeLessThan(medical.indexOf("createProfileSection('Treatment'"));
+    expect(styles).toMatch(/data-active-tab="medical"[^}]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/s);
+    expect(styles).toContain('data-section="routes-and-symptoms"] { grid-column: 1;');
+    expect(styles).toContain('data-section="treatment"] { grid-column: 2;');
+    expect(script).toContain("section.classList.add('chemical-profile-life-safety')");
+    expect(styles).toContain('content: "LIFE SAFETY";');
   });
 
   it("uses the reference toolbar, light-grey search field and built-in profile icons", () => {
@@ -145,6 +159,11 @@ describe("Chemical Profile UI system", () => {
     expect(styles).toContain('background: #d7dce1;');
     expect(script).toContain('function createChemicalProfileIcon');
     expect(script).toContain("chemicalProfileIconPaths");
+  });
+
+  it("uses dark navy Export / Print wording on the light-grey controls", () => {
+    expect(styles).toMatch(/#chemical-id-results #profile-export-btn \{[^}]*color: #071f36;[^}]*background: #d7dce1;/s);
+    expect(styles).toMatch(/\.chemical-profile-export-options button \{[^}]*color: #071f36;[^}]*background: #d7dce1;/s);
   });
 
   it("renders the NFPA 704 placard from selected-profile values instead of a static icon", () => {
@@ -157,9 +176,22 @@ describe("Chemical Profile UI system", () => {
     expect(styles).toContain(".nfpa-704-diamond");
   });
 
-  it("uses readable, top-aligned white titles and larger profile values", () => {
+  it("uses bold titles with regular-weight profile values", () => {
     expect(styles).toMatch(/\.chemical-profile-section h4,[\s\S]*?color: #fff;[\s\S]*?font-size: 1\.05rem;[\s\S]*?font-weight: 850;/);
     expect(styles).toContain("grid-template-rows: auto minmax(0, 1fr);");
-    expect(styles).toMatch(/\.chemical-profile-row strong,[\s\S]*?font-size: 0\.94rem;/);
+    expect(styles).toMatch(/\.chemical-profile-row strong,[\s\S]*?font-size: 0\.94rem;[\s\S]*?font-weight: 400;/);
+    expect(styles).toMatch(/\.chemical-profile-meta-value \{[\s\S]*?font-weight: 400;/);
+  });
+
+  it("keeps the Chemical Profile toolbar in normal flow above the results", () => {
+    expect(styles).toMatch(/#lookup \.chemical-profile-toolbar \{[\s\S]*?position: static;[\s\S]*?top: auto;/);
+  });
+
+  it("color-codes the primary hazard, IDLH, and ERG Guide summary values", () => {
+    expect(styles).toMatch(/data-field="primary-hazard"[^}]*> strong \{[\s\S]*?color: #ffd34f;/);
+    expect(styles).toMatch(/data-field="idlh"[^}]*> strong \{[\s\S]*?color: #ff5a5f;/);
+    expect(styles).toMatch(/data-field="erg-guide"[^}]*> strong \{[\s\S]*?color: #ff8a1c;/);
+    expect(styles).toContain('.chemcompare-row[data-field="idlh"] .chemcompare-value-main');
+    expect(script).toContain("row.dataset.field = String(label).toLowerCase()");
   });
 });

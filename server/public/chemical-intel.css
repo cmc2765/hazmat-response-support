@@ -319,15 +319,29 @@
   width: 100%;
   min-height: 34px;
   border-color: transparent;
-  color: #e8f5ff;
-  background: #0b3557;
+  color: #071f36;
+  background: #d7dce1;
   text-align: left;
 }
 
 #chemical-id-results .chemical-profile-export-options button:hover,
 #chemical-id-results .chemical-profile-export-options button:focus-visible {
-  border-color: #70d59b;
-  background: #124a75;
+  border-color: #2f5f86;
+  color: #071f36;
+  background: #e5e7eb;
+}
+
+#chemical-id-results #profile-export-btn {
+  border-color: #9aa7b3;
+  color: #071f36;
+  background: #d7dce1;
+}
+
+#chemical-id-results #profile-export-btn:hover,
+#chemical-id-results #profile-export-btn:focus-visible {
+  border-color: #2f5f86;
+  color: #071f36;
+  background: #e5e7eb;
 }
 
 #chemical-id-results .chemical-profile-toolbar button {
@@ -461,20 +475,20 @@
   overflow-wrap: anywhere;
   color: #f8fafc;
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.35;
 }
 
 #chemical-id-results .chemical-profile-meta-item[data-field="un-na"] .chemical-profile-meta-value {
   color: #ffd34f;
   font-size: 1.35rem;
-  font-weight: 900;
+  font-weight: 400;
 }
 
 #chemical-id-results .chemical-profile-meta-item[data-field="erg-guide"] .chemical-profile-meta-value {
   color: #ff8a1c;
   font-size: 1.35rem;
-  font-weight: 900;
+  font-weight: 400;
 }
 
 #chemical-id-results .chemical-profile-meta-item[data-field="ppe-recommendation"] {
@@ -484,7 +498,7 @@
 #chemical-id-results .chemical-profile-meta-item[data-field="ppe-recommendation"] .chemical-profile-meta-value {
   color: #fff;
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 400;
 }
 
 .chemical-hazard-overview {
@@ -716,8 +730,23 @@
 #chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-value-list,
 #chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-list {
   font-size: 0.94rem;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.5;
+}
+
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-row[data-field="primary-hazard"] > span,
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-row[data-field="primary-hazard"] > strong {
+  color: #ffd34f;
+}
+
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-row[data-field="idlh"] > span,
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-row[data-field="idlh"] > strong {
+  color: #ff5a5f;
+}
+
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-row[data-field="erg-guide"] > span,
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-row[data-field="erg-guide"] > strong {
+  color: #ff8a1c;
 }
 
 #chemical-id-results .chemical-profile-list { gap: 7px; }
@@ -752,6 +781,7 @@
 .ppe-recommendation-status > strong {
   color: #fff;
   font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 400;
 }
 
 .ppe-level-options {
@@ -771,8 +801,8 @@
   background: #071f36;
 }
 
-.ppe-level-option strong { color: #fff; font-size: 0.86rem; line-height: 1.35; }
-.ppe-level-option span { color: #d6e2ec; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; }
+.ppe-level-option strong { color: #fff; font-size: 0.86rem; font-weight: 700; line-height: 1.35; }
+.ppe-level-option span { color: #d6e2ec; font-size: 0.72rem; font-weight: 400; text-transform: uppercase; }
 .ppe-level-option.level-a { border-left-color: var(--red); }
 .ppe-level-option.level-b { border-left-color: var(--orange); }
 .ppe-level-option.level-c { border-left-color: var(--yellow); }
@@ -862,7 +892,7 @@
   margin: 3px 0 0;
   color: #f8fafc;
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 @media (min-width: 1200px) {
@@ -941,6 +971,407 @@
   }
 }
 
+/* Hazard ID command console — cinematic single-search workspace. */
+.layout:has(#lookup.active) > .content-area,
+.layout:has(#lookup.active) #lookup.active {
+  width: 100%;
+  min-width: 0;
+  background: #071a2e;
+}
+
+.layout:has(#lookup.active) #lookup.active {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: max-content max-content max-content max-content !important;
+  align-content: start;
+  gap: clamp(18px, 2vw, 28px) !important;
+  padding: clamp(12px, 1.5vw, 22px) !important;
+}
+
+#lookup > .hazard-id-page-hero {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: clamp(140px, 13vw, 180px) !important;
+  margin: 0 !important;
+  padding: clamp(18px, 2.5vw, 36px) !important;
+  overflow: hidden;
+  border: 1px solid rgba(72, 130, 174, 0.72) !important;
+  border-radius: 18px;
+  background-image:
+    linear-gradient(90deg, rgba(3, 17, 31, 0.98) 0%, rgba(4, 27, 47, 0.82) 42%, rgba(5, 30, 49, 0.2) 72%),
+    url("assets/hazard-id-level-b-hero-v2.png") !important;
+  background-position: center, center 56% !important;
+  background-size: cover !important;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+#lookup > .hazard-id-page-hero::before {
+  z-index: 0;
+  inset: -30px;
+  background-image:
+    linear-gradient(rgba(105, 174, 225, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(105, 174, 225, 0.08) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.64) 56%, transparent 88%);
+  animation: hazardBlueprintDrift 40s linear infinite;
+}
+
+#lookup > .hazard-id-page-hero::after {
+  display: block;
+  z-index: 0;
+  inset: -30% -10%;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: radial-gradient(ellipse at 74% 44%, rgba(95, 184, 255, 0.2), transparent 26%);
+  box-shadow: none;
+  content: "";
+  transform: none;
+  animation: hazardHeroLight 16s ease-in-out infinite alternate;
+}
+
+.hazard-id-hero-atmosphere {
+  position: absolute;
+  z-index: 1;
+  inset: -20%;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.44) 0 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(246, 195, 67, 0.34) 0 1px, transparent 1.8px);
+  background-position: 0 0, 42px 66px;
+  background-size: 94px 94px, 137px 137px;
+  opacity: 0.2;
+  animation: hazardParticleDrift 30s linear infinite;
+  pointer-events: none;
+}
+
+#lookup > .hazard-id-page-hero .hazmat-page-hero-content {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: min(620px, 58%);
+  margin: 0;
+  text-align: left;
+}
+
+#lookup > .hazard-id-page-hero .hazmat-hero-title {
+  margin: 0;
+  color: #fff;
+  font-family: Impact, "Agency FB", "DIN Condensed", "Bahnschrift Condensed", "Arial Narrow", sans-serif;
+  font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+  font-weight: 950;
+  letter-spacing: 0.075em;
+  line-height: 0.88;
+  text-align: left;
+  text-shadow: 4px 5px 0 rgba(1, 12, 22, 0.94), 0 0 24px rgba(65, 155, 226, 0.3);
+  transform: skewX(-5deg) scaleX(0.95);
+  transform-origin: left center;
+}
+
+#lookup > .hazard-id-page-hero .hazmat-hero-subtitle {
+  display: flex;
+  justify-content: space-between;
+  gap: clamp(8px, 1.4vw, 22px);
+  width: min(100%, 520px);
+  margin: 10px 0 0;
+  color: #f6c343 !important;
+  font: 900 clamp(1.05rem, 1.6vw, 1.45rem)/1.05 "Bahnschrift Condensed", "Arial Narrow", sans-serif;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+  text-shadow: 0 2px 7px rgba(0, 0, 0, 0.9);
+}
+
+#lookup > .hazard-id-command-console.chemical-id-search-card {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  display: grid !important;
+  grid-template-rows: auto auto auto;
+  width: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible;
+  border: 1px solid #315f82;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(12, 39, 66, 0.99), rgba(5, 26, 45, 0.99));
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.hazard-search-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid #315f82;
+  background: rgba(3, 23, 40, 0.74);
+}
+
+.hazard-search-tab {
+  min-height: 54px;
+  padding: 11px 18px;
+  border: 0;
+  border-right: 1px solid #315f82;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font: 900 clamp(1rem, 1.5vw, 1.3rem)/1 var(--hazmatiq-font-heading);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.hazard-search-tab:last-child { border-right: 0; }
+.hazard-search-tab:hover,
+.hazard-search-tab:focus-visible { background: rgba(46, 140, 255, 0.12); box-shadow: inset 0 -3px 0 #6bb8ff; }
+.hazard-search-tab.active { background: linear-gradient(180deg, rgba(246, 195, 67, 0.2), rgba(246, 195, 67, 0.06)); color: #f6c343; box-shadow: inset 0 -4px 0 #f6c343, 0 0 22px rgba(246, 195, 67, 0.08); }
+
+.hazard-search-command-body {
+  display: grid;
+  gap: 12px;
+  padding: clamp(16px, 2vw, 26px);
+}
+
+.hazard-search-mode-copy { display: grid; gap: 5px; }
+.hazard-search-mode-copy .eyebrow { margin: 0; color: #f6c343; font-size: 0.83rem; font-weight: 900; letter-spacing: 0.16em; }
+.hazard-search-mode-copy h2 { margin: 0; color: #fff; font-size: clamp(1.5rem, 2.2vw, 2rem); }
+.hazard-search-mode-copy > p:last-child { margin: 0; color: #fff; font-size: 1rem; line-height: 1.5; }
+
+#lookup .hazard-unified-search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+}
+
+#lookup .hazard-unified-search-form .chemical-search-input-wrap::before,
+#lookup .hazard-unified-search-form .chemical-search-input-wrap::after {
+  content: none;
+  display: none;
+}
+
+#lookup .hazard-unified-search-form #chemical-search {
+  width: 100%;
+  min-height: 74px;
+  padding: 16px 22px;
+  border: 2px solid #417ca8;
+  border-radius: 13px;
+  background: #f1f5f9;
+  color: #071f36;
+  caret-color: #071f36;
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+  font-weight: 700;
+  box-shadow: inset 0 3px 12px rgba(0, 0, 0, 0.38);
+}
+
+#lookup .hazard-unified-search-form #chemical-search::placeholder { color: #334155; opacity: 1; }
+#lookup .hazard-unified-search-form #chemical-search:focus { border-color: #f6c343; outline: 3px solid rgba(246, 195, 67, 0.18); }
+#lookup .hazard-unified-search-form > .primary-btn {
+  min-width: 176px;
+  min-height: 74px;
+  border: 1px solid #ffe174;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ffd85b, #eca900);
+  color: #171006;
+  font-size: 1.05rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 20px rgba(246, 195, 67, 0.2);
+}
+
+#lookup .hazard-unified-search-form > .primary-btn:hover,
+#lookup .hazard-unified-search-form > .primary-btn:focus-visible { box-shadow: 0 0 0 3px rgba(246, 195, 67, 0.18), 0 0 28px rgba(246, 195, 67, 0.35); transform: translateY(-1px); }
+
+#lookup .hazard-search-examples { min-height: 34px; color: #fff; font-size: 1rem; }
+#lookup .hazard-search-examples button { min-height: 34px; padding: 6px 12px; border-color: #38698f; background: #0a2a46; color: #fff; font-size: 0.85rem; }
+#lookup .chemical-search-status { min-height: 24px; margin: 0; color: #fff; font-size: 1rem; }
+
+#lookup .hazard-unified-suggestions {
+  z-index: 20;
+  top: calc(100% + 7px);
+  max-height: 410px;
+  overflow-y: auto;
+  border: 1px solid #3e769f;
+  border-radius: 11px;
+  background: #071f35;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.48);
+  animation: hazardResultsIn 180ms ease-out;
+}
+
+#lookup .hazard-unified-suggestions .hazard-search-result-card { min-height: 82px; padding: 13px 16px; border: 0; border-bottom: 1px solid #2c5879; border-radius: 0; background: #0c2742; }
+#lookup .hazard-unified-suggestions .hazard-search-result-card strong { color: #fff; font-size: 1rem; }
+#lookup .hazard-unified-suggestions .hazard-search-result-card small { color: #fff; font-size: 0.82rem; }
+
+.hazard-workflow-rail {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #315f82;
+  list-style: none;
+}
+
+.hazard-workflow-rail li {
+  position: relative;
+  padding: 15px 28px 15px 18px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.hazard-workflow-rail li:not(:last-child)::after { position: absolute; top: 50%; right: -6px; color: #f6c343; content: "›"; font-size: 1.65rem; transform: translateY(-54%); }
+
+#lookup > .hazard-id-empty-profile,
+#lookup > #chemical-id-results,
+#lookup > .hazard-profile-results {
+  grid-column: 1 !important;
+  grid-row: 3 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  animation: hazardProfileIn 300ms ease-out;
+}
+
+#lookup > #facility-inventory { grid-column: 1 !important; grid-row: 4 !important; }
+
+#lookup .hazard-id-empty-profile {
+  min-height: 380px;
+  padding: 44px;
+  border: 1px solid #315f82;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(46, 140, 255, 0.16), transparent 27%),
+    linear-gradient(145deg, #0c2742, #061d32);
+  color: #fff;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.26);
+}
+
+#lookup .hazard-id-empty-profile > span { width: 112px; height: 112px; border: 2px solid #f6c343; background: repeating-radial-gradient(circle, rgba(46, 140, 255, 0.14) 0 9px, transparent 10px 18px); color: #f6c343; font-size: 2.25rem; box-shadow: 0 0 38px rgba(46, 140, 255, 0.3); transform: rotate(45deg); }
+#lookup .hazard-id-empty-profile > span::first-letter { transform: rotate(-45deg); }
+#lookup .hazard-id-empty-profile .eyebrow { color: #f6c343; font-size: 1rem; letter-spacing: 0.16em; }
+#lookup .hazard-id-empty-profile h2 { color: #fff; font-size: clamp(1.8rem, 3vw, 2.7rem); }
+#lookup .hazard-id-empty-profile p:last-child { color: #fff; font-size: 1rem; }
+
+#lookup .chemical-profile-shell,
+#lookup .hazard-profile-shell { border-color: #315f82; border-radius: 16px; background: #071a2e; }
+#lookup .chemical-profile-toolbar,
+#lookup .hazard-profile-toolbar { position: sticky; z-index: 12; top: 0; border: 1px solid #315f82; border-radius: 11px; background: rgba(5, 27, 47, 0.96); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.26); backdrop-filter: blur(12px); }
+#lookup .chemical-profile-toolbar {
+  position: static;
+  z-index: auto;
+  top: auto;
+}
+#lookup .hazard-profile-toolbar { grid-template-columns: auto 1fr auto; padding: 9px; }
+.hazard-profile-toolbar-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+#lookup .hazard-profile-toolbar-actions button { min-height: 46px; }
+#lookup .hazard-profile-plume-btn { border-color: #ef4b52; background: linear-gradient(180deg, #dc2830, #a90e15); color: #fff; }
+#lookup .hazard-profile-header-card,
+#lookup .chemical-profile-header-card,
+#lookup .hazard-profile-content-card,
+#lookup .chemical-profile-content-card { border-color: #315f82; background: #0c2742; color: #fff; }
+#lookup .hazard-profile-content { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#lookup .hazard-source-fact-card { border-color: #315f82; background: linear-gradient(150deg, #0d3151, #081f35); color: #fff; transition: transform 180ms ease, box-shadow 180ms ease; }
+#lookup .hazard-source-fact-card:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25); }
+#lookup .hazard-source-fact-card p,
+#lookup .hazard-source-fact-card small { color: #fff; font-size: 1rem; }
+
+.app-shell:has(#lookup.active) .command-header { grid-template-rows: 200px 72px; }
+.app-shell:has(#lookup.active) .command-header .hazmat-command-identity,
+.app-shell:has(#lookup.active) .command-header .hazmat-command-identity .brand,
+.app-shell:has(#lookup.active) .command-header .command-brand-home,
+.app-shell:has(#lookup.active) .command-header .brand-logo-command {
+  width: clamp(676px, 55vw, 1066px);
+  height: 200px;
+}
+
+#lookup .chemical-profile-content-card p,
+#lookup .chemical-profile-content-card li,
+#lookup .chemical-profile-content-card dd,
+#lookup .hazard-profile-content-card p,
+#lookup .hazard-profile-content-card li,
+#lookup .hazard-profile-content-card dd { color: #fff; font-size: 1rem; }
+#lookup .chemical-profile-content-card h3,
+#lookup .hazard-profile-content-card h3 { color: #fff; font-size: clamp(1.35rem, 2vw, 1.75rem); }
+
+.hazard-profile-action-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.hazard-profile-action-grid article {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  min-height: 148px;
+  padding: 16px;
+  border: 1px solid #315f82;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #0d3151, #081f35);
+  color: #fff;
+}
+.hazard-profile-action-grid h3 { margin: 0; color: #fff; font-size: 1.15rem; }
+.hazard-profile-action-grid p { margin: 0; color: #fff; font-size: 1rem; line-height: 1.45; }
+.hazard-profile-action-grid span { justify-self: start; padding: 4px 8px; border: 1px solid #a67c21; border-radius: 999px; color: #f6c343; font-size: 0.75rem; font-weight: 900; }
+.hazard-profile-action-grid span[data-status="Source Backed"] { border-color: #3d9852; color: #7ee395; }
+.hazard-profile-limitations { padding: 16px 18px; border: 1px solid #7e6325; border-radius: 10px; background: rgba(91, 64, 13, 0.2); color: #fff; }
+.hazard-profile-limitations h3 { margin: 0 0 9px; color: #f6c343; }
+.hazard-profile-limitations ul { display: grid; gap: 7px; margin: 0; padding-left: 22px; }
+.hazard-profile-limitations li { color: #fff; font-size: 1rem; line-height: 1.45; }
+
+@keyframes hazardBlueprintDrift { to { background-position: 76px 38px, 76px 38px; } }
+@keyframes hazardParticleDrift { to { transform: translate3d(70px, -46px, 0); } }
+@keyframes hazardHeroLight { from { opacity: 0.45; transform: translateX(-2%); } to { opacity: 0.9; transform: translateX(3%); } }
+@keyframes hazardResultsIn { from { opacity: 0; transform: translateY(-7px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes hazardProfileIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 900px) {
+  .app-shell:has(#lookup.active) .command-header { grid-template-rows: 172px auto; }
+  .app-shell:has(#lookup.active) .command-header .hazmat-command-identity,
+  .app-shell:has(#lookup.active) .command-header .hazmat-command-identity .brand,
+  .app-shell:has(#lookup.active) .command-header .command-brand-home,
+  .app-shell:has(#lookup.active) .command-header .brand-logo-command { height: 172px; }
+  #lookup > .hazard-id-page-hero { min-height: 140px !important; background-position: center, 62% 56% !important; }
+  #lookup > .hazard-id-page-hero .hazmat-page-hero-content { width: min(540px, 72%); }
+  #lookup .hazard-profile-content { grid-template-columns: 1fr; }
+  .hazard-profile-action-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #lookup .hazard-profile-toolbar { grid-template-columns: 1fr; }
+  .hazard-profile-toolbar-actions { justify-content: stretch; }
+  .hazard-profile-toolbar-actions button { flex: 1; }
+}
+
+@media (max-width: 620px) {
+  .app-shell:has(#lookup.active) .command-header { grid-template-rows: 146px auto; }
+  .app-shell:has(#lookup.active) .command-header .hazmat-command-identity,
+  .app-shell:has(#lookup.active) .command-header .hazmat-command-identity .brand,
+  .app-shell:has(#lookup.active) .command-header .command-brand-home,
+  .app-shell:has(#lookup.active) .command-header .brand-logo-command { width: 100%; height: 146px; }
+  #lookup > .hazard-id-page-hero { min-height: 112px !important; padding: 16px 20px !important; background-position: center, 68% center !important; }
+  #lookup > .hazard-id-page-hero .hazmat-page-hero-content { width: 82%; }
+  #lookup > .hazard-id-page-hero .hazmat-hero-title { font-size: 2.75rem; }
+  #lookup > .hazard-id-page-hero .hazmat-hero-subtitle { gap: 7px; width: 100%; margin-top: 8px; font-size: 0.78rem; letter-spacing: 0.025em; }
+  .hazard-search-tab { min-height: 58px; padding: 10px 6px; font-size: 0.78rem; }
+  #lookup .hazard-unified-search-form { grid-template-columns: 1fr; }
+  #lookup .hazard-unified-search-form > .primary-btn { width: 100%; min-height: 60px; }
+  .hazard-workflow-rail { grid-template-columns: 1fr; }
+  .hazard-profile-action-grid { grid-template-columns: 1fr; }
+  .hazard-workflow-rail li { padding: 9px; }
+  .hazard-workflow-rail li:not(:last-child)::after { top: auto; right: 50%; bottom: -11px; transform: translateX(50%) rotate(90deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #lookup > .hazard-id-page-hero::before,
+  #lookup > .hazard-id-page-hero::after,
+  .hazard-id-hero-atmosphere,
+  #lookup > .hazard-id-empty-profile,
+  #lookup > #chemical-id-results,
+  #lookup > .hazard-profile-results,
+  #lookup .hazard-unified-suggestions { animation: none; }
+}
+
 @media print {
   body.printing-chemical-profile #incident-report-summary,
   body.printing-chemical-profile #incident-report-summary * {
@@ -967,4 +1398,18 @@
   body.printing-chemical-profile .chemical-results-header {
     display: none;
   }
+}
+
+/* Cross-platform plume actions use the responder-green schema. */
+#lookup .hazard-profile-plume-btn,
+#lookup #open-plume-btn {
+  border-color: #238a4b !important;
+  color: #fff !important;
+  background: linear-gradient(180deg, #2c9b55, #176b39) !important;
+}
+
+#lookup .hazard-profile-plume-btn:hover,
+#lookup #open-plume-btn:hover {
+  border-color: #5ed487 !important;
+  background: linear-gradient(180deg, #35ac62, #1c7a42) !important;
 }

@@ -26,6 +26,7 @@ export const sourceBadgeLabels = [
   "Linked ERG",
   "Linked CAMEO",
   "Linked ALOHA",
+  "Linked EPA AEGL",
   "Transportation Identifier",
   "Requires Review",
   "No Current Data Exists",

@@ -43,11 +43,11 @@ describe("responder display-text normalization", () => {
     expect(browserScript).toContain("responderText.formatResponderGuidance(filtered)");
   });
 
-  it("uses shared HazMatIQ font and spacing tokens across operational cards", () => {
+  it("keeps readable body text and applies the tactical condensed command-heading stack", () => {
     expect(styles).toContain('--hazmatiq-font-body: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif');
     expect(styles).toContain('--hazmatiq-font-heading: "Segoe UI", "Bahnschrift", "Roboto", "Helvetica Neue", Arial, sans-serif');
     expect(styles).toContain("--hazmatiq-card-padding: 14px");
     expect(styles).not.toContain('font-family: "Courier New"');
-    expect(styles).not.toContain('font-family: "Bahnschrift Condensed"');
+    expect(styles).toContain('--hazmatiq-font-heading: "Bahnschrift Condensed", "Arial Narrow", Impact, sans-serif');
   });
 });

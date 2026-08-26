@@ -10,6 +10,7 @@ export interface AeglLevelValues {
 }
 
 export interface AeglEndpointRecord {
+  masterChemicalIds?: string[];
   chemicalId: string;
   chemicalName: string;
   casNumber: string;
@@ -53,6 +54,7 @@ const COMMON_LIMITATIONS = [
  */
 export const VERIFIED_EPA_AEGL_ENDPOINTS: readonly AeglEndpointRecord[] = [
   {
+    masterChemicalIds: ["10"],
     chemicalId: "ammonia",
     chemicalName: "Ammonia",
     casNumber: "7664-41-7",
@@ -73,6 +75,7 @@ export const VERIFIED_EPA_AEGL_ENDPOINTS: readonly AeglEndpointRecord[] = [
     limitations: [...COMMON_LIMITATIONS],
   },
   {
+    masterChemicalIds: ["22"],
     chemicalId: "chlorine",
     chemicalName: "Chlorine",
     casNumber: "7782-50-5",
@@ -93,6 +96,7 @@ export const VERIFIED_EPA_AEGL_ENDPOINTS: readonly AeglEndpointRecord[] = [
     limitations: [...COMMON_LIMITATIONS],
   },
   {
+    masterChemicalIds: ["54"],
     chemicalId: "hydrazine",
     chemicalName: "Hydrazine",
     casNumber: "302-01-2",
@@ -112,18 +116,90 @@ export const VERIFIED_EPA_AEGL_ENDPOINTS: readonly AeglEndpointRecord[] = [
     importedAt: "2026-08-17",
     limitations: [...COMMON_LIMITATIONS],
   },
+  {
+    masterChemicalIds: ["56"],
+    chemicalId: "anhydrous-hydrogen-chloride",
+    chemicalName: "Hydrogen chloride",
+    casNumber: "7647-01-0",
+    endpointSource: "EPA AEGL",
+    endpointStatus: "Final",
+    exposureDurations: [10, 30, 60, 240, 480],
+    valuesByDurationMinutes: {
+      10: { aegl1: 1.8, aegl2: 100, aegl3: 620 },
+      30: { aegl1: 1.8, aegl2: 43, aegl3: 210 },
+      60: { aegl1: 1.8, aegl2: 22, aegl3: 100 },
+      240: { aegl1: 1.8, aegl2: 11, aegl3: 26 },
+      480: { aegl1: 1.8, aegl2: 11, aegl3: 26 },
+    },
+    units: "ppm",
+    sourceVersion: "EPA final AEGL values; Hydrogen Chloride Final AEGL Technical Support Document",
+    sourceUrlOrCitationKey: "https://www.epa.gov/aegl/hydrogen-chloride-results-aegl-program",
+    importedAt: "2026-08-24",
+    limitations: [...COMMON_LIMITATIONS],
+  },
+  {
+    masterChemicalIds: ["60"],
+    chemicalId: "hydrogen-sulfide",
+    chemicalName: "Hydrogen sulfide",
+    casNumber: "7783-06-4",
+    endpointSource: "EPA AEGL",
+    endpointStatus: "Final",
+    exposureDurations: [10, 30, 60, 240, 480],
+    valuesByDurationMinutes: {
+      10: { aegl1: 0.75, aegl2: 41, aegl3: 76 },
+      30: { aegl1: 0.6, aegl2: 32, aegl3: 59 },
+      60: { aegl1: 0.51, aegl2: 27, aegl3: 50 },
+      240: { aegl1: 0.36, aegl2: 20, aegl3: 37 },
+      480: { aegl1: 0.33, aegl2: 17, aegl3: 31 },
+    },
+    units: "ppm",
+    sourceVersion: "EPA final AEGL values",
+    sourceUrlOrCitationKey: "https://www.epa.gov/aegl/hydrogen-sulfide-results-aegl-program",
+    importedAt: "2026-08-24",
+    limitations: [...COMMON_LIMITATIONS],
+  },
+  {
+    masterChemicalIds: ["102"],
+    chemicalId: "sulfur-dioxide",
+    chemicalName: "Sulfur dioxide",
+    casNumber: "7446-09-5",
+    endpointSource: "EPA AEGL",
+    endpointStatus: "Final",
+    exposureDurations: [10, 30, 60, 240, 480],
+    valuesByDurationMinutes: {
+      10: { aegl1: 0.2, aegl2: 0.75, aegl3: 30 },
+      30: { aegl1: 0.2, aegl2: 0.75, aegl3: 30 },
+      60: { aegl1: 0.2, aegl2: 0.75, aegl3: 30 },
+      240: { aegl1: 0.2, aegl2: 0.75, aegl3: 19 },
+      480: { aegl1: 0.2, aegl2: 0.75, aegl3: 9.6 },
+    },
+    units: "ppm",
+    sourceVersion: "EPA final AEGL values",
+    sourceUrlOrCitationKey: "https://www.epa.gov/aegl/sulfur-dioxide-results-aegl-program",
+    importedAt: "2026-08-24",
+    limitations: [...COMMON_LIMITATIONS],
+  },
 ] as const;
 
 export function selectVerifiedAeglEndpoint(
   chemicalId: string,
   casNumber: string,
   durationMinutes: AeglDurationMinutes = 60,
+  masterChemicalId?: string | number | null,
 ): SelectedAeglEndpoint | null {
   const canonicalId = chemicalId.trim().toLowerCase();
   const canonicalCas = casNumber.trim();
   if (!canonicalId || !canonicalCas) return null;
-  const record = VERIFIED_EPA_AEGL_ENDPOINTS.find((candidate) =>
-    candidate.chemicalId === canonicalId && candidate.casNumber === canonicalCas);
+  const casMatches = VERIFIED_EPA_AEGL_ENDPOINTS.filter((candidate) => candidate.casNumber === canonicalCas);
+  const normalizedMasterId = String(masterChemicalId ?? "").trim();
+  const masterLinkedRecord = normalizedMasterId
+    ? casMatches.find((candidate) => candidate.masterChemicalIds?.includes(normalizedMasterId))
+    : undefined;
+  const canonicalRecord = casMatches.find((candidate) => candidate.chemicalId === canonicalId);
+  // A supplied master ID must match an explicitly reviewed master link. Without
+  // master context, both canonical chemical ID and CAS must match; CAS alone is
+  // not enough because solutions and physical forms can share an identifier.
+  const record = normalizedMasterId ? masterLinkedRecord : canonicalRecord;
   const values = record?.valuesByDurationMinutes[durationMinutes];
   if (!record || !values) return null;
   return {

@@ -9,7 +9,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "HOST=0.0.0.0 PORT=3000 npm --prefix server start",
+    "dev": "npm --prefix server start",
     "typecheck": "tsc -b --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",

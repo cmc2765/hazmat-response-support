@@ -87,7 +87,7 @@ export const CHEMICALS: Chex[] = [
   {
     id: "anhydrous-hydrogen-chloride",
     name: "Hydrogen chloride, anhydrous",
-    synonyms: ["Anhydrous HCl", "HCl gas"],
+    synonyms: ["Hydrogen chloride", "HCl", "Anhydrous HCl", "HCl gas", "Hydrochloric acid gas", "Anhydrous hydrogen chloride"],
     cas: ["7647-01-0"],
     un: ["1050"],
     hazardClass: ["2.3", "8"],

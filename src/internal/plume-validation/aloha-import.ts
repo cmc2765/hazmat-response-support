@@ -1,3 +1,4 @@
+// Developer-only inspection of imported ALOHA benchmark artifacts.
 export const ALOHA_IMPORT_STATUSES = ["Not Configured", "Ready", "Imported"] as const;
 export type AlohaImportStatus = typeof ALOHA_IMPORT_STATUSES[number];
 

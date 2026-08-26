@@ -17,36 +17,39 @@ do not count as passed.
 ## Model and formula approach
 
 - Model: `HazMatIQ Baseline Plume Planning Model`
-- Implementation version: `0.1.0-plume-skeleton`
+- Implementation version: `0.1.1-plume-screening`
 - Continuous release: steady-state Gaussian point-source plume with ground reflection.
 - Instantaneous release: Gaussian puff evaluated at an explicit operator-supplied time.
-- Dispersion coefficients: Pasquill-Gifford/Briggs rural or urban parameterizations in
-  `src/lib/model/briggs.ts`.
+- Dispersion coefficients: separate lateral and vertical Pasquill-Gifford/Briggs rural
+  or urban parameterizations in `src/lib/model/briggs.ts`. Version 0.1.1 corrects an
+  earlier implementation that reused one lateral curve for both axes.
 - Endpoint geometry: sampled concentration isopleths calculated from a selected,
   duration-specific EPA AEGL value.
 
-The dispersion equations are unchanged. The contour builder now refines the downwind
-threshold crossing with bisection instead of ending at the last coarse sample. This is
-a numerical geometry correction: it removes the artificial flat tail and reduces
-endpoint under-reporting without changing the concentration formula. Internal tests
-verify arithmetic and structural invariants; those tests are not independent scientific
-validation.
+Version 0.1.1 corrects the Briggs coefficient implementation and therefore changes
+calculated geometry. The contour builder also refines the downwind threshold crossing
+with bisection instead of ending at the last coarse sample. Internal tests verify the
+published coefficient equations, arithmetic, and structural invariants; those tests are
+not independent scientific validation.
 
 ## Source requirements
 
 Chemical identity must resolve to a numeric Chemical Companion master record with a CAS
-number. That CAS must exactly match a canonical chemical record and a reviewed EPA AEGL
-catalog entry. Loose names, canonical slugs submitted without a master link, and
-transportation identifiers do not establish identity.
+number. The master ID, CAS, canonical chemical ID, and reviewed EPA AEGL catalog entry
+must all match. Loose names, CAS-only matches, canonical slugs submitted without a
+master link, and transportation identifiers do not establish identity.
 
-The reviewed endpoint catalog currently contains only final EPA AEGL tables transcribed
-for:
+The reviewed endpoint catalog currently contains final EPA AEGL tables transcribed for:
 
 - Ammonia, CAS 7664-41-7
 - Chlorine, CAS 7782-50-5
+- Hydrazine, CAS 302-01-2
+- Hydrogen chloride, CAS 7647-01-0 (restricted to reviewed anhydrous master record 56)
+- Hydrogen sulfide, CAS 7783-06-4
+- Sulfur dioxide, CAS 7446-09-5
 
-Supported durations are 10, 30, 60, 240, and 480 minutes for these two records. The UI
-defaults to the 60-minute endpoint because that duration exists in both reviewed tables.
+Supported durations are 10, 30, 60, 240, and 480 minutes for these records. The UI
+defaults to the 60-minute endpoint because that duration exists in every reviewed table.
 AEGL-1, AEGL-2, and AEGL-3 values are used directly; values are never interpolated,
 extrapolated, or calculated from ERPG, TEEL, IDLH, or occupational limits.
 

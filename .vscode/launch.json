@@ -12,7 +12,7 @@
       "outputCapture": "std",
       "serverReadyAction": {
         "pattern": ".*Hono API listening on http://localhost:([0-9]+).*$",
-        "uriFormat": "https://${env:CODESPACE_NAME}-%s.${env:GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}",
+        "uriFormat": "http://localhost:%s",
         "action": "openExternally"
       },
       "skipFiles": ["<node_internals>/**"]

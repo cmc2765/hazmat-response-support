@@ -122,11 +122,19 @@ export function runPlume(inputs: PlumeInputs, opts: RunPlumeOptions): PlumeResul
     const missingEvidence = requiredEvidence.filter((field) => !evidencedFields.has(field));
     if (missingEvidence.length) throw new Error(`Missing approved plume source records for: ${missingEvidence.join(", ")}`);
   }
-  if (mw === undefined) throw new Error("Molecular weight is required; no default may be inferred.");
-  if (isPlume && Q === undefined) throw new Error("Release rate is required for a continuous plume; no default may be inferred.");
-  if (!isPlume && M === undefined) throw new Error("Total mass is required for a puff; no default may be inferred.");
-  if (!isPlume && inputs.durationSec === undefined) throw new Error("Evaluation time is required for a puff; no default may be inferred.");
+  if (!Number.isFinite(mw) || mw! <= 0) throw new Error("Molecular weight is required and must be positive; no default may be inferred.");
+  if (!Number.isFinite(inputs.windSpeedMps) || inputs.windSpeedMps <= 0) throw new Error("A positive wind speed is required.");
+  if (!Number.isFinite(inputs.windDirDeg) || inputs.windDirDeg < 0 || inputs.windDirDeg > 360) throw new Error("Wind direction must be between 0 and 360 degrees.");
+  if (!Number.isFinite(inputs.releaseHeightM) || inputs.releaseHeightM < 0) throw new Error("Release height must be zero or greater.");
+  if (!Number.isFinite(inputs.tempC) || inputs.tempC <= -273.15) throw new Error("Air temperature must be above absolute zero.");
+  if (!Number.isFinite(maxRange) || maxRange <= 0) throw new Error("Computational range must be positive.");
+  if (isPlume && (!Number.isFinite(Q) || Q! <= 0)) throw new Error("A positive release rate is required for a continuous plume; no default may be inferred.");
+  if (!isPlume && (!Number.isFinite(M) || M! <= 0)) throw new Error("A positive total mass is required for a puff; no default may be inferred.");
+  if (!isPlume && (!Number.isFinite(inputs.durationSec) || inputs.durationSec! <= 0)) throw new Error("A positive evaluation time is required for a puff; no default may be inferred.");
   if (!opts.thresholds.length) throw new Error("At least one approved exposure threshold is required; no default may be inferred.");
+  if (opts.thresholds.some((threshold) => !Number.isFinite(threshold.valuePpm) || threshold.valuePpm <= 0)) {
+    throw new Error("Every exposure threshold must be a positive finite concentration.");
+  }
   const calculatedInputValues: Record<string, unknown> = {
     ...inputs,
     molecularWeight: mw,
@@ -147,7 +155,7 @@ export function runPlume(inputs: PlumeInputs, opts: RunPlumeOptions): PlumeResul
     : Math.max(pickRoughness(inputs.stabilityClass, inputs.surfaceRoughness).sigmaY(Math.max(inputs.windSpeedMps, 0.1) * inputs.durationSec!), 1e-3);
   const targetMgM3ByKind = new Map<string, number>();
   for (const b of opts.thresholds) {
-    targetMgM3ByKind.set(`${b.kind}-${b.level}`, ppmToMgM3(b.valuePpm, mw, inputs.tempC));
+    targetMgM3ByKind.set(`${b.kind}-${b.level}`, ppmToMgM3(b.valuePpm, mw!, inputs.tempC));
   }
   const thresholdTarget = (kind: string, level: number): number => {
     const v = targetMgM3ByKind.get(`${kind}-${level}`);
@@ -163,7 +171,7 @@ export function runPlume(inputs: PlumeInputs, opts: RunPlumeOptions): PlumeResul
       : gaussianPuffC(inputs, x, 0, 0, M!, inputs.durationSec!);
     centerline.push({
       distanceM: Math.round(x),
-      concentrationPpm: Number(mgM3ToPpm(c * 1e6, mw, inputs.tempC).toFixed(4)),
+      concentrationPpm: Number(mgM3ToPpm(c * 1e6, mw!, inputs.tempC).toFixed(4)),
     });
   }
 

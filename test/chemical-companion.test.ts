@@ -36,9 +36,9 @@ describe('normalizeChemicalProfile', () => {
     expect(coverage.importedCanonicalTotal).toBe(coverage.sourceChemicalTotal);
     expect(Number(coverage.sourceUnNaIdentifierTotal)).toBeGreaterThan(3000);
     expect(coverage.importedUnNaIdentifierTotal).toBe(0);
-    expect(coverage.reviewedTransportationLinkTotal).toBe(0);
+    expect(coverage.reviewedTransportationLinkTotal).toBe(1);
     expect(coverage.transportationIdentifierTotal).toBe(1980);
-    expect(coverage.unlinkedTransportationIdentifiers).toBe(1980);
+    expect(coverage.unlinkedTransportationIdentifiers).toBe(1979);
     expect(Number(coverage.sourceCasIdentifierTotal)).toBeGreaterThan(1300);
     expect(coverage.importedCasIdentifierTotal).toBe(coverage.sourceCasIdentifierTotal);
     expect(Number(coverage.sourceAliasTotal)).toBeGreaterThan(13000);
@@ -62,6 +62,42 @@ describe('normalizeChemicalProfile', () => {
       resultType: 'Transportation Identifier — Requires Review',
       guidanceEligible: false,
     }));
+  });
+
+  it('shows one verified anhydrous hydrogen chloride master with reviewed AEGL, CAMEO, and ERG links', () => {
+    const results = searchCompanionChemicals('Hydrogen Chloride, anhydrous');
+    const hcl = results.filter((row) => row.ChemicalID === 56);
+    expect(hcl).toHaveLength(1);
+    expect(hcl[0]).toMatchObject({
+      CasNumber: '7647-01-0',
+      UnnaNumber: '1050',
+      ErgNumber: '125',
+      groupedRecordCount: 2,
+      guidanceEligible: true,
+    });
+    expect(hcl[0].sourceBadges).toEqual(expect.arrayContaining([
+      'Chemical Companion Master', 'Linked EPA AEGL', 'Linked CAMEO', 'Linked ERG',
+    ]));
+    expect(hcl[0].ChemicalName.trim()).toBe('Hydrogen chloride, anhydrous');
+    expect(hcl[0].linkedIdentifiers).toEqual(expect.arrayContaining([
+      expect.objectContaining({ type: 'CAS', value: '7647-01-0' }),
+      expect.objectContaining({ type: 'UN/NA', value: '1050' }),
+      expect.objectContaining({ type: 'ERG', value: '125' }),
+      expect.objectContaining({ type: 'Transport', value: '1050', reviewStatus: 'verified' }),
+    ]));
+  });
+
+  it.each(['Hydrogen chloride', 'HCl', 'Hydrochloric acid gas', 'Anhydrous hydrogen chloride'])(
+    'resolves reviewed anhydrous hydrogen chloride alias %s to master 56', (alias) => {
+      expect(searchCompanionChemicals(alias)[0]).toMatchObject({ ChemicalID: 56, CasNumber: '7647-01-0' });
+    },
+  );
+
+  it('keeps the same-CAS hydrochloric acid solution as a distinct master record', () => {
+    const anhydrous = queryChemicalProfile(56)?.header;
+    expect(anhydrous).toMatchObject({ cas: '7647-01-0', un: '1050' });
+    expect(anhydrous?.name.trim()).toBe('Hydrogen chloride, anhydrous');
+    expect(queryChemicalProfile(965)?.header).toMatchObject({ name: 'Hydrochloric acid', cas: '7647-01-0', un: '1789' });
   });
 
   it('groups repeated Chemical Companion master names only when verified CAS identity also matches', () => {
@@ -160,7 +196,15 @@ describe('normalizeChemicalProfile', () => {
   it('displays only direct Chemical Companion decon records for hydrofluoric acid', () => {
     const profile = queryChemicalProfile(58);
 
-    expect(profile?.decon.preferredMethod).toBe('Air');
+    expect(profile?.properties.physicalState).toContain('Liquid');
+    expect(profile?.decon.preferredMethod).toEqual(['Liquid — People: Water / Dry / Air']);
+    expect(profile?.decon.technicalDecon).toEqual(expect.arrayContaining([
+      'Liquid — Objects: Water / Dry / Base / Air',
+      expect.stringContaining('Liquid — Dry: HEPA Vacuum/Cloth'),
+      expect.stringContaining('Liquid — Water: Process detail unavailable from current source'),
+    ]));
+    expect(profile?.decon.technicalDecon).not.toEqual(expect.arrayContaining([expect.stringContaining('Gas (')]));
+    expect(profile?.decon.technicalDecon).not.toEqual(expect.arrayContaining([expect.stringContaining('Solid —')]));
     expect(profile?.decon.hazmatPersonnelProcedure).not.toContain(expect.stringContaining('controlled assisted doffing'));
     expect(profile?.decon.patientVictimDecon).not.toContain(expect.stringContaining('water flush ≥30 min'));
     expect(profile?.decon.sourceBasis).toEqual([

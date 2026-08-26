@@ -1,6 +1,6 @@
 {
   "manifestVersion": "1.0.0",
-  "generatedAt": "2026-08-07",
+  "generatedAt": "2026-08-24",
   "datasets": [
     {
       "id": "chemical-companion-sqlite",
@@ -19,8 +19,8 @@
       "id": "erg-guides-bundle",
       "path": "server/public/data/erg-guides-2024.json",
       "fields": ["erg-guide", "protective-action"],
-      "sourceCitation": null,
-      "revision": "2024 (asserted by repository filename; requires source reconciliation)",
+      "sourceCitation": "PHMSA, Emergency Response Guidebook 2024: https://www.phmsa.dot.gov/training/hazmat/erg/emergency-response-guidebook-erg",
+      "revision": "2024 (bundled values still require row-level source reconciliation)",
       "licenseOrPermission": null,
       "sha256": "f27d33a36fbfbbc5d3edce42917103567bfb7ced83f5cf199f50b82b3dd6755d",
       "reviewState": "requires-review",
@@ -50,6 +50,32 @@
       "reviewState": "requires-review",
       "reviewedBy": null,
       "reviewedAt": null
+    },
+    {
+      "id": "epa-final-aegl-endpoint-catalog",
+      "path": "src/lib/model/plume-endpoints.ts",
+      "fields": ["chemical-identity", "cas-identifier", "aegl-1", "aegl-2", "aegl-3", "exposure-duration", "units"],
+      "sourceCitation": "EPA final AEGL chemical result pages: https://www.epa.gov/aegl/access-acute-exposure-guideline-levels-aegls-values",
+      "revision": "EPA pages checked 2026-08-24; six explicitly master-linked records",
+      "licenseOrPermission": "U.S. government source; application redistribution review remains required",
+      "sha256": "06cbc277e51e55ba094a97f3cf83d19029243a73f9342d2ed13aaa9b7a6bcd43",
+      "reviewState": "requires-review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "notes": ["Values were cross-checked against current EPA final-value pages; independent human transcription review and release approval remain open."]
+    },
+    {
+      "id": "briggs-dispersion-coefficients",
+      "path": "src/lib/model/briggs.ts",
+      "fields": ["sigma-y", "sigma-z", "pasquill-stability", "urban-roughness", "rural-roughness"],
+      "sourceCitation": "EPA dispersion-model documentation reproducing Briggs rural and urban coefficient equations",
+      "revision": "HazMatIQ 0.1.1-plume-screening",
+      "licenseOrPermission": "U.S. government source",
+      "sha256": "9ea6f70b02b2e3f64c55925ca76f09d3ef7101bcfa0d38e3db83a4fbc6cdf908",
+      "reviewState": "requires-review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "notes": ["Equation regression tests pass; independent scientific validation against reference plume outputs remains blocked."]
     }
   ]
 }

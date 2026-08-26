@@ -7,6 +7,16 @@ import type { Hono } from "hono";
 
 let app: Hono;
 
+function currentManualWeather() {
+  return {
+    lat: 38.9517,
+    lng: -92.3341,
+    weatherSourceMode: "manual",
+    weatherSource: "Manual Entry",
+    weatherObservationTime: new Date().toISOString(),
+  };
+}
+
 beforeAll(() => {
   const dbPath = path.join(mkdtempSync(path.join(tmpdir(), "hazmat-test-")), "test.db");
   process.env.SQLITE_PATH = dbPath;
@@ -48,6 +58,49 @@ describe("API routes", () => {
     const res = await app.request("/api/manifest");
     const body = (await res.json()) as { sources: { cameo: { recordCount: number } } };
     expect(body.sources.cameo.recordCount).toBeGreaterThan(200);
+  });
+
+  it("serves Hazard ID and the backward-compatible Chemical ID alias", async () => {
+    for (const route of ["/hazard-id", "/chemical-id"]) {
+      const response = await app.request(route);
+      expect(response.status).toBe(200);
+      expect(await response.text()).toContain('<h1 class="hazmat-hero-title">HAZARD ID</h1>');
+    }
+  });
+
+  it("searches hydrated CBRNE and radiological records with review-gated responder facts", async () => {
+    const cbrne = await (await app.request("/api/hazards/search?lane=CBRNE_CWA&q=GB")).json() as { results: Array<{ id: string; displayName: string }> };
+    expect(cbrne.results[0]).toMatchObject({ id: "sarin-gb", displayName: "Sarin" });
+    const radiological = await (await app.request("/api/hazards/search?lane=RADIOLOGICAL&q=Cs-137")).json() as { results: Array<{ id: string; displayName: string }> };
+    expect(radiological.results[0]).toMatchObject({ id: "cesium-137", displayName: "Cesium-137" });
+
+    const profile = await (await app.request("/api/hazards/RADIOLOGICAL/cesium-137/profile")).json() as {
+      verificationStatus: string;
+      isolationStandoffFacts: Array<{ value: unknown; verificationStatus: string }>;
+    };
+    expect(profile.verificationStatus).toBe("Requires SME Review");
+    expect(profile.isolationStandoffFacts[0]).toMatchObject({ verificationStatus: "Requires SME Review" });
+    expect(profile.isolationStandoffFacts[0]?.value).toEqual(expect.any(String));
+  });
+
+  it("searches Anthrax and renders its source-backed, review-gated Hazard ID profile", async () => {
+    const searchResponse = await app.request("/api/hazards/search?lane=CBRNE_CWA&q=Bacillus%20anthracis");
+    expect(searchResponse.status).toBe(200);
+    const search = await searchResponse.json() as { results: Array<{ id: string; displayName: string; scientificName: string }> };
+    expect(search.results[0]).toMatchObject({ id: "anthrax", displayName: "Anthrax", scientificName: "Bacillus anthracis" });
+
+    const profileResponse = await app.request("/api/hazards/CBRNE_CWA/anthrax/profile");
+    expect(profileResponse.status).toBe(200);
+    const profile = await profileResponse.json() as {
+      displayName: string;
+      scientificName: string;
+      hazardFacts: Array<{ value: unknown; verificationStatus: string }>;
+      actionCards: Array<{ title: string }>;
+    };
+    expect(profile).toMatchObject({ displayName: "Anthrax", scientificName: "Bacillus anthracis" });
+    expect(profile.hazardFacts[0]).toMatchObject({ verificationStatus: "Requires SME Review" });
+    expect(profile.hazardFacts[0]?.value).toEqual(expect.any(String));
+    expect(profile.actionCards).toContainEqual(expect.objectContaining({ title: "Identify / Verify Biological Threat" }));
   });
 
   it("GET /api/chemicals?q=ammonia finds ammonia", async () => {
@@ -105,6 +158,7 @@ describe("API routes", () => {
         windDirDeg: 270,
         stabilityClass: "D",
         tempC: 20,
+        ...currentManualWeather(),
       }),
     });
     expect(res.status).toBe(200);
@@ -158,6 +212,7 @@ describe("API routes", () => {
         windDirDeg: 270,
         stabilityClass: "D",
         tempC: 20,
+        ...currentManualWeather(),
       }),
     });
     expect(res.status).toBe(200);
@@ -185,6 +240,7 @@ describe("API routes", () => {
         windDirDeg: 270,
         stabilityClass: "D",
         tempC: 20,
+        ...currentManualWeather(),
         ergSpillSize: "large",
         ergPeriod: "night",
       }),
@@ -227,12 +283,174 @@ describe("API routes", () => {
     expect(await res.json()).toMatchObject({ mode: "aegl-plume" });
   });
 
-  it("returns ERG isolation data on explicit request even when AEGL is available", async () => {
+  it.each([
+    ["10", "Ammonia"],
+    ["22", "Chlorine"],
+    ["60", "Hydrogen sulfide"],
+    ["102", "Sulfur dioxide"],
+  ])("defaults supported TIH Chemical Companion record %s (%s) to Planning Plume", async (chemicalId) => {
+    const res = await app.request(`/api/plume/availability?chemicalId=${chemicalId}&endpointDurationMinutes=60`);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({
+      mode: "aegl-plume",
+      modelMode: "HAZMATIQ_PLANNING_ESTIMATE",
+    });
+  });
+
+  it("makes anhydrous hydrogen chloride Planning Plume eligible through reviewed identity and source links", async () => {
+    const res = await app.request("/api/plume/availability?chemicalId=56&endpointDurationMinutes=60");
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({
+      mode: "aegl-plume",
+      modelMode: "HAZMATIQ_PLANNING_ESTIMATE",
+      masterChemicalId: "56",
+      chemicalIdentity: { chemicalName: "Hydrogen chloride, anhydrous", casNumber: "7647-01-0" },
+      endpoint: {
+        endpointSource: "EPA AEGL",
+        endpointStatus: "Final",
+        selectedDurationMinutes: 60,
+        aegl1: 1.8,
+        aegl2: 22,
+        aegl3: 100,
+      },
+      ergAvailability: { status: "Found", un: "1050", guide: "125" },
+      sourceLinks: {
+        chemicalCompanion: { status: "Verified", recordId: "56" },
+        aegl: { status: "Verified" },
+        cameo: { status: "Verified", sourceUrl: "https://cameochemicals.noaa.gov/chemical/4649" },
+        erg: { status: "Verified", un: "1050", guide: "125" },
+      },
+    });
+  });
+
+  it("plots anhydrous hydrogen chloride with complete release and weather inputs", async () => {
+    const res = await app.request("/api/plume/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chemicalId: "56",
+        releaseKind: "plume",
+        releaseRateKgPerSec: 1,
+        windSpeedMps: 3,
+        windDirDeg: 270,
+        stabilityClass: "D",
+        tempC: 20,
+        ...currentManualWeather(),
+      }),
+    });
+    expect(res.status).toBe(200);
+    const body = await res.json() as { mode: string; masterChemicalId: string; endpoint: object; isopleths: unknown[] };
+    expect(body).toMatchObject({
+      mode: "aegl-plume",
+      masterChemicalId: "56",
+      endpoint: { endpointSource: "EPA AEGL", aegl1: 1.8, aegl2: 22, aegl3: 100 },
+    });
+    expect(body.isopleths).toHaveLength(3);
+  });
+
+  it("uses the canonical molecular weight instead of a caller override", async () => {
+    const res = await app.request("/api/plume/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chemicalId: "10",
+        releaseKind: "plume",
+        releaseRateKgPerSec: 1,
+        windSpeedMps: 3,
+        windDirDeg: 270,
+        stabilityClass: "D",
+        tempC: 20,
+        molecularWeight: 999,
+        ...currentManualWeather(),
+      }),
+    });
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({ inputs: { molecularWeight: 17.03 } });
+  });
+
+  it("rejects client-asserted calculation evidence", async () => {
+    const res = await app.request("/api/plume/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chemicalId: "10",
+        releaseKind: "plume",
+        releaseRateKgPerSec: 1,
+        windSpeedMps: 3,
+        windDirDeg: 270,
+        stabilityClass: "D",
+        tempC: 20,
+        calculationEvidence: { approved: true },
+        ...currentManualWeather(),
+      }),
+    });
+    expect(res.status).toBe(400);
+    expect(await res.json()).toMatchObject({
+      error: "Calculation evidence is server-controlled and cannot be supplied by a client.",
+    });
+  });
+
+  it("blocks a plume when weather source or observation time is missing", async () => {
+    const res = await app.request("/api/plume/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chemicalId: "10",
+        releaseKind: "plume",
+        releaseRateKgPerSec: 1,
+        windSpeedMps: 3,
+        windDirDeg: 270,
+        stabilityClass: "D",
+        tempC: 20,
+        lat: 38.9517,
+        lng: -92.3341,
+      }),
+    });
+    expect(res.status).toBe(422);
+    expect(await res.json()).toMatchObject({
+      plumeStatus: "Blocked Missing Weather",
+      weather: { usableForPlanning: false },
+    });
+  });
+
+  it("blocks a plume without an incident or planning location", async () => {
+    const weather = currentManualWeather();
+    const res = await app.request("/api/plume/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chemicalId: "10",
+        releaseKind: "plume",
+        releaseRateKgPerSec: 1,
+        windSpeedMps: 3,
+        windDirDeg: 270,
+        stabilityClass: "D",
+        tempC: 20,
+        weatherSourceMode: weather.weatherSourceMode,
+        weatherSource: weather.weatherSource,
+        weatherObservationTime: weather.weatherObservationTime,
+      }),
+    });
+    expect(res.status).toBe(422);
+    expect(await res.json()).toMatchObject({
+      error: "Cannot plot plume without a valid incident or planning location.",
+    });
+  });
+
+  it("does not transfer the anhydrous-gas AEGL master link to hydrochloric acid solution", async () => {
+    const res = await app.request("/api/plume/availability?chemicalId=965&endpointDurationMinutes=60");
+    expect(res.status).toBe(200);
+    const body = await res.json() as { mode: string; endpoint?: unknown; chemicalIdentity?: { casNumber: string } };
+    expect(body.mode).not.toBe("aegl-plume");
+    expect(body.endpoint).toBeUndefined();
+  });
+
+  it("does not allow ERG to override Planning Plume when AEGL is available", async () => {
     const res = await app.request("/api/plume/availability?chemicalId=10&ergSpillSize=large&ergPeriod=night&ergOnly=true");
     expect(res.status).toBe(200);
     expect(await res.json()).toMatchObject({
-      mode: "erg-protective-action",
-      ergOverlay: { un: "1005", spillSize: "large", period: "night" },
+      mode: "aegl-plume",
+      modelMode: "HAZMATIQ_PLANNING_ESTIMATE",
     });
   });
 

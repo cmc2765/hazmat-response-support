@@ -1,4 +1,4 @@
-import { runPlume } from "./plume";
+import { runPlume } from "../../lib/model/plume";
 import type { PlumeInputs, StabilityClass, ThresholdBand } from "@/lib/schema";
 
 export const PLUME_VALIDATION_PLACEHOLDER_WARNING =

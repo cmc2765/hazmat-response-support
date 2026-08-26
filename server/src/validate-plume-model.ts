@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import {
   type PlumeValidationCase,
   validatePlumeCases,
-} from "../../src/lib/model/validation.js";
+} from "../../src/internal/plume-validation/index.js";
 
 const fixtureUrl = new URL(
   "../../test/model-validation/plume-validation-cases.example.json",

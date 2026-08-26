@@ -5,55 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HazMatIQ Prototype</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
-    <link rel="stylesheet" href="styles.css?v=chemical-intel-7" />
-    <link rel="stylesheet" href="chemical-intel.css?v=chemical-intel-7" />
+    <link rel="stylesheet" href="styles.css?v=design-mode-resize-40" />
+    <link rel="stylesheet" href="chemical-intel.css?v=incident-command-decon-17" />
   </head>
   <body>
     <div class="app-shell">
-      <header class="topbar">
-        <div class="brand">
-          <img class="brand-logo" src="assets/hazmatiq-logo.png" alt="HazMatIQ — Incident Intelligence" />
+      <header class="topbar hazmat-command-bar command-header">
+        <span class="command-header-plume" aria-hidden="true"></span>
+        <span class="command-header-contours" aria-hidden="true"></span>
+        <div class="hazmat-command-identity">
+          <div class="brand">
+            <button class="module-btn command-brand-home" type="button" data-view="overview" aria-label="Return to the HazMatIQ Home Page">
+              <img class="brand-logo-command" src="assets/hazmatiq-logo-command.png" alt="HazMatIQ — Incident Intelligence" />
+            </button>
+          </div>
         </div>
-        <a
-          class="department-logo-link"
-          href="https://pelhamcityal.sharepoint.com/sites/PFDHAZMAT"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Open the Pelham Fire Department HazMat SharePoint site in a new tab"
-          title="Pelham Fire Department HazMat SharePoint"
-        >
-          <img class="department-logo" src="assets/pelham-fire-logo.png" alt="Pelham Fire Department" />
-        </a>
+
+        <div class="command-header-footer">
+          <div class="command-center-launch">
+            <button class="command-menu-toggle" id="command-menu-toggle" type="button" aria-label="Open command dashboard navigation" aria-controls="workspace-navigation-drawer" aria-expanded="false"><span></span><span></span><span></span></button>
+            <span class="command-center-label">Command Center</span>
+          </div>
+          <section class="notification-center hazmat-command-context" id="notification-center" role="status" aria-live="polite" aria-atomic="false" data-severity="normal">
+            <strong class="notification-center-title sr-only">HazMatIQ Command Status</strong>
+            <div class="notification-feed">
+              <div class="notification-item notification-system">
+                <span>System</span>
+                <time class="notification-updated" id="notification-updated" aria-label="Current 24-hour time">00:00:00</time>
+                <strong class="notification-system-message" id="tactical-alert-message">System Normal</strong>
+              </div>
+              <div class="notification-item notification-weather-item">
+                <span>Weather</span>
+                <strong id="notification-weather">Awaiting live weather data</strong>
+                <small id="notification-weather-source">Closest live station</small>
+              </div>
+              <div class="notification-item">
+                <span>Alerts</span>
+                <strong id="notification-monitoring">No Alerts Found</strong>
+              </div>
+            </div>
+            <button class="notification-alert-count" id="notification-alert-count" type="button" aria-haspopup="dialog" aria-controls="notification-drawer">Alerts: 0</button>
+          </section>
+        </div>
       </header>
 
-      <section class="alert-banner notification-center" id="notification-center" role="status" aria-live="polite" aria-atomic="false" data-severity="normal">
-        <span class="notification-severity-icon" id="notification-severity-icon" role="img" aria-label="Tactical alert status">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M10.3 3.7 2.2 18a2 2 0 0 0 1.7 3h16.2a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0Z"></path>
-            <path d="M12 9v4"></path>
-            <path d="M12 17h.01"></path>
-          </svg>
-        </span>
-        <strong class="notification-center-title">Notification Center</strong>
-        <div class="notification-feed">
-          <div class="notification-item notification-system">
-            <span>System</span>
-            <time class="notification-updated" id="notification-updated" aria-label="Current 24-hour time">00:00:00</time>
-            <strong class="notification-system-message" id="tactical-alert-message">System Normal</strong>
-          </div>
-          <div class="notification-item">
-            <span>Weather</span>
-            <strong id="notification-weather">Awaiting live weather data</strong>
-          </div>
-          <div class="notification-item">
-            <span>Monitor Alerts</span>
-            <strong id="notification-monitoring">No Alerts Found</strong>
-          </div>
-        </div>
-        <button class="notification-alert-count" id="notification-alert-count" type="button" aria-haspopup="dialog" aria-controls="notification-drawer">Alerts: 0</button>
-        <button class="notification-details-btn" id="notification-details-btn" type="button" aria-haspopup="dialog" aria-controls="notification-drawer" hidden>View Details</button>
-        <button class="notification-ack-btn" id="notification-ack-btn" type="button" hidden>Acknowledge</button>
-      </section>
+      <div class="workspace-drawer-backdrop" id="workspace-drawer-backdrop" hidden></div>
+      <aside class="workspace-navigation-drawer" id="workspace-navigation-drawer" role="dialog" aria-modal="true" aria-labelledby="workspace-drawer-title" hidden>
+        <header class="workspace-drawer-header">
+          <h2 id="workspace-drawer-title">COMMAND DASHBOARD</h2>
+          <button class="workspace-drawer-close" id="workspace-drawer-close" type="button" aria-label="Close workspace navigation">Close</button>
+        </header>
+        <nav class="workspace-drawer-nav" aria-label="Workspace navigation">
+          <button class="module-btn workspace-home-btn" data-view="overview" aria-label="Return to the HazMatIQ homepage">
+            <img src="assets/hazmatiq-logo-command.png" alt="" aria-hidden="true" />
+          </button>
+          <button class="module-btn" data-view="incident">INCIDENT COMMAND</button>
+          <button class="module-btn" data-view="lookup">HAZARD ID</button>
+          <button class="module-btn" data-view="plume">PLUME MODELING</button>
+          <button class="module-btn" data-view="map">LIVE MAP</button>
+          <button class="module-btn" data-view="guided-response">Guided Response</button>
+          <button class="module-btn" data-view="monitor">EQUIPMENT INVENTORY</button>
+          <button class="module-btn" data-view="report">MY REPORTS</button>
+          <button class="module-btn" data-view="my-chemicals">MY CHEMICALS</button>
+          <button class="module-btn" type="button" disabled title="Settings are not configured in this prototype">Settings <small>Not configured</small></button>
+        </nav>
+      </aside>
 
       <div class="notification-drawer-backdrop" id="notification-drawer-backdrop" hidden></div>
       <aside class="notification-drawer" id="notification-drawer" role="dialog" aria-modal="true" aria-labelledby="notification-drawer-title" hidden>
@@ -68,105 +84,179 @@
       </aside>
 
       <main class="layout">
-        <aside class="sidebar">
-          <div class="sidebar-card">
-            <h2>Command Dashboard</h2>
-            <nav class="module-nav" aria-label="Primary">
-              <button class="module-btn home-logo-btn active" data-view="overview" aria-label="HazMatIQ Home">
-                <span class="home-nav-emblem" aria-hidden="true">
-                  <span class="home-nav-cell home-nav-fire"><span>1</span></span>
-                  <span class="home-nav-cell home-nav-reactivity"><span>0</span></span>
-                  <span class="home-nav-cell home-nav-health"><span>3</span></span>
-                  <span class="home-nav-cell home-nav-special"><span>W</span></span>
-                </span>
-                <span class="home-nav-brand">HazMat<strong>IQ</strong></span>
-              </button>
-              <button class="module-btn" data-view="incident">Incident Dashboard</button>
-              <button class="module-btn" data-view="lookup">Chemical ID</button>
-              <button class="module-btn" data-view="plume">Plume Model</button>
-              <button class="module-btn" data-view="map">Live Map</button>
-              <button class="module-btn" data-view="monitor">Monitoring Equipment</button>
-              <button class="module-btn" data-view="report">Incident Reports</button>
-              <button class="module-btn my-chemicals-nav" data-view="my-chemicals">My Chemicals</button>
-            </nav>
-          </div>
-
-        </aside>
-
         <section class="content-area">
           <section id="overview" class="view active">
             <article class="panel-card incident-overview-card">
               <div class="incident-overview-actions">
-                <button class="module-btn overview-action-btn overview-action-incident" data-view="incident" data-incident-action="new">
-                  <span class="overview-action-copy">
-                    <span class="overview-action-title">New Incident</span>
-                    <span class="overview-action-description">Begin a New Incident Response</span>
-                    <span class="overview-action-arrow" aria-hidden="true">&#8594;</span>
-                  </span>
-                </button>
-                <button class="module-btn overview-action-btn overview-action-planning" data-view="planning-tools">
-                  <span class="overview-action-copy">
-                    <span class="overview-action-title">Planning Tools</span>
-                    <span class="overview-action-description">Access tools for pre-incident planning, resources, and scenario preparation.</span>
-                    <span class="overview-action-arrow" aria-hidden="true">&#8594;</span>
-                  </span>
-                </button>
-                <button class="module-btn overview-action-btn overview-action-training" data-view="incident" data-incident-action="training">
-                  <span class="overview-action-copy">
-                    <span class="overview-action-title">Training Mode</span>
-                    <span class="overview-action-description">Practice response procedures and test your knowledge in a safe environment.</span>
-                    <span class="overview-action-arrow" aria-hidden="true">&#8594;</span>
-                  </span>
-                </button>
+                <section class="overview-command-panel overview-command-incident" aria-labelledby="overview-new-incident-title" data-hero-trigger data-design-layout="home.newIncident" data-design-page="home">
+                  <div class="overview-command-copy">
+                    <p class="overview-command-kicker" id="overview-new-incident-title">NEW INCIDENT</p>
+                    <h2>Start the incident, set the objectives, and build the operational picture.</h2>
+                    <button class="module-btn overview-command-primary" data-view="incident" data-incident-action="new">Establish Command <span aria-hidden="true">&#8594;</span></button>
+                  </div>
+                </section>
+
+                <section class="overview-command-panel overview-command-planning" aria-labelledby="overview-planning-title" data-hero-trigger data-design-layout="home.planningTools" data-design-page="home">
+                  <div class="overview-command-copy">
+                    <p class="overview-command-kicker" id="overview-planning-title">PLANNING TOOLS</p>
+                    <h2>Plan the incident before it happens.</h2>
+                    <p>Facility intelligence, pre-plans, hazards, maps, contacts, and response resources in one command workspace.</p>
+                    <button class="module-btn overview-command-primary" data-view="planning-tools">Open Planning Tools <span aria-hidden="true">&#8594;</span></button>
+                  </div>
+                </section>
+
+                <section class="overview-command-panel overview-command-reports" aria-labelledby="overview-reports-title" data-hero-trigger data-design-layout="home.incidentReports" data-design-page="home">
+                  <div class="overview-command-copy">
+                    <p class="overview-command-kicker" id="overview-reports-title">INCIDENT REPORTS</p>
+                    <h2>ICS Forms. Printing. Command Documentation.</h2>
+                    <button class="module-btn overview-command-primary" data-view="report" data-report-shortcut="library">ICS Forms <span aria-hidden="true">&#8594;</span></button>
+                  </div>
+                </section>
               </div>
             </article>
           </section>
 
           <section id="planning-tools" class="view">
+            <header class="hazmat-page-hero variant-planning">
+              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Planning Tools</p><h1 class="hazmat-hero-title">Pre-Incident Intelligence</h1><p class="hazmat-hero-subtitle">Facility data, hazard intelligence, maps, pre-plans, and response scenarios before the alarm.</p></div>
+              <span class="hazmat-hero-symbol" aria-hidden="true">PLN</span>
+            </header>
             <article class="panel-card planning-tools-card">
               <div class="planning-tools-heading">
-                <p class="eyebrow box-title">Facility Pre-Planning</p>
-                <h2>Planning Tools</h2>
-                <p>Review E-Plan facility records or open a locally stored facility pre-plan.</p>
+                <p class="eyebrow box-title">Preparedness Workspace</p>
+                <p>Build a response-ready picture of the places, hazards, and decisions that matter before the call drops.</p>
               </div>
 
-              <div class="planning-tools-layout">
-                <div class="planning-tools-primary">
-                  <section class="planning-eplan-card" aria-labelledby="planning-eplan-title">
-                    <h3 id="planning-eplan-title">E-Plan Facility Records</h3>
-                    <div
-                      class="eplan-login-form"
-                      aria-label="Open E-Plan first responder login"
-                    >
-                      <img
-                        class="eplan-logo"
-                        src="https://erplan.net/eplan/media/eplanlogo.gif"
-                        alt="E-Plan"
-                        referrerpolicy="no-referrer"
-                      />
-                      <a class="primary-btn" href="https://erplan.net/eplan/login.htm" target="eplan-program" rel="noopener noreferrer">E-Plan LogIn</a>
-                    </div>
-                  </section>
+              <div class="planning-tools-grid">
+                <section class="planning-tool-section planning-tool-eplan" aria-labelledby="planning-eplan-title" data-design-layout="planningTools.eplan" data-design-page="planning-tools">
+                  <div class="planning-tool-section-heading"><span class="planning-tool-index">01</span><div><p class="planning-tool-label">Facility Intelligence</p><h3 id="planning-eplan-title">E-Plan / Facility Intelligence</h3></div></div>
+                  <p>Sync facility data, chemical inventories, site contacts, SDS files, maps, and Tier II information when authorized.</p>
+                  <ul class="planning-tool-list"><li>E-Plan login and sync</li><li>Facility contacts, maps, and chemical documents</li><li>Import facility intelligence into an active incident</li></ul>
+                  <div class="planning-tool-actions"><a class="primary-btn" href="https://erplan.net/eplan/login.htm" target="eplan-program" rel="noopener noreferrer">Login to E-Plan</a><button class="ghost-btn" type="button" data-planning-status="Facility sync is ready for an authorized E-Plan connection.">Sync Facility Data</button><button class="ghost-btn" type="button" data-planning-status="Facility profile selection will be available after a facility sync.">Open Facility Profile</button></div>
+                </section>
 
-                  <section class="facility-preplan-section" aria-labelledby="facility-preplan-title">
-                    <div class="facility-preplan-heading">
-                      <h3 id="facility-preplan-title">Target Hazard Pre-Plans</h3>
-                      <button class="facility-preplan-add-btn" id="add-facility-preplan-btn" type="button">Add Preplans</button>
-                    </div>
-                    <div class="facility-preplan-grid">
-                      <button class="facility-preplan-btn" type="button" data-preplan-name="Colonial Pipeline">Colonial Pipeline</button>
-                      <button class="facility-preplan-btn" type="button" data-preplan-name="Pelham Civic Complex">Pelham Civic Complex</button>
-                      <button class="facility-preplan-btn" type="button" data-preplan-name="Research Solutions">Research Solutions</button>
-                    </div>
-                    <p class="muted" id="facility-preplan-status" role="status" aria-live="polite">Pre-plan documents will be connected here when uploaded.</p>
-                  </section>
-                </div>
-                <aside class="planning-tools-future" aria-label="Space reserved for additional planning tools"></aside>
+                <section class="planning-tool-section" aria-labelledby="planning-preplans-title" data-design-layout="planningTools.preIncidentPlans" data-design-page="planning-tools">
+                  <div class="planning-tool-section-heading"><span class="planning-tool-index">02</span><div><p class="planning-tool-label">Tactical Readiness</p><h3 id="planning-preplans-title">Pre-Incident Plans</h3></div></div>
+                  <p>Build and store tactical plans for schools, industrial sites, warehouses, rail yards, hospitals, and other high-risk facilities.</p>
+                  <ul class="planning-tool-list"><li>Entry points, staging, command post, and decon</li><li>Shutoffs, utilities, hydrants, and evacuation concerns</li><li>Target hazards and response notes</li></ul>
+                  <button class="primary-btn" type="button" data-planning-status="Pre-plan builder is ready for a facility profile.">Build Pre-Plan</button>
+                </section>
+
+                <section class="planning-tool-section" aria-labelledby="planning-hazards-title" data-design-layout="planningTools.hazardPlanning" data-design-page="planning-tools">
+                  <div class="planning-tool-section-heading"><span class="planning-tool-index">03</span><div><p class="planning-tool-label">Known Threats</p><h3 id="planning-hazards-title">Hazard Planning</h3></div></div>
+                  <p>Identify known chemicals, CBRNE hazards, radiological materials, and threat concerns before arrival.</p>
+                  <ul class="planning-tool-list"><li>Save hazards to a facility profile</li><li>Pre-plan PPE, decon, and plume candidates</li><li>Flag high-risk materials from E-Plan</li></ul>
+                  <button class="primary-btn" type="button" data-view="lookup">Open Hazard Planning</button>
+                </section>
+
+                <section class="planning-tool-section" aria-labelledby="planning-map-title" data-design-layout="planningTools.mapLayout" data-design-page="planning-tools">
+                  <div class="planning-tool-section-heading"><span class="planning-tool-index">04</span><div><p class="planning-tool-label">Operational Geography</p><h3 id="planning-map-title">Map &amp; Response Layout</h3></div></div>
+                  <p>Prepare the operational map before the incident becomes chaotic.</p>
+                  <ul class="planning-tool-list"><li>Access routes, ICP, staging, and evacuation routes</li><li>Hot, warm, cold zones, and decon corridors</li><li>Sensitive receptors, schools, hospitals, and waterways</li></ul>
+                  <div class="planning-tool-actions"><button class="primary-btn" type="button" data-view="map">Open Planning Map</button><button class="ghost-btn" type="button" data-planning-status="Response layout tools are ready for a planning map.">Create Response Layout</button></div>
+                </section>
+
+                <section class="planning-tool-section planning-tool-scenario" aria-labelledby="planning-scenario-title" data-design-layout="planningTools.scenarioBuilder" data-design-page="planning-tools">
+                  <div class="planning-tool-section-heading"><span class="planning-tool-index">05</span><div><p class="planning-tool-label">Tabletop Readiness</p><h3 id="planning-scenario-title">Scenario Builder</h3></div></div>
+                  <p>Run pre-incident tabletop scenarios using real facility hazards.</p>
+                  <div class="planning-scenario-examples"><span>Chlorine release</span><span>Ammonia leak</span><span>Acid spill</span><span>Radiological package</span><span>Unknown powder</span><span>Railcar leak</span></div>
+                  <button class="primary-btn" type="button" data-planning-status="Scenario builder is queued for the facility planning workspace.">Build Scenario</button>
+                </section>
               </div>
+              <p class="planning-tools-status muted" id="planning-tools-status" role="status" aria-live="polite">Select a planning capability to begin.</p>
             </article>
           </section>
 
           <section id="incident" class="view">
+            <header class="hazmat-page-hero variant-incident incident-command-hero" data-design-layout="incidentCommand.hero" data-design-page="incident">
+              <div class="hazmat-page-hero-content"><span class="sr-only">Incident Command Dashboard</span><h1 class="hazmat-hero-title incident-command-title">Incident Command</h1><p class="hazmat-hero-subtitle incident-command-subtitle">Real-Time Operational Overview</p></div>
+            </header>
+            <section class="incident-command-dashboard" aria-label="Incident command operational dashboard">
+              <div id="incident-command-empty" class="incident-command-empty" hidden>
+                <p class="eyebrow">COMMAND STATUS</p>
+                <h2>NO ACTIVE INCIDENT</h2>
+                <p>Start a new incident to build the command brief, tactical status, plume, map, reports, and operational record.</p>
+                <div class="button-row">
+                  <button class="incident-command-primary" type="button" data-incident-command-action="start">Start New Incident</button>
+                  <button class="incident-command-secondary" type="button" data-command-view="lookup">Open Hazard ID</button>
+                </div>
+              </div>
+
+              <div id="incident-command-active">
+                <section class="incident-command-summary-strip" aria-label="Active incident summary">
+                  <div><span><b aria-hidden="true">📋</b> Incident Name</span><strong id="ic-summary-name">Incident not named</strong></div>
+                  <div><span><b aria-hidden="true">●</b> Status</span><strong id="ic-summary-status" class="incident-command-badge">No Active Incident</strong></div>
+                  <div><span><b aria-hidden="true">📍</b> Location</span><strong id="ic-summary-location">Location not set</strong></div>
+                  <div><span><b aria-hidden="true">🕒</b> Start Time</span><strong id="ic-summary-start">Start time pending</strong></div>
+                  <div><span><b aria-hidden="true">⏱</b> Elapsed Time</span><strong id="ic-summary-elapsed">00:00:00</strong></div>
+                  <div><span><b aria-hidden="true">⚗</b> Chemical / Hazard</span><strong id="ic-summary-hazard">Hazard not identified</strong></div>
+                  <div><span><b aria-hidden="true">🛡</b> Operational Mode</span><strong id="ic-summary-mode">Assessment pending</strong></div>
+                </section>
+                <div class="incident-command-hazard-stripe" aria-hidden="true"></div>
+
+                <div class="incident-command-main-grid">
+                  <article class="incident-command-panel incident-command-brief-panel" data-design-layout="incidentCommand.liveBrief" data-design-page="incident">
+                    <h2><span aria-hidden="true">📋</span> Live Incident Brief</h2>
+                    <dl id="ic-brief-list" class="incident-command-brief-list"></dl>
+                  </article>
+
+                  <article class="incident-command-panel incident-command-tactical-panel" data-design-layout="incidentCommand.tacticalStatus" data-design-page="incident">
+                    <h2><span aria-hidden="true">🛡️</span> Tactical Status</h2>
+                    <div id="ic-tactical-list" class="incident-command-tactical-list"></div>
+                  </article>
+
+                  <article class="incident-command-panel incident-command-reports-panel" data-design-layout="incidentCommand.reports" data-design-page="incident">
+                    <h2><span aria-hidden="true">🗂️</span> Incident Reports</h2>
+                    <section>
+                      <h3>Current Incident Report</h3>
+                      <div id="ic-current-report" class="incident-command-report-card"></div>
+                      <div class="incident-command-inline-actions">
+                        <button type="button" data-incident-command-action="open-report">Open Report</button>
+                        <button type="button" data-incident-command-action="generate-report">Generate Report</button>
+                        <button type="button" data-incident-command-action="export-package">Export Package</button>
+                      </div>
+                    </section>
+                    <section>
+                      <h3>Recent / Completed Reports</h3>
+                      <div id="ic-recent-reports" class="incident-command-recent-reports"></div>
+                    </section>
+                    <button class="incident-command-wide-action" type="button" data-incident-command-action="ics">Open ICS Forms</button>
+                  </article>
+                </div>
+
+                <section class="incident-command-panel incident-command-tools" aria-labelledby="ic-command-tools-title" data-design-layout="incidentCommand.commandTools" data-design-page="incident">
+                  <h2 id="ic-command-tools-title"><span aria-hidden="true">🧰</span> Command Tools</h2>
+                  <div class="incident-command-tool-grid">
+                    <button class="incident-command-tool incident-command-tool-plume" type="button" data-command-view="plume"><strong>☁️ Open Plume Model</strong><span>View / plot chemical plume</span></button>
+                    <button class="incident-command-tool" type="button" data-command-view="map"><strong>🗺️ Open Live Map</strong><span>Real-time situational map</span></button>
+                    <button class="incident-command-tool" type="button" data-incident-command-action="note"><strong>✏️ Add Incident Note</strong><span>Add new tactical note</span></button>
+                    <button class="incident-command-tool" type="button" data-incident-command-action="generate-report"><strong>📄 Generate Report</strong><span>Create incident report</span></button>
+                    <button class="incident-command-tool incident-command-tool-danger" type="button" data-incident-command-action="complete"><strong>✅ Complete Incident</strong><span>Close out this incident</span></button>
+                  </div>
+                </section>
+
+                <details class="incident-command-panel incident-command-operational-details" data-design-layout="incidentCommand.operationalDetails" data-design-page="incident">
+                  <summary><strong>Operational Details</strong><span>Detailed information, full guidance, and supporting resources.</span></summary>
+                  <div class="incident-command-detail-grid">
+                    <section><h3>Incident Notes</h3><div id="ic-detail-notes">No Current Data Exists</div></section>
+                    <section><h3>Weather Details</h3><div id="ic-detail-weather">No Current Data Exists</div></section>
+                    <section><h3>Plume Details</h3><div id="ic-detail-plume">No Current Data Exists</div></section>
+                    <section><h3>Monitoring Details</h3><div id="ic-detail-monitoring">No Current Data Exists</div></section>
+                    <section><h3>Protective Actions</h3><div id="ic-detail-protective">No Current Data Exists</div></section>
+                    <section><h3>PPE / Decon / Medical</h3><div id="ic-detail-safety">No Current Data Exists</div></section>
+                    <section><h3>Report History</h3><div id="ic-detail-reports">No Current Data Exists</div></section>
+                  </div>
+                  <button class="incident-command-secondary" id="ic-edit-scene-btn" type="button">Edit Incident Brief / Scene</button>
+                </details>
+              </div>
+            </section>
+
+            <dialog id="incident-note-dialog" aria-labelledby="incident-note-title">
+              <h3 id="incident-note-title">Add Incident Note</h3>
+              <label for="incident-command-note"><span>Tactical note</span><textarea id="incident-command-note" rows="5" required></textarea></label>
+              <p id="incident-note-status" role="status" aria-live="polite"></p>
+              <div class="button-row"><button class="primary-btn" id="save-incident-note-btn" type="button">Save Note</button><button class="ghost-btn" id="cancel-incident-note-btn" type="button">Cancel</button></div>
+            </dialog>
             <section class="incident-command-snapshot" aria-labelledby="command-snapshot-title">
               <div class="command-snapshot-heading">
                 <div>
@@ -392,52 +482,38 @@
           </section>
 
           <section id="lookup" class="view">
-            <article class="panel-card chemical-id-search-card">
-              <div class="chemical-search-brand">
-                <img src="assets/hazmatiq-logo-transparent.png" alt="HazMatIQ — Incident Intelligence" />
-                <img class="chemical-search-brand__white-hazmat" src="assets/hazmatiq-logo-transparent.png" alt="" aria-hidden="true" />
-                <img class="chemical-search-brand__white-subtitle" src="assets/hazmatiq-logo-transparent.png" alt="" aria-hidden="true" />
+            <header class="hazmat-page-hero variant-chemical hazard-id-page-hero" data-design-layout="hazardId.hero" data-design-page="lookup">
+              <span class="hazard-id-hero-atmosphere" aria-hidden="true"></span>
+              <div class="hazmat-page-hero-content">
+                <h1 class="hazmat-hero-title">HAZARD ID</h1>
+                <p class="hazmat-hero-subtitle"><span>Search.</span><span>Identify.</span><span>Verify.</span><span>Respond.</span></p>
               </div>
-              <div class="chemical-search-hero-copy">
-                <h1>Chemical ID</h1>
-              </div>
-              <div class="chemical-id-search-content">
-                <form id="chemical-search-form" class="chemical-search-form" role="search">
+            </header>
+            <article class="hazard-id-command-console chemical-id-search-card" aria-label="Hazard identification command console" data-design-layout="hazardId.chemicalSearch" data-design-page="lookup" data-design-hazard-search>
+              <nav class="hazard-search-tabs" role="tablist" aria-label="Hazard database">
+                <button class="hazard-search-tab active" type="button" role="tab" aria-selected="true" data-hazard-search-tab="CHEMICAL">Chemical</button>
+                <button class="hazard-search-tab" type="button" role="tab" aria-selected="false" data-hazard-search-tab="CBRNE_CWA">CBRNE / CWA</button>
+                <button class="hazard-search-tab" type="button" role="tab" aria-selected="false" data-hazard-search-tab="RADIOLOGICAL">Radiological</button>
+              </nav>
+              <div class="hazard-search-command-body">
+                <div class="hazard-search-mode-copy"><p class="eyebrow" id="hazard-search-mode-label">CHEMICAL INTELLIGENCE</p><h2 id="hazard-search-mode-title">Chemical Identification</h2><p id="hazard-search-mode-description">Search chemical name, CAS, UN/NA, ERG, synonym, or facility.</p></div>
+                <form id="chemical-search-form" class="chemical-search-form hazard-unified-search-form" role="search">
                   <div class="chemical-search-input-wrap">
-                    <label class="sr-only" for="chemical-search">Chemical name, UN number, CAS number, or facility</label>
-                    <input
-                      id="chemical-search"
-                      type="search"
-                      role="combobox"
-                      placeholder="Chemical name, UN number, CAS number, or facility"
-                      autocomplete="off"
-                      aria-controls="chemical-search-suggestions"
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                    />
-                    <div id="chemical-search-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
+                    <label class="sr-only" id="hazard-search-label" for="chemical-search">Search Chemical Name, CAS, UN, ERG</label>
+                    <input id="chemical-search" type="search" role="combobox" placeholder="Search Chemical Name, CAS, UN, ERG..." autocomplete="off" aria-controls="chemical-search-suggestions" aria-expanded="false" aria-haspopup="listbox" />
+                    <div id="chemical-search-suggestions" class="chemical-search-suggestions hazard-unified-suggestions" role="listbox" hidden></div>
                   </div>
                   <button class="primary-btn" id="chemical-lookup-btn" type="submit">Search</button>
-                  <button class="accent-btn" id="save-my-chemical-btn" type="button">Save to My Chemicals</button>
                 </form>
-                <div class="chemical-search-examples" aria-label="Chemical search examples">
-                  <span>Examples:</span><button type="button" data-chemical-example="Chlorine">Chlorine</button><button type="button" data-chemical-example="Ammonia">Ammonia</button><button type="button" data-chemical-example="Diesel Fuel">Diesel Fuel</button><button type="button" data-chemical-example="Sodium Hydroxide">Sodium Hydroxide</button><button type="button" data-chemical-example="UN1017">UN1017</button><button type="button" data-chemical-example="1005">1005</button>
-                </div>
+                <div id="hazard-search-examples" class="chemical-search-examples hazard-search-examples" aria-label="Search examples"></div>
                 <p id="chemical-search-status" class="chemical-search-status" role="status" aria-live="polite"></p>
               </div>
-              <div class="chemical-search-assurance-grid">
-                <article><span>⚡</span><div><strong>Fast &amp; Accurate</strong><small>Real-time data from trusted sources</small></div></article>
-                <article><span>✓</span><div><strong>Response Ready</strong><small>Information you need, when you need it</small></div></article>
-                <article><span>◇</span><div><strong>Field Proven</strong><small>Built for responders, by responders</small></div></article>
-                <article><span>↻</span><div><strong>Always Updated</strong><small>Continuous updates from reliable authorities</small></div></article>
-              </div>
-              <div class="chemical-search-trust-grid">
-                <article><span>◇</span><div><strong>Verified Sources</strong><small>Trusted data from government &amp; industry</small></div></article>
-                <article><span>⇩</span><div><strong>Offline Ready</strong><small>Critical info available when you need it</small></div></article>
-                <article><span>⌘</span><div><strong>Export &amp; Share</strong><small>Reports, ICS forms &amp; incident data</small></div></article>
-                <article><span>▣</span><div><strong>Secure &amp; Reliable</strong><small>Built with security &amp; data integrity</small></div></article>
-              </div>
+              <ol class="hazard-workflow-rail" aria-label="HazMatIQ response workflow"><li>Identify</li><li>Analyze</li><li>Model</li><li>Respond</li><li>Report</li></ol>
             </article>
+
+            <aside class="hazard-id-empty-profile" id="hazard-id-empty-profile">
+              <span aria-hidden="true">ID</span><p class="eyebrow">HAZARD PROFILE</p><h2>Select a hazard to begin</h2><p>Use Chemical ID, Warfare Agents ID, or Radiological ID. Tactical fields remain unavailable until supported by verified sources.</p>
+            </aside>
 
             <article id="facility-inventory" class="panel-card facility-inventory" hidden>
               <div class="chemical-card-header">
@@ -452,11 +528,11 @@
               <div id="facility-chemical-list" class="facility-chemical-list"></div>
             </article>
 
-            <div id="chemical-id-results" class="chemical-id-results" hidden>
+            <div id="chemical-id-results" class="chemical-id-results" hidden data-design-layout="hazardId.profile" data-design-page="lookup">
               <div class="section-header chemical-results-header">
                 <div>
                   <p class="eyebrow">Hazard summary</p>
-                  <h2>Chemical ID Results</h2>
+                  <h2>HAZARD ID Results</h2>
                 </div>
               </div>
               <div class="chemical-profile-shell">
@@ -474,7 +550,7 @@
                         <button id="profile-download-btn" type="button" role="menuitem">Save Profile Data (.json)</button>
                       </div>
                     </div>
-                    <button class="ghost-btn" id="profile-save-chemical-btn" type="button">Save to My Chemicals</button>
+                    <button class="ghost-btn" id="profile-save-chemical-btn" type="button">Save to My Hazards</button>
                   </div>
                 </header>
                 <article class="panel-card chemical-profile-header-card">
@@ -510,14 +586,49 @@
                 </div>
               </div>
             </div>
+
+            <div id="hazard-profile-results" class="hazard-profile-results" hidden data-design-layout="hazardId.profile" data-design-page="lookup">
+              <div class="hazard-profile-shell">
+                <header class="hazard-profile-toolbar">
+                  <button class="ghost-btn" id="hazard-profile-back-btn" type="button">← Back to Search</button>
+                  <strong id="hazard-profile-toolbar-title">Hazard Profile</strong>
+                  <div class="hazard-profile-toolbar-actions">
+                    <button class="primary-btn hazard-profile-plume-btn" id="hazard-profile-plume-btn" type="button" disabled>Plot Plume</button>
+                    <button class="ghost-btn" id="hazard-profile-export-btn" type="button">Export</button>
+                    <button class="ghost-btn" id="hazard-profile-save-btn" type="button">Save to My Hazards</button>
+                  </div>
+                </header>
+                <article class="hazard-profile-header-card">
+                  <div class="hazard-profile-emblem" id="hazard-profile-emblem" aria-hidden="true">ID</div>
+                  <div><p class="eyebrow" id="hazard-profile-lane">Hazard ID</p><h2 id="hazard-profile-name">Select a hazard</h2><p id="hazard-profile-category"></p><div id="hazard-profile-identifiers" class="hazard-profile-identifiers"></div></div>
+                  <div class="hazard-profile-data-status" id="hazard-profile-status" aria-label="Profile data status"><span class="chemical-profile-status-chip" data-state="review">Requires Review</span></div>
+                </article>
+                <section class="hazard-profile-action-grid" id="hazard-profile-action-cards" aria-label="Responder action status"></section>
+                <nav id="hazard-profile-tabs" class="chemical-profile-tabs hazard-profile-tabs" aria-label="Hazard profile sections"></nav>
+                <article class="hazard-profile-content-card"><div id="hazard-profile-content" class="hazard-profile-content"></div></article>
+                <aside class="hazard-profile-limitations" id="hazard-profile-limitations" aria-label="Safety limitations"></aside>
+                <footer class="hazard-profile-source-footer" aria-label="Source status">
+                  <div><span>Source Status</span><strong id="hazard-profile-source-summary">No source packs loaded</strong></div>
+                  <div><span>Source Packs Loaded</span><strong id="hazard-profile-source-pack-count">0</strong></div>
+                  <div><span>Source Facts Attached</span><strong id="hazard-profile-source-fact-count">0</strong></div>
+                  <div><span>Sources Used</span><strong id="hazard-profile-source-names">None</strong></div>
+                  <div><span>Requires SME Review</span><strong id="hazard-profile-review-count">0</strong></div>
+                  <div><span>Conflicting Sources</span><strong id="hazard-profile-conflict-count">0</strong></div>
+                  <div><span>No Current Data Fields</span><strong id="hazard-profile-missing-count">0</strong></div>
+                  <div><span>Last Import / Update</span><strong id="hazard-profile-last-import">Not imported</strong></div>
+                  <div><span>Import Warnings</span><strong id="hazard-profile-import-warnings">None</strong></div>
+                </footer>
+              </div>
+            </div>
           </section>
 
           <section id="chem-compare" class="view chemcompare-page" aria-labelledby="chemcompare-title">
             <div class="chemcompare-shell">
-              <header class="chemcompare-header">
-                <div>
-                  <h1 id="chemcompare-title">ChemCompare</h1>
-                  <p>Compare critical chemical hazards and response factors.</p>
+              <header class="chemcompare-header hazmat-page-hero variant-chemical-profile">
+                <div class="hazmat-page-hero-content">
+                  <p class="hazmat-hero-eyebrow">Chemical Intelligence</p>
+                  <h1 class="hazmat-hero-title" id="chemcompare-title">ChemCompare</h1>
+                  <p class="hazmat-hero-subtitle">Compare critical chemical hazards and response factors.</p>
                 </div>
                 <button class="ghost-btn" id="chemcompare-back-btn" type="button">Back to Chemical Profile</button>
               </header>
@@ -559,12 +670,16 @@
           </section>
 
           <section id="guided-response" class="view">
-            <header class="panel-card guided-response-heading">
+            <header class="hazmat-page-hero variant-guided-response guided-response-heading">
               <div class="guided-response-brand">
-                <img class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png" alt="HazMatIQ — Incident Intelligence" />
-                <div>
-                  <h2>Guided Response</h2>
-                  <p>Source-backed planning from Chemical Companion, ERG, NIOSH, and CAMEO.</p>
+                <div class="hazmatiq-logo-lockup hazmatiq-logo-lockup-hero" role="img" aria-label="HazMatIQ — Incident Intelligence">
+                  <span class="hazmatiq-logo-placard" aria-hidden="true"><i class="logo-fire">1</i><i class="logo-health">9</i><i class="logo-reactivity">1</i><i class="logo-special">W</i></span>
+                  <span class="hazmatiq-logo-type"><span class="hazmatiq-logo-word"><b>HAZMAT</b><strong>IQ</strong></span><small>Incident Intelligence</small></span>
+                </div>
+                <div class="hazmat-page-hero-content">
+                  <p class="hazmat-hero-eyebrow">Tactical Decision Support</p>
+                  <h1 class="hazmat-hero-title">Guided Response</h1>
+                  <p class="hazmat-hero-subtitle">Source-backed tactical planning for HazMat operations.</p>
                 </div>
               </div>
             </header>
@@ -576,7 +691,7 @@
               </div>
               <div class="guided-response-actions" aria-label="Guided response actions">
                 <button class="primary-btn" id="guided-open-plume-btn" type="button">Open Plume Model</button>
-                <button class="ghost-btn" id="guided-back-btn" type="button">Back to Chemical ID</button>
+                <button class="ghost-btn" id="guided-back-btn" type="button">Back to HAZARD ID</button>
                 <button class="ghost-btn" id="guided-save-record-btn" type="button">Save Tactical Decision Record</button>
                 <button class="ghost-btn" id="guided-save-incident-btn" type="button">Save to Incident</button>
                 <button class="ghost-btn" id="guided-save-chemical-btn" type="button">Add to My Chemicals</button>
@@ -591,20 +706,48 @@
           </section>
 
           <section id="my-chemicals" class="view">
+            <header class="hazmat-page-hero variant-my-chemicals">
+              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Saved Intelligence</p><h1 class="hazmat-hero-title">My Chemicals</h1><p class="hazmat-hero-subtitle">Saved chemical profiles and quick-access response intelligence.</p></div>
+              <span class="hazmat-hero-symbol" aria-hidden="true">MY</span>
+            </header>
             <article class="panel-card facility-inventory">
-              <h2>My Chemicals</h2>
               <div id="my-chemicals-list" class="facility-chemical-list my-chemicals-list"></div>
             </article>
           </section>
 
           <section id="plume" class="view">
+            <header class="plume-page-header hazmat-page-hero hazmat-page-hero-compact variant-plume">
+              <div class="plume-page-heading">
+                <span class="plume-hero-plume" aria-hidden="true">
+                  <svg viewBox="0 0 92 56" focusable="false">
+                    <defs>
+                      <linearGradient id="plume-aegl-one" x1="0" x2="1"><stop stop-color="#ffd323" stop-opacity=".92"/><stop offset="1" stop-color="#f6c343" stop-opacity=".32"/></linearGradient>
+                      <linearGradient id="plume-aegl-two" x1="0" x2="1"><stop stop-color="#f28c18"/><stop offset="1" stop-color="#f28c18" stop-opacity=".38"/></linearGradient>
+                      <linearGradient id="plume-aegl-three" x1="0" x2="1"><stop stop-color="#d71920"/><stop offset="1" stop-color="#c1121f" stop-opacity=".45"/></linearGradient>
+                    </defs>
+                    <ellipse class="plume-hero-shadow" cx="53" cy="48" rx="35" ry="5"/>
+                    <path class="plume-hero-zone zone-one" d="M14 28 L78 9 A9 19 0 0 1 78 47 Z"/>
+                    <ellipse class="plume-hero-cap cap-one" cx="78" cy="28" rx="9" ry="19"/>
+                    <path class="plume-hero-zone zone-two" d="M14 28 L73 16 A7 12 0 0 1 73 40 Z"/>
+                    <ellipse class="plume-hero-cap cap-two" cx="73" cy="28" rx="7" ry="12"/>
+                    <path class="plume-hero-zone zone-three" d="M14 28 L65 22 A5 6 0 0 1 65 34 Z"/>
+                    <ellipse class="plume-hero-cap cap-three" cx="65" cy="28" rx="5" ry="6"/>
+                    <path class="plume-hero-centerline" d="M14 28 L87 28"/>
+                    <circle class="plume-hero-source" cx="13" cy="28" r="5"/>
+                  </svg>
+                </span>
+                <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Threat-Zone Planning</p><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><p class="hazmat-hero-subtitle">Operational plume planning, weather, terrain, and threat-zone visualization.</p><small id="plume-header-chemical">Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers">CAS / UN / ERG pending</small></div>
+              </div>
+            </header>
+            <div class="plume-main-workspace">
+              <div class="plume-control-column" data-design-layout="plume.controls" data-design-page="plume">
             <form class="plume-model-controls" id="plume-model-form">
               <div class="plume-model-input-grid">
                 <section class="plume-model-section">
-                  <header class="plume-model-section-heading"><strong>Model Inputs</strong></header>
+                  <header class="plume-model-section-heading"><strong>Chemical Release</strong><span class="plume-card-accent" aria-hidden="true"></span></header>
                   <div class="plume-model-section-grid plume-release-grid">
-                    <label class="plume-model-field plume-chemical-field" for="plume-chemical-input">
-                      <span>Chemical</span>
+                    <label class="plume-model-field plume-chemical-field plume-required-field" for="plume-chemical-input">
+                      <span class="plume-required-label">Chemical <b>Required</b></span>
                       <div class="plume-chemical-search">
                         <div class="plume-linked-input">
                           <input id="plume-chemical-input" type="text" placeholder="Name, Chemical ID, UN, or CAS" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="plume-chemical-suggestions" aria-describedby="plume-input-status" />
@@ -613,15 +756,15 @@
                         <div id="plume-chemical-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
                       </div>
                     </label>
-                    <label class="plume-model-field" for="plume-release-type">
-                      <span>Release type</span>
+                    <label class="plume-model-field plume-required-field" for="plume-release-type">
+                      <span class="plume-required-label">Release type <b>Required</b></span>
                       <select id="plume-release-type">
                         <option value="plume">Continuous release</option>
                         <option value="puff">Instantaneous release</option>
                       </select>
                     </label>
-                    <label class="plume-model-field" for="plume-release-quantity">
-                      <span id="plume-release-quantity-label">Release rate</span>
+                    <label class="plume-model-field plume-required-field" for="plume-release-quantity">
+                      <span class="plume-required-label"><span id="plume-release-quantity-label">Release rate</span> <b>Required</b></span>
                       <div class="plume-quantity-input">
                         <input id="plume-release-quantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Required" required />
                         <select id="plume-release-unit" aria-label="Release quantity unit">
@@ -630,17 +773,18 @@
                         </select>
                       </div>
                     </label>
-                    <label class="plume-model-field" id="plume-puff-duration-field" for="plume-puff-duration" hidden>
-                      <span>Puff evaluation time (seconds)</span>
+                    <label class="plume-model-field plume-required-field" id="plume-puff-duration-field" for="plume-puff-duration" hidden>
+                      <span class="plume-required-label">Puff evaluation time (seconds) <b>Required</b></span>
                       <input id="plume-puff-duration" type="number" min="1" step="1" inputmode="numeric" placeholder="Required for puff" />
                     </label>
-                    <label class="plume-model-field" id="plume-release-duration-field" for="plume-release-duration">
-                      <span>Release duration (seconds)</span>
-                      <input id="plume-release-duration" type="number" min="1" step="1" inputmode="numeric" placeholder="Required for source assessment" />
+                    <label class="plume-model-field plume-required-field" id="plume-release-duration-field" for="plume-release-duration">
+                      <span class="plume-required-label">Release duration (minutes) <b>Required</b></span>
+                      <input id="plume-release-duration" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="Required in minutes" />
                     </label>
                     <label class="plume-model-field" for="plume-release-height">
-                      <span>Release height (ft)</span>
-                      <input id="plume-release-height" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Required — use 0 only if verified at ground" />
+                      <span>Release height (ft) <b class="plume-optional-label">Optional</b></span>
+                      <input id="plume-release-height" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Ground-level default" />
+                      <small>Blank uses the existing 0 ft ground-level planning default.</small>
                     </label>
                     <label class="plume-model-field" for="plume-endpoint-duration">
                       <span>EPA AEGL duration</span>
@@ -653,20 +797,8 @@
                       </select>
                       <small id="plume-endpoint-status">AEGL lookup occurs after verified Chemical Companion/CAS linkage.</small>
                     </label>
-                    <label class="plume-model-field" for="plume-erg-spill-size">
-                      <span>ERG fallback spill size</span>
-                      <select id="plume-erg-spill-size">
-                        <option value="large" selected>Large spill — conservative default</option>
-                        <option value="small">Small spill</option>
-                      </select>
-                    </label>
-                    <label class="plume-model-field" for="plume-erg-period">
-                      <span>ERG fallback condition</span>
-                      <select id="plume-erg-period">
-                        <option value="night" selected>Night — conservative default</option>
-                        <option value="day">Day</option>
-                      </select>
-                    </label>
+                    <input id="plume-erg-spill-size" type="hidden" value="large" />
+                    <input id="plume-erg-period" type="hidden" value="night" />
                     <div class="container-profile" aria-label="Editable container planning profile">
                       <div class="container-bubble-grid">
                         <label class="container-bubble" for="plume-container-type"><span>Container Type</span><select id="plume-container-type"></select></label>
@@ -706,11 +838,11 @@
                     </details>
                   </div>
                 </section>
-                <section class="plume-model-section plume-weather-section" id="plume-weather-data-panel" aria-labelledby="plume-weather-data-heading" hidden>
-                  <header class="plume-model-section-heading"><strong id="plume-weather-data-heading">Weather Data</strong></header>
+                <section class="plume-model-section plume-weather-section" id="plume-weather-data-panel" aria-labelledby="plume-weather-data-heading" data-design-layout="plume.weather" data-design-page="plume">
+                  <header class="plume-model-section-heading"><strong id="plume-weather-data-heading">Weather Data</strong><button class="ghost-btn plume-weather-refresh" id="use-live-plume-weather-btn" type="button">Refresh</button></header>
                   <div class="plume-model-section-grid plume-weather-grid">
                     <label class="plume-model-field" for="plume-weather-source">
-                      <span>Weather Source</span>
+                      <span>Source</span>
                       <select id="plume-weather-source">
                         <option value="auto-live" selected>Best Current Live Source</option>
                         <option value="open-meteo">Open-Meteo</option>
@@ -723,32 +855,18 @@
                       <span>Upload CSV</span>
                       <input id="plume-columbia-csv" type="file" accept=".csv,text/csv" />
                     </label>
-                    <label class="plume-model-field plume-manual-weather" for="plume-manual-observation-time" hidden>
-                      <span>Manual observation time</span>
-                      <input id="plume-manual-observation-time" type="datetime-local" />
-                      <small>Selecting Manual Entry and recording the observation time confirms this planning input; verify before operational use.</small>
-                    </label>
-                    <div class="plume-columbia-csv plume-columbia-values" hidden>
-                      <small>Station Name: <strong id="columbia-station-name">Not available</strong></small>
-                      <small>Wind Gusts: <strong id="columbia-wind-gust">Not available</strong></small>
-                      <small>Humidity: <strong id="columbia-humidity">Not available</strong></small>
-                      <small>Pressure: <strong id="columbia-pressure">Not available</strong></small>
-                    </div>
-                    <label class="plume-model-field" for="plume-wind-speed">
-                      <span>Wind speed (mph)</span>
+                    <input id="plume-manual-observation-time" type="hidden" />
+                    <label class="plume-model-field plume-required-field" for="plume-wind-speed">
+                      <span class="plume-required-label">Wind speed (mph) <b>Required</b></span>
                       <input id="plume-wind-speed" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Required" required />
                     </label>
-                    <label class="plume-model-field" for="plume-wind-direction">
-                      <span>Wind from (degrees)</span>
+                    <label class="plume-model-field plume-required-field" for="plume-wind-direction">
+                      <span class="plume-required-label">Wind from (degrees) <b>Required</b></span>
                       <input id="plume-wind-direction" type="number" min="0" max="360" step="0.1" inputmode="decimal" placeholder="Required" required />
                     </label>
-                    <label class="plume-model-field" for="plume-temperature">
-                      <span>Air Temp (°F)</span>
-                      <input id="plume-temperature" type="number" step="0.1" inputmode="decimal" placeholder="Required" required />
-                    </label>
-                    <label class="plume-model-field" for="plume-elevation">
-                      <span>Elevation (ft)</span>
-                      <input id="plume-elevation" type="text" placeholder="Unavailable" readonly />
+                    <label class="plume-model-field plume-required-field" for="plume-temperature">
+                      <span class="plume-required-label">Air Temp (°F) <b>Required</b></span>
+                      <input id="plume-temperature" type="number" step="0.1" inputmode="decimal" value="68" />
                     </label>
                     <input id="plume-stability-class" type="hidden" value="D" />
                     <label class="plume-model-field" for="plume-surface-roughness">
@@ -758,14 +876,25 @@
                         <option value="urban">Urban / obstructed</option>
                       </select>
                     </label>
-                    <div class="plume-weather-verification" aria-label="Weather verification">
-                      <small>Source <strong id="plume-weather-source-name">Best Current Live Source</strong></small>
-                      <small>Status <strong id="plume-weather-source-state">Awaiting verification</strong></small>
-                      <small>Observation <strong id="plume-weather-observation-time">Not available</strong></small>
-                      <small>Age <strong id="plume-weather-age">Unknown</strong></small>
-                    </div>
                     <details class="plume-input-review plume-weather-review">
-                      <summary>Weather Summary <span class="plume-status-badge" id="plume-weather-badge" data-state="missing">Weather Missing</span></summary>
+                      <summary>Weather Details <span class="plume-status-badge" id="plume-weather-badge" data-state="missing">Weather Missing</span></summary>
+                      <div class="plume-weather-verification" aria-label="Weather verification">
+                        <small>Source <strong id="plume-weather-source-name">Best Current Live Source</strong></small>
+                        <small>Status <strong id="plume-weather-source-state">Awaiting verification</strong></small>
+                        <small>Observation <strong id="plume-weather-observation-time">Not available</strong></small>
+                        <small>Age <strong id="plume-weather-age">Unknown</strong></small>
+                      </div>
+                      <label class="plume-model-field" for="plume-elevation">
+                        <span>Reported location elevation (ft)</span>
+                        <input id="plume-elevation" type="text" placeholder="Unavailable" readonly />
+                      </label>
+                      <small class="plume-weather-default-note">Temperature uses the live value when available; otherwise 68°F is the displayed planning default.</small>
+                      <div class="plume-columbia-csv plume-columbia-values" hidden>
+                        <small>Station Name: <strong id="columbia-station-name">Not available</strong></small>
+                        <small>Wind Gusts: <strong id="columbia-wind-gust">Not available</strong></small>
+                        <small>Humidity: <strong id="columbia-humidity">Not available</strong></small>
+                        <small>Pressure: <strong id="columbia-pressure">Not available</strong></small>
+                      </div>
                       <dl class="plume-review-list">
                         <div><dt>Weather Source</dt><dd id="plume-review-weather-source">Best Current Live Source</dd></div>
                         <div><dt>Observation Time</dt><dd id="plume-review-observation-time">No Current Data Exists</dd></div>
@@ -778,152 +907,140 @@
                       </dl>
                     </details>
                   </div>
-                  <div class="plume-model-actions">
-                    <button class="ghost-btn" id="use-live-plume-weather-btn" type="button">Refresh Weather</button>
-                  </div>
                 </section>
               </div>
             </form>
 
-            <section class="plume-readiness-grid" aria-label="Plume model readiness and evidence">
-              <article><span>Model Mode</span><strong id="plume-model-mode-badge">Cannot Plot — Missing Required Data</strong></article>
-              <article><span>Validation</span><strong id="plume-validation-badge">Not independently validated</strong></article>
-              <article><span>Confidence</span><strong id="plume-confidence-badge">Insufficient Data</strong></article>
-              <article><span>Source Strength</span><strong id="plume-source-strength-badge">Missing Required Inputs</strong><small id="plume-source-strength-detail">Enter and verify release information.</small></article>
-              <article><span>Weather Quality</span><strong id="plume-weather-quality-badge">Time Unknown</strong><small id="plume-weather-quality-detail">Wind speed, direction, source, and time are required.</small></article>
-              <article><span>Endpoint / LOC</span><strong id="plume-endpoint-badge">No Current Data Exists</strong><small id="plume-endpoint-detail">Chemical/CAS verification and endpoint lookup required.</small></article>
-              <article><span>Field Verification</span><strong id="plume-field-verification-badge">Required</strong><small>Use field monitoring to establish actual boundaries. Never downgrade PPE or authorize offensive tactics from plume output alone.</small></article>
-              <article><span>Official ALOHA Import</span><strong id="plume-aloha-import-badge">Not Configured</strong><small id="plume-aloha-import-detail">Imported official output is displayed, not recalculated.</small></article>
+            <section class="plume-compact-card plume-endpoint-card" aria-labelledby="plume-endpoint-card-heading">
+              <header><h3 id="plume-endpoint-card-heading">Endpoint / LOC</h3><strong id="plume-endpoint-badge">Missing</strong></header>
+              <p id="plume-endpoint-detail">Select a verified chemical.</p>
+              <p id="plume-endpoint-levels">AEGL values appear after source-backed endpoint selection.</p>
+              <small>ERG fallback: <strong id="plume-readiness-erg">Missing</strong></small>
+              <span id="plume-readiness-cas" hidden>No Current Data Exists</span>
             </section>
 
-            <details class="plume-safety-disclaimer">
-              <summary>Planning limitations and verification requirements</summary>
-              <div>
-                <p>HazMatIQ is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.</p>
-                <p>Plume results are planning estimates only and are not a substitute for field monitoring, official modeling, or Incident Command decision-making.</p>
-                <p>Plume results are planning estimates unless validation results are shown for this chemical, release scenario, and endpoint.</p>
-                <p>Missing, outdated, or unverified data should be treated as No Current Data Exists until confirmed by an approved source.</p>
-                <p>Weather data source and observation time must be verified. Stale or manually entered weather can significantly affect plume output.</p>
-                <p>Baseline plume model has not been independently validated against published comparison cases unless validation results are shown.</p>
               </div>
-            </details>
 
-            <div class="plume-import-row">
-              <div class="plume-aloha-import-control">
-                <label for="plume-aloha-import"><strong>Import model output</strong></label>
-                <input id="plume-aloha-import" type="file" accept=".kml,.geojson,.json,.txt,application/vnd.google-earth.kml+xml,application/geo+json,text/plain" />
-                <label><input id="plume-aloha-source-confirmed" type="checkbox" /> Confirm this file is official ALOHA output</label>
-                <small id="plume-aloha-import-status" role="status">KML and GeoJSON geometry supported; TXT summary may be attached. KMZ requires extraction before import.</small>
-              </div>
-              <div class="plume-layer-controls" aria-label="Map Layers">
-                <strong>Map Layers</strong>
-                <div>
-                  <button class="plume-plot-btn" id="plot-plume-btn" type="submit" form="plume-model-form" disabled>Plot Plume</button>
-                  <button class="plume-erg-layer-btn" id="toggle-erg-isolation-btn" type="button" aria-pressed="false">ERG Isolation Distance</button>
-                  <button class="plume-weather-layer-btn" id="toggle-plume-weather-btn" type="button" aria-pressed="false" aria-controls="plume-weather-data-panel">Weather Data</button>
-                  <button type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
-                  <button class="plume-live-radar-link" type="button" data-view="map">View Radar on Live Map</button>
-                </div>
-                <small id="plume-layers-status" role="status" aria-live="polite"></small>
-              </div>
-              <div class="plume-map-view-controls" role="group" aria-label="Plume map view">
-                <button class="ghost-btn active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
-                <button class="ghost-btn" type="button" data-plume-map-view="street" aria-pressed="false">Street Map</button>
-                <button class="ghost-btn" type="button" data-plume-map-view="street-3d" aria-pressed="false">Street 3D</button>
-              </div>
-              <details class="plume-summary-panel" id="plume-incident-data-panel">
-                <summary>Plume Summary</summary>
-                <div class="plume-summary-content">
-                  <ul class="detail-list">
-                    <li><span>Incident Name</span><strong id="plume-summary-incident-name"></strong></li>
-                    <li><span>Mode</span><strong id="plume-mode-summary"></strong></li>
-                    <li><span>Chemical</span><strong id="plume-product-summary"></strong></li>
-                    <li><span>AEGL / LOC Endpoint</span><strong id="plume-endpoint-summary"></strong></li>
-                    <li><span>Zone Meaning</span><strong id="plume-zone-meaning-summary"></strong></li>
-                    <li><span>GPS Location</span><strong id="plume-gps-summary"></strong></li>
-                    <li><span>Location Source</span><strong id="plume-location-source"></strong></li>
-                    <li><span>Open-Meteo</span><strong id="open-meteo-summary"></strong></li>
-                    <li><span>Release / Container</span><strong id="plume-release-summary"></strong></li>
-                    <li><span>Weather Inputs</span><strong id="plume-weather-input-summary"></strong></li>
-                    <li><span>Model</span><strong id="selected-model-summary"></strong></li>
-                    <li><span>Model Result</span><strong id="backend-model-summary"></strong></li>
-                    <li><span>Model Status</span><strong id="plume-model-status-summary"></strong></li>
-                    <li><span>Validation Status</span><strong id="plume-validation-status-summary"></strong></li>
-                    <li><span>Model Limitations</span><strong id="plume-limitations-summary"></strong></li>
-                    <li><span>Model Timestamp</span><strong id="plume-model-time-summary"></strong></li>
-                    <li><span>Text Summary</span><strong id="plume-text-summary"></strong></li>
-                    <li><span>Weather Station</span><strong id="nws-station-summary"></strong></li>
-                    <li><span>Weather Station Details</span><strong id="nws-weather-summary"></strong></li>
-                    <li><span>Observation Time</span><strong id="nws-observation-summary"></strong></li>
-                  </ul>
-                </div>
-              </details>
-              <details class="plume-summary-panel plume-threat-zone-panel plume-demographics" id="plume-demographics">
-                <summary>Threat Zone</summary>
-                <div class="plume-summary-content plume-lower-card-content plume-threat-zone-content">
-                  <div class="plume-threat-zone-status"><span class="status-pill" id="demographics-zone-badge">No zone</span></div>
-                  <section class="threat-zone-summary" aria-labelledby="threat-zone-summary-heading">
-                    <h3 id="threat-zone-summary-heading">Threat Zone Summary</h3>
-                    <p id="demographics-zone-summary" class="demographics-summary">Select a plume zone or protective-action area to view affected-area estimates.</p>
-                    <dl class="threat-zone-summary-list">
-                      <div><dt>Selected Area</dt><dd id="threat-zone-selected-area">Unknown</dd></div>
-                      <div><dt>Basis</dt><dd id="threat-zone-basis">No Current Data Exists</dd></div>
-                      <div><dt>Area</dt><dd id="threat-zone-area">No Current Data Exists</dd></div>
-                      <div><dt>Method</dt><dd id="threat-zone-method">No Current Data Exists</dd></div>
-                      <div><dt>Confidence</dt><dd id="threat-zone-confidence">No Current Data Exists</dd></div>
-                      <div><dt>Generated</dt><dd id="threat-zone-generated">No Current Data Exists</dd></div>
-                    </dl>
-                  </section>
-                  <div class="demographics-grid threat-zone-primary-metrics" aria-live="polite">
-                    <article class="demographic-stat" data-threat-metric="residentialHomes" hidden><span>Residential Homes</span><strong id="demographics-structures"></strong><small id="threat-zone-residential-method"></small></article>
-                    <article class="demographic-stat" data-threat-metric="currentPopulation" hidden><span>Current Population</span><strong id="demographics-current-population"></strong><small id="threat-zone-population-method"></small></article>
-                    <article class="demographic-stat" data-threat-metric="criticalInfrastructure" hidden><span>Critical Infrastructure</span><strong id="demographics-critical"></strong><small id="threat-zone-critical-method"></small></article>
-                    <article class="demographic-stat" data-threat-metric="healthcareFacilities" hidden><span>Healthcare Facilities</span><strong id="demographics-healthcare"></strong><small id="threat-zone-healthcare-method"></small></article>
-                    <article class="demographic-stat" data-threat-metric="schools" hidden><span>Schools</span><strong id="demographics-schools"></strong><small id="threat-zone-schools-method"></small></article>
+              <div class="plume-map-column">
+                <article class="plume-map-card" data-design-layout="plume.map" data-design-page="plume">
+                  <form class="plume-map-toolbar" id="plume-map-address-form">
+                    <label class="plume-location-field" for="plume-map-address-input">
+                      <span>Plume Location</span>
+                      <input class="plume-location-input" id="plume-map-address-input" type="text" placeholder="Enter address, coordinates, or use incident location" autocomplete="street-address" />
+                    </label>
+                    <button class="plume-map-button secondary" id="use-plume-incident-location-btn" type="button">Use Incident Location</button>
+                    <button class="plume-map-button secondary" type="submit">Manual Entry</button>
+                    <button class="plume-map-button primary" id="plot-plume-btn" type="submit" form="plume-model-form" disabled>Plot Plume</button>
+                    <button class="plume-map-button secondary plume-live-radar-link" type="button" data-view="map">Open Live Map</button>
+                  </form>
+                  <div class="plume-layer-row" role="group" aria-label="Plume basemap">
+                    <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
+                    <button class="plume-layer-button" type="button" data-plume-map-view="street" aria-pressed="false">Street Map</button>
+                    <button class="plume-layer-button" type="button" data-plume-map-view="terrain3d" aria-pressed="false">3D Terrain</button>
+                    <button class="plume-layer-button" type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
+                    <button class="plume-layer-button" id="plume-buildings-toggle" type="button" aria-pressed="false" disabled>Buildings</button>
+                    <button class="plume-layer-button" id="plume-reset-view-btn" type="button">Reset View</button>
                   </div>
-                  <details class="threat-zone-estimate-details" hidden>
-                    <summary>Estimate Details</summary>
-                    <dl>
-                      <div data-threat-detail="censusPopulation" hidden><dt>Nearby Census population</dt><dd id="demographics-population"></dd></div>
-                      <div data-threat-detail="censusHouseholds" hidden><dt>Nearby Census households</dt><dd id="demographics-census-households"></dd></div>
-                      <div data-threat-detail="buildingFootprints" hidden><dt>Building footprints counted</dt><dd id="threat-zone-detail-buildings"></dd></div>
-                      <div data-threat-detail="nursing" hidden><dt>Nursing / assisted living</dt><dd id="demographics-nursing"></dd></div>
-                      <div data-threat-detail="businesses" hidden><dt>Businesses / industrial sites</dt><dd id="demographics-businesses"></dd></div>
-                      <div data-threat-detail="criticalReceptors" hidden><dt>Critical receptors</dt><dd id="demographics-critical-receptors"></dd></div>
-                      <div data-threat-detail="protectiveAction" hidden><dt>Protective action</dt><dd id="demographics-protective-action"></dd></div>
-                      <div data-threat-detail="householdMethod" hidden><dt>Residential estimate method</dt><dd id="demographics-household-method"></dd></div>
-                      <div data-threat-detail="householdStatus" hidden><dt>Confidence / status</dt><dd id="demographics-household-status"></dd></div>
-                      <div data-threat-detail="householdLimitations" hidden><dt>Limitations</dt><dd id="demographics-household-limitations"></dd></div>
-                      <div data-threat-detail="legacyHousing" hidden><dt>Impacted households</dt><dd id="demographics-housing"></dd></div>
-                    </dl>
-                  </details>
-                  <p class="demographics-estimate-warning">Threat Zone impact values are planning estimates based on the selected plume or protective-action area. Census geographies and facility datasets may be incomplete or extend beyond the selected area. Verify residential homes, population, critical infrastructure, healthcare facilities, and schools with local GIS, field reconnaissance, field monitoring, and Incident Command.</p>
-                  <p id="demographics-source-status" class="demographics-source-status">Population estimate: U.S. Census geography. Occupancies: OpenStreetMap mapped features.</p>
-                </div>
-              </details>
-              <p class="plume-toolbar-status" id="plume-input-status" role="status" aria-live="polite"></p>
+                  <div class="plume-map-shell">
+                    <div id="plume-gis-map" class="plume-map-frame" role="application" aria-label="Interactive incident plume map"></div>
+                    <div class="plume-terrain-status" id="plume-terrain-status">Satellite View</div>
+                    <div class="plume-wind-direction-status" id="plume-wind-direction-status">Missing Wind Direction</div>
+                    <div class="plume-compass-control" id="plume-compass-control" aria-label="Map rotation and tilt controls">
+                      <div class="plume-compass-ring" aria-hidden="true"><span class="plume-compass-north">N</span><span class="plume-compass-arrow" id="plume-compass-arrow"></span></div>
+                      <div class="plume-compass-buttons">
+                        <button class="plume-compass-button left" type="button" data-plume-camera="rotate-left" aria-label="Rotate map left" title="Rotate Left">↶</button>
+                        <button class="plume-compass-button right" type="button" data-plume-camera="rotate-right" aria-label="Rotate map right" title="Rotate Right">↷</button>
+                        <button class="plume-compass-button tilt-up" type="button" data-plume-camera="tilt-up" aria-label="Tilt map up" title="Tilt Up">＋</button>
+                        <button class="plume-compass-button tilt-down" type="button" data-plume-camera="tilt-down" aria-label="Tilt map down" title="Tilt Down">−</button>
+                        <button class="plume-compass-button reset" type="button" data-plume-camera="reset-north" aria-label="Reset map north" title="Reset North">N</button>
+                      </div>
+                      <output id="plume-bearing-output" aria-live="polite">0°</output>
+                    </div>
+                  </div>
+                  <footer class="plume-map-status-footer">
+                    <span id="plume-map-address-status" role="status" aria-live="polite"></span>
+                    <span id="plume-layers-status" role="status" aria-live="polite"></span>
+                    <span id="plume-input-status" role="status" aria-live="polite"></span>
+                  </footer>
+                </article>
+              </div>
             </div>
 
-            <div class="plume-map-layout">
-              <article class="plume-full-map">
-                <div id="plume-gis-map" class="plume-map-frame" role="application" aria-label="Interactive incident plume map"></div>
-                <form class="plume-map-address-control" id="plume-map-address-form">
-                  <label class="sr-only" for="plume-map-address-input">Plume plotting address</label>
-                  <input
-                    id="plume-map-address-input"
-                    type="text"
-                    placeholder="Enter plume plotting address"
-                    autocomplete="street-address"
-                  />
-                  <button type="submit">Manual Entry</button>
-                  <span class="sr-only" id="plume-map-address-status" role="status" aria-live="polite"></span>
-                </form>
-              </article>
-            </div>
+            <section class="plume-results-section" id="plume-results-section" aria-label="Plume results" hidden>
+              <div class="plume-results-grid">
+                <article class="plume-threat-card plume-demographics" id="plume-demographics" data-design-layout="plume.threatZone" data-design-page="plume">
+                  <header class="plume-card-heading"><h3>Threat Zone</h3><span class="status-pill" id="demographics-zone-badge">No zone</span></header>
+                  <div class="plume-selected-zone"><span>Selected Zone</span><strong id="threat-zone-selected-area">No zone selected</strong></div>
+                  <p id="demographics-zone-summary" class="demographics-summary">Select a plume zone or protective-action area to view affected-area estimates.</p>
+                  <div class="plume-threat-metrics" aria-live="polite">
+                    <article class="plume-threat-metric" data-threat-metric="residentialHomes"><span class="plume-threat-label">Residential Homes</span><strong class="plume-threat-value" id="demographics-structures">No Current Data Exists</strong><small id="threat-zone-residential-method"></small></article>
+                    <article class="plume-threat-metric" data-threat-metric="currentPopulation"><span class="plume-threat-label">Current Population</span><strong class="plume-threat-value" id="demographics-current-population">No Current Data Exists</strong><small id="threat-zone-population-method"></small></article>
+                    <article class="plume-threat-metric" data-threat-metric="criticalInfrastructure"><span class="plume-threat-label">Critical Infrastructure</span><strong class="plume-threat-value" id="demographics-critical">No Current Data Exists</strong><small id="threat-zone-critical-method"></small></article>
+                    <article class="plume-threat-metric" data-threat-metric="healthcareFacilities"><span class="plume-threat-label">Healthcare Facilities</span><strong class="plume-threat-value" id="demographics-healthcare">No Current Data Exists</strong><small id="threat-zone-healthcare-method"></small></article>
+                    <article class="plume-threat-metric" data-threat-metric="schools"><span class="plume-threat-label">Schools</span><strong class="plume-threat-value" id="demographics-schools">No Current Data Exists</strong><small id="threat-zone-schools-method"></small></article>
+                  </div>
+                  <p class="demographics-estimate-warning">Planning estimates only. Verify affected areas with local GIS, field reconnaissance, field monitoring, and Incident Command.</p>
+                </article>
+              </div>
+
+              <details class="plume-model-details" data-design-layout="plume.summary" data-design-page="plume">
+                <summary>Model Details</summary>
+                <div class="plume-model-details-grid">
+                  <div><span>Model Mode</span><strong id="plume-model-mode-badge">Blocked</strong></div>
+                  <div><span>Confidence</span><strong id="plume-confidence-badge">Insufficient Data</strong></div>
+                  <div><span>Validation Status</span><strong id="plume-model-status-summary">No Current Data Exists</strong></div>
+                  <div><span>Source Strength Status</span><strong id="plume-source-strength-badge">Cannot Calculate</strong><small id="plume-source-strength-detail">Enter release information.</small></div>
+                  <div><span>Weather Quality</span><strong id="plume-model-weather-quality">See Weather Snapshot</strong></div>
+                  <div><span>Timestamp</span><strong id="plume-model-details-time">No Current Data Exists</strong></div>
+                </div>
+                <dl class="plume-technical-details">
+                  <div><dt>Incident Name</dt><dd id="plume-summary-incident-name"></dd></div>
+                  <div><dt>Incident Mode</dt><dd id="plume-mode-summary"></dd></div>
+                  <div><dt>GPS Location</dt><dd id="plume-gps-summary"></dd></div>
+                  <div><dt>Location Source</dt><dd id="plume-location-source"></dd></div>
+                  <div><dt>Weather Source Details</dt><dd id="open-meteo-summary"></dd></div>
+                  <div><dt>Weather Station</dt><dd id="nws-station-summary"></dd></div>
+                  <div><dt>Weather Station Details</dt><dd id="nws-weather-summary"></dd></div>
+                  <div><dt>Observation Time</dt><dd id="nws-observation-summary"></dd></div>
+                  <div><dt>Model Result</dt><dd id="backend-model-summary"></dd></div>
+                  <div><dt>Model Assumptions / Limitations</dt><dd id="plume-limitations-summary"></dd></div>
+                  <div><dt>Full Text Summary</dt><dd id="plume-text-summary"></dd></div>
+                  <div><dt>Terrain Status</dt><dd id="plume-model-terrain-status">Flat-ground planning baseline; no terrain correction is applied.</dd></div>
+                </dl>
+                <div class="plume-planning-notices">
+                  <p>HazMatIQ is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.</p>
+                  <p>Plume results are planning estimates only and are not a substitute for field monitoring, official modeling, or Incident Command decision-making.</p>
+                  <p>Missing, outdated, or unverified data should be treated as No Current Data Exists until confirmed by an approved source.</p>
+                  <p>Weather data source and observation time must be verified. Stale or manually entered weather can significantly affect plume output.</p>
+                </div>
+                <details class="threat-zone-estimate-details" hidden>
+                  <summary>Threat Zone Estimate Details</summary>
+                  <dl>
+                    <div data-threat-detail="censusPopulation" hidden><dt>Nearby Census population</dt><dd id="demographics-population"></dd></div>
+                    <div data-threat-detail="censusHouseholds" hidden><dt>Nearby Census households</dt><dd id="demographics-census-households"></dd></div>
+                    <div data-threat-detail="buildingFootprints" hidden><dt>Building footprints counted</dt><dd id="threat-zone-detail-buildings"></dd></div>
+                    <div data-threat-detail="nursing" hidden><dt>Nursing / assisted living</dt><dd id="demographics-nursing"></dd></div>
+                    <div data-threat-detail="businesses" hidden><dt>Businesses / industrial sites</dt><dd id="demographics-businesses"></dd></div>
+                    <div data-threat-detail="criticalReceptors" hidden><dt>Critical receptors</dt><dd id="demographics-critical-receptors"></dd></div>
+                    <div data-threat-detail="protectiveAction" hidden><dt>Protective action</dt><dd id="demographics-protective-action"></dd></div>
+                    <div data-threat-detail="householdMethod" hidden><dt>Residential estimate method</dt><dd id="demographics-household-method"></dd></div>
+                    <div data-threat-detail="householdStatus" hidden><dt>Confidence / status</dt><dd id="demographics-household-status"></dd></div>
+                    <div data-threat-detail="householdLimitations" hidden><dt>Limitations</dt><dd id="demographics-household-limitations"></dd></div>
+                    <div data-threat-detail="legacyHousing" hidden><dt>Impacted households</dt><dd id="demographics-housing"></dd></div>
+                  </dl>
+                </details>
+                <p id="demographics-source-status" class="demographics-source-status">Select an affected area to load available selected-zone data.</p>
+                <span id="threat-zone-basis" hidden></span><span id="threat-zone-area" hidden></span><span id="threat-zone-method" hidden></span><span id="threat-zone-confidence" hidden></span><span id="threat-zone-generated" hidden></span>
+              </details>
+            </section>
 
           </section>
 
           <section id="map" class="view">
+            <header class="hazmat-page-hero hazmat-page-hero-compact variant-live-map">
+              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Common Operating Picture</p><h1 class="hazmat-hero-title">Live Map</h1><p class="hazmat-hero-subtitle">Real-time operational map, radar, units, zones, and plume overlays.</p></div>
+              <span class="hazmat-hero-symbol" aria-hidden="true">MAP</span>
+            </header>
             <div class="live-map-command-bar">
               <div><strong id="live-map-incident-name">Planning Map</strong><span id="live-map-mode">Planning Mode</span></div>
               <div>
@@ -983,10 +1100,10 @@
           </section>
 
           <section id="monitor" class="view">
-            <div class="monitor-page-heading">
-              <div><p class="eyebrow">Command monitoring module</p><h2>Monitoring Equipment</h2></div>
-              <span class="monitor-simulated-label">Training Data · Simulated</span>
-            </div>
+            <header class="hazmat-page-hero variant-monitoring">
+              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Command Monitoring Module</p><h1 class="hazmat-hero-title">Monitoring Equipment</h1><p class="hazmat-hero-subtitle">Live readings, detector assignments, alarms, and field validation.</p><div class="hazmat-hero-chip-row"><span class="hazmat-hero-chip monitor-simulated-label">Training Data · Simulated</span></div></div>
+              <span class="hazmat-hero-symbol" aria-hidden="true">MON</span>
+            </header>
 
             <p class="monitor-purpose">HazMatIQ uses FirstDue as the future system of record for apparatus, equipment, inspections, calibration, and weekly checks. HazMatIQ tracks which monitors are assigned to this incident, displays readings, and records timestamped monitoring activity for reports.</p>
 
@@ -1153,8 +1270,11 @@
           </section>
 
           <section id="report" class="view">
+            <header class="hazmat-page-hero variant-reports">
+              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Incident Documentation</p><h1 class="hazmat-hero-title">Incident Reports &amp; ICS Forms</h1><p class="hazmat-hero-subtitle">Generate, print, export, and archive incident documentation.</p></div>
+              <span class="hazmat-hero-symbol" aria-hidden="true">ICS</span>
+            </header>
             <div class="panel-card report-center">
-              <h2>Incident Reports &amp; ICS Forms</h2>
               <div class="button-row report-tabs">
                 <button class="primary-btn" type="button" data-report-tab="current">Current Incident Forms</button>
                 <button class="ghost-btn" type="button" data-report-tab="previous">Completed Forms</button>
@@ -1237,6 +1357,10 @@
           </section>
 
           <section id="source" class="view">
+            <header class="hazmat-page-hero variant-about">
+              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">System Reference</p><h1 class="hazmat-hero-title">About HazMatIQ</h1><p class="hazmat-hero-subtitle">Incident intelligence, source status, and planning-model transparency.</p></div>
+              <span class="hazmat-hero-symbol" aria-hidden="true">IQ</span>
+            </header>
             <div class="panel-card">
               <div class="chemical-card-header">
                 <h3>Reference status</h3>
@@ -1247,7 +1371,7 @@
                 <li><span>NIOSH Pocket Guide</span><strong>Bundled exposure and physical-property records</strong></li>
                 <li><span>ERG 2024</span><strong>Guide and Table 1 response data</strong></li>
                 <li><span>HazMatIQ plume model</span><strong>Backend threshold isopleths rendered as GIS polygons</strong></li>
-                <li><span>ALOHA / MARPLOT</span><strong>KML threat-zone import supported</strong></li>
+                <li><span>Planning Plume</span><strong>Source-backed AEGL endpoints with ERG fallback</strong></li>
               </ul>
             </div>
           </section>
@@ -1265,8 +1389,9 @@
     <script src="weather-radar-providers.js"></script>
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
-    <script src="script.js?v=chemical-intel-7"></script>
-    <script src="chem-compare.js?v=chemcompare-1"></script>
+    <script src="script.js?v=incident-command-live-4"></script>
+    <script src="design-mode.js?v=layout-resize-1"></script>
+    <script src="chem-compare.js?v=chemcompare-2"></script>
     <script src="monitor-inventory.js"></script>
     <script src="live-map-bootstrap.js"></script>
   </body>

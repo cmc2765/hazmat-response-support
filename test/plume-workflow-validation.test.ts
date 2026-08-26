@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
-  inspectAlohaImport,
   PLUME_MODEL_MODES,
   selectPlumeModelFamily,
   selectPlumeModelMode,
   validatePlumeWeather,
   validateSourceStrength,
 } from "@/lib/model";
+import { inspectAlohaImport } from "@/internal/plume-validation";
 
 describe("plume workflow validation", () => {
   it("never promotes a planning result without a completed validation gate", () => {
@@ -29,6 +29,20 @@ describe("plume workflow validation", () => {
     expect(manual.usableForPlanning).toBe(true);
     expect(manual.eligibleForValidatedModel).toBe(false);
     expect(validatePlumeWeather({ windSpeedMps: 0, windDirectionDeg: 180 }).usableForPlanning).toBe(false);
+    expect(validatePlumeWeather({
+      windSpeedMps: 2,
+      windDirectionDeg: 180,
+      source: "No Current Data Exists",
+      observationTime: "2026-08-23T12:00:00.000Z",
+      now: "2026-08-23T12:05:00.000Z",
+    }).usableForPlanning).toBe(false);
+    expect(validatePlumeWeather({
+      windSpeedMps: 2,
+      windDirectionDeg: 180,
+      source: "NWS",
+      observationTime: "2026-08-23T12:20:01.000Z",
+      now: "2026-08-23T12:05:00.000Z",
+    })).toMatchObject({ freshness: "Future / Invalid", usableForPlanning: false });
   });
 
   it("reports source strength instead of inferring missing thermodynamic inputs", () => {

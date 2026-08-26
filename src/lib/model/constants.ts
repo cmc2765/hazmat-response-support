@@ -1,4 +1,4 @@
-export const MODEL_VERSION = "0.1.0-plume-skeleton";
+export const MODEL_VERSION = "0.1.1-plume-screening";
 export const PLUME_MODEL_NAME = "HazMatIQ Gaussian plume/puff screening model";
 export const PLUME_FORMULA_REFERENCE =
   "Gaussian plume and puff equations: NOAA Technical Memorandum ERL ARL-205, equation 2.3 and following Gaussian puff equation (https://www.arl.noaa.gov/wp_arl/wp-content/uploads/2017/08/ARL-205.pdf)";

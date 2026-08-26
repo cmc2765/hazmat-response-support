@@ -142,6 +142,14 @@ describe("plume runPlume", () => {
       calculationEvidence: evidence("plume", { windSpeedMps: 99 }),
     })).toThrow(/do not match approved source records for: windSpeedMps/);
   });
+
+  it("rejects nonphysical model and endpoint inputs even when called outside the API schema", () => {
+    expect(() => runPlume({ ...inputs, releaseHeightM: -1 }, { thresholds })).toThrow(/release height/i);
+    expect(() => runPlume({ ...inputs, tempC: -273.15 }, { thresholds })).toThrow(/absolute zero/i);
+    expect(() => runPlume({ ...inputs, windSpeedMps: 0 }, { thresholds })).toThrow(/wind speed/i);
+    expect(() => runPlume(inputs, { thresholds: [{ ...thresholds[0], valuePpm: 0 }] })).toThrow(/positive finite concentration/i);
+    expect(() => runPlume(inputs, { thresholds, maxRangeM: 0 })).toThrow(/computational range/i);
+  });
 });
 
 describe("isoplethCentroid", () => {

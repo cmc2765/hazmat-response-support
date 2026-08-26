@@ -16,6 +16,7 @@
 // Run: npm run dev  (starts on http://localhost:3000)
 
 import { Hono } from "hono";
+import type { Context } from "hono";
 import { logger } from "hono/logger";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { eq, sql } from "drizzle-orm";
@@ -27,7 +28,7 @@ import { getDb } from "./db.js";
 import * as schema from "./schema.js";
 import { queryChemicalProfile, searchCompanionChemicals } from "./chemical-companion.js";
 import { runPlume } from "../../src/lib/model/plume.js";
-import { PlumeCalculationEvidence, PlumeInputs } from "../../src/lib/schema/plume.js";
+import { PlumeInputs } from "../../src/lib/schema/plume.js";
 import { aeglThresholdBands, selectVerifiedAeglEndpoint } from "../../src/lib/model/plume-endpoints.js";
 import { determinePlumeStatus } from "../../src/lib/model/plume-status.js";
 import { PLUME_MODEL_MODES, plumeModelModeLabel } from "../../src/lib/model/plumeModelModes.js";
@@ -36,6 +37,9 @@ import { validatePlumeWeather } from "../../src/lib/model/plumeWeatherValidation
 import { validateSourceStrength } from "../../src/lib/model/sourceStrengthValidation.js";
 import { ERG_TABLE_1, getErgAdditionalTables, getErgContainerDistances } from "../../src/data/erg.js";
 import { molecularWeightOf } from "../../src/data/molecular-weight.js";
+import { searchStarterHazards } from "../../src/lib/hazard-id/hazardSearch.js";
+import { starterHazardProfile } from "../../src/lib/hazard-id/hazardProfileAdapter.js";
+import type { HazardIdLane } from "../../src/lib/hazard-id/hazardTypes.js";
 
 const planningModelMode = PLUME_MODEL_MODES.HAZMATIQ_PLANNING_ESTIMATE;
 const ergModelMode = PLUME_MODEL_MODES.ERG_ISOLATION_PROTECTIVE_ACTION_OVERLAY;
@@ -44,6 +48,44 @@ function numericValue(value: unknown): number | null {
   if (typeof value === "number" && Number.isFinite(value)) return value;
   const match = String(value ?? "").match(/-?\d+(?:\.\d+)?/);
   return match ? Number(match[0]) : null;
+}
+
+type CanonicalChemicalRow = typeof schema.chemicals.$inferSelect;
+
+function parsedStringList(value: unknown): string[] {
+  try {
+    const parsed = JSON.parse(String(value ?? "[]"));
+    return Array.isArray(parsed) ? parsed.map(String).map((item) => item.trim()).filter(Boolean) : [];
+  } catch {
+    return [];
+  }
+}
+
+function parsedSourceNames(value: unknown): string[] {
+  try {
+    const parsed = JSON.parse(String(value ?? "[]"));
+    if (!Array.isArray(parsed)) return [];
+    return parsed.map((item) => typeof item === "string" ? item : String(item?.source ?? ""))
+      .map((item) => item.trim()).filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
+function resolveCanonicalChemical(
+  chemicalRows: CanonicalChemicalRow[],
+  companionCas: string,
+  companionUn: string,
+): CanonicalChemicalRow | null {
+  const casMatches = chemicalRows.filter((row) => parsedStringList(row.cas).includes(companionCas));
+  if (casMatches.length === 1) return casMatches[0];
+  const normalizedUn = companionUn.replace(/^(?:UN|NA)\s*/i, "").trim();
+  if (normalizedUn) {
+    const transportMatch = casMatches.find((row) => parsedStringList(row.un).includes(normalizedUn)
+      || parsedStringList(row.na).includes(normalizedUn));
+    if (transportMatch) return transportMatch;
+  }
+  return null;
 }
 
 function plumeBlockedFields(display = "Cannot Plot — Missing Required Data") {
@@ -56,6 +98,11 @@ function plumeBlockedFields(display = "Cannot Plot — Missing Required Data") {
 
 const app = new Hono();
 app.use(logger());
+const publicIndexPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../public/index.html");
+const serveHazardIdWorkspace = async (c: Context) =>
+  c.html(await readFile(publicIndexPath, "utf8"));
+app.get("/hazard-id", serveHazardIdWorkspace);
+app.get("/chemical-id", serveHazardIdWorkspace);
 app.use("/*", serveStatic({ root: "./public" }));
 
 function backendEnvironment(...names: string[]) {
@@ -313,6 +360,24 @@ app.get("/api/manifest", async (c) => {
 });
 
 // ─── Chemicals ──────────────────────────────────────────────────────────
+app.get("/api/hazards/search", (c) => {
+  const lane = c.req.query("lane") as HazardIdLane | undefined;
+  const query = c.req.query("q") ?? "";
+  if (lane !== "CBRNE_CWA" && lane !== "RADIOLOGICAL") {
+    return c.json({ error: "lane must be CBRNE_CWA or RADIOLOGICAL", results: [] }, 400);
+  }
+  return c.json({ lane, results: searchStarterHazards(lane, query) });
+});
+
+app.get("/api/hazards/:lane/:id/profile", (c) => {
+  const lane = c.req.param("lane") as HazardIdLane;
+  if (lane !== "CBRNE_CWA" && lane !== "RADIOLOGICAL") {
+    return c.json({ error: "Chemical profiles use the existing Chemical Companion endpoint" }, 400);
+  }
+  const profile = starterHazardProfile(lane, c.req.param("id"));
+  return profile ? c.json(profile) : c.json({ error: "not found" }, 404);
+});
+
 app.get("/api/chemicals", async (c) => {
   const db = getDb();
   const q = c.req.query("q");
@@ -473,15 +538,12 @@ app.get("/api/plume/availability", async (c) => {
   }
 
   const db = getDb();
-  const chemicalRows = await db.select().from(schema.chemicals).limit(500);
-  const canonicalChemical = chemicalRows.find((row) => {
-    try {
-      const casValues = JSON.parse(String(row.cas || "[]")) as string[];
-      return casValues.some((cas) => cas.trim() === companionCas);
-    } catch {
-      return false;
-    }
-  });
+  const chemicalRows = await db.select().from(schema.chemicals);
+  const canonicalChemical = resolveCanonicalChemical(
+    chemicalRows,
+    companionCas,
+    companionProfile.header.un?.trim() || "",
+  );
   if (!canonicalChemical) {
     return c.json({
       error: "Chemical Companion record has no verified canonical chemical/CAS link for plume modeling.",
@@ -494,30 +556,38 @@ app.get("/api/plume/availability", async (c) => {
   const requestedDurationValue = Number(c.req.query("endpointDurationMinutes"));
   const requestedDuration = ([10, 30, 60, 240, 480] as const)
     .find((duration) => duration === requestedDurationValue) ?? 60;
-  const endpoint = selectVerifiedAeglEndpoint(canonicalChemical.id, companionCas, requestedDuration);
-  const ergOnlyRequested = c.req.query("ergOnly") === "true";
-  if (endpoint && !ergOnlyRequested) {
+  const canonicalUns = parsedStringList(canonicalChemical.un);
+  const ergRows = (await Promise.all(canonicalUns.map((un) =>
+    db.select().from(schema.ergTable1).where(eq(schema.ergTable1.un, un))))).flat();
+  const canonicalGuide = String(canonicalChemical.ergGuide || "").replace(/P$/i, "");
+  const ergRow = ergRows.find((row) => row.guide.replace(/P$/i, "") === canonicalGuide)
+    ?? ergRows[0];
+  const endpoint = selectVerifiedAeglEndpoint(canonicalChemical.id, companionCas, requestedDuration, masterChemicalId);
+  if (endpoint) {
+    const sources = parsedSourceNames(canonicalChemical.sources);
     return c.json({
       mode: "aegl-plume",
       display: "AEGL / LOC Plume Model",
       modelMode: planningModelMode,
       modelModeLabel: plumeModelModeLabel(planningModelMode),
       endpointStatus: "Source-backed AEGL / LOC endpoint available; complete release and weather inputs are required.",
+      masterChemicalId,
+      chemicalIdentity: {
+        chemicalName: companionProfile.header.name,
+        casNumber: companionCas,
+        sourceStatus: "Verified Chemical Companion Master Record",
+      },
+      endpoint,
+      ergAvailability: ergRow ? { status: "Found", un: ergRow.un, guide: ergRow.guide } : { status: "Missing" },
+      sourceLinks: {
+        chemicalCompanion: { status: "Verified", recordId: masterChemicalId },
+        aegl: { status: "Verified", source: endpoint.endpointSource, sourceUrl: endpoint.sourceUrlOrCitationKey },
+        cameo: { status: sources.some((source) => /CAMEO/i.test(source)) ? "Verified" : "Missing", sourceUrl: canonicalChemical.sdsUrl },
+        erg: ergRow ? { status: "Verified", un: ergRow.un, guide: ergRow.guide } : { status: "Missing" },
+      },
     });
   }
 
-  const canonicalUns = (() => {
-    try {
-      return JSON.parse(String(canonicalChemical.un || "[]")) as string[];
-    } catch {
-      return [];
-    }
-  })();
-  const ergRows = (await Promise.all(canonicalUns.map((un) =>
-    db.select().from(schema.ergTable1).where(eq(schema.ergTable1.un, un))))).flat();
-  const canonicalGuide = String(canonicalChemical.ergGuide || "").replace(/P$/i, "");
-  const ergRow = ergRows.find((row) => row.guide.replace(/P$/i, "") === canonicalGuide)
-    ?? ergRows[0];
   if (ergRow) {
     const spillSize = c.req.query("ergSpillSize") === "small" ? "small" : "large";
     const period = c.req.query("ergPeriod") === "day" ? "day" : "night";
@@ -529,10 +599,10 @@ app.get("/api/plume/availability", async (c) => {
         display: "ERG Initial Isolation / Protective Action Overlay",
         modelMode: ergModelMode,
         modelModeLabel: plumeModelModeLabel(ergModelMode),
-        endpointStatus: "AEGL / LOC unavailable; using source-backed ERG distances.",
+        endpointStatus: "AEGL / LOC unavailable; using bundled ERG distances that require current-PHMSA verification.",
         plumeStatus: "ERG Protective Action Guide",
         modelStatus: "Not a modeled plume",
-        validationStatus: "PHMSA ERG 2024 source-backed distance overlay",
+        validationStatus: "Bundled ERG 2024 data — row-level source reconciliation required",
         masterChemicalId,
         chemicalIdentity: {
           chemicalName: companionProfile.header.name,
@@ -549,6 +619,7 @@ app.get("/api/plume/availability", async (c) => {
           protectiveActionMi,
           source: "PHMSA Emergency Response Guidebook 2024 Table 1",
           sourceUrl: "https://www.phmsa.dot.gov/training/hazmat/erg/emergency-response-guidebook-erg",
+          provenanceStatus: "Requires row-level verification against the current PHMSA ERG",
           limitations: [
             "This is an ERG initial-isolation/protective-action guide overlay, not a dispersion model or toxic concentration contour.",
             "Verify the UN/NA identification, spill size, day/night condition, wind direction, current ERG, field observations, monitoring, agency SOPs, and Incident Command.",
@@ -560,9 +631,7 @@ app.get("/api/plume/availability", async (c) => {
 
   return c.json({
     mode: "no-distance-data",
-    error: ergOnlyRequested
-      ? "No Current ERG Isolation Distance Exists. Establish isolation using agency SOPs, field observations, monitoring, and Incident Command."
-      : "No Current Data Exists. Establish isolation using agency SOPs, field observations, monitoring, and Incident Command.",
+    error: "No Current Data Exists. Establish isolation using agency SOPs, field observations, monitoring, and Incident Command.",
     display: "No Current Data Exists",
     modelMode: PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS,
     modelModeLabel: plumeModelModeLabel(PLUME_MODEL_MODES.NO_CURRENT_DATA_EXISTS),
@@ -588,9 +657,13 @@ app.post("/api/plume/run", async (c) => {
       ...plumeBlockedFields(),
     }, 400);
   }
-  const evidenceParsed = PlumeCalculationEvidence.safeParse(bodyRecord.calculationEvidence);
+  if (Object.hasOwn(bodyRecord, "calculationEvidence")) {
+    return c.json({
+      error: "Calculation evidence is server-controlled and cannot be supplied by a client.",
+      ...plumeBlockedFields(),
+    }, 400);
+  }
   const inputs = parsed.data;
-  const calculationEvidence = evidenceParsed.success ? evidenceParsed.data : undefined;
 
   // A numeric Chemical Companion master ID is required. Transportation-only
   // identifiers and canonical slugs cannot independently establish identity.
@@ -610,15 +683,12 @@ app.post("/api/plume/run", async (c) => {
     }, 422);
   }
 
-  const chemicalRows = await db.select().from(schema.chemicals).limit(500);
-  const canonicalChemical = chemicalRows.find((row) => {
-    try {
-      const casValues = JSON.parse(String(row.cas || "[]")) as string[];
-      return casValues.some((cas) => cas.trim() === companionCas);
-    } catch {
-      return false;
-    }
-  });
+  const chemicalRows = await db.select().from(schema.chemicals);
+  const canonicalChemical = resolveCanonicalChemical(
+    chemicalRows,
+    companionCas,
+    companionProfile.header.un?.trim() || "",
+  );
   if (!canonicalChemical) {
     return c.json({
       error: "Chemical Companion record has no verified canonical chemical/CAS link for plume modeling.",
@@ -634,6 +704,7 @@ app.post("/api/plume/run", async (c) => {
     canonicalChemical.id,
     companionCas,
     inputs.endpointDurationMinutes ?? 60,
+    masterChemicalId,
   );
   if (!endpoint) {
     const canonicalUns = (() => {
@@ -662,10 +733,10 @@ app.post("/api/plume/run", async (c) => {
           modelMode: ergModelMode,
           modelModeLabel: plumeModelModeLabel(ergModelMode),
           confidenceLevel: "ERG Protective Action Guide",
-          endpointStatus: "AEGL / LOC unavailable; using source-backed ERG distances.",
+          endpointStatus: "AEGL / LOC unavailable; using bundled ERG distances that require current-PHMSA verification.",
           plumeStatus: "ERG Protective Action Guide",
           modelStatus: "Not a modeled plume",
-          validationStatus: "PHMSA ERG 2024 source-backed distance overlay",
+          validationStatus: "Bundled ERG 2024 data — row-level source reconciliation required",
           masterChemicalId,
           releaseScenario: "ERG source-distance lookup; no dispersion source term calculated",
           inputs: {
@@ -690,7 +761,7 @@ app.post("/api/plume/run", async (c) => {
             status: "No Current Data Exists",
             sourceStrengthValue: null,
             sourceStrengthUnits: "No Current Data Exists",
-            sourceStrengthMethod: "No dispersion calculation — source-backed ERG distance lookup",
+            sourceStrengthMethod: "No dispersion calculation — bundled ERG distance lookup requiring current-source verification",
             missingInputs: [],
             sourceStrengthLimitations: ["ERG distances are not calculated from operator-entered source strength."],
           },
@@ -705,7 +776,7 @@ app.post("/api/plume/run", async (c) => {
           endpoint: {
             endpointType: "ERG 2024 initial isolation / protective action",
             endpointSource: "PHMSA Emergency Response Guidebook 2024 Table 1",
-            endpointStatus: "AEGL / LOC unavailable; using source-backed ERG distances.",
+            endpointStatus: "AEGL / LOC unavailable; bundled ERG distances require current-PHMSA verification.",
           },
           terrain: { status: "Not applied to ERG distance overlay", terrainAppliedToDispersion: false },
           ergOverlay: {
@@ -718,6 +789,7 @@ app.post("/api/plume/run", async (c) => {
             protectiveActionMi,
             source: "PHMSA Emergency Response Guidebook 2024 Table 1",
             sourceUrl: "https://www.phmsa.dot.gov/training/hazmat/erg/emergency-response-guidebook-erg",
+            provenanceStatus: "Requires row-level verification against the current PHMSA ERG",
             limitations: [
               "This is an ERG initial-isolation/protective-action guide overlay, not a dispersion model or toxic concentration contour.",
               "Verify the UN/NA identification, spill size, day/night condition, wind direction, current ERG, field observations, monitoring, agency SOPs, and Incident Command.",
@@ -753,23 +825,28 @@ app.post("/api/plume/run", async (c) => {
     }, 422);
   }
 
-  inputs.chemicalId = canonicalChemical.id;
-  if (inputs.molecularWeight === undefined) {
-    const mw = canonicalChemical.molecularWeight
-      ? Number(canonicalChemical.molecularWeight)
-      : molecularWeightOf(canonicalChemical.id);
-    if (mw !== undefined) {
-      inputs.molecularWeight = mw;
-      calculationEvidence?.sourceData.push({
-        sourceName: "Chemical Companion / CAMEO-linked chemical record",
-        sourceRecordId: masterChemicalId,
-        fields: ["molecularWeight"],
-        values: { molecularWeight: mw },
-        approved: true,
-        sourceLocator: `chemical-companion:${masterChemicalId}; chemicals:${canonicalChemical.id}`,
-      });
-    }
+  if (!Number.isFinite(inputs.lat) || !Number.isFinite(inputs.lng)) {
+    return c.json({
+      error: "Cannot plot plume without a valid incident or planning location.",
+      display: "Cannot Plot — Missing Required Location Data",
+      plumeStatus: "Blocked Missing Location",
+      ...plumeBlockedFields("Cannot Plot — Missing Required Location Data"),
+    }, 422);
   }
+
+  inputs.chemicalId = canonicalChemical.id;
+  // Molecular weight is chemical identity data, not an operator override.
+  const canonicalMolecularWeight = canonicalChemical.molecularWeight
+    ? Number(canonicalChemical.molecularWeight)
+    : molecularWeightOf(canonicalChemical.id);
+  if (!canonicalMolecularWeight || !Number.isFinite(canonicalMolecularWeight)) {
+    return c.json({
+      error: "No reviewed molecular weight is available for this chemical.",
+      display: "No Current Data Exists",
+      ...plumeBlockedFields(),
+    }, 422);
+  }
+  inputs.molecularWeight = canonicalMolecularWeight;
 
   const thresholds = aeglThresholdBands(endpoint);
   const weather = validatePlumeWeather({
@@ -779,6 +856,15 @@ app.post("/api/plume/run", async (c) => {
     sourceMode: typeof bodyRecord.weatherSourceMode === "string" ? bodyRecord.weatherSourceMode : null,
     observationTime: typeof bodyRecord.weatherObservationTime === "string" ? bodyRecord.weatherObservationTime : null,
   });
+  if (!weather.usableForPlanning) {
+    return c.json({
+      error: "Cannot plot plume without identified, time-valid weather data and valid wind inputs.",
+      display: "Cannot Plot — Missing Required Weather Data",
+      weather,
+      plumeStatus: determinePlumeStatus({ hasChemicalLink: true, hasAeglEndpoint: true, hasWeather: false, hasReleaseInputs: true }),
+      ...plumeBlockedFields("Cannot Plot — Missing Required Weather Data"),
+    }, 422);
+  }
   const sourceStrength = validateSourceStrength({
     chemicalId: masterChemicalId,
     releaseKind: inputs.releaseKind,
@@ -803,7 +889,7 @@ app.post("/api/plume/run", async (c) => {
   });
 
   try {
-    const result = runPlume(inputs, { thresholds, calculationEvidence });
+    const result = runPlume(inputs, { thresholds });
     const confidenceLevel = weather.status === "Requires Review" || modelSelection.status === "Requires Review"
       ? "Requires Review"
       : "Planning Only";
@@ -864,10 +950,6 @@ app.post("/api/plume/run", async (c) => {
       limitations,
       fieldVerificationRequirements,
       disclaimers: [result.disclaimer, "Planning estimate only; verify with official modeling, field monitoring, agency SOPs, and Incident Command."],
-      alohaImport: {
-        status: "Not Configured",
-        display: "Official ALOHA Import: Not Configured",
-      },
       liveMonitoring: {
         configured: false,
         behavior: "Recalculate after a material weather-input change; preserve prior result with timestamps.",
@@ -970,14 +1052,16 @@ app.get("/api/weather/current", async (c) => {
         );
         const values = observation.properties as Record<string, { value?: unknown }> | undefined;
         const temperature = values?.temperature?.value;
+        const relativeHumidity = values?.relativeHumidity?.value;
         const windSpeed = values?.windSpeed?.value;
         const windDirection = values?.windDirection?.value;
         const isComplete =
           typeof temperature === "number" &&
           Number.isFinite(temperature) &&
+          typeof relativeHumidity === "number" &&
+          Number.isFinite(relativeHumidity) &&
           typeof windSpeed === "number" &&
           Number.isFinite(windSpeed) &&
-          windSpeed > 0 &&
           typeof windDirection === "number" &&
           Number.isFinite(windDirection);
         if (isComplete)

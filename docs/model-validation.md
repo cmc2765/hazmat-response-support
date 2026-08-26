@@ -22,7 +22,7 @@ the flat-ground baseline has reproducible, model-compatible published comparison
 
 The offline framework is implemented in:
 
-- `src/lib/model/validation.ts`
+- `src/internal/plume-validation/validation.ts`
 - `test/model-validation/plume-validation.test.ts`
 - `test/model-validation/plume-validation-cases.example.json`
 

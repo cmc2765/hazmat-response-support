@@ -4,7 +4,7 @@ import {
   PLUME_VALIDATION_PLACEHOLDER_WARNING,
   validatePlumeCases,
   type PlumeValidationCase,
-} from "@/lib/model/validation";
+} from "@/internal/plume-validation";
 
 const validationCases = JSON.parse(readFileSync(
   new URL("./plume-validation-cases.example.json", import.meta.url),

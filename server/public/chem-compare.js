@@ -310,6 +310,7 @@
     compareRows.forEach(([key, label]) => {
       const row = document.createElement('article');
       row.className = 'chemcompare-row';
+      row.dataset.field = key;
       const different = comparisonSignature(baseComparison[key]) !== comparisonSignature(secondComparison[key]);
       row.append(
         renderCompareValue(baseComparison[key], baseComparison.chemicalName, different),

@@ -15,21 +15,22 @@ const guidedHtml = html.slice(
 );
 const lookupHtml = html.slice(
   html.indexOf('<section id="lookup"'),
-  html.indexOf('<section id="guided-response"'),
+  html.indexOf('<section id="chem-compare"'),
 );
 
 describe("Guided Response workflow", () => {
-  it("uses the branded Chemical ID hero with live search controls", () => {
-    expect(styles).toContain('url("assets/chemical-id-search-background-v2.png")');
-    expect(lookupHtml).toContain('class="chemical-id-search-content"');
+  it("uses the branded unified Hazard ID hero with one tabbed search console", () => {
+    expect(styles).toContain('url("assets/hazard-id-level-b-hero-v2.png")');
+    expect(lookupHtml.match(/data-hazard-search-tab=/g)).toHaveLength(3);
+    expect(lookupHtml.match(/type="search"/g)).toHaveLength(1);
     expect(lookupHtml).toContain('id="chemical-search"');
     expect(lookupHtml).toContain('id="chemical-lookup-btn"');
-    expect(lookupHtml).toContain('id="save-my-chemical-btn"');
-    expect(lookupHtml).toContain('assets/hazmatiq-logo-transparent.png');
-    expect(styles).toContain(".layout:has(#lookup.active) #lookup.active");
-    expect(styles).toMatch(/\.layout:has\(#lookup\.active\) #lookup\.active\s*\{[^}]*flex-direction: column;/s);
-    expect(styles).toMatch(/\.layout:has\(#lookup\.active\) #lookup\.active > \.chemical-id-search-card[^}]*min-height: 280px;/s);
-    expect(styles).toMatch(/#lookup\.active:has\(#chemical-id-results:not\(\[hidden\]\)\) > #chemical-id-results[^}]*width: 100%;/s);
+    expect(lookupHtml).not.toContain('id="cbrne-cwa-search"');
+    expect(lookupHtml).not.toContain('id="radiological-search"');
+    expect(lookupHtml).toContain('<h1 class="hazmat-hero-title">HAZARD ID</h1>');
+    expect(styles).toContain("/* Hazard ID command console — cinematic single-search workspace. */");
+    expect(styles).toMatch(/#lookup > \.hazard-id-command-console\.chemical-id-search-card[^}]*grid-column: 1 !important;/s);
+    expect(styles).toMatch(/#lookup > #chemical-id-results[^}]*grid-column: 1 !important;/s);
   });
 
   it("does not render a Sources bubble in the populated Chemical Profile header", () => {
@@ -67,8 +68,8 @@ describe("Guided Response workflow", () => {
     expect(script).not.toContain("['Hazard Class', formatHazardClassSummary");
     expect(script).not.toContain("['Packing Group', profile?.header?.packingGroup");
     expect(styles).toMatch(/chemical-profile-meta-item[^}]*display: grid;[^}]*grid-template-rows: auto minmax\(2\.4rem, 1fr\);/s);
-    expect(styles).toMatch(/data-field="un-na"[^}]*color: #ffd34f;[^}]*font-size: 1\.35rem;[^}]*font-weight: 900;/s);
-    expect(styles).toMatch(/data-field="erg-guide"[^}]*color: #ff8a1c;[^}]*font-size: 1\.35rem;[^}]*font-weight: 900;/s);
+    expect(styles).toMatch(/data-field="un-na"[^}]*color: #ffd34f;[^}]*font-size: 1\.35rem;[^}]*font-weight: 400;/s);
+    expect(styles).toMatch(/data-field="erg-guide"[^}]*color: #ff8a1c;[^}]*font-size: 1\.35rem;[^}]*font-weight: 400;/s);
     expect(styles).toMatch(/data-field="ppe-recommendation"[^}]*grid-column: span 2;/s);
   });
 
@@ -99,8 +100,8 @@ describe("Guided Response workflow", () => {
 
   it("provides the new view, required actions, and compact disclaimers", () => {
     expect(html).toContain('id="guided-response" class="view"');
-    expect(guidedHtml).toContain('class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png"');
-    expect(guidedHtml).toMatch(/class="guided-response-logo"[^>]*>\s*<div>\s*<h2>Guided Response<\/h2>/s);
+    expect(guidedHtml).toContain('class="hazmatiq-logo-lockup hazmatiq-logo-lockup-hero"');
+    expect(guidedHtml).toMatch(/hazmatiq-logo-lockup-hero[\s\S]*<div class="hazmat-page-hero-content">[\s\S]*<h1 class="hazmat-hero-title">Guided Response<\/h1>/s);
     for (const id of [
       "guided-open-plume-btn",
       "guided-save-record-btn",
@@ -113,7 +114,7 @@ describe("Guided Response workflow", () => {
 
   it("reuses selected state and blocks missing or unresolved chemical identity", () => {
     expect(script).toContain("function renderGuidedResponse()");
-    expect(script).toContain("No chemical selected. Return to Chemical ID and select a Chemical Companion master record.");
+    expect(script).toContain("No chemical selected. Return to HAZARD ID and select a Chemical Companion master record.");
     expect(script).toContain("Chemical-specific response guidance requires a verified Chemical Companion master link.");
     expect(script).toContain("document.getElementById('guided-open-plume-btn')?.addEventListener('click', openPlumeWorkspace)");
   });
