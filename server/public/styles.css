@@ -34,144 +34,6 @@
   /* Optional future experiment: change --hazmatiq-font-body to this serif stack. */
   --hazmatiq-font-serif-experiment: Georgia, "Times New Roman", Times, serif;
 }
-
-/* Prototype-only layout Design Mode. Responder mode is unchanged while inactive. */
-.design-mode-toolbar {
-  position: fixed;
-  z-index: 10000;
-  right: 14px;
-  bottom: 14px;
-  display: grid;
-  width: min(390px, calc(100vw - 28px));
-  border: 1px solid #f6c343;
-  border-radius: 10px;
-  background: #061a2e;
-  color: #fff;
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.48);
-  font: 700 12px/1.35 Arial, sans-serif;
-}
-
-.design-mode-toolbar > button {
-  min-height: 42px;
-  border: 0;
-  border-radius: 9px;
-  background: #f6c343;
-  color: #061a2e;
-  font-weight: 950;
-  cursor: pointer;
-}
-
-.design-mode-toolbar.active > button { border-radius: 9px 9px 0 0; }
-.design-mode-controls { display: none; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
-.design-mode-toolbar.active .design-mode-controls { display: grid; }
-.design-mode-controls > strong,
-.design-mode-controls > p,
-.design-mode-controls > output { grid-column: 1 / -1; }
-.design-mode-controls > strong { color: #f6c343; letter-spacing: 0.12em; }
-.design-mode-controls label { display: flex; align-items: center; gap: 6px; min-height: 34px; }
-.design-mode-controls select,
-.design-mode-controls button {
-  min-height: 34px;
-  border: 1px solid #537895;
-  border-radius: 6px;
-  background: #0d2d49;
-  color: #fff;
-  font-weight: 800;
-}
-.design-mode-controls button { padding: 6px 9px; cursor: pointer; }
-.design-mode-controls p { margin: 0; color: #c7d8e6; font-size: 11px; font-weight: 600; }
-.design-mode-controls output { min-height: 16px; color: #f6c343; font-size: 11px; }
-
-.design-drag-handle,
-.design-size-readout,
-.design-resize-handle { display: none; }
-
-.design-mode-active [data-design-layout] {
-  position: relative !important;
-  z-index: 1;
-  box-sizing: border-box;
-  transform: translate3d(var(--design-x, 0), var(--design-y, 0), 0) !important;
-  outline: 2px dashed rgba(246, 195, 67, 0.82) !important;
-  outline-offset: 3px;
-  touch-action: none;
-  cursor: grab;
-}
-
-.design-mode-active [data-design-layout] * { pointer-events: none; }
-.design-mode-active [data-design-layout][hidden] { display: none !important; }
-.design-mode-active [data-design-layout].design-selected {
-  z-index: 20;
-  outline: 4px solid #f6c343 !important;
-  box-shadow: 0 0 0 7px rgba(246, 195, 67, 0.28), 0 14px 30px rgba(0, 0, 0, 0.34) !important;
-}
-
-.design-mode-active .design-drag-handle {
-  position: absolute;
-  z-index: 1003;
-  top: 5px;
-  left: 50%;
-  display: block;
-  padding: 3px 10px;
-  border: 1px solid #061a2e;
-  border-radius: 999px;
-  background: #f6c343;
-  color: #061a2e;
-  font: 950 9px/1 Arial, sans-serif;
-  letter-spacing: 0.12em;
-  transform: translateX(-50%);
-  pointer-events: auto;
-  cursor: grab;
-  user-select: none;
-}
-
-.design-mode-active .design-size-readout {
-  position: absolute;
-  z-index: 1002;
-  top: 7px;
-  left: 7px;
-  display: block;
-  max-width: calc(50% - 38px);
-  padding: 5px 7px;
-  border: 1px solid rgba(246, 195, 67, 0.78);
-  border-radius: 5px;
-  background: rgba(6, 26, 46, 0.92);
-  color: #fff;
-  font: 700 9px/1.25 ui-monospace, SFMono-Regular, Consolas, monospace;
-  text-align: left;
-  white-space: pre;
-  pointer-events: none;
-}
-
-.design-mode-active .design-resize-handle {
-  position: absolute;
-  z-index: 1004;
-  display: block;
-  width: 22px;
-  height: 22px;
-  border: 2px solid #061a2e;
-  background: #f6c343;
-  box-shadow: 0 0 0 2px rgba(246, 195, 67, 0.45);
-  pointer-events: auto;
-  touch-action: none;
-}
-
-.design-mode-active .design-resize-handle.top-left { top: -8px; left: -8px; cursor: nwse-resize; }
-.design-mode-active .design-resize-handle.top-right { top: -8px; right: -8px; cursor: nesw-resize; }
-.design-mode-active .design-resize-handle.bottom-left { bottom: -8px; left: -8px; cursor: nesw-resize; }
-.design-mode-active .design-resize-handle.bottom-right { right: -8px; bottom: -8px; cursor: nwse-resize; }
-
-.design-pointer-active,
-.design-pointer-active * {
-  cursor: grabbing !important;
-  user-select: none !important;
-  -webkit-user-select: none !important;
-}
-
-@media (max-width: 560px) {
-  .design-mode-toolbar { right: 7px; bottom: 7px; width: calc(100vw - 14px); }
-  .design-mode-controls { max-height: 58vh; overflow-y: auto; }
-}
-
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 .sr-only {
@@ -3813,6 +3675,180 @@ h1 { font-weight: 800; }
   }
 }
 
+/* Home command header refinement: enlarged identity, bottom status rail, and compact menu. */
+.app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
+  min-height: 510px;
+  padding: 18px clamp(14px, 1.5vw, 24px) 82px;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
+  width: min(76%, 1320px);
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
+.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn,
+.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:hover,
+.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:focus-visible,
+.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn.active,
+.app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+  width: min(1320px, 100%);
+  height: 371px;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .command-center-launch {
+  justify-self: start;
+  width: 52px;
+  min-width: 52px;
+  min-height: 48px;
+  margin: -5px 0 0 4px;
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .command-center-label {
+  display: none;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .command-center-launch .command-menu-toggle {
+  width: 48px;
+  height: 44px;
+  flex-basis: 48px;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .command-header-footer {
+  top: auto;
+  right: clamp(14px, 1.5vw, 24px);
+  bottom: 14px;
+  left: clamp(14px, 1.5vw, 24px);
+  width: auto;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context.notification-center {
+  display: block;
+  width: 100%;
+  height: 54px;
+  min-height: 54px;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-feed {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(7px, 1vw, 14px);
+  width: 100%;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-feed > .notification-item:last-child {
+  display: grid;
+  padding-right: 10px;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-item,
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system {
+  min-height: 54px;
+  padding: 5px 10px;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-alert-count {
+  display: none;
+}
+
+.app-shell:has(#overview.view.active) > .layout {
+  padding: 0 clamp(12px, 1.5vw, 24px) clamp(12px, 1.5vw, 24px);
+}
+
+#overview .incident-overview-actions .overview-action-btn {
+  border: 1px solid rgba(255, 255, 255, 0.88);
+}
+
+#overview .incident-overview-actions .overview-action-incident {
+  --overview-accent: #a90f18;
+  --overview-accent-rgb: 169, 15, 24;
+}
+
+#overview .incident-overview-actions .overview-action-planning {
+  --overview-accent: #167238;
+  --overview-accent-rgb: 22, 114, 56;
+}
+
+#overview .incident-overview-actions .overview-action-reports {
+  --overview-accent: #d2a900;
+  --overview-accent-rgb: 210, 169, 0;
+}
+
+#overview .incident-overview-actions .overview-action-btn:hover,
+#overview .incident-overview-actions .overview-action-btn:focus-visible {
+  border: 5px solid var(--overview-accent);
+  box-shadow: 0 0 0 2px rgba(var(--overview-accent-rgb), 0.42), 0 20px 42px rgba(var(--overview-accent-rgb), 0.38);
+}
+
+@media (max-width: 1120px) {
+  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
+    min-height: 440px;
+    padding-bottom: 78px;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
+    width: min(82%, 1080px);
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:hover,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:focus-visible,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn.active,
+  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+    height: 310px;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .command-header-footer {
+    position: absolute;
+    top: auto;
+    right: clamp(14px, 1.5vw, 24px);
+    bottom: 14px;
+    left: clamp(14px, 1.5vw, 24px);
+    width: auto;
+    margin: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
+    min-height: 385px;
+    padding-bottom: 116px;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
+    width: 92%;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:hover,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:focus-visible,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn.active,
+  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+    height: 245px;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context.notification-center {
+    display: block;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-feed {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-item,
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system {
+    min-width: 0;
+    min-height: 86px;
+    padding: 5px 6px;
+  }
+}
+
 .chemical-profile-section[data-section$="levels"] .chemical-profile-list,
 .chemical-profile-section[data-section="primary-limits"] .chemical-profile-list,
 .chemical-profile-section[data-section="additional-exposure-levels"] .chemical-profile-list,
@@ -3928,6 +3964,19 @@ h1 { font-weight: 800; }
   color: #fff;
   background: #061f34;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-weather-item {
+  grid-template-rows: auto auto;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-weather-item > span,
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-weather-item > strong {
+  justify-self: center;
+  text-align: center;
 }
 
 .chemical-profile-toolbar > strong {
@@ -8413,7 +8462,7 @@ body.workspace-drawer-open { overflow: hidden; }
 .hazmat-hero-eyebrow { text-shadow: 0 2px 5px rgba(0, 0, 0, 0.65); }
 
 .variant-planning {
-  background-image: linear-gradient(90deg, rgba(6, 26, 46, 0.98) 0%, rgba(8, 37, 64, 0.86) 42%, rgba(8, 37, 64, 0.18) 78%), url("assets/home-card-scenes.png") !important;
+  background-image: linear-gradient(90deg, rgba(6, 26, 46, 0.98) 0%, rgba(8, 37, 64, 0.86) 42%, rgba(8, 37, 64, 0.18) 78%), url("assets/home-card-scenes-v5.png") !important;
   background-position: center, center center;
   background-size: cover, 100% 300% !important;
 }
@@ -8435,7 +8484,7 @@ body.workspace-drawer-open { overflow: hidden; }
 }
 
 .variant-monitoring {
-  background-image: linear-gradient(90deg, rgba(6, 26, 46, 0.99), rgba(8, 37, 64, 0.74) 56%, rgba(8, 37, 64, 0.22)), url("assets/home-card-scenes.png") !important;
+  background-image: linear-gradient(90deg, rgba(6, 26, 46, 0.99), rgba(8, 37, 64, 0.74) 56%, rgba(8, 37, 64, 0.22)), url("assets/home-card-scenes-v5.png") !important;
   background-position: center, center bottom;
   background-size: cover, 100% 300% !important;
 }
@@ -8727,7 +8776,7 @@ body.workspace-drawer-open { overflow: hidden; }
 
 .incident-overview-actions .overview-action-btn::before {
   z-index: -2;
-  background-image: url("assets/home-card-scenes.png");
+  background-image: url("assets/home-card-scenes-v5.png");
   background-repeat: no-repeat;
   background-size: 100% 300%;
   transition: transform 0.25s ease, filter 0.25s ease;
@@ -8957,8 +9006,14 @@ body.workspace-drawer-open { overflow: hidden; }
   color: #fff;
   box-shadow: none;
 }
-.planning-tools-grid {
 .planning-eplan-card .primary-btn:hover,
+.planning-eplan-card .primary-btn:focus-visible {
+  border-color: #8f3d00;
+  background: #b65000;
+}
+
+.planning-tools-grid {
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
@@ -8974,24 +9029,21 @@ body.workspace-drawer-open { overflow: hidden; }
   border-top: 4px solid #1683dc;
   background: #fff;
   box-shadow: 0 5px 12px rgba(34, 38, 42, 0.08);
-  gap: 8px;
-  margin: 12px 0 16px;
-.planning-tool-eplan {
-  border-top-color: #ed7203;
-.facility-preplan-btn {
-  min-height: 0;
+}
+
+.planning-tool-eplan { border-top-color: #ed7203; }
 .planning-tool-scenario {
   grid-column: 1 / -1;
   border-top-color: #9f1016;
-  background: transparent;
-  color: #9f1016;
+}
+
 .planning-tool-section-heading {
   display: flex;
   align-items: flex-start;
   gap: 12px;
   width: 100%;
-  cursor: pointer;
-  box-shadow: none;
+}
+
 .planning-tool-index {
   flex: 0 0 auto;
   color: #9f1016;
@@ -8999,8 +9051,8 @@ body.workspace-drawer-open { overflow: hidden; }
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.08em;
+}
 
-.facility-preplan-btn:hover,
 .planning-tool-label {
   margin: 0 0 3px;
   color: #5d646b;
@@ -9008,19 +9060,19 @@ body.workspace-drawer-open { overflow: hidden; }
   font-weight: 850;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #111;
-  transform: none;
+}
+
 .planning-tool-section h3 {
   margin: 0;
   color: #17120a;
   font-size: 1.12rem;
-    grid-template-columns: 1fr;
-  }
+}
+
 .planning-tool-section > p {
   margin: 0;
   color: #3e454a;
-    display: none;
-  }
+}
+
 .planning-tool-list {
   display: grid;
   gap: 5px;
@@ -9029,34 +9081,34 @@ body.workspace-drawer-open { overflow: hidden; }
   padding-left: 18px;
   color: #3e454a;
   font-size: 0.86rem;
+}
 
-  .planning-tools-primary .eplan-login-form .primary-btn {
 .planning-tool-list li::marker {
   color: #ed7203;
   font-weight: 900;
-    align-items: flex-start;
-  }
+}
+
 .planning-tool-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: auto;
-@media (min-width: 720px) {
-  .incident-overview-actions {
+}
+
 .planning-tool-section .primary-btn,
 .planning-tool-section .ghost-btn {
   min-height: 36px;
   padding: 7px 11px;
   font-size: 0.78rem;
-    min-height: min(790px, max(480px, calc(100dvh - 200px)));
-    margin-bottom: 0;
+}
+
 .planning-scenario-examples {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
   margin-top: 2px;
-  .app-shell:has(#overview.active) .sidebar .module-nav {
-    gap: 18px;
+}
+
 .planning-scenario-examples span {
   padding: 5px 8px;
   border: 1px solid #d5b0b2;
@@ -9065,58 +9117,25 @@ body.workspace-drawer-open { overflow: hidden; }
   color: #731017;
   font-size: 0.78rem;
   font-weight: 700;
-    height: auto;
-    overflow: visible;
+}
+
 .planning-tools-status {
   margin: 0;
   padding-top: 4px;
   border-top: 1px solid #c3c8cc;
+}
 
-  .app-shell:has(#overview.active) .sidebar,
+@media (max-width: 900px) {
+  .planning-tools-grid { grid-template-columns: 1fr; }
+  .planning-tool-scenario { grid-column: auto; }
+}
 
-  .planning-tools-grid {
-  .overview-action-title { font-size: clamp(1.65rem, 2.65vw, 2.6rem); }
-  .overview-action-description { font-size: clamp(0.82rem, 1.12vw, 1rem); line-height: 1.2; }
-  .overview-action-arrow { font-size: 1.8rem; }
-  .planning-tool-scenario {
-    grid-column: auto;
-  .app-shell:has(#overview.active) .footer-note {
-    display: none;
-  }
-
+@media (max-width: 719px) {
   .planning-tool-actions,
   .planning-tool-actions .primary-btn,
-  .planning-tool-actions .ghost-btn {
-    width: 100%;
-@media (max-width: 719px) {
-  .app-shell { padding: 10px; }
-  .topbar { flex-direction: row; align-items: center; padding: 8px 10px; gap: 10px; }
-  .department-logo { width: 54px; height: 54px; }
-  .alert-banner { margin: 8px 0; padding: 9px 11px; font-size: 0.76rem; line-height: 1.35; }
-  .layout { grid-template-columns: 1fr; gap: 6px; }
-  .sidebar-card { margin-bottom: 0; padding: 11px; }
-  .sidebar-card h2 { margin-bottom: 3px; font-size: 1.2rem; }
-  .sidebar-card .muted { margin-bottom: 8px; font-size: 0.75rem; }
-  .sidebar-card.compact { display: none; }
-  .sidebar .module-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
-  .sidebar .module-btn { min-height: 44px; padding: 7px 8px; font-size: 0.76rem; line-height: 1.15; }
-  .incident-overview-actions { grid-template-columns: 1fr; gap: 14px; }
-  .incident-overview-actions .overview-action-btn {
-    min-height: clamp(180px, 54vw, 220px);
-    padding: 22px 18px;
-    border-width: 4px;
-    border-radius: 14px;
-  }
-  .incident-overview-actions .overview-action-btn::after {
-    background: linear-gradient(90deg, rgba(250, 252, 253, 0.98) 0%, rgba(250, 252, 253, 0.91) 50%, rgba(250, 252, 253, 0.28) 80%, transparent 100%);
-  }
-  .overview-action-copy { width: 72%; gap: 8px; }
-  .overview-action-title { padding-left: 14px; border-left-width: 6px; font-size: clamp(1.55rem, 8vw, 2.2rem); }
-  .overview-action-description { padding-left: 20px; font-size: 0.9rem; line-height: 1.25; }
-  .overview-action-arrow { padding-left: 20px; font-size: 2rem; }
+  .planning-tool-actions .ghost-btn { width: 100%; }
   .facility-preplan-grid { grid-template-columns: 1fr; }
   .facility-preplan-btn { min-height: 0; }
-  .footer-note { display: none; }
 }
 
 /* Compact tactical alert strip and overlay history drawer. */
@@ -12730,6 +12749,46 @@ body,
   margin-top: 8px;
 }
 
+.command-promo-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 7px;
+  min-width: 0;
+}
+
+.overview-promo-strip {
+  margin-top: 14px;
+  padding: 10px 2px 2px;
+  border-top: 1px solid rgba(77, 124, 160, 0.55);
+}
+
+.command-promo-grid article {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 7px;
+  align-items: center;
+  min-width: 0;
+  min-height: 54px;
+  padding: 7px 9px;
+  border: 1px solid rgba(77, 124, 160, 0.72);
+  border-radius: 8px;
+  background: rgba(5, 27, 46, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(3px);
+}
+
+.command-promo-grid article > span {
+  color: #f6c343;
+  font-size: 1.35rem;
+  line-height: 1;
+  text-align: center;
+}
+
+.command-promo-grid strong,
+.command-promo-grid small { display: block; overflow: hidden; text-overflow: ellipsis; }
+.command-promo-grid strong { color: #fff; font-size: 0.7rem; line-height: 1.15; }
+.command-promo-grid small { margin-top: 2px; color: #9eb7cb; font-size: 0.57rem; line-height: 1.2; }
+
 .hazmat-command-context.notification-center {
   position: relative;
   right: auto;
@@ -12997,6 +13056,7 @@ body,
 @media (max-width: 1180px) {
   .hazmat-command-bar.topbar { min-height: 0; padding: 10px 12px 12px; }
   .brand-logo-command { width: min(980px, 100%); height: 174px; }
+  .command-promo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .hazmat-command-context.notification-center { width: min(790px, 100%); justify-self: end; }
 }
 
@@ -13007,6 +13067,7 @@ body,
     padding: 8px 9px 10px;
   }
   .brand-logo-command { width: 100%; height: 140px; }
+  .command-promo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hazmat-command-context.notification-center { width: 100%; }
   .hazmat-command-context .notification-feed {
     grid-template-columns: minmax(105px, 0.75fr) minmax(300px, 2fr) minmax(105px, 0.75fr);
@@ -13024,6 +13085,8 @@ body,
   .command-center-launch .command-menu-toggle { width: 42px; height: 42px; flex-basis: 42px; }
   .command-center-label { font-size: 0.67rem; }
   .command-header-footer { margin-top: 8px; }
+  .command-promo-grid article { min-height: 48px; }
+  .command-promo-grid small { display: none; }
   .hazmat-command-context .notification-feed { width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
   .hazmat-command-context .notification-weather-item { grid-column: 1 / -1; grid-row: 1; }
   .hazmat-command-context .notification-system { grid-column: 1; grid-row: 2; }
@@ -14363,7 +14426,7 @@ button[data-command-view="plume"]:disabled,
 
 #overview .incident-overview-actions .overview-action-btn::before {
   z-index: -2;
-  background-image: url("assets/home-card-scenes.png") !important;
+  background-image: url("assets/home-card-scenes-v5.png") !important;
   background-position: center top !important;
   background-size: 100% 300%;
   background-repeat: no-repeat;
@@ -14441,4 +14504,818 @@ button[data-command-view="plume"]:disabled,
   #overview .overview-action-description { padding-left: 20px; font-size: 0.9rem; }
   #overview .overview-action-arrow { padding-left: 20px; }
 }
+}
+
+/* Yesterday's approved full-bleed cinematic Home cards. */
+#overview.view.active {
+  display: grid;
+  min-height: auto;
+  padding: 10px;
+  background: #02090f;
+}
+
+#overview .incident-overview-card {
+  display: grid;
+  width: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#overview .incident-overview-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: repeat(3, minmax(clamp(260px, 20.8vw, 330px), auto));
+  gap: 16px;
+  width: 100%;
+}
+
+#overview .overview-action-layout {
+  display: grid;
+  min-width: 0;
+  min-height: clamp(260px, 20.8vw, 330px);
+  margin: 0;
+}
+
+#overview .incident-overview-actions .overview-action-btn {
+  --overview-accent: #d71920;
+  --overview-accent-rgb: 215, 25, 32;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: clamp(260px, 20.8vw, 330px);
+  padding: clamp(28px, 3.2vw, 48px);
+  overflow: hidden;
+  border: 2px solid var(--overview-accent);
+  border-radius: 18px;
+  color: #fff;
+  background: #02090f;
+  font-family: var(--hazmatiq-font-heading);
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: left;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.36);
+  cursor: pointer;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+#overview .incident-overview-actions .overview-action-btn::before,
+#overview .incident-overview-actions .overview-action-btn::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+#overview .incident-overview-actions .overview-action-btn::before {
+  z-index: 0;
+  background-image: url("assets/home-card-scenes-v5.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center top !important;
+  background-size: 100% 300% !important;
+  opacity: 1;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+#overview .incident-overview-actions .overview-action-btn::after {
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(0, 5, 9, 0.98) 0%, rgba(0, 7, 12, 0.9) 29%, rgba(0, 10, 17, 0.55) 48%, rgba(0, 7, 12, 0.2) 72%, rgba(0, 0, 0, 0.24) 100%);
+}
+
+#overview .overview-action-copy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: min(48%, 660px);
+  max-width: calc(100% - 24px);
+  gap: 16px;
+  transform: none;
+}
+
+#overview .overview-action-title,
+#overview .overview-action-description,
+#overview .overview-action-arrow {
+  display: block;
+  color: #fff;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.88);
+}
+
+#overview .overview-action-title,
+#overview .overview-action-incident .overview-action-title {
+  padding-left: 34px;
+  border-left: 10px solid var(--overview-accent);
+  color: #fff;
+  font-family: "Bahnschrift Condensed", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(2.7rem, 4.35vw, 4.65rem);
+  font-weight: 950;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+  text-transform: uppercase;
+  white-space: normal;
+}
+
+#overview .overview-action-description {
+  max-width: 38rem;
+  padding-left: 44px;
+  font-family: var(--hazmatiq-font-body);
+  font-size: clamp(1.1rem, 1.7vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.28;
+}
+
+#overview .overview-action-arrow {
+  padding-left: 44px;
+  color: var(--overview-accent);
+  font-family: var(--hazmatiq-font-body);
+  font-size: clamp(2.3rem, 3.4vw, 3.7rem);
+  font-weight: 400;
+  line-height: 0.75;
+}
+
+#overview .overview-action-planning {
+  --overview-accent: #2e9df4;
+  --overview-accent-rgb: 46, 157, 244;
+}
+
+#overview .incident-overview-actions .overview-action-planning::before {
+  background-position: center center !important;
+}
+
+#overview .overview-action-reports {
+  --overview-accent: #53b719;
+  --overview-accent-rgb: 83, 183, 25;
+}
+
+#overview .incident-overview-actions .overview-action-reports::before {
+  background-image: url("assets/home-card-scenes-v5.png") !important;
+  background-position: center bottom !important;
+}
+
+#overview .incident-overview-actions .overview-action-btn:hover,
+#overview .incident-overview-actions .overview-action-btn:focus-visible {
+  z-index: 3;
+  border-color: var(--overview-accent);
+  transform: translateY(-4px) scale(1.006);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(var(--overview-accent-rgb), 0.28), 0 18px 38px rgba(0, 0, 0, 0.48);
+}
+
+#overview .incident-overview-actions .overview-action-btn:hover::before,
+#overview .incident-overview-actions .overview-action-btn:focus-visible::before {
+  transform: scale(1.035);
+  filter: saturate(1.1) contrast(1.05) brightness(1.03);
+}
+
+@media (max-width: 760px) {
+  #overview.view.active { padding: 7px; }
+  #overview .incident-overview-actions { grid-template-rows: none; gap: 10px; }
+  #overview .incident-overview-actions .overview-action-btn { min-height: 230px; padding: 22px; border-radius: 13px; }
+  #overview .overview-action-layout { min-height: 230px; }
+  #overview .overview-action-copy { width: min(78%, 560px); gap: 10px; }
+  #overview .overview-action-title,
+  #overview .overview-action-incident .overview-action-title { padding-left: 18px; border-left-width: 7px; font-size: clamp(2rem, 8vw, 3rem); }
+  #overview .overview-action-description { padding-left: 25px; font-size: clamp(0.95rem, 3.8vw, 1.15rem); }
+  #overview .overview-action-arrow { padding-left: 25px; font-size: 2.4rem; }
+}
+
+/* Restore the approved command identity: large logo with its menu directly below. */
+.command-header.hazmat-command-bar.topbar {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: stretch;
+  gap: 10px;
+  min-height: 408px;
+  padding: 10px 16px 14px;
+}
+
+.command-header .hazmat-command-identity {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 5px;
+  width: 100%;
+  height: auto;
+}
+
+.command-header .hazmat-command-identity .brand,
+.command-header .command-brand-home.module-btn,
+.command-header .command-brand-home.module-btn:hover,
+.command-header .command-brand-home.module-btn:focus-visible,
+.command-header .command-brand-home.module-btn.active,
+.command-header .brand-logo-command {
+  width: min(1240px, 100%);
+  max-width: 100%;
+  height: 218px;
+}
+
+.command-header .command-brand-home.module-btn,
+.command-header .command-brand-home.module-btn:hover,
+.command-header .command-brand-home.module-btn:focus-visible,
+.command-header .command-brand-home.module-btn.active {
+  justify-content: flex-start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.command-header .brand-logo-command {
+  object-fit: contain;
+  object-position: left center;
+}
+
+.command-header .hazmat-command-identity .command-center-launch {
+  justify-self: start;
+  justify-content: flex-start;
+  width: fit-content;
+  min-width: 250px;
+  min-height: 58px;
+  padding: 8px 16px;
+}
+
+.command-header .command-header-footer {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  width: 100%;
+  height: auto;
+}
+
+.command-header .hazmat-command-context.notification-center {
+  width: min(1040px, 100%);
+  height: 72px;
+}
+
+@media (max-width: 900px) {
+  .command-header.hazmat-command-bar.topbar { min-height: 0; }
+  .command-header .hazmat-command-identity .brand,
+  .command-header .command-brand-home.module-btn,
+  .command-header .command-brand-home.module-btn:hover,
+  .command-header .command-brand-home.module-btn:focus-visible,
+  .command-header .command-brand-home.module-btn.active,
+  .command-header .brand-logo-command { height: 174px; }
+}
+
+@media (max-width: 680px) {
+  .command-header .hazmat-command-identity .brand,
+  .command-header .command-brand-home.module-btn,
+  .command-header .command-brand-home.module-btn:hover,
+  .command-header .command-brand-home.module-btn:focus-visible,
+  .command-header .command-brand-home.module-btn.active,
+  .command-header .brand-logo-command { height: 132px; }
+  .command-header .hazmat-command-identity .command-center-launch,
+  .command-header .hazmat-command-context.notification-center { width: 100%; }
+}
+
+/* Approved command-launch copy and touch targets; keep Home limited to three launchers. */
+.app-shell:has(#overview.view.active) > .footer-note {
+  display: none;
+}
+
+#overview .overview-action-phrase,
+#overview .overview-action-cta {
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin-left: 44px;
+}
+
+#overview .overview-action-phrase {
+  color: #f6c343;
+  font-size: clamp(1rem, 1.4vw, 1.35rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 7px rgba(0, 0, 0, 0.85);
+}
+
+#overview .overview-action-cta {
+  justify-self: start;
+  min-width: 220px;
+  min-height: 48px;
+  padding: 13px 18px;
+  border: 2px solid var(--overview-accent);
+  border-radius: 8px;
+  color: #fff;
+  background: linear-gradient(135deg, rgba(var(--overview-accent-rgb), 0.94), rgba(var(--overview-accent-rgb), 0.68));
+  font-size: 0.88rem;
+  font-weight: 950;
+  letter-spacing: 0.055em;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 7px 18px rgba(0, 0, 0, 0.3);
+}
+
+#overview .overview-action-cta > span {
+  margin-left: 18px;
+  color: #fff4b3;
+  font-size: 1.2rem;
+}
+
+.workspace-drawer-nav .workspace-settings-btn {
+  margin-top: 18px;
+  border-top-color: #557895;
+}
+
+@media (max-width: 760px) {
+  #overview .overview-action-phrase,
+  #overview .overview-action-cta { margin-left: 25px; }
+  #overview .overview-action-cta { min-width: 190px; min-height: 46px; padding: 12px 14px; }
+}
+
+/* Editable Homepage layout. Keep homepage changes in this section while it is in development. */
+body:has(#overview.view.active),
+.app-shell:has(#overview.view.active) {
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #020d17;
+  background-image:
+    linear-gradient(rgba(103, 156, 197, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(103, 156, 197, 0.045) 1px, transparent 1px),
+    radial-gradient(circle at 84% 8%, rgba(42, 121, 180, 0.16), transparent 27%),
+    linear-gradient(145deg, #020d17 0%, #061a2e 48%, #071f35 100%);
+  background-size: 42px 42px, 42px 42px, auto, auto;
+}
+
+.app-shell:has(#overview.view.active) {
+  overflow-x: hidden;
+}
+
+.app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 4px;
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 4px clamp(8px, 0.7vw, 11px) 11px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.app-shell:has(#overview.view.active) > .command-header::before {
+  opacity: 0.42;
+}
+
+.app-shell:has(#overview.view.active) > .command-header::after {
+  top: calc(50% - 5px);
+  right: -10%;
+  left: auto;
+  width: clamp(520px, 56vw, 960px);
+  height: clamp(520px, 56vw, 960px);
+  opacity: 0.48;
+  background:
+    radial-gradient(circle at 50% 50%, #f6c343 0 4px, rgba(246, 195, 67, 0.45) 5px 8px, transparent 9px),
+    repeating-radial-gradient(circle at 50% 50%, transparent 0 74px, rgba(148, 194, 231, 0.12) 75px 76px),
+    conic-gradient(
+      from 210deg at 50% 50%,
+      transparent 0deg,
+      rgba(46, 140, 255, 0) 40deg,
+      rgba(92, 177, 255, 0.38) 47deg,
+      rgba(255, 215, 105, 0.3) 51deg,
+      transparent 59deg,
+      transparent 360deg
+    );
+  translate: 0 -50%;
+  transform: rotate(0deg);
+  transform-origin: 50% 50%;
+  animation: homepageRadarSweep 20s linear infinite;
+}
+
+@keyframes homepageRadarSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  justify-items: start;
+  gap: 0;
+  width: 100%;
+  height: auto;
+  padding-bottom: 12px;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
+.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn,
+.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:hover,
+.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:focus-visible,
+.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn.active {
+  display: block;
+  /* Sixty percent of the previous 1,890px / full-viewport logo treatment. */
+  width: min(1134px, calc(60vw - clamp(8px, 0.7vw, 11px)));
+  max-width: none;
+  /* Crop the transparent PNG canvas to roughly half its uncropped display height. */
+  aspect-ratio: 5.6 / 1;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  object-fit: contain;
+  object-position: left top;
+  transform: translateY(-20%);
+}
+
+.app-shell:has(#overview.view.active) > .command-header .command-center-label {
+  display: none;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .command-center-launch .command-menu-toggle {
+  width: 46px;
+  height: 42px;
+  flex: 0 0 46px;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .command-header-footer {
+  position: relative;
+  z-index: 4;
+  inset: auto;
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context.notification-center {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-feed {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(5px, 0.65vw, 10px);
+  width: 100%;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-feed > .notification-item:last-child {
+  display: grid;
+  padding-right: 10px;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-item,
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system {
+  min-width: 0;
+  min-height: 46px;
+  padding: 2px clamp(7px, 0.8vw, 12px);
+  border: 1px solid rgba(78, 132, 174, 0.66);
+  border-radius: 7px;
+  background: rgba(5, 27, 46, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.command-header .hazmat-command-context .notification-system {
+  position: relative;
+  grid-template-columns: minmax(48px, 1fr) minmax(0, 2fr) minmax(48px, 1fr);
+  grid-template-rows: auto auto;
+  align-content: center;
+  padding-inline: 58px;
+  text-align: center;
+}
+
+.command-header .hazmat-command-context .notification-system > .command-center-launch {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  min-width: 34px;
+  height: 34px;
+  min-height: 34px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: translateY(-50%);
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system .command-center-launch .command-menu-toggle {
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  flex: 0 0 32px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system .command-center-launch .command-menu-toggle:hover,
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system .command-center-launch .command-menu-toggle:focus-visible {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system .command-center-launch .command-menu-toggle span {
+  width: 27px;
+  height: 4px;
+  border-radius: 3px;
+  background: #f8fafc;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system .command-center-launch .command-menu-toggle:hover span,
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system .command-center-launch .command-menu-toggle:focus-visible span {
+  background: #69adff;
+  box-shadow: 0 0 5px rgba(105, 173, 255, 0.75);
+}
+
+.command-header .hazmat-command-context .notification-system > span,
+.command-header .hazmat-command-context .notification-system > time,
+.command-header .hazmat-command-context .notification-system > strong {
+  grid-column: 2;
+  justify-self: center;
+  text-align: center;
+}
+
+.command-header .hazmat-command-context .notification-system > span,
+.command-header .hazmat-command-context .notification-system > time {
+  grid-row: 1;
+}
+
+.command-header .hazmat-command-context .notification-system > span {
+  transform: translateX(-34px);
+}
+
+.command-header .hazmat-command-context .notification-system > time {
+  transform: translateX(34px);
+}
+
+.command-header .hazmat-command-context .notification-system > strong {
+  grid-row: 2;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system > span,
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system > time,
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system > strong {
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-alert-count {
+  display: none;
+}
+
+.app-shell:has(#overview.view.active) > .layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(8px, 1vw, 14px) clamp(32px, 6vw, 120px) clamp(18px, 2vw, 32px) clamp(6px, 0.6vw, 10px);
+  background: transparent;
+}
+
+.app-shell:has(#overview.view.active) > .layout > .content-area,
+#overview.view.active,
+#overview .incident-overview-card,
+#overview .incident-overview-actions,
+#overview .overview-action-layout {
+  grid-column: 1;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+#overview.view.active,
+#overview .incident-overview-card {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+#overview .incident-overview-actions {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: repeat(3, auto);
+  justify-items: start;
+  gap: clamp(12px, 1vw, 16px);
+}
+
+#overview .overview-action-layout {
+  justify-self: start;
+  min-height: clamp(170px, 14vw, 205px);
+}
+
+#overview .incident-overview-actions .overview-action-btn {
+  width: 100%;
+  max-width: none;
+  min-height: clamp(170px, 14vw, 205px);
+  padding: clamp(14px, 1.4vw, 22px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-sizing: border-box;
+}
+
+#overview .incident-overview-actions .overview-action-copy {
+  gap: clamp(5px, 0.55vw, 8px);
+}
+
+#overview .incident-overview-actions .overview-action-title,
+#overview .incident-overview-actions .overview-action-incident .overview-action-title {
+  font-size: clamp(2rem, 3vw, 3.2rem);
+}
+
+#overview .incident-overview-actions .overview-action-description {
+  font-size: clamp(1rem, 1.45vw, 1.45rem);
+}
+
+#overview .incident-overview-actions .overview-action-cta {
+  min-height: 40px;
+  padding-block: 9px;
+}
+
+/* Map the generated sprite's actual 311px / 261px / 264px scene bands. */
+#overview .incident-overview-actions .overview-action-incident::before {
+  background-position: center top !important;
+  background-size: 100% 269% !important;
+}
+
+#overview .incident-overview-actions .overview-action-planning::before {
+  background-position: center 54.1% !important;
+  background-size: 100% 320% !important;
+}
+
+#overview .incident-overview-actions .overview-action-reports::before {
+  background-position: center bottom !important;
+  background-size: 100% 317% !important;
+}
+
+#overview .incident-overview-actions .overview-action-incident {
+  --overview-accent: #c8102e;
+  --overview-accent-rgb: 200, 16, 46;
+  border: 4px solid var(--overview-accent);
+}
+
+#overview .incident-overview-actions .overview-action-planning {
+  --overview-accent: #1765b0;
+  --overview-accent-rgb: 23, 101, 176;
+  border: 4px solid var(--overview-accent);
+}
+
+#overview .incident-overview-actions .overview-action-reports {
+  --overview-accent: #f2cf20;
+  --overview-accent-rgb: 242, 207, 32;
+  border: 4px solid var(--overview-accent);
+}
+
+#overview .incident-overview-actions .overview-action-btn:hover,
+#overview .incident-overview-actions .overview-action-btn:focus-visible {
+  border: 8px solid var(--overview-accent);
+  transform: translateY(-2px);
+  box-shadow: inset 0 0 24px rgba(var(--overview-accent-rgb), 0.16), 0 0 0 2px rgba(var(--overview-accent-rgb), 0.4);
+}
+
+#overview .overview-promo-strip {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(112px, 1fr));
+  gap: clamp(6px, 0.65vw, 10px);
+  width: 100%;
+  margin-top: clamp(14px, 1.2vw, 20px);
+  padding: 12px 0 0;
+  overflow-x: auto;
+  border-top: 1px solid rgba(77, 124, 160, 0.55);
+  box-sizing: border-box;
+}
+
+#overview .overview-promo-strip .overview-promo-box {
+  min-width: 0;
+  min-height: 54px;
+  padding: 7px 8px;
+}
+
+#overview .overview-promo-strip .overview-promo-box > span {
+  font-size: 0.9rem;
+  font-weight: 950;
+}
+
+body:has(#overview.view.active) .workspace-drawer-backdrop.workspace-drawer-home {
+  top: var(--workspace-drawer-top, 0);
+  background: transparent;
+  backdrop-filter: none;
+}
+
+body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home {
+  top: var(--workspace-drawer-top, 0);
+  bottom: auto;
+  left: var(--workspace-drawer-left, 6px);
+  width: min(320px, calc(100vw - var(--workspace-drawer-left, 6px) - 8px));
+  max-height: calc(100dvh - var(--workspace-drawer-top, 0px) - 8px);
+  border: 2px solid #f6c343;
+  border-radius: 0 10px 10px 10px;
+  box-shadow: 10px 14px 34px rgba(2, 13, 23, 0.58);
+  transform-origin: top left;
+  animation: homepageDashboardDrop 180ms ease-out;
+}
+
+body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home .workspace-drawer-header {
+  padding: 12px 12px 10px;
+}
+
+body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home .workspace-drawer-header h2 {
+  font-size: 1rem;
+}
+
+body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home .workspace-drawer-close {
+  min-height: 32px;
+  padding: 5px 8px;
+}
+
+body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home .workspace-drawer-nav {
+  gap: 5px;
+  padding: 10px 12px 14px;
+}
+
+body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home .workspace-drawer-nav .module-btn {
+  min-height: 39px;
+  padding: 7px 10px;
+  font-size: 0.8rem;
+}
+
+body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home .workspace-settings-btn {
+  margin-top: 8px;
+}
+
+@keyframes homepageDashboardDrop {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 760px) {
+  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
+    padding: 4px 7px 6px;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:hover,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:focus-visible,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn.active {
+    width: min(94vw, 680px);
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-feed {
+    gap: 5px;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-item,
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system {
+    min-height: 46px;
+    padding: 2px 5px;
+  }
+
+  .command-header .hazmat-command-context .notification-system {
+    padding-inline: 52px;
+  }
+
+  .app-shell:has(#overview.view.active) > .layout {
+    padding-right: clamp(14px, 4vw, 24px);
+    padding-left: 6px;
+  }
+
+  #overview .incident-overview-actions .overview-action-btn {
+    min-height: clamp(170px, 46vw, 205px);
+    padding: 14px;
+  }
+
+  #overview .overview-action-layout {
+    min-height: clamp(170px, 46vw, 205px);
+  }
 }

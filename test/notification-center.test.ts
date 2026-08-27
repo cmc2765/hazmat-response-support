@@ -10,10 +10,14 @@ describe("HazMatIQ Command Bar", () => {
     expect(html).toContain('class="topbar hazmat-command-bar command-header"');
     expect(html).toContain('id="notification-center"');
     expect(html).toContain('class="notification-center hazmat-command-context"');
+    expect(html).toContain("<span>System</span>");
+    expect(html).toContain('id="notification-weather"');
+    expect(html).toContain('id="notification-alert-count"');
     expect(html).not.toContain('class="module-nav hazmat-command-nav"');
     expect(html).not.toContain('class="notification-item notification-incident"');
     expect(html).not.toContain('id="command-bar-incident"');
-    expect(styles).toContain("grid-template-rows: 154px 72px");
+    expect(styles).toContain(".command-header.hazmat-command-bar.topbar");
+    expect(styles).toContain("min-height: 408px;");
     expect(styles).toContain("--hazmat-navy: #061a2e");
     expect(script).toContain("function syncCommandBarContext()");
   });
@@ -23,7 +27,16 @@ describe("HazMatIQ Command Bar", () => {
     expect(html.match(/class="workspace-drawer-nav"/g)).toHaveLength(1);
     expect(styles).toContain(".layout > .sidebar { display: none; }");
     expect(styles).toContain("grid-template-columns: minmax(0, 1fr);");
-    for (const view of ["overview", "incident", "lookup", "plume", "map", "guided-response", "report", "monitor", "my-chemicals"]) {
+    for (const view of [
+      "overview",
+      "incident",
+      "lookup",
+      "plume",
+      "map",
+      "report",
+      "monitor",
+      "my-chemicals",
+    ]) {
       expect(html).toContain(`data-view="${view}"`);
     }
   });
@@ -38,7 +51,8 @@ describe("HazMatIQ Command Bar", () => {
       "Incident Reports &amp; ICS Forms",
       "Monitoring Equipment",
       "My Chemicals",
-    ]) expect(html).toContain(title);
+    ])
+      expect(html).toContain(title);
     expect(html).not.toContain("HazMatIQ Command Center");
     expect(html.match(/hazmat-page-hero/g)?.length).toBeGreaterThanOrEqual(9);
     expect(html).toMatch(/hazmat-page-hero hazmat-page-hero-compact variant-plume/);
@@ -49,10 +63,24 @@ describe("HazMatIQ Command Bar", () => {
   });
 
   it("renders Incident Command as a real-state operational dashboard", () => {
-    for (const label of ["Real-Time Operational Overview", "Live Incident Brief", "Tactical Status", "Incident Reports", "Command Tools", "Operational Details", "NO ACTIVE INCIDENT"]) {
+    for (const label of [
+      "Real-Time Operational Overview",
+      "Live Incident Brief",
+      "Tactical Status",
+      "Incident Reports",
+      "Command Tools",
+      "Operational Details",
+      "NO ACTIVE INCIDENT",
+    ]) {
       expect(html).toContain(label);
     }
-    for (const action of ["Open Plume Model", "Open Live Map", "Add Incident Note", "Generate Report", "Complete Incident"]) {
+    for (const action of [
+      "Open Plume Model",
+      "Open Live Map",
+      "Add Incident Note",
+      "Generate Report",
+      "Complete Incident",
+    ]) {
       expect(html).toContain(action);
     }
     expect(styles).toContain('url("assets/incident-command-hero-v2.png")');
@@ -67,28 +95,45 @@ describe("HazMatIQ Command Bar", () => {
   });
 
   it("keeps Incident Command compact and fills Tactical Status from live incident state", () => {
-    const tacticalModel = script.slice(script.indexOf('function buildIncidentCommandViewModel()'), script.indexOf('function incidentCommandStatusClass'));
+    const tacticalModel = script.slice(
+      script.indexOf("function buildIncidentCommandViewModel()"),
+      script.indexOf("function incidentCommandStatusClass"),
+    );
     expect(html).not.toContain('class="incident-command-hero-grid"');
-    expect(styles).toMatch(/#incident \.incident-command-hero \{[^}]*min-height: clamp\(138px, 15vw, 205px\) !important;/s);
-    expect(styles).toMatch(/#incident \.incident-command-hero::after \{[^}]*border: 0;[^}]*box-shadow: none;[^}]*transform: none;/s);
-    expect(styles).toMatch(/#incident \.incident-command-hero \.hazmat-page-hero-content \{[^}]*justify-items: center;/s);
+    expect(styles).toMatch(
+      /#incident \.incident-command-hero \{[^}]*min-height: clamp\(138px, 15vw, 205px\) !important;/s,
+    );
+    expect(styles).toMatch(
+      /#incident \.incident-command-hero::after \{[^}]*border: 0;[^}]*box-shadow: none;[^}]*transform: none;/s,
+    );
+    expect(styles).toMatch(
+      /#incident \.incident-command-hero \.hazmat-page-hero-content \{[^}]*justify-items: center;/s,
+    );
     expect(styles).toMatch(/#incident \.incident-command-subtitle \{[^}]*margin: 8px auto 0;/s);
-    expect(script).toContain('function incidentCommandMonitoringState(incident)');
+    expect(script).toContain("function incidentCommandMonitoringState(incident)");
     expect(tacticalModel).toContain("profile.ppeRecommendation");
     expect(tacticalModel).toContain("profile.decon");
     expect(tacticalModel).toContain("incident.medicalSummary || profile.medical");
     expect(tacticalModel).toContain("No plume run saved for this incident");
     expect(tacticalModel).not.toContain("status: 'No Current Data'");
-    for (const icon of ['🛡️', '🥽', '💧', '❤️', '🏭', '☁️', '📡']) expect(tacticalModel).toContain(icon);
+    for (const icon of ["🛡️", "🥽", "💧", "❤️", "🏭", "☁️", "📡"])
+      expect(tacticalModel).toContain(icon);
   });
 
   it("uses green high-contrast controls for every Plume Model action", () => {
     expect(styles).toContain('button[data-view="plume"]');
     expect(styles).toContain('button[data-command-view="plume"]');
-    for (const id of ["#open-plume-btn", "#guided-open-plume-btn", "#hazard-profile-plume-btn", "#plot-plume-btn"]) {
+    for (const id of [
+      "#open-plume-btn",
+      "#guided-open-plume-btn",
+      "#hazard-profile-plume-btn",
+      "#plot-plume-btn",
+    ]) {
       expect(styles).toContain(id);
     }
-    expect(styles).toMatch(/button\[data-view="plume"\][\s\S]*?color: #fff !important;[\s\S]*?background: linear-gradient\(180deg, #2c9b55, #176b39\) !important;/);
+    expect(styles).toMatch(
+      /button\[data-view="plume"\][\s\S]*?color: #fff !important;[\s\S]*?background: linear-gradient\(180deg, #2c9b55, #176b39\) !important;/,
+    );
   });
 
   it("uses the permanent command header and complete overlay workspace navigation", () => {
@@ -96,23 +141,36 @@ describe("HazMatIQ Command Bar", () => {
     expect(html).toContain('id="workspace-navigation-drawer"');
     expect(html).toContain('class="brand-logo-command"');
     expect(html).toContain('src="assets/hazmatiq-logo-command.png"');
-    expect(html).toContain('<span class="command-center-label">Command Center</span>');
+    expect(html).toContain('<span class="command-center-label">Command Dashboard</span>');
+    const systemStatus = html.slice(
+      html.indexOf('<div class="notification-item notification-system">'),
+      html.indexOf('<div class="notification-item notification-weather-item">'),
+    );
+    expect(systemStatus).toContain('id="command-menu-toggle"');
     expect(html).not.toContain('id="command-bar-mode"');
     expect(html).not.toContain('class="department-logo-link"');
     expect(html).not.toContain('id="command-profile-control"');
+    expect(html).not.toContain('id="notification-weather-source"');
     expect(html).not.toContain('class="brand-logo"');
-    for (const destination of [
-      "Dashboard",
-      "INCIDENT COMMAND",
-      "HAZARD ID",
-      "PLUME MODELING",
-      "Guided Response",
-      "LIVE MAP",
-      "EQUIPMENT INVENTORY",
-      "MY REPORTS",
-      "MY CHEMICALS",
-      "Settings",
-    ]) expect(html).toContain(destination);
+    expect(html).not.toContain("data-design-");
+    expect(html).not.toContain("design-mode.js");
+    expect(styles).not.toContain(".design-mode-toolbar");
+    const commandDrawer = html.slice(
+      html.indexOf('<aside class="workspace-navigation-drawer"'),
+      html.indexOf('<div class="notification-drawer-backdrop"'),
+    );
+    expect(commandDrawer.match(/data-view="[^"]+"/g)).toEqual([
+      'data-view="incident"',
+      'data-view="lookup"',
+      'data-view="plume"',
+      'data-view="map"',
+      'data-view="monitor"',
+      'data-view="report"',
+      'data-view="my-chemicals"',
+    ]);
+    expect(commandDrawer).not.toContain('data-view="overview"');
+    expect(commandDrawer).not.toContain('data-view="guided-response"');
+    expect(commandDrawer).toContain("Settings");
     expect(script).toContain("function openWorkspaceDrawer(");
     expect(script).toContain("function closeWorkspaceDrawer(");
   });
@@ -142,39 +200,82 @@ describe("HazMatIQ Command Bar", () => {
     expect(script).toContain("Closest available station");
     expect(script).toContain("RH ${humidity}%");
     expect(script).toContain("WIND ${windSpeed} MPH ${windDirection}");
-    expect(html).not.toContain('command-promo-grid');
-    expect(html).not.toContain('overview-promo-strip');
-    expect(styles).toContain("grid-template-columns: minmax(150px, 0.85fr) minmax(300px, 1.5fr) minmax(150px, 0.85fr);");
+    expect(html).toContain('class="command-promo-grid overview-promo-strip"');
+    expect(html.match(/class="overview-promo-box"/g)).toHaveLength(8);
+    expect(styles).toContain(
+      "grid-template-columns: minmax(150px, 0.85fr) minmax(300px, 1.5fr) minmax(150px, 0.85fr);",
+    );
   });
 
-  it("keeps the newer three-panel homepage and updated graphics", () => {
-    expect(html.match(/class="overview-command-panel /g)).toHaveLength(3);
-    expect(html.match(/data-hero-trigger/g)).toHaveLength(3);
-    expect(script).toContain("panel.querySelector('.overview-command-primary')?.click()");
-    for (const title of ["NEW INCIDENT", "PLANNING TOOLS", "INCIDENT REPORTS"]) expect(html).toContain(`>${title}</p>`);
-    for (const destination of ["Establish Command", "Open Planning Tools", "ICS Forms"]) expect(html).toContain(`>${destination} <span aria-hidden="true">`);
-    const overview = html.slice(html.indexOf('<section id="overview"'), html.indexOf('<section id="planning-tools"'));
-    expect(overview.match(/class="overview-command-panel /g)).toHaveLength(3);
+  it("keeps the approved three-panel cinematic homepage", () => {
+    expect(html.match(/class="module-btn overview-action-btn /g)).toHaveLength(3);
+    for (const title of ["New Incident", "Planning Tools", "Incident Reports"])
+      expect(html).toContain(`<span class="overview-action-title">${title}</span>`);
+    const overview = html.slice(
+      html.indexOf('<section id="overview"'),
+      html.indexOf('<section id="planning-tools"'),
+    );
+    expect(overview.match(/class="module-btn overview-action-btn /g)).toHaveLength(3);
     expect(overview).not.toContain("operational capabilities");
-    expect(overview).toContain('data-view="planning-tools">Open Planning Tools');
-    expect(overview).not.toContain('data-view="plume">');
-    for (const asset of ["home-new-incident-hero-v5.png", "home-planning-tools-hero-v4.png", "home-incident-reports-hero-v4.png"]) expect(styles).toContain(asset);
-    expect(styles).toContain("border: 2px solid var(--panel-accent);");
-    expect(styles).toContain("border-width: 6px;");
+    expect(overview).not.toContain("Training Mode");
+    expect(overview).not.toContain('class="overview-action-icon"');
+    for (const phrase of ["Establish Command.", "Plan Smarter.", "Document Clearly."])
+      expect(overview).toContain(`<span class="overview-action-phrase">${phrase}</span>`);
+    expect(overview).toContain("Start Incident, Set Objectives, Control the Scene");
+    expect(overview).toContain("Incident Intelligence, Mapping, Event Planning");
+    expect(overview).toContain("Complete Reports, Access ICS Forms, Export Packages");
+    for (const action of ["Establish Command", "Open Planning Tools", "Open Reports"])
+      expect(overview).toContain(`<span class="overview-action-cta">${action}`);
+    expect(overview).toContain('data-view="planning-tools"');
+    expect(overview).toContain('data-view="report"');
+    expect(styles).toContain('background-image: url("assets/home-card-scenes-v5.png") !important;');
+    expect(styles).toContain("background-position: center top !important;");
+    expect(styles).toContain("background-position: center center !important;");
+    expect(styles).toContain("background-position: center bottom !important;");
+    expect(styles).toContain("background-position: center 54.1% !important;");
+    expect(styles).toContain("background-size: 100% 320% !important;");
+    expect(styles).toContain("border: 2px solid var(--overview-accent);");
+    expect(styles).toContain(
+      "/* Editable Homepage layout. Keep homepage changes in this section while it is in development. */",
+    );
+    expect(styles).toContain("animation: homepageRadarSweep 20s linear infinite;");
+    expect(styles).toContain("top: calc(50% - 5px);");
+    expect(styles).toContain("gap: 10px;");
+    expect(styles).not.toContain("Final Home cascade lock");
+    expect(styles).not.toContain("Homepage brand-first sizing and full-width launcher layout");
+    expect(styles).toContain("width: min(1134px, calc(60vw - clamp(8px, 0.7vw, 11px)));");
+    expect(styles).toContain("height: auto;");
+    expect(styles).toContain("grid-template-columns: repeat(3, minmax(0, 1fr));");
+    expect(styles).toContain("font-size: 0.78rem;");
+    expect(styles).toContain("border: 1px solid rgba(255, 255, 255, 0.88);");
+    expect(styles).toContain("--overview-accent: #c8102e;");
+    expect(styles).toContain("--overview-accent: #1765b0;");
+    expect(styles).toContain("--overview-accent: #f2cf20;");
+    expect(styles).toContain("border: 8px solid var(--overview-accent);");
+    expect(styles).toContain(
+      ".app-shell:has(#overview.view.active) > .command-header .command-center-label",
+    );
+    expect(styles).toContain(
+      ".app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-alert-count",
+    );
   });
 
   it("keeps the live 24-hour clock visible", () => {
     expect(script).toContain("hourCycle: 'h23'");
     expect(script).toContain("second: '2-digit'");
     expect(script).toContain("window.setInterval(renderTacticalClock, 1000)");
-    expect(html.indexOf('class="notification-item notification-system"')).toBeLessThan(html.indexOf('id="notification-updated"'));
+    expect(html.indexOf('class="notification-item notification-system"')).toBeLessThan(
+      html.indexOf('id="notification-updated"'),
+    );
     expect(styles).toContain(".notification-center .notification-updated");
     expect(styles).toContain("color: #fff;");
     expect(styles).not.toContain(".notification-center .notification-updated { display: none; }");
   });
 
   it("uses four station fields in the compact strip and retains feels-like for responder rehab", () => {
-    expect(script).toContain("[weather.temperatureF, weather.rh, weather.windSpeedMph, weather.windDirDeg]");
+    expect(script).toContain(
+      "[weather.temperatureF, weather.rh, weather.windSpeedMph, weather.windDirDeg]",
+    );
     expect(script).toContain("Closest station observation unavailable");
     expect(script).toContain("{ label: 'Feels Like', value:");
   });

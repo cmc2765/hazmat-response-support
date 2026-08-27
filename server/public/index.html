@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HazMatIQ Prototype</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
-    <link rel="stylesheet" href="styles.css?v=design-mode-resize-40" />
+    <link rel="stylesheet" href="styles.css?v=homepage-editable-layout-83" />
     <link rel="stylesheet" href="chemical-intel.css?v=incident-command-decon-17" />
   </head>
   <body>
@@ -22,14 +22,14 @@
         </div>
 
         <div class="command-header-footer">
-          <div class="command-center-launch">
-            <button class="command-menu-toggle" id="command-menu-toggle" type="button" aria-label="Open command dashboard navigation" aria-controls="workspace-navigation-drawer" aria-expanded="false"><span></span><span></span><span></span></button>
-            <span class="command-center-label">Command Center</span>
-          </div>
           <section class="notification-center hazmat-command-context" id="notification-center" role="status" aria-live="polite" aria-atomic="false" data-severity="normal">
             <strong class="notification-center-title sr-only">HazMatIQ Command Status</strong>
             <div class="notification-feed">
               <div class="notification-item notification-system">
+                <div class="command-center-launch">
+                  <button class="command-menu-toggle" id="command-menu-toggle" type="button" aria-label="Open command dashboard navigation" aria-controls="workspace-navigation-drawer" aria-expanded="false"><span></span><span></span><span></span></button>
+                  <span class="command-center-label">Command Dashboard</span>
+                </div>
                 <span>System</span>
                 <time class="notification-updated" id="notification-updated" aria-label="Current 24-hour time">00:00:00</time>
                 <strong class="notification-system-message" id="tactical-alert-message">System Normal</strong>
@@ -37,7 +37,6 @@
               <div class="notification-item notification-weather-item">
                 <span>Weather</span>
                 <strong id="notification-weather">Awaiting live weather data</strong>
-                <small id="notification-weather-source">Closest live station</small>
               </div>
               <div class="notification-item">
                 <span>Alerts</span>
@@ -56,18 +55,14 @@
           <button class="workspace-drawer-close" id="workspace-drawer-close" type="button" aria-label="Close workspace navigation">Close</button>
         </header>
         <nav class="workspace-drawer-nav" aria-label="Workspace navigation">
-          <button class="module-btn workspace-home-btn" data-view="overview" aria-label="Return to the HazMatIQ homepage">
-            <img src="assets/hazmatiq-logo-command.png" alt="" aria-hidden="true" />
-          </button>
           <button class="module-btn" data-view="incident">INCIDENT COMMAND</button>
           <button class="module-btn" data-view="lookup">HAZARD ID</button>
           <button class="module-btn" data-view="plume">PLUME MODELING</button>
           <button class="module-btn" data-view="map">LIVE MAP</button>
-          <button class="module-btn" data-view="guided-response">Guided Response</button>
-          <button class="module-btn" data-view="monitor">EQUIPMENT INVENTORY</button>
+          <button class="module-btn" data-view="monitor">EQUIPMENT</button>
           <button class="module-btn" data-view="report">MY REPORTS</button>
           <button class="module-btn" data-view="my-chemicals">MY CHEMICALS</button>
-          <button class="module-btn" type="button" disabled title="Settings are not configured in this prototype">Settings <small>Not configured</small></button>
+          <button class="module-btn workspace-settings-btn" type="button" disabled title="Settings are not configured in this prototype">Settings <small>Not configured</small></button>
         </nav>
       </aside>
 
@@ -88,31 +83,50 @@
           <section id="overview" class="view active">
             <article class="panel-card incident-overview-card">
               <div class="incident-overview-actions">
-                <section class="overview-command-panel overview-command-incident" aria-labelledby="overview-new-incident-title" data-hero-trigger data-design-layout="home.newIncident" data-design-page="home">
-                  <div class="overview-command-copy">
-                    <p class="overview-command-kicker" id="overview-new-incident-title">NEW INCIDENT</p>
-                    <h2>Start the incident, set the objectives, and build the operational picture.</h2>
-                    <button class="module-btn overview-command-primary" data-view="incident" data-incident-action="new">Establish Command <span aria-hidden="true">&#8594;</span></button>
-                  </div>
+                <section class="overview-action-layout">
+                  <button class="module-btn overview-action-btn overview-action-incident" data-view="incident" data-incident-action="new">
+                    <span class="overview-action-copy">
+                      <span class="overview-action-title">New Incident</span>
+                      <span class="overview-action-phrase">Establish Command.</span>
+                      <span class="overview-action-description">Start Incident, Set Objectives, Control the Scene</span>
+                      <span class="overview-action-cta">Establish Command <span aria-hidden="true">&#8594;</span></span>
+                    </span>
+                  </button>
                 </section>
 
-                <section class="overview-command-panel overview-command-planning" aria-labelledby="overview-planning-title" data-hero-trigger data-design-layout="home.planningTools" data-design-page="home">
-                  <div class="overview-command-copy">
-                    <p class="overview-command-kicker" id="overview-planning-title">PLANNING TOOLS</p>
-                    <h2>Plan the incident before it happens.</h2>
-                    <p>Facility intelligence, pre-plans, hazards, maps, contacts, and response resources in one command workspace.</p>
-                    <button class="module-btn overview-command-primary" data-view="planning-tools">Open Planning Tools <span aria-hidden="true">&#8594;</span></button>
-                  </div>
+                <section class="overview-action-layout">
+                  <button class="module-btn overview-action-btn overview-action-planning" data-view="planning-tools">
+                    <span class="overview-action-copy">
+                      <span class="overview-action-title">Planning Tools</span>
+                      <span class="overview-action-phrase">Plan Smarter.</span>
+                      <span class="overview-action-description">Incident Intelligence, Mapping, Event Planning</span>
+                      <span class="overview-action-cta">Open Planning Tools <span aria-hidden="true">&#8594;</span></span>
+                    </span>
+                  </button>
                 </section>
 
-                <section class="overview-command-panel overview-command-reports" aria-labelledby="overview-reports-title" data-hero-trigger data-design-layout="home.incidentReports" data-design-page="home">
-                  <div class="overview-command-copy">
-                    <p class="overview-command-kicker" id="overview-reports-title">INCIDENT REPORTS</p>
-                    <h2>ICS Forms. Printing. Command Documentation.</h2>
-                    <button class="module-btn overview-command-primary" data-view="report" data-report-shortcut="library">ICS Forms <span aria-hidden="true">&#8594;</span></button>
-                  </div>
+                <section class="overview-action-layout">
+                  <button class="module-btn overview-action-btn overview-action-reports" data-view="report" data-report-shortcut="library">
+                    <span class="overview-action-copy">
+                      <span class="overview-action-title">Incident Reports</span>
+                      <span class="overview-action-phrase">Document Clearly.</span>
+                      <span class="overview-action-description">Complete Reports, Access ICS Forms, Export Packages</span>
+                      <span class="overview-action-cta">Open Reports <span aria-hidden="true">&#8594;</span></span>
+                    </span>
+                  </button>
                 </section>
               </div>
+
+              <section class="command-promo-grid overview-promo-strip" aria-label="HazMatIQ capability highlights">
+                <article class="overview-promo-box"><span aria-hidden="true">ID</span><div><strong>Chemical ID</strong><small>Source-backed hazard profiles</small></div></article>
+                <article class="overview-promo-box"><span aria-hidden="true">CB</span><div><strong>Warfare Agents</strong><small>CBRN identification support</small></div></article>
+                <article class="overview-promo-box"><span aria-hidden="true">RA</span><div><strong>Radiological ID</strong><small>Isotope response intelligence</small></div></article>
+                <article class="overview-promo-box"><span aria-hidden="true">GR</span><div><strong>Guided Response</strong><small>Tactical decision support</small></div></article>
+                <article class="overview-promo-box"><span aria-hidden="true">PL</span><div><strong>Plume Modeling</strong><small>Weather-aware threat zones</small></div></article>
+                <article class="overview-promo-box"><span aria-hidden="true">MP</span><div><strong>Live Mapping</strong><small>Operational scene mapping</small></div></article>
+                <article class="overview-promo-box"><span aria-hidden="true">MO</span><div><strong>Monitoring</strong><small>Equipment and live readings</small></div></article>
+                <article class="overview-promo-box"><span aria-hidden="true">ICS</span><div><strong>ICS Reports</strong><small>Forms, exports, and archives</small></div></article>
+              </section>
             </article>
           </section>
 
@@ -128,35 +142,35 @@
               </div>
 
               <div class="planning-tools-grid">
-                <section class="planning-tool-section planning-tool-eplan" aria-labelledby="planning-eplan-title" data-design-layout="planningTools.eplan" data-design-page="planning-tools">
+                <section class="planning-tool-section planning-tool-eplan" aria-labelledby="planning-eplan-title">
                   <div class="planning-tool-section-heading"><span class="planning-tool-index">01</span><div><p class="planning-tool-label">Facility Intelligence</p><h3 id="planning-eplan-title">E-Plan / Facility Intelligence</h3></div></div>
                   <p>Sync facility data, chemical inventories, site contacts, SDS files, maps, and Tier II information when authorized.</p>
                   <ul class="planning-tool-list"><li>E-Plan login and sync</li><li>Facility contacts, maps, and chemical documents</li><li>Import facility intelligence into an active incident</li></ul>
                   <div class="planning-tool-actions"><a class="primary-btn" href="https://erplan.net/eplan/login.htm" target="eplan-program" rel="noopener noreferrer">Login to E-Plan</a><button class="ghost-btn" type="button" data-planning-status="Facility sync is ready for an authorized E-Plan connection.">Sync Facility Data</button><button class="ghost-btn" type="button" data-planning-status="Facility profile selection will be available after a facility sync.">Open Facility Profile</button></div>
                 </section>
 
-                <section class="planning-tool-section" aria-labelledby="planning-preplans-title" data-design-layout="planningTools.preIncidentPlans" data-design-page="planning-tools">
+                <section class="planning-tool-section" aria-labelledby="planning-preplans-title">
                   <div class="planning-tool-section-heading"><span class="planning-tool-index">02</span><div><p class="planning-tool-label">Tactical Readiness</p><h3 id="planning-preplans-title">Pre-Incident Plans</h3></div></div>
                   <p>Build and store tactical plans for schools, industrial sites, warehouses, rail yards, hospitals, and other high-risk facilities.</p>
                   <ul class="planning-tool-list"><li>Entry points, staging, command post, and decon</li><li>Shutoffs, utilities, hydrants, and evacuation concerns</li><li>Target hazards and response notes</li></ul>
                   <button class="primary-btn" type="button" data-planning-status="Pre-plan builder is ready for a facility profile.">Build Pre-Plan</button>
                 </section>
 
-                <section class="planning-tool-section" aria-labelledby="planning-hazards-title" data-design-layout="planningTools.hazardPlanning" data-design-page="planning-tools">
+                <section class="planning-tool-section" aria-labelledby="planning-hazards-title">
                   <div class="planning-tool-section-heading"><span class="planning-tool-index">03</span><div><p class="planning-tool-label">Known Threats</p><h3 id="planning-hazards-title">Hazard Planning</h3></div></div>
                   <p>Identify known chemicals, CBRNE hazards, radiological materials, and threat concerns before arrival.</p>
                   <ul class="planning-tool-list"><li>Save hazards to a facility profile</li><li>Pre-plan PPE, decon, and plume candidates</li><li>Flag high-risk materials from E-Plan</li></ul>
                   <button class="primary-btn" type="button" data-view="lookup">Open Hazard Planning</button>
                 </section>
 
-                <section class="planning-tool-section" aria-labelledby="planning-map-title" data-design-layout="planningTools.mapLayout" data-design-page="planning-tools">
+                <section class="planning-tool-section" aria-labelledby="planning-map-title">
                   <div class="planning-tool-section-heading"><span class="planning-tool-index">04</span><div><p class="planning-tool-label">Operational Geography</p><h3 id="planning-map-title">Map &amp; Response Layout</h3></div></div>
                   <p>Prepare the operational map before the incident becomes chaotic.</p>
                   <ul class="planning-tool-list"><li>Access routes, ICP, staging, and evacuation routes</li><li>Hot, warm, cold zones, and decon corridors</li><li>Sensitive receptors, schools, hospitals, and waterways</li></ul>
                   <div class="planning-tool-actions"><button class="primary-btn" type="button" data-view="map">Open Planning Map</button><button class="ghost-btn" type="button" data-planning-status="Response layout tools are ready for a planning map.">Create Response Layout</button></div>
                 </section>
 
-                <section class="planning-tool-section planning-tool-scenario" aria-labelledby="planning-scenario-title" data-design-layout="planningTools.scenarioBuilder" data-design-page="planning-tools">
+                <section class="planning-tool-section planning-tool-scenario" aria-labelledby="planning-scenario-title">
                   <div class="planning-tool-section-heading"><span class="planning-tool-index">05</span><div><p class="planning-tool-label">Tabletop Readiness</p><h3 id="planning-scenario-title">Scenario Builder</h3></div></div>
                   <p>Run pre-incident tabletop scenarios using real facility hazards.</p>
                   <div class="planning-scenario-examples"><span>Chlorine release</span><span>Ammonia leak</span><span>Acid spill</span><span>Radiological package</span><span>Unknown powder</span><span>Railcar leak</span></div>
@@ -168,7 +182,7 @@
           </section>
 
           <section id="incident" class="view">
-            <header class="hazmat-page-hero variant-incident incident-command-hero" data-design-layout="incidentCommand.hero" data-design-page="incident">
+            <header class="hazmat-page-hero variant-incident incident-command-hero">
               <div class="hazmat-page-hero-content"><span class="sr-only">Incident Command Dashboard</span><h1 class="hazmat-hero-title incident-command-title">Incident Command</h1><p class="hazmat-hero-subtitle incident-command-subtitle">Real-Time Operational Overview</p></div>
             </header>
             <section class="incident-command-dashboard" aria-label="Incident command operational dashboard">
@@ -195,17 +209,17 @@
                 <div class="incident-command-hazard-stripe" aria-hidden="true"></div>
 
                 <div class="incident-command-main-grid">
-                  <article class="incident-command-panel incident-command-brief-panel" data-design-layout="incidentCommand.liveBrief" data-design-page="incident">
+                  <article class="incident-command-panel incident-command-brief-panel">
                     <h2><span aria-hidden="true">📋</span> Live Incident Brief</h2>
                     <dl id="ic-brief-list" class="incident-command-brief-list"></dl>
                   </article>
 
-                  <article class="incident-command-panel incident-command-tactical-panel" data-design-layout="incidentCommand.tacticalStatus" data-design-page="incident">
+                  <article class="incident-command-panel incident-command-tactical-panel">
                     <h2><span aria-hidden="true">🛡️</span> Tactical Status</h2>
                     <div id="ic-tactical-list" class="incident-command-tactical-list"></div>
                   </article>
 
-                  <article class="incident-command-panel incident-command-reports-panel" data-design-layout="incidentCommand.reports" data-design-page="incident">
+                  <article class="incident-command-panel incident-command-reports-panel">
                     <h2><span aria-hidden="true">🗂️</span> Incident Reports</h2>
                     <section>
                       <h3>Current Incident Report</h3>
@@ -224,7 +238,7 @@
                   </article>
                 </div>
 
-                <section class="incident-command-panel incident-command-tools" aria-labelledby="ic-command-tools-title" data-design-layout="incidentCommand.commandTools" data-design-page="incident">
+                <section class="incident-command-panel incident-command-tools" aria-labelledby="ic-command-tools-title">
                   <h2 id="ic-command-tools-title"><span aria-hidden="true">🧰</span> Command Tools</h2>
                   <div class="incident-command-tool-grid">
                     <button class="incident-command-tool incident-command-tool-plume" type="button" data-command-view="plume"><strong>☁️ Open Plume Model</strong><span>View / plot chemical plume</span></button>
@@ -235,7 +249,7 @@
                   </div>
                 </section>
 
-                <details class="incident-command-panel incident-command-operational-details" data-design-layout="incidentCommand.operationalDetails" data-design-page="incident">
+                <details class="incident-command-panel incident-command-operational-details">
                   <summary><strong>Operational Details</strong><span>Detailed information, full guidance, and supporting resources.</span></summary>
                   <div class="incident-command-detail-grid">
                     <section><h3>Incident Notes</h3><div id="ic-detail-notes">No Current Data Exists</div></section>
@@ -482,14 +496,14 @@
           </section>
 
           <section id="lookup" class="view">
-            <header class="hazmat-page-hero variant-chemical hazard-id-page-hero" data-design-layout="hazardId.hero" data-design-page="lookup">
+            <header class="hazmat-page-hero variant-chemical hazard-id-page-hero">
               <span class="hazard-id-hero-atmosphere" aria-hidden="true"></span>
               <div class="hazmat-page-hero-content">
                 <h1 class="hazmat-hero-title">HAZARD ID</h1>
                 <p class="hazmat-hero-subtitle"><span>Search.</span><span>Identify.</span><span>Verify.</span><span>Respond.</span></p>
               </div>
             </header>
-            <article class="hazard-id-command-console chemical-id-search-card" aria-label="Hazard identification command console" data-design-layout="hazardId.chemicalSearch" data-design-page="lookup" data-design-hazard-search>
+            <article class="hazard-id-command-console chemical-id-search-card" aria-label="Hazard identification command console">
               <nav class="hazard-search-tabs" role="tablist" aria-label="Hazard database">
                 <button class="hazard-search-tab active" type="button" role="tab" aria-selected="true" data-hazard-search-tab="CHEMICAL">Chemical</button>
                 <button class="hazard-search-tab" type="button" role="tab" aria-selected="false" data-hazard-search-tab="CBRNE_CWA">CBRNE / CWA</button>
@@ -528,7 +542,7 @@
               <div id="facility-chemical-list" class="facility-chemical-list"></div>
             </article>
 
-            <div id="chemical-id-results" class="chemical-id-results" hidden data-design-layout="hazardId.profile" data-design-page="lookup">
+            <div id="chemical-id-results" class="chemical-id-results" hidden>
               <div class="section-header chemical-results-header">
                 <div>
                   <p class="eyebrow">Hazard summary</p>
@@ -587,7 +601,7 @@
               </div>
             </div>
 
-            <div id="hazard-profile-results" class="hazard-profile-results" hidden data-design-layout="hazardId.profile" data-design-page="lookup">
+            <div id="hazard-profile-results" class="hazard-profile-results" hidden>
               <div class="hazard-profile-shell">
                 <header class="hazard-profile-toolbar">
                   <button class="ghost-btn" id="hazard-profile-back-btn" type="button">← Back to Search</button>
@@ -740,7 +754,7 @@
               </div>
             </header>
             <div class="plume-main-workspace">
-              <div class="plume-control-column" data-design-layout="plume.controls" data-design-page="plume">
+              <div class="plume-control-column">
             <form class="plume-model-controls" id="plume-model-form">
               <div class="plume-model-input-grid">
                 <section class="plume-model-section">
@@ -838,7 +852,7 @@
                     </details>
                   </div>
                 </section>
-                <section class="plume-model-section plume-weather-section" id="plume-weather-data-panel" aria-labelledby="plume-weather-data-heading" data-design-layout="plume.weather" data-design-page="plume">
+                <section class="plume-model-section plume-weather-section" id="plume-weather-data-panel" aria-labelledby="plume-weather-data-heading">
                   <header class="plume-model-section-heading"><strong id="plume-weather-data-heading">Weather Data</strong><button class="ghost-btn plume-weather-refresh" id="use-live-plume-weather-btn" type="button">Refresh</button></header>
                   <div class="plume-model-section-grid plume-weather-grid">
                     <label class="plume-model-field" for="plume-weather-source">
@@ -922,7 +936,7 @@
               </div>
 
               <div class="plume-map-column">
-                <article class="plume-map-card" data-design-layout="plume.map" data-design-page="plume">
+                <article class="plume-map-card">
                   <form class="plume-map-toolbar" id="plume-map-address-form">
                     <label class="plume-location-field" for="plume-map-address-input">
                       <span>Plume Location</span>
@@ -968,7 +982,7 @@
 
             <section class="plume-results-section" id="plume-results-section" aria-label="Plume results" hidden>
               <div class="plume-results-grid">
-                <article class="plume-threat-card plume-demographics" id="plume-demographics" data-design-layout="plume.threatZone" data-design-page="plume">
+                <article class="plume-threat-card plume-demographics" id="plume-demographics">
                   <header class="plume-card-heading"><h3>Threat Zone</h3><span class="status-pill" id="demographics-zone-badge">No zone</span></header>
                   <div class="plume-selected-zone"><span>Selected Zone</span><strong id="threat-zone-selected-area">No zone selected</strong></div>
                   <p id="demographics-zone-summary" class="demographics-summary">Select a plume zone or protective-action area to view affected-area estimates.</p>
@@ -983,7 +997,7 @@
                 </article>
               </div>
 
-              <details class="plume-model-details" data-design-layout="plume.summary" data-design-page="plume">
+              <details class="plume-model-details">
                 <summary>Model Details</summary>
                 <div class="plume-model-details-grid">
                   <div><span>Model Mode</span><strong id="plume-model-mode-badge">Blocked</strong></div>
@@ -1389,8 +1403,7 @@
     <script src="weather-radar-providers.js"></script>
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
-    <script src="script.js?v=incident-command-live-4"></script>
-    <script src="design-mode.js?v=layout-resize-1"></script>
+    <script src="script.js?v=incident-command-live-5"></script>
     <script src="chem-compare.js?v=chemcompare-2"></script>
     <script src="monitor-inventory.js"></script>
     <script src="live-map-bootstrap.js"></script>

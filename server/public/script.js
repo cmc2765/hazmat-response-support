@@ -547,9 +547,29 @@ const workspaceDrawerClose = document.getElementById('workspace-drawer-close');
 const workspaceProfileControl = document.getElementById('command-profile-control');
 let workspaceDrawerReturnFocus = null;
 
+function positionHomepageWorkspaceDrawer() {
+  if (!workspaceDrawer || !workspaceDrawerBackdrop || !workspaceDrawerToggle) return false;
+  const isHomepage = document.getElementById('overview')?.classList.contains('active');
+  workspaceDrawer.classList.toggle('workspace-drawer-home', isHomepage);
+  workspaceDrawerBackdrop.classList.toggle('workspace-drawer-home', isHomepage);
+  if (!isHomepage) {
+    workspaceDrawer.style.removeProperty('--workspace-drawer-top');
+    workspaceDrawer.style.removeProperty('--workspace-drawer-left');
+    workspaceDrawerBackdrop.style.removeProperty('--workspace-drawer-top');
+    return false;
+  }
+  const toggleRect = workspaceDrawerToggle.getBoundingClientRect();
+  const drawerTop = `${Math.round(toggleRect.bottom + 5)}px`;
+  workspaceDrawer.style.setProperty('--workspace-drawer-top', drawerTop);
+  workspaceDrawer.style.setProperty('--workspace-drawer-left', `${Math.max(6, Math.round(toggleRect.left))}px`);
+  workspaceDrawerBackdrop.style.setProperty('--workspace-drawer-top', drawerTop);
+  return true;
+}
+
 function openWorkspaceDrawer(trigger = workspaceDrawerToggle) {
   if (!workspaceDrawer || !workspaceDrawerBackdrop) return;
   workspaceDrawerReturnFocus = trigger;
+  positionHomepageWorkspaceDrawer();
   workspaceDrawer.hidden = false;
   workspaceDrawerBackdrop.hidden = false;
   workspaceDrawerToggle?.setAttribute('aria-expanded', 'true');
@@ -563,6 +583,8 @@ function closeWorkspaceDrawer({ restoreFocus = true } = {}) {
   workspaceDrawerBackdrop.hidden = true;
   workspaceDrawerToggle?.setAttribute('aria-expanded', 'false');
   document.body.classList.remove('workspace-drawer-open');
+  workspaceDrawer.classList.remove('workspace-drawer-home');
+  workspaceDrawerBackdrop.classList.remove('workspace-drawer-home');
   if (restoreFocus) workspaceDrawerReturnFocus?.focus?.();
 }
 
@@ -570,6 +592,9 @@ workspaceDrawerToggle?.addEventListener('click', () => openWorkspaceDrawer(works
 workspaceProfileControl?.addEventListener('click', () => openWorkspaceDrawer(workspaceProfileControl));
 workspaceDrawerClose?.addEventListener('click', () => closeWorkspaceDrawer());
 workspaceDrawerBackdrop?.addEventListener('click', () => closeWorkspaceDrawer());
+window.addEventListener('resize', () => {
+  if (!workspaceDrawer?.hidden) positionHomepageWorkspaceDrawer();
+});
 workspaceDrawer?.querySelectorAll('[data-view]').forEach((control) => {
   control.addEventListener('click', () => closeWorkspaceDrawer({ restoreFocus: false }));
 });
