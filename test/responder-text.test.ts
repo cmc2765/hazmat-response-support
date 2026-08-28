@@ -44,10 +44,10 @@ describe("responder display-text normalization", () => {
   });
 
   it("keeps readable body text and applies the tactical condensed command-heading stack", () => {
-    expect(styles).toContain('--hazmatiq-font-body: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif');
-    expect(styles).toContain('--hazmatiq-font-heading: "Segoe UI", "Bahnschrift", "Roboto", "Helvetica Neue", Arial, sans-serif');
+    expect(styles).toContain('--hazmatiq-font-body: "Bahnschrift", "DIN Alternate", "DejaVu Sans Condensed", "Arial Narrow", "Segoe UI", sans-serif');
+    expect(styles).toContain('--hazmatiq-font-heading: "Black Ops One", "Stencil Std", Copperplate, "Bahnschrift Condensed", "DejaVu Sans Condensed", Impact, sans-serif');
     expect(styles).toContain("--hazmatiq-card-padding: 14px");
     expect(styles).not.toContain('font-family: "Courier New"');
-    expect(styles).toContain('--hazmatiq-font-heading: "Bahnschrift Condensed", "Arial Narrow", Impact, sans-serif');
+    expect(styles).toContain('--hazmatiq-font-heading: "Black Ops One", "Stencil Std", Copperplate, "Bahnschrift Condensed", "DejaVu Sans Condensed", Impact, sans-serif');
   });
 });

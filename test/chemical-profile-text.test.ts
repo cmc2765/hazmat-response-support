@@ -88,7 +88,7 @@ describe("Chemical Profile UI system", () => {
   });
 
   it("includes the complete profile workflow and hero actions", () => {
-    for (const tab of ["Overview", "Properties", "Exposure", "PPE", "Response", "Medical", "Decon", "Sources"]) {
+    for (const tab of ["Overview", "Properties", "Exposures", "PPE & Monitoring", "Response", "Medical", "Decon", "Sources"]) {
       expect(script).toContain(`['${tab}'`);
     }
     for (const actionId of ["open-guided-response-btn", "open-plume-btn", "profile-save-chemical-btn", "chemical-profile-back-btn"]) {
@@ -117,9 +117,9 @@ describe("Chemical Profile UI system", () => {
     expect(script).toContain("activeTab: 'overview'");
   });
 
-  it("keeps decon in its own tab instead of duplicating it in Overview", () => {
+  it("summarizes decon in Overview while retaining the complete Decon tab", () => {
     const overview = script.slice(script.indexOf("{ key: 'overview'"), script.indexOf("{ key: 'properties'"));
-    expect(overview).not.toContain("createProfileSection('Decon Considerations'");
+    expect(overview).toContain("createProfileSection('Decon Considerations'");
     expect(script).toContain("{ key: 'decon', title: 'DECON'");
   });
 

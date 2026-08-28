@@ -23,8 +23,8 @@
   --purple: #b388ff;
   --gray: #8fa2b8;
   --black: #0f172a;
-  --hazmatiq-font-body: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-  --hazmatiq-font-heading: "Segoe UI", "Bahnschrift", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --hazmatiq-font-body: "Bahnschrift", "DIN Alternate", "DejaVu Sans Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+  --hazmatiq-font-heading: "Black Ops One", "Stencil Std", Copperplate, "Bahnschrift Condensed", "DejaVu Sans Condensed", Impact, sans-serif;
   --hazmatiq-text-body: 0.9375rem;
   --hazmatiq-text-small: 0.8rem;
   --hazmatiq-text-section: 1.125rem;
@@ -425,101 +425,7 @@ h1 { font-weight: 800; }
 }
 
 /* Phase 1 incident command map. */
-.live-map-command-bar,
-.live-map-layer-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.live-map-command-bar > div {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.live-map-view-buttons {
-  display: inline-flex;
-  gap: 4px;
-}
-
-.live-map-view-buttons button.active {
-  border-color: #0b1f33;
-  background: #0b1f33;
-  color: #fff;
-}
-
-.live-map-command-bar span,
-.live-map-status {
-  color: var(--muted);
-  font-size: 0.75rem;
-}
-
-.live-map-layer-bar {
-  justify-content: flex-start;
-  overflow-x: auto;
-  padding-bottom: 3px;
-}
-
-.live-map-layer-bar button {
-  flex: 0 0 auto;
-  min-height: 30px;
-  padding: 4px 9px;
-  border: 1px solid #8796a5;
-  border-radius: 8px;
-  background: #eef3f7;
-  color: #0b1f33;
-  cursor: pointer;
-  font-size: 0.72rem;
-  font-weight: 850;
-}
-
-.live-map-layer-bar button.active {
-  border-color: #0b1f33;
-  background: #0b1f33;
-  color: #fff;
-  box-shadow: inset 0 -3px 0 #ffd323;
-}
-
-.live-map-stage {
-  position: relative;
-  min-height: 620px;
-  overflow: hidden;
-  border: 2px solid #0b1f33;
-  border-radius: 14px;
-  background: #dce3e8;
-}
-
-#live-gis-map {
-  width: 100%;
-  height: min(75dvh, 720px);
-  min-height: 620px;
-}
-
-#live-map-loading {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: #0b1f33;
-  font-weight: 850;
-  pointer-events: none;
-}
-
-.live-map-stage.map-ready #live-map-loading {
-  display: none;
-}
-
-.live-map-panels {
-  position: absolute;
-  z-index: 3;
-  top: 10px;
-  right: 10px;
-  display: grid;
-  gap: 7px;
+.live-map-command-bar {
   width: min(390px, calc(100% - 20px));
   pointer-events: none;
 }
@@ -852,6 +758,7 @@ h1 { font-weight: 800; }
   font-size: 0.72rem;
   line-height: 1.3;
   overflow-wrap: anywhere;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
 }
@@ -1934,30 +1841,30 @@ h1 { font-weight: 800; }
   right: 0;
   max-height: 390px;
   overflow-y: auto;
-  padding: 6px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: #f7f8f9;
-  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.2);
+  padding: 4px;
+  border: 1px solid #397aa4;
+  border-radius: 4px;
+  background: #061a2e;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.42);
 }
 
 .chemical-suggestion {
   width: 100%;
   display: grid;
-  border-radius: 8px;
-  color: var(--text);
+  border-radius: 3px;
+  color: #fff;
 }
 
 .chemical-suggestion-select {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(118px, 160px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 10px;
   align-items: center;
-  padding: 10px;
+  padding: 8px 10px;
   border: 0;
-  border-radius: 8px;
-  color: var(--text);
+  border-radius: 3px;
+  color: #fff;
   background: transparent;
   text-align: left;
   cursor: pointer;
@@ -1966,7 +1873,7 @@ h1 { font-weight: 800; }
 .chemical-suggestion:hover,
 .chemical-suggestion:focus-within {
   outline: none;
-  background: rgba(90, 169, 255, 0.16);
+  background: #103b5b;
 }
 
 .chemical-suggestion-type {
@@ -1980,6 +1887,9 @@ h1 { font-weight: 800; }
   text-transform: uppercase;
 }
 
+.chemical-suggestion.is-chemical-suggestion .chemical-suggestion-type { display: none; }
+.chemical-suggestion.is-chemical-suggestion .chemical-suggestion-select { align-items: start; }
+
 .chemical-suggestion strong,
 .chemical-suggestion small {
   display: block;
@@ -1987,7 +1897,10 @@ h1 { font-weight: 800; }
 
 .chemical-suggestion small {
   margin-top: 3px;
-  color: var(--muted);
+  color: #8fd9fa;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 
 .chemical-identifier-chips {
@@ -3614,6 +3527,144 @@ h1 { font-weight: 800; }
 
 .command-header .hazmat-command-context .notification-feed > :last-child {
   padding-right: 78px;
+}
+
+/* Internal command pages expose navigation only; the homepage keeps its full brand rail. */
+.app-shell:not(:has(#overview.view.active)) > .command-header {
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(56px, auto);
+  min-height: 64px;
+  padding: 6px 12px;
+  border-radius: 0;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header .hazmat-command-identity,
+.app-shell:not(:has(#overview.view.active)) > .command-header .notification-item:not(.notification-system),
+.app-shell:not(:has(#overview.view.active)) > .command-header .notification-alert-count,
+.app-shell:not(:has(#overview.view.active)) > .command-header .notification-system > span,
+.app-shell:not(:has(#overview.view.active)) > .command-header .notification-system > time,
+.app-shell:not(:has(#overview.view.active)) > .command-header .notification-system > strong {
+  display: none;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header .command-header-footer,
+.app-shell:not(:has(#overview.view.active)) > .command-header .hazmat-command-context.notification-center,
+.app-shell:not(:has(#overview.view.active)) > .command-header .notification-feed,
+.app-shell:not(:has(#overview.view.active)) > .command-header .notification-system {
+  display: block;
+  width: max-content;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header .command-center-launch {
+  display: flex;
+  width: max-content;
+  min-height: 50px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header .command-center-launch .command-menu-toggle {
+  width: 48px;
+  height: 48px;
+  flex-basis: 48px;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header .command-center-label { display: none; }
+
+/* Compact internal navigation: brand above the menu, with no empty radar rail. */
+.app-shell:not(:has(#overview.view.active)) > .command-header {
+  display: grid;
+  grid-template-columns: 164px;
+  grid-template-rows: auto auto;
+  align-content: start;
+  justify-content: start;
+  gap: 2px;
+  min-height: 92px;
+  padding: 7px 12px 8px;
+  overflow: visible;
+  border-bottom: 1px solid rgba(82, 153, 201, 0.55);
+  background: #061a2e;
+  box-shadow: none;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header::before,
+.app-shell:not(:has(#overview.view.active)) > .command-header::after,
+.app-shell:not(:has(#overview.view.active)) > .command-header .command-header-plume,
+.app-shell:not(:has(#overview.view.active)) > .command-header .command-header-contours {
+  display: none;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header .hazmat-command-identity {
+  display: block;
+  grid-column: 1;
+  grid-row: 1;
+  width: 154px;
+  height: 37px;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header .hazmat-command-identity .brand,
+.app-shell:not(:has(#overview.view.active)) > .command-header .command-brand-home.module-btn {
+  display: block;
+  width: 154px;
+  height: 37px;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header .brand-logo-command {
+  width: 154px;
+  height: 37px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header .command-header-footer {
+  grid-column: 1;
+  grid-row: 2;
+  width: 52px;
+  height: 48px;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header .command-center-launch {
+  min-height: 48px;
+  width: 48px;
+}
+
+.app-shell:not(:has(#overview.view.active)) > .command-header .command-center-launch .command-menu-toggle {
+  width: 48px;
+  height: 48px;
+  flex-basis: 48px;
+  border-color: #f6c343;
+  background: #0b3557;
+}
+
+/* Incident Command's own banner starts at the top of the workspace and stays centered. */
+#incident .incident-command-hero .hazmat-page-hero-content {
+  justify-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .app-shell:not(:has(#overview.view.active)) > .command-header {
+    grid-template-columns: 136px;
+    min-height: 82px;
+    padding: 5px 8px 6px;
+  }
+
+  .app-shell:not(:has(#overview.view.active)) > .command-header .hazmat-command-identity,
+  .app-shell:not(:has(#overview.view.active)) > .command-header .hazmat-command-identity .brand,
+  .app-shell:not(:has(#overview.view.active)) > .command-header .command-brand-home.module-btn,
+  .app-shell:not(:has(#overview.view.active)) > .command-header .brand-logo-command {
+    width: 132px;
+    height: 31px;
+  }
 }
 
 @keyframes commandGridDrift {
@@ -6355,6 +6406,7 @@ input, select, textarea {
   .chemical-search-form .primary-btn,
   .chemical-search-form .accent-btn { width: 100%; }
   .chemical-suggestion-select { grid-template-columns: 100px minmax(0, 1fr); }
+  .chemical-suggestion.is-chemical-suggestion .chemical-suggestion-select { grid-template-columns: minmax(0, 1fr); }
   .chemical-linked-identifiers { margin-left: 10px; }
 
   .chemical-id-search-card {
@@ -12419,7 +12471,7 @@ body.workspace-drawer-open { overflow: hidden; }
 
 /* Tactical command-board refinement. Keep last. */
 :root {
-  --hazmatiq-font-heading: "Bahnschrift Condensed", "Arial Narrow", Impact, sans-serif;
+  --hazmatiq-font-heading: "Black Ops One", "Stencil Std", Copperplate, "Bahnschrift Condensed", "DejaVu Sans Condensed", Impact, sans-serif;
 }
 
 .hazmat-command-bar.topbar {
@@ -14033,6 +14085,55 @@ body,
   background: linear-gradient(180deg, #061a2e, #041422);
 }
 
+/* Incident Command is the operational exception to the generic page hero. */
+.app-shell:has(#incident.active) .command-header {
+  min-height: 54px;
+}
+
+.app-shell:has(#incident.active) .command-header-footer {
+  display: none;
+}
+
+.incident-command-hero {
+  min-height: 154px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 16, 29, 0.96) 0%, rgba(4, 25, 44, 0.78) 42%, rgba(4, 25, 44, 0.42) 100%),
+    url("assets/incident-command-hero-v2.png") center 44% / cover;
+  box-shadow: inset 0 -1px 0 rgba(91, 170, 222, 0.4);
+}
+
+.incident-command-hero::before {
+  background-size: 22px 22px;
+  mask-image: linear-gradient(90deg, #000 0%, #000 55%, transparent 100%);
+}
+
+.incident-command-hero::after {
+  right: 10%;
+  border-color: rgba(71, 185, 239, 0.3);
+  box-shadow: 0 0 0 14px rgba(44, 154, 221, 0.1), 0 0 0 32px rgba(246, 195, 67, 0.06);
+}
+
+.incident-command-banner-identity {
+  display: grid;
+  flex: 0 0 190px;
+  align-self: stretch;
+  place-items: center start;
+  padding-left: 10px;
+  border-right: 1px solid rgba(109, 190, 237, 0.34);
+}
+
+.incident-command-banner-identity img {
+  width: min(180px, 100%);
+  height: auto;
+}
+
+.incident-command-hero .hazmat-page-hero-content { flex: 1; }
+.incident-command-hero .hazmat-hero-eyebrow { color: #f6c343 !important; }
+.incident-command-hero .hazmat-hero-subtitle { color: #d5edf9 !important; }
+
 .incident-command-empty {
   display: grid;
   place-items: center;
@@ -14049,7 +14150,7 @@ body,
 
 .incident-command-summary-strip {
   display: grid;
-  grid-template-columns: 1.25fr 0.72fr 1.35fr 0.9fr 0.78fr 1.2fr 1.08fr;
+  grid-template-columns: 1.25fr 1.35fr 1.2fr 1.35fr 1fr 0.95fr;
   padding: 9px 12px;
   border-bottom: 1px solid #244d6d;
   background: rgba(3, 17, 30, 0.93);
@@ -14064,6 +14165,57 @@ body,
   border-right: 1px solid rgba(93, 142, 180, 0.28);
 }
 .incident-command-summary-strip > div:last-child { border-right: 0; }
+.incident-command-summary-strip > label,
+.incident-command-summary-strip > div {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 3px 10px;
+  border-right: 1px solid rgba(93, 142, 180, 0.28);
+}
+.incident-command-summary-strip > label > span,
+.incident-command-summary-strip > div > span {
+  color: #9dc4df;
+  font-family: "Bahnschrift Condensed", "Arial Narrow", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.incident-command-summary-strip input,
+.incident-command-summary-strip select {
+  width: 100%;
+  min-width: 0;
+  min-height: 30px;
+  padding: 4px 7px;
+  border: 1px solid #397aa4;
+  border-radius: 3px;
+  color: #071f36;
+  background: #fff;
+  font: inherit;
+  font-size: 0.78rem;
+}
+.incident-command-summary-strip input::placeholder { color: #52677a; }
+.incident-command-summary-strip select { color: #071f36; font-weight: 800; }
+.incident-command-summary-strip select option { color: #071f36; background: #fff; }
+.incident-command-summary-strip > label:first-child { grid-template-columns: minmax(0, 1fr) 30px; }
+.incident-command-summary-strip > label:first-child > span { grid-column: 1 / -1; }
+.incident-command-summary-strip > label:first-child button {
+  min-height: 30px;
+  border: 1px solid #f6c343;
+  border-radius: 3px;
+  color: #071f36;
+  background: #f6c343;
+  font-weight: 900;
+  cursor: pointer;
+}
+.incident-command-summary-strip > div time,
+.incident-command-summary-strip > div strong { color: #fff; font-size: 0.82rem; white-space: nowrap; }
+.incident-command-summary-strip .chemical-search-input-wrap,
+.incident-command-summary-strip .incident-address-autocomplete { min-width: 0; }
+.incident-command-summary-strip .chemical-search-suggestions { top: calc(100% + 4px); z-index: 30; }
 .incident-command-summary-strip span {
   color: #9dc4df;
   font-family: "Bahnschrift Condensed", "Arial Narrow", sans-serif;
@@ -14112,6 +14264,22 @@ body,
 }
 .incident-command-panel > h2 > span,
 .incident-command-tools > h2 > span { margin-right: 6px; font-size: 0.95rem; }
+.incident-command-panel-action {
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  min-height: 28px;
+  margin-left: auto;
+  place-items: center;
+  padding: 4px;
+  border: 1px solid #56bdf3;
+  border-radius: 3px;
+  color: #dff5ff;
+  background: #0a2a44;
+  cursor: pointer;
+}
+.incident-command-panel-action:hover { border-color: #fff; background: #124568; }
+.incident-command-panel-action svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; }
 
 .incident-command-brief-list { margin: 0; padding: 5px 11px 8px; }
 .incident-command-brief-list > div {
@@ -14134,21 +14302,12 @@ body,
 .incident-command-tactical-list { padding: 4px 8px; }
 .incident-command-tactical-row {
   display: grid;
-  grid-template-columns: 30px minmax(105px, 0.75fr) auto minmax(135px, 1.55fr) auto;
+  grid-template-columns: 36px minmax(122px, 0.9fr) minmax(82px, auto) minmax(0, 1.6fr) 58px;
   align-items: center;
-  gap: 7px;
-  padding: 7px 3px;
+  gap: 9px;
+  min-height: 56px;
+  padding: 7px 4px;
   border-bottom: 1px solid rgba(103, 145, 177, 0.2);
-}
-.incident-command-tactical-icon {
-  display: grid;
-  width: 27px;
-  height: 27px;
-  place-items: center;
-  border: 1px solid rgba(69, 163, 219, 0.5);
-  border-radius: 50%;
-  background: rgba(5, 24, 41, 0.78);
-  font-size: 0.86rem;
 }
 .incident-command-tactical-row > strong { color: #fff; font-size: 0.81rem; text-transform: uppercase; }
 .incident-command-tactical-row > p { margin: 0; color: #c5d5e1; font-size: 0.72rem; line-height: 1.35; }
@@ -14164,6 +14323,190 @@ body,
   cursor: pointer;
 }
 .incident-command-tactical-row.is-life-safety { border-left: 3px solid #ef3340; padding-left: 8px; }
+
+.incident-command-guided-content {
+  display: grid;
+  gap: 10px;
+  padding: 9px 10px 11px;
+}
+
+.incident-command-guided-content section { min-width: 0; }
+.incident-command-guided-content h3 {
+  margin: 0 0 6px;
+  color: #f6c343;
+  font-size: 0.69rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.incident-command-guided-list,
+.incident-command-guided-actions,
+.incident-command-guided-progress {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.incident-command-guided-list li,
+.incident-command-guided-actions > div,
+.incident-command-guided-progress > div {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 5px 0;
+  border-bottom: 1px dotted rgba(120, 160, 190, 0.3);
+  color: #e5f2fa;
+  font-size: 0.72rem;
+}
+
+.incident-command-guided-list button {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid #3f91bd;
+  border-radius: 50%;
+  color: #6ed6ff;
+  background: #092942;
+  cursor: pointer;
+}
+
+.incident-command-guided-list .is-complete button,
+.incident-command-guided-progress .is-complete span { color: #a8f0bd; border-color: #3a9d5d; }
+.incident-command-guided-actions > div { grid-template-columns: minmax(80px, 0.7fr) minmax(0, 1.5fr); }
+.incident-command-guided-actions strong { color: #d9effd; text-transform: uppercase; }
+.incident-command-guided-actions span { color: #fff; overflow-wrap: anywhere; }
+.incident-command-guided-actions small,
+.incident-command-guided-progress span { color: #f6c343; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; }
+.incident-command-guided-links { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.incident-command-guided-links button {
+  min-height: 28px;
+  padding: 4px 6px;
+  border: 1px solid #377ba8;
+  border-radius: 4px;
+  color: #dff5ff;
+  background: #0a2a44;
+  font-size: 0.66rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.incident-command-guided-links button:hover { border-color: #65c9f4; background: #103a5b; }
+.incident-command-guided-progress > div { grid-template-columns: 66px minmax(0, 1fr); }
+.incident-command-guided-progress .is-pending span { color: #f6c343; }
+
+/* Operational Status rows use the same deliberate four-zone composition. */
+.incident-command-tactical-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(26px, auto) auto;
+  align-items: center;
+  gap: 5px 10px;
+  min-height: 86px;
+  padding: 9px 4px 8px;
+}
+
+.incident-command-tactical-row > strong {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  color: #f8fbff;
+  font-size: 0.9rem;
+  font-weight: 900;
+  letter-spacing: 0.055em;
+  line-height: 1.1;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.incident-command-tactical-row > button {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  min-width: 58px;
+  min-height: 29px;
+  padding: 4px 9px;
+}
+
+.incident-command-tactical-row > .incident-command-badge {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  padding: 3px 6px;
+  font-size: 0.59rem;
+}
+
+.incident-command-tactical-row > p {
+  grid-column: 1;
+  grid-row: 2 / span 2;
+  align-self: center;
+  margin: 0;
+  padding-right: 4px;
+  color: #d5e6f2;
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+
+.incident-command-tactical-row > .incident-command-tactical-icon {
+  grid-column: 1;
+  grid-row: 3;
+  justify-self: start;
+  width: 34px;
+  height: 22px;
+  border-radius: 3px;
+  font-size: 0.57rem;
+}
+
+.incident-command-tactical-row.is-life-safety { padding-left: 8px; }
+
+.internal-command-menu,
+.internal-command-menu:hover,
+.internal-command-menu:focus-visible {
+  position: absolute;
+  z-index: 5;
+  top: 14px;
+  left: 16px;
+  display: grid;
+  width: 62px;
+  height: 56px;
+  min-width: 62px;
+  min-height: 56px;
+  place-content: center;
+  gap: 6px;
+  padding: 0;
+  border: 2px solid #f6c343;
+  border-radius: 5px;
+  outline-offset: 3px;
+  background: #0b3557;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+}
+
+.internal-command-menu::before,
+.internal-command-menu::after { display: none !important; content: none !important; }
+.internal-command-menu span { display: block; width: 32px; height: 4px; background: #fff; }
+.internal-command-menu:hover { border-color: #fff; background: #124568; }
+
+#incident .incident-command-hero .internal-command-menu {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 720px) {
+  .internal-command-menu,
+  .internal-command-menu:hover,
+  .internal-command-menu:focus-visible {
+    top: 10px;
+    left: 10px;
+    width: 56px;
+    height: 50px;
+    min-width: 56px;
+    min-height: 50px;
+  }
+  .internal-command-menu span { width: 28px; height: 3px; }
+  #incident .incident-command-hero .internal-command-menu { top: 50%; }
+}
 
 .incident-command-badge {
   display: inline-flex;
@@ -14348,7 +14691,7 @@ button[data-command-view="plume"]:disabled,
   .incident-command-summary-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .incident-command-summary-strip > div:nth-child(4) { border-right: 0; }
   .incident-command-main-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .incident-command-reports-panel { grid-column: 1 / -1; }
+  .incident-command-guided-panel { grid-column: 1 / -1; }
 }
 
 @media (max-width: 760px) {
@@ -14358,7 +14701,7 @@ button[data-command-view="plume"]:disabled,
   .incident-command-detail-grid,
   #chemical-id-results .chemical-profile-content[data-active-tab="medical"] { grid-template-columns: 1fr !important; }
   .incident-command-summary-strip > div { border-right: 0; border-bottom: 1px solid rgba(93, 142, 180, 0.28); }
-  .incident-command-reports-panel,
+  .incident-command-guided-panel,
   #chemical-id-results .chemical-profile-content[data-active-tab="medical"] > .chemical-profile-section { grid-column: 1 !important; }
   #chemical-id-results .chemical-profile-content[data-active-tab="decon"] { grid-template-columns: 1fr !important; }
   #chemical-id-results .chemical-profile-content[data-active-tab="decon"] > .chemical-profile-section { grid-column: 1 !important; }
@@ -14366,6 +14709,9 @@ button[data-command-view="plume"]:disabled,
   .incident-command-tactical-row > p { grid-column: 2 / -1; }
   .incident-command-tactical-row > button { grid-column: 3; grid-row: 2; }
   #incident .incident-command-title { font-size: clamp(2.7rem, 13vw, 4.5rem); }
+  .incident-command-hero { align-items: end; min-height: 138px; padding: 16px; }
+  .incident-command-banner-identity { display: none; }
+  .incident-command-guided-links { grid-template-columns: 1fr; }
 }
 
 /* Superseded legacy homepage rollback retained outside the active cascade. */
@@ -15318,4 +15664,470 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   #overview .overview-action-layout {
     min-height: clamp(170px, 46vw, 205px);
   }
+}
+
+/* Internal pages begin with their own title banner; the homepage alone keeps the global brand header. */
+.app-shell:not(:has(#overview.view.active)) > .command-header {
+  display: none !important;
+}
+
+.view:not(#overview) > .hazmat-page-hero,
+.view:not(#overview) > .plume-page-header {
+  position: relative;
+}
+
+.internal-command-menu,
+.internal-command-menu:hover,
+.internal-command-menu:focus-visible {
+  display: grid;
+  width: 62px;
+  height: 56px;
+  min-width: 62px;
+  min-height: 56px;
+  flex: 0 0 56px;
+  place-content: center;
+  gap: 6px;
+  padding: 0;
+  border: 2px solid #f6c343;
+  border-radius: 5px;
+  outline-offset: 3px;
+  background: #0b3557;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+}
+
+.internal-command-menu::before,
+.internal-command-menu::after {
+  display: none !important;
+  content: none !important;
+}
+
+.internal-command-menu span {
+  display: block;
+  width: 32px;
+  height: 4px;
+  margin: 0;
+  border-radius: 1px;
+  background: #fff;
+}
+
+.internal-command-menu:hover { border-color: #fff; background: #124568; }
+
+#incident .incident-command-hero .hazmat-page-hero-content {
+  position: relative;
+  z-index: 2;
+  padding-inline: 180px;
+}
+
+@media (max-width: 720px) {
+  .internal-command-menu,
+  .internal-command-menu:hover,
+  .internal-command-menu:focus-visible { width: 54px; height: 50px; min-width: 54px; min-height: 50px; flex-basis: 50px; }
+  .internal-command-menu span { width: 28px; height: 3px; }
+  #incident .incident-command-hero .hazmat-page-hero-content { padding-inline: 130px 12px; }
+}
+
+/* Final Incident Command row geometry overrides legacy responsive rules. */
+.incident-command-tactical-row {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-rows: auto minmax(26px, auto) auto !important;
+  min-height: 86px;
+}
+.incident-command-tactical-row > strong { grid-column: 1 !important; grid-row: 1 !important; }
+.incident-command-tactical-row > button { grid-column: 2 !important; grid-row: 1 !important; }
+.incident-command-tactical-row > .incident-command-badge { grid-column: 2 !important; grid-row: 2 !important; }
+.incident-command-tactical-row > p { grid-column: 1 !important; grid-row: 2 / span 2 !important; }
+
+@media (max-width: 760px) {
+  .incident-command-tactical-row {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-rows: auto minmax(26px, auto) auto !important;
+  }
+  .incident-command-tactical-row > p { grid-column: 1 !important; grid-row: 2 / span 2 !important; }
+  .incident-command-tactical-row > button { grid-column: 2 !important; grid-row: 1 !important; }
+}
+
+/* Internal command hero alignment: menu and title share one tactical heading row. */
+.view:not(#overview) .hazmat-page-hero .hazmat-page-hero-content {
+  align-self: center;
+  justify-items: start;
+  margin-inline: 0;
+  padding-inline: 0;
+  text-align: left;
+}
+
+.view:not(#overview) .hazmat-page-hero .internal-command-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(12px, 1.4vw, 22px);
+  width: 100%;
+  margin: 5px 0 7px;
+  text-align: left;
+}
+
+.view:not(#overview) .hazmat-page-hero .internal-command-title-row .hazmat-hero-title {
+  min-width: 0;
+  margin: 0;
+  font-family: "Black Ops One", "Stencil Std", Copperplate, "Bahnschrift Condensed", "Arial Narrow", Impact, sans-serif;
+  font-stretch: condensed;
+  font-weight: 950;
+  letter-spacing: 0.055em;
+  text-align: left;
+  text-transform: uppercase;
+  -webkit-text-stroke: 0.35px currentColor;
+}
+
+.view:not(#overview) .hazmat-page-hero .internal-command-title-row .internal-command-menu,
+.view:not(#overview) .hazmat-page-hero .internal-command-title-row .internal-command-menu:hover,
+.view:not(#overview) .hazmat-page-hero .internal-command-title-row .internal-command-menu:focus-visible {
+  position: static;
+  top: auto;
+  left: auto;
+  flex: 0 0 62px;
+  transform: none;
+}
+
+#incident .incident-command-hero .hazmat-page-hero-content {
+  justify-items: start;
+  width: 100%;
+  margin-inline: 0;
+  padding-inline: 0;
+  text-align: left;
+}
+
+#incident .incident-command-hero .incident-command-subtitle {
+  margin-inline: 84px 0;
+  text-align: left;
+}
+
+#lookup > .hazard-id-page-hero {
+  place-items: center start;
+}
+
+#lookup > .hazard-id-page-hero .hazmat-page-hero-content,
+#lookup > .hazard-id-page-hero .hazmat-hero-subtitle,
+#lookup > .hazard-id-page-hero .hazmat-hero-title {
+  justify-items: start;
+  margin-inline: 0;
+  text-align: left;
+}
+
+@media (max-width: 720px) {
+  .view:not(#overview) .hazmat-page-hero .internal-command-title-row .internal-command-menu,
+  .view:not(#overview) .hazmat-page-hero .internal-command-title-row .internal-command-menu:hover,
+  .view:not(#overview) .hazmat-page-hero .internal-command-title-row .internal-command-menu:focus-visible {
+    flex-basis: 54px;
+  }
+
+  #incident .incident-command-hero .incident-command-subtitle {
+    margin-inline-start: 66px;
+  }
+}
+
+/* Shared operational typography and panel-heading treatment across every page. */
+.view :is(p, li, dt, dd, td, th, label, button, input, select, textarea, small, strong) {
+  font-family: var(--hazmatiq-font-body) !important;
+}
+
+.view :is(h2, h3, h4, h5, h6, .box-title),
+.view :is(.plume-model-section-heading, .plume-card-heading, .monitor-inventory-label) > strong {
+  font-family: var(--hazmatiq-font-heading) !important;
+  font-stretch: condensed;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.incident-command-brief-panel > h2 {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.incident-command-brief-panel > h2 .incident-command-panel-action {
+  flex: 0 0 28px;
+  margin-left: auto;
+}
+
+/* Safe CSS-only readability pass: dark command surfaces and high-contrast controls. */
+:root,
+[data-theme="dark"] {
+  --hmi-bg-main: #020b14;
+  --hmi-bg-page: #061a2e;
+  --hmi-bg-panel: rgba(8, 31, 52, 0.94);
+  --hmi-bg-card: rgba(12, 39, 66, 0.94);
+  --hmi-bg-card-solid: #0b1f33;
+  --hmi-text-primary: #f8fafc;
+  --hmi-text-secondary: #dde7f2;
+  --hmi-text-muted: #b8c7d9;
+  --hmi-border: rgba(64, 107, 145, 0.82);
+  --hmi-border-strong: #406b91;
+  --hmi-yellow: #f6c343;
+  --hmi-yellow-dark: #d99a00;
+  --hmi-red: #c1121f;
+  --hmi-blue: #2e8cff;
+  --hmi-green: #2e8b57;
+  --hmi-purple: #8b5cf6;
+  --hmi-control-bg: #102a43;
+  --hmi-control-bg-hover: #143b5d;
+  --hmi-control-border: #406b91;
+  --hmi-control-text: #f8fafc;
+  --hmi-control-active-bg: #f6c343;
+  --hmi-control-active-text: #061a2e;
+  --hmi-control-danger-bg: #c1121f;
+  --hmi-control-danger-text: #fff;
+  --hmi-disabled-bg: #243b53;
+  --hmi-disabled-text: #dde7f2;
+  --hmi-disabled-border: #52677c;
+}
+
+@media screen {
+  body {
+    background:
+      radial-gradient(circle at 15% 8%, rgba(46, 140, 255, 0.12), transparent 28%),
+      radial-gradient(circle at 82% 12%, rgba(246, 195, 67, 0.08), transparent 26%),
+      linear-gradient(135deg, var(--hmi-bg-main) 0%, var(--hmi-bg-page) 38%, var(--hmi-bg-card-solid) 100%);
+    color: var(--hmi-text-primary);
+  }
+
+  .app-shell,
+  .layout,
+  .content-area,
+  .view.active {
+    background: transparent;
+    color: var(--hmi-text-primary);
+  }
+
+  .view:not(#overview) :is(
+    .panel-card,
+    [class$="-card"],
+    [class*="-card "],
+    [class$="-panel"],
+    [class*="-panel "]
+  ) {
+    border-color: var(--hmi-border);
+    background: var(--hmi-bg-panel) !important;
+    color: var(--hmi-text-primary);
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
+  }
+
+  .hmi-button,
+  .hmi-tab,
+  .hmi-pill,
+  .hmi-chip,
+  .hmi-bubble,
+  .hmi-segment-button,
+  .report-tab,
+  .forms-tab,
+  .command-tab,
+  button.tab,
+  button.pill,
+  button.segment,
+  .view:not(#overview) .ghost-btn,
+  .view:not(#overview) .module-btn,
+  .hazard-search-tab,
+  .monitor-tab,
+  .chemical-profile-tab,
+  #report .report-tabs [data-report-tab] {
+    border: 1px solid var(--hmi-control-border);
+    border-radius: 12px;
+    background: var(--hmi-control-bg);
+    color: var(--hmi-control-text) !important;
+    font-weight: 800;
+    text-shadow: none;
+  }
+
+  .hmi-button:hover,
+  .hmi-tab:hover,
+  .hmi-pill:hover,
+  .hmi-chip:hover,
+  .hmi-bubble:hover,
+  .hmi-segment-button:hover,
+  .report-tab:hover,
+  .forms-tab:hover,
+  .command-tab:hover,
+  button.tab:hover,
+  button.pill:hover,
+  button.segment:hover,
+  .view:not(#overview) .ghost-btn:hover,
+  .view:not(#overview) .module-btn:hover,
+  .hazard-search-tab:hover,
+  .monitor-tab:hover,
+  .chemical-profile-tab:hover,
+  #report .report-tabs [data-report-tab]:hover {
+    border-color: var(--hmi-blue);
+    background: var(--hmi-control-bg-hover);
+    color: #fff !important;
+  }
+
+  .hmi-button.active,
+  .hmi-button[aria-selected="true"],
+  .hmi-tab.active,
+  .hmi-tab[aria-selected="true"],
+  .hmi-pill.active,
+  .hmi-chip.active,
+  .hmi-bubble.active,
+  .hmi-segment-button.active,
+  .report-tab.active,
+  .forms-tab.active,
+  .command-tab.active,
+  button.tab.active,
+  button.pill.active,
+  button.segment.active,
+  .hazard-search-tab.active,
+  .hazard-search-tab[aria-selected="true"],
+  .monitor-tab.active,
+  .monitor-tab[aria-selected="true"],
+  .chemical-profile-tab.active,
+  .chemical-profile-tab[aria-selected="true"] {
+    border-color: var(--hmi-control-active-bg);
+    background: var(--hmi-control-active-bg);
+    color: var(--hmi-control-active-text) !important;
+    text-shadow: none;
+  }
+
+  #report .report-tabs [data-report-tab].primary-btn {
+    border-color: var(--hmi-control-danger-bg);
+    background: var(--hmi-control-danger-bg);
+    color: var(--hmi-control-danger-text) !important;
+    text-shadow: none;
+  }
+
+  .hmi-button:disabled,
+  .hmi-tab:disabled,
+  .hmi-pill:disabled,
+  .hmi-chip:disabled,
+  .hmi-bubble:disabled,
+  .hmi-segment-button:disabled,
+  .report-tab:disabled,
+  .forms-tab:disabled,
+  .command-tab:disabled,
+  button.tab:disabled,
+  button.pill:disabled,
+  button.segment:disabled,
+  .view button:disabled,
+  .view [aria-disabled="true"] {
+    border-color: var(--hmi-disabled-border) !important;
+    background: var(--hmi-disabled-bg) !important;
+    color: var(--hmi-disabled-text) !important;
+    opacity: 1 !important;
+    cursor: not-allowed;
+  }
+
+  #report .report-center,
+  #report .report-section,
+  #report .report-incident-item {
+    color: var(--hmi-text-primary);
+  }
+
+  #report .report-incident-item {
+    border-color: var(--hmi-border-strong);
+    background: var(--hmi-bg-card);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
+  }
+
+  #report :is(.muted, .report-incident-item small) {
+    color: var(--hmi-text-muted) !important;
+  }
+
+  #report :is(.ics-form-library a, .ics-form-text-link) {
+    color: #69adff;
+  }
+
+  #report :is(.ics-form-library a, .ics-form-text-link):hover,
+  #report :is(.ics-form-library a, .ics-form-text-link):focus-visible {
+    color: var(--hmi-yellow);
+  }
+}
+
+/* Command Dashboard settings: theme token is the first settings option. */
+.workspace-settings-menu {
+  margin-top: 18px;
+  border-top: 1px solid #557895;
+}
+
+.workspace-settings-menu > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 45px;
+  padding: 9px 13px;
+  border: 1px solid #315d82;
+  border-radius: 8px;
+  background: #0d2d49;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  cursor: pointer;
+  list-style: none;
+}
+
+.workspace-settings-menu > .workspace-settings-btn { margin-top: 0 !important; }
+
+.workspace-settings-menu > summary::-webkit-details-marker { display: none; }
+.workspace-settings-menu > summary::after { content: "+"; color: #f6c343; font-size: 1.15rem; }
+.workspace-settings-menu[open] > summary::after { content: "−"; }
+.workspace-settings-menu > summary:hover,
+.workspace-settings-menu > summary:focus-visible { border-color: #69adff; background: #15598a; }
+.workspace-settings-menu > summary:focus-visible { outline: 3px solid #f6c343; outline-offset: 1px; }
+.workspace-settings-menu > summary small { margin-left: auto; margin-right: 10px; color: #bfd0df; font-size: 0.63rem; }
+
+.workspace-settings-options {
+  padding: 9px 0 0;
+}
+
+.workspace-settings-options > p {
+  margin: 0 0 6px;
+  color: #f6c343;
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.workspace-theme-option,
+.workspace-setting-note {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #406b91;
+  border-radius: 8px;
+  background: #102a43;
+  color: #f8fafc;
+  text-align: left;
+}
+
+.workspace-theme-option { cursor: pointer; }
+.workspace-theme-option:hover,
+.workspace-theme-option:focus-visible { border-color: #2e8cff; background: #143b5d; }
+.workspace-theme-option:focus-visible { outline: 3px solid #f6c343; outline-offset: 1px; }
+.workspace-theme-option.active { border-color: #f6c343; box-shadow: inset 3px 0 0 #f6c343; }
+
+.workspace-theme-swatch {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #69adff;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #020b14, #061a2e 55%, #0b1f33);
+  box-shadow: inset 0 0 0 4px rgba(46, 140, 255, 0.12);
+}
+
+.workspace-theme-option > span:nth-child(2),
+.workspace-setting-note > span { display: grid; gap: 2px; }
+.workspace-theme-option strong,
+.workspace-setting-note strong { color: #f8fafc; font-size: 0.75rem; }
+.workspace-theme-option small,
+.workspace-setting-note small { display: block; color: #b8c7d9; font-size: 0.61rem; }
+.workspace-theme-option b { color: #f6c343; font-size: 0.62rem; text-transform: uppercase; }
+
+.workspace-setting-note {
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: 7px;
+  background: rgba(8, 31, 52, 0.78);
 }

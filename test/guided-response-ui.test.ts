@@ -64,13 +64,12 @@ describe("Guided Response workflow", () => {
   });
 
   it("centers and emphasizes the Chemical Profile transport metadata", () => {
-    expect(script).toContain("['PPE Recommendation', profile?.ppeRecommendation?.displayLabel || noCurrentDataText]");
-    expect(script).not.toContain("['Hazard Class', formatHazardClassSummary");
+    expect(script).toContain("['Hazard Class', profile?.header?.hazardClass || profile?.header?.hazard || noCurrentDataText]");
     expect(script).not.toContain("['Packing Group', profile?.header?.packingGroup");
     expect(styles).toMatch(/chemical-profile-meta-item[^}]*display: grid;[^}]*grid-template-rows: auto minmax\(2\.4rem, 1fr\);/s);
     expect(styles).toMatch(/data-field="un-na"[^}]*color: #ffd34f;[^}]*font-size: 1\.35rem;[^}]*font-weight: 400;/s);
     expect(styles).toMatch(/data-field="erg-guide"[^}]*color: #ff8a1c;[^}]*font-size: 1\.35rem;[^}]*font-weight: 400;/s);
-    expect(styles).toMatch(/data-field="ppe-recommendation"[^}]*grid-column: span 2;/s);
+    expect(styles).toMatch(/#lookup \.chemical-profile-meta\s*\{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/s);
   });
 
   it("provides green Guided Response and print/download profile actions", () => {

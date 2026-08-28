@@ -65,7 +65,7 @@ describe("HazMatIQ Command Bar", () => {
   it("renders Incident Command as a real-state operational dashboard", () => {
     for (const label of [
       "Real-Time Operational Overview",
-      "Live Incident Brief",
+      "Incident Brief",
       "Tactical Status",
       "Incident Reports",
       "Command Tools",
@@ -171,8 +171,12 @@ describe("HazMatIQ Command Bar", () => {
     expect(commandDrawer).not.toContain('data-view="overview"');
     expect(commandDrawer).not.toContain('data-view="guided-response"');
     expect(commandDrawer).toContain("Settings");
+    expect(commandDrawer).toContain("Dark Command Theme");
+    expect(commandDrawer).toContain("Theme token · HMI-DARK");
+    expect(commandDrawer).not.toContain("Not configured");
     expect(script).toContain("function openWorkspaceDrawer(");
     expect(script).toContain("function closeWorkspaceDrawer(");
+    expect(script).toContain("function activateDarkCommandTheme(");
   });
 
   it("uses a restrained animated command interface with readable status zones", () => {

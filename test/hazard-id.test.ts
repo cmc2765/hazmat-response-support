@@ -18,10 +18,12 @@ describe("unified Hazard ID workspace", () => {
     expect(html).not.toContain("chemical-search-assurance-grid");
     expect(html).not.toContain("chemical-search-trust-grid");
     expect(html).toContain('<h1 class="hazmat-hero-title">HAZARD ID</h1>');
+    expect(html).toContain('class="hazard-id-hero-logo"');
     expect(html).not.toContain("HAZARD ID SEARCH");
     for (const action of ["Search.", "Identify.", "Verify.", "Respond."]) expect(html).toContain(`<span>${action}</span>`);
     expect(html).not.toContain("Unified Responder Intelligence");
     expect(html).not.toContain("ONE Database — ONE Command.");
+    expect(html).not.toContain("hazard-workflow-rail");
     expect(html).not.toContain('hazmat-hero-symbol hazmat-hero-diamond');
     expect(script).toContain("Search isotope, radioactive material, package type, RDD, or radiological type.");
     expect(html).toContain('<p class="eyebrow">HAZARD PROFILE</p>');
@@ -31,10 +33,31 @@ describe("unified Hazard ID workspace", () => {
   it("keeps Chemical Companion controls and safely gates non-chemical plume actions", () => {
     expect(html).toContain('id="chemical-search-form"');
     expect(html).toContain('id="chemical-id-results"');
+    expect(html).toContain('script.js?v=hazard-profile-runtime-8');
     expect(html).toContain('id="open-plume-btn"');
     expect(html).toContain('id="hazard-profile-plume-btn" type="button" disabled');
     expect(script).toContain("Plume requires verified endpoint/source data.");
     expect(script).toContain("Radiological plume/standoff requires radiological model support.");
+    for (const tab of ["Overview", "Properties", "Exposures", "PPE & Monitoring", "Response", "Medical", "Decon", "Sources"]) {
+      expect(script).toContain(`['${tab}'`);
+    }
+    for (const tab of ["Hazards", "Detection", "PPE / Respiratory", "Isolation / Standoff", "Tech Ops", "Radiation Hazards", "Detection / Survey", "PPE / Contamination"]) {
+      expect(script).toContain(`['${tab}'`);
+    }
+    expect(html).toContain('id="hazard-profile-overview-list"');
+    expect(script).toContain("['Hazard Class', profile?.header?.hazardClass || profile?.header?.hazard || noCurrentDataText]");
+    expect(script).toContain("if (chemicalIdResults) chemicalIdResults.hidden = false;\n  try {\n    updateChemicalCard(combinedRecord);");
+    expect(script).toContain("if (typeof content.scrollTo === 'function')");
+    expect(script.indexOf("tabs.replaceChildren();")).toBeLessThan(script.indexOf("renderNfpa704Placard(profile?.header?.nfpa704"));
+    expect(script).toContain("Chemical profile section rendering failed.");
+    expect(styles).toContain("grid-template-columns: minmax(350px, 42%) minmax(0, 58%) !important;");
+    expect(styles).toContain("grid-row: 1 / span 2 !important;");
+    expect(styles).toContain('grid-template-rows: minmax(290px, 44%) minmax(0, 56%) !important;');
+    expect(styles).toMatch(/#lookup \.hazard-search-tab\[aria-selected="true"\] \{[\s\S]*?background: #f6c343 !important;/);
+    expect(styles).toMatch(/#lookup #open-plume-btn \{[\s\S]*?order: 20;[\s\S]*?margin-left: auto;/);
+    expect(styles).toMatch(/#chemical-id-results #open-plume-btn,[\s\S]*?background: linear-gradient\(180deg, #d72734, #a90e19\) !important;/);
+    expect(styles).toMatch(/\/\* Final chemical profile geometry override\. \*\/[\s\S]*?#chemical-id-results \.chemical-nfpa-placard \{[\s\S]*?grid-area: placard !important;[\s\S]*?position: static !important;/);
+    expect(styles).toMatch(/#chemical-id-results \.chemical-profile-tabs \{[\s\S]*?display: grid !important;[\s\S]*?visibility: visible !important;/);
   });
 
   it("uses the attached dashboard visual language", () => {
