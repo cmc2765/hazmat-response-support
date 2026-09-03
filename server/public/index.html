@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HazMatIQ Prototype</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
-    <link rel="stylesheet" href="styles.css?v=homepage-navy-fade-52" />
-    <link rel="stylesheet" href="chemical-intel.css?v=incident-command-decon-17" />
+    <link rel="stylesheet" href="styles.css?v=homepage-action-art-5" />
+    <link rel="stylesheet" href="chemical-intel.css?v=hazard-profile-panel-23" />
   </head>
   <body>
     <div class="app-shell">
@@ -59,10 +59,21 @@
           <button class="module-btn" data-view="lookup">HAZARD ID</button>
           <button class="module-btn" data-view="plume">PLUME MODELING</button>
           <button class="module-btn" data-view="map">LIVE MAP</button>
-          <button class="module-btn" data-view="monitor">EQUIPMENT INVENTORY</button>
+          <button class="module-btn" data-view="monitor">EQUIPMENT</button>
           <button class="module-btn" data-view="report">MY REPORTS</button>
           <button class="module-btn" data-view="my-chemicals">MY CHEMICALS</button>
-          <button class="module-btn workspace-settings-btn" type="button" disabled title="Settings are not configured in this prototype">Settings <small>Not configured</small></button>
+          <details class="workspace-settings-menu">
+            <summary class="workspace-settings-btn">Settings <small>Theme &amp; display</small></summary>
+            <div class="workspace-settings-options">
+              <p>Appearance</p>
+              <button class="workspace-theme-option active" id="workspace-dark-theme-option" type="button" aria-pressed="true">
+                <span class="workspace-theme-swatch" aria-hidden="true"></span>
+                <span><strong>Dark Command Theme</strong><small>Theme token · HMI-DARK</small></span>
+                <b>Active</b>
+              </button>
+              <div class="workspace-setting-note"><strong>High-contrast controls</strong><small>Readable command controls and disabled states</small></div>
+            </div>
+          </details>
         </nav>
       </aside>
 
@@ -88,7 +99,7 @@
                     <span class="overview-action-copy">
                       <span class="overview-action-title">New Incident</span>
                       <span class="overview-action-phrase">Establish Command.</span>
-                      <span class="overview-action-description">Start the incident, set the objectives, and build the operational picture.</span>
+                      <span class="overview-action-description">Start Incident, Set Objectives, Control the Scene</span>
                       <span class="overview-action-cta">Establish Command <span aria-hidden="true">&#8594;</span></span>
                     </span>
                   </button>
@@ -99,7 +110,7 @@
                     <span class="overview-action-copy">
                       <span class="overview-action-title">Planning Tools</span>
                       <span class="overview-action-phrase">Plan Smarter.</span>
-                      <span class="overview-action-description">Incident Intelligence. Tactical Mapping. Command Confidence.</span>
+                      <span class="overview-action-description">Incident Intelligence, Mapping, Event Planning</span>
                       <span class="overview-action-cta">Open Planning Tools <span aria-hidden="true">&#8594;</span></span>
                     </span>
                   </button>
@@ -110,18 +121,29 @@
                     <span class="overview-action-copy">
                       <span class="overview-action-title">Incident Reports</span>
                       <span class="overview-action-phrase">Document Clearly.</span>
-                      <span class="overview-action-description">Current reports, completed incidents, ICS forms, and export packages.</span>
+                      <span class="overview-action-description">Complete Reports, Access ICS Forms, Export Packages</span>
                       <span class="overview-action-cta">Open Reports <span aria-hidden="true">&#8594;</span></span>
                     </span>
                   </button>
                 </section>
               </div>
+
+              <section class="command-promo-grid overview-promo-strip" aria-label="HazMatIQ capability highlights">
+                <article class="overview-promo-box promo-chemical"><span aria-hidden="true">⚗</span><div><strong>Chemical ID</strong><small>Source-backed hazard profiles</small></div></article>
+                <article class="overview-promo-box promo-cbrn"><span aria-hidden="true">☣</span><div><strong>Warfare Agents</strong><small>CBRN identification support</small></div></article>
+                <article class="overview-promo-box promo-rad"><span aria-hidden="true">☢</span><div><strong>Radiological ID</strong><small>Isotope response intelligence</small></div></article>
+                <article class="overview-promo-box promo-guided"><span aria-hidden="true">✚</span><div><strong>Guided Response</strong><small>Tactical decision support</small></div></article>
+                <article class="overview-promo-box promo-plume"><span aria-hidden="true">◉</span><div><strong>Plume Modeling</strong><small>Weather-aware threat zones</small></div></article>
+                <article class="overview-promo-box promo-map"><span aria-hidden="true">⌖</span><div><strong>Live Mapping</strong><small>Operational scene mapping</small></div></article>
+                <article class="overview-promo-box promo-monitor"><span aria-hidden="true">◌</span><div><strong>Monitoring</strong><small>Equipment and live readings</small></div></article>
+                <article class="overview-promo-box promo-reports"><span aria-hidden="true">▣</span><div><strong>ICS Reports</strong><small>Forms, exports, and archives</small></div></article>
+              </section>
             </article>
           </section>
 
           <section id="planning-tools" class="view">
             <header class="hazmat-page-hero variant-planning">
-              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Planning Tools</p><h1 class="hazmat-hero-title">Pre-Incident Intelligence</h1><p class="hazmat-hero-subtitle">Facility data, hazard intelligence, maps, pre-plans, and response scenarios before the alarm.</p></div>
+              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Pre-Incident Intelligence</h1><p class="hazmat-hero-subtitle">Facility data, hazard intelligence, maps, pre-plans, and response scenarios before the alarm.</p></div>
               <span class="hazmat-hero-symbol" aria-hidden="true">PLN</span>
             </header>
             <article class="panel-card planning-tools-card">
@@ -187,43 +209,51 @@
 
               <div id="incident-command-active">
                 <section class="incident-command-summary-strip" aria-label="Active incident summary">
-                  <div><span><b aria-hidden="true">📋</b> Incident Name</span><strong id="ic-summary-name">Incident not named</strong></div>
-                  <div><span><b aria-hidden="true">●</b> Status</span><strong id="ic-summary-status" class="incident-command-badge">No Active Incident</strong></div>
-                  <div><span><b aria-hidden="true">📍</b> Location</span><strong id="ic-summary-location">Location not set</strong></div>
-                  <div><span><b aria-hidden="true">🕒</b> Start Time</span><strong id="ic-summary-start">Start time pending</strong></div>
+                  <label><span><b aria-hidden="true">📋</b> Incident Name</span><input id="incidentName" name="incidentName" type="text" placeholder="Enter incident name" required /><button id="ic-save-incident-name" type="button" aria-label="Save incident name" title="Save incident name">▣</button></label>
+                  <label class="incident-command-location-field"><span><b aria-hidden="true">📍</b> Incident Location</span><div class="incident-address-autocomplete"><input id="incident-address-input" type="text" role="combobox" placeholder="Address or location" autocomplete="off" aria-autocomplete="list" aria-controls="incident-address-suggestions" aria-expanded="false" /><div id="incident-address-suggestions" class="chemical-search-suggestions incident-address-suggestions" role="listbox" hidden></div></div></label>
+                  <label class="incident-command-chemical-field"><span><b aria-hidden="true">⚗</b> Chemical / Hazard ID</span><div class="chemical-search-input-wrap"><input id="incident-product" type="text" role="combobox" placeholder="Type chemical, UN, or CAS" autocomplete="off" aria-autocomplete="list" aria-controls="incident-product-suggestions" aria-expanded="false" /><div id="incident-product-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div></div></label>
+                  <label><span><b aria-hidden="true">🛡</b> Operational Mode</span><select id="incident-operational-mode"><option value="Research &amp; Assessment">Research &amp; Assessment</option><option value="Offensive/Entry">Offensive/Entry</option><option value="Defensive/Control/Contain">Defensive/Control/Contain</option><option value="Non-Intervention">Non-Intervention</option></select></label>
+                  <div><span><b aria-hidden="true">◷</b> Real Time</span><time id="ic-real-time" datetime="">--/--/---- --:--:--</time></div>
                   <div><span><b aria-hidden="true">⏱</b> Elapsed Time</span><strong id="ic-summary-elapsed">00:00:00</strong></div>
-                  <div><span><b aria-hidden="true">⚗</b> Chemical / Hazard</span><strong id="ic-summary-hazard">Hazard not identified</strong></div>
-                  <div><span><b aria-hidden="true">🛡</b> Operational Mode</span><strong id="ic-summary-mode">Assessment pending</strong></div>
                 </section>
                 <div class="incident-command-hazard-stripe" aria-hidden="true"></div>
 
                 <div class="incident-command-main-grid">
                   <article class="incident-command-panel incident-command-brief-panel">
-                    <h2><span aria-hidden="true">📋</span> Live Incident Brief</h2>
+                    <h2><span aria-hidden="true">📋</span> Incident Brief <button class="incident-command-panel-action" type="button" data-incident-command-action="export-package" aria-label="Print or export incident brief" title="Print or export incident brief"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5h-2M7 14h10v7H7z" /></svg></button></h2>
                     <dl id="ic-brief-list" class="incident-command-brief-list"></dl>
                   </article>
 
                   <article class="incident-command-panel incident-command-tactical-panel">
-                    <h2><span aria-hidden="true">🛡️</span> Tactical Status</h2>
+                    <h2><span aria-hidden="true">🛡️</span> Operational Status <span class="sr-only">Tactical Status</span></h2>
                     <div id="ic-tactical-list" class="incident-command-tactical-list"></div>
                   </article>
 
-                  <article class="incident-command-panel incident-command-reports-panel">
-                    <h2><span aria-hidden="true">🗂️</span> Incident Reports</h2>
-                    <section>
-                      <h3>Current Incident Report</h3>
-                      <div id="ic-current-report" class="incident-command-report-card"></div>
-                      <div class="incident-command-inline-actions">
-                        <button type="button" data-incident-command-action="open-report">Open Report</button>
-                        <button type="button" data-incident-command-action="generate-report">Generate Report</button>
-                        <button type="button" data-incident-command-action="export-package">Export Package</button>
-                      </div>
-                    </section>
-                    <section>
-                      <h3>Recent / Completed Reports</h3>
-                      <div id="ic-recent-reports" class="incident-command-recent-reports"></div>
-                    </section>
-                    <button class="incident-command-wide-action" type="button" data-incident-command-action="ics">Open ICS Forms</button>
+                  <article class="incident-command-panel incident-command-guided-panel">
+                    <h2><span aria-hidden="true">✦</span> Guided Response</h2>
+                    <div class="incident-command-guided-content">
+                      <section>
+                        <h3>Immediate Priorities</h3>
+                        <ul id="ic-guided-priorities" class="incident-command-guided-list"></ul>
+                      </section>
+                      <section>
+                        <h3>Recommended Actions</h3>
+                        <div id="ic-guided-recommendations" class="incident-command-guided-actions"></div>
+                      </section>
+                      <section>
+                        <h3>Decision Support</h3>
+                        <div class="incident-command-guided-links">
+                          <button type="button" data-command-view="lookup">Review Chemical / PPE</button>
+                          <button type="button" data-command-view="plume">Open Plume Model</button>
+                          <button type="button" data-command-view="map">View Live Map</button>
+                          <button type="button" data-command-view="details">Open Incident Details</button>
+                        </div>
+                      </section>
+                      <section>
+                        <h3>Current Response Progress</h3>
+                        <div id="ic-guided-progress" class="incident-command-guided-progress"></div>
+                      </section>
+                    </div>
                   </article>
                 </div>
 
@@ -247,6 +277,7 @@
                     <section><h3>Monitoring Details</h3><div id="ic-detail-monitoring">No Current Data Exists</div></section>
                     <section><h3>Protective Actions</h3><div id="ic-detail-protective">No Current Data Exists</div></section>
                     <section><h3>PPE / Decon / Medical</h3><div id="ic-detail-safety">No Current Data Exists</div></section>
+                    <section><h3>Incident Reports</h3><div>Open current or completed incident documentation from My Reports.</div><div class="incident-command-inline-actions"><button type="button" data-incident-command-action="open-report">Open Report</button><button type="button" data-incident-command-action="ics">Open ICS Forms</button></div></section>
                     <section><h3>Report History</h3><div id="ic-detail-reports">No Current Data Exists</div></section>
                   </div>
                   <button class="incident-command-secondary" id="ic-edit-scene-btn" type="button">Edit Incident Brief / Scene</button>
@@ -330,31 +361,6 @@
                   </div>
                 </div>
                 <div class="incident-form-grid">
-                  <label class="incident-field incident-field-wide" for="incidentName">
-                    <span>Incident Name <small class="required-marker">* required</small></span>
-                    <input id="incidentName" name="incidentName" type="text" placeholder="Enter incident name" required />
-                  </label>
-                  <div class="incident-field incident-field-wide">
-                    <label class="incident-field-label" for="incident-address-input">Address or Location</label>
-                    <div class="incident-address-autocomplete">
-                      <input
-                        id="incident-address-input"
-                        type="text"
-                        role="combobox"
-                        placeholder="Street address, highway marker, or facility"
-                        autocomplete="off"
-                        aria-autocomplete="list"
-                        aria-controls="incident-address-suggestions"
-                        aria-expanded="false"
-                      />
-                      <div
-                        id="incident-address-suggestions"
-                        class="chemical-search-suggestions incident-address-suggestions"
-                        role="listbox"
-                        hidden
-                      ></div>
-                    </div>
-                  </div>
                   <label class="incident-field incident-field-wide" for="incident-city">
                     <span>City</span>
                     <input id="incident-city" type="text" placeholder="City" autocomplete="address-level2" />
@@ -371,22 +377,6 @@
                     <span>GPS latitude, longitude</span>
                     <input id="incident-coordinates-input" type="text" placeholder="33.5186, -86.8104" inputmode="decimal" />
                   </label>
-                  <div class="incident-field incident-field-wide">
-                    <label class="incident-field-label" for="incident-product">Product / Chemical / UN Placard</label>
-                    <div class="chemical-search-input-wrap">
-                      <input
-                        id="incident-product"
-                        type="text"
-                        role="combobox"
-                        placeholder="Product, chemical, UN/NA number, or placard"
-                        autocomplete="off"
-                        aria-autocomplete="list"
-                        aria-controls="incident-product-suggestions"
-                        aria-expanded="false"
-                      />
-                      <div id="incident-product-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
-                    </div>
-                  </div>
                   <label class="incident-field incident-field-full" for="incident-notes">
                     <span>Notes</span>
                     <textarea id="incident-notes" rows="3" placeholder="Leak indicators, odor reports, access issues, or other scene notes"></textarea>
@@ -488,6 +478,7 @@
             <header class="hazmat-page-hero variant-chemical hazard-id-page-hero">
               <span class="hazard-id-hero-atmosphere" aria-hidden="true"></span>
               <div class="hazmat-page-hero-content">
+                <img class="hazard-id-hero-logo" src="assets/hazmatiq-logo-command.png" alt="HazMatIQ — Incident Intelligence" />
                 <h1 class="hazmat-hero-title">HAZARD ID</h1>
                 <p class="hazmat-hero-subtitle"><span>Search.</span><span>Identify.</span><span>Verify.</span><span>Respond.</span></p>
               </div>
@@ -511,7 +502,6 @@
                 <div id="hazard-search-examples" class="chemical-search-examples hazard-search-examples" aria-label="Search examples"></div>
                 <p id="chemical-search-status" class="chemical-search-status" role="status" aria-live="polite"></p>
               </div>
-              <ol class="hazard-workflow-rail" aria-label="HazMatIQ response workflow"><li>Identify</li><li>Analyze</li><li>Model</li><li>Respond</li><li>Report</li></ol>
             </article>
 
             <aside class="hazard-id-empty-profile" id="hazard-id-empty-profile">
@@ -587,6 +577,11 @@
                     <div id="chemical-profile-content" class="chemical-profile-content"></div>
                   </article>
                 </div>
+                <footer class="chemical-profile-footer" aria-label="Chemical profile source and confidence status">
+                  <div><span>Source Summary</span><strong id="chemical-profile-footer-sources">No Current Data Exists</strong></div>
+                  <div><span>Data Status</span><strong id="chemical-profile-footer-status">No Current Data Exists</strong></div>
+                  <div><span>Confidence Level</span><strong id="chemical-profile-footer-confidence">No Current Data Exists</strong></div>
+                </footer>
               </div>
             </div>
 
@@ -603,23 +598,17 @@
                 </header>
                 <article class="hazard-profile-header-card">
                   <div class="hazard-profile-emblem" id="hazard-profile-emblem" aria-hidden="true">ID</div>
-                  <div><p class="eyebrow" id="hazard-profile-lane">Hazard ID</p><h2 id="hazard-profile-name">Select a hazard</h2><p id="hazard-profile-category"></p><div id="hazard-profile-identifiers" class="hazard-profile-identifiers"></div></div>
-                  <div class="hazard-profile-data-status" id="hazard-profile-status" aria-label="Profile data status"><span class="chemical-profile-status-chip" data-state="review">Requires Review</span></div>
+                  <div class="hazard-profile-identity"><p class="eyebrow" id="hazard-profile-lane">Hazard ID</p><div class="hazard-profile-title-line"><h2 id="hazard-profile-name">Select a hazard</h2><div class="hazard-profile-data-status" id="hazard-profile-status" aria-label="Profile data status"><span class="chemical-profile-status-chip" data-state="review">Requires Review</span></div></div><p id="hazard-profile-category"></p><div id="hazard-profile-identifiers" class="hazard-profile-identifiers"></div></div>
+                  <aside class="hazard-profile-overview" aria-labelledby="hazard-profile-overview-title"><strong id="hazard-profile-overview-title">Hazard Overview</strong><ul id="hazard-profile-overview-list"></ul></aside>
                 </article>
                 <section class="hazard-profile-action-grid" id="hazard-profile-action-cards" aria-label="Responder action status"></section>
                 <nav id="hazard-profile-tabs" class="chemical-profile-tabs hazard-profile-tabs" aria-label="Hazard profile sections"></nav>
                 <article class="hazard-profile-content-card"><div id="hazard-profile-content" class="hazard-profile-content"></div></article>
                 <aside class="hazard-profile-limitations" id="hazard-profile-limitations" aria-label="Safety limitations"></aside>
                 <footer class="hazard-profile-source-footer" aria-label="Source status">
-                  <div><span>Source Status</span><strong id="hazard-profile-source-summary">No source packs loaded</strong></div>
-                  <div><span>Source Packs Loaded</span><strong id="hazard-profile-source-pack-count">0</strong></div>
-                  <div><span>Source Facts Attached</span><strong id="hazard-profile-source-fact-count">0</strong></div>
-                  <div><span>Sources Used</span><strong id="hazard-profile-source-names">None</strong></div>
-                  <div><span>Requires SME Review</span><strong id="hazard-profile-review-count">0</strong></div>
-                  <div><span>Conflicting Sources</span><strong id="hazard-profile-conflict-count">0</strong></div>
-                  <div><span>No Current Data Fields</span><strong id="hazard-profile-missing-count">0</strong></div>
-                  <div><span>Last Import / Update</span><strong id="hazard-profile-last-import">Not imported</strong></div>
-                  <div><span>Import Warnings</span><strong id="hazard-profile-import-warnings">None</strong></div>
+                  <div><span>Source Summary</span><strong id="hazard-profile-source-summary">No Current Data Exists</strong><small><b id="hazard-profile-source-pack-count">0</b> source packs · <b id="hazard-profile-source-fact-count">0</b> facts · <b id="hazard-profile-source-names">None</b></small></div>
+                  <div><span>Data Status</span><strong id="hazard-profile-data-summary">No Current Data Exists</strong><small><b id="hazard-profile-review-count">0</b> require review · <b id="hazard-profile-conflict-count">0</b> conflicts · <b id="hazard-profile-missing-count">0</b> missing</small></div>
+                  <div><span>Confidence Level</span><strong id="hazard-profile-confidence-level">No Current Data Exists</strong><small>Updated <b id="hazard-profile-last-import">Not imported</b> · <b id="hazard-profile-import-warnings">No warnings</b></small></div>
                 </footer>
               </div>
             </div>
@@ -629,7 +618,6 @@
             <div class="chemcompare-shell">
               <header class="chemcompare-header hazmat-page-hero variant-chemical-profile">
                 <div class="hazmat-page-hero-content">
-                  <p class="hazmat-hero-eyebrow">Chemical Intelligence</p>
                   <h1 class="hazmat-hero-title" id="chemcompare-title">ChemCompare</h1>
                   <p class="hazmat-hero-subtitle">Compare critical chemical hazards and response factors.</p>
                 </div>
@@ -680,7 +668,6 @@
                   <span class="hazmatiq-logo-type"><span class="hazmatiq-logo-word"><b>HAZMAT</b><strong>IQ</strong></span><small>Incident Intelligence</small></span>
                 </div>
                 <div class="hazmat-page-hero-content">
-                  <p class="hazmat-hero-eyebrow">Tactical Decision Support</p>
                   <h1 class="hazmat-hero-title">Guided Response</h1>
                   <p class="hazmat-hero-subtitle">Source-backed tactical planning for HazMat operations.</p>
                 </div>
@@ -710,7 +697,7 @@
 
           <section id="my-chemicals" class="view">
             <header class="hazmat-page-hero variant-my-chemicals">
-              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Saved Intelligence</p><h1 class="hazmat-hero-title">My Chemicals</h1><p class="hazmat-hero-subtitle">Saved chemical profiles and quick-access response intelligence.</p></div>
+              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">My Chemicals</h1><p class="hazmat-hero-subtitle">Saved chemical profiles and quick-access response intelligence.</p></div>
               <span class="hazmat-hero-symbol" aria-hidden="true">MY</span>
             </header>
             <article class="panel-card facility-inventory">
@@ -739,7 +726,7 @@
                     <circle class="plume-hero-source" cx="13" cy="28" r="5"/>
                   </svg>
                 </span>
-                <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Threat-Zone Planning</p><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><p class="hazmat-hero-subtitle">Operational plume planning, weather, terrain, and threat-zone visualization.</p><small id="plume-header-chemical">Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers">CAS / UN / ERG pending</small></div>
+                <div class="hazmat-page-hero-content"><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><p class="hazmat-hero-subtitle">Operational plume planning, weather, terrain, and threat-zone visualization.</p><small id="plume-header-chemical">Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers">CAS / UN / ERG pending</small></div>
               </div>
             </header>
             <div class="plume-main-workspace">
@@ -1041,7 +1028,7 @@
 
           <section id="map" class="view">
             <header class="hazmat-page-hero hazmat-page-hero-compact variant-live-map">
-              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Common Operating Picture</p><h1 class="hazmat-hero-title">Live Map</h1><p class="hazmat-hero-subtitle">Real-time operational map, radar, units, zones, and plume overlays.</p></div>
+              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Live Map</h1><p class="hazmat-hero-subtitle">Real-time operational map, radar, units, zones, and plume overlays.</p></div>
               <span class="hazmat-hero-symbol" aria-hidden="true">MAP</span>
             </header>
             <div class="live-map-command-bar">
@@ -1104,7 +1091,7 @@
 
           <section id="monitor" class="view">
             <header class="hazmat-page-hero variant-monitoring">
-              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Command Monitoring Module</p><h1 class="hazmat-hero-title">Monitoring Equipment</h1><p class="hazmat-hero-subtitle">Live readings, detector assignments, alarms, and field validation.</p><div class="hazmat-hero-chip-row"><span class="hazmat-hero-chip monitor-simulated-label">Training Data · Simulated</span></div></div>
+              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Monitoring Equipment</h1><p class="hazmat-hero-subtitle">Live readings, detector assignments, alarms, and field validation.</p><div class="hazmat-hero-chip-row"><span class="hazmat-hero-chip monitor-simulated-label">Training Data · Simulated</span></div></div>
               <span class="hazmat-hero-symbol" aria-hidden="true">MON</span>
             </header>
 
@@ -1274,7 +1261,7 @@
 
           <section id="report" class="view">
             <header class="hazmat-page-hero variant-reports">
-              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">Incident Documentation</p><h1 class="hazmat-hero-title">Incident Reports &amp; ICS Forms</h1><p class="hazmat-hero-subtitle">Generate, print, export, and archive incident documentation.</p></div>
+              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Incident Reports &amp; ICS Forms</h1><p class="hazmat-hero-subtitle">Generate, print, export, and archive incident documentation.</p></div>
               <span class="hazmat-hero-symbol" aria-hidden="true">ICS</span>
             </header>
             <div class="panel-card report-center">
@@ -1361,7 +1348,7 @@
 
           <section id="source" class="view">
             <header class="hazmat-page-hero variant-about">
-              <div class="hazmat-page-hero-content"><p class="hazmat-hero-eyebrow">System Reference</p><h1 class="hazmat-hero-title">About HazMatIQ</h1><p class="hazmat-hero-subtitle">Incident intelligence, source status, and planning-model transparency.</p></div>
+              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">About HazMatIQ</h1><p class="hazmat-hero-subtitle">Incident intelligence, source status, and planning-model transparency.</p></div>
               <span class="hazmat-hero-symbol" aria-hidden="true">IQ</span>
             </header>
             <div class="panel-card">
@@ -1392,7 +1379,7 @@
     <script src="weather-radar-providers.js"></script>
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
-    <script src="script.js?v=incident-command-live-4"></script>
+    <script src="script.js?v=hazard-profile-runtime-8"></script>
     <script src="chem-compare.js?v=chemcompare-2"></script>
     <script src="monitor-inventory.js"></script>
     <script src="live-map-bootstrap.js"></script>

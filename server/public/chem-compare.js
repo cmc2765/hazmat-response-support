@@ -16,18 +16,14 @@
   const EMPTY_VALUE = /^(?:n\/?a|not available|not established|null|undefined|unknown|no current data exists|not listed by current source|data unavailable from current source|not in (?:the )?.+dataset)$/i;
 
   const searchInput = document.getElementById('chemcompare-search');
-  const selector = document.getElementById('chemcompare-selector');
-  const selectorTitle = document.getElementById('chemcompare-selector-title');
-  const selectorContext = document.getElementById('chemcompare-selector-context');
   const suggestions = document.getElementById('chemcompare-search-suggestions');
   const searchStatus = document.getElementById('chemcompare-search-status');
   const baseSummary = document.getElementById('chemcompare-base-summary');
   const secondSummary = document.getElementById('chemcompare-second-summary');
   const results = document.getElementById('chemcompare-results');
+  const clearButton = document.getElementById('chemcompare-clear-btn');
   let baseComparison = null;
   let secondComparison = null;
-  let selectionTarget = 'second';
-  let compareTrigger = null;
   let searchTimer = null;
   let latestSearch = 0;
 
@@ -181,7 +177,6 @@
       'specialHazards.waterReactive', 'nfpa704.special', 'profile.reactivity.waterReactivity',
       'profile.header.nfpa704.special',
     ]);
-    const sourceValues = (paths) => uniqueValues(paths.map((path) => valueAt(wrapped, path)));
 
     return {
       chemicalId,
@@ -196,41 +191,11 @@
       specificHazards: sourceBackedHazards(wrapped, requiresReview),
       specificGravity: reviewedValue(specificGravity, requiresReview),
       vaporDensity: reviewedValue(vaporDensity, requiresReview),
-      hazardClass: reviewedValue(firstValue(wrapped, ['profile.header.hazardClass', 'profile.header.hazard', 'HazardClass', 'hazardClass']), requiresReview),
-      physicalProperties: requiresReview ? [REQUIRES_REVIEW] : sourceValues([
-        'profile.properties.physicalState', 'profile.properties.appearance', 'profile.properties.boilingPoint',
-        'profile.properties.vaporPressure', 'profile.properties.waterSolubility',
-      ]),
       aeglLevels: aeglValues(wrapped, requiresReview),
       idlh: reviewedValue(idlh, requiresReview),
-      exposureLimits: requiresReview ? [REQUIRES_REVIEW] : sourceValues([
-        'profile.exposures.oshaPel', 'profile.exposures.nioshRel', 'profile.exposures.acgihTlv',
-        'profile.exposures.exposureLimits',
-      ]),
       ppeLevel,
-      respiratoryProtection: reviewedValue(firstValue(wrapped, [
-        'profile.ppeRecommendation.respiratoryProtection', 'profile.ppeRespiratory.respiratoryProtection',
-        'profile.ppeRespiratory.respiratory',
-      ]), requiresReview),
-      monitoringDetection: requiresReview ? [REQUIRES_REVIEW] : sourceValues([
-        'profile.detectors.items', 'profile.detectors.monitoring', 'profile.exposures.monitoringConcerns',
-      ]),
       waterReactivity: reviewedValue(waterReactivity, requiresReview),
-      reactivity: requiresReview ? [REQUIRES_REVIEW] : sourceValues([
-        'profile.reactivity.chemicalMixtureReactivity', 'profile.reactivity.incompatibleMaterials',
-        'profile.reactivity.polymerization',
-      ]),
       isolationDistances: isolationValues(wrapped, requiresReview),
-      medicalConsiderations: requiresReview ? [REQUIRES_REVIEW] : sourceValues([
-        'profile.medical.firstAid', 'profile.medical.emsConsiderations', 'profile.medical.treatment',
-      ]),
-      fireResponse: requiresReview ? [REQUIRES_REVIEW] : sourceValues([
-        'profile.fire.extinguishingMedia', 'profile.fire.firefightingProcedures', 'profile.response.fire',
-      ]),
-      deconGuidance: requiresReview ? [REQUIRES_REVIEW] : sourceValues([
-        'profile.decon.guidance', 'profile.decon.emergencyDecon', 'profile.decon.technicalDecon',
-        'profile.decon.personalDecon',
-      ]),
       limitations: requiresReview
         ? ['Unresolved transport identifiers cannot drive PPE or safety guidance.']
         : uniqueValues([ppeObject?.limitations]),
@@ -310,23 +275,14 @@
   }
 
   const compareRows = [
-    ['hazardClass', 'Hazard Class'],
     ['specificHazards', 'Specific Hazard'],
     ['specificGravity', 'Specific Gravity'],
     ['vaporDensity', 'Vapor Density'],
-    ['physicalProperties', 'Physical Properties'],
     ['aeglLevels', 'AEGL Levels'],
     ['idlh', 'IDLH'],
-    ['exposureLimits', 'Exposure Limits'],
     ['ppeLevel', 'Level of PPE'],
-    ['respiratoryProtection', 'Respiratory Protection'],
-    ['monitoringDetection', 'Monitoring & Detection'],
     ['waterReactivity', 'Water Reactivity'],
-    ['reactivity', 'Reactivity'],
     ['isolationDistances', 'Isolation Distances'],
-    ['medicalConsiderations', 'Medical Considerations'],
-    ['fireResponse', 'Fire Response'],
-    ['deconGuidance', 'DECON Guidance'],
   ];
 
   function comparisonSignature(value) {
@@ -366,15 +322,8 @@
   }
 
   async function loadComparisonChemical(chemical) {
-    const candidateId = chemical.selectedChemicalId ?? chemical.ChemicalID ?? chemical.id;
-    const otherChemical = selectionTarget === 'base' ? secondComparison : baseComparison;
-    if (otherChemical && String(candidateId) === String(otherChemical.chemicalId)) {
-      setSearchStatus('Choose a different chemical for comparison.', 'error');
-      return;
-    }
-    let loadedComparison;
     if (isUnreviewedTransportationRecord(chemical)) {
-      loadedComparison = getChemicalCompareData({ chemical, sourceStatus: REQUIRES_REVIEW, requiresReview: true });
+      secondComparison = getChemicalCompareData({ chemical, sourceStatus: REQUIRES_REVIEW, requiresReview: true });
     } else {
       const chemicalId = chemical.selectedChemicalId ?? chemical.ChemicalID ?? chemical.id;
       setSearchStatus(`Loading ${chemical.name || chemical.ChemicalName || 'chemical'}…`, 'loading');
@@ -384,28 +333,19 @@
       if (chemical.ProperShippingName) params.set('shippingName', chemical.ProperShippingName);
       const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(chemicalId)}/profile${params.size ? `?${params}` : ''}`);
       const profile = profileResponse && !profileResponse.error ? profileResponse : null;
-      loadedComparison = getChemicalCompareData({
+      secondComparison = getChemicalCompareData({
         chemical,
         record: profile ? { ...record, profile } : record,
         profile,
         sourceStatus: chemical.sourceStatus || 'Verified Chemical Companion Master Record',
       });
     }
-    if (selectionTarget === 'base') baseComparison = loadedComparison;
-    else secondComparison = loadedComparison;
-    if (searchInput) searchInput.value = loadedComparison.chemicalName;
+    if (searchInput) searchInput.value = secondComparison.chemicalName;
     clearSuggestions();
     setSearchStatus('');
-    selector?.close();
-    renderSummary(baseSummary, baseComparison, NO_DATA);
+    if (clearButton) clearButton.hidden = false;
     renderSummary(secondSummary, secondComparison, 'Search for a second chemical.');
     renderResults();
-    if (baseComparison && secondComparison) {
-      if (window.history.state?.hazardPageState !== 'compare') {
-        window.history.pushState({ ...window.history.state, hazardPageState: 'compare' }, '');
-      }
-      showView('chem-compare');
-    }
   }
 
   async function searchComparisonChemicals(value) {
@@ -435,31 +375,7 @@
       : 'No matching chemicals found.', chemicals.length ? '' : 'error');
   }
 
-  function openSelector(target = 'second', trigger = null) {
-    selectionTarget = target;
-    compareTrigger = trigger || document.activeElement;
-    const replacingBase = target === 'base';
-    if (selectorTitle) selectorTitle.textContent = replacingBase ? 'Replace Chemical A' : (secondComparison ? 'Replace Chemical B' : 'Select a second chemical');
-    const retained = replacingBase ? secondComparison : baseComparison;
-    if (selectorContext) selectorContext.textContent = retained
-      ? `${retained.chemicalName} will remain in the comparison. Choose a different chemical.`
-      : 'Choose a different chemical to begin comparison.';
-    if (searchInput) searchInput.value = '';
-    clearSuggestions();
-    setSearchStatus('');
-    if (selector?.showModal) selector.showModal();
-    else selector?.setAttribute('open', '');
-    window.requestAnimationFrame(() => searchInput?.focus({ preventScroll: true }));
-  }
-
-  function closeSelector() {
-    clearSuggestions();
-    setSearchStatus('');
-    selector?.close();
-    compareTrigger?.focus?.({ preventScroll: true });
-  }
-
-  function openChemCompare(baseChemical = null, trigger = null) {
+  function openChemCompare(baseChemical = null) {
     if (!baseChemical && (!activeChemical || !activeChemicalRecord)) return;
     baseComparison = baseChemical
       ? getChemicalCompareData({ chemical: baseChemical, sourceStatus: REQUIRES_REVIEW, requiresReview: true })
@@ -470,37 +386,29 @@
         sourceStatus: 'Verified Chemical Companion Master Record',
       });
     secondComparison = null;
-    openSelector('second', trigger);
+    if (searchInput) searchInput.value = '';
+    if (clearButton) clearButton.hidden = true;
+    clearSuggestions();
+    setSearchStatus('');
+    renderSummary(baseSummary, baseComparison, NO_DATA);
+    renderSummary(secondSummary, null, 'Search by chemical name, verified CAS, or UN/NA identifier.');
+    renderResults();
+    showView('chem-compare');
+    searchInput?.focus({ preventScroll: true });
   }
 
   window.HazMatIQ.openChemCompareWithBase = openChemCompare;
-  document.getElementById('open-chemcompare-btn')?.addEventListener('click', (event) => openChemCompare(null, event.currentTarget));
-  document.getElementById('chemcompare-cancel-btn')?.addEventListener('click', closeSelector);
-  document.getElementById('chemcompare-back-btn')?.addEventListener('click', () => {
+  document.getElementById('open-chemcompare-btn')?.addEventListener('click', () => openChemCompare());
+  document.getElementById('chemcompare-back-btn')?.addEventListener('click', () => showView('lookup'));
+  clearButton?.addEventListener('click', () => {
     secondComparison = null;
-    showView('lookup');
-    document.getElementById('open-chemcompare-btn')?.focus({ preventScroll: true });
-    if (window.history.state?.hazardPageState === 'compare') window.history.back();
-  });
-  document.getElementById('chemcompare-search-back-btn')?.addEventListener('click', () => {
-    secondComparison = null;
-    showView('lookup');
-    setHazardProfileMode('search');
-    document.getElementById('chemical-search')?.focus({ preventScroll: true });
-    if (window.history.state?.hazardPageState === 'compare') window.history.go(-2);
-  });
-  document.getElementById('chemcompare-replace-base-btn')?.addEventListener('click', (event) => openSelector('base', event.currentTarget));
-  document.getElementById('chemcompare-replace-second-btn')?.addEventListener('click', (event) => openSelector('second', event.currentTarget));
-  document.getElementById('chemcompare-swap-btn')?.addEventListener('click', () => {
-    [baseComparison, secondComparison] = [secondComparison, baseComparison];
-    renderSummary(baseSummary, baseComparison, NO_DATA);
-    renderSummary(secondSummary, secondComparison, NO_DATA);
+    if (searchInput) searchInput.value = '';
+    clearButton.hidden = true;
+    clearSuggestions();
+    setSearchStatus('');
+    renderSummary(secondSummary, null, 'Search by chemical name, verified CAS, or UN/NA identifier.');
     renderResults();
-  });
-  document.getElementById('chemcompare-print-btn')?.addEventListener('click', () => window.print());
-  selector?.addEventListener('cancel', (event) => {
-    event.preventDefault();
-    closeSelector();
+    searchInput?.focus();
   });
   searchInput?.addEventListener('input', () => {
     window.clearTimeout(searchTimer);

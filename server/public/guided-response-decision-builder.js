@@ -229,12 +229,7 @@
 
   function buildMitigation(linkedSources, lifeSafety, plumeState, weatherState, sources) {
     const profile = linkedSources.profile || {};
-    const spillFacts = unique([
-      profile.spillResponse,
-      profile.releaseControl,
-      profile.response?.spillOrLeak,
-      linkedSources.responderGuide?.emergencyResponse?.spillOrLeak,
-    ]);
+    const spillFacts = unique([profile.spillResponse, profile.releaseControl, linkedSources.responderGuide?.emergencyResponse?.spillOrLeak]);
     const fireFacts = unique([profile.vaporControl, profile.fire?.firefightingPrecautions, linkedSources.responderGuide?.emergencyResponse?.fire]);
     const neutralizationFacts = unique(profile.neutralization);
     const runoffFacts = unique([
@@ -242,102 +237,45 @@
       spillFacts.filter((value) => /runoff|waterway|sewer|drain|environment/i.test(value)),
     ]);
     const vaporFacts = unique(spillFacts.filter((value) => /vapor|spray|fog|cloud|dispers/i.test(value)));
-    const sourceControlFacts = unique(spillFacts.filter((value) => /stop (?:the )?leak|shut[ -]?off|close (?:the )?valve|plug|patch|overpack|upright|transfer|recover product/i.test(value)));
-    const confinementFacts = unique([
-      spillFacts.filter((value) => /dike|berm|dam|absorb|contain|divert|drain|sewer|waterway|runoff/i.test(value)),
-      runoffFacts,
-    ]);
     const nonInterventionFacts = unique([
-      values(profile.fire?.explosionHazards).filter((value) => /withdraw immediately|do not approach|do not fight|non-intervention|mass explosion/i.test(value)),
-      spillFacts.filter((value) => /withdraw immediately|do not approach|do not touch|non-intervention/i.test(value)),
-      fireFacts.filter((value) => /withdraw immediately|do not fight|impossible|mass explosion|non-intervention/i.test(value)),
+      profile.fire?.explosionHazards,
+      spillFacts.filter((value) => /without risk|withdraw|do not|non-intervention/i.test(value)),
+      fireFacts.filter((value) => /withdraw|do not|impossible|explode|rupture/i.test(value)),
     ]);
     const missingData = [];
     if (!spillFacts.length) missingData.push('Spill / release control');
     if (!neutralizationFacts.length) missingData.push('Neutralization');
     if (!fireFacts.length) missingData.push('Vapor / fire control');
     if (!runoffFacts.length) missingData.push('Environmental / runoff control');
-    const hazardText = unique([
-      profile.header?.hazard,
-      profile.header?.hazardClass,
-      profile.fire?.explosionHazards,
-      profile.fire?.vaporBehavior,
-      profile.reactivity?.waterReactivity,
-      profile.reactivity?.polymerizationRisk,
-    ]).join(' ');
-    const hazardEscalationCues = unique([
-      /toxic gas|toxic by inhalation|inhalation hazard|\bTIH\b/i.test(hazardText) ? 'toxic inhalation or gas hazard' : '',
-      /explos|detonat|rupture|polymeri[sz]|water[- ]react/i.test(hazardText) ? 'explosion, pressure, polymerization, or water-reactivity hazard' : '',
-      nonInterventionFacts.length ? 'source guidance includes withdrawal or non-intervention cues' : '',
+    const defensiveTriggers = unique([
+      missingData.length ? 'mitigation source data is incomplete' : '',
+      lifeSafety.specificValues.scbaDecision === 'SCBA MANDATED' ? 'SCBA is mandated' : '',
+      values(plumeState?.missingInputs).length ? 'plume inputs are incomplete' : '',
+      /(?:requires|needs) verification|manual|stale|recent/i.test(text(weatherState?.status)) ? 'wind / weather is not verified' : '',
+      !text(plumeState?.endpointSelected) ? 'AEGL / LOC endpoint is missing' : '',
+      /planning|insufficient|review|unvalidated/i.test(text(plumeState?.confidenceLevel || plumeState?.confidenceStatus))
+        ? 'plume confidence requires field verification' : '',
+      lifeSafety.missingData.includes('Suit compatibility') ? 'suit compatibility is not verified' : '',
     ]);
-    const chemicalIdentity = `${text(profile.header?.name)} ${text(profile.header?.cas)}`;
-    const isChlorine = /\bchlorine\b|7782-50-5/i.test(chemicalIdentity);
-    const isTicTih = /toxic industrial chemical|toxic inhalation|toxic gas|poison gas|\bTIH\b|\bTIC\b|6\.1\s*\(toxic/i.test(`${chemicalIdentity} ${hazardText}`);
-    const leakControlEquipmentRequirement = isChlorine
-      ? 'Select and stage the correct Chlorine Institute emergency kit for the verified container: Kit A for cylinders, Kit B for one-ton containers, or Kit C for tank cars / cargo tanks; follow the current kit instructions and agency SOP.'
-      : isTicTih
-        ? 'Identify, verify compatibility, and stage the product- and container-specific manufacturer or industry leak-control kit, tools, plugs, patches, capping device, or approved overpack required for the defined task; follow current instructions and agency SOP.'
-        : '';
-    const sourceControlPlan = unique([leakControlEquipmentRequirement, sourceControlFacts]);
-    const ppeSourceBacked = lifeSafety.status === 'SOURCE_BACKED_RECOMMENDATION'
-      && lifeSafety.specificValues.protectionLevel !== NO_DATA;
-    const offensiveAvailable = sourceControlFacts.length > 0
-      && ppeSourceBacked
-      && (isTicTih || nonInterventionFacts.length === 0);
-    const tacticalPosture = nonInterventionFacts.length && !sourceControlFacts.length
-      ? 'Non-Intervention — Isolate and Protect Exposures'
-      : offensiveAvailable
-        ? 'Offensive — Conditional Source Control'
-        : confinementFacts.length
-          ? 'Defensive — Contain and Protect'
-          : 'Defensive — Isolate and Monitor';
-    const postureReason = offensiveAvailable
-      ? `${isTicTih ? `${isChlorine ? 'Chlorine' : 'TIC/TIH'} source control is a valid technician-level offensive option when the correct product- and container-specific leak-control equipment and procedure are confirmed. ` : ''}Verified source-control direction and source-backed PPE support a technician entry after every listed prerequisite is confirmed.`
-      : tacticalPosture.startsWith('Non-Intervention')
-        ? 'Source hazards indicate withdrawal or non-intervention; protect exposures and allow the incident to stabilize under command control.'
-        : hazardEscalationCues.length
-          ? `A defensive posture is recommended because source-control conditions are incomplete while ${hazardEscalationCues.join(', ')} remain active concerns.`
-          : 'Direct source-control conditions are not fully established; contain, confine, monitor, and reassess for a controlled transition.';
+    const tacticalPosture = defensiveTriggers.length ? 'Defensive' : REVIEW;
     const spillReleaseControl = spillFacts.length ? spillFacts.join(' · ') : NO_DATA;
     const neutralization = neutralizationFacts.length ? neutralizationFacts.join(' · ') : 'Neutralization Requires Source-Backed Verification';
     const vaporFireControl = unique([vaporFacts, fireFacts]).length ? unique([vaporFacts, fireFacts]).join(' · ') : NO_DATA;
     const environmentalRunoff = runoffFacts.length ? runoffFacts.join(' · ') : NO_DATA;
-    const entryDecision = offensiveAvailable
-      ? `Technician entry may be considered for the defined source-control task using ${lifeSafety.specificValues.protectionLevel}; maintain backup, rescue, decon, and continuous monitoring.`
-      : `Remain non-entry unless Incident Command authorizes a defined task after ${lifeSafety.specificValues.protectionLevel === NO_DATA ? 'respiratory and chemical protection' : lifeSafety.specificValues.protectionLevel} and all entry conditions are verified.`;
-    const directGuidance = `${tacticalPosture}. ${postureReason}`;
-    const entryPrerequisites = unique([
-      'Positive chemical and container identification',
-      'Defined task, entry objective, and termination point',
-      lifeSafety.specificValues.protectionLevel === NO_DATA ? 'Verified task-specific PPE and respiratory protection' : lifeSafety.specificValues.protectionLevel,
+    const entryDecision = lifeSafety.specificValues.scbaDecision === 'SCBA MANDATED'
+      ? `Entry only with ${lifeSafety.specificValues.protectionLevel === NO_DATA ? 'verified respiratory and chemical protection' : lifeSafety.specificValues.protectionLevel}; otherwise remain non-entry.`
+      : REVIEW;
+    const directGuidance = tacticalPosture === 'Defensive'
+      ? `Operate defensively until ${defensiveTriggers.join(', ')} are resolved through approved-source review and field verification.`
+      : 'Select the final tactical posture from the displayed source guidance, field conditions, and specialist review.';
+    const requiredVerification = unique([
+      missingData,
+      values(plumeState?.missingInputs),
       'Field monitoring',
-      'Current wind, weather, and upwind/uphill approach',
+      'Current wind and weather observation time',
       'Suit compatibility for the assigned task',
-      leakControlEquipmentRequirement,
-      'Backup team, rapid intervention / rescue, and technical decon ready',
       'Agency SOP',
       'Incident Command approval',
-    ]);
-    const requiredVerification = unique([missingData, values(plumeState?.missingInputs), entryPrerequisites]);
-    const abortCriteria = unique([
-      'Unexpected pressure, bulging, violent reaction, flame impingement, or container instability',
-      'Monitoring reaches an action level or changes outside the entry plan',
-      'Loss of communications, water supply, backup team, rescue capability, or decon',
-      'PPE breach, heat stress, low-air alarm, responder distress, or changing wind',
-      nonInterventionFacts,
-    ]);
-    const recommendedRoute = unique([
-      'Confirm the product, container, release point, physical state, and current hazards from an upwind/uphill position.',
-      'Establish ERG isolation, hot/warm/cold zones, access control, and downwind protective actions; verify with monitoring.',
-      `Implement ${lifeSafety.specificValues.protectionLevel === NO_DATA ? 'verified task-specific PPE' : lifeSafety.specificValues.protectionLevel}, entry control, backup/rescue, and technical decon.`,
-      offensiveAvailable
-        ? `Conduct the defined source-control task: ${sourceControlPlan.join(' · ')}`
-        : confinementFacts.length
-          ? `Confine migration without entering the release point: ${confinementFacts.join(' · ')}`
-          : 'Maintain isolation, protect exposures, monitor conditions, and obtain chemical-specific control guidance.',
-      vaporFireControl !== NO_DATA ? `Apply only verified vapor/fire controls: ${vaporFireControl}` : '',
-      environmentalRunoff !== NO_DATA ? `Protect drains, waterways, and runoff paths: ${environmentalRunoff}` : '',
-      'Confirm control effectiveness with monitoring, terminate before conditions exceed the plan, and complete technical decon.',
     ]);
 
     return {
@@ -346,7 +284,7 @@
         primaryDecision: tacticalPosture,
         directGuidance,
         tacticalActions: [
-          ...recommendedRoute,
+          spillFacts.length ? 'Use only the displayed source-backed spill / release controls.' : 'Do not select a spill / release tactic until approved-source guidance is verified.',
           neutralizationFacts.length ? 'Use only the displayed source-backed neutralization direction.' : 'Do not neutralize without verified source guidance.',
           nonInterventionFacts.length ? 'Consider non-intervention where the displayed source hazards make responder risk excessive.' : '',
         ],
@@ -358,12 +296,6 @@
           vaporFireControl,
           environmentalRunoff,
           nonInterventionConsiderations: join(nonInterventionFacts),
-          recommendedRoute,
-          sourceControlOptions: sourceControlPlan.length ? sourceControlPlan : [NO_DATA],
-          confinementOptions: confinementFacts.length ? confinementFacts : [NO_DATA],
-          entryPrerequisites,
-          abortCriteria,
-          postureReason,
           requiredVerification,
         },
         missingData,
@@ -379,12 +311,6 @@
         vaporFireControl,
         environmentalRunoff,
         nonInterventionConsiderations: join(nonInterventionFacts),
-        recommendedRoute,
-        sourceControlOptions: sourceControlPlan.length ? sourceControlPlan : [NO_DATA],
-        confinementOptions: confinementFacts.length ? confinementFacts : [NO_DATA],
-        entryPrerequisites,
-        abortCriteria,
-        postureReason,
         requiredVerification,
         executionNote: MITIGATION_EXECUTION_NOTE,
       },
