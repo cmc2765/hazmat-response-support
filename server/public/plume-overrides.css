@@ -1,0 +1,73 @@
+/* Final Plume Model command-console layout overrides. */
+#plume.view.active .plume-main-workspace {
+  display: grid !important;
+  grid-template-columns: minmax(330px, 380px) minmax(0, 1fr) !important;
+  gap: 14px !important;
+}
+#plume.view.active .plume-control-column {
+  display: flex !important;
+  flex-direction: column;
+  gap: 10px;
+  max-height: none !important;
+}
+#plume.view.active .plume-model-controls,
+#plume.view.active .plume-model-input-grid { display: contents !important; }
+#plume.view.active .plume-control-column .plume-model-section {
+  border: 1px solid #1d648f !important;
+  border-radius: 10px !important;
+  padding: 12px !important;
+  background: linear-gradient(180deg,#061a2e,#041322) !important;
+}
+#plume.view.active .plume-release-grid,
+#plume.view.active .plume-weather-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+}
+#plume.view.active .plume-release-grid > .plume-chemical-field,
+#plume.view.active .plume-release-grid > .container-profile,
+#plume.view.active .plume-release-grid > .plume-input-review,
+#plume.view.active .plume-weather-grid > label[for="plume-weather-source"],
+#plume.view.active .plume-weather-grid > .plume-weather-review { grid-column: 1 / -1 !important; }
+#plume.view.active .plume-control-column input:not([type="checkbox"]):not([type="file"]),
+#plume.view.active .plume-control-column select {
+  min-height: 34px;
+  border: 1px solid #315f80 !important;
+  border-radius: 5px;
+  background: #020f1d !important;
+  color: #f8fafc !important;
+}
+#plume.view.active .plume-map-column { min-width: 0; }
+#plume.view.active .plume-map-card {
+  overflow: hidden;
+  border: 1px solid #1d648f;
+  border-radius: 10px;
+  background: #020f1d;
+}
+#plume.view.active .plume-map-shell {
+  min-height: 620px;
+  height: calc(100svh - 270px) !important;
+}
+@media (max-width: 950px) {
+  #plume.view.active .plume-main-workspace { grid-template-columns: 1fr !important; }
+  #plume.view.active .plume-map-shell { height: 64svh !important; }
+}
+@media (max-width: 620px) {
+  #plume.view.active .plume-release-grid,
+  #plume.view.active .plume-weather-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Keep the control flow compact and make operational states immediately scannable. */
+#plume.view.active .plume-control-column .plume-model-section:not(.plume-weather-section) { order: 1; }
+#plume.view.active .plume-weather-section { order: 2; }
+#plume.view.active .plume-endpoint-card { order: 3; margin-top: auto; }
+#plume.view.active .plume-control-column { min-height: calc(100svh - 270px); }
+#plume.view.active .plume-control-column .plume-model-section:first-of-type .plume-model-section-heading > strong { color: #ff5960 !important; }
+#plume.view.active .plume-weather-section .plume-model-section-heading > strong { color: #2e8cff !important; }
+#plume.view.active .container-details {
+  border: 1px solid #cbd5e1 !important;
+  background: #fff !important;
+  color: #061a2e !important;
+}
+#plume.view.active .container-details > summary { color: #061a2e !important; font-weight: 900; cursor: pointer; }
+#plume.view.active .plume-layer-button[data-plume-map-view="tactical"] { border-color: #f6c343; color: #f6c343; }

@@ -1,0 +1,61 @@
+/* Keep search and the populated Chemical Profile as separate page surfaces. */
+#lookup:has(#chemical-id-results:not([hidden])) .hazard-id-command-console,
+#lookup:has(#chemical-id-results:not([hidden])) .hazard-id-empty-profile,
+#lookup:has(#chemical-id-results:not([hidden])) #facility-inventory,
+#lookup:has(#chemical-id-results:not([hidden])) #hazard-profile-results {
+  display: none !important;
+}
+#lookup:has(#chemical-id-results:not([hidden])) #chemical-id-results {
+  display: block !important;
+  margin-top: 14px;
+}
+
+#lookup .hazard-id-command-console {
+  width: 100%;
+  max-width: none;
+}
+#lookup .hazard-search-command-body {
+  display: grid;
+  grid-template-columns: minmax(240px, .7fr) minmax(0, 1.3fr);
+  align-items: center;
+  gap: 18px;
+}
+#lookup .hazard-search-command-body .chemical-search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  width: 100%;
+}
+
+/* The search state is a single focused surface; a selected profile becomes the full page. */
+#lookup.view.active:not(:has(#chemical-id-results:not([hidden]))):not(:has(#hazard-profile-results:not([hidden]))) {
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+}
+#lookup.view.active:not(:has(#chemical-id-results:not([hidden]))):not(:has(#hazard-profile-results:not([hidden]))) > .hazard-id-command-console {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+}
+#lookup:has(#chemical-id-results:not([hidden])),
+#lookup:has(#hazard-profile-results:not([hidden])) {
+  display: block !important;
+  min-height: 0 !important;
+}
+#lookup:has(#chemical-id-results:not([hidden])) > #chemical-id-results,
+#lookup:has(#hazard-profile-results:not([hidden])) > #hazard-profile-results {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 14px 0 0 !important;
+}
+#lookup:has(#chemical-id-results:not([hidden])) .chemical-profile-shell,
+#lookup:has(#hazard-profile-results:not([hidden])) .hazard-profile-shell {
+  width: 100%;
+  min-height: calc(100dvh - 190px);
+  box-sizing: border-box;
+}
+#lookup:has(#chemical-id-results:not([hidden])) .chemical-profile-toolbar-actions,
+#lookup:has(#hazard-profile-results:not([hidden])) .hazard-profile-toolbar-actions {
+  justify-content: flex-end;
+}
+@media (max-width: 760px) {
+  #lookup .hazard-search-command-body { grid-template-columns: 1fr; }
+}

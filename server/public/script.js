@@ -3532,6 +3532,9 @@ function updateChemicalCard(record) {
     ...(record.profile || record),
     header: {
       ...(record.profile?.header || {}),
+      name: record.profile?.header?.name || record.name || record.ChemicalName || 'Select a chemical',
+      cas: record.profile?.header?.cas || record.cas || record.CasNumber || '',
+      un: record.profile?.header?.un || record.un || record.UnnaNumber || '',
       hazardClass: hasMeaningfulChemicalProfileData(record.profile?.header?.hazardClass)
         ? record.profile.header.hazardClass
         : (hasMeaningfulChemicalProfileData(record.dotClass) ? record.dotClass : undefined),
@@ -5579,6 +5582,7 @@ const plumeSatelliteLayerId = 'plume-satellite-basemap-layer';
 const plumeMapViews = {
   street: { style: plumeMapStyleUrl, pitch: 0, bearing: 0 },
   satellite: { style: plumeMapStyleUrl, pitch: 0, bearing: 0 },
+  tactical: { style: plumeMapStyleUrl, pitch: 28, bearing: 0 },
   terrain3d: { style: plumeMapStyleUrl, pitch: 60, bearing: -20, minZoom: 15 },
 };
 let activePlumeMapView = 'satellite';
@@ -5642,7 +5646,9 @@ function resetPlumeMapView() {
 
 function updatePlumeTerrainStatus() {
   if (activePlumeMapView !== 'terrain3d') {
-    const status = activePlumeMapView === 'satellite' ? 'Satellite View' : 'Street Map View';
+    const status = activePlumeMapView === 'satellite'
+      ? 'Satellite View'
+      : activePlumeMapView === 'tactical' ? 'Tactical View' : 'Street Map View';
     setText('plume-terrain-status', status);
     setText('plume-model-terrain-status', `${status} · Flat-ground planning baseline; no terrain correction is applied.`);
     return;
@@ -7896,8 +7902,6 @@ function updateOperationalPlumeReadiness(availability = latestPlumeAvailability,
   const missingWeather = missing.filter((item) => weatherLabels.has(item));
   const weatherMode = document.getElementById('plume-weather-source')?.value;
   const endpointFound = result?.endpoint || availability?.mode === 'aegl-plume';
-  const ergFound = Boolean(result?.ergOverlay || availability?.ergAvailability?.status === 'Found'
-    || availability?.mode === 'erg-protective-action');
   const endpoint = result?.endpoint || availability?.endpoint;
   const profileHeader = activeChemicalRecord?.profile?.header || {};
   const un = availability?.ergAvailability?.un || result?.ergOverlay?.un || profileHeader.un || '';
@@ -7908,14 +7912,28 @@ function updateOperationalPlumeReadiness(availability = latestPlumeAvailability,
   setText('plume-header-identifiers', [cas ? `CAS ${cas}` : null, un ? `UN ${un}` : null, ergGuide ? `ERG ${ergGuide}` : null].filter(Boolean).join(' · ') || 'CAS / UN / ERG pending');
   setText('plume-readiness-cas', cas || 'No Current Data Exists');
   setText('plume-endpoint-badge', endpointFound ? 'Found' : 'Missing');
-  setText('plume-header-endpoint-chip', endpointFound ? 'AEGL' : ergFound ? 'ERG' : 'Missing');
+  setText('plume-header-endpoint-chip', endpointFound ? 'AEGL' : 'Missing');
   setText('plume-endpoint-detail', endpointFound
     ? `${result?.endpoint?.endpointSource || availability?.endpoint?.endpointSource || 'EPA AEGL'} · exact CAS/source link`
     : (availability?.endpointStatus || 'No verified AEGL / LOC link found.'));
-  setText('plume-endpoint-levels', endpoint
-    ? `${endpoint.selectedDurationMinutes}-minute · AEGL-1 ${endpoint.aegl1} ${endpoint.units} · AEGL-2 ${endpoint.aegl2} ${endpoint.units} · AEGL-3 ${endpoint.aegl3} ${endpoint.units}`
-    : ergFound ? 'AEGL unavailable; bundled ERG fallback is available and requires current-PHMSA verification.' : 'No Current Data Exists');
-  setText('plume-readiness-erg', ergFound ? 'Found' : 'Missing');
+  const endpointLevels = document.getElementById('plume-endpoint-levels');
+  if (endpointLevels) {
+    endpointLevels.replaceChildren();
+    if (endpoint) {
+      endpointLevels.append(document.createTextNode(`${endpoint.selectedDurationMinutes}-minute · `));
+      [['AEGL-1', endpoint.aegl1, '#ffd323'], ['AEGL-2', endpoint.aegl2, '#f28c18'], ['AEGL-3', endpoint.aegl3, '#d71920']]
+        .forEach(([label, value, color], index, entries) => {
+          const level = document.createElement('span');
+          level.textContent = `${label} ${value} ${endpoint.units}`;
+          level.style.color = color;
+          level.style.fontWeight = '900';
+          endpointLevels.append(level);
+          if (index < entries.length - 1) endpointLevels.append(document.createTextNode(' · '));
+        });
+    } else {
+      endpointLevels.textContent = 'No Current Data Exists';
+    }
+  }
   setText('plume-readiness-release', missingRelease.length ? 'Missing' : 'Complete');
   setText('plume-readiness-release-detail', missingRelease.length ? missingRelease.join(', ') : 'Required release inputs are present.');
   if (!result?.sourceStrength) {
@@ -7934,15 +7952,12 @@ function updateOperationalPlumeReadiness(availability = latestPlumeAvailability,
     ? missingWeather.join(', ')
     : weatherMode === 'manual' ? 'Manual Entry — verify field conditions.' : 'Live weather available.');
 
-  const selectedMode = result?.mode === 'erg-protective-action' || availability?.mode === 'erg-protective-action'
-    ? 'ERG Overlay'
-    : endpointFound && !missing.length ? 'Planning Plume'
-      : endpointFound ? 'Blocked' : ergFound ? 'ERG Overlay' : 'Blocked';
+  const selectedMode = endpointFound && !missing.length ? 'Planning Plume' : 'Blocked';
   setText('plume-model-mode-badge', selectedMode);
   setText('plume-header-mode-chip', selectedMode === 'Planning Plume' ? 'Planning Estimate' : selectedMode);
   const readinessReason = reason || (endpointFound
     ? missing.length ? `AEGL / LOC found. Missing: ${missing.join(', ')}.` : 'AEGL / LOC and required plume inputs are available.'
-    : ergFound ? 'AEGL / LOC is unavailable; ERG is the fallback.' : 'Neither AEGL / LOC nor ERG data is available.');
+    : 'No verified AEGL / LOC endpoint is available for this plume estimate.');
   setText('plume-readiness-reason', readinessReason);
 }
 
