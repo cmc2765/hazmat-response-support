@@ -60,6 +60,8 @@ describe("source-backed PPE recommendation engine", () => {
     });
     expect(blocked.selectedLevel).toBe(PPE_LEVELS.REVIEW);
     expect(blocked.levelCAllowed).toBe(false);
+    expect(blocked.levelCSourceSupported).toBe(true);
+    expect(blocked.levelCStatus).toBe("CONDITIONAL");
     expect(blocked.scbaRequired).toBe(true);
     expect(blocked.levelCBlockedReason).toMatch(/oxygen|IDLH|concentration|monitoring|cartridge/i);
 
@@ -80,6 +82,37 @@ describe("source-backed PPE recommendation engine", () => {
     expect(allowed.selectedLevel).toBe(PPE_LEVELS.LEVEL_C);
     expect(allowed.levelCAllowed).toBe(true);
     expect(allowed.aprAllowed).toBe(true);
+  });
+
+  it("allows verified Level C conditions when sources also include emergency SCBA guidance", () => {
+    const result = buildPpeRecommendation({
+      ...verified,
+      approvedSourceFacts: {
+        NIOSH: ["SCBA for unknown or IDLH concentrations", "APR with an appropriate cartridge below use limits"],
+      },
+      operationalConditions: {
+        unknownAtmosphere: false,
+        oxygenAdequate: true,
+        oxygenDeficient: false,
+        atmosphereIdlh: false,
+        concentrationKnown: true,
+        concentrationBelowLimits: true,
+        monitoringVerified: true,
+        cartridgeVerified: true,
+      },
+    });
+    expect(result.selectedLevel).toBe(PPE_LEVELS.LEVEL_C);
+    expect(result.levelCAllowed).toBe(true);
+    expect(result.levelCStatus).toBe("ALLOWED");
+  });
+
+  it("does not treat prohibited or escape-only APR language as Level C support", () => {
+    const result = buildPpeRecommendation({
+      ...verified,
+      approvedSourceFacts: { NIOSH: ["APR not recommended; escape-only respirator use"] },
+    });
+    expect(result.levelCSourceSupported).toBe(false);
+    expect(result.levelCStatus).toBe("BLOCKED");
   });
 
   it("selects Level D only with explicit source guidance and verified non-exposure conditions", () => {

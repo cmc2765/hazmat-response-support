@@ -48,7 +48,7 @@ describe("HazMatIQ Command Bar", () => {
       "Plume Model",
       "Live Map",
       "Guided Response",
-      "Incident Reports &amp; ICS Forms",
+      "My Reports",
       "Monitoring Equipment",
       "My Chemicals",
     ])
@@ -92,6 +92,16 @@ describe("HazMatIQ Command Bar", () => {
     expect(script).toContain("completedAt: now.toISOString()");
     expect(script).not.toContain("Northridge Chemical Release");
     expect(script).not.toContain("123 Industrial Way");
+  });
+
+  it("keeps Incident Command line items compact but readable", () => {
+    const readabilityStyles = styles.slice(styles.lastIndexOf("/* Incident Command readability:"));
+
+    expect(readabilityStyles).toMatch(/\.incident-command-brief-list > div \{[\s\S]*?padding: 7px 2px;[\s\S]*?font-size: 0\.84rem;[\s\S]*?line-height: 1\.45;/);
+    expect(readabilityStyles).toMatch(/\.incident-command-brief-list dd \{[\s\S]*?overflow-wrap: break-word;/);
+    expect(readabilityStyles).toContain(".incident-command-guided-list li,");
+    expect(readabilityStyles).toContain("padding-block: 7px;");
+    expect(readabilityStyles).toContain("@media (max-width: 520px)");
   });
 
   it("keeps Incident Command compact and fills Tactical Status from live incident state", () => {
@@ -179,15 +189,17 @@ describe("HazMatIQ Command Bar", () => {
     expect(script).toContain("function activateDarkCommandTheme(");
   });
 
-  it("uses a restrained animated command interface with readable status zones", () => {
+  it("uses static radar rings and restrained ambient motion with readable status zones", () => {
     expect(html).not.toContain('class="command-hero-scene"');
     expect(html).not.toContain('src="assets/command-header-hazmat-scene-v2.png"');
     expect(html).toContain('class="command-header-plume"');
     expect(html).toContain('class="command-header-contours"');
     expect(html).not.toContain('class="command-header-pattern"');
     expect(styles).toContain(".command-header::before {");
-    expect(styles).toContain("animation: commandRadarSweep 22s linear infinite;");
-    expect(styles).toContain("transform-origin: 50% 50%;");
+    const radarBackdrop = styles.slice(styles.indexOf(".command-header::after {"), styles.indexOf(".command-header-plume,"));
+    expect(radarBackdrop).toContain("repeating-radial-gradient(circle");
+    expect(radarBackdrop).not.toContain("conic-gradient");
+    expect(styles).not.toContain("commandRadarSweep");
     expect(styles).toContain("top: 51%;");
     expect(styles).toContain("left: 82%;");
     expect(styles).toContain("opacity: 0.42;");
@@ -242,12 +254,19 @@ describe("HazMatIQ Command Bar", () => {
     expect(styles).toContain(
       "/* Editable Homepage layout. Keep homepage changes in this section while it is in development. */",
     );
-    expect(styles).toContain("animation: homepageRadarSweep 20s linear infinite;");
-    expect(styles).toContain("top: calc(50% - 5px);");
+    expect(styles).toContain("animation: none !important;");
+    expect(styles).toContain(".app-shell:has(#overview.view.active) > .command-header::after");
+    expect(styles).toContain("homepageRadarOriginPulse 4.8s ease-in-out infinite");
+    expect(styles).toContain("background: #fff200;");
+    expect(styles).toContain("left: 82%;");
+    expect(styles).toContain("transform: translate(-50%, -50%) rotate(0deg);");
+    expect(styles).toContain("from { transform: translate(-50%, -50%) rotate(0deg); }");
     expect(styles).toContain("gap: 10px;");
     expect(styles).not.toContain("Final Home cascade lock");
     expect(styles).not.toContain("Homepage brand-first sizing and full-width launcher layout");
     expect(styles).toContain("width: min(1134px, calc(60vw - clamp(8px, 0.7vw, 11px)));");
+    expect(styles).toContain("width: min(1280px, calc(68vw - clamp(8px, 0.7vw, 11px))) !important;");
+    expect(styles).toMatch(/\.workspace-drawer-nav \.workspace-home-btn img \{[\s\S]*?width: min\(210px, 100%\);[\s\S]*?height: 42px;/);
     expect(styles).toContain("height: auto;");
     expect(styles).toContain("grid-template-columns: repeat(3, minmax(0, 1fr));");
     expect(styles).toContain("font-size: 0.78rem;");

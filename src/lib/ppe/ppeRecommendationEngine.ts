@@ -59,6 +59,8 @@ export type PpeRecommendation = {
   scbaRequired: boolean;
   aprAllowed: boolean;
   levelCAllowed: boolean;
+  levelCSourceSupported: boolean;
+  levelCStatus: "ALLOWED" | "CONDITIONAL" | "BLOCKED";
   levelCBlockedReason: string;
   sourceSummary: string;
   decisionReasons: string[];
@@ -101,6 +103,8 @@ function baseRecommendation(input: PpeRecommendationInput, selectedLevel: PpeSel
     scbaRequired: false,
     aprAllowed: false,
     levelCAllowed: false,
+    levelCSourceSupported: false,
+    levelCStatus: "BLOCKED",
     levelCBlockedReason: "APR/cartridge conditions have not been verified.",
     sourceSummary: "No Current Data Exists",
     decisionReasons: [],
@@ -164,10 +168,12 @@ export function buildPpeRecommendation(input: PpeRecommendationInput): PpeRecomm
   const explicitD = matchedFacts(facts, /\blevel\s*d\b|no chemical (?:protective ensemble|protection) required/i);
   const scbaFacts = matchedFacts(facts, /\bSCBA\b|self-contained breathing apparatus/i)
     .filter((fact) => !/escape\s+only|no\s+SCBA|SCBA\s+not/i.test(fact));
-  const aprFacts = matchedFacts(facts, /\bAPR\b|\bPAPR\b|air-purifying respirator|cartridge|canister/i);
+  const aprFacts = matchedFacts(facts, /\bAPR\b|\bPAPR\b|air-purifying respirator|cartridge|canister/i)
+    .filter((fact) => !/escape\s+only|not\s+(?:approved|recommended|suitable)|do\s+not\s+use|no\s+(?:approved|suitable)\s+(?:cartridge|canister)/i.test(fact));
   const skinVaporFacts = matchedFacts(facts, /skin absorption|dermal toxic|vapor[- ]protective|fully\s+encapsulat|chemical[- ]resistant (?:suit|clothing)|splash protection/i);
   const eyeFacts = matchedFacts(facts, /eye|goggle|face\s*shield/i);
   const conditions = { unknownAtmosphere: true, ...input.operationalConditions };
+  const levelCSourceSupported = explicitC.length > 0 || aprFacts.length > 0;
   const conditionRequiresScba = conditions.unknownAtmosphere === true
     || conditions.oxygenDeficient === true
     || conditions.atmosphereIdlh === true
@@ -185,12 +191,20 @@ export function buildPpeRecommendation(input: PpeRecommendationInput): PpeRecomm
     [conditions.monitoringVerified === true, "Air monitoring is not verified."],
     [conditions.cartridgeVerified === true, "Chemical-specific cartridge/canister suitability is not verified."],
     [conditions.concentrationBelowLimits === true, "Concentration is not verified below the applicable exposure/use limits."],
-    [aprFacts.length > 0 || explicitC.length > 0, "APR/PAPR use is not source-supported."],
-    [scbaFacts.length === 0 && !conditionRequiresScba, "A condition requiring SCBA remains present."],
+    [levelCSourceSupported, "APR/PAPR use is not source-supported."],
+    [!conditionRequiresScba, "A condition requiring SCBA remains present."],
   ];
   const failedLevelCChecks = levelCChecks.filter(([passed]) => !passed).map(([, reason]) => reason);
+  const explicitlyUnsafeForLevelC = input.operationalConditions?.unknownAtmosphere === true
+    || input.operationalConditions?.oxygenDeficient === true
+    || input.operationalConditions?.atmosphereIdlh === true
+    || input.operationalConditions?.emergencyInhalationHazard === true;
+  recommendation.levelCSourceSupported = levelCSourceSupported;
   recommendation.levelCAllowed = failedLevelCChecks.length === 0;
   recommendation.aprAllowed = recommendation.levelCAllowed;
+  recommendation.levelCStatus = recommendation.levelCAllowed
+    ? "ALLOWED"
+    : (levelCSourceSupported && !explicitlyUnsafeForLevelC ? "CONDITIONAL" : "BLOCKED");
   recommendation.levelCBlockedReason = recommendation.levelCAllowed ? "" : failedLevelCChecks.join(" ");
 
   const levelDAllowed = explicitD.length > 0
@@ -204,10 +218,11 @@ export function buildPpeRecommendation(input: PpeRecommendationInput): PpeRecomm
 
   let selectedLevel: PpeSelectedLevel = PPE_LEVELS.REVIEW;
   if (!recommendation.sourceConflicts.length && explicitA.length && scbaFacts.length) selectedLevel = PPE_LEVELS.LEVEL_A;
-  else if (!recommendation.sourceConflicts.length && scbaFacts.length && !explicitC.length && !explicitD.length) {
-    selectedLevel = skinVaporFacts.length && explicitA.length ? PPE_LEVELS.LEVEL_A : PPE_LEVELS.LEVEL_B;
-  } else if (!recommendation.sourceConflicts.length && (explicitC.length || aprFacts.length) && recommendation.levelCAllowed) {
+  else if (!recommendation.sourceConflicts.length && explicitB.length && scbaFacts.length) selectedLevel = PPE_LEVELS.LEVEL_B;
+  else if (!recommendation.sourceConflicts.length && levelCSourceSupported && recommendation.levelCAllowed) {
     selectedLevel = PPE_LEVELS.LEVEL_C;
+  } else if (!recommendation.sourceConflicts.length && scbaFacts.length && !explicitC.length && !explicitD.length) {
+    selectedLevel = skinVaporFacts.length && explicitA.length ? PPE_LEVELS.LEVEL_A : PPE_LEVELS.LEVEL_B;
   } else if (!recommendation.sourceConflicts.length && levelDAllowed) selectedLevel = PPE_LEVELS.LEVEL_D;
 
   recommendation.selectedLevel = selectedLevel;

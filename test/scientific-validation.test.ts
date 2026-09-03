@@ -10,8 +10,10 @@ describe("scientific safety-field validation", () => {
   it("uses the required nonblank missing-data messages", () => {
     expect(safetyDisplayValue(undefined)).toBe(SAFETY_DATA_STATUS.NO_CURRENT_DATA);
     expect(safetyDisplayValue("Not established")).toBe(SAFETY_DATA_STATUS.NOT_LISTED);
+    expect(safetyDisplayValue("Not relevant")).toBe(SAFETY_DATA_STATUS.NOT_APPLICABLE);
     expect(safetyDisplayValue("Not available")).toBe(SAFETY_DATA_STATUS.UNAVAILABLE);
     expect(safetyDisplayValue("Data unavailable")).toBe(SAFETY_DATA_STATUS.UNAVAILABLE);
+    expect(safetyDisplayValue("—")).toBe(SAFETY_DATA_STATUS.UNAVAILABLE);
   });
 
   it("rejects unapproved and unverified linked values", () => {

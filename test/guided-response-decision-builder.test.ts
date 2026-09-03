@@ -57,8 +57,76 @@ describe("Guided Response tactical decision builder", () => {
     expect(record.verifyIsolate.specificValues.protectiveAction).toContain("Small spill, night: 1.5 kilometers");
     expect(record.lifeSafety.specificValues.scbaDecision).toBe("SCBA MANDATED");
     expect(record.lifeSafety.specificValues.protectionLevel).toBe("Vapor Protective Level A w/ SCBA");
-    expect(record.mitigation.specificValues.tacticalPosture).toBe("Defensive");
+    expect(record.mitigation.specificValues.tacticalPosture).toBe("Offensive — Conditional Source Control");
     expect(record.mitigationDecisionSupport.spillReleaseControl).toMatch(/Stop leak if you can do it without risk/i);
+    expect(record.mitigationDecisionSupport.sourceControlOptions.join(" ")).toMatch(/Chlorine Institute emergency kit/i);
+    expect(record.mitigationDecisionSupport.entryPrerequisites.join(" ")).toMatch(/Kit A for cylinders, Kit B for one-ton containers, or Kit C/i);
+  });
+
+  it("recommends conditional offensive source control when verified conditions support technician entry", () => {
+    const record = builder.buildGuidedResponseDecisions({
+      masterLinked: true,
+      masterChemicalId: 999,
+      chemicalName: "Low-volatility test liquid",
+    }, {
+      approvedSources: ["Chemical Companion", "ERG"],
+      profile: {
+        header: { name: "Low-volatility test liquid", hazard: "8 (Corrosive)" },
+        response: { spillOrLeak: ["Stop leak if you can do it without risk.", "Dike liquid for recovery."] },
+        decon: { runoffContainment: ["Prevent entry into drains."] },
+        ppeRecommendation: {
+          selectedLevel: "LEVEL_B_SCBA",
+          displayLabel: "Level B w/ SCBA",
+          recommendationStatus: "SOURCE_BACKED_RECOMMENDATION",
+          respiratoryProtection: "Positive-pressure SCBA",
+          skinProtection: "Chemical protective clothing",
+          cartridgeRequirement: "Not applicable",
+          scbaRequired: true,
+          levelCAllowed: false,
+          decisionReasons: ["Source-backed task protection"],
+          verificationRequirements: ["Verify suit compatibility"],
+          sourcesReviewed: ["Chemical Companion"],
+          limitations: [],
+        },
+      },
+    });
+    expect(record.mitigation.specificValues.tacticalPosture).toBe("Offensive — Conditional Source Control");
+    expect(record.mitigation.specificValues.recommendedRoute.join(" ")).toMatch(/Conduct the defined source-control task/i);
+    expect(record.mitigation.specificValues.entryPrerequisites).toContain("Incident Command approval");
+    expect(record.mitigation.specificValues.abortCriteria).toContain("PPE breach, heat stress, low-air alarm, responder distress, or changing wind");
+  });
+
+  it("allows conditional offensive source control for non-chlorine TIC/TIH releases", () => {
+    const record = builder.buildGuidedResponseDecisions({
+      masterLinked: true,
+      masterChemicalId: 998,
+      chemicalName: "Sulfur dioxide test record",
+    }, {
+      approvedSources: ["Chemical Companion", "ERG"],
+      profile: {
+        header: { name: "Sulfur dioxide test record", hazard: "2.3 (Toxic Gas) · TIH" },
+        response: { spillOrLeak: ["Stop leak if you can do it without risk."] },
+        fire: { firefightingPrecautions: ["Withdraw immediately if container becomes unstable."] },
+        ppeRecommendation: {
+          selectedLevel: "LEVEL_A_VAPOR_PROTECTIVE_SCBA",
+          displayLabel: "Vapor Protective Level A w/ SCBA",
+          recommendationStatus: "SOURCE_BACKED_RECOMMENDATION",
+          respiratoryProtection: "Positive-pressure SCBA",
+          skinProtection: "Vapor-protective suit",
+          cartridgeRequirement: "Not applicable",
+          scbaRequired: true,
+          levelCAllowed: false,
+          decisionReasons: ["Toxic inhalation hazard"],
+          verificationRequirements: ["Verify suit compatibility"],
+          sourcesReviewed: ["Chemical Companion"],
+          limitations: [],
+        },
+      },
+    });
+    expect(record.mitigation.specificValues.tacticalPosture).toBe("Offensive — Conditional Source Control");
+    expect(record.mitigation.specificValues.sourceControlOptions.join(" ")).toMatch(/product- and container-specific.*leak-control kit/i);
+    expect(record.mitigation.specificValues.entryPrerequisites.join(" ")).toMatch(/verify compatibility.*leak-control kit/i);
+    expect(record.mitigation.specificValues.abortCriteria.join(" ")).toMatch(/Withdraw immediately if container becomes unstable/i);
   });
 
   it("fails closed when PPE data is absent and never turns IC approval into the PPE decision", () => {

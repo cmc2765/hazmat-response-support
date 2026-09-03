@@ -145,7 +145,78 @@ describe('normalizeChemicalProfile', () => {
     expect(profile?.header.name).toBe('Hydrazine');
     expect(profile?.header.ergGuide).toBe('132');
     expect(profile?.properties.molecularWeight).toBe('32.05');
+    expect(profile?.exposures.monitoringConcerns).toEqual(expect.arrayContaining([
+      expect.stringContaining('AEGL1_10min'),
+      expect.stringContaining('AEGL3_8hr'),
+    ]));
+    expect(profile?.ppeRecommendation.displayLabel).toBe('Level B w/ SCBA');
+    expect(profile?.medical.emsConsiderations.length).toBeGreaterThan(0);
+    expect(profile?.decon.preferredMethod.length).toBeGreaterThan(0);
+    expect(profile?.decon.technicalDecon.length).toBeGreaterThan(0);
     expect(queryChemicalProfile('Hydrazine')).toBeNull();
+  });
+
+  it.each([1, 70, 140, 280, 350, 420, 490, 560, 700, 770, 840, 910, 980, 1050, 1120, 1190, 1260, 1330, 1400, 1582])(
+    'returns every display section for distributed master chemical %s', (id) => {
+      const profile = queryChemicalProfile(id);
+      expect(profile).not.toBeNull();
+      expect(profile).toEqual(expect.objectContaining({
+        properties: expect.any(Object),
+        exposures: expect.any(Object),
+        ppeRecommendation: expect.any(Object),
+        medical: expect.any(Object),
+        decon: expect.any(Object),
+      }));
+    },
+  );
+
+  it('hydrates sparse Chemical Companion sections from linked NIOSH and ERG sources', () => {
+    const profile = queryChemicalProfile(374);
+    const sparseDeconProfile = queryChemicalProfile(813);
+
+    expect(profile?.header.name).toBe('Cyanamide');
+    expect(profile?.sources).toEqual(expect.arrayContaining(['NIOSH Pocket Guide', 'ERG 2024']));
+    expect(profile?.medical.firstAid).toContain('Call 911 or emergency medical service.');
+    expect(sparseDeconProfile?.decon.sourceBasis).toContain('ERG 2024 first-aid contamination-control guidance');
+  });
+
+  it.each([
+    [56, 'Hydrogen chloride, anhydrous', 'HCl', '50 ppm', 'Vapor Protective Level A w/ SCBA'],
+    [22, 'Chlorine', 'Cl2', '10 ppm', 'Vapor Protective Level A w/ SCBA'],
+    [10, 'Ammonia (anhydrous)', 'H3N', '300 ppm', 'Vapor Protective Level A w/ SCBA'],
+    [515, 'Sodium Hydroxide', 'NaOH', '10 mg/m^3', 'Level B w/ SCBA'],
+  ])('hydrates all operational profile sections for master chemical %s', (id, name, formula, idlh, ppe) => {
+    const profile = queryChemicalProfile(id);
+
+    expect(profile?.header.name).toBe(name);
+    expect(profile?.header.nfpa704).toEqual(expect.objectContaining({
+      health: expect.stringMatching(/^[0-4]$/),
+      flammability: expect.stringMatching(/^[0-4]$/),
+      instability: expect.stringMatching(/^[0-4]$/),
+    }));
+    expect(profile?.properties.formula).toBe(formula);
+    expect(profile?.properties.physicalState).not.toMatch(/No Current Data|Not available/i);
+    expect(profile?.exposures.idlh).toBe(idlh);
+    expect(profile?.exposures.oshaPel).not.toMatch(/No Current Data|Not listed|Not available/i);
+    expect(profile?.ppeRecommendation.displayLabel).toBe(ppe);
+    expect(profile?.response.publicSafety).not.toEqual(['No Current Data Exists']);
+    expect(profile?.response.spillOrLeak).not.toEqual(['No Current Data Exists']);
+    expect(profile?.medical.firstAid).not.toEqual(['No Current Data Exists']);
+    expect(profile?.decon.preferredMethod).not.toEqual(['No Current Data Exists']);
+    expect(profile?.sources).toEqual(expect.arrayContaining(['Chemical Companion', 'ERG 2024']));
+  });
+
+  it('preserves HCl AEGL durations and maps ceiling limits instead of discarding them', () => {
+    const profile = queryChemicalProfile(56);
+
+    expect(profile?.exposures.oshaPel).toBe('Ceiling: 5 ppm');
+    expect(profile?.exposures.nioshRel).toBe('Ceiling: 5 ppm');
+    expect(profile?.exposures.acgihTlv).toBe('Ceiling: 2 ppm');
+    expect(profile?.exposures.monitoringConcerns).toEqual(expect.arrayContaining([
+      'AEGL1_10min: 1.8',
+      'AEGL2_60min: 22',
+      'AEGL3_8hr: 26',
+    ]));
   });
 
   it('loads the selected chemical NFPA 704 ratings from the companion NFPA tables', () => {
@@ -313,6 +384,56 @@ describe('normalizeChemicalProfile', () => {
     expect(profile.exposures.oshaPel).toBe('5 mg/m^3');
     expect(profile.exposures.nioshRel).toBe('2 ppb');
     expect(profile.exposures.acgihTlv).toBe('0.5 ppm');
+  });
+
+  it('uses an exact-CAS linked NIOSH IDLH when the master says it is not established', () => {
+    const profile = normalizeChemicalProfile({ ChemicalID: 414, CasNumber: '76-44-8' }, {
+      exposureLimits: [{ IDLHPpm: 'Not established' }],
+      npg: { id: 'heptachlor', cas: '76-44-8', exposureLimits: { idlh: '35 mg-m3 (Ca)' } },
+    });
+
+    expect(profile.header.idlh).toBe('35 mg/m³ (Ca)');
+    expect(profile.exposures.idlh).toBe('35 mg/m³ (Ca)');
+    expect(profile.exposures.idlhValues[0]).toMatchObject({
+      value: '35 mg/m³ (Ca)',
+      source: 'NIOSH',
+      sourceRecordId: 'heptachlor',
+    });
+  });
+
+  it('does not treat an NIOSH em dash as an IDLH measurement', () => {
+    const profile = normalizeChemicalProfile({ ChemicalID: 1, CasNumber: '12-34-5' }, {
+      exposureLimits: [{ IDLHPpm: 'Not established' }],
+      npg: { id: 'no-idlh', cas: '12-34-5', exposureLimits: { idlh: '—' } },
+    });
+
+    expect(profile.header.idlh).toBe('Not listed by current source');
+    expect(profile.exposures.idlhValues.every(({ value }) => !value.includes('—'))).toBe(true);
+  });
+
+  it('rejects a NIOSH IDLH when the CAS link does not match the master record', () => {
+    const profile = normalizeChemicalProfile({ ChemicalID: 1, CasNumber: '12-34-5' }, {
+      exposureLimits: [{ IDLHPpm: null }],
+      npg: { id: 'wrong-record', cas: '98-76-5', exposureLimits: { idlh: '10 ppm' } },
+    });
+
+    expect(profile.header.idlh).toBe('No Current Data Exists');
+    expect(profile.exposures.idlhValues).toHaveLength(1);
+  });
+
+  it.each([
+    [414, '35 mg/m³ (Ca)'],
+    [453, '4 ppm'],
+    [482, '5 mg/m³'],
+    [648, '2000 ppm'],
+    [1207, '1100 ppm ([10%LEL])'],
+    [1208, '1100 ppm ([10%LEL])'],
+    [1497, '30 ppm'],
+    [1580, '100 mg/m³ (as Sn)'],
+  ])('hydrates missing master IDLH from the exact-CAS NIOSH record for chemical %s', (chemicalId, expectedIdlh) => {
+    const profile = queryChemicalProfile(chemicalId);
+    expect(profile?.header.idlh).toBe(expectedIdlh);
+    expect(profile?.exposures.idlhValues[0]?.source).toBe('NIOSH');
   });
 
   it('preserves standalone medical source text without expanding it', () => {

@@ -27,6 +27,7 @@ import { PDFDocument, PDFTextField } from "pdf-lib";
 import { getDb } from "./db.js";
 import * as schema from "./schema.js";
 import { queryChemicalProfile, searchCompanionChemicals } from "./chemical-companion.js";
+import { reviewedSourceLinksForMaster } from "./chemical-companion/reviewed-source-links.js";
 import { runPlume } from "../../src/lib/model/plume.js";
 import { PlumeInputs } from "../../src/lib/schema/plume.js";
 import { aeglThresholdBands, selectVerifiedAeglEndpoint } from "../../src/lib/model/plume-endpoints.js";
@@ -409,6 +410,7 @@ app.get("/api/chemicals/search", async (c) => {
 });
 
 app.get("/api/chemicals/:id/profile", async (c) => {
+  c.header("Cache-Control", "no-store");
   const id = c.req.param("id");
   if (!/^\d+$/.test(id)) return c.json({ error: "ChemicalID must be a positive integer" }, 400);
   const profile = queryChemicalProfile(id);
@@ -419,6 +421,22 @@ app.get("/api/chemicals/:id/profile", async (c) => {
   );
   const ergTable2 = ergTable1 ? getErgAdditionalTables(ergTable1) : [];
   const ergTable3 = getErgContainerDistances(profile.header.un);
+  const reviewedLinks = reviewedSourceLinksForMaster(Number(id)).map((link) => ({
+    ...link,
+    sourceVersion: link.sourceName === "ERG" ? "2024 repository dataset" : "Reviewed local source link",
+  }));
+  const sourceLinks = reviewedLinks.some((link) => link.sourceName === "ERG") ? reviewedLinks : [
+    ...reviewedLinks,
+    {
+      sourceName: "ERG",
+      sourceRecordId: profile.header.un || null,
+      sourceIdentifierType: "UN/NA",
+      sourceIdentifierValue: profile.header.un || null,
+      matchBasis: "Chemical Companion master record fields",
+      reviewStatus: ergTable1 ? "source-displayed" : "needs review",
+      sourceVersion: "2024 repository dataset",
+    },
+  ];
   return c.json({
     id,
     selectedChemicalId: Number(id),
@@ -428,15 +446,7 @@ app.get("/api/chemicals/:id/profile", async (c) => {
       sourceStatus: "Imported Source",
       reviewStatus: "master-record",
     },
-    sourceLinks: [{
-      sourceName: "ERG",
-      sourceRecordId: profile.header.un || null,
-      sourceIdentifierType: "UN/NA",
-      sourceIdentifierValue: profile.header.un || null,
-      matchBasis: "Chemical Companion master record fields",
-      reviewStatus: ergTable1 ? "source-displayed" : "needs review",
-      sourceVersion: "2024 repository dataset",
-    }],
+    sourceLinks,
     ...profile,
     isolationErg: {
       ...profile.isolationErg,

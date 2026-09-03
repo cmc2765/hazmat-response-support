@@ -123,6 +123,38 @@ describe("API routes", () => {
     expect(body.header).toMatchObject({ name: "Phenol", un: "1671", ergGuide: "153" });
   });
 
+  it("hydrates the reviewed HCl profile with NFPA, exposure, response, and source provenance", async () => {
+    const res = await app.request("/api/chemicals/56/profile");
+    expect(res.status).toBe(200);
+    const body = await res.json() as {
+      header: { name: string; nfpa704: { health: string; flammability: string; instability: string } };
+      properties: { formula: string; physicalState: string; molecularWeight: string; boilingPoint: string; vaporPressure: string };
+      exposures: { oshaPel: string; monitoringConcerns: string[] };
+      response: { spillOrLeak: string[] };
+      sourceLinks: Array<{ sourceName: string; sourceUrl?: string; reviewStatus: string }>;
+    };
+    expect(body.header).toMatchObject({
+      name: "Hydrogen chloride, anhydrous",
+      nfpa704: { health: "3", flammability: "1", instability: "1" },
+    });
+    expect(body.properties).toMatchObject({
+      formula: "HCl",
+      physicalState: expect.stringMatching(/gas/i),
+      molecularWeight: "36.46",
+    });
+    expect(body.properties.boilingPoint).not.toMatch(/Not available|No Current Data/i);
+    expect(body.properties.vaporPressure).not.toMatch(/Not available|No Current Data/i);
+    expect(res.headers.get("cache-control")).toBe("no-store");
+    expect(body.exposures.oshaPel).toBe("Ceiling: 5 ppm");
+    expect(body.exposures.monitoringConcerns).toContain("AEGL2_60min: 22");
+    expect(body.response.spillOrLeak.length).toBeGreaterThan(0);
+    expect(body.sourceLinks).toEqual(expect.arrayContaining([
+      expect.objectContaining({ sourceName: "EPA AEGL", reviewStatus: "approved", sourceUrl: expect.stringContaining("epa.gov") }),
+      expect.objectContaining({ sourceName: "CAMEO Chemicals", reviewStatus: "approved", sourceUrl: expect.stringContaining("cameochemicals.noaa.gov") }),
+      expect.objectContaining({ sourceName: "ERG", reviewStatus: "approved", sourceUrl: expect.stringContaining("phmsa.dot.gov") }),
+    ]));
+  });
+
   it("GET /api/erg/:un returns the Table 1 row matching the requested guide", async () => {
     const res = await app.request("/api/erg/1005?guide=125");
     expect(res.status).toBe(200);

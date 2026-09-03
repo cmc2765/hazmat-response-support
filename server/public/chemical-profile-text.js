@@ -74,6 +74,19 @@
     return removeContradictoryEmptyStates(mergeBrokenGuidanceFragments(items));
   }
 
+  function capitalizeGuidanceLine(value) {
+    return value.replace(/^([^A-Za-z]*)([a-z])/, (_, prefix, letter) => `${prefix}${letter.toUpperCase()}`);
+  }
+
+  function formatFirstAidGuidance(items) {
+    const sourceLines = items.flat(Infinity)
+      .map(normalizeChemicalProfileText)
+      .map((item) => item.replace(/^(?:immediate\s+)?first aid\s*[:—-]\s*/i, '').trim())
+      .filter((item) => !isEmpty(item));
+    const formatted = normalizeGuidanceItems(sourceLines).map(capitalizeGuidanceLine);
+    return formatted.length ? formatted : [NO_DATA];
+  }
+
   const aeglTimeframes = [
     { label: '< 1 Hour', includes: (minutes) => minutes < 60 },
     { label: '1-4 Hours', includes: (minutes) => minutes >= 60 && minutes <= 240 },
@@ -116,6 +129,7 @@
     isEmpty,
     normalizeChemicalProfileText,
     normalizeGuidanceItems,
+    formatFirstAidGuidance,
     mergeBrokenGuidanceFragments,
     removeContradictoryEmptyStates,
     normalizeEmptyState,

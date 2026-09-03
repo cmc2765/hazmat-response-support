@@ -11,6 +11,16 @@ const styles = [
 const script = readFileSync(new URL("../server/public/script.js", import.meta.url), "utf8");
 
 describe("unified Hazard ID workspace", () => {
+  it("locks Hazard ID to the shared hero height and readable tactical title face", () => {
+    const finalHeroLock = styles.slice(styles.indexOf("/* Final-loaded program hero lock."));
+    expect(finalHeroLock).toContain('--hazmatiq-font-page-title: "DejaVu Sans Mono"');
+    expect(finalHeroLock).toContain("--hazmatiq-internal-hero-height: 178px;");
+    expect(finalHeroLock).toContain("#lookup.view.active:has(> #hazard-id-search-hero):not(.hazard-profile-open)");
+    expect(finalHeroLock).toContain("grid-template-rows: var(--hazmatiq-internal-hero-height) minmax(0, 1fr) !important;");
+    expect(finalHeroLock).toContain("#hazard-id-search-hero.hazard-id-page-hero");
+    expect(finalHeroLock).toContain("max-height: var(--hazmatiq-internal-hero-height) !important;");
+  });
+
   it("renders one search input with three tactical database tabs", () => {
     expect(html.match(/data-hazard-search-tab=/g)).toHaveLength(3);
     expect(html.match(/type="search"/g)?.length).toBeGreaterThan(0);
@@ -26,14 +36,14 @@ describe("unified Hazard ID workspace", () => {
     expect(html).not.toContain("hazard-workflow-rail");
     expect(html).not.toContain('hazmat-hero-symbol hazmat-hero-diamond');
     expect(script).toContain("Search isotope, radioactive material, package type, RDD, or radiological type.");
-    expect(html).toContain('<p class="eyebrow">HAZARD PROFILE</p>');
+    expect(html).not.toContain('id="hazard-id-empty-profile"');
     expect(html).not.toContain("Unified Hazard Profile");
   });
 
   it("keeps Chemical Companion controls and safely gates non-chemical plume actions", () => {
     expect(html).toContain('id="chemical-search-form"');
     expect(html).toContain('id="chemical-id-results"');
-    expect(html).toContain('script.js?v=hazard-profile-runtime-8');
+  expect(html).toContain('script.js?v=plume-command-workspace-46');
     expect(html).toContain('id="open-plume-btn"');
     expect(html).toContain('id="hazard-profile-plume-btn" type="button" disabled');
     expect(script).toContain("Plume requires verified endpoint/source data.");
@@ -45,11 +55,30 @@ describe("unified Hazard ID workspace", () => {
       expect(script).toContain(`['${tab}'`);
     }
     expect(html).toContain('id="hazard-profile-overview-list"');
-    expect(script).toContain("['Hazard Class', profile?.header?.hazardClass || profile?.header?.hazard || noCurrentDataText]");
+    expect(script).toContain("['Hazard Class', hazardClassDisplayLines(profile?.header?.hazardClass || profile?.header?.hazard || noCurrentDataText)]");
+    expect(script).toContain('idlh: isAvailableGuidance(profileIdlh) ? profileIdlh : (record.commandFacts?.idlh || null)');
     expect(script).toContain("if (chemicalIdResults) chemicalIdResults.hidden = false;\n  try {\n    updateChemicalCard(combinedRecord);");
-    expect(script).toContain("if (typeof content.scrollTo === 'function')");
+    expect(script).toContain("const renderActiveTab = (activeKey) => {");
+    expect(script).toContain("button.addEventListener('click', () => {\n      renderActiveTab(key);");
+    expect(script).not.toContain("renderChemicalProfile({ ...profile, activeTab: key })");
     expect(script.indexOf("tabs.replaceChildren();")).toBeLessThan(script.indexOf("renderNfpa704Placard(profile?.header?.nfpa704"));
     expect(script).toContain("Chemical profile section rendering failed.");
+    expect(script).toContain("updateChemicalCard({ profile: chemicalSearchPreviewProfile(chemical) });");
+    expect(script).toContain("renderStarterHazardTab(profile, defaultFieldNames);");
+    expect(script).toContain("content.dataset.activeTab = button.dataset.tab;");
+    expect(html).not.toContain('id="hazard-profile-action-cards"');
+    expect(html).not.toContain('id="hazard-profile-limitations"');
+    expect(html).toContain('class="hazard-profile-content hazard-profile-tab-content hazard-profile-card-grid"');
+    expect(script).toContain("card.className = 'hazard-source-fact-card hazard-profile-card';");
+    expect(script).toContain('resolvedChemicalIdlh(profile)');
+    expect(script).toContain('profile?.exposures?.idlh,');
+    expect(script).toContain('profile?.header?.idlh,');
+    expect(script).toContain("/^IDLH(?:Ppm)?\\s*:/i");
+    expect(script).toContain("content.replaceChildren(fragment);");
+    expect(script).not.toContain("createChemicalProfileSourceSummary");
+    expect(html.match(/class="confidence-meter" role="meter"/g)).toHaveLength(2);
+    expect(script).toContain("const filledSegments = { high: 6, medium: 4, low: 2 }[level];");
+    expect(styles).toContain('.confidence-meter[data-level="medium"] > i:nth-child(-n + 4)');
     expect(styles).toContain("grid-template-columns: minmax(350px, 42%) minmax(0, 58%) !important;");
     expect(styles).toContain("grid-row: 1 / span 2 !important;");
     expect(styles).toContain('grid-template-rows: minmax(290px, 44%) minmax(0, 56%) !important;');
@@ -74,6 +103,54 @@ describe("unified Hazard ID workspace", () => {
     expect(styles).toContain(".hazard-unified-search-form .chemical-search-input-wrap::before,");
     expect(styles).toMatch(/\.hazard-unified-search-form \.chemical-search-input-wrap::after \{[\s\S]*?content: none;[\s\S]*?display: none;/);
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+  });
+
+  it("keeps the Hazard ID shell fluid from desktop through tablet widths", () => {
+    expect(html).toContain('styles.css?v=plume-command-workspace-140');
+    expect(html).toContain('chemical-intel.css?v=guided-response-visible-48');
+    expect(styles).toContain("/* Hazard ID responsive workspace repair.");
+    expect(styles).toMatch(/@media screen \{[\s\S]*?html \{[\s\S]*?background-color: #020b14;[\s\S]*?body \{[\s\S]*?background-attachment: fixed;/);
+    expect(styles).toMatch(/\.app-shell:has\(#lookup\.view\.active\) \{[\s\S]*?min-height: 100vh;[\s\S]*?background:[\s\S]*?linear-gradient\(135deg, #020b14 0%, #061a2e 42%, #0b1f33 100%\);/);
+    expect(styles).toMatch(/#lookup\.view\.active \{[\s\S]*?width: min\(100%, 1920px\);[\s\S]*?overflow-x: hidden;/);
+    const naturalFlowStyles = styles.slice(styles.indexOf("/* Chemical Profile natural-flow contract."));
+    expect(naturalFlowStyles).toMatch(/#lookup\.view\.active:has\(#chemical-id-results:not\(\[hidden\]\)\) \{[\s\S]*?grid-template-rows: auto auto !important;[\s\S]*?height: auto !important;[\s\S]*?overflow-y: visible !important;/);
+    expect(naturalFlowStyles).toMatch(/#chemical-id-results \.chemical-profile-layout,[\s\S]*?#chemical-id-results \.chemical-profile-content \{[\s\S]*?height: auto !important;[\s\S]*?max-height: none !important;[\s\S]*?overflow-y: visible !important;[\s\S]*?position: relative;/);
+    expect(naturalFlowStyles).toMatch(/\.chemical-profile-shell \{[\s\S]*?grid-template-rows: auto auto auto auto !important;[\s\S]*?gap: 6px;/);
+    expect(naturalFlowStyles).not.toContain("overflow-y: auto");
+    expect(styles).toMatch(/Populated-result state:[\s\S]*?#lookup\.view\.active:has\(#chemical-id-results:not\(\[hidden\]\)\)[\s\S]*?display: grid !important;[\s\S]*?background: transparent !important;/);
+    expect(styles).toContain("column-gap: clamp(6px, 0.55vw, 10px) !important;");
+    expect(styles).toMatch(/#chemical-id-results \.chemical-profile-content,[\s\S]*?grid-template-columns: repeat\(12, minmax\(0, 1fr\)\) !important;/);
+  });
+
+  it("uses mutually exclusive full-width search and profile states", () => {
+    expect(html).toContain('id="hazard-id-search-hero"');
+    expect(html).toContain('id="hazard-id-search-workspace"');
+    expect(script).toContain("hazardSearchHero.hidden = !searchState");
+    expect(script).toContain("hazardSearchWorkspace.hidden = !searchState");
+    expect(script).toContain("data-hazard-page-state");
+    expect(script).toContain("window.history.pushState({ ...window.history.state, hazardPageState: 'profile' }");
+    expect(script).toContain("window.addEventListener('popstate'");
+    expect(styles).toContain("/* Hazard ID page-state contract.");
+    expect(styles.lastIndexOf("Definitive populated-profile geometry")).toBeGreaterThan(styles.lastIndexOf("Profile containment invariant"));
+    expect(script).toContain("surface.style.setProperty('display', 'none', 'important')");
+    expect(script).toContain("lookup?.classList.toggle('hazard-profile-open', !searchState)");
+    expect(script).toContain("applyImportantStyles(lookup, fullWidthProfileStyles)");
+    expect(script).toContain("applyImportantStyles(profileSurface, fullWidthSurfaceStyles)");
+    expect(script).toContain("'grid-column': '1 / -1'");
+    expect(styles).toMatch(/#lookup\.view\.active\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\) !important;/s);
+    expect(styles).toMatch(/#lookup\.view\.active\[data-hazard-page-state="single-profile"\]\s*\{[^}]*display: block !important;[^}]*width: 100% !important;/s);
+  });
+
+  it("moves cleanly from Chemical Profile to Plume Model and restores the profile", () => {
+    expect(html).toContain('id="plume-back-to-profile-btn" type="button" hidden>← Back to Chemical Profile</button>');
+    expect(script).toContain("if (active) view.style.removeProperty('display');");
+    expect(script).toContain("else view.style.setProperty('display', 'none', 'important');");
+    expect(script).toContain("const launchedFromChemicalProfile = document.getElementById('lookup')?.classList.contains('active')");
+    expect(script).toContain("if (profileReturnButton) profileReturnButton.hidden = !launchedFromChemicalProfile");
+    expect(script).toContain("function returnToChemicalProfileFromPlume()");
+    expect(script).toContain("setHazardProfileMode('chemical', { writeHistory: false })");
+    expect(script).toContain("document.getElementById('plume-back-to-profile-btn')?.addEventListener('click', returnToChemicalProfileFromPlume)");
+    expect(styles).toMatch(/#plume \.plume-profile-return \{[\s\S]*?position: absolute;[\s\S]*?right: clamp/);
   });
 });
 

@@ -7,14 +7,40 @@ const appScript = readFileSync(new URL("../server/public/script.js", import.meta
 const styles = readFileSync(new URL("../server/public/styles.css", import.meta.url), "utf8");
 
 describe("ChemCompare workspace", () => {
-  it("opens from the Chemical Profile toolbar into a dedicated comparison view", () => {
+  it("opens a compact selector before entering the dedicated comparison view", () => {
     expect(html).toContain('id="open-chemcompare-btn"');
-    expect(html).toContain('id="open-chemcompare-btn" type="button">CHEM COMPARE</button>');
+    expect(html).toContain('id="open-chemcompare-btn" type="button" disabled');
     expect(html).toContain('class="chemical-action-button chem-compare"');
+    expect(styles).toMatch(/#chemical-id-results \.chem-compare\s*\{[^}]*display: inline-flex !important;/s);
+    expect(html).toContain('id="chemcompare-selector" class="chemcompare-selector"');
+    expect(html).toContain('id="chemcompare-cancel-btn"');
     expect(html).toContain('id="chem-compare" class="view chemcompare-page"');
     expect(html).toContain('id="chemcompare-back-btn"');
     expect(html.indexOf('src="script.js')).toBeLessThan(html.indexOf('src="chem-compare.js'));
-    expect(script).toContain("showView('chem-compare')");
+    expect(script).toContain("openSelector('second', trigger)");
+    expect(script).toMatch(/if \(baseComparison && secondComparison\) \{[\s\S]*?showView\('chem-compare'\);/);
+    expect(html.indexOf('id="open-chemcompare-btn"')).toBeLessThan(html.indexOf('id="open-guided-response-btn"'));
+    expect(appScript).toContain("compareButton.disabled = !activeChemical || !activeChemicalRecord");
+  });
+
+  it("keeps the profile full width during selection and rejects duplicate chemicals", () => {
+    expect(script).toContain("selector.showModal()");
+    expect(script).toContain("Choose a different chemical for comparison.");
+    const openFlow = script.slice(script.indexOf("function openChemCompare"), script.indexOf("window.HazMatIQ.openChemCompareWithBase"));
+    expect(openFlow).toContain("openSelector('second', trigger)");
+    expect(openFlow).not.toContain("showView('chem-compare')");
+    expect(styles).toContain(".chemcompare-selector::backdrop");
+  });
+
+  it("provides exit, replace, swap, search, and print controls", () => {
+    for (const id of [
+      "chemcompare-search-back-btn",
+      "chemcompare-replace-base-btn",
+      "chemcompare-replace-second-btn",
+      "chemcompare-swap-btn",
+      "chemcompare-print-btn",
+      "chemcompare-back-btn",
+    ]) expect(html).toContain(`id="${id}"`);
   });
 
   it("uses the current profile as the base without replacing the active chemical", () => {
@@ -37,11 +63,20 @@ describe("ChemCompare workspace", () => {
       "specificHazards",
       "specificGravity",
       "vaporDensity",
+      "hazardClass",
+      "physicalProperties",
       "aeglLevels",
       "idlh",
+      "exposureLimits",
       "ppeLevel",
+      "respiratoryProtection",
+      "monitoringDetection",
       "waterReactivity",
+      "reactivity",
       "isolationDistances",
+      "medicalConsiderations",
+      "fireResponse",
+      "deconGuidance",
     ]) expect(script).toContain(key);
     expect(script).toContain("function getChemicalCompareData(chemical)");
     expect(script).toContain("profile.ppeRecommendation");
@@ -52,7 +87,7 @@ describe("ChemCompare workspace", () => {
     expect(script).toContain("const BLOCKED_PPE = 'Blocked Pending Verified Chemical Link'");
     expect(script).toContain("isUnreviewedTransportationRecord(chemical)");
     expect(script).toContain("window.HazMatIQ.openChemCompareWithBase = openChemCompare");
-    expect(appScript).toContain("window.HazMatIQ?.openChemCompareWithBase?.(chemical)");
+    expect(appScript).not.toContain("window.HazMatIQ?.openChemCompareWithBase?.(chemical)");
     expect(html).toContain("Missing values are not guessed.");
   });
 

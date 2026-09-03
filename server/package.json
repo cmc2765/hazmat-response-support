@@ -16,6 +16,7 @@
     "db:init-sqlite": "tsx src/init-sqlite.ts",
     "db:seed": "tsx src/seed.ts",
     "chemicals:audit": "node --import tsx src/audit-chemical-companion.ts",
+    "safety-data:audit": "node --import tsx src/audit-safety-data.ts",
     "chemicals:rebuild": "node --import tsx --input-type=module -e \"import { rebuildCompanionSearchIndex } from './src/chemical-companion.ts'; console.log(rebuildCompanionSearchIndex())\"",
     "chemicals:export-unlinked": "node --import tsx src/export-unlinked-chemical-companion.ts",
     "db:studio": "drizzle-kit studio",

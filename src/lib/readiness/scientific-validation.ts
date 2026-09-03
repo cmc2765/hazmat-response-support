@@ -1,6 +1,7 @@
 export const SAFETY_DATA_STATUS = {
   NO_CURRENT_DATA: "No Current Data Exists",
   NOT_LISTED: "Not listed by current source",
+  NOT_APPLICABLE: "Not applicable to this hazard",
   UNAVAILABLE: "Data unavailable from current source",
 } as const;
 
@@ -41,7 +42,8 @@ export interface DisplayableSafetyValue {
 }
 
 const NOT_LISTED_MARKERS = /^(?:not\s+(?:listed|established)(?:\s+by\s+current\s+source)?|none\s+listed)$/i;
-const UNAVAILABLE_MARKERS = /^(?:(?:data\s+)?unavailable(?:\s+from\s+current\s+source)?|n\/?a|not\s+available|null|undefined)$/i;
+const NOT_APPLICABLE_MARKERS = /^(?:not\s+(?:relevant|applicable)|n\/a\s*[-–—]\s*not\s+applicable)$/i;
+const UNAVAILABLE_MARKERS = /^(?:(?:data\s+)?unavailable(?:\s+from\s+current\s+source)?|n\/?a|not\s+available|null|undefined|[-–—])$/i;
 
 /** Maps source state to the exact fail-closed UI text without inventing a value. */
 export function safetyDisplayValue(value: unknown): string {
@@ -50,6 +52,7 @@ export function safetyDisplayValue(value: unknown): string {
   }
   const text = String(value).trim();
   if (NOT_LISTED_MARKERS.test(text)) return SAFETY_DATA_STATUS.NOT_LISTED;
+  if (NOT_APPLICABLE_MARKERS.test(text)) return SAFETY_DATA_STATUS.NOT_APPLICABLE;
   if (UNAVAILABLE_MARKERS.test(text)) return SAFETY_DATA_STATUS.UNAVAILABLE;
   return text;
 }

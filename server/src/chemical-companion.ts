@@ -9,6 +9,7 @@ import {
   reviewedSourceLinksForMaster,
 } from './chemical-companion/reviewed-source-links.js';
 import { buildPpeRecommendation } from '../../src/lib/ppe/ppeRecommendationEngine.js';
+import { extractChemicalProfileFacts } from '../../src/lib/chemical-profile/extractChemicalProfileFacts.js';
 import {
   SAFETY_DATA_STATUS,
   primarySafetyValue,
@@ -67,8 +68,26 @@ function normalizeValue(value: unknown): string {
   return !text || /^(?:n\/?a|null|undefined)$/i.test(text) ? 'Not available' : text;
 }
 
+function firstAvailableValue(...values: unknown[]): unknown {
+  return values.find((value) => normalizeValue(value) !== 'Not available');
+}
+
+function exposureLimitSummary(entries: Array<[string, unknown]>, fallback?: unknown): string {
+  const facts = entries.flatMap(([label, value]) => {
+    const display = safetyDisplayValue(value);
+    if (Object.values(SAFETY_DATA_STATUS).includes(display as typeof SAFETY_DATA_STATUS[keyof typeof SAFETY_DATA_STATUS])
+      || /^(?:not relevant|not established|not available)$/i.test(display)) return [];
+    return [{ label, value: normalizeConcentration(display) }];
+  });
+  if (facts.length === 1 && facts[0].label === 'TWA') return facts[0].value;
+  if (facts.length) return facts.map(({ label, value }) => `${label}: ${value}`).join(' · ');
+  return normalizeConcentration(safetyDisplayValue(fallback));
+}
+
 function normalizeConcentration(value: unknown): string {
-  const text = normalizeValue(value);
+  const text = normalizeValue(value)
+    .replace(/\b([µμu]?g|mg|kg)-m(?:\^?3|³)\b/gi, '$1/m³')
+    .replace(/\(\((as\s+[^)]+)\)\)/gi, '($1)');
   if (text === 'Not available' || /(?:\b(?:ppm|ppb|percent)\b|\b(?:[µμu]?g|mg|kg)\s*[/-]\s*m(?:\^?3|³)|%(?:\s*(?:LEL|UEL))?)/i.test(text)) {
     return text;
   }
@@ -204,6 +223,17 @@ function findCompanionChemicalRow(db: Database.Database, chemicalId: string | nu
 
 export function normalizeChemicalProfile(chemical: Record<string, unknown>, related: Record<string, unknown> = {}) {
   const relatedData = related as Record<string, unknown>;
+  const npg = asObject(relatedData.npg);
+  const npgExposureLimits = asObject(npg.exposureLimits);
+  const npgPhysical = asObject(npg.physical);
+  const npgHealth = asObject(npg.health);
+  const npgPpe = asObject(npg.ppe);
+  const npgReactivity = asObject(npg.reactivity);
+  const ergFirstAid = relatedStrings(relatedData.ergFirstAid);
+  const cameo = asObject(relatedData.cameo);
+  const ergGuide = asObject(relatedData.ergGuide);
+  const ergPublicSafety = asObject(ergGuide.publicSafety);
+  const ergEmergencyResponse = asObject(ergGuide.emergencyResponse);
   const nfpaHazard = asObject(Array.isArray(relatedData.nfpaHazards) ? relatedData.nfpaHazards[0] : relatedData.nfpaHazards);
   const nfpaRating = (value: unknown) => {
     const rating = Number(value);
@@ -223,8 +253,11 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
   const symptomRows = Array.isArray(relatedData.symptoms)
     ? relatedData.symptoms.filter((item): item is Record<string, unknown> => typeof item === 'object' && item !== null)
     : [];
-  const symptoms = asList(symptomRows.map((row) => row.ChemicalSignsSymptom).join(', '));
-  const compatibility = available([...asList(chemical.ChemicalClassIncompatibilities), ...asList(relatedData.compatibility), ...relatedStrings(relatedData.incompatibilities), ...relatedStrings(relatedData.classIncompatibilities)]);
+  const symptoms = available([
+    ...asList(symptomRows.map((row) => row.ChemicalSignsSymptom).join(', ')),
+    ...asList(npgHealth.symptoms),
+  ]);
+  const compatibility = available([...asList(chemical.ChemicalClassIncompatibilities), ...asList(relatedData.compatibility), ...relatedStrings(relatedData.incompatibilities), ...relatedStrings(relatedData.classIncompatibilities), ...asList(npgReactivity.incompatibilities), ...asList(cameo.incompatibilities)]);
   const respirators = Array.isArray(relatedData.respirators) ? relatedData.respirators : [];
   const suits = Array.isArray(relatedData.suits) ? relatedData.suits : [];
   const gloves = Array.isArray(relatedData.gloves) ? relatedData.gloves : [];
@@ -266,8 +299,28 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
     isCurrent: true,
     sourceLocator: `chemicals:${masterRecordId}`,
   });
+  const masterCas = normalizeCasIdentifier(chemical.CasNumber ?? chemical.cas);
+  const npgCas = normalizeCasIdentifier(npg.cas);
+  const npgRecordId = String(npg.id ?? npg.cas ?? '').trim();
+  const linkedNpgIdlhRecords: ApprovedSourceRecord[] = npgRecordId && masterCas && masterCas === npgCas
+    ? [{
+        field: 'idlh',
+        value: npgExposureLimits.idlh,
+        sourceName: 'NIOSH',
+        sourceRecordId: npgRecordId,
+        approved: true,
+        linkVerified: true,
+        sourceVersion: 'Bundled NIOSH Pocket Guide-derived dataset (Lucas et al., 2024)',
+        sourceLocator: `npg:${npgRecordId}`,
+        limitations: [
+          'Linked to the Chemical Companion master record by exact CAS number.',
+          'Bundled offline source; verify against current NIOSH policy when connectivity and incident conditions permit.',
+        ],
+      }]
+    : [];
   const safetyRecords: ApprovedSourceRecord[] = [
     companionRecord('idlh', exposureLimits.IDLHPpm ?? exposureLimits.idlh),
+    ...linkedNpgIdlhRecords,
     companionRecord('exposure_limit', exposureLimits.PELTWAPpm ?? exposureLimits.PELCeiling ?? exposureLimits.PELSTEL),
     companionRecord('exposure_limit', exposureLimits.RELTWAPpm ?? exposureLimits.RELSTEL ?? exposureLimits.RELCeiling),
     companionRecord('exposure_limit', exposureLimits.TLVTWAPpm ?? exposureLimits.TLVSTEL ?? exposureLimits.TLVCeiling),
@@ -304,6 +357,9 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
     ergGuide: normalizeValue(chemical.ErgNumber || chemical.ergGuide),
     idlh,
     hazard: normalizeValue(chemical.ErgWarning || chemical.ChemicalClass || chemical.hazardClass),
+    hazardClass: normalizeValue(chemical.ChemicalClass || chemical.hazardClass),
+    packingGroup: available(asList(cameo.packingGroup)),
+    placard: normalizeValue(cameo.placard),
     sources: [...new Set(['Chemical Companion', ...sources])].filter(Boolean),
     nfpa704: {
       health: nfpaRating(nfpaHazard.health),
@@ -320,14 +376,17 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
 
   const properties = {
     physicalState: normalizeValue(physicalStates.join(', ')),
-    molecularWeight: normalizeValue(chemical.MolecularWeight),
-    boilingPoint: normalizeValue(chemical.BoilingPoint),
-    meltingPoint: normalizeValue(chemical.MeltingPoint),
-    vaporPressure: normalizeValue(chemical.VaporPressure),
+    odor: normalizeValue(odors.join(', ')),
+    color: normalizeValue(characteristics.filter((value) => /\b(?:color|colour|white|black|yellow|green|blue|red|brown|gray|grey|clear|transparent)\b/i.test(value)).join(', ')),
+    appearance: normalizeValue(characteristics.join(', ')),
+    molecularWeight: normalizeValue(firstAvailableValue(chemical.MolecularWeight, npgPhysical.mw)),
+    boilingPoint: normalizeValue(firstAvailableValue(chemical.BoilingPoint, npgPhysical.bp)),
+    meltingPoint: normalizeValue(firstAvailableValue(chemical.MeltingPoint, npgPhysical.mp)),
+    vaporPressure: normalizeValue(firstAvailableValue(chemical.VaporPressure, npgPhysical.vpMmHg)),
     vaporDensity: normalizeValue(chemical.VaporDensity),
-    specificGravity: normalizeValue(chemical.SpecificGravity),
+    specificGravity: normalizeValue(firstAvailableValue(chemical.SpecificGravity, npgPhysical.sg)),
     waterSolubility: normalizeValue(chemical.WaterSolubility),
-    flashPoint,
+    flashPoint: flashPoint === SAFETY_DATA_STATUS.NO_CURRENT_DATA ? normalizeValue(npgPhysical.flPt) : flashPoint,
     ignitionTemperature: normalizeValue(chemical.IgnitionTemp),
     lelUel: `${lel} / ${uel}`,
     odorThreshold: normalizeValue([chemical.OdorThreshold, odors.join(', ')].filter(Boolean).join(' — ')),
@@ -337,7 +396,7 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
     synonyms,
     environmentalPersistence: normalizeValue([chemical.ChemicalEnvironmentalPersistence, ...persistence].filter(Boolean).join(', ')),
     mixtureReactivity: normalizeValue(chemical.ChemicalMixtureReactivity),
-    formula: normalizeValue(chemical.ChemicalFormula),
+    formula: normalizeValue(firstAvailableValue(chemical.ChemicalFormula, npg.formula)),
     liquidDensity: normalizeValue(chemical.LiquidDensity),
     evaporationRate: normalizeValue(chemical.EvaporationRate),
     characteristics: available(characteristics),
@@ -348,12 +407,24 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
   const exposures = {
     idlh,
     idlhValues,
-    oshaPel: normalizeConcentration(safetyDisplayValue(exposureLimits.PELTWAPpm ?? exposureLimits.PELCeiling ?? exposureLimits.PELSTEL)),
-    nioshRel: normalizeConcentration(safetyDisplayValue(exposureLimits.RELTWAPpm ?? exposureLimits.RELSTEL ?? exposureLimits.RELCeiling)),
-    acgihTlv: normalizeConcentration(safetyDisplayValue(exposureLimits.TLVTWAPpm ?? exposureLimits.TLVSTEL ?? exposureLimits.TLVCeiling)),
+    oshaPel: exposureLimitSummary([
+      ['TWA', exposureLimits.PELTWAPpm],
+      ['STEL', exposureLimits.PELSTEL],
+      ['Ceiling', exposureLimits.PELCeiling],
+    ], npgExposureLimits.pel),
+    nioshRel: exposureLimitSummary([
+      ['TWA', exposureLimits.RELTWAPpm],
+      ['STEL', exposureLimits.RELSTEL],
+      ['Ceiling', exposureLimits.RELCeiling],
+    ], npgExposureLimits.rel),
+    acgihTlv: exposureLimitSummary([
+      ['TWA', exposureLimits.TLVTWAPpm],
+      ['STEL', exposureLimits.TLVSTEL],
+      ['Ceiling', exposureLimits.TLVCeiling],
+    ]),
     routes: available(relatedStrings(relatedData.exposureRoutes)),
-    symptoms: symptoms.length ? symptoms : [SAFETY_DATA_STATUS.NO_CURRENT_DATA],
-    targetOrgans: available(symptomCategories),
+    symptoms,
+    targetOrgans: available([...symptomCategories, ...asList(npgHealth.targetOrgans)]),
     acuteNotes: available(emsParadigms),
     monitoringConcerns: available(Object.entries(exposureLimits).filter(([key, value]) => !/^(ChemicalID|revision_id)$/.test(key) && value && normalizeValue(value) !== 'Not established').map(([key, value]) => `${key}: ${value}`)),
   };
@@ -369,13 +440,21 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
     recommendedPpe: available([
       ...[...suits, ...gloves, ...boots].map((row: Record<string, unknown>) => formatPpeRow('PPE', row)),
     ]),
-    skinEyeProtection: available(deconNotes.filter((value) => /skin|eye|protect/i.test(value))),
+    skinEyeProtection: available([
+      ...deconNotes.filter((value) => /skin|eye|protect/i.test(value)),
+      ...asList(npgPpe.skin),
+      ...asList(npgPpe.eye),
+    ]),
     gloveSuitMaterial: available([
       ...suits.map((row: Record<string, unknown>) => formatPpeRow('Suit', row)),
       ...gloves.map((row: Record<string, unknown>) => formatPpeRow('Glove', row)),
       ...boots.map((row: Record<string, unknown>) => formatPpeRow('Boot', row)),
     ]),
-    respiratorRecommendations: available(respirators.map((row: Record<string, unknown>) => formatPpeRow('Respirator', row))),
+    respiratorRecommendations: available([
+      ...respirators.map((row: Record<string, unknown>) => formatPpeRow('Respirator', row)),
+      ...asList(npgHealth.respiratorSelection),
+      ...asList(npgPpe.respiratory),
+    ]),
     aprPaprScba: available(emsParadigms.filter((value) => /respirat|scba|papr|apr/i.test(value))),
     escapeRespirator: [SAFETY_DATA_STATUS.NO_CURRENT_DATA],
     cartridgeLimitations: available(cartridgeRows.map((row) => `${normalizeValue(row.CartridgeColor)} cartridge — ${normalizeValue(row.ChemicalCategory)}`)),
@@ -397,7 +476,7 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
     waterReactivity: ['Not available'],
     oxidizerReducerConcerns: available(reactiveGroups),
     decompositionProducts: available([combustion.major_products, combustion.minor_products, combustion.likely_products].flatMap(asList)),
-    chemicalMixtureReactivity: normalizeValue(chemical.ChemicalMixtureReactivity),
+    chemicalMixtureReactivity: normalizeValue(firstAvailableValue(chemical.ChemicalMixtureReactivity, asList(cameo.reactivity).join(' · '))),
     stabilityNotes: normalizeValue([chemical.ChemicalStability, ...stabilities].filter(Boolean).join(', ')),
   };
 
@@ -423,11 +502,16 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
   };
 
   const medical = {
-    signsSymptoms: symptoms.length ? symptoms : [SAFETY_DATA_STATUS.NO_CURRENT_DATA],
-    firstAid: available(medicalProtocols.filter((value) => /first|basic|wash|flush|remove|airway|oxygen/i.test(value))),
-    emsConsiderations: available(emsParadigms),
+    signsSymptoms: symptoms,
+    firstAid: available([
+      ...medicalProtocols.filter((value) => /first|basic|wash|flush|remove|airway|oxygen/i.test(value)),
+      ...asList(npgHealth.firstAid),
+      ...asList(cameo.firstAid),
+      ...ergFirstAid,
+    ]),
+    emsConsiderations: available([...emsParadigms, ...ergFirstAid]),
     antidotes: available(medicalProtocols.filter((value) => /antidot|administer|dose|medication|drug/i.test(value))),
-    treatmentNotes: available(medicalProtocols),
+    treatmentNotes: available([...medicalProtocols, ...asList(npgHealth.firstAid), ...asList(cameo.firstAid), ...ergFirstAid]),
     responderHazards: available(characteristics),
     contaminatedPatientHandling: available(deconNotes),
   };
@@ -436,7 +520,7 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
     flammability: normalizeValue(classes.length ? classes.join(', ') : chemical.ChemicalClass),
     flashPoint,
     lelUel: `${lel} / ${uel}`,
-    extinguishingMedia: available(fireGuidance),
+    extinguishingMedia: available([...fireGuidance, ...asList(ergEmergencyResponse.fire)]),
     firefightingPrecautions: available([normalizeValue(relatedData.extinction)].filter((value) => value !== 'Not available')),
     vaporBehavior: available([`Vapor density: ${normalizeValue(chemical.VaporDensity)}`, `Vapor pressure: ${normalizeValue(chemical.VaporPressure)}`]),
     explosionHazards: available([
@@ -446,11 +530,23 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
     runoffConcerns: available(persistence),
   };
 
+  const response = {
+    publicSafety: available(asList(ergPublicSafety.general)),
+    protectiveClothing: available(asList(ergPublicSafety.protectiveClothing)),
+    evacuation: available(asList(ergPublicSafety.evacuation)),
+    healthHazards: available(asList(asObject(ergGuide.potentialHazards).health)),
+    fire: available(asList(ergEmergencyResponse.fire)),
+    spillOrLeak: available(asList(ergEmergencyResponse.spillOrLeak)),
+    source: Object.keys(ergGuide).length ? 'ERG 2024' : SAFETY_DATA_STATUS.NO_CURRENT_DATA,
+  };
+
   const personnelDeconMatrix = deconMatrixSummary(deconRows, physicalStates, 'People');
   const objectDeconMatrix = deconMatrixSummary(deconRows, physicalStates, 'Objects');
+  const ergContaminationControl = ergFirstAid.filter((value) => /contamin|remove|clothing|shoe|flush|wash|skin|eyes?/i.test(value));
+  const hasCompanionDecon = Boolean(deconRows.length || deconNotes.length || protocols.length);
   const decon = {
-    preferredMethod: available(personnelDeconMatrix),
-    hazmatPersonnelProcedure: available([...personnelDeconMatrix, ...deconNotes]),
+    preferredMethod: available(hasCompanionDecon ? personnelDeconMatrix : ergContaminationControl),
+    hazmatPersonnelProcedure: available(hasCompanionDecon ? [...personnelDeconMatrix, ...deconNotes] : ergContaminationControl),
     wetVsDry: available(deconRows.filter((row: Record<string, unknown>) => deconRowMatchesPhysicalState(row, physicalStates)).map((row: Record<string, unknown>) => {
       const method = cleanDeconText(row.method);
       const note = cleanDeconText(row.notes);
@@ -463,7 +559,7 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
       ...objectDeconMatrix,
       ...technicalDeconSteps(deconRows, physicalStates),
     ]),
-    patientVictimDecon: available(deconNotes),
+    patientVictimDecon: available(deconNotes.length ? deconNotes : ergContaminationControl),
     equipmentDecon: available([
       ...objectDeconMatrix,
       ...technicalDeconSteps(deconRows, physicalStates),
@@ -473,6 +569,7 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
       deconRows.length ? 'Chemical Companion decontamination method matrix' : '',
       deconNotes.length ? 'Chemical Companion decontamination notes' : '',
       protocols.length ? 'Chemical Companion decontamination protocols' : '',
+      !hasCompanionDecon && ergContaminationControl.length ? 'ERG 2024 first-aid contamination-control guidance' : '',
     ]),
   };
 
@@ -486,6 +583,7 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
     isolationErg,
     medical,
     fire,
+    response,
     decon,
     safetyCritical: {
       records: safetyRecords.filter((record) => record.approved).map((record) => ({
@@ -583,7 +681,12 @@ export function queryChemicalProfile(chemicalId: string | number) {
   `).get(id);
   const npg = ALL_NPG.find((record) => record.cas === String(chemicalRow.CasNumber ?? '').trim());
   const guideNumber = String(chemicalRow.ErgNumber ?? '').trim();
-  const ergGuides = (ergGuideData as { guides: Record<string, { emergencyResponse?: { firstAid?: string[] } }> }).guides;
+  const ergGuides = (ergGuideData as { guides: Record<string, {
+    emergencyResponse?: { firstAid?: string[]; fire?: string[]; spillOrLeak?: string[] };
+    publicSafety?: { general?: string[]; protectiveClothing?: string[]; evacuation?: string[] };
+    potentialHazards?: { health?: string[] };
+  }> }).guides;
+  const supportingChemical = CHEMICALS.find((record) => record.cas?.includes(String(chemicalRow.CasNumber ?? '').trim()));
 
   const profile = normalizeChemicalProfile(chemicalRow as Record<string, unknown>, {
     synonyms,
@@ -616,10 +719,31 @@ export function queryChemicalProfile(chemicalId: string | number) {
     cartridges,
     nfpaHazards: nfpaHazard ? [nfpaHazard] : [],
     npg,
+    cameo: supportingChemical,
+    ergGuide: ergGuides[guideNumber],
     ergFirstAid: ergGuides[guideNumber]?.emergencyResponse?.firstAid ?? [],
-    sources: ['Chemical Companion'],
+    sources: [
+      'Chemical Companion',
+      ...(npg ? ['NIOSH Pocket Guide'] : []),
+      ...(ergGuides[guideNumber] ? ['ERG 2024'] : []),
+    ],
   });
-  const supportingChemical = CHEMICALS.find((record) => record.cas?.includes(String(chemicalRow.CasNumber ?? '').trim()));
+  const extractedFacts = extractChemicalProfileFacts({
+    chemical: { ...chemicalRow, ...profile },
+    sourceFacts: profile.safetyCritical?.records,
+    linkedFacts: [profile.exposures, profile.isolationErg, profile.properties],
+  });
+  if (extractedFacts.exposures.idlh && profile.exposures.idlh === SAFETY_DATA_STATUS.NO_CURRENT_DATA) {
+    profile.exposures.idlh = extractedFacts.exposures.idlh;
+    profile.header.idlh = extractedFacts.exposures.idlh;
+  }
+  if (extractedFacts.isolation.initialIsolation && profile.isolationErg.initialIsolationDistance === SAFETY_DATA_STATUS.NO_CURRENT_DATA) {
+    profile.isolationErg.initialIsolationDistance = extractedFacts.isolation.initialIsolation;
+  }
+  if (extractedFacts.isolation.protectiveAction
+    && profile.isolationErg.protectiveActionDistance.every((value) => value === SAFETY_DATA_STATUS.NO_CURRENT_DATA)) {
+    profile.isolationErg.protectiveActionDistance = [extractedFacts.isolation.protectiveAction];
+  }
   const supportingSources = supportingChemical?.sources?.map((source) => source.source) ?? [];
   const npgRecord = npg as unknown as Record<string, unknown> | undefined;
   const npgHealth = asObject(npgRecord?.health);

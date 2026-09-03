@@ -108,6 +108,24 @@ export function normalizeGuidanceItems(items: readonly unknown[]): string[] {
   return removeContradictoryEmptyStates(mergeBrokenGuidanceFragments(items));
 }
 
+function capitalizeGuidanceLine(value: string): string {
+  return value.replace(/^([^A-Za-z]*)([a-z])/, (_, prefix: string, letter: string) => `${prefix}${letter.toUpperCase()}`);
+}
+
+/**
+ * Formats first-aid instructions without breaking semicolon clauses or
+ * multi-sentence source entries into separate display lines.
+ */
+export function formatFirstAidGuidance(items: readonly unknown[]): string[] {
+  const sourceLines = items
+    .flatMap((item) => Array.isArray(item) ? item : [item])
+    .map(normalizeChemicalProfileText)
+    .map((item) => item.replace(/^(?:immediate\s+)?first aid\s*[:—-]\s*/i, "").trim())
+    .filter((item) => !isPlaceholder(item));
+  const formatted = normalizeGuidanceItems(sourceLines).map(capitalizeGuidanceLine);
+  return formatted.length ? formatted : [CHEMICAL_PROFILE_EMPTY_STATE];
+}
+
 export function normalizeHeading(text: unknown): string {
   return normalizeChemicalProfileText(text).replace(/[:.]+$/, "");
 }
