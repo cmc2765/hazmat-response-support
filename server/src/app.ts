@@ -278,7 +278,7 @@ function automaticIcsValue(fieldName: string, incident: Record<string, unknown>)
   if (normalized === "weather" || normalized.includes("weatherconcerns")) {
     return [
       incident.weather,
-      incident.windSpeed && `Wind ${textValue(incident.windSpeed)}`,
+      incident.windSpeed && `Wind ${textValue(incident.windSpeed)} mph`,
       incident.windDirection,
     ]
       .map(textValue)
@@ -1033,21 +1033,22 @@ app.get("/api/weather/current", async (c) => {
     timeformat: "unixtime",
   }).toString();
 
-  const getJson = async (url: string, headers?: Record<string, string>) => {
-    const response = await fetch(url, { headers });
+  const getJson = async (url: string, headers?: Record<string, string>, signal?: AbortSignal) => {
+    const response = await fetch(url, { headers, signal });
     if (!response.ok) throw new Error(`Weather request failed (${response.status})`);
     return response.json() as Promise<Record<string, unknown>>;
   };
-  const fetchNws = async () => {
+  const fetchNws = async (signal: AbortSignal) => {
     const headers = { "User-Agent": "HazMatIQ/0.1 (weather support)" };
     const points = await getJson(
       `https://api.weather.gov/points/${lat.toFixed(4)},${lon.toFixed(4)}`,
       headers,
+      signal,
     );
     const pointProperties = points.properties as Record<string, unknown> | undefined;
     const stationUrl = pointProperties?.observationStations;
     if (typeof stationUrl !== "string") throw new Error("NWS station lookup unavailable");
-    const stations = await getJson(stationUrl, headers);
+    const stations = await getJson(stationUrl, headers, signal);
     const features = stations.features as
       | Array<{ properties?: Record<string, unknown> }>
       | undefined;
@@ -1059,6 +1060,7 @@ app.get("/api/weather/current", async (c) => {
         const observation = await getJson(
           `https://api.weather.gov/stations/${encodeURIComponent(stationId)}/observations/latest`,
           headers,
+          signal,
         );
         const values = observation.properties as Record<string, { value?: unknown }> | undefined;
         const temperature = values?.temperature?.value;
@@ -1083,10 +1085,16 @@ app.get("/api/weather/current", async (c) => {
     throw new Error("No nearby NWS station has complete plume weather data");
   };
 
+  const openMeteoController = new AbortController();
+  const nwsController = new AbortController();
+  const openMeteoTimeout = setTimeout(() => openMeteoController.abort(), 8000);
+  const nwsTimeout = setTimeout(() => nwsController.abort(), 8000);
   const [openMeteoResult, nwsResult] = await Promise.allSettled([
-    getJson(openMeteoUrl.toString()),
-    fetchNws(),
+    getJson(openMeteoUrl.toString(), undefined, openMeteoController.signal),
+    fetchNws(nwsController.signal),
   ]);
+  clearTimeout(openMeteoTimeout);
+  clearTimeout(nwsTimeout);
   const openMeteo = openMeteoResult.status === "fulfilled" ? openMeteoResult.value : null;
   const nws = nwsResult.status === "fulfilled" ? nwsResult.value : null;
   if (!openMeteo && !nws) return c.json({ error: "live weather feeds unavailable" }, 502);

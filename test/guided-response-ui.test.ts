@@ -8,6 +8,7 @@ const ppeEngine = readFileSync(new URL("../src/lib/ppe/ppeRecommendationEngine.t
 const styles = [
   readFileSync(new URL("../server/public/styles.css", import.meta.url), "utf8"),
   readFileSync(new URL("../server/public/chemical-intel.css", import.meta.url), "utf8"),
+  readFileSync(new URL("../server/public/guided-response-overrides.css", import.meta.url), "utf8"),
 ].join("\n");
 const guidedHtml = html.slice(
   html.indexOf('<section id="guided-response"'),
@@ -110,8 +111,8 @@ describe("Guided Response workflow", () => {
 
   it("provides the new view, required actions, and compact disclaimers", () => {
     expect(html).toContain('id="guided-response" class="view"');
-    expect(guidedHtml).toContain('class="hazmatiq-logo-lockup hazmatiq-logo-lockup-hero"');
-    expect(guidedHtml).toMatch(/hazmatiq-logo-lockup-hero[\s\S]*<div class="hazmat-page-hero-content">[\s\S]*<h1 class="hazmat-hero-title">Guided Response<\/h1>/s);
+    expect(guidedHtml).toContain('class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png"');
+    expect(guidedHtml).toMatch(/guided-response-logo[^>]*>[\s\S]*<div class="hazmat-page-hero-content">[\s\S]*<h1 class="hazmat-hero-title">Guided Response<\/h1>/s);
     expect(guidedHtml).toContain('SOURCE-VERIFIED TACTICAL RESPONSE GUIDELINES');
     for (const id of [
       "guided-open-profile-btn",
@@ -155,6 +156,19 @@ describe("Guided Response workflow", () => {
     expect(styles).toContain("align-self: start");
     expect(styles).toContain("justify-self: start");
     expect(styles).toContain("text-align: center");
+  });
+
+  it("uses page-scoped navy hero text and menu controls over the light smoke image", () => {
+    expect(styles).toMatch(/#guided-response \.hazmat-hero-title,[\s\S]*color: #082b4a !important;/);
+    expect(styles).toMatch(/#guided-response \.internal-command-menu span,[\s\S]*background: #082b4a !important;/);
+    expect(styles).toMatch(/#guided-response > \.guided-response-heading::before[\s\S]*rgba\(245, 248, 250, 0\.96\)/);
+  });
+
+  it("resolves the active incident chemical before rendering Guided Response", () => {
+    expect(script).toContain("async function ensureGuidedResponseChemicalSelection(requestId)");
+    expect(script).toContain("const targetId = activeIncident?.selectedChemicalId");
+    expect(script).toContain("await ensureGuidedResponseChemicalSelection(requestId)");
+    expect(script).toContain("else if (target === 'guided-response') void openGuidedResponseWorkspace();");
   });
 
   it("renders the four-box tactical decision flow with responsive connectors", () => {

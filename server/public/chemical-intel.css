@@ -6,6 +6,72 @@
   min-width: 0;
 }
 
+/* Chemical profiles are document-length reference pages; keep scrolling on the page. */
+#lookup.active:has(#chemical-id-results:not([hidden])),
+#lookup.active:has(#chemical-id-results:not([hidden])) #chemical-id-results,
+#lookup.active:has(#chemical-id-results:not([hidden])) .chemical-profile-shell {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+#lookup.active:has(#chemical-id-results:not([hidden])) .chemical-profile-content {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+@media (min-width: 701px) {
+  /* The profile is a long reference document, so it must participate in the
+     normal page flow instead of being constrained by the lookup grid. */
+  .layout:has(#lookup.active) #lookup.active:has(#chemical-id-results:not([hidden])) {
+    display: block !important;
+    min-height: 0 !important;
+  }
+
+  .layout:has(#lookup.active) #lookup.active:has(#chemical-id-results:not([hidden])) > #chemical-id-results {
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 720px) {
+  .layout:has(#lookup.active) #lookup.active {
+    grid-template-rows: auto !important;
+    align-content: start !important;
+  }
+
+  .layout:has(#lookup.active) > .content-area {
+    overflow: visible !important;
+  }
+}
+
+#chemical-id-results .chemical-profile-meta-item[data-field="hazard-class"] .chemical-profile-meta-value {
+  display: grid;
+  gap: 3px;
+  white-space: pre-line;
+}
+
+#chemical-id-results .chemical-profile-toolbar-actions { align-items: center; }
+
+#chemical-id-results .chemical-profile-toolbar-actions .chemical-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#chemical-id-results .chemical-profile-toolbar-actions .chem-compare,
+#chemical-id-results .chemical-profile-toolbar-actions .chemical-profile-plume {
+  min-width: 128px;
+}
+
+@media (min-width: 761px) {
+  #chem-compare.view.active { display: block !important; min-height: 100%; overflow: visible !important; }
+  #chem-compare.view.active .chemcompare-split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  }
+}
+
 .layout:has(#lookup.active) #lookup.active {
   display: flex;
   flex-direction: column;
@@ -2184,11 +2250,6 @@
   align-items: center;
   justify-content: flex-end;
   gap: 5px;
-}
-
-#chemical-id-results .chem-compare,
-#chemical-id-results #open-guided-response-btn {
-  display: none;
 }
 
 #chemical-id-results #open-plume-btn,

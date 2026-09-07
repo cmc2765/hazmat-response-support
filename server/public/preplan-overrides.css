@@ -1,0 +1,43 @@
+.preplan-builder-card,.preplan-saved-card { margin: 14px 0; padding: 18px; border: 1px solid #2d668f; border-radius: 11px; background: #061f34; }
+.preplan-builder-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:14px; }
+.preplan-builder-heading h2 { margin:0; color:#f8fafc; font-size:clamp(20px,1.6vw,27px); }
+.preplan-builder-heading p { margin:4px 0 0; color:#b8c7d9; font-size:15px; }
+.preplan-form-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.preplan-form-grid label { display:grid; gap:5px; color:#dce7f2; font-size:15px; font-weight:800; }
+.preplan-form-grid label:nth-last-child(-n+8) { grid-column:span 1; }
+.preplan-form-grid textarea,.preplan-form-grid input,.preplan-form-grid select { width:100%; box-sizing:border-box; min-height:38px; padding:8px 10px; border:1px solid #396d91; border-radius:6px; background:#031827; color:#fff; font:inherit; }
+.preplan-form-grid textarea { resize:vertical; }
+.preplan-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.preplan-actions button { min-height:40px; }
+.preplan-saved-row { display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid rgba(120,160,190,.25); color:#fff; }
+.preplan-saved-row span { color:#b8c7d9; }
+
+/* Six-card Planning Tools board: every capability has the same footprint. */
+#planning-tools .planning-tools-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 320px;
+  align-items: stretch;
+}
+#planning-tools .planning-tool-section,
+#planning-tools .planning-tool-scenario {
+  grid-column: auto;
+  width: 100%;
+  height: 320px;
+  min-height: 320px;
+  box-sizing: border-box;
+}
+#planning-tools .planning-tool-section > .planning-tool-actions {
+  width: 100%;
+  margin-top: auto;
+}
+#planning-tools .planning-tool-pipeline { border-top-color: #2e7d4f; }
+#planning-tools .planning-tool-pipeline .planning-tool-index { color: #2e7d4f; }
+
+@media(max-width:900px){
+  #planning-tools .planning-tools-grid { grid-template-columns:1fr; grid-auto-rows:auto; }
+  #planning-tools .planning-tool-section,
+  #planning-tools .planning-tool-scenario { height:auto; min-height:280px; }
+}
+@media(max-width:850px){.preplan-form-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:560px){.preplan-form-grid{grid-template-columns:1fr;}.preplan-saved-row{grid-template-columns:1fr;}}
+@media print { body * { visibility:hidden; } #preplan-builder,#preplan-builder * { visibility:visible; } #preplan-builder { position:absolute; inset:0; background:#fff; color:#111; } }

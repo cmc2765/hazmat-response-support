@@ -54,6 +54,75 @@
   background: #f8fafc !important;
   box-shadow: none !important;
 }
+
+/* Homepage status tabs use the same vertical title/time/value rhythm. */
+.app-shell:has(#overview.view.active) .notification-system {
+  grid-template-columns: 1fr !important;
+  grid-template-rows: auto auto auto auto !important;
+}
+.app-shell:has(#overview.view.active) .notification-system .command-center-launch {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+.app-shell:has(#overview.view.active) .notification-system > span {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+}
+.notification-system-heading { display: grid; justify-items: center; gap: 2px; text-align: center; }
+.notification-system-heading > span { color: #f6c343; font-size: .68rem; font-weight: 950; text-transform: uppercase; }
+.notification-system-heading > time { color: #f8fafc; font-size: .73rem; }
+.app-shell:has(#overview.view.active) .notification-system > time {
+  position: absolute !important;
+  top: 29px !important;
+  left: 50% !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  justify-self: auto !important;
+  transform: translateX(-50%) !important;
+  text-align: center !important;
+}
+.app-shell:has(#overview.view.active) .notification-system > strong {
+  grid-column: 1 !important;
+  grid-row: 4 !important;
+}
+.app-shell:has(#overview.view.active) .notification-system-heading {
+  grid-column: 1 !important;
+  grid-row: 2 / span 2 !important;
+  justify-self: center !important;
+}
+.app-shell:has(#overview.view.active) .notification-system-heading > time { position: static !important; transform: none !important; }
+.app-shell:not(:has(#overview.view.active)) .notification-system-heading { display: none !important; }
+.workspace-drawer-home {
+  display: block;
+  width: min(220px, 62vw);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.workspace-drawer-home img { display: block; width: 100%; height: auto; object-fit: contain; }
+.workspace-drawer-home:focus-visible { outline: 2px solid #f6c343; outline-offset: 4px; border-radius: 6px; }
+
+/* Keep the Command Dashboard compact and legible over every page. */
+.workspace-navigation-drawer {
+  width: min(300px, 84vw) !important;
+  background: #082540 !important;
+  opacity: 1 !important;
+}
+.workspace-navigation-drawer .workspace-drawer-header {
+  background: #0b2d4b !important;
+}
+.workspace-navigation-drawer .workspace-drawer-nav .module-btn,
+.workspace-navigation-drawer .workspace-settings-btn {
+  background: #0b2944 !important;
+}
+.command-header .command-center-launch {
+  background: #082540 !important;
+  border-color: #315d82 !important;
+}
+body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home {
+  width: min(280px, calc(100vw - 20px)) !important;
+}
 .command-menu-toggle:hover span,
 .command-menu-toggle:focus-visible span,
 .internal-command-menu:hover span,

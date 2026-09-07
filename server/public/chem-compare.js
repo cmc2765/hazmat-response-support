@@ -393,13 +393,19 @@
     renderSummary(baseSummary, baseComparison, NO_DATA);
     renderSummary(secondSummary, null, 'Search by chemical name, verified CAS, or UN/NA identifier.');
     renderResults();
+    // ChemCompare is a dedicated workspace. Explicitly clear the profile view
+    // so the two surfaces can never stack on top of one another.
+    document.getElementById('lookup')?.classList.remove('active');
     showView('chem-compare');
     searchInput?.focus({ preventScroll: true });
   }
 
   window.HazMatIQ.openChemCompareWithBase = openChemCompare;
   document.getElementById('open-chemcompare-btn')?.addEventListener('click', () => openChemCompare());
-  document.getElementById('chemcompare-back-btn')?.addEventListener('click', () => showView('lookup'));
+  document.getElementById('chemcompare-back-btn')?.addEventListener('click', () => {
+    setHazardProfileMode('chemical');
+    showView('lookup', { preserveHazardState: true });
+  });
   clearButton?.addEventListener('click', () => {
     secondComparison = null;
     if (searchInput) searchInput.value = '';

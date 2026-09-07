@@ -1,0 +1,285 @@
+/* Guided Response hero: use the light smoke artwork with field-readable branding. */
+#guided-response > .guided-response-heading {
+  min-height: 138px !important;
+  padding: 14px 20px !important;
+  background-color: #dce3e8 !important;
+  background-image: url("assets/guided-response-hero.png") !important;
+}
+
+#guided-response > .guided-response-heading::before {
+  background: linear-gradient(90deg, rgba(245, 248, 250, 0.96) 0%, rgba(235, 240, 244, 0.84) 46%, rgba(220, 228, 234, 0.34) 100%) !important;
+}
+
+#guided-response .guided-response-brand {
+  position: relative;
+  z-index: 2;
+}
+
+#guided-response .guided-response-logo {
+  display: block;
+  width: clamp(220px, 22vw, 310px);
+  height: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+
+#guided-response .hazmat-hero-title {
+  font-size: clamp(2.1rem, 3.8vw, 3.7rem) !important;
+}
+
+#guided-response .hazmat-hero-title,
+#guided-response .hazmat-hero-subtitle {
+  color: #082b4a !important;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.9) !important;
+}
+
+#guided-response .internal-command-menu,
+#guided-response .internal-command-menu:hover,
+#guided-response .internal-command-menu:focus-visible {
+  border-color: #082b4a !important;
+  background: rgba(244, 248, 250, 0.82) !important;
+  box-shadow: 0 5px 16px rgba(8, 43, 74, 0.18) !important;
+}
+
+#guided-response .internal-command-menu span,
+#guided-response .internal-command-menu:hover span,
+#guided-response .internal-command-menu:focus-visible span {
+  background: #082b4a !important;
+}
+
+#guided-response .guided-response-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+
+#guided-response .guided-chemical-strip {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.35fr) repeat(3, minmax(130px, 1fr));
+  overflow: hidden;
+  border: 1px solid #315d82;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #061a2e, #0b3558);
+  box-shadow: 0 12px 28px rgba(2, 11, 20, 0.22);
+}
+
+#guided-response .guided-chemical-strip > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 13px;
+  border-right: 1px solid rgba(91, 137, 173, 0.42);
+}
+
+#guided-response .guided-chemical-strip > div:last-child {
+  border-right: 0;
+}
+
+#guided-response .guided-chemical-strip span {
+  color: #f6c343;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#guided-response .guided-chemical-strip strong {
+  color: #f8fafc;
+  font-size: 0.86rem;
+  overflow-wrap: anywhere;
+}
+
+#guided-response .guided-tactical-flow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 12px;
+  border-color: #315d82;
+  background: #061a2e;
+}
+
+#guided-response .guided-tactical-flow > .guided-tactical-section-heading,
+#guided-response .guided-tactical-flow > .guided-flow-box[open] {
+  grid-column: 1 / -1;
+}
+
+#guided-response .guided-tactical-section-heading {
+  margin: 0;
+  padding: 2px 4px 8px;
+  text-align: left;
+}
+
+#guided-response .guided-tactical-section-heading h3 {
+  color: #f8fafc;
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+#guided-response .guided-tactical-section-heading p {
+  color: #a9bfd1;
+  font-size: 0.75rem;
+}
+
+#guided-response .guided-flow-box {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #315d82;
+  border-left: 4px solid #2e8cff;
+  border-radius: 8px;
+  background: #0b2944;
+  color: #e8f0f6;
+}
+
+#guided-response .guided-flow-summary {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.55fr) minmax(0, 1.45fr);
+  gap: 8px;
+  align-items: center;
+  padding: 9px 11px;
+  cursor: pointer;
+  list-style-position: inside;
+}
+
+#guided-response .guided-flow-summary h4 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 0.86rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+#guided-response .guided-flow-status {
+  margin: 0;
+  padding: 5px 7px;
+  background: rgba(246, 195, 67, 0.12);
+  color: #f6c343;
+  font-size: 0.72rem;
+}
+
+#guided-response .guided-flow-box dl {
+  gap: 0;
+  padding: 0 11px 8px;
+}
+
+#guided-response .guided-flow-box dl > div {
+  grid-template-columns: minmax(145px, 0.48fr) minmax(0, 1.52fr);
+  padding: 6px 2px;
+  border-top-color: rgba(91, 137, 173, 0.32);
+  font-size: 0.75rem;
+  line-height: 1.32;
+}
+
+#guided-response .guided-flow-box dt,
+#guided-response .guided-flow-box dd {
+  color: #dce7f2;
+}
+
+#guided-response .guided-flow-box dt {
+  color: #8fb6d4;
+}
+
+#guided-response .guided-flow-sources,
+#guided-response .guided-flow-approval {
+  margin: 0 11px 8px;
+  color: #9fb7ca;
+  font-size: 0.68rem;
+}
+
+#guided-response .guided-flow-approval {
+  background: rgba(246, 195, 67, 0.12);
+  color: #f6c343;
+}
+
+#guided-response .guided-flow-arrow {
+  display: none;
+}
+
+#guided-response .guided-mitigation-support {
+  padding: 0;
+  overflow: hidden;
+  border-color: #315d82;
+  background: #082540;
+}
+
+#guided-response .guided-mitigation-support > summary {
+  padding: 10px 13px;
+  cursor: pointer;
+  list-style-position: inside;
+}
+
+#guided-response .guided-mitigation-support > summary h3,
+#guided-response .guided-mitigation-support > summary p {
+  display: inline;
+}
+
+#guided-response .guided-mitigation-support > summary p {
+  margin-left: 8px !important;
+}
+
+#guided-response .guided-mitigation-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin: 0;
+  padding: 0 10px 10px;
+}
+
+#guided-response .guided-mitigation-card,
+#guided-response .guided-mitigation-card:last-child {
+  grid-column: auto;
+  padding: 9px;
+  border-color: #315d82;
+  background: #0b2944;
+}
+
+#guided-response .guided-mitigation-card h4,
+#guided-response .guided-mitigation-card strong,
+#guided-response .guided-mitigation-card p {
+  color: #e8f0f6;
+}
+
+#guided-response .guided-mitigation-card small {
+  color: #8fb6d4;
+}
+
+#guided-response .guided-command-actions {
+  padding: 10px 12px;
+  border-color: #315d82;
+  background: #082540;
+  color: #f8fafc;
+}
+
+#guided-response .guided-command-actions h3 {
+  color: #f8fafc;
+}
+
+#guided-response .guided-command-actions p {
+  color: #a9bfd1;
+}
+
+@media (max-width: 760px) {
+  #guided-response .guided-response-logo {
+    width: min(285px, 86vw);
+  }
+
+  #guided-response .guided-chemical-strip,
+  #guided-response .guided-tactical-flow,
+  #guided-response .guided-mitigation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #guided-response .guided-chemical-strip > div {
+    border-right: 0;
+    border-bottom: 1px solid rgba(91, 137, 173, 0.42);
+  }
+
+  #guided-response .guided-tactical-flow > .guided-flow-box[open] {
+    grid-column: auto;
+  }
+
+  #guided-response .guided-flow-summary,
+  #guided-response .guided-flow-box dl > div {
+    grid-template-columns: 1fr;
+  }
+}

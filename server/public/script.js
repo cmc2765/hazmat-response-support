@@ -430,7 +430,8 @@ async function initializeTacticalClock() {
   }, 5 * 60 * 1000);
 
   try {
-    const gps = await getCurrentGps();
+    const savedLocation = await getIncidentCoordinates({ requestGps: false }).catch(() => null);
+    const gps = savedLocation || await getCurrentGps();
     try {
       await setTacticalClockTimeZoneFromCoordinates(gps);
     } catch {
@@ -502,7 +503,8 @@ document.addEventListener('hazmatiq:telemetry', (event) => {
   updateNotificationCenter(event.detail || {});
 });
 
-function showView(targetId) {
+function showView(targetId, { preserveHazardState = false } = {}) {
+  if (targetId === 'lookup' && !preserveHazardState) setHazardProfileMode('empty');
   buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
   views.forEach((view) => view.classList.toggle('active', view.id === targetId));
   window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -518,13 +520,17 @@ function showView(targetId) {
   if (targetId === 'guided-response') renderGuidedResponse();
   if (targetId === 'map') window.requestAnimationFrame(initializeLiveMap);
   if (targetId === 'plume') updatePlumeModeLabel();
-  if (targetId === 'plume') window.requestAnimationFrame(() => plumeMap?.resize());
+  if (targetId === 'plume') window.requestAnimationFrame(() => void refreshPlumeWorkspace({ requestGps: true }));
 }
 
-// The command-bar logo is a global home control, available from every workspace.
-document.getElementById('command-brand-home')?.addEventListener('click', () => {
-  closeWorkspaceDrawer();
+// Every HAZMATIQ logo in the Command Dashboard is a dedicated Home control.
+function returnToHazMatIqHome() {
+  closeWorkspaceDrawer({ restoreFocus: false });
   showView('overview');
+}
+
+document.querySelectorAll('#command-brand-home, .workspace-drawer-home').forEach((control) => {
+  control.addEventListener('click', returnToHazMatIqHome);
 });
 
 function syncCommandBarContext() {
@@ -749,6 +755,47 @@ document.querySelectorAll('[data-planning-status]').forEach((button) => {
   button.addEventListener('click', () => setText('planning-tools-status', button.dataset.planningStatus));
 });
 
+const preplanFields = ['name','type','facility','address','occupancy','review-date','status','contacts','access','utilities','fire-water','hazards','tactical','map-zones','event','resources','notes'];
+const preplanStoreKey = 'hazmatiq_preplan_records';
+const preplanEl = (id) => document.getElementById(`preplan-${id}`);
+function readPreplans() { try { const value = JSON.parse(localStorage.getItem(preplanStoreKey) || '[]'); return Array.isArray(value) ? value : []; } catch { return []; } }
+function setPreplanMessage(message) { setText('preplan-status-message', message); }
+function collectPreplan() {
+  const existing = preplanEl('id')?.value;
+  const now = new Date().toISOString();
+  const record = { id: existing || `preplan-${Date.now()}`, createdAt: now, updatedAt: now };
+  preplanFields.forEach((field) => { const input = preplanEl(field); if (input) record[field] = input.value.trim(); });
+  return record;
+}
+function openPreplan(record = null) {
+  document.getElementById('preplan-builder').hidden = false;
+  document.getElementById('preplan-saved-card').hidden = true;
+  preplanFields.forEach((field) => { const input = preplanEl(field); if (input) input.value = record?.[field] || (field === 'status' ? 'Draft' : ''); });
+  let hiddenId = preplanEl('id'); if (!hiddenId) { hiddenId = document.createElement('input'); hiddenId.type = 'hidden'; hiddenId.id = 'preplan-id'; document.getElementById('preplan-form')?.append(hiddenId); } hiddenId.value = record?.id || '';
+}
+function renderSavedPreplans() {
+  const list = document.getElementById('preplan-saved-list'); if (!list) return; list.replaceChildren();
+  const records = readPreplans();
+  if (!records.length) { list.textContent = 'No saved pre-plans yet.'; return; }
+  records.forEach((record) => { const row = document.createElement('div'); row.className = 'preplan-saved-row'; const title = document.createElement('strong'); title.textContent = record.name || 'Untitled Pre-Plan'; const meta = document.createElement('span'); meta.textContent = `${record.type || 'Facility Pre-Plan'} · ${record.status || 'Draft'}`; const button = document.createElement('button'); button.className = 'ghost-btn'; button.type = 'button'; button.textContent = 'Edit'; button.addEventListener('click', () => openPreplan(record)); row.append(title, meta, button); list.append(row); });
+}
+document.getElementById('new-preplan-btn')?.addEventListener('click', () => openPreplan());
+document.getElementById('pipeline-preplan-btn')?.addEventListener('click', () => {
+  openPreplan();
+  const type = preplanEl('type');
+  if (type) type.value = 'Pipeline Incident Pre-Plan';
+  const name = preplanEl('name');
+  if (name) name.placeholder = 'Pipeline, operator, or segment name';
+  setPreplanMessage('Pipeline planning template opened. Add operator, product, pressure, valve, access, and isolation information.');
+});
+document.getElementById('open-preplans-btn')?.addEventListener('click', () => { document.getElementById('preplan-saved-card').hidden = false; document.getElementById('preplan-builder').hidden = true; renderSavedPreplans(); });
+document.getElementById('preplan-close-btn')?.addEventListener('click', () => { document.getElementById('preplan-builder').hidden = true; });
+document.getElementById('preplan-saved-close-btn')?.addEventListener('click', () => { document.getElementById('preplan-saved-card').hidden = true; });
+document.getElementById('preplan-form')?.addEventListener('submit', (event) => { event.preventDefault(); const record = collectPreplan(); const records = readPreplans(); const index = records.findIndex((item) => item.id === record.id); if (index >= 0) { record.createdAt = records[index].createdAt; records[index] = record; } else records.unshift(record); localStorage.setItem(preplanStoreKey, JSON.stringify(records)); setPreplanMessage(`Saved ${record.name || 'pre-plan'} locally.`); });
+document.getElementById('preplan-print-btn')?.addEventListener('click', () => window.print());
+document.getElementById('preplan-send-incident-btn')?.addEventListener('click', () => setPreplanMessage('Pre-plan summary ready to attach when an active incident is selected.'));
+document.getElementById('preplan-import-btn')?.addEventListener('click', () => setText('planning-tools-status', 'Document attachments are recorded as links or notes in the pre-plan; credentials are never stored.'));
+
 document.getElementById('add-facility-preplan-btn')?.addEventListener('click', () => {
   setText('facility-preplan-status', 'Document upload, naming, and saving will be available here in a future update.');
 });
@@ -955,6 +1002,56 @@ function incidentCommandValue(value, fallback = noCurrentDataText) {
   return text || fallback;
 }
 
+function firstChemicalDataValue(...values) {
+  return values.find((value) => {
+    if (Array.isArray(value)) return value.length > 0;
+    if (value && typeof value === 'object') return Object.keys(value).length > 0;
+    const text = String(value ?? '').trim();
+    return text && !/^(?:N\/?A|Not available|No Current Data Exists)$/i.test(text);
+  });
+}
+
+function selectedChemicalOperationalData({ record = activeChemicalRecord, chemical = activeChemical, incident = null, profile: suppliedProfile } = {}) {
+  const profile = suppliedProfile !== undefined
+    ? (suppliedProfile || {})
+    : (record?.profile || incident?.chemicalProfile || {});
+  const advanced = Object.fromEntries(Array.isArray(record?.advanced) ? record.advanced : []);
+  const chemicalName = firstChemicalDataValue(
+    profile.header?.name,
+    record?.name,
+    chemical?.name,
+    incident?.chemicalName,
+  );
+  const hazardClass = firstChemicalDataValue(
+    profile.header?.hazardClass,
+    record?.dotClass,
+    advanced['DOT Hazard Class'],
+    incident?.hazardClass,
+    profile.header?.hazard,
+  );
+  const idlh = firstChemicalDataValue(
+    profile.header?.idlh,
+    profile.exposures?.idlh,
+    record?.commandFacts?.idlh,
+    record?.idlh,
+    advanced.IDLH,
+    incident?.idlh,
+  );
+  return {
+    chemicalName,
+    selectedChemicalId: firstChemicalDataValue(chemical?.selectedChemicalId, chemical?.id, profile.selectedChemicalId, profile.id, incident?.selectedChemicalId),
+    casNumber: firstChemicalDataValue(profile.header?.cas, advanced.CAS, incident?.casNumber),
+    unNumber: firstChemicalDataValue(profile.header?.un, record?.un, advanced.UN, incident?.unNumber),
+    ergGuide: firstChemicalDataValue(profile.header?.ergGuide, record?.ergGuide, advanced['ERG Guide'], incident?.ergGuide),
+    hazardClass,
+    primaryHazard: firstChemicalDataValue(profile.header?.hazard, incident?.primaryHazard, hazardClass),
+    idlh: idlh ? formatIdlh(idlh) : '',
+    initialIsolation: firstChemicalDataValue(profile.isolationErg?.initialIsolationDistance, record?.commandFacts?.initialIsolation),
+    protectiveAction: firstChemicalDataValue(profile.isolationErg?.protectiveActionDistance, record?.commandFacts?.protectiveAction),
+    profile,
+  };
+}
+
 function cleanIncidentOperationalMode(value) {
   const normalized = String(value ?? '').trim().toUpperCase().replace(/[\s-]+/g, '_');
   const modes = {
@@ -1036,10 +1133,12 @@ function buildIncidentCommandViewModel() {
     || [incident.windSpeed && `Wind ${incident.windSpeed} mph`, incident.windDirection && `from ${incident.windDirection}°`].filter(Boolean).join(' ');
   const notes = Array.isArray(incident.incidentNotes) ? incident.incidentNotes : [];
   const monitoring = incidentCommandMonitoringState(incident);
-  const hazards = [incident.chemicalName, incident.primaryHazard].filter(Boolean);
+  const profile = incident.chemicalProfile || {};
+  const chemicalData = selectedChemicalOperationalData({ incident, profile });
+  const hazards = [chemicalData.chemicalName, chemicalData.primaryHazard].filter(Boolean);
   const sourceStatus = incident.sourceStatuses || {};
   const operationalStatus = (value, fallback) => incidentCommandSummary(value, fallback, 1);
-  const profile = incident.chemicalProfile || {};
+  const hazardClass = chemicalData.hazardClass || 'Hazard class pending verification';
   const protectiveSummary = incidentCommandSummary(
     incident.protectiveActionSummary,
     plume ? 'Plume available for protective-action review' : 'Protective-action assessment pending',
@@ -1084,8 +1183,9 @@ function buildIncidentCommandViewModel() {
     startTime: incident.startedAt || [incident.startDate, incident.startTime].filter(Boolean).join(' '),
     elapsedTime: getIncidentElapsedTime(incident),
     hazards,
-    primaryHazard: incidentCommandValue(incident.primaryHazard, 'Hazard classification pending'),
-    idlh: incidentCommandValue(incident.idlh, 'IDLH not established for this incident'),
+    hazardClass: incidentCommandValue(hazardClass),
+    primaryHazard: incidentCommandValue(chemicalData.primaryHazard, 'Hazard classification pending'),
+    idlh: incidentCommandValue(chemicalData.idlh, 'IDLH not established for this incident'),
     operationalMode,
     protectiveActionsSummary: protectiveSummary,
     entryTeamPpe: ppeSummary,
@@ -1209,7 +1309,7 @@ function renderIncidentCommandDashboard() {
   [
     ['Incident Name', model.incidentName], ['Status', model.status], ['Location', model.location],
     ['Date / Time Started', model.startTime ? new Date(model.startTime).toLocaleString() : noCurrentDataText],
-    ['Elapsed Time', model.elapsedTime], ['Chemical(s) / Hazard(s)', incidentCommandValue(model.hazards)],
+    ['Elapsed Time', model.elapsedTime], ['Chemical(s) / Hazard(s)', incidentCommandValue(model.hazards)], ['Hazard Class', model.hazardClass],
     ['Primary Hazard', model.primaryHazard, true], ['IDLH', model.idlh, true, 'idlh'], ['Operational Mode', model.operationalMode],
     ['Protective Actions Summary', model.protectiveActionsSummary], ['Entry Team PPE', model.entryTeamPpe],
     ['DECON Team PPE', model.deconTeamPpe], ['Medical Concerns', model.medicalConcerns, true],
@@ -1373,13 +1473,18 @@ function startIncidentTimer() {
 
 function getIncidentFormData() {
   const coordinates = parseGpsCoordinate(document.getElementById('incident-coordinates-input')?.value);
-  const advanced = Object.fromEntries(activeChemicalRecord?.advanced || []);
   const containerSelect = document.getElementById('plume-container-type');
   const existingIncident = getActiveIncident();
   const selectionMatchesIncident = String(activeChemical?.selectedChemicalId ?? '') === String(existingIncident?.selectedChemicalId ?? '');
   const chemicalProfile = activeChemicalRecord?.profile
     || (selectionMatchesIncident ? existingIncident?.chemicalProfile : null)
     || null;
+  const chemicalData = selectedChemicalOperationalData({
+    record: activeChemicalRecord,
+    chemical: activeChemical,
+    incident: selectionMatchesIncident ? existingIncident : null,
+    profile: chemicalProfile,
+  });
   const profileMatchesIncident = chemicalProfile?.header?.name === existingIncident?.chemicalProfile?.header?.name;
   return {
     incidentName: document.getElementById('incidentName')?.value.trim() || getActiveIncident()?.incidentName || 'New Incident',
@@ -1401,14 +1506,15 @@ function getIncidentFormData() {
       : (document.getElementById('plume-weather-source-state')?.textContent?.trim() || readinessStatus.verify),
     windSpeed: document.getElementById('plume-wind-speed')?.value || latestPlumeWeather?.windSpeedMph || '',
     windDirection: document.getElementById('plume-wind-direction')?.value || latestPlumeWeather?.windDirDeg || '',
-    chemicalName: document.getElementById('incident-product')?.value.trim() || activeChemical?.name || existingIncident?.chemicalName || '',
+    chemicalName: chemicalData.chemicalName || document.getElementById('incident-product')?.value.trim() || '',
     operationalMode: document.getElementById('incident-operational-mode')?.value || existingIncident?.operationalMode || 'Research & Assessment',
-    selectedChemicalId: activeChemical?.selectedChemicalId ?? existingIncident?.selectedChemicalId ?? null,
-    casNumber: advanced.CAS === 'N/A' ? '' : advanced.CAS || chemicalProfile?.header?.cas || existingIncident?.casNumber || '',
-    unNumber: activeChemicalRecord?.un === 'N/A' ? '' : activeChemicalRecord?.un || chemicalProfile?.header?.un || existingIncident?.unNumber || '',
-    ergGuide: chemicalProfile?.header?.ergGuide || activeChemicalRecord?.ergGuide || existingIncident?.ergGuide || '',
-    idlh: formatIdlh(chemicalProfile?.header?.idlh || activeChemicalRecord?.idlh || existingIncident?.idlh || ''),
-    primaryHazard: chemicalProfile?.header?.hazard || existingIncident?.primaryHazard || '',
+    selectedChemicalId: chemicalData.selectedChemicalId ?? null,
+    casNumber: chemicalData.casNumber || '',
+    unNumber: chemicalData.unNumber || '',
+    ergGuide: chemicalData.ergGuide || '',
+    idlh: chemicalData.idlh || '',
+    hazardClass: chemicalData.hazardClass || '',
+    primaryHazard: chemicalData.primaryHazard || '',
     chemicalProfile,
     chemicalProfileCapturedAt: chemicalProfile
       ? (profileMatchesIncident ? existingIncident?.chemicalProfileCapturedAt : null) || new Date().toISOString()
@@ -1673,7 +1779,7 @@ const completedReportFields = [
   ['containerReleaseLocation', 'Release location', 'text'],
   ['containerReleasePhase', 'Release phase', 'text'],
   ['weather', 'Weather / conditions', 'text'],
-  ['windSpeed', 'Wind speed', 'text'],
+  ['windSpeed', 'Wind speed (mph)', 'text'],
   ['windDirection', 'Wind direction', 'text'],
   ['notes', 'Scene notes', 'textarea'],
 ];
@@ -1780,7 +1886,7 @@ function openIncidentSummary(incidentId) {
   appendChemicalProfileToIncidentReport(content, incident.chemicalProfile);
   appendIncidentSummarySection(content, 'Conditions', [
     ['Weather', incident.weather],
-    ['Wind speed', incident.windSpeed],
+    ['Wind speed (mph)', incident.windSpeed],
     ['Wind direction', incident.windDirection],
   ]);
   appendIncidentSummarySection(content, 'PPE Requirements', [['Guidance', incident.ppeSummary?.items || []]]);
@@ -2013,9 +2119,6 @@ incidentBriefFieldIds.forEach((id) => {
 ['plume-release-quantity', 'plume-wind-speed', 'plume-wind-direction'].forEach((id) => {
   document.getElementById(id)?.addEventListener('input', updateActiveIncidentRecord);
 });
-startIncidentTimer();
-renderIncidentLists();
-void restoreIncidentsFromBackend();
 
 const completeIncidentDialog = document.getElementById('complete-incident-dialog');
 document.getElementById('complete-incident-btn')?.addEventListener('click', () => completeIncidentDialog?.showModal());
@@ -2310,6 +2413,7 @@ incidentCommandDashboard?.addEventListener('click', (event) => {
       if (details) details.open = true;
       details?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else if (target === 'plume') openPlumeWorkspace();
+    else if (target === 'guided-response') void openGuidedResponseWorkspace();
     else if (target) showView(target);
     return;
   }
@@ -2364,13 +2468,17 @@ document.getElementById('save-incident-note-btn')?.addEventListener('click', () 
 
 // ─── Chemical lookup/card: backed by the real API (207-chemical dataset, NPG, thresholds) ───
 
-async function fetchJson(url) {
+async function fetchJson(url, { timeoutMs = 15000 } = {}) {
+  const controller = typeof AbortController === 'function' ? new AbortController() : null;
+  const timeout = controller ? window.setTimeout(() => controller.abort(), timeoutMs) : null;
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, controller ? { signal: controller.signal } : undefined);
     if (!res.ok) return null;
     return await res.json();
   } catch {
     return null;
+  } finally {
+    if (timeout !== null) window.clearTimeout(timeout);
   }
 }
 
@@ -3204,6 +3312,18 @@ function renderChemicalHazardOverview(profile) {
   }));
 }
 
+function formatHazardClassLines(value) {
+  const raw = profileDisplayParts(value).map((part) => String(part).trim()).filter(Boolean);
+  const lines = raw.flatMap((part) => part.split(/\s*[,;]\s*/)).map((part) => part.trim()).filter(Boolean);
+  return [...new Map(lines.map((line) => {
+    const match = line.match(/^\s*(\d+(?:\.\d+)?)\s*(?:\(([^)]+)\)|[-:]\s*(.*))?\s*$/);
+    if (!match) return [line.toLowerCase(), line];
+    const description = (match[2] || match[3] || '').trim();
+    const label = description ? `Class ${match[1]}: ${description}` : `Class ${match[1]}`;
+    return [label.toLowerCase(), label];
+  })).values()];
+}
+
 function renderChemicalProfile(profile) {
   const content = document.getElementById('chemical-profile-content');
   const tabs = document.getElementById('chemical-profile-tabs');
@@ -3489,7 +3609,7 @@ function renderChemicalProfile(profile) {
   const metaItems = [
     ['UN/NA', profile?.header?.un || noCurrentDataText],
     ['ERG Guide', profile?.header?.ergGuide || noCurrentDataText],
-    ['Hazard Class', profile?.header?.hazardClass || profile?.header?.hazard || noCurrentDataText],
+    ['Hazard Class', formatHazardClassLines(profile?.header?.hazardClass || profile?.header?.hazard).join('\n') || noCurrentDataText],
   ];
   metaItems.forEach(([label, value]) => {
     const item = document.createElement('span');
@@ -3709,13 +3829,17 @@ function guidedExplicitProtectionLevels(values) {
 }
 
 function createTacticalFlowBox(title, status, rows, sources, icApprovalRequired = false) {
-  const box = document.createElement('section');
+  const box = document.createElement('details');
   box.className = 'guided-flow-box';
+  box.open = title === 'Life Safety';
+  const summary = document.createElement('summary');
+  summary.className = 'guided-flow-summary';
   const heading = document.createElement('h4');
   heading.textContent = responderText.normalizeSectionHeading(title);
   const statusBox = document.createElement('strong');
   statusBox.className = 'guided-flow-status';
   statusBox.textContent = status;
+  summary.append(heading, statusBox);
   const list = document.createElement('dl');
   rows.forEach(({ label, value }) => {
     const row = document.createElement('div');
@@ -3730,7 +3854,7 @@ function createTacticalFlowBox(title, status, rows, sources, icApprovalRequired 
   const sourceLine = document.createElement('p');
   sourceLine.className = 'guided-flow-sources';
   sourceLine.textContent = `Sources reviewed: ${sources.length ? sources.join(', ') : noCurrentDataText}`;
-  box.append(heading, statusBox, list, sourceLine);
+  box.append(summary, list, sourceLine);
   if (icApprovalRequired) {
     const approval = document.createElement('p');
     approval.className = 'guided-flow-approval';
@@ -3749,9 +3873,9 @@ function createTacticalFlowArrow() {
 }
 
 function createMitigationDecisionSupport(record) {
-  const section = document.createElement('section');
+  const section = document.createElement('details');
   section.className = 'panel-card guided-mitigation-support';
-  const heading = document.createElement('div');
+  const heading = document.createElement('summary');
   heading.className = 'guided-tactical-section-heading';
   const title = document.createElement('h3');
   title.textContent = 'Mitigation Decision Support';
@@ -3914,6 +4038,24 @@ function renderGuidedResponse() {
   };
   window.HazMatIQ.guidedResponseDecisionRecord = decisionRecord;
 
+  const chemicalData = selectedChemicalOperationalData();
+  const chemicalStrip = document.createElement('section');
+  chemicalStrip.className = 'guided-chemical-strip';
+  [
+    ['Chemical', chemicalData.chemicalName],
+    ['UN/NA', chemicalData.unNumber],
+    ['Hazard Class', chemicalData.hazardClass],
+    ['IDLH', chemicalData.idlh],
+  ].forEach(([label, value]) => {
+    const item = document.createElement('div');
+    const term = document.createElement('span');
+    const detail = document.createElement('strong');
+    term.textContent = label;
+    detail.textContent = incidentCommandValue(value);
+    item.append(term, detail);
+    chemicalStrip.append(item);
+  });
+
   const flow = document.createElement('section');
   flow.className = 'panel-card guided-tactical-flow';
   const flowHeading = document.createElement('div');
@@ -3989,7 +4131,7 @@ function renderGuidedResponse() {
     { label: 'Tactical Actions', value: actionText(mitigationDecision) },
   ], decisionRecord.tacticalDecisionFlow.mitigation.sourceSummary, true);
   flow.append(flowHeading, identifyFlow, createTacticalFlowArrow(), verifyFlow, createTacticalFlowArrow(), lifeFlow, createTacticalFlowArrow(), mitigationFlow);
-  container.append(flow, createMitigationDecisionSupport(decisionRecord));
+  container.append(chemicalStrip, flow, createMitigationDecisionSupport(decisionRecord));
 }
 
 const chemicalSearchForm = document.getElementById('chemical-search-form');
@@ -4083,6 +4225,16 @@ function renderHazardSearchMode(lane) {
 }
 
 function setHazardProfileMode(mode) {
+  const lookup = document.getElementById('lookup');
+  const searchHero = document.getElementById('hazard-id-search-hero');
+  const searchWorkspace = document.getElementById('hazard-id-search-workspace');
+  const searchState = mode === 'empty';
+  if (lookup) lookup.dataset.hazardPageState = mode === 'chemical'
+    ? 'chemical-profile'
+    : mode === 'starter' ? 'hazard-profile' : 'search';
+  if (searchHero) searchHero.hidden = !searchState;
+  if (searchWorkspace) searchWorkspace.hidden = !searchState;
+  if (!searchState && facilityInventory) facilityInventory.hidden = true;
   if (chemicalIdResults) chemicalIdResults.hidden = mode !== 'chemical';
   if (hazardProfileResults) hazardProfileResults.hidden = mode !== 'starter';
   if (hazardEmptyProfile) hazardEmptyProfile.hidden = mode !== 'empty';
@@ -4795,17 +4947,17 @@ function renderIncidentCommandSnapshot() {
     renderProtectiveActionGuidance('command-protective-guidance');
   } else {
     const recordLoaded = Boolean(activeChemicalRecord);
-    const commandFacts = activeChemicalRecord?.commandFacts;
+    const chemicalData = selectedChemicalOperationalData();
     setText('command-chemical-status', recordLoaded ? readinessStatus.imported : readinessStatus.verify);
     setText('command-chemical-name', activeChemical.name);
     setText('command-chemical-summary', recordLoaded
-      ? `UN ${activeChemicalRecord.un} · ERG ${activeChemicalRecord.ergGuide}`
+      ? `UN ${incidentCommandValue(chemicalData.unNumber)} · ERG ${incidentCommandValue(chemicalData.ergGuide)}`
       : 'Loading ERG, CAMEO, and NIOSH records…');
     replaceCommandList('command-chemical-details', recordLoaded ? [
-      commandFacts?.initialIsolation ? `Initial isolation: ${commandFacts.initialIsolation}` : 'Initial isolation: not available in the loaded backend record.',
-      commandFacts?.protectiveAction ? `Protective action: ${commandFacts.protectiveAction}` : 'Protective action: not available in the loaded backend record.',
-      commandFacts?.idlh ? `NIOSH IDLH: ${formatIdlh(commandFacts.idlh)}` : 'NIOSH IDLH: not available in the loaded backend record.',
-      `DOT class: ${activeChemicalRecord.dotClass}`,
+      chemicalData.initialIsolation ? `Initial isolation: ${incidentCommandValue(chemicalData.initialIsolation)}` : 'Initial isolation: not available in the loaded backend record.',
+      chemicalData.protectiveAction ? `Protective action: ${incidentCommandValue(chemicalData.protectiveAction)}` : 'Protective action: not available in the loaded backend record.',
+      chemicalData.idlh ? `NIOSH IDLH: ${chemicalData.idlh}` : 'NIOSH IDLH: not available in the loaded backend record.',
+      `DOT class: ${incidentCommandValue(chemicalData.hazardClass)}`,
     ] : [], 'Loading chemical data…');
 
     setText('command-plume-status', activePlumeCommand ? readinessStatus.planning : readinessStatus.missing);
@@ -4899,24 +5051,31 @@ function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {
 async function restoreSelectedChemical() {
   try {
     const incidentSelection = JSON.parse(window.localStorage.getItem(selectedChemicalStorageKey) || 'null');
-    const saved = getActiveIncident() ? incidentSelection : readPlanningState().selectedChemical;
-    if (!saved?.id) {
+    const incident = getActiveIncident();
+    const saved = activeChemical || (incident?.selectedChemicalId
+      ? { id: incident.selectedChemicalId, name: incident.chemicalName }
+      : incident ? incidentSelection : readPlanningState().selectedChemical);
+    const savedId = saved?.selectedChemicalId ?? saved?.id;
+    const selectionAtStart = selectedChemicalId;
+    if (savedId === null || savedId === undefined || savedId === '') {
       syncPlumeChemicalSelection();
       return;
     }
-    const chemical = await fetchJson(`/api/chemicals/${encodeURIComponent(saved.id)}`);
+    const chemical = await fetchJson(`/api/chemicals/${encodeURIComponent(savedId)}`);
+    if (selectedChemicalId !== selectionAtStart) return;
     if (chemical && !chemical.error) {
       setActiveChemical(chemical, { persist: false, clearOverlay: false });
       const record = await buildFullChemicalRecord(chemical);
-      const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(saved.selectedChemicalId ?? saved.id)}/profile`);
+      const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(savedId)}/profile`);
       const profile = profileResponse && !profileResponse.error ? profileResponse : null;
       const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'overview' }, name: record.name } : record;
-      if (activeChemical?.id === chemical.id) {
+      if (String(activeChemical?.id) === String(savedId)) {
         activeChemicalRecord = combinedRecord;
         applyChemicalContainerProfile();
         restoreIncidentContainerData();
         updateActiveIncidentRecord();
         renderIncidentCommandSnapshot();
+        syncPlumeChemicalSelection();
       }
     } else syncPlumeChemicalSelection();
   } catch {
@@ -4942,11 +5101,10 @@ function clearChemicalSuggestions() {
 renderHazardSearchMode('CHEMICAL');
 
 async function openChemical(chemical, facilityName = '') {
-  if (chemical.recordType === 'transportation-identifier' || !chemical.guidanceEligible) {
+  if (chemical.recordType === 'transportation-identifier' || chemical.guidanceEligible === false) {
     setChemicalSearchStatus(chemical.reviewWarning || 'This transport identifier has not been verified against a Chemical Companion master chemical record. Do not use it for IDLH, PPE, plume, decon, or medical guidance until reviewed.', 'error');
     return;
   }
-  setHazardProfileMode('chemical');
   setActiveChemical(chemical);
   const chosenChemicalId = chemical.selectedChemicalId ?? chemical.ChemicalID ?? chemical.id;
   const chosenChemicalName = chemical.ChemicalName || chemical.name;
@@ -4957,29 +5115,72 @@ async function openChemical(chemical, facilityName = '') {
   latestChemicalSearch += 1;
   window.clearTimeout(chemicalSearchTimer);
   setChemicalSearchStatus(`Loading ${chemical.name || 'chemical'}…`, 'loading');
-  const record = await buildFullChemicalRecord(chemical);
-  if (String(selectedChemicalId) === String(chosenChemicalId)) {
-    activeChemicalRecord = record;
-    applyChemicalContainerProfile();
-    updateActiveIncidentRecord();
-    renderIncidentCommandSnapshot();
-  }
   const profileParams = new URLSearchParams();
   if (chemical.UnnaNumber && chemical.UnnaNumber !== 'Not available') profileParams.set('identifier', chemical.UnnaNumber);
   if (chemical.ProperShippingName) profileParams.set('shippingName', chemical.ProperShippingName);
-  const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(chosenChemicalId)}/profile${profileParams.size ? `?${profileParams}` : ''}`);
+  const profileUrl = `/api/chemicals/${encodeURIComponent(chosenChemicalId)}/profile${profileParams.size ? `?${profileParams}` : ''}`;
+  // The Chemical Companion profile is the primary display contract. Start the
+  // optional legacy enrichment in parallel, but never make the profile wait on
+  // NPG, ERG, threshold, or guide-library requests.
+  const recordPromise = buildFullChemicalRecord(chemical).catch((error) => {
+      console.warn('[chemical-companion] optional profile enrichment failed', error);
+      return null;
+    });
+  const profileResponse = await fetchJson(profileUrl);
+  if (String(selectedChemicalId) !== String(chosenChemicalId)) return;
+
   const profile = profileResponse && !profileResponse.error ? profileResponse : null;
-  const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'overview' }, name: record.name } : record;
-  activeChemicalRecord = combinedRecord;
+  const profileRecord = profile ? {
+    id: String(chosenChemicalId),
+    selectedChemicalId: chosenChemicalId,
+    name: profile.header?.name || chosenChemicalName,
+    un: profile.header?.un || 'N/A',
+    ergGuide: profile.header?.ergGuide || 'N/A',
+    dotClass: profile.header?.hazardClass || profile.header?.hazard || 'N/A',
+    idlh: formatIdlh(profile.header?.idlh || profile.exposures?.idlh || ''),
+    summarySources: chemicalProfileSources(profile),
+    profile: { ...profile, activeTab: 'overview' },
+  } : null;
+
+  if (profileRecord) {
+    activeChemicalRecord = profileRecord;
+    applyChemicalContainerProfile();
+    updateActiveIncidentRecord();
+    renderIncidentCommandSnapshot();
+    try {
+      updateChemicalCard(profileRecord);
+      setHazardProfileMode('chemical');
+      setChemicalSearchStatus('');
+    } catch (error) {
+      console.error('[chemical-companion] profile render failed', error);
+      setHazardProfileMode('empty');
+      setChemicalSearchStatus('The database profile loaded, but the display could not render it. Refresh and try again.', 'error');
+      return;
+    }
+  }
+
+  const record = await recordPromise;
+  if (String(selectedChemicalId) !== String(chosenChemicalId)) return;
+  if (!profileRecord && !record) {
+    setHazardProfileMode('empty');
+    setChemicalSearchStatus(`Database information for ${chosenChemicalName || 'this chemical'} could not be loaded.`, 'error');
+    return;
+  }
+  activeChemicalRecord = profileRecord ? { ...record, ...profileRecord } : record;
+  applyChemicalContainerProfile();
   updateActiveIncidentRecord();
   renderIncidentCommandSnapshot();
-  if (chemicalIdResults) chemicalIdResults.hidden = false;
-  try {
-    updateChemicalCard(combinedRecord);
-    setChemicalSearchStatus('');
-  } catch (error) {
-    console.error('[chemical-companion] profile render failed', error);
-    setChemicalSearchStatus('The profile loaded, but the display could not finish rendering. Refresh and try again.', 'error');
+  if (!profileRecord) {
+    try {
+      updateChemicalCard(activeChemicalRecord);
+      setHazardProfileMode('chemical');
+      setChemicalSearchStatus('The primary Chemical Profile was unavailable; showing available linked database data.', 'error');
+    } catch (error) {
+      console.error('[chemical-companion] fallback profile render failed', error);
+      setHazardProfileMode('empty');
+      setChemicalSearchStatus('Chemical information could not be displayed.', 'error');
+      return;
+    }
   }
   if (window.matchMedia('(max-width: 1199px)').matches) {
     chemicalIdResults?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -5180,7 +5381,7 @@ document.addEventListener('keydown', (event) => {
 });
 document.getElementById('chemical-profile-back-btn')?.addEventListener('click', () => {
   setHazardProfileMode('empty');
-  document.querySelector('.chemical-id-search-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('hazard-id-search-workspace')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   document.getElementById('chemical-search')?.focus({ preventScroll: true });
 });
 
@@ -5540,6 +5741,13 @@ incidentProductInput?.addEventListener('input', () => {
 });
 
 incidentProductInput?.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    window.clearTimeout(incidentProductSearchTimer);
+    const suggestion = !incidentProductSuggestions?.hidden && incidentProductSuggestions?.querySelector('button');
+    if (suggestion) suggestion.click();
+    else if (incidentProductInput.value.trim().length >= 2) void searchIncidentProducts(incidentProductInput.value.trim());
+  }
   if (event.key === 'Escape') clearIncidentProductSuggestions();
   if (event.key === 'ArrowDown' && !incidentProductSuggestions?.hidden) {
     event.preventDefault();
@@ -5829,14 +6037,14 @@ function updateIncidentLocationFromMap(lng, lat, action) {
   void refreshPlumeWorkspace({ requestGps: false });
 }
 
-function ensurePlumeMap(location) {
+function ensurePlumeMap(location = null) {
   if (!window.maplibregl) throw new Error('The local GIS map library did not load.');
   if (!plumeMap) {
     const view = plumeMapViews[activePlumeMapView];
     plumeMap = new window.maplibregl.Map({
       container: 'plume-gis-map',
-      center: [location.lon, location.lat],
-      zoom: 13,
+      center: location ? [location.lon, location.lat] : [-98.5, 39.5],
+      zoom: location ? 13 : 3,
       style: view.style,
       pitch: view.pitch,
       bearing: view.bearing,
@@ -5900,7 +6108,9 @@ function ensurePlumeMap(location) {
   }
   plumeMap.resize();
   updatePlumeCompass();
-  plumeMap.easeTo({ center: [location.lon, location.lat], duration: 400 });
+  // A regional preview is not an incident location: do not place a release pin yet.
+  if (!location) return plumeMapReady;
+  plumeMap.easeTo({ center: [location.lon, location.lat], zoom: Math.max(13, plumeMap.getZoom()), duration: 400 });
   if (!plumeSourceMarker) {
     plumeSourceMarker = new window.maplibregl.Marker({
       color: '#d71920',
@@ -7008,7 +7218,16 @@ async function getIncidentCoordinates({ requestGps = true, allowPlumeManual = fa
   const input = document.getElementById('incident-coordinates-input');
   const entered = parseGpsCoordinate(input?.value);
   if (entered) return { ...entered, source: 'Incident Dashboard' };
+  const incident = getActiveIncident();
   const address = getIncidentAddressValue();
+  const savedAddress = [incident?.address, incident?.city, incident?.state].filter(Boolean).join(', ');
+  const saved = incident?.latitude !== '' && incident?.longitude !== ''
+    && incident?.latitude != null && incident?.longitude != null
+    ? parseGpsCoordinate(`${incident.latitude}, ${incident.longitude}`) : null;
+  if (saved && (!address || address === savedAddress)) {
+    if (input) input.value = `${saved.lat.toFixed(6)}, ${saved.lon.toFixed(6)}`;
+    return { ...saved, source: 'Saved incident location' };
+  }
   if (address) {
     const match = await geocodePlumeAddress(address);
     if (match) {
@@ -7125,7 +7344,7 @@ async function fetchNwsObservation(lat, lon) {
 
 async function fetchWeatherSources(lat, lon) {
   const proxyQuery = new URLSearchParams({ lat: String(lat), lon: String(lon), refresh: String(Date.now()) });
-  const proxy = await fetchJson(`/api/weather/current?${proxyQuery}`);
+  const proxy = await fetchJson(`/api/weather/current?${proxyQuery}`, { timeoutMs: 10000 });
   if (proxy?.openMeteo || proxy?.nws) {
     return {
       openMeteo: formatOpenMeteo(proxy.openMeteo),
@@ -7154,20 +7373,24 @@ function hasCompleteHeaderWeather(weather) {
 }
 
 function renderNotificationWeather(openMeteo, nws) {
-  const stationWeather = hasCompleteHeaderWeather(nws) ? nws : null;
-  if (!stationWeather) {
-    updateNotificationCenter({ weather: 'Closest station observation unavailable' });
-    if (notificationWeatherSource) notificationWeatherSource.textContent = 'No complete live station report available';
+  const liveWeather = hasCompleteHeaderWeather(nws)
+    ? { ...nws, headerSource: `Closest available station · ${nws.displayStation}` }
+    : hasCompleteHeaderWeather(openMeteo)
+      ? { ...openMeteo, headerSource: 'Open-Meteo current conditions' }
+      : null;
+  if (!liveWeather) {
+    updateNotificationCenter({ weather: 'Live weather unavailable for the selected location' });
+    if (notificationWeatherSource) notificationWeatherSource.textContent = 'No complete live weather report available';
     return;
   }
-  const temperature = Number(stationWeather.temperatureF).toFixed(1);
-  const humidity = Math.round(Number(stationWeather.rh));
-  const windSpeed = Number(stationWeather.windSpeedMph).toFixed(1);
-  const windDirection = degreesToCompass(Number(stationWeather.windDirDeg));
+  const temperature = Number(liveWeather.temperatureF).toFixed(1);
+  const humidity = Math.round(Number(liveWeather.rh));
+  const windSpeed = Number(liveWeather.windSpeedMph).toFixed(1);
+  const windDirection = degreesToCompass(Number(liveWeather.windDirDeg));
   updateNotificationCenter({
     weather: `TEMP ${temperature}\u00b0F  \u00b7  RH ${humidity}%  \u00b7  WIND ${windSpeed} MPH ${windDirection}`,
   });
-  if (notificationWeatherSource) notificationWeatherSource.textContent = `Closest available station \u00b7 ${stationWeather.displayStation}`;
+  if (notificationWeatherSource) notificationWeatherSource.textContent = liveWeather.headerSource;
 }
 
 function formatOpenMeteo(data) {
@@ -7200,25 +7423,37 @@ function formatOpenMeteo(data) {
   };
 }
 
+function convertWindSpeedToMph(value, unit = 'mph') {
+  const speed = Number(value);
+  if (!Number.isFinite(speed)) return null;
+  const normalizedUnit = String(unit || 'mph').trim().toLowerCase().replace(/\s+/g, '');
+  if (/^(?:km\/?h|kmh|kph|wmounit:km_h-?1)$/.test(normalizedUnit)) return speed * 0.621371;
+  if (/^(?:m\/?s|mps|ms-?1|wmounit:m_s-?1)$/.test(normalizedUnit)) return speed * 2.23694;
+  if (/^(?:kt|kts|knot|knots)$/.test(normalizedUnit)) return speed * 1.15078;
+  return speed;
+}
+
 function formatNws(data) {
   if (!data?.observation) return null;
   const observation = data.observation;
   const tempC = observation.temperature?.value;
-  const windMps = observation.windSpeed?.value;
-  const gustMps = observation.windGust?.value;
+  const nwsWindMph = (measurement) => {
+    const unit = String(measurement?.unitCode || 'm/s').replace(/^wmoUnit:/i, 'wmoUnit:');
+    return convertWindSpeedToMph(measurement?.value, unit);
+  };
+  const windSpeedMph = nwsWindMph(observation.windSpeed);
+  const gustMph = nwsWindMph(observation.windGust);
   const temperatureF = Number.isFinite(tempC) ? (tempC * 9) / 5 + 32 : null;
   const heatIndexC = observation.heatIndex?.value;
   const windChillC = observation.windChill?.value;
   const apparentC = Number.isFinite(heatIndexC) ? heatIndexC : windChillC;
   const feelsLikeF = Number.isFinite(apparentC) ? (apparentC * 9) / 5 + 32 : null;
-  const windSpeedMph = Number.isFinite(windMps) ? windMps * 2.23694 : null;
-  const gustMph = Number.isFinite(gustMps) ? gustMps * 2.23694 : null;
   const rh = Number(observation.relativeHumidity?.value);
   const pressurePa = Number(observation.barometricPressure?.value);
   const elevationM = Number(data.station?.elevation?.value);
   const tempF = Number.isFinite(tempC) ? `${((tempC * 9) / 5 + 32).toFixed(1)}°F` : 'temperature unavailable';
   const feelsLike = Number.isFinite(feelsLikeF) ? ` · Feels Like ${feelsLikeF.toFixed(1)}°F` : '';
-  const wind = Number.isFinite(windMps) ? `${(windMps * 2.23694).toFixed(1)} mph` : 'wind unavailable';
+  const wind = Number.isFinite(windSpeedMph) ? `${windSpeedMph.toFixed(1)} mph` : 'wind unavailable';
   return {
     station: `NWS ${data.office === 'BMX' ? 'Birmingham (BMX)' : data.office || 'office'} · ${data.station.stationIdentifier} ${data.station.name || ''}`.trim(),
     displayStation: `${data.station.stationIdentifier} · ${data.station.name || 'NWS weather station'}`,
@@ -7304,6 +7539,7 @@ async function refreshCommandWeather({ requestGps = false } = {}) {
     return;
   }
 
+  notificationWeatherLocation = { lat: location.lat, lon: location.lon };
   const { openMeteo, nws } = await fetchWeatherSources(location.lat, location.lon);
   if (token !== commandWeatherRequestToken) return;
   latestPlumeWeather = selectPlumeWeather(openMeteo, nws);
@@ -7332,17 +7568,24 @@ function applyLiveWeatherToPlumeInputs(weather) {
 // Columbia imports are normalized here so a live station can use the same shape later.
 function normalizeColumbiaWeatherData(data = {}, sourceMode = 'csv') {
   const value = (name) => data[name] === undefined || data[name] === null ? '' : String(data[name]).trim();
+  const sourceWindSpeedUnit = value('windSpeedUnit') || 'mph';
+  const sourceWindGustUnit = value('windGustUnit') || sourceWindSpeedUnit;
+  const windSpeedMph = convertWindSpeedToMph(value('windSpeed'), sourceWindSpeedUnit);
+  const windGustMph = convertWindSpeedToMph(value('windGust'), sourceWindGustUnit);
   return {
     source: 'Columbia Weather Station',
     sourceMode,
     stationName: value('stationName'),
     stationId: value('stationId'),
     observationTime: value('observationTime'),
-    windSpeed: value('windSpeed'),
-    windSpeedUnit: value('windSpeedUnit') || 'mph',
+    windSpeed: windSpeedMph === null ? '' : Number(windSpeedMph.toFixed(1)),
+    windSpeedMph: windSpeedMph === null ? null : windSpeedMph,
+    windSpeedUnit: 'mph',
+    sourceWindSpeedUnit,
     windDirection: value('windDirection'),
     windDirectionUnit: value('windDirectionUnit') || 'degrees',
-    windGust: value('windGust'),
+    windGust: windGustMph === null ? '' : Number(windGustMph.toFixed(1)),
+    gustMph: windGustMph,
     temperature: value('temperature'),
     temperatureUnit: value('temperatureUnit') || '°F',
     humidity: value('humidity'),
@@ -7397,7 +7640,10 @@ function applyColumbiaWeatherToPlumeInputs(weather) {
   setText('columbia-wind-gust', importedValue(weather.windGust, weather.windSpeedUnit));
   setText('columbia-humidity', importedValue(weather.humidity, '%'));
   setText('columbia-pressure', importedValue(weather.pressure, weather.pressureUnit));
-  updatePlumeWeatherSourceStatus(weather.stationName || weather.source, weather.observationTime);
+  const conversionNote = weather.sourceWindSpeedUnit.toLowerCase() === 'mph'
+    ? ''
+    : `Wind converted from ${weather.sourceWindSpeedUnit} to mph.`;
+  updatePlumeWeatherSourceStatus(weather.stationName || weather.source, weather.observationTime, conversionNote);
 }
 
 function parseColumbiaWeatherCsv(csvText) {
@@ -7405,7 +7651,7 @@ function parseColumbiaWeatherCsv(csvText) {
   if (lines.length < 2) return normalizeColumbiaWeatherData({}, 'csv');
   const headers = lines[0].split(',').map((header) => header.trim());
   const values = lines[1].split(',').map((entry) => entry.trim());
-  const knownColumns = ['windSpeed', 'windDirection', 'windGust', 'temperature', 'humidity', 'pressure', 'observationTime', 'stationName'];
+  const knownColumns = ['windSpeed', 'windSpeedUnit', 'windDirection', 'windGust', 'windGustUnit', 'temperature', 'humidity', 'pressure', 'observationTime', 'stationName'];
   const row = {};
   knownColumns.forEach((column) => {
     const index = headers.indexOf(column);
@@ -8551,6 +8797,12 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   const status = document.getElementById('plume-live-status');
   if (status) status.textContent = 'Resolving incident location…';
 
+  // Chemical restoration and the basemap must not depend on GPS permission.
+  const chemicalReady = activeChemicalRecord ? Promise.resolve() : restoreSelectedChemical();
+  void Promise.resolve().then(() => ensurePlumeMap()).catch((error) => {
+    setText('plume-overlay-status', error instanceof Error ? error.message : 'The plume map is unavailable.');
+  });
+
   const plumeAddressInput = document.getElementById('plume-map-address-input');
   const incidentAddress = getIncidentAddressValue();
   if (plumeAddressInput && !plumeAddressInput.value.trim() && incidentAddress) {
@@ -8561,12 +8813,14 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   try {
     location = await getIncidentCoordinates({ requestGps, allowPlumeManual: true });
   } catch (error) {
-    if (status) status.textContent = error.message;
+    if (token !== plumeRefreshToken) return;
+    if (status) status.textContent = `${error.message} Enter an address or coordinates above to load local weather.`;
     setText('plume-location-source', 'Location required');
     return;
   }
+  if (token !== plumeRefreshToken) return;
   if (!location) {
-    if (status) status.textContent = 'Enter coordinates in Incident Dashboard or use Current GPS.';
+    if (status) status.textContent = 'Enter an address or coordinates above to load local weather.';
     return;
   }
 
@@ -8580,12 +8834,12 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
     : (manualProduct ? `${manualProduct} · manual incident entry` : 'No chemical selected'));
   setText('selected-model-summary', 'Plume Model');
 
-  try {
-    await ensurePlumeMap(location);
-  } catch (error) {
-    if (status) status.textContent = error.message;
-    return;
-  }
+  // Map tiles and styles are visual support, not a prerequisite for weather.
+  // Begin map initialization without allowing it to gate current conditions.
+  const mapReadyPromise = Promise.resolve().then(() => ensurePlumeMap(location)).then(() => true).catch((error) => {
+    setText('plume-overlay-status', error instanceof Error ? error.message : 'The plume map is unavailable.');
+    return false;
+  });
   if (status) status.textContent = 'Loading Open-Meteo and National Weather Service observations…';
 
   const { openMeteo, nws } = await fetchWeatherSources(location.lat, location.lon);
@@ -8629,6 +8883,8 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
     setText('plume-input-status', 'Live weather is unavailable. Enter wind direction and wind speed to continue.');
   }
   setText('backend-model-summary', 'Run plume model to view result.');
+  await Promise.all([mapReadyPromise, chemicalReady]);
+  if (token !== plumeRefreshToken) return;
   await clearThreatZones('Enter release information to calculate a Planning Plume.');
   if (token !== plumeRefreshToken) return;
   if (status) status.innerHTML = `Location and weather updated ${formatCentralZuluHtml()}.`;
@@ -8650,7 +8906,69 @@ function scheduleAutomaticPlanningPlume() {
 
 function openPlumeWorkspace() {
   showView('plume');
-  refreshPlumeWorkspace({ requestGps: true });
+}
+
+let guidedResponseOpenRequest = 0;
+
+async function ensureGuidedResponseChemicalSelection(requestId) {
+  const activeIncident = getActiveIncident();
+  const targetId = activeIncident?.selectedChemicalId
+    ?? activeChemical?.selectedChemicalId
+    ?? activeChemical?.id
+    ?? null;
+  if (targetId === null || targetId === undefined || targetId === '') return;
+
+  const targetName = activeIncident?.chemicalName || activeChemical?.name || '';
+  const activeId = activeChemical?.selectedChemicalId ?? activeChemical?.id ?? null;
+  const loadedName = activeChemicalRecord?.profile?.header?.name || activeChemicalRecord?.name || '';
+  const selectionIsLoaded = String(activeId ?? '') === String(targetId)
+    && Boolean(activeChemicalRecord?.profile)
+    && (!targetName || !loadedName || loadedName === targetName);
+  if (selectionIsLoaded) return;
+
+  const container = document.getElementById('guided-response-content');
+  if (container) {
+    const loading = document.createElement('article');
+    loading.className = 'panel-card guided-response-empty';
+    loading.textContent = `Loading Guided Response for ${targetName || 'the selected chemical'}…`;
+    container.replaceChildren(loading);
+  }
+
+  try {
+    const chemical = await fetchJson(`/api/chemicals/${encodeURIComponent(targetId)}`);
+    if (requestId !== guidedResponseOpenRequest || chemical?.error) throw new Error('Chemical record unavailable');
+    setActiveChemical(chemical, { persist: false, clearOverlay: false });
+    const record = await buildFullChemicalRecord(chemical);
+    const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(targetId)}/profile`);
+    if (requestId !== guidedResponseOpenRequest) return;
+    const profile = profileResponse && !profileResponse.error ? profileResponse : null;
+    activeChemicalRecord = profile
+      ? { ...record, profile: { ...profile, activeTab: 'overview' }, name: record.name }
+      : record;
+  } catch {
+    if (requestId !== guidedResponseOpenRequest || !activeIncident?.chemicalProfile) return;
+    setActiveChemical({
+      id: targetId,
+      selectedChemicalId: targetId,
+      name: targetName || activeIncident.chemicalProfile.header?.name,
+    }, { persist: false, clearOverlay: false });
+    activeChemicalRecord = {
+      id: String(targetId),
+      selectedChemicalId: targetId,
+      name: targetName || activeIncident.chemicalProfile.header?.name,
+      profile: activeIncident.chemicalProfile,
+      summarySources: activeIncident.chemicalSources || [],
+    };
+  }
+}
+
+async function openGuidedResponseWorkspace() {
+  const requestId = ++guidedResponseOpenRequest;
+  showView('guided-response');
+  await ensureGuidedResponseChemicalSelection(requestId);
+  if (requestId === guidedResponseOpenRequest && document.getElementById('guided-response')?.classList.contains('active')) {
+    renderGuidedResponse();
+  }
 }
 
 function saveGuidedResponseTacticalRecord({ attachToIncident = false } = {}) {
@@ -8690,7 +9008,7 @@ function saveGuidedResponseTacticalRecord({ attachToIncident = false } = {}) {
 }
 
 document.getElementById('open-plume-btn')?.addEventListener('click', openPlumeWorkspace);
-document.getElementById('open-guided-response-btn')?.addEventListener('click', () => showView('guided-response'));
+document.getElementById('open-guided-response-btn')?.addEventListener('click', openGuidedResponseWorkspace);
 document.getElementById('guided-open-plume-btn')?.addEventListener('click', openPlumeWorkspace);
 document.getElementById('guided-back-btn')?.addEventListener('click', () => showView('lookup'));
 document.getElementById('guided-save-record-btn')?.addEventListener('click', () => {
@@ -8719,14 +9037,14 @@ document.getElementById('guided-save-incident-btn')?.addEventListener('click', (
     : 'The tactical decision record could not be attached to the active incident.';
 });
 document.querySelectorAll('[data-command-view]').forEach((button) => {
+  // Dashboard controls use its delegated handler, including dynamically rendered actions.
+  if (incidentCommandDashboard?.contains(button)) return;
   button.addEventListener('click', () => {
     const target = button.dataset.commandView;
     if (target === 'plume') openPlumeWorkspace();
+    else if (target === 'guided-response') void openGuidedResponseWorkspace();
     else if (target) showView(target);
   });
-});
-document.querySelectorAll('[data-view="plume"]').forEach((button) => {
-  button.addEventListener('click', () => refreshPlumeWorkspace({ requestGps: true }));
 });
 
 document.getElementById('refresh-plume-data-btn')?.addEventListener('click', () => refreshPlumeWorkspace({ requestGps: true }));
@@ -9024,7 +9342,6 @@ document.getElementById('tier2-reset-btn')?.addEventListener('click', () => {
 });
 
 renderTier2Results();
-getDefaultChemicalRecord().then(updateChemicalCard);
 
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Enter' && document.activeElement && document.activeElement.classList.contains('module-btn')) {
@@ -9719,3 +10036,8 @@ document.getElementById('monitor-data-source')?.addEventListener('change', (even
 
 refreshSampleMonitorReadings({ vary: false });
 syncCommandBarContext();
+
+// Render saved incidents only after chemical state and all control handlers are initialized.
+startIncidentTimer();
+renderIncidentLists();
+void restoreIncidentsFromBackend();

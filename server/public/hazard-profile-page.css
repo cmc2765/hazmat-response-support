@@ -1,0 +1,56 @@
+/* Hazard ID uses exclusive, full-page search and selected-profile surfaces. */
+#lookup[data-hazard-page-state="chemical-profile"] > #hazard-id-search-hero,
+#lookup[data-hazard-page-state="chemical-profile"] > #hazard-id-search-workspace,
+#lookup[data-hazard-page-state="chemical-profile"] > #facility-inventory,
+#lookup[data-hazard-page-state="hazard-profile"] > #hazard-id-search-hero,
+#lookup[data-hazard-page-state="hazard-profile"] > #hazard-id-search-workspace,
+#lookup[data-hazard-page-state="hazard-profile"] > #facility-inventory {
+  display: none !important;
+}
+
+#lookup.view[data-hazard-page-state="chemical-profile"],
+#lookup.view[data-hazard-page-state="hazard-profile"] {
+  display: block !important;
+  width: 100% !important;
+  min-height: calc(100dvh - 24px) !important;
+  padding: 0 !important;
+}
+
+#lookup.view[data-hazard-page-state="chemical-profile"] > #chemical-id-results,
+#lookup.view[data-hazard-page-state="hazard-profile"] > #hazard-profile-results {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: calc(100dvh - 24px) !important;
+  margin: 0 !important;
+}
+
+#lookup[data-hazard-page-state="chemical-profile"] .chemical-profile-shell,
+#lookup[data-hazard-page-state="hazard-profile"] .hazard-profile-shell {
+  width: 100% !important;
+  min-height: calc(100dvh - 24px) !important;
+}
+
+#chemical-id-results .chemical-profile-toolbar {
+  grid-template-columns: auto minmax(130px, 1fr) auto !important;
+}
+
+#chemical-id-results .chemical-profile-toolbar-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+#chemical-id-results #open-chemcompare-btn {
+  display: inline-flex !important;
+}
+
+@media (max-width: 700px) {
+  #chemical-id-results .chemical-profile-toolbar {
+    grid-template-columns: 1fr auto !important;
+  }
+
+  #chemical-id-results .chemical-profile-toolbar > strong {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+}

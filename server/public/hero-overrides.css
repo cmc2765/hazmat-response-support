@@ -111,3 +111,18 @@
   .view:not(#overview) > .hazmat-page-hero,
   .view:not(#overview) > .plume-page-header { background-position: 68% center !important; }
 }
+
+/* Give page content more vertical room while retaining the title/menu hierarchy. */
+.view:not(#overview) > .hazmat-page-hero,
+.view:not(#overview) > .plume-page-header {
+  min-height: 148px !important;
+  padding: 14px 18px !important;
+}
+.view:not(#overview) > .hazmat-page-hero.hazmat-page-hero-compact,
+.view:not(#overview) > .plume-page-header.hazmat-page-hero-compact {
+  min-height: 126px !important;
+}
+@media (max-width: 760px) {
+  .view:not(#overview) > .hazmat-page-hero,
+  .view:not(#overview) > .plume-page-header { min-height: 132px !important; padding: 12px !important; }
+}

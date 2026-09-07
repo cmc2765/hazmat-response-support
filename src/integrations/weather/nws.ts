@@ -20,12 +20,21 @@ interface NwsObservationResponse {
     timestamp: string;
     temperature: { value: number | null };
     relativeHumidity: { value: number | null };
-    windSpeed: { value: number | null };
+    windSpeed: { value: number | null; unitCode?: string };
     windDirection: { value: number | null };
-    windGust: { value: number | null };
+    windGust: { value: number | null; unitCode?: string };
     cloudCover: { value: number | null };
     barometricPressure: { value: number | null };
   };
+}
+
+export function nwsWindSpeedToMps(measurement: { value: number | null; unitCode?: string }): number | undefined {
+  if (measurement.value === null || !Number.isFinite(measurement.value)) return undefined;
+  const unit = String(measurement.unitCode || "wmoUnit:m_s-1").toLowerCase();
+  if (unit.includes("km_h")) return measurement.value / 3.6;
+  if (unit.includes("mi_h")) return measurement.value * 0.44704;
+  if (/\b(?:kt|knot)/.test(unit)) return measurement.value * 0.514444;
+  return measurement.value;
 }
 
 export interface NwsOptions {
@@ -95,9 +104,9 @@ export class NwsAdapter extends BaseIntegration<Observation> implements WeatherI
         ts: p.timestamp,
         lat,
         lng,
-        windSpeedMps: p.windSpeed.value ?? undefined,
+        windSpeedMps: nwsWindSpeedToMps(p.windSpeed),
         windDirDeg: p.windDirection.value ?? undefined,
-        gustMps: p.windGust.value ?? undefined,
+        gustMps: nwsWindSpeedToMps(p.windGust),
         tempC: p.temperature.value ?? undefined,
         rh: p.relativeHumidity.value ?? undefined,
         pressureHpa: p.barometricPressure.value ? p.barometricPressure.value / 100 : undefined,

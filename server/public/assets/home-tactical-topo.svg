@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 480" fill="none">
+  <!-- Sparse, continuous terrain contours; decorative, not operational map data. -->
+  <g stroke="#d5e5ed" stroke-linecap="round">
+    <path d="M380 -10 C600 60 670 -270 910 -170 S1200 50 1490 -100" stroke-width="1.25" stroke-opacity="0.6"/>
+    <path d="M380 58 C600 128 670 -202 910 -102 S1200 118 1490 -32" stroke-width="0.75" stroke-opacity="0.32"/>
+    <path d="M380 126 C600 196 670 -134 910 -34 S1200 186 1490 36" stroke-width="0.75" stroke-opacity="0.32"/>
+    <path d="M380 194 C600 264 670 -66 910 34 S1200 254 1490 104" stroke-width="1.25" stroke-opacity="0.6"/>
+    <path d="M380 262 C600 332 670 2 910 102 S1200 322 1490 172" stroke-width="0.75" stroke-opacity="0.32"/>
+    <path d="M380 330 C600 400 670 70 910 170 S1200 390 1490 240" stroke-width="0.75" stroke-opacity="0.32"/>
+    <path d="M380 398 C600 468 670 138 910 238 S1200 458 1490 308" stroke-width="1.25" stroke-opacity="0.6"/>
+    <path d="M380 466 C600 536 670 206 910 306 S1200 526 1490 376" stroke-width="0.75" stroke-opacity="0.32"/>
+    <path d="M380 534 C600 604 670 274 910 374 S1200 594 1490 444" stroke-width="0.75" stroke-opacity="0.32"/>
+    <path d="M380 602 C600 672 670 342 910 442 S1200 662 1490 512" stroke-width="1.25" stroke-opacity="0.6"/>
+  </g>
+</svg>
