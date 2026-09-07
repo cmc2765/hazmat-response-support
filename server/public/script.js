@@ -521,6 +521,12 @@ function showView(targetId) {
   if (targetId === 'plume') window.requestAnimationFrame(() => plumeMap?.resize());
 }
 
+// The command-bar logo is a global home control, available from every workspace.
+document.getElementById('command-brand-home')?.addEventListener('click', () => {
+  closeWorkspaceDrawer();
+  showView('overview');
+});
+
 function syncCommandBarContext() {
   const activeIncident = getActiveIncident();
   const incidentName = activeIncident?.incidentName || 'Planning Workspace';
