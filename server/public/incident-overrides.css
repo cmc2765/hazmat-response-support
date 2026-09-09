@@ -26,8 +26,6 @@
 .incident-guided-primary { width: 100%; min-height: 44px; margin-bottom: 12px; border: 1px solid #f6c343; border-radius: 7px; background: #123f63; color: #fff; }
 .incident-command-snapshot[hidden] { display: none !important; }
 .incident-command-brief-list > div { padding: 9px 0; gap: 14px; font-size: 1rem; }
-.incident-command-brief-list dt,
-.incident-command-brief-list dd { font-size: clamp(15px, .95vw, 18px); line-height: 1.45; }
 @media (max-width: 760px) {
   .incident-command-flow { padding: 12px; }
   .incident-command-flow-heading { align-items: flex-start; flex-direction: column; }
