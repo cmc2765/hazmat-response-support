@@ -14482,23 +14482,6 @@ body,
 .incident-command-panel-action:hover { border-color: #fff; background: #124568; }
 .incident-command-panel-action svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; }
 
-.incident-command-brief-list { margin: 0; padding: 5px 11px 8px; }
-.incident-command-brief-list > div {
-  display: grid;
-  grid-template-columns: minmax(118px, 0.85fr) minmax(0, 1.5fr);
-  gap: 10px;
-  padding: 3px 0;
-  border-bottom: 1px dotted rgba(120, 160, 190, 0.25);
-  font-size: 0.76rem;
-}
-.incident-command-brief-list dt { color: #d8e7f1; font-weight: 700; }
-.incident-command-brief-list dd { margin: 0; color: #fff; overflow-wrap: anywhere; }
-.incident-command-brief-list .is-life-safety {
-  margin-inline: -6px;
-  padding-inline: 6px;
-  border-left: 3px solid #ef3340;
-  background: rgba(177, 18, 38, 0.13);
-}
 
 .incident-command-tactical-list { padding: 4px 8px; }
 .incident-command-tactical-row {
@@ -16032,17 +16015,6 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   font-weight: 900;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-}
-
-.incident-command-brief-panel > h2 {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.incident-command-brief-panel > h2 .incident-command-panel-action {
-  flex: 0 0 28px;
-  margin-left: auto;
 }
 
 /* Safe CSS-only readability pass: dark command surfaces and high-contrast controls. */

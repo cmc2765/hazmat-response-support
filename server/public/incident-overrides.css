@@ -25,7 +25,32 @@
 .incident-command-flow-steps button { align-self: flex-start; margin-top: auto; min-height: 44px; padding: 6px 12px; border: 1px solid #5a8db5; border-radius: 6px; background: #123f63; color: #fff; }
 .incident-guided-primary { width: 100%; min-height: 44px; margin-bottom: 12px; border: 1px solid #f6c343; border-radius: 7px; background: #123f63; color: #fff; }
 .incident-command-snapshot[hidden] { display: none !important; }
-.incident-command-brief-list > div { padding: 9px 0; gap: 14px; font-size: 1rem; }
+.incident-command-brief-list { margin: 0; padding: 5px 11px 8px; }
+.incident-command-brief-list > div {
+  display: grid;
+  grid-template-columns: minmax(118px, 0.85fr) minmax(0, 1.5fr);
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px dotted rgba(120, 160, 190, 0.25);
+  font-size: 1rem;
+}
+.incident-command-brief-list dt { color: #d8e7f1; font-weight: 700; }
+.incident-command-brief-list dd { margin: 0; color: #fff; overflow-wrap: anywhere; }
+.incident-command-brief-list .is-life-safety {
+  margin-inline: -6px;
+  padding-inline: 6px;
+  border-left: 3px solid #ef3340;
+  background: rgba(177, 18, 38, 0.13);
+}
+.incident-command-brief-panel > h2 {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.incident-command-brief-panel > h2 .incident-command-panel-action {
+  flex: 0 0 28px;
+  margin-left: auto;
+}
 @media (max-width: 760px) {
   .incident-command-flow { padding: 12px; }
   .incident-command-flow-heading { align-items: flex-start; flex-direction: column; }
