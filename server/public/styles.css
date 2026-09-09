@@ -14483,19 +14483,6 @@ body,
 .incident-command-panel-action svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; }
 
 
-.incident-command-tactical-list { padding: 4px 8px; }
-.incident-command-tactical-row {
-  display: grid;
-  grid-template-columns: 36px minmax(122px, 0.9fr) minmax(82px, auto) minmax(0, 1.6fr) 58px;
-  align-items: center;
-  gap: 9px;
-  min-height: 56px;
-  padding: 7px 4px;
-  border-bottom: 1px solid rgba(103, 145, 177, 0.2);
-}
-.incident-command-tactical-row > strong { color: #fff; font-size: 0.81rem; text-transform: uppercase; }
-.incident-command-tactical-row > p { margin: 0; color: #c5d5e1; font-size: 0.72rem; line-height: 1.35; }
-.incident-command-tactical-row > button,
 .incident-command-inline-actions button,
 .incident-command-wide-action {
   min-height: 30px;
@@ -14506,7 +14493,6 @@ body,
   font-weight: 750;
   cursor: pointer;
 }
-.incident-command-tactical-row.is-life-safety { border-left: 3px solid #ef3340; padding-left: 8px; }
 
 .incident-command-guided-content {
   display: grid;
@@ -14581,69 +14567,6 @@ body,
 .incident-command-guided-progress > div { grid-template-columns: 66px minmax(0, 1fr); }
 .incident-command-guided-progress .is-pending span { color: #f6c343; }
 
-/* Operational Status rows use the same deliberate four-zone composition. */
-.incident-command-tactical-row {
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto minmax(26px, auto) auto;
-  align-items: center;
-  gap: 5px 10px;
-  min-height: 86px;
-  padding: 9px 4px 8px;
-}
-
-.incident-command-tactical-row > strong {
-  grid-column: 1;
-  grid-row: 1;
-  align-self: center;
-  color: #f8fbff;
-  font-size: 0.9rem;
-  font-weight: 900;
-  letter-spacing: 0.055em;
-  line-height: 1.1;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.incident-command-tactical-row > button {
-  grid-column: 2;
-  grid-row: 1;
-  justify-self: end;
-  min-width: 58px;
-  min-height: 29px;
-  padding: 4px 9px;
-}
-
-.incident-command-tactical-row > .incident-command-badge {
-  grid-column: 2;
-  grid-row: 2;
-  justify-self: end;
-  padding: 3px 6px;
-  font-size: 0.59rem;
-}
-
-.incident-command-tactical-row > p {
-  grid-column: 1;
-  grid-row: 2 / span 2;
-  align-self: center;
-  margin: 0;
-  padding-right: 4px;
-  color: #d5e6f2;
-  font-size: 0.74rem;
-  line-height: 1.35;
-}
-
-.incident-command-tactical-row > .incident-command-tactical-icon {
-  grid-column: 1;
-  grid-row: 3;
-  justify-self: start;
-  width: 34px;
-  height: 22px;
-  border-radius: 3px;
-  font-size: 0.57rem;
-}
-
-.incident-command-tactical-row.is-life-safety { padding-left: 8px; }
-
 .internal-command-menu,
 .internal-command-menu:hover,
 .internal-command-menu:focus-visible {
@@ -14691,24 +14614,6 @@ body,
   .internal-command-menu span { width: 28px; height: 3px; }
   #incident .incident-command-hero .internal-command-menu { top: 50%; }
 }
-
-.incident-command-badge {
-  display: inline-flex;
-  width: max-content;
-  max-width: 100%;
-  padding: 4px 7px;
-  border-radius: 5px;
-  color: #fff;
-  background: #b11226;
-  font-size: 0.65rem;
-  font-weight: 850;
-  line-height: 1;
-  text-transform: uppercase;
-}
-.incident-command-badge.is-available { background: #227a3f; }
-.incident-command-badge.is-active { background: #1769c2; }
-.incident-command-badge.is-review { color: #071f36; background: #f6c343; }
-.incident-command-badge.is-missing { background: #52677a; }
 
 .incident-command-reports-panel > section { margin: 7px 9px; }
 .incident-command-reports-panel h3 { margin: 0 0 7px; color: #9dcbe8; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -14889,9 +14794,6 @@ button[data-command-view="plume"]:disabled,
   #chemical-id-results .chemical-profile-content[data-active-tab="medical"] > .chemical-profile-section { grid-column: 1 !important; }
   #chemical-id-results .chemical-profile-content[data-active-tab="decon"] { grid-template-columns: 1fr !important; }
   #chemical-id-results .chemical-profile-content[data-active-tab="decon"] > .chemical-profile-section { grid-column: 1 !important; }
-  .incident-command-tactical-row { grid-template-columns: 30px minmax(100px, 1fr) auto; }
-  .incident-command-tactical-row > p { grid-column: 2 / -1; }
-  .incident-command-tactical-row > button { grid-column: 3; grid-row: 2; }
   #incident .incident-command-title { font-size: clamp(2.7rem, 13vw, 4.5rem); }
   .incident-command-hero { align-items: end; min-height: 138px; padding: 16px; }
   .incident-command-banner-identity { display: none; }
@@ -15903,26 +15805,6 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   .internal-command-menu:focus-visible { width: 54px; height: 50px; min-width: 54px; min-height: 50px; flex-basis: 50px; }
   .internal-command-menu span { width: 28px; height: 3px; }
   #incident .incident-command-hero .hazmat-page-hero-content { padding-inline: 130px 12px; }
-}
-
-/* Final Incident Command row geometry overrides legacy responsive rules. */
-.incident-command-tactical-row {
-  grid-template-columns: minmax(0, 1fr) auto !important;
-  grid-template-rows: auto minmax(26px, auto) auto !important;
-  min-height: 86px;
-}
-.incident-command-tactical-row > strong { grid-column: 1 !important; grid-row: 1 !important; }
-.incident-command-tactical-row > button { grid-column: 2 !important; grid-row: 1 !important; }
-.incident-command-tactical-row > .incident-command-badge { grid-column: 2 !important; grid-row: 2 !important; }
-.incident-command-tactical-row > p { grid-column: 1 !important; grid-row: 2 / span 2 !important; }
-
-@media (max-width: 760px) {
-  .incident-command-tactical-row {
-    grid-template-columns: minmax(0, 1fr) auto !important;
-    grid-template-rows: auto minmax(26px, auto) auto !important;
-  }
-  .incident-command-tactical-row > p { grid-column: 1 !important; grid-row: 2 / span 2 !important; }
-  .incident-command-tactical-row > button { grid-column: 2 !important; grid-row: 1 !important; }
 }
 
 /* Internal command hero alignment: menu and title share one tactical heading row. */
