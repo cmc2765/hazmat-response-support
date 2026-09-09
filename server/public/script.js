@@ -2510,6 +2510,11 @@ function isGenericErgReference(value) {
   return /^\s*(?:refer to|per) ERG Guide/i.test(String(value || ''));
 }
 
+function isChemicalCompanionSelection(chemical) {
+  const candidate = chemical?.selectedChemicalId ?? chemical?.ChemicalID ?? chemical?.id;
+  return /^\d+$/.test(String(candidate ?? '').trim()) && Number(candidate) > 0;
+}
+
 function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
   const synonyms = parseJsonField(chem.synonyms, []);
   const cas = parseJsonField(chem.cas, []) || [];
@@ -2620,7 +2625,9 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
     ergTable: hasGreenTable ? ergTable : null,
     dotClass: hazardClass.join(' / ') || 'N/A',
     physicalState: physical.bp ? `Boiling point ${formatTempFahrenheit(physical.bp)} (see physical data)` : 'Not modeled in this dataset',
-    idlh: exposureLimits.idlh ? formatIdlh(exposureLimits.idlh) : 'Not in NIOSH dataset',
+    idlh: exposureLimits.idlh
+      ? formatIdlh(exposureLimits.idlh)
+      : (isChemicalCompanionSelection(chem) ? 'NIOSH linkage requires verification' : 'Not in NIOSH dataset'),
     aeGL: formatThresholdGroup(thresholdRows, 'AEGL'),
     erpg: formatThresholdGroup(thresholdRows, 'ERPG'),
     pac: formatThresholdGroup(thresholdRows, 'TEEL'),
@@ -2661,8 +2668,11 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
 async function buildFullChemicalRecord(chem) {
   const un = parseJsonField(chem.un, [])?.[0];
   const guideNumber = String(chem.ergGuide || '').replace(/P$/i, '');
+  const npgRequest = isChemicalCompanionSelection(chem)
+    ? Promise.resolve(null)
+    : fetchJson(`/api/npg/${encodeURIComponent(chem.id)}`);
   const [npg, thresholdsData, guideLibrary, ergTable] = await Promise.all([
-    fetchJson(`/api/npg/${encodeURIComponent(chem.id)}`),
+    npgRequest,
     fetchJson(`/api/thresholds?chemicalId=${encodeURIComponent(chem.id)}`),
     fetchErgGuideLibrary(),
     un && guideNumber

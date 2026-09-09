@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { getCompanionDiagnostics, groupChemicalSearchResults, normalizeChemicalProfile, normalizeTransportationIdentifier, queryChemicalProfile, searchCompanionChemicals } from '../server/src/chemical-companion.js';
+import app from '../server/src/app.js';
+import { getCompanionDiagnostics, groupChemicalSearchResults, NIOSH_IDENTITY_STATUS, normalizeChemicalProfile, normalizeTransportationIdentifier, queryChemicalProfile, searchCompanionChemicals } from '../server/src/chemical-companion.js';
 
 describe('normalizeChemicalProfile', () => {
   it.each(['2312', 'UN2312', 'UN 2312', 'UN-2312', 'NA2312', 'NA 2312'])(
@@ -98,6 +99,46 @@ describe('normalizeChemicalProfile', () => {
     expect(anhydrous).toMatchObject({ cas: '7647-01-0', un: '1050' });
     expect(anhydrous?.name.trim()).toBe('Hydrogen chloride, anhydrous');
     expect(queryChemicalProfile(965)?.header).toMatchObject({ name: 'Hydrochloric acid', cas: '7647-01-0', un: '1789' });
+  });
+
+  it('resolves sulfur dioxide NIOSH identity and IDLH through the Chemical Companion profile', () => {
+    const profile = queryChemicalProfile(102);
+
+    expect(profile?.header).toMatchObject({ name: 'Sulfur dioxide', cas: '7446-09-5', un: '1079', idlh: '100 ppm' });
+    expect(profile?.exposures.idlh).toBe('100 ppm');
+    expect(profile?.niosh).toEqual({
+      status: NIOSH_IDENTITY_STATUS.VERIFIED_NIOSH,
+      sourceRecordId: 'sulfur-dioxide',
+      masterCas: '7446-09-5',
+      sourceCas: '7446-09-5',
+      matchBasis: 'CAS',
+    });
+    expect(profile?.sources).toContain('NIOSH Pocket Guide');
+  });
+
+  it('returns the NIOSH-linked sulfur dioxide profile from the API', async () => {
+    const response = await app.request('/api/chemicals/102/profile');
+    expect(response.status).toBe(200);
+    const profile = await response.json();
+
+    expect(profile).toMatchObject({
+      selectedChemicalId: 102,
+      header: { name: 'Sulfur dioxide', idlh: '100 ppm' },
+      niosh: {
+        status: NIOSH_IDENTITY_STATUS.VERIFIED_NIOSH,
+        sourceRecordId: 'sulfur-dioxide',
+        matchBasis: 'CAS',
+      },
+    });
+    expect(profile.sourceLinks).toContainEqual(expect.objectContaining({
+      sourceName: 'NIOSH', sourceRecordId: 'sulfur-dioxide', sourceIdentifierType: 'CAS',
+    }));
+  });
+
+  it('keeps Chemical Companion IDs out of the NPG identifier namespace', async () => {
+    const response = await app.request('/api/npg/102');
+    expect(response.status).toBe(404);
+    expect(await response.json()).toMatchObject({ error: expect.stringContaining('separate') });
   });
 
   it('groups repeated Chemical Companion master names only when verified CAS identity also matches', () => {
@@ -419,6 +460,41 @@ describe('normalizeChemicalProfile', () => {
 
     expect(profile.header.idlh).toBe('No Current Data Exists');
     expect(profile.exposures.idlhValues).toHaveLength(1);
+    expect(profile.niosh).toMatchObject({ status: NIOSH_IDENTITY_STATUS.IDENTITY_MATCH_FAILED, sourceRecordId: 'wrong-record' });
+  });
+
+  it('uses canonical CAS identity for a verified NIOSH link', () => {
+    const profile = normalizeChemicalProfile({ ChemicalID: 102, CasNumber: 'CAS 7446 09 5' }, {
+      npg: { id: 'sulfur-dioxide', cas: '7446-09-5', exposureLimits: { idlh: '100 ppm' } },
+    });
+
+    expect(profile.niosh).toMatchObject({
+      status: NIOSH_IDENTITY_STATUS.VERIFIED_NIOSH,
+      sourceRecordId: 'sulfur-dioxide',
+      matchBasis: 'CAS',
+    });
+    expect(profile.exposures.idlh).toBe('100 ppm');
+  });
+
+  it('does not select the first NIOSH constituent for a multi-CAS mixture', () => {
+    const profile = normalizeChemicalProfile({ ChemicalID: 248, CasNumber: '67-66-3; 8013-54-5' }, {
+      npg: { id: 'chloroform', cas: '67-66-3', exposureLimits: { idlh: '500 ppm' } },
+    });
+
+    expect(profile.niosh).toMatchObject({
+      status: NIOSH_IDENTITY_STATUS.SOURCE_DATA_INCOMPLETE,
+      sourceRecordId: null,
+      matchBasis: null,
+    });
+    expect(profile.exposures.idlh).toBe('No Current Data Exists');
+  });
+
+  it('distinguishes a valid CAS with no local NIOSH record from incomplete identity data', () => {
+    const unavailable = normalizeChemicalProfile({ ChemicalID: 999, CasNumber: '99999-99-9' });
+    const incomplete = normalizeChemicalProfile({ ChemicalID: 1000, CasNumber: 'Mixture: component identities pending' });
+
+    expect(unavailable.niosh).toMatchObject({ status: NIOSH_IDENTITY_STATUS.NIOSH_NOT_AVAILABLE });
+    expect(incomplete.niosh).toMatchObject({ status: NIOSH_IDENTITY_STATUS.SOURCE_DATA_INCOMPLETE });
   });
 
   it.each([

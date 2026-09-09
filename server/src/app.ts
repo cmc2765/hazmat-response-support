@@ -26,7 +26,7 @@ import { fileURLToPath } from "node:url";
 import { PDFDocument, PDFTextField } from "pdf-lib";
 import { getDb } from "./db.js";
 import * as schema from "./schema.js";
-import { queryChemicalProfile, searchCompanionChemicals } from "./chemical-companion.js";
+import { NIOSH_IDENTITY_STATUS, queryChemicalProfile, searchCompanionChemicals } from "./chemical-companion.js";
 import { reviewedSourceLinksForMaster } from "./chemical-companion/reviewed-source-links.js";
 import { runPlume } from "../../src/lib/model/plume.js";
 import { PlumeInputs } from "../../src/lib/schema/plume.js";
@@ -425,9 +425,24 @@ app.get("/api/chemicals/:id/profile", async (c) => {
     ...link,
     sourceVersion: link.sourceName === "ERG" ? "2024 repository dataset" : "Reviewed local source link",
   }));
-  const sourceLinks = reviewedLinks.some((link) => link.sourceName === "ERG") ? reviewedLinks : [
+  const nioshLink = profile.niosh?.status === NIOSH_IDENTITY_STATUS.VERIFIED_NIOSH
+    && profile.niosh.sourceRecordId
+    ? {
+      sourceName: "NIOSH",
+      sourceRecordId: profile.niosh.sourceRecordId,
+      sourceIdentifierType: "CAS",
+      sourceIdentifierValue: profile.niosh.sourceCas,
+      matchBasis: "Canonical CAS number",
+      reviewStatus: "verified",
+      sourceVersion: "Bundled NIOSH Pocket Guide-derived dataset (Lucas et al., 2024)",
+    }
+    : null;
+  const sourceLinks: Array<Record<string, unknown>> = [
     ...reviewedLinks,
-    {
+    ...(nioshLink ? [nioshLink] : []),
+  ];
+  if (!sourceLinks.some((link) => link.sourceName === "ERG")) {
+    sourceLinks.push({
       sourceName: "ERG",
       sourceRecordId: profile.header.un || null,
       sourceIdentifierType: "UN/NA",
@@ -435,8 +450,8 @@ app.get("/api/chemicals/:id/profile", async (c) => {
       matchBasis: "Chemical Companion master record fields",
       reviewStatus: ergTable1 ? "source-displayed" : "needs review",
       sourceVersion: "2024 repository dataset",
-    },
-  ];
+    });
+  }
   return c.json({
     id,
     selectedChemicalId: Number(id),
@@ -488,8 +503,9 @@ app.get("/api/npg", async (c) => {
 });
 
 app.get("/api/npg/:id", async (c) => {
-  const db = getDb();
   const id = c.req.param("id");
+  if (/^\d+$/.test(id)) return c.json({ error: "NPG source record IDs are separate from Chemical Companion IDs" }, 404);
+  const db = getDb();
   const rows = await db.select().from(schema.npgRecords).where(eq(schema.npgRecords.id, id));
   if (rows.length === 0) return c.json({ error: "not found" }, 404);
   return c.json(rows[0]);
