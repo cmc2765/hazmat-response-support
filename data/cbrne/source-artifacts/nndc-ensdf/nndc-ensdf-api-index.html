@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Programmatic access to evaluated nuclear structure and decay data from ENSDF.">
+  <title>ENSDF API | National Nuclear Data Center</title>
+  <link rel="icon" href="/ensdf-api/static/images/favicon.ico">
+  <link rel="stylesheet" href="/ensdf-api/static/assets/fontawesome/css/fontawesome.min.css">
+  <link rel="stylesheet" href="/ensdf-api/static/assets/fontawesome/css/solid.min.css">
+  <link rel="stylesheet" href="/ensdf-api/static/css/styles.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-content">
+      <a class="identity" href="/ensdf-api/">
+        <img src="/ensdf-api/static/images/logo.png" alt="" width="42" height="42">
+        <span>
+          <strong>ENSDF API</strong>
+          <small>National Nuclear Data Center</small>
+        </span>
+      </a>
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a class="active" href="/ensdf-api/" aria-current="page">Home</a>
+        <a href="/ensdf-api/tutorials">Tutorials</a>
+        <a href="/ensdf-api/docs">API documentation</a>
+        <a href="/ensdf-api/redoc">Schema reference</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="intro">
+      <div class="container intro-grid">
+        <div>
+          <p class="eyebrow">Evaluated Nuclear Structure Data File</p>
+          <h1>ENSDF API</h1>
+          <p class="lead">
+            Programmatic access to evaluated nuclear structure and decay data
+            maintained by the National Nuclear Data Center.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="/ensdf-api/docs">
+              <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+              <span>Open API documentation</span>
+            </a>
+            <a class="button secondary" href="/ensdf-api/tutorials">
+              <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+              <span>View tutorials</span>
+            </a>
+          </div>
+        </div>
+        <aside class="status-panel" aria-label="Service information">
+          <h2>Service information</h2>
+          <dl>
+            <div>
+              <dt>Status</dt>
+              <dd><span class="status-indicator"></span> Available</dd>
+            </div>
+            <div>
+              <dt>Release</dt>
+              <dd>Public beta</dd>
+            </div>
+            <div>
+              <dt>Database</dt>
+              <dd>ENSDF</dd>
+            </div>
+            <div>
+              <dt>Formats</dt>
+              <dd>JSON, NDJSON</dd>
+            </div>
+            <div>
+              <dt>Data generated</dt>
+              <dd title="Resource ids are only guaranteed valid while this is unchanged from when you fetched them.">
+                2026-08-10T15:57:13Z
+              </dd>
+            </div>
+          </dl>
+          <a href="/ensdf-api/meta/release">View release metadata</a> 
+          <a href="/ensdf-api/live">View liveness response</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="notice" aria-label="Beta notice">
+      <div class="container">
+        <strong>Public beta:</strong>
+        The interface may continue to evolve. Please report missing data, unclear
+        fields, or unexpected behavior to
+        <a href="mailto:dmason@bnl.gov" target="_blank" rel="noopener">dmason@bnl.gov</a>.
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Getting started</h2>
+          <p>Choose the resource that best matches your task.</p>
+        </div>
+        <div class="link-grid">
+          <article>
+            <div class="card-heading">
+              <span class="card-icon" aria-hidden="true">
+                <i class="fa-solid fa-code"></i>
+              </span>
+              <h3>Interactive documentation</h3>
+            </div>
+            <p>Review endpoints and parameters, then execute requests directly in the browser.</p>
+            <a href="/ensdf-api/docs">Open Swagger UI</a>
+          </article>
+          <article>
+            <div class="card-heading">
+              <span class="card-icon" aria-hidden="true">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </span>
+              <h3>Tutorial notebooks</h3>
+            </div>
+            <p>Learn the API through focused Jupyter notebooks and complete analysis examples.</p>
+            <a href="/ensdf-api/tutorials">Browse tutorials</a>
+          </article>
+          <article>
+            <div class="card-heading">
+              <span class="card-icon" aria-hidden="true">
+                <i class="fa-solid fa-sitemap"></i>
+              </span>
+              <h3>Schema reference</h3>
+            </div>
+            <p>Read the complete endpoint and response-model reference in a searchable format.</p>
+            <a href="/ensdf-api/redoc">Open ReDoc</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-muted">
+      <div class="container two-column">
+        <div>
+          <div class="section-heading">
+            <h2>Example request</h2>
+            <p>Retrieve the first five evaluated levels for <sup>60</sup>Co.</p>
+          </div>
+          <div class="code-panel">
+            <div><span>GET</span><code>http://www.nndc.bnl.gov/ensdf-api/levels?nuclide=60Co&amp;limit=5</code></div>
+            <pre><code>curl "http://www.nndc.bnl.gov/ensdf-api/levels?nuclide=60Co&amp;limit=5"</code></pre>
+          </div>
+        </div>
+        <div>
+          <div class="section-heading">
+            <h2>Common endpoints</h2>
+            <p>Use list endpoints to discover records and apply scientific filters.</p>
+          </div>
+          <ul class="endpoint-list">
+            <li><a href="/ensdf-api/nuclides?limit=10"><code>/nuclides</code><span>Nuclide discovery</span></a>
+            </li>
+            <li><a href="/ensdf-api/datasets?limit=10"><code>/datasets</code><span>Evaluated datasets</span></a>
+            </li>
+            <li><a href="/ensdf-api/levels?limit=10"><code>/levels</code><span>Nuclear levels</span></a></li>
+            <li><a href="/ensdf-api/gammas?limit=10"><code>/gammas</code><span>Gamma transitions</span></a></li>
+            <li><a href="/ensdf-api/decays?limit=10"><code>/decays</code><span>Decay records</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>API features</h2>
+          <p>The API is designed for both direct inspection and reproducible data analysis.</p>
+        </div>
+        <div class="feature-grid">
+          <div>
+            <div class="feature-heading">
+              <span class="feature-icon" aria-hidden="true">
+                <i class="fa-solid fa-filter"></i>
+              </span>
+              <h3>Scientific filters</h3>
+            </div>
+            <p>Filter evaluated quantities using documented units, ranges, identifiers, and presence checks.</p>
+          </div>
+          <div>
+            <div class="feature-heading">
+              <span class="feature-icon" aria-hidden="true">
+                <i class="fa-solid fa-sliders"></i>
+              </span>
+              <h3>Controlled responses</h3>
+            </div>
+            <p>Use pagination, sparse field selection, and optional comments to limit response size.</p>
+          </div>
+          <div>
+            <div class="feature-heading">
+              <span class="feature-icon" aria-hidden="true">
+                <i class="fa-solid fa-diagram-project"></i>
+              </span>
+              <h3>Data provenance</h3>
+            </div>
+            <p>Connect records to their datasets, references, source files, and evaluation context.</p>
+          </div>
+          <div>
+            <div class="feature-heading">
+              <span class="feature-icon" aria-hidden="true">
+                <i class="fa-solid fa-file-code"></i>
+              </span>
+              <h3>Machine-readable contract</h3>
+            </div>
+            <p>Use the published OpenAPI document to inspect or generate clients for the service.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-about">
+        <p class="footer-eyebrow">National Nuclear Data Center</p>
+        <h2 class="footer-title">ENSDF API</h2>
+        <p class="footer-description">
+          Evaluated nuclear structure and decay data provided by Brookhaven
+          National Laboratory.
+        </p>
+      </div>
+
+      <div class="footer-resources">
+        <h3>API resources</h3>
+        <nav class="footer-nav" aria-label="API resources">
+          <a href="/ensdf-api/openapi.json">OpenAPI JSON</a>
+          <a href="/ensdf-api/live">Server status</a>
+          <a href="https://www.nndc.bnl.gov/" target="_blank" rel="noopener">NNDC website</a>
+        </nav>
+      </div>
+
+      <div class="footer-contact">
+        <h3>Questions or feedback?</h3>
+        <a class="button footer-contact-button"
+           href="https://www.nndc.bnl.gov/contact-us/"
+           target="_blank"
+           rel="noopener">
+          <i class="fa-solid fa-comments" aria-hidden="true"></i>
+          <span>Contact us</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-lower">
+      <nav class="footer-policy" aria-label="Policies and acknowledgements">
+        <a href="https://www.bnl.gov/privacy/" target="_blank" rel="noopener">
+          Privacy and disclaimer
+        </a>
+        <a href="https://www.nndc.bnl.gov/acknowledgements/" target="_blank" rel="noopener">
+          Acknowledgements
+        </a>
+      </nav>
+
+      <div class="footer-logos" aria-label="Sponsoring institutions">
+        <img src="/ensdf-api/static/images/BNL_Logo.png"
+             alt="Brookhaven National Laboratory"
+             width="188"
+             height="45">
+        <img src="/ensdf-api/static/images/DOE_Logo.png"
+             alt="U.S. Department of Energy"
+             width="180">
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+
+</html>

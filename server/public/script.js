@@ -4292,7 +4292,18 @@ function renderStarterHazardTab(profile, fieldNames) {
       source.append(link);
     } else source.textContent = `Source: ${sourceLabel}`;
     if (fact.sourcePage) source.append(document.createTextNode(` · Location: ${fact.sourcePage}`));
-    card.append(heading, value, status, notes, source);
+    const provenance = document.createElement('details');
+    const provenanceSummary = document.createElement('summary');
+    provenanceSummary.textContent = 'Why this recommendation?';
+    const provenanceText = document.createElement('p');
+    provenanceText.textContent = [
+      fact.sourceArtifactId ? `Artifact: ${fact.sourceArtifactId}` : 'Artifact: not linked',
+      `Locator: ${fact.sourceLocator || fact.sourcePage || 'not available'}`,
+      `Review: ${fact.detailedReviewStatus || fact.verificationStatus || 'Requires Review'}`,
+      ...(fact.limitations || []),
+    ].join(' · ');
+    provenance.append(provenanceSummary, provenanceText);
+    card.append(heading, value, status, notes, source, provenance);
     fragment.append(card);
   });
   if (requestedFields.includes('technicalOperationsFacts') && profile.limitations?.length) {

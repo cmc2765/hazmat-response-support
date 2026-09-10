@@ -1,0 +1,683 @@
+[
+  {
+    "canonicalRecordId": "cesium-137",
+    "namespace": "RADIONUCLIDE",
+    "canonicalNuclideId": "nuclide:cs-137",
+    "element": "Cesium",
+    "elementSymbol": "CS",
+    "atomicNumber": 55,
+    "neutronNumber": 82,
+    "massNumber": 137,
+    "metastableState": null,
+    "nndcName": "137CS",
+    "nndcNuclideId": 3332,
+    "stability": "RADIOACTIVE",
+    "halfLifeOriginal": "30.08 y",
+    "halfLifeValue": 30.08,
+    "halfLifeUnits": "y",
+    "halfLifeSeconds": 949252608,
+    "halfLifeUncertainty": {
+      "type": "symmetric",
+      "value": 0.09
+    },
+    "decayModes": [
+      {
+        "decayMode": "B-",
+        "daughterCanonicalNuclideId": "nuclide:137ba",
+        "daughterNndcName": "137BA",
+        "qValue": 1175.63,
+        "qValueUnits": "keV",
+        "datasetId": 18496,
+        "datasetName": "137CS B- DECAY",
+        "evaluationCutoffDate": "2006-10-01"
+      }
+    ],
+    "branchingInformation": {
+      "B-": {
+        "value": 100,
+        "unit": "%",
+        "uncertainty": {
+          "type": "none"
+        }
+      }
+    },
+    "adoptedDataset": {
+      "datasetId": 18522,
+      "datasetName": "ADOPTED LEVELS, GAMMAS",
+      "evaluationCutoffDate": "2006-10-01"
+    },
+    "sourceArtifacts": [
+      "nndc-137cs-identity",
+      "nndc-137cs-levels",
+      "nndc-137cs-decays"
+    ],
+    "sourceApi": "ENSDF",
+    "reviewStatus": "SOURCE_IMPORTED_PENDING_REVIEW",
+    "limitations": [
+      "Evaluated nuclear physics only; this record is not tactical response guidance.",
+      "Do not infer shielding, PPE, standoff, evacuation distance, dose, or medical treatment from isotope identity or half-life.",
+      "Decay rows retain evaluated dataset identifiers and cutoff dates; disagreements must be reviewed rather than collapsed."
+    ]
+  },
+  {
+    "canonicalRecordId": "cobalt-60",
+    "namespace": "RADIONUCLIDE",
+    "canonicalNuclideId": "nuclide:co-60",
+    "element": "Cobalt",
+    "elementSymbol": "CO",
+    "atomicNumber": 27,
+    "neutronNumber": 33,
+    "massNumber": 60,
+    "metastableState": null,
+    "nndcName": "60CO",
+    "nndcNuclideId": 2408,
+    "stability": "RADIOACTIVE",
+    "halfLifeOriginal": "1925.28 d",
+    "halfLifeValue": 1925.28,
+    "halfLifeUnits": "d",
+    "halfLifeSeconds": 166344192,
+    "halfLifeUncertainty": {
+      "type": "symmetric",
+      "value": 0.14
+    },
+    "decayModes": [
+      {
+        "decayMode": "B-",
+        "daughterCanonicalNuclideId": "nuclide:60ni",
+        "daughterNndcName": "60NI",
+        "qValue": 2822.8,
+        "qValueUnits": "keV",
+        "datasetId": 13752,
+        "datasetName": "60CO B- DECAY (1925.28 D)",
+        "evaluationCutoffDate": "2012-12-31"
+      }
+    ],
+    "branchingInformation": {
+      "B-": {
+        "value": 100,
+        "unit": "%",
+        "uncertainty": {
+          "type": "none"
+        }
+      }
+    },
+    "adoptedDataset": {
+      "datasetId": 13606,
+      "datasetName": "ADOPTED LEVELS, GAMMAS",
+      "evaluationCutoffDate": "2012-12-31"
+    },
+    "sourceArtifacts": [
+      "nndc-60co-identity",
+      "nndc-60co-levels",
+      "nndc-60co-decays"
+    ],
+    "sourceApi": "ENSDF",
+    "reviewStatus": "SOURCE_IMPORTED_PENDING_REVIEW",
+    "limitations": [
+      "Evaluated nuclear physics only; this record is not tactical response guidance.",
+      "Do not infer shielding, PPE, standoff, evacuation distance, dose, or medical treatment from isotope identity or half-life.",
+      "Decay rows retain evaluated dataset identifiers and cutoff dates; disagreements must be reviewed rather than collapsed."
+    ]
+  },
+  {
+    "canonicalRecordId": "iridium-192",
+    "namespace": "RADIONUCLIDE",
+    "canonicalNuclideId": "nuclide:ir-192",
+    "element": "Iridium",
+    "elementSymbol": "IR",
+    "atomicNumber": 77,
+    "neutronNumber": 115,
+    "massNumber": 192,
+    "metastableState": null,
+    "nndcName": "192IR",
+    "nndcNuclideId": 69,
+    "stability": "RADIOACTIVE",
+    "halfLifeOriginal": "73.829 d",
+    "halfLifeValue": 73.829,
+    "halfLifeUnits": "d",
+    "halfLifeSeconds": 6378825.6,
+    "halfLifeUncertainty": {
+      "type": "symmetric",
+      "value": 0.011
+    },
+    "decayModes": [
+      {
+        "decayMode": "EC",
+        "daughterCanonicalNuclideId": "nuclide:192os",
+        "daughterNndcName": "192OS",
+        "qValue": 1046.3,
+        "qValueUnits": "keV",
+        "datasetId": 398,
+        "datasetName": "192IR EC DECAY (73.829 D)",
+        "evaluationCutoffDate": "2012-06-15"
+      },
+      {
+        "decayMode": "B-",
+        "daughterCanonicalNuclideId": "nuclide:192pt",
+        "daughterNndcName": "192PT",
+        "qValue": 1454.5,
+        "qValueUnits": "keV",
+        "datasetId": 628,
+        "datasetName": "192IR B- DECAY (73.829 D)",
+        "evaluationCutoffDate": "2012-06-15"
+      }
+    ],
+    "branchingInformation": {
+      "B-": {
+        "value": 95.24,
+        "unit": "%",
+        "uncertainty": {
+          "type": "symmetric",
+          "value": 0.04
+        }
+      },
+      "EC": {
+        "value": 4.76,
+        "unit": "%",
+        "uncertainty": {
+          "type": "symmetric",
+          "value": 0.04
+        }
+      }
+    },
+    "adoptedDataset": {
+      "datasetId": 256,
+      "datasetName": "ADOPTED LEVELS, GAMMAS",
+      "evaluationCutoffDate": "2012-06-15"
+    },
+    "sourceArtifacts": [
+      "nndc-192ir-identity",
+      "nndc-192ir-levels",
+      "nndc-192ir-decays"
+    ],
+    "sourceApi": "ENSDF",
+    "reviewStatus": "SOURCE_IMPORTED_PENDING_REVIEW",
+    "limitations": [
+      "Evaluated nuclear physics only; this record is not tactical response guidance.",
+      "Do not infer shielding, PPE, standoff, evacuation distance, dose, or medical treatment from isotope identity or half-life.",
+      "Decay rows retain evaluated dataset identifiers and cutoff dates; disagreements must be reviewed rather than collapsed."
+    ]
+  },
+  {
+    "canonicalRecordId": "americium-241",
+    "namespace": "RADIONUCLIDE",
+    "canonicalNuclideId": "nuclide:am-241",
+    "element": "Americium",
+    "elementSymbol": "AM",
+    "atomicNumber": 95,
+    "neutronNumber": 146,
+    "massNumber": 241,
+    "metastableState": null,
+    "nndcName": "241AM",
+    "nndcNuclideId": 1613,
+    "stability": "RADIOACTIVE",
+    "halfLifeOriginal": "432.6 y",
+    "halfLifeValue": 432.6,
+    "halfLifeUnits": "y",
+    "halfLifeSeconds": 13651817760,
+    "halfLifeUncertainty": {
+      "type": "symmetric",
+      "value": 0.6
+    },
+    "decayModes": [
+      {
+        "decayMode": "a",
+        "daughterCanonicalNuclideId": "nuclide:237np",
+        "daughterNndcName": "237NP",
+        "qValue": 5637.82,
+        "qValueUnits": "keV",
+        "datasetId": 9805,
+        "datasetName": "241AM A DECAY",
+        "evaluationCutoffDate": "2006-03-15"
+      }
+    ],
+    "branchingInformation": {
+      "A": {
+        "value": 100,
+        "unit": "%",
+        "uncertainty": {
+          "type": "none"
+        }
+      },
+      "F": {
+        "value": 3.6e-10,
+        "unit": "%",
+        "uncertainty": {
+          "type": "symmetric",
+          "value": 9e-11
+        }
+      }
+    },
+    "adoptedDataset": {
+      "datasetId": 10318,
+      "datasetName": "ADOPTED LEVELS, GAMMAS",
+      "evaluationCutoffDate": "2015-09-30"
+    },
+    "sourceArtifacts": [
+      "nndc-241am-identity",
+      "nndc-241am-levels",
+      "nndc-241am-decays"
+    ],
+    "sourceApi": "ENSDF",
+    "reviewStatus": "SOURCE_IMPORTED_PENDING_REVIEW",
+    "limitations": [
+      "Evaluated nuclear physics only; this record is not tactical response guidance.",
+      "Do not infer shielding, PPE, standoff, evacuation distance, dose, or medical treatment from isotope identity or half-life.",
+      "Decay rows retain evaluated dataset identifiers and cutoff dates; disagreements must be reviewed rather than collapsed."
+    ]
+  },
+  {
+    "canonicalRecordId": "strontium-90",
+    "namespace": "RADIONUCLIDE",
+    "canonicalNuclideId": "nuclide:sr-90",
+    "element": "Strontium",
+    "elementSymbol": "SR",
+    "atomicNumber": 38,
+    "neutronNumber": 52,
+    "massNumber": 90,
+    "metastableState": null,
+    "nndcName": "90SR",
+    "nndcNuclideId": 449,
+    "stability": "RADIOACTIVE",
+    "halfLifeOriginal": "28.91 y",
+    "halfLifeValue": 28.91,
+    "halfLifeUnits": "y",
+    "halfLifeSeconds": 912330216,
+    "halfLifeUncertainty": {
+      "type": "symmetric",
+      "value": 0.03
+    },
+    "decayModes": [
+      {
+        "decayMode": "B-",
+        "daughterCanonicalNuclideId": "nuclide:90y",
+        "daughterNndcName": "90Y",
+        "qValue": 545.9,
+        "qValueUnits": "keV",
+        "datasetId": 3239,
+        "datasetName": "90SR B- DECAY (28.91 Y)",
+        "evaluationCutoffDate": "2020-03-01"
+      }
+    ],
+    "branchingInformation": {
+      "B-": {
+        "value": 100,
+        "unit": "%",
+        "uncertainty": {
+          "type": "none"
+        }
+      }
+    },
+    "adoptedDataset": {
+      "datasetId": 3172,
+      "datasetName": "ADOPTED LEVELS, GAMMAS",
+      "evaluationCutoffDate": "2020-03-01"
+    },
+    "sourceArtifacts": [
+      "nndc-90sr-identity",
+      "nndc-90sr-levels",
+      "nndc-90sr-decays"
+    ],
+    "sourceApi": "ENSDF",
+    "reviewStatus": "SOURCE_IMPORTED_PENDING_REVIEW",
+    "limitations": [
+      "Evaluated nuclear physics only; this record is not tactical response guidance.",
+      "Do not infer shielding, PPE, standoff, evacuation distance, dose, or medical treatment from isotope identity or half-life.",
+      "Decay rows retain evaluated dataset identifiers and cutoff dates; disagreements must be reviewed rather than collapsed."
+    ]
+  },
+  {
+    "canonicalRecordId": "iodine-131",
+    "namespace": "RADIONUCLIDE",
+    "canonicalNuclideId": "nuclide:i-131",
+    "element": "Iodine",
+    "elementSymbol": "I",
+    "atomicNumber": 53,
+    "neutronNumber": 78,
+    "massNumber": 131,
+    "metastableState": null,
+    "nndcName": "131I",
+    "nndcNuclideId": 3051,
+    "stability": "RADIOACTIVE",
+    "halfLifeOriginal": "8.0252 d",
+    "halfLifeValue": 8.0252,
+    "halfLifeUnits": "d",
+    "halfLifeSeconds": 693377.28,
+    "halfLifeUncertainty": {
+      "type": "symmetric",
+      "value": 0.0006
+    },
+    "decayModes": [
+      {
+        "decayMode": "B-",
+        "daughterCanonicalNuclideId": "nuclide:131xe",
+        "daughterNndcName": "131XE",
+        "qValue": 970.8,
+        "qValueUnits": "keV",
+        "datasetId": 17315,
+        "datasetName": "131I B- DECAY",
+        "evaluationCutoffDate": "2006-07-17"
+      }
+    ],
+    "branchingInformation": {
+      "B-": {
+        "value": 100,
+        "unit": "%",
+        "uncertainty": {
+          "type": "none"
+        }
+      }
+    },
+    "adoptedDataset": {
+      "datasetId": 17140,
+      "datasetName": "ADOPTED LEVELS, GAMMAS",
+      "evaluationCutoffDate": "2006-07-17"
+    },
+    "sourceArtifacts": [
+      "nndc-131i-identity",
+      "nndc-131i-levels",
+      "nndc-131i-decays"
+    ],
+    "sourceApi": "ENSDF",
+    "reviewStatus": "SOURCE_IMPORTED_PENDING_REVIEW",
+    "limitations": [
+      "Evaluated nuclear physics only; this record is not tactical response guidance.",
+      "Do not infer shielding, PPE, standoff, evacuation distance, dose, or medical treatment from isotope identity or half-life.",
+      "Decay rows retain evaluated dataset identifiers and cutoff dates; disagreements must be reviewed rather than collapsed."
+    ]
+  },
+  {
+    "canonicalRecordId": "radium-226",
+    "namespace": "RADIONUCLIDE",
+    "canonicalNuclideId": "nuclide:ra-226",
+    "element": "Radium",
+    "elementSymbol": "RA",
+    "atomicNumber": 88,
+    "neutronNumber": 138,
+    "massNumber": 226,
+    "metastableState": null,
+    "nndcName": "226RA",
+    "nndcNuclideId": 1269,
+    "stability": "RADIOACTIVE",
+    "halfLifeOriginal": "1600 y",
+    "halfLifeValue": 1600,
+    "halfLifeUnits": "y",
+    "halfLifeSeconds": 50492160000,
+    "halfLifeUncertainty": {
+      "type": "symmetric",
+      "value": 7
+    },
+    "decayModes": [
+      {
+        "decayMode": "a",
+        "daughterCanonicalNuclideId": "nuclide:222rn",
+        "daughterNndcName": "222RN",
+        "qValue": 4870.7,
+        "qValueUnits": "keV",
+        "datasetId": 8077,
+        "datasetName": "226RA A DECAY (1603 Y)",
+        "evaluationCutoffDate": "2023-09-25"
+      }
+    ],
+    "branchingInformation": {
+      "14C": {
+        "value": 3.2e-9,
+        "unit": "%",
+        "uncertainty": {
+          "type": "symmetric",
+          "value": 1.6e-9
+        }
+      },
+      "A": {
+        "value": 100,
+        "unit": "%",
+        "uncertainty": {
+          "type": "none"
+        }
+      }
+    },
+    "adoptedDataset": {
+      "datasetId": 8416,
+      "datasetName": "ADOPTED LEVELS, GAMMAS",
+      "evaluationCutoffDate": "1996-02-01"
+    },
+    "sourceArtifacts": [
+      "nndc-226ra-identity",
+      "nndc-226ra-levels",
+      "nndc-226ra-decays"
+    ],
+    "sourceApi": "ENSDF",
+    "reviewStatus": "SOURCE_IMPORTED_PENDING_REVIEW",
+    "limitations": [
+      "Evaluated nuclear physics only; this record is not tactical response guidance.",
+      "Do not infer shielding, PPE, standoff, evacuation distance, dose, or medical treatment from isotope identity or half-life.",
+      "Decay rows retain evaluated dataset identifiers and cutoff dates; disagreements must be reviewed rather than collapsed."
+    ]
+  },
+  {
+    "canonicalRecordId": "uranium-235",
+    "namespace": "RADIONUCLIDE",
+    "canonicalNuclideId": "nuclide:u-235",
+    "element": "Uranium",
+    "elementSymbol": "U",
+    "atomicNumber": 92,
+    "neutronNumber": 143,
+    "massNumber": 235,
+    "metastableState": null,
+    "nndcName": "235U",
+    "nndcNuclideId": 1468,
+    "stability": "RADIOACTIVE",
+    "halfLifeOriginal": "704000000 y",
+    "halfLifeValue": 704000000,
+    "halfLifeUnits": "y",
+    "halfLifeSeconds": 22216550400000000,
+    "halfLifeUncertainty": {
+      "type": "symmetric",
+      "value": 1000000
+    },
+    "decayModes": [
+      {
+        "decayMode": "a",
+        "daughterCanonicalNuclideId": "nuclide:231th",
+        "daughterNndcName": "231TH",
+        "qValue": 4678.1,
+        "qValueUnits": "keV",
+        "datasetId": 9034,
+        "datasetName": "235U A DECAY (7.04E+8 Y)",
+        "evaluationCutoffDate": "2022-08-31"
+      }
+    ],
+    "branchingInformation": {
+      "20NE": {
+        "value": 8e-10,
+        "unit": "%",
+        "uncertainty": {
+          "type": "symmetric",
+          "value": 4e-10
+        }
+      },
+      "25NE": {
+        "value": 8e-10,
+        "unit": "%",
+        "uncertainty": {
+          "type": "approximation"
+        }
+      },
+      "28MG": {
+        "value": 8e-10,
+        "unit": "%",
+        "uncertainty": {
+          "type": "none"
+        }
+      },
+      "A": {
+        "value": 100,
+        "unit": "%",
+        "uncertainty": {
+          "type": "none"
+        }
+      },
+      "F": {
+        "value": 7e-9,
+        "unit": "%",
+        "uncertainty": {
+          "type": "symmetric",
+          "value": 2e-9
+        }
+      }
+    },
+    "adoptedDataset": {
+      "datasetId": 9567,
+      "datasetName": "ADOPTED LEVELS, GAMMAS",
+      "evaluationCutoffDate": "2014-02-01"
+    },
+    "sourceArtifacts": [
+      "nndc-235u-identity",
+      "nndc-235u-levels",
+      "nndc-235u-decays"
+    ],
+    "sourceApi": "ENSDF",
+    "reviewStatus": "SOURCE_IMPORTED_PENDING_REVIEW",
+    "limitations": [
+      "Evaluated nuclear physics only; this record is not tactical response guidance.",
+      "Do not infer shielding, PPE, standoff, evacuation distance, dose, or medical treatment from isotope identity or half-life.",
+      "Decay rows retain evaluated dataset identifiers and cutoff dates; disagreements must be reviewed rather than collapsed."
+    ]
+  },
+  {
+    "canonicalRecordId": "uranium-238",
+    "namespace": "RADIONUCLIDE",
+    "canonicalNuclideId": "nuclide:u-238",
+    "element": "Uranium",
+    "elementSymbol": "U",
+    "atomicNumber": 92,
+    "neutronNumber": 146,
+    "massNumber": 238,
+    "metastableState": null,
+    "nndcName": "238U",
+    "nndcNuclideId": 1543,
+    "stability": "RADIOACTIVE",
+    "halfLifeOriginal": "4468000000 y",
+    "halfLifeValue": 4468000000,
+    "halfLifeUnits": "y",
+    "halfLifeSeconds": 140999356800000000,
+    "halfLifeUncertainty": {
+      "type": "symmetric",
+      "value": 6000000
+    },
+    "decayModes": [
+      {
+        "decayMode": "a",
+        "daughterCanonicalNuclideId": "nuclide:234th",
+        "daughterNndcName": "234TH",
+        "qValue": 4269.9,
+        "qValueUnits": "keV",
+        "datasetId": 9427,
+        "datasetName": "238U A DECAY",
+        "evaluationCutoffDate": "2023-12-01"
+      }
+    ],
+    "branchingInformation": {
+      "A": {
+        "value": 100,
+        "unit": "%",
+        "uncertainty": {
+          "type": "none"
+        }
+      },
+      "F": {
+        "value": 0.0000545,
+        "unit": "%",
+        "uncertainty": {
+          "type": "symmetric",
+          "value": 7e-7
+        }
+      }
+    },
+    "adoptedDataset": {
+      "datasetId": 10052,
+      "datasetName": "ADOPTED LEVELS, GAMMAS",
+      "evaluationCutoffDate": "2014-06-01"
+    },
+    "sourceArtifacts": [
+      "nndc-238u-identity",
+      "nndc-238u-levels",
+      "nndc-238u-decays"
+    ],
+    "sourceApi": "ENSDF",
+    "reviewStatus": "SOURCE_IMPORTED_PENDING_REVIEW",
+    "limitations": [
+      "Evaluated nuclear physics only; this record is not tactical response guidance.",
+      "Do not infer shielding, PPE, standoff, evacuation distance, dose, or medical treatment from isotope identity or half-life.",
+      "Decay rows retain evaluated dataset identifiers and cutoff dates; disagreements must be reviewed rather than collapsed."
+    ]
+  },
+  {
+    "canonicalRecordId": "plutonium-239",
+    "namespace": "RADIONUCLIDE",
+    "canonicalNuclideId": "nuclide:pu-239",
+    "element": "Plutonium",
+    "elementSymbol": "PU",
+    "atomicNumber": 94,
+    "neutronNumber": 145,
+    "massNumber": 239,
+    "metastableState": null,
+    "nndcName": "239PU",
+    "nndcNuclideId": 1572,
+    "stability": "RADIOACTIVE",
+    "halfLifeOriginal": "24110 y",
+    "halfLifeValue": 24110,
+    "halfLifeUnits": "y",
+    "halfLifeSeconds": 760853736000,
+    "halfLifeUncertainty": {
+      "type": "symmetric",
+      "value": 30
+    },
+    "decayModes": [
+      {
+        "decayMode": "a",
+        "daughterCanonicalNuclideId": "nuclide:235u",
+        "daughterNndcName": "235U",
+        "qValue": 5244.5,
+        "qValueUnits": "keV",
+        "datasetId": 9597,
+        "datasetName": "239PU A DECAY",
+        "evaluationCutoffDate": "2014-02-01"
+      }
+    ],
+    "branchingInformation": {
+      "A": {
+        "value": 100,
+        "unit": "%",
+        "uncertainty": {
+          "type": "none"
+        }
+      },
+      "F": {
+        "value": 3.1e-10,
+        "unit": "%",
+        "uncertainty": {
+          "type": "symmetric",
+          "value": 6e-11
+        }
+      }
+    },
+    "adoptedDataset": {
+      "datasetId": 10146,
+      "datasetName": "ADOPTED LEVELS, GAMMAS",
+      "evaluationCutoffDate": "2013-06-30"
+    },
+    "sourceArtifacts": [
+      "nndc-239pu-identity",
+      "nndc-239pu-levels",
+      "nndc-239pu-decays"
+    ],
+    "sourceApi": "ENSDF",
+    "reviewStatus": "SOURCE_IMPORTED_PENDING_REVIEW",
+    "limitations": [
+      "Evaluated nuclear physics only; this record is not tactical response guidance.",
+      "Do not infer shielding, PPE, standoff, evacuation distance, dose, or medical treatment from isotope identity or half-life.",
+      "Decay rows retain evaluated dataset identifiers and cutoff dates; disagreements must be reviewed rather than collapsed."
+    ]
+  }
+]

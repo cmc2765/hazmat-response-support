@@ -1,0 +1,1399 @@
+<!DOCTYPE html><html class='' lang="en"><head>
+<title>Dose Estimator for Exposure: 3 Biodosimetry Tools - Radiation Emergency Medical Management</title>
+<meta charset='UTF-8'>
+<meta http-equiv="X-UA-Compatible" content="IE=10">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NWD949H');</script>
+<!-- End Google Tag Manager -->
+
+<link rel="canonical" href="https://remm.hhs.gov/ars_wbd.htm" />
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+
+<!--<meta name="viewport" content="width=device-width">-->
+
+<script src='modernizr.js'></script>
+  <link rel="stylesheet" href="/style1.css?v=2.0" media="screen" />
+<link rel='stylesheet' href='/bootstrap.min.css'>
+<link rel='stylesheet' href='/mega.css'>
+<link rel='stylesheet' href='/megacustom.css'>
+<link href='https://fonts.googleapis.com/css?family=Roboto:300italic,400italic,600italic,700italic,700,400,300,100' rel='stylesheet' type='text/css'>
+    <script src="carouselengine/jquery.js"></script>
+<!--JAVASCRIPT STYLE HERE-->
+
+<script language="Javascript" src="CalendarPopup.js"></script>
+
+<!--Javascript starts here -->
+<SCRIPT LANGUAGE="JavaScript">document.write(getCalendarStyles());</SCRIPT>
+<SCRIPT language=JavaScript type=text/javascript>
+    <!--
+
+
+    var msg=   ['This assessment is based on adult population with normal count range of 1.35 to 3.5E+09 cells/liter.\n',
+                'Cannot make estimate using kinetic method.  Data in the normal range is consistent with zero Gy dose estimate.\n',
+                'Make additional measurements every 6-8 hours for several days.\n',
+               	'There is evidence of exposure, but a kinetic dose estimate cannot be made using the lymphocyte data.\n',
+		'If not already done, make additional measurements every 6-8 hours for several days.  Then use the Multi-Sample Dose Estimate method to determine dose.\n',
+                'Lymphocyte data is consistent with background or exposure of 0 Gy (i.e., no exposure).  This estimate has poor reliability.  Draw serial blood samples and make additional measurements.\n',
+                'Data is consistent with zero Gy dose estimate.\n'];
+
+
+    function computetimelapse(date1, date2, time1, time2) {
+        var timestr1= date1 + " " + time1 + ":00";
+        var timestr2= date2 + " " + time2 + ":00";
+        var d1=new Date(timestr1);
+        var d2=new Date(timestr2);
+        var minutes=1000*60;
+        var diff=(d2.getTime() - d1.getTime())/minutes;
+        return diff;
+
+    }
+    function vomitdose1()
+    {
+       var hours;
+
+       var lapse = computetimelapse(document.vomit.date1x.value, document.vomit.date1xx.value, document.vomit.hour1x.value, document.vomit.hour1xx.value);
+      if (lapse <= 0) {
+        alert ("Time of exposure is not before time of vomiting.");
+        return;
+      }
+      else if (!lapse) {
+          alert("Time format is not correct.");
+          return;
+      }
+      hours = parseFloat(lapse)/60;
+      var dose = 5.9398 * (Math.pow(hours, -0.71007));
+      if (dose > 40.6) {
+        document.vomit.dosevomit.value=">40.6";
+        document.vomit.CL.value="";
+      }
+      else if (dose <1.1) {
+        document.vomit.dosevomit.value="<1.1";
+        document.vomit.CL.value="";
+      }
+      else {
+        document.vomit.dosevomit.value=roundNumber(dose,1);
+        var CL_1=0.119287 + (0.09666 * Math.pow(Math.log(hours), 2)) + (0.072867 * Math.log(hours));
+        var upperCL=(5.9398 + 2 * (Math.sqrt(CL_1))) * Math.pow(hours, -0.71007);
+        var lowerCL=(5.9398 - 2 * (Math.sqrt(CL_1))) * Math.pow(hours, -0.71007);
+        if (lowerCL < 0)
+            lowerCL=0;
+
+        document.vomit.CL.value=roundNumber(lowerCL,1)+" - "+roundNumber(upperCL,1);
+      }
+
+
+    }
+
+    function vomitdose()
+    {
+
+       var lapse = computetimelapse(document.vomit.date1x.value, document.vomit.date1xx.value, document.vomit.hour1x.value, document.vomit.hour1xx.value);
+
+      if (lapse < 0) {
+        alert ("Vomit time must be after the time of exposure.");
+      }
+      else if (lapse < 30) {
+          document.vomit.dosevomit.value="> 10";
+          document.vomit.percentvomit.value="100";
+       }
+       else if (lapse>=30 && lapse < 40) {
+          document.vomit.dosevomit.value="9";
+          document.vomit.percentvomit.value="100";
+       }
+       else if (lapse >=40 && lapse < 45) {
+          document.vomit.dosevomit.value="8";
+          document.vomit.percentvomit.value="99";
+       }
+       else if (lapse >=45 && lapse < 60) {
+          document.vomit.dosevomit.value="7";
+          document.vomit.percentvomit.value="98";
+       }
+       else if (lapse >= 60 && lapse < 75) {
+          document.vomit.dosevomit.value="6";
+          document.vomit.percentvomit.value="94";
+       }
+       else if (lapse >= 75 && lapse < 105) {
+          document.vomit.dosevomit.value="5";
+          document.vomit.percentvomit.value="86";
+       }
+       else if (lapse >= 105 && lapse < 150) {
+          document.vomit.dosevomit.value="4";
+          document.vomit.percentvomit.value="72";
+       }
+       else if (lapse >=150 && lapse <= 270) {
+          document.vomit.dosevomit.value="3";
+          document.vomit.percentvomit.value="54";
+       }
+       else {
+          document.vomit.dosevomit.value="< 2";
+          document.vomit.percentvomit.value="35";
+       }
+    }
+
+
+   function sinh(num){
+
+      return (Math.exp(num) - Math.exp(-num))/2;
+   }
+
+   function cosh(num) {
+      return (Math.exp(num) + Math.exp(-num))/2;
+   }
+
+   function tanh (num) {
+      return sinh(num) / cosh(num);
+
+   }
+
+   function roundNumber(num, dec) {
+	var result = Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
+	return result;
+   }
+
+    function lymphocyte1dose(formname)
+    {
+      var k;
+      var totaldays;
+      var dose;
+
+
+      var lapse = computetimelapse(document.lymphform.date2x.value, document.lymphform.date2xx.value, document.lymphform.hour2x.value, document.lymphform.hour2xx.value); /* returns minutes */
+      if (lapse <= 0) {
+        alert("Blood sample  must be taken after the time of exposure.");
+        return;
+      }
+      else if (!lapse) {
+        alert("Time format is not correct.");
+        return;
+      }
+
+
+      var day=24 * 60;
+
+      if (formname.L1.value=="" ) {
+         alert ("Enter a value for lymphocyte count.");
+         return;
+      }
+
+/*
+         if (formname.dayvalue.value=="")
+            formname.dayvalue.value="0";
+         if (formname.hourvalue.value=="")
+            formname.hourvalue.value="0";
+
+         while (formname.dayvalue.value !="0" && formname.dayvalue.value.indexOf('0')==0)
+           formname.dayvalue.value=formname.dayvalue.value.substring(1);
+
+         while (formname.hourvalue.value !="0" && formname.hourvalue.value.indexOf('0')==0)
+           formname.hourvalue.value=formname.hourvalue.value.substring(1);
+
+         if (formname.dayvalue.value=="0" && formname.hourvalue.value=="0"){
+            alert("Enter a value for Time interval.");
+            return;
+         }
+         totaldays=(parseFloat(formname.dayvalue.value)*24 + parseFloat(formname.hourvalue.value))/24;
+*/
+         totaldays = parseFloat(lapse)/day;
+
+         if (formname.L1.value <0.007 || formname.L1.value >7)
+             alert ("Lymphocyte count is out of range.");
+         else if (totaldays > 11)
+             alert ("Time interval is out of range.");
+
+         else {
+
+	   if(formname.L1.value>=5)
+             alert ("Warning: Lymphocyte count must be less than 5.0E+09 to make estimate.");
+           else if (formname.L1.value >1.35)
+             alert (msg[6] +   msg[0] +  msg[4]);
+           else {
+             dose=(0.14848 - (Math.log(formname.L1.value)/Math.log(10)))/(0.116655+(0.1355311 * (tanh((totaldays-2.45501)/3.17703))));
+
+             if(dose <1.5)
+                formname.lymphdose.value="0";
+             else if (dose >10)
+                formname.lymphdose.value=">10";
+             else
+                formname.lymphdose.value= roundNumber(dose,1);
+           }
+
+
+
+         }
+
+
+
+   }
+
+
+    function lymphocyte2dose(formname)
+    {
+
+      var k;
+      var totaldays3;
+      var totaldays2;
+      var totaldays1;
+      var timeinterval;
+      var dose;
+      var lym1;
+      var lym2;
+      var lym3;
+      var count=0;
+      var lymphArray=new Array();
+      var dateArray=new Array();
+      var sum_x=0;
+      var sum_y=0;
+      var sum_xy =0;
+      var sum_x2=0;
+      var sum_gus_xy=0;
+      var sum_gus_x2=0;
+      var sum_gus_y2=0;
+      var cl_t_Array = new Array();
+
+      cl_t_Array[0] = 0;
+      cl_t_Array[1] = 12.706;
+      cl_t_Array[2]=4.303;
+      cl_t_Array[3]=3.182;
+
+
+      formname.lymphdose.value="";
+      formname.CL.value="";
+
+         if (formname.L1.value=="") {
+             if (formname.L2.value=="" && formname.L3.value=="") {
+                alert ("Enter a value for lymphocyte count.");
+                return false;
+             }
+             else {
+                alert("If there is only one blood count report, enter the data in the first box.");
+                return false;
+             }
+
+         }
+         else if (formname.L1.value !="" ) {
+             if (formname.L2.value=="" && formname.L3.value=="") {
+                lymphocyte1dose(formname);
+
+                return;
+             }
+             else if (formname.L2.value!="" && formname.L3.value=="") {
+                count=2;
+                lymphArray[0]=parseFloat(formname.L1.value);
+                lymphArray[1]=parseFloat(formname.L2.value);
+
+             }
+             else if (formname.L2.value=="" && formname.L3.value!="") {
+                alert ("If there are only 2 blood counts, enter the data in the first 2 boxes.");
+                return false;
+             }
+             else {
+                count=3;
+                lymphArray[0]=parseFloat(formname.L1.value);
+                lymphArray[1]=parseFloat(formname.L2.value);
+                lymphArray[2]=parseFloat(formname.L3.value);
+             }
+         }
+
+
+       var lapse1 = computetimelapse(document.lymphform.date2x.value, document.lymphform.date2xx.value, document.lymphform.hour2x.value, document.lymphform.hour2xx.value); /* returns minutes */
+       var lapse2 = computetimelapse(document.lymphform.date2x.value, document.lymphform.date2xxx.value, document.lymphform.hour2x.value, document.lymphform.hour2xxx.value); /* returns minutes */
+
+       if (lapse1<=0 || lapse2<=0) {
+          alert ("Blood sample must be taken after the time of exposure.");
+          return;
+       }
+       else if (lapse1==lapse2) {
+          alert("For multisample prediction, all measurements cannot have same time.  Unable to obtain multisample estimate from your lymphocyte data.  Draw serial blood samples and make additional measurements.");
+          return;
+
+       }
+       else if (!lapse1 || !lapse2) {
+          alert("Time format is not correct.");
+          return;
+       }
+
+       if (count==3) {
+           var lapse3 = computetimelapse(document.lymphform.date2x.value, document.lymphform.date2xxxx.value, document.lymphform.hour2x.value, document.lymphform.hour2xxxx.value); /* returns minutes */
+           if (lapse1==lapse2 && lapse2 == lapse3) {
+             alert("For multisample prediction, all measurements cannot have same time.  Unable to obtain multisample estimate from your lymphocyte data.  Draw serial blood samples and make additional measurements.");
+             return;
+           }
+           else if (!lapse1 || !lapse2 || !lapse3) {
+             alert("Time format is not correct.");
+             return;
+           }
+
+       }
+       var day = 24 * 60;
+       totaldays1=parseFloat(lapse1)/day;
+       totaldays2=parseFloat(lapse2)/day;
+
+       dateArray[0]=totaldays1;
+       dateArray[1]=totaldays2;
+       if (count==3) {
+          totaldays3=parseFloat(lapse3)/day;
+          dateArray[2]=totaldays3;
+       }
+
+
+        for (var i=0; i< count; i++) {
+           if (lymphArray[i] < 0.007 || lymphArray[i] > 7) {
+               alert("Lymphocyte count is out of range.");
+               return false;
+           }
+        }
+
+        for(i=0; i< count; i++) {
+           if(dateArray[i] > 11){
+              alert("Time interval is out of range.");
+              return false;
+           }
+        }
+
+
+           for (i=0; i<count; i++) {
+              if (lymphArray[i]< 1.35 || lymphArray[i]>5)
+                  break;
+           }
+           for (var j=0; j<count; j++) {
+              if (dateArray[i]>=1.5)
+                  break;
+           }
+
+           if (i==count && j==count)
+              alert(msg[1] +  msg[2] +  msg[0]);
+
+           else {
+
+           lym1=lymphArray[0];
+           lym2=lymphArray[1];
+
+             /* BHAT */
+
+            for (i=0; i< count; i++) {
+               sum_x += dateArray[i];
+               sum_y += lymphArray[i];
+               sum_xy += (lymphArray[i] * dateArray[i]);
+               sum_x2 += Math.pow(dateArray[i], 2);
+            }
+
+
+            dose= ((sum_x * sum_y) - (count * sum_xy)) / ( Math.pow(sum_x, 2) - (count * sum_x2) );
+
+
+             if (dose >=0)  {
+                if ((lym1+lym2)/2 < 1)
+                   alert(msg[3]);
+                else
+                   alert(msg[5]);
+             }
+             else {
+
+                /* AHAT */
+
+                dose = (sum_y/count) - ((dose * sum_x)/count);
+
+
+                if (dose <1.5) { /*Guskova*/
+                  /*  alert ("Guskova"); */
+
+                    for (i=0; i<count; i++) {
+                       sum_gus_x2 += Math.pow((0.116655 + (0.1355311 * (tanh((dateArray[i]-2.45501)/3.17703)))),2);
+                       sum_gus_y2 += Math.pow((0.14848 - Math.log(lymphArray[i])/Math.log(10)), 2);
+                       sum_gus_xy += (0.116655 + (0.1355311 * (tanh((dateArray[i]-2.45501)/3.17703)))  )* (0.14848 - Math.log(lymphArray[i])/Math.log(10));
+
+                    }
+                    dose = sum_gus_xy / sum_gus_x2;
+
+
+                     if (dose <1)
+                       formname.lymphdose.value="0";
+                     else if (dose > 10)
+                       formname.lymphdose.value=">10";
+                     else {
+                       formname.lymphdose.value=roundNumber(dose,1);
+
+                       var CL = cl_t_Array[count-1] * (Math.sqrt((sum_gus_y2 / ((count-1) * sum_gus_x2 )) - (Math.pow(dose,2)/ (count-1))));
+
+
+                       var upperCL=dose +  CL;
+                       var lowerCL=dose - CL;
+                       if (lowerCL < 0)
+                          lowerCL=0;
+                       formname.CL.value=roundNumber(lowerCL, 1) + " - " + roundNumber(upperCL, 1);
+
+                     }
+                }
+                else { /*Goans */
+                    /*alert ("Goans"); */
+
+                  sum_x=0;
+                  sum_y=0;
+                  sum_xy=0;
+                  sum_x2=0;
+
+                  for (i=0; i< count; i++) {
+                    sum_x += dateArray[i];
+                    sum_y += Math.log(lymphArray[i]);
+                    sum_xy += (Math.log(lymphArray[i]) * dateArray[i]);
+                    sum_x2 += Math.pow(dateArray[i], 2);
+                  }
+
+
+
+                  var numerator= (sum_x * sum_y) - (count * sum_xy);
+                  var denominator= Math.pow(sum_x, 2) - (count * sum_x2);
+
+
+                  dose=(-7.941) * (numerator/denominator);
+
+
+                  if (dose <1){
+                    formname.lymphdose.value="0";
+                    formname.CL.value="";
+                  }
+                  else if (dose > 8) {
+                    formname.lymphdose.value=">8";
+                    formname.CL.value="";
+                  }
+                  else {
+                    formname.lymphdose.value=roundNumber(dose,1);
+
+                    var upperCL=1.2253 * dose;
+                    var lowerCL=0.7747 * dose;
+                    formname.CL.value=roundNumber(lowerCL, 1) + " - " + roundNumber(upperCL, 1);
+                  }
+                }
+
+             }
+
+           }
+
+
+
+
+   }
+
+
+
+    function cytodose()
+    {
+       var lapse = computetimelapse(document.cytogeneticsform.date3x.value, document.cytogeneticsform.date3xx.value, document.cytogeneticsform.hour3x.value, document.cytogeneticsform.hour3xx.value);
+       var day = 24 * 60;
+       var weeks = 24 * 60 * 4 * 7;
+       if (lapse <= day) {
+         alert("Blood sample should be taken at least 24 hours after exposure.");
+         document.cytogeneticsform.dosecyto.value="";
+         return;
+      }
+      else if (lapse > weeks) {
+        alert ("No calculation is provided for sample taken 4 weeks after exposure.  It is necessary to enter a time correction factor which is provided by the cytogenetics laboratory.");
+        document.cytogeneticsform.dosecyto.value="";
+        return;
+
+      }
+
+       if (document.cytogeneticsform.dicentrics.selectedIndex==1)
+          document.cytogeneticsform.dosecyto.value="0";
+       else if (document.cytogeneticsform.dicentrics.selectedIndex==2)
+          document.cytogeneticsform.dosecyto.value="0 - 1";
+       else if (document.cytogeneticsform.dicentrics.selectedIndex==3)
+          document.cytogeneticsform.dosecyto.value="1 - 2";
+       else if (document.cytogeneticsform.dicentrics.selectedIndex==4)
+          document.cytogeneticsform.dosecyto.value="2 - 3";
+       else if (document.cytogeneticsform.dicentrics.selectedIndex==5)
+          document.cytogeneticsform.dosecyto.value="3 - 4";
+       else if (document.cytogeneticsform.dicentrics.selectedIndex==6)
+          document.cytogeneticsform.dosecyto.value="4 - 5";
+       else if (document.cytogeneticsform.dicentrics.selectedIndex==7)
+          document.cytogeneticsform.dosecyto.value="> 5";
+       else if (document.cytogeneticsform.dicentrics.selectedIndex==0)
+          document.cytogeneticsform.dosecyto.value="";
+    }
+    function getRx(formname)
+    {
+        var dose;
+        var doseGy;
+        var i;
+        var j;
+
+
+        if (formname=="v") {
+           if (document.vomit.dosevomit.value==""){
+              alert("Enter date/time of exposure and onset of vomiting, then click the Estimate dose button.");
+              return;
+           }
+           if (document.vomit.dosevomit.value.indexOf('<')!=-1)
+              dose="1 Gy";
+           else if (document.vomit.dosevomit.value.indexOf('>')!=-1)
+              dose="10 Gy";
+           else if (document.vomit.dosevomit.value>=10)
+              dose="10 Gy";
+           else
+              dose=roundNumber(document.vomit.dosevomit.value, 0) + " Gy";
+
+        }
+        else if (formname=="l") {
+           if (document.lymphform.lymphdose.value==""){
+              alert("Enter date/time of exposure and date/time of one or more blood counts and corresponding lymphocyte counts, then click the Estimate dose button");
+	      return;
+	   }
+           else if (document.lymphform.lymphdose.value.indexOf('>')!=-1){
+              if (document.lymphform.lymphdose.value==">10")
+                 dose="10 Gy";
+              else if (document.lymphform.lymphdose.value==">8")
+                 dose="9 Gy";
+           }
+           else
+              dose=roundNumber(document.lymphform.lymphdose.value, 0) + " Gy";
+
+        }
+        else if (formname=="c") {
+           if (document.cytogeneticsform.dosecyto.value==""){
+              alert("Select a value for the number of dicentrics, then click the Calculate button.");
+              return;
+           }
+           dose=document.cytogeneticsform.dosecyto.value + " Gy";
+        }
+        else
+           dose=formname;
+
+        if (dose.indexOf('<')!=-1)
+           doseGy=dose.substring(2);
+        else if (dose.indexOf('>')!=-1)
+           doseGy=dose.substring(2);
+        else if (dose.indexOf('-')!=-1)
+           doseGy=dose.substring(4);
+        else
+           doseGy=dose;
+
+/*
+        doseGy=doseGy + "|" +dose +"|";
+        if (formname=="v")
+            doseGy+="onset of vomiting";
+        if (formname=="l")
+            doseGy+="lymphocyte depletion kinetics";
+        if (formname=="c")
+            doseGy+="dicentric chromosomes";
+
+        setCookie('biodose', doseGy, null, '/', null, null);
+        document.location.href="ars_dose.htm";
+*/
+       resetcolor();
+       if (dose=="> 5 Gy"){
+          change("6_Gy", "second");change("6_Gy_img", "visible");
+          change("7_Gy", "second");change("7_Gy_img", "visible");
+          change("8_Gy", "second");change("8_Gy_img", "visible");
+          change("9_Gy", "second");change("9_Gy_img", "visible");
+          change("10_Gy", "second");change("10_Gy_img", "visible");
+          for (i=1; i< 5; i++) {
+             for (j=1; j<5; j++) {
+                change(("6_Gy"+"_" + i.toString() + "_" + j.toString()), "visible");
+                change(("7_Gy"+"_" + i.toString() + "_" + j.toString()), "visible");
+                change(("8_Gy"+"_" + i.toString() + "_" + j.toString()), "visible");
+                change(("9_Gy"+"_" + i.toString() + "_" + j.toString()), "visible");
+                change(("10_Gy"+"_" + i.toString() + "_" + j.toString()), "visible");
+             }
+          }
+       }
+       else {
+          change(doseGy.replace(" ", "_"), "second");
+          change((doseGy.replace(" ", "_")+"_img"), "visible");
+
+          for (i=1; i< 5; i++) {
+             for (j=1; j<5; j++) {
+                change((doseGy.replace(" ", "_")+"_" + i.toString() + "_" + j.toString()), "visible");
+             }
+          }
+       }
+
+       document.location.href="#rx";
+
+     }
+
+
+
+function setCookie(name, value, expires, path, domain, secure) {
+
+  var curCookie = name + "=" + escape(value) +
+      ((expires) ? "; expires=" + expires.toGMTString() : "") +
+      ((path) ? "; path=" + path : "") +
+      ((domain) ? "; domain=" + domain : "") +
+      ((secure) ? "; secure" : "");
+  document.cookie = curCookie;
+}
+
+function getCookie(name) {
+  var dc = document.cookie;
+  var prefix = name + "=";
+  var begin = dc.indexOf("; " + prefix);
+  if (begin == -1) {
+    begin = dc.indexOf(prefix);
+    if (begin != 0) return null;
+  } else
+    begin += 2;
+  var end = document.cookie.indexOf(";", begin);
+  if (end == -1)
+    end = dc.length;
+  return unescape(dc.substring(begin + prefix.length, end));
+}
+
+function deleteCookie(name, path, domain) {
+  if (getCookie(name)) {
+    document.cookie = name + "=" +
+    ((path) ? "; path=" + path : "") +
+    ((domain) ? "; domain=" + domain : "") +
+    "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+  }
+}
+
+
+function change(id, newClass) {
+
+   identity=document.getElementById(id);
+   if (identity)
+      identity.className=newClass;
+
+
+
+
+}
+
+function resetcolor(){
+var id;
+var i; var j; var k;
+var imgid;
+  for (i=1; i<11; i++)
+  {
+    id=i+"_Gy";
+    change(id, "first");
+  }
+  for (i=1; i<11; i++)
+  {
+    id=i+"_Gy_img";
+    change(id, "hidden");
+  }
+
+  for (i=1; i< 11; i++) {
+    for (j=1; j<5; j++) {
+       for (k=1; k<5; k++) {
+          id=i.toString()+"_Gy"+"_"+ j.toString() + "_" + k.toString() ;
+
+          change(id, "hidden");
+       }
+    }
+ }
+}
+
+
+function showall(){
+var id;
+var i; var j; var k;
+  resetcolor();
+  for (i=1; i< 11; i++) {
+    for (j=1; j<5; j++) {
+       for (k=1; k<5; k++) {
+          id=i.toString()+"_Gy"+"_"+ j.toString() + "_" + k.toString() ;
+
+          change(id, "visible");
+       }
+    }
+  }
+}
+
+function readme () {
+  figures('aboutdicentrics.htm#warning', '900','600');
+}
+
+var aResultWin;
+function print_v_form () {
+var pw=parent.window;
+var inputform=pw.document.forms['vomit'];
+if (inputform.elements['dosevomit'].value=="") {
+   alert("No result to print.");
+   return;
+}
+var aPopUp = window.open('dose_estimator_result.htm', 'Result', 'toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,menubar=no,width=600,height=600');
+var ndoc = aPopUp.document;
+var astr = '<html><head><title>Print Result</title>';
+astr += '<style> body {font-family:verdana;color:#333;font-size:0.8em;}</style>';
+astr += '</head><body  bgcolor="ffffff">';
+astr += '<h3>Dose Estimator: by time to onset of vomiting</h3><p>Patient Name/ID: _______________</p><p>Data Entry Date: ______________, Time: ___________</p><p>Input by: __________________________________</p><br/> ';
+astr += '<p>Date/time exposure began: ';
+astr += inputform.elements['date1x'].value;
+astr += ', '
+astr += inputform.elements['hour1x'].value;
+astr += '</p>';
+astr += '<p>Date/time vomiting began: ';
+astr += inputform.elements['date1xx'].value;
+astr += ', '
+astr += inputform.elements['hour1xx'].value;
+astr += '</p>';
+astr += '<p>Dose estimate: ';
+astr += inputform.elements['dosevomit'].value;
+astr += ' Gy'
+astr += '</p>';
+if ( inputform.elements['CL'].value !="") {
+   astr +='<p>95% Confidence limits: ';
+   astr += inputform.elements['CL'].value;
+   astr += ' Gy </p>';
+}
+astr += '<br/><br/><a href="javascript:window.print()">Print this page</a>';
+astr += '</body>';
+astr += '</html>';
+ndoc.write(astr);
+ndoc.close();
+self.aResultWin = aPopUp
+self.aResultWin.focus()
+}
+
+
+function print_l_form () {
+var pw=parent.window;
+var inputform=pw.document.forms['lymphform'];
+if (inputform.elements['lymphdose'].value=="") {
+   alert("No result to print.");
+   return;
+}
+
+var aPopUp = window.open('dose_estimator_result.htm', 'Result', 'toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,menubar=no,width=600,height=600');
+var ndoc = aPopUp.document;
+var astr = '<html><head><title>Print Result</title>';
+astr += '<style> body {font-family:verdana;color:#333;font-size:0.8em;}</style>';
+astr += '</head><body  bgcolor="ffffff">';
+astr += '<h3>Dose Estimator: by lymphocyte depletion kinetics</h3><p>Patient Name/ID: _______________</p><p>Data Entry Date: ______________, Time: ___________</p><p>Input by: __________________________________</p><br/> ';
+astr += '<p>Date/time exposure began: ';
+astr += inputform.elements['date2x'].value;
+astr += ', '
+astr += inputform.elements['hour2x'].value;
+astr += '</p>';
+astr += '<p>Date/time of the first blood count: </p>';
+astr += '<p>';
+astr += inputform.elements['date2xx'].value;
+astr += ', '
+astr += inputform.elements['hour2xx'].value;
+astr += ', count: '
+astr += inputform.elements['L1'].value;
+astr += ' x 10<sup>9</sup> cells/liter'
+astr += '</p>';
+if (inputform.elements['L2'].value!="")
+{
+astr += '<p>Date/time of the second blood count: </p>';
+astr += '<p>';
+astr += inputform.elements['date2xxx'].value;
+astr += ', '
+astr += inputform.elements['hour2xxx'].value;
+astr += ', count: '
+astr += inputform.elements['L2'].value;
+astr += ' x 10<sup>9</sup> cells/liter'
+astr += '</p>';
+}
+if (inputform.elements['L3'].value!="")
+{
+astr += '<p>Date/time of the third blood count: </p>';
+astr += '<p>';
+astr += inputform.elements['date2xxxx'].value;
+astr += ', '
+astr += inputform.elements['hour2xxxx'].value;
+astr += ', count: '
+astr += inputform.elements['L3'].value;
+astr += ' x 10<sup>9</sup> cells/liter'
+astr += '</p>';
+}
+astr += '<br/><p>Dose estimate: ';
+astr += inputform.elements['lymphdose'].value;
+astr += ' Gy'
+astr += '</p>';
+if (inputform.elements['CL'].value !="") {
+   astr += '<p>95% Confidence limits: ';
+   astr += inputform.elements['CL'].value;
+   astr += ' Gy </p>';
+}
+
+astr += '<br/><a href="javascript:window.print()">Print this page</a>';
+astr += '</body>';
+astr += '</html>';
+ndoc.write(astr);
+ndoc.close();
+self.aResultWin = aPopUp
+self.aResultWin.focus()
+}
+
+    //-->
+    </SCRIPT>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+//-->
+</script>
+<noscript> </noscript>
+
+<!--style starts here -->
+<style type="text/css"><!--
+input, textarea, .uneditable-input {
+    width: 150px;
+}
+.white {
+  font-size: 0.70em;
+  color: #ffffff;
+  line-height: 1.4em;
+}
+.vert {
+width:1px;
+font-size: 0.8em;
+writing-mode: tb-rl; }
+
+.color3 {
+  background-color: #ffffcc;
+}
+
+.color4{
+  background-color: #ffffd9;
+}
+
+.color5{
+  background-color: #ffffbc;
+}
+.visible {
+  visibility:visible;
+}
+.hidden {
+  visibility:hidden;
+}
+.table_format th {
+	border:1px solid #707070;
+/*	border-color:#ddd #999 #888 #ddd; */
+        padding:1px;
+
+	/*font-weight:bold;*/
+/*	text-align:left;
+	color:#003;
+	padding:2px;
+	padding-bottom:2px;
+	font-size:.8em;
+*/
+}
+.table_format td {
+	border:1px solid #707070;
+	padding:1px;
+}
+.dicentricbox {
+   border:1px solid #c3c3c3;
+   padding:2px;
+}
+.first
+{
+color: black;
+font-family: arial;
+font-size:.8em;
+}
+.second
+{
+color: white;
+background-color: red;
+font-family: arial;
+font-size:.8em;
+font-weight:bold;
+}
+.firstheader
+{
+color: black;
+font-family: arial;
+font-size:.8em;
+font-weight:bold;
+background-color:#ffffd9
+}
+
+.textdose {
+   background-color:#dff4ff;
+}
+
+
+/*Credits: Dynamic Drive CSS Library */
+/*URL: http://www.dynamicdrive.com/style/ */
+
+.shadetabs{
+border-bottom: 1px solid gray;
+width: 80%; /*width of menu. Uncomment to change to a specific width */
+margin-bottom: 1em;
+}
+
+.shadetabs ul{
+padding: 3px 0;
+margin-left: 0;
+margin-top: 1px;
+margin-bottom: 0;
+font: bold 12px Verdana;
+list-style-type: none;
+text-align: left; /*set to left, center, or right to align the menu as desired*/
+}
+
+.shadetabs li{
+display: inline;
+margin: 0;
+}
+
+.shadetabs li a{
+text-decoration: none;
+padding: 3px 7px;
+margin-right: 3px;
+border: 1px solid #778;
+color: #2d2b2b;
+background: white url(RemmMockup_files/shade.gif) top left repeat-x;
+}
+
+.shadetabs li a:visited{
+color: #2d2b2b;
+text-decoration: none;
+padding: 3px 7px;
+margin-right: 3px;
+border: 1px solid #778;
+color: #2d2b2b;
+background: white url(RemmMockup_files/shade.gif) top left repeat-x;
+}
+
+.shadetabs li a:hover{
+text-decoration: none;
+color: #2d2b2b;
+}
+
+.shadetabs li.selected{
+position: relative;
+top: 1px;
+}
+
+.shadetabs li.selected a{ /*selected main tab style */
+background-image: url(RemmMockup_files/shadeactive.gif);
+border-bottom-color: white;
+}
+
+.shadetabs li.selected a:hover{ /*selected main tab style */
+text-decoration: none;
+}
+
+.shadeheader {
+
+border: 1px solid #778;
+
+margin-left: 0;
+margin-bottom:0;
+margin-top: 1px;
+font: bold 12px Verdana;
+text-align: center;
+
+padding: 3px 7px;
+margin-right: 3px;
+border: 1px solid #778;
+color: #2d2b2b;
+background: white url(RemmMockup_files/shade.gif) top left repeat-x;
+}
+
+label {
+   display:inline;
+}
+
+--></style>
+
+<!--Load in header and footer-->
+    <!-- Header Include -->
+    <script>
+        $(function () {
+            $("#includeheader").load("header.html");
+        });
+    </script>
+
+    <!-- Footer Include -->
+    <script>
+        $(function () {
+            $("#includefooter").load("footer.html");
+        });
+    </script>
+<!--Load in header and footer end-->
+
+
+</head><body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NWD949H"
+height="0" width="0" style="display:none;visibility:hidden" title="hhsgoogletagmanager"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<a class="skipnavigation" title="Skip the navigation on this page" href="#skipnav" tabindex="1">Skip Navigation</a>
+
+<!-- Navigation -->
+<div id="includeheader"></div>
+<!-- End Navigation -->
+
+<div id="middle" class="full_width">
+    <div class="container">
+		<!--content-->
+		<div class="content " role="main">
+
+			<!-- post details-->
+			<article class="post-details">
+			<div class="entry clearfix">
+                        <div class="content_area">
+ <a id="skipnav" name="skipnav"></a>
+ <a name="top"></a>
+<!--breadcrumbs-->
+<div class="breadcrumbs"><a href="index.html">Home</a> &gt; <a href="exposureonly.htm">Exposure:  Diagnose/Manage Acute Radiation Syndrome</a> &gt;
+   <strong><a href="ars_wbd.htm">Dose Estimator for Exposure: 3 Biodosimetry Tools</a></strong></div>
+<!-- /breadcrumbs -->
+
+<!-- Content starts here -->
+
+<div style="float:right;  margin-right:20px; font-size:0.8em; text-align:center;"> <a href="doseestimator_tutorial.htm" onClick="figures(this.href, '750','600'); return false;" target="_blank"> <img src="RemmMockup_files/smallvideodoseestimator.gif" alt="video" border="0"> </a> <br /> Video Tutorial (2:33)</div>
+
+<h1>Dose Estimator for Exposure:<br/> 3 Biodosimetry Tools </h1>
+<a name="calculator"></a>
+
+<div style="line-height:2.0em"><a href="biodosimetry_definition.htm" onClick="figures(this.href, '800','600'); return false;" target="_blank">Define Biodosimetry</a> | <a href="explainbiodosimetry.htm" onClick="figures(this.href, '900','800'); return false;" target="_blank">What You Need to Know about Biodosimetry: The Basics</a>  |  <a href="aboutbiodosimetry.htm" onClick="figures(this.href, '600','600'); return false;" target="_blank">About This Tool/Credits</a> | <a href="disclaimbiodosimetry.htm" onClick="figures(this.href, '600','400'); return false;" target="_blank">Disclaimer</a>  <br/>
+<a href="biodosimetry_compare.htm" onClick="figures(this.href,'800','800');return false;" target="_blank">Four References Comparing Biodosimetry Tools</a> |
+<a href="biodosimetry_refs_mindnode.htm" onClick="figures(this.href,'800','800');return false;" target="_blank">REMM Biodosimetry Reference List</a> | <a href="exposureimage_top1.htm" onClick="figures(this.href,'800','800');return false;" target="_blank">What is exposure?</a> </div><br><br>
+<div id="testdiv1" STYLE="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;"></div>
+
+<div id="anchor_graphics">
+   <div class="tool_icon">
+   <a href="#vomit_section"><img src="RemmMockup_files/vomit2.png" alt="Times to Onset of Vomiting"></a><br/>
+   <center><a href="#vomit_section">Time to <br/>Onset of Vomiting</a></center>
+   </div>
+   <div class="tool_icon">
+   <a href="#ldk_section"><img src="RemmMockup_files/LDK2.png" alt="Lymphocyte Depletion Kinetics"></a><br/>
+   <center><a href="#ldk_section">Lymphocyte<br/> Depletion Kinetics</a></center>
+   </div>
+   <div class="tool_icon">
+   <a href="#dicentrics_section"><img src="RemmMockup_files/dicentricChrom2.png" alt="Dicentric chromosomes"></a><br/>
+   <center><a href="#dicentrics_section">Dicentric <br/>Chromosome Assay</a></center>
+   </div>
+</div>
+<div style="clear:both"></div>
+<table border=1 width="70%" cellpadding="1" cellspacing="6" role="presentation">
+<tr>
+<th class="shadeheader" scope="col"><a name="vomit_section"></a><a name="vomit"></a>1. Time to Onset of Vomiting</th>
+<!--<th width="35%" class="shadeheader">Lymphocyte Depletion Kinetics</th><th width="1" bgcolor="#ffffff"><img src="RemmMockup_files/spacer.gif" alt=""></th>
+<th class="shadeheader">Dicentric Chromosome Assay</th>--></tr>
+<tr class="homelist">
+<td valign="top">
+
+<div align="center" class="footer"><br/> <div style="vertical-align:bottom;"><img src="RemmMockup_files/exclamation_point_small.gif" alt="warning" style="vertical-align:middle">
+<a href="aboutvomiting.htm" onClick="figures(this.href, '800','600'); return false;" target="_blank"><b>Warning</b></a> <br>
+<a href="aboutvomiting.htm#background" onClick="figures(this.href, '800','600'); return false;" target="_blank">Background</a> |
+ <a href="aboutvomiting.htm#illustration" onClick="figures(this.href, '800','600'); return false;" target="_blank">Illustrations</a> |
+ <a href="aboutvomiting.htm#references" onClick="figures(this.href, '800','600'); return false;" target="_blank">References</a>
+
+</div></div>
+
+<br>
+<table border=0 width="100%" cellspacing=0 cellpadding=2 role="presentation"><tr class="homelist"><tr>
+<td>
+<form name="vomit" onSubmit="javascript:return false;">
+ <b>1. Date/time exposure began</b> <br>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x1">
+var cal1x = new CalendarPopup("testdiv1");
+</SCRIPT>
+
+ <nobr>
+    <label class="hidden" for="date1x">mm/dd/yyyy</label>
+    <input type="text" name="date1x" id="date1x" value="mm/dd/yyyy" size=13 aria-label="Date of exposure"> <A HREF="#" onClick="cal1x.select(document.forms[1].date1x,'anchor1x','MM/dd/yyyy'); return false;" TITLE="cal1x.select(document.forms[1].date1x,'anchor1x','MM/dd/yyyy'); return false;" NAME="anchor1x" ID="anchor1x"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+    <label class="hidden" for="hour1x">00:00</label>
+    <input type="text" name="hour1x" id="hour1x" value="00:00" size="5" aria-label="Time of exposure">
+ </nobr>
+
+ <br/>
+
+<nobr>(e.g., 01/22/2008, 14:25)</nobr>
+</td>
+	<td align="center" valign="top"><img src="RemmMockup_files/vomit_small.png" style="width:80px" alt="Victim vomiting"></td></tr>
+<tr class="homelist"><td colspan="2">
+<br>
+ <b>2. Date/time vomiting began </b><br>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x2">
+var cal1xx = new CalendarPopup("testdiv1");
+</SCRIPT>
+ <nobr>
+    <label class="hidden" for="date1xx">mm/dd/yyyy</label>
+    <input type="text" name="date1xx" id="date1xx" value="mm/dd/yyyy" size=13 aria-label="Date when vomiting began"> <A HREF="#" onClick="cal1xx.select(document.forms[1].date1xx,'anchor1xx','MM/dd/yyyy'); return false;" TITLE="cal1xx.select(document.forms[1].date1xx,'anchor1xx','MM/dd/yyyy'); return false;" NAME="anchor1xx" ID="anchor1xx"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+   <label class="hidden" for="hour1xx">00:00</label>
+  <input type="text" name="hour1xx" id="hour1xx" value="00:00" size="5" aria-label="Time when vomiting began">
+  </nobr>
+
+</td></tr>
+<tr class="homelist"><td colspan="2">&nbsp;</td></tr>
+<tr class="homelist"><td colspan="2">
+<img src="RemmMockup_files/spacer.gif" height="5" alt=""><br>
+ <b>3. <input type="button" style="font-weight:bold" value="Estimate dose" onClick="javascript:vomitdose1();"> from exposure</b><br><br> </td></tr>
+<!--
+<tr class="homelist">
+<td><b> 4. Dose estimate</b> </td><td><nobr>% patients </nobr></td></tr>
+<tr class="homelist">
+<td> <input type="text" name="dosevomit" id="dosevomit" size=10 class="textdose" readonly="readonly" aria-label="Estimated dose will be displayed here"> <a href="gray_definition.htm" onClick="figures(this.href,'500','400');return false;" target="_blank">Gy</a></td><td> <input type="text" size="10" name="percentvomit" id="percentvomit" class="textdose" readonly="readonly" aria-label="95% confidence limit will be displayed here"></td></tr>-->
+
+<tr class="homelist">
+<td><b><label for="dosevomit"> 4. Dose estimate</label></b></td><td><label for="CL1"><a href="conf_limit_vomit.htm" onClick="figures(this.href,'300','300');return false;" target="_blank">95% confidence limits</a></label><br></td></tr>
+<tr class="homelist">
+<td> <input type="text" name="dosevomit" id="dosevomit" size=10 class="textdose" readonly="readonly" aria-label="Estimated dose will be displayed here"> <a href="gray_definition.htm" onClick="figures(this.href,'500','400');return false;" target="_blank">Gy</a> </td> <td><input type="text" size=10 name="CL" id="CL1" class="textdose" readonly="readonly" aria-label="95% confidence limits will be displayed here"> <a href="gray_definition.htm" onClick="figures(this.href,'500','400');return false;" target="_blank">Gy</a></td> </tr>
+
+<tr class="homelist"><td colspan="2"><br><b>5.</b> <!--<input type="button" value="Suggest treatment" name="Rxbutton" onClick="javascript:getRx('v');"> &nbsp;--> <a href="javascript:print_v_form();"><b>Print this result</b></a> <img src="RemmMockup_files/printer.gif" alt="Print result"><br/><br/>
+</td></tr>
+
+</form>
+</td></tr></table>
+</td>
+
+</tr>
+<tr>
+<th class="shadeheader" scope="col"><a name="ldk_section"></a><a name="lymphocyte"></a>2. Lymphocyte Depletion Kinetics</th><!--<th width="1" bgcolor="#ffffff"><img src="RemmMockup_files/spacer.gif" alt=""></th>--></tr>
+<tr class="homelist">
+
+<td valign="top">
+
+<div align="center" class="footer"><br/> <div style="vertical-align:bottom;"><img src="RemmMockup_files/exclamation_point_small.gif" alt="warning" style="vertical-align:middle">
+<a href="aboutlymphocytedepletion.htm" onClick="figures(this.href, '800','600'); return false;" target="_blank"><b>Warning</b></a> <br>
+<a href="aboutlymphocytedepletion.htm#background" onClick="figures(this.href, '800','600'); return false;" target="_blank">Background</a> |
+ <a href="aboutlymphocytedepletion.htm#illustration" onClick="figures(this.href, '800','600'); return false;" target="_blank">Illustrations</a> |
+ <a href="aboutlymphocytedepletion.htm#references" onClick="figures(this.href, '800','600'); return false;" target="_blank">References</a>
+</div></div>
+
+
+
+<br>
+<form name="lymphform" onSubmit="javascript:return false;">
+<table border=0 width="100%" cellspacing=0 cellpadding=2 role="presentation"><tr class="homelist">
+<td>
+ <b>1. Date/time exposure began </b>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x3">
+var cal2x = new CalendarPopup("testdiv1");
+</SCRIPT>
+ <nobr>
+    <label class="hidden" for="date2x">mm/dd/yyyy</label>
+    <input type="text" name="date2x" id="date2x" value="mm/dd/yyyy" size=10 aria-label="Date of exposure"> <A HREF="#" onClick="cal2x.select(document.forms[2].date2x,'anchor2x','MM/dd/yyyy'); return false;" TITLE="cal2x.select(document.forms[2].date2x,'anchor2x','MM/dd/yyyy'); return false;" NAME="anchor2x" ID="anchor2x"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+   <label class="hidden" for="hour2x">00:00</label>
+  <input type="text" name="hour2x" id="hour2x" value="00:00" size="5" aria-label="Time of exposure">
+  </nobr><br>
+<nobr>(e.g., 01/22/2008, 14:25)</nobr>
+
+</td><td align="center" valign="top" width="207"><img src="RemmMockup_files/bloodtest_small.png" alt="Lymphocyte depletion graph" style="width:80px"></td></tr>
+<tr class="homelist"><td>
+<br>
+ <b>2. Date/time of one or more blood counts </b></td><td><br>&nbsp; <b>Lymphocyte count</b> <br>&nbsp; (x 10<sup>9</sup> cells/L) <a href="help_biodosimetry.htm"  onClick="figures(this.href, '750','500'); return false;" target="_blank" title="Important: Read this before using Lymphocyte Depletion Kinetics Tool"><img src="RemmMockup_files/exclamation_point_small.gif" alt="Important: Read this before using Lymphocyte Depletion Kinetics Tool" border="0"></a></td></tr>
+
+<tr class="homelist"><td>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x4">
+var cal2xx = new CalendarPopup("testdiv1");
+</SCRIPT>
+ <nobr>
+    <label class="hidden" for="date2xx">mm/dd/yyyy</label>
+    <input type="text" name="date2xx" id="date2xx" value="mm/dd/yyyy" size=10 aria-label="Date of the first blood sample"> <A HREF="#" onClick="cal2xx.select(document.forms[2].date2xx,'anchor2xx','MM/dd/yyyy'); return false;" TITLE="cal2xx.select(document.forms[2].date2xx,'anchor2xx','MM/dd/yyyy'); return false;" NAME="anchor2xx" ID="anchor2xx"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+   <label class="hidden" for="hour2xx">00:00</label>
+  <input type="text" name="hour2xx" id="hour2xx" value="00:00" size="5" aria-label="Time of the first blood sample">
+  </nobr>
+</td>
+<td>&nbsp; <label class="hidden" for="L1">cell count</label><input type="text" size="10" name="L1" id="L1" aria-label="Lymphocyte count of the first blood sample"></td></tr>
+
+
+<tr class="homelist"><td>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x5">
+var cal2xxx = new CalendarPopup("testdiv1");
+</SCRIPT>
+ <nobr>
+    <label class="hidden" for="date2xxx">mm/dd/yyyy</label>
+    <input type="text" name="date2xxx" id="date2xxx" value="mm/dd/yyyy" size=10 aria-label="Date of the second blood sample"> <A HREF="#" onClick="cal2xxx.select(document.forms[2].date2xxx,'anchor2xxx','MM/dd/yyyy'); return false;" TITLE="cal2xxx.select(document.forms[2].date2xxx,'anchor2xxx','MM/dd/yyyy'); return false;" NAME="anchor2xxx" ID="anchor2xxx"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+   <label class="hidden" for="hour2xxx">00:00</label>
+  <input type="text" name="hour2xxx" id="hour2xxx" value="00:00" size="5" aria-label="Time of the second blood sample">
+  </nobr>
+</td>
+<td>&nbsp; <label class="hidden" for="L2">cell count</label><input type="text" size="10" name="L2" id="L2" aria-label="Lymphocyte count of the second blood sample"></td></tr>
+
+<tr class="homelist"><td>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x6">
+var cal2xxxx = new CalendarPopup("testdiv1");
+</SCRIPT>
+ <nobr>
+    <label class="hidden" for="date2xxxx">mm/dd/yyyy</label>
+    <input type="text" name="date2xxxx" id="date2xxxx" value="mm/dd/yyyy" size=10 aria-label="Date of the third blood sample"> <A HREF="#" onClick="cal2xxxx.select(document.forms[2].date2xxxx,'anchor2xxxx','MM/dd/yyyy'); return false;" TITLE="cal2xxxx.select(document.forms[2].date2xxxx,'anchor2xxxx','MM/dd/yyyy'); return false;" NAME="anchor2xxxx" ID="anchor2xxxx"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+   <label class="hidden" for="hour2xxxx">00:00</label>
+  <input type="text" name="hour2xxxx" id="hour2xxxx" value="00:00" size="5" aria-label="Time of the third blood sample">
+  </nobr>
+  </td>
+<td>&nbsp; <label class="hidden" for="L3">cell count</label><input type="text" size="10" name="L3" id="L3" value="" aria-label="Lymphocyte count of the third blood sample">
+
+</td></tr>
+<tr class="homelist"><td><nobr>(e.g., 01/22/2008, 23:00)</nobr></td>
+<td>&nbsp; (e.g., 1.25)</td></tr>
+
+
+
+<tr class="homelist"><td colspan="2">&nbsp;</td></tr>
+<tr class="homelist"><td colspan="2">
+<br>
+ <b>3. <input type="button" style="font-weight:bold" value="Estimate dose" onClick="javascript:lymphocyte2dose(this.form);"><b> from exposure</b><br><br></td></tr>
+<tr class="homelist">
+<td><b><label for="lymphdose"> 4. Dose estimate</label></b></td><td><label for="CL2"><a href="conf_limit_definition.htm" onClick="figures(this.href,'300','300');return false;" target="_blank">95% confidence limits</a></label><br></td></tr>
+<tr class="homelist">
+<td>
+ <input type="text" size=10 name="lymphdose" id="lymphdose" class="textdose" readonly="readonly" aria-label="Estimated dose will be displayed here"> <a href="gray_definition.htm" onClick="figures(this.href,'500','400');return false;" target="_blank">Gy</a></td><td><input type="text" size=10 name="CL" id="CL2" class="textdose" readonly="readonly" aria-label="95% confidence limits will be displayed here"> <a href="gray_definition.htm" onClick="figures(this.href,'500','400');return false;" target="_blank">Gy</a></td></tr>
+<tr class="homelist"><td colspan="2">
+<br>
+  <b>5.</b> <!--<input type="button" value="Suggest treatment" name="Rxbutton" onClick="javascript:getRx('l');">   &nbsp;--> <a href="javascript:print_l_form();"><b>Print this result</b></a> <img src="RemmMockup_files/printer.gif" alt="Print result">  </form></td></tr>
+</table>
+
+
+
+</td>
+<!--<td width="1" bgcolor="#c3c3c3"><img src="RemmMockup_files/spacer.gif" alt=""></td>-->
+<tr>
+<th class="shadeheader" scope="col"><a name="dicentrics_section"></a><a name="dicentrics"></a>3. Dicentric Chromosome Assay</th></tr>
+<tr>
+<td valign="top">
+
+<div align="center" class="footer"><br/> <div style="vertical-align:bottom;"><img src="RemmMockup_files/exclamation_point_small.gif" alt="warning" style="vertical-align:middle"> <a href="aboutdicentrics.htm" onClick="figures(this.href, '900','600'); return false;" target="_blank"><b>Warning</b></a> <br>
+ <a href="aboutdicentrics.htm#background" onClick="figures(this.href, '900','600'); return false;" target="_blank">Background</a> |
+ <a href="aboutdicentrics.htm#illustration" onClick="figures(this.href, '900','600'); return false;" target="_blank">Illustrations</a> |
+ <a href="aboutdicentrics.htm#references" onClick="figures(this.href, '900','600'); return false;" target="_blank">References</a>
+</div></div>
+
+<br>
+<!--<form name="cytogeneticsform" onSubmit="javascript:return false;"> -->
+<table border=0 width="100%" cellspacing=0 cellpadding=2 role="presentation">
+<tr class="homelist">
+<td>
+<!--
+ 1. Date/time of exposure <br>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x7">
+var cal3x = new CalendarPopup("testdiv1");
+</SCRIPT>
+ <nobr>
+    <input type="text" name="date3x" value="mm/dd/yyyy" size=10> <A HREF="#" onClick="cal3x.select(document.forms[3].date3x,'anchor3x','MM/dd/yyyy'); return false;" TITLE="cal3x.select(document.forms[3].date3x,'anchor3x','MM/dd/yyyy'); return false;" NAME="anchor3x" ID="anchor3x"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+  <input type="text" name="hour3x" value="00:00" size="5">
+  </nobr>
+<br>
+<nobr>(e.g., 01/22/2008, 14:25)</nobr>
+-->
+To estimate radiation dose,
+the Dicentric Chromosome Assay
+should be performed in a <a href="aboutdicentrics.htm#warning" onClick="figures(this.href, '900','600'); return false;" target="_blank">reference laboratory</a>.<br><br>
+</td>
+<td align="center" valign="top"><img src="RemmMockup_files/dicentric_single_s.png" alt="Dicentric chromosome" width="80"></td></tr>
+<!--
+<tr class="homelist">
+<td>
+<br>
+ 2. Date/time of blood sample <br>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x8">
+var cal3xx = new CalendarPopup("testdiv1");
+</SCRIPT>
+ <nobr>    <input type="text" name="date3xx" value="mm/dd/yyyy" size=10> <A HREF="#" onClick="cal3xx.select(document.forms[3].date3xx,'anchor3xx','MM/dd/yyyy'); return false;" TITLE="cal3xx.select(document.forms[3].date3xx,'anchor3xx','MM/dd/yyyy'); return false;" NAME="anchor3xx" ID="anchor3xx"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+  <input type="text" name="hour3xx" value="00:00" size="5">  </nobr>
+ <br><br>
+<td align="left"></td>
+</td></tr>
+<tr class="homelist">
+<td colspan="2">
+<nobr><img src="RemmMockup_files/spacer.gif" height="5" alt=""><br>
+Number of dicentrics/50 cells &nbsp;&nbsp; <a href="aboutdicentrics.htm#warning" onclick="figures(this.href, '800','500'); return false;" target="_blank">Read Me First</a> </nobr>
+<br>
+</td></tr>
+<tr class="homelist"><td colspan="2">
+        <select name="dicentrics" title="Dicentric chromosome" onChange="readme();">
+         <option selected label="Select a number " value="">Select a number</option>
+         <option label="0.05 - 0.1" value="0.05 - 0.1">0.05 - 0.1</option>
+         <option label="0.2 - 4" value="0.2 - 4">0.2 - 4</option>
+         <option label="5 - 12" value="5 - 12">5 - 12</option>
+         <option label="13 - 22" value="13 - 22">13 - 22</option>
+         <option label="23 - 35" value="23 - 35">23 - 35</option>
+         <option label="36 - 51" value="36 - 51">36 - 51</option>
+         <option label=">51" value =">51">&gt; 51</option>
+         </select>
+</td></tr>
+<tr class="homelist">
+<td colspan="2">
+<br>
+3. <input type="button" value="Estimate dose" onClick="javascript:cytodose();"> from exposure<br><br>
+4. Dose estimate <br>
+ <input type="text" size="10" name="dosecyto" readonly="readonly" class="textdose"> <a href="gray_definition.htm" onClick="figures(this.href,'500','400');return false;" target="_blank">Gy</a></td></tr>
+<tr class="homelist"><td colspan="2">
+<br>
+5. <input type="button" value="Suggest treatment" name="Rxbutton" onClick="javascript:getRx('c');">
+</form>
+</td></tr> --></table>
+
+
+
+</td>
+
+</tr>
+
+
+
+
+</table>
+<br>
+
+
+<!-- Content ends here -->
+<script language="javascript">
+var mydate = new Date(document.lastModified).toDateString();
+document.write("<br><br>Last updated "+mydate+"<br><br>");
+</script>
+                        </div> <!--/content_area-->
+			</div>
+			</article>
+			<!--post details-->
+		</div>
+		<!--/content-->
+		</div>
+	</div>
+	<!--/middle-->
+
+
+<!-- End of body section HTML codes -->
+
+<!--</div>-->
+
+<!--Footer-->
+<div id="includefooter"></div>
+<!--Footer End-->
+
+
+<!--<script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>-->
+<script src='js/bootstrap.min.js'></script>
+<script>
+jQuery(document).ready(function () {
+    function is_touch_device() {
+       return !!('ontouchstart' in window);
+    }
+    if (is_touch_device()) {
+       $('.nav > li > a').click(function(event) {
+          event.preventDefault();
+       });
+
+       $(':not(.nav > li > a)').click(function(event) {
+          $('.nav &gt; li &gt; a').css('display', 'none');
+       });
+    }
+
+    $('.dropdown').hover(function () {
+        $('.dropdown-menu', this).fadeIn('fast');
+    }, function () {
+        $('.dropdown-menu', this).fadeOut('fast');
+    });
+});
+</script>
+
+
+
+<script>
+//<![CDATA[
+      var usasearch_config = { siteHandle:"radiationemergencymedicalmanageme" };
+
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "//search.usa.gov/javascripts/remote.loader.js";
+      document.getElementsByTagName("head")[0].appendChild(script);
+
+//]]>
+</script>
+</body></html>

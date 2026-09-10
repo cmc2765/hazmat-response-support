@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html class="" lang="en">
+
+<head>
+  <title>REMM - Radiation Emergency Medical Management</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+  <!-- Cache-Control -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+
+  <!-- Pragma (for backwards compatibility) -->
+  <meta http-equiv="Pragma" content="no-cache">
+
+  <!-- Expires tag set to a specific date and time -->
+  <meta http-equiv="Expires" content="Mon, 1 Jan 2024 00:00:00 GMT">
+
+  <script>
+    // Attempt to break out of frames
+    if (window.top !== window.self) {
+      window.top.location = window.self.location;
+    }
+
+    // More robust frame-busting technique
+    (function (window) {
+      if (window.top !== window.self) {
+        // Use the best candidate for the location property
+        var targetLocation = window.location || window.document.location || window.document.URL;
+        // Hide content and show a warning
+        document.body.style.display = 'none';
+        window.top.location = targetLocation;
+      }
+    })(window);
+  </script>
+
+  <!-- Google Tag Manager -->
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-NWD949H");
+  </script>
+  <!-- End Google Tag Manager -->
+  <link rel="canonical" href="https://remm.hhs.gov" />
+
+  <!--<meta name="viewport" content="width=device-width">-->
+  <script src="/modernizr.js"></script>
+  <link rel="stylesheet" href="/style1.css?v=2.0" media="screen" />
+  <link rel="stylesheet" href="/style2.css" />
+  <link rel="stylesheet" href="/bootstrap.min.css" />
+  <link rel="stylesheet" href="/mega.css" />
+  <link rel="stylesheet" href="/megacustom.css?v=1.0" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300italic,400italic,600italic,700italic,700,400,300,100"
+    rel="stylesheet" type="text/css" />
+  <!--
+    SECURITY REMEDIATION (DOM XSS finding):
+    Amazing Carousel was REMOVED from this page. It merged untrusted
+    query-string params into its options and pushed them into jQuery HTML sinks
+    (amazingcarousel.js: window.location.search -> $.extend(options) -> markup),
+    and it bundled the html5lightbox modal in the same file.
+
+    This page was the ONLY page on the site where that code path actually ran:
+    the engine only acts on "#amazingcarousel-1" and ".html5lightbox", and those
+    elements existed nowhere else. Confirmed reproducible here before the swap --
+    "?spacing=99&navstyle=numbering" overrode the values hardcoded in
+    initcarousel-1.js. So this change is what closes the finding.
+
+    NOTE for anyone auditing amazingcarousel.js: the "Override default options to
+    ensure watermark is disabled" block in that file is DEAD CODE -- defaultOptions
+    is redeclared a few statements later with the original values. It is not a
+    mitigation and never was.
+
+    REPLACED BY Swiper + GLightbox, neither of which reads window.location.
+    Both are self-hosted in /js/ (no CDN) -- see /js/VENDOR-LICENSES.txt.
+    Styling and behaviour are shared with imagegallery.htm, which renders the
+    same eight items: /js/remm-gallery.css and /js/remm-gallery.js.
+
+    jQuery is intentionally KEPT: the header/footer .load() calls below need it.
+  -->
+  <script src="/carouselengine/jquery.js"></script>
+
+  <link rel="stylesheet" href="/js/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="/js/glightbox.min.css" />
+  <link rel="stylesheet" href="/js/remm-gallery.css" />
+
+  <!--Load in header and footer-->
+  <!-- Header Include -->
+  <script>
+    $(function () {
+      $("#includeheader").load("header.html");
+    });
+  </script>
+
+  <!-- Footer Include -->
+  <script>
+    $(function () {
+      $("#includefooter").load("footer.html");
+    });
+  </script>
+  <!--Load in header and footer end-->
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NWD949H" height="0" width="0"
+      style="display: none; visibility: hidden" title="hhsgoogletagmanager"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
+  <a class="skipnavigation" title="Skip the navigation on this page" href="#skipnav">Skip Navigation</a>
+
+  <!-- Navigation -->
+  <div id="includeheader"></div>
+  <!-- End Navigation -->
+  <div id="middle" class="full_width">
+    <div class="container">
+      <!--content-->
+       <a id="skipnav" name="skipnav"></a>
+      <div class="content" role="main">
+        <!-- post details-->
+        <article class="post-details">
+          <div class="entry clearfix">
+            <!--<p style="color:red">Due to the lapse in government funding, the information on this web site may not be up to date, transactions submitted via the web site may not be processed, and the agency may not be able to respond to inquiries until appropriations are enacted. Updates regarding government operating status and resumption of normal operations can be found at <a href=http://www.usa.gov/>USA.gov</a>. </p> -->
+            <h1 class="sr-only">Radiation Emergency Medical Management</h1>
+            <!-- categories list-->
+            <div class="categories-list categories-style2">
+              <div class="categories-item">
+                <div class="categories_title">
+                  <h2 class="box_grey">
+                    <a href="#">What Kind of Emergency?
+                      <img src="/images/icons/noun_182_a5.png" alt="Icon for What Kind of Emergency?" /></a>
+                  </h2>
+                </div>
+                <div class="categories_desc clearfix">
+                  <ul>
+                    <li>
+                      <a href="/nuclearexplosion.htm">Nuclear Detonation: Weapons, Improvised Nuclear
+                        Devices</a>
+                    </li>
+                    <li>
+                      <a href="/rdd.htm">Radiological Dispersal Devices, Dirty Bombs</a>
+                    </li>
+                    <li>
+                      <a href="/nuclearaccident.htm">Nuclear Power Plant/<br />Reactor Incidents</a>
+                    </li>
+                    <li>
+                      <a href="/red.htm">Radiological Exposure Devices</a>
+                    </li>
+                    <li>
+                      <a href="/transport.htm">Transportation Incidents</a>
+                      <p style="line-height: 11px">&nbsp;</p>
+                    </li>
+                  </ul>
+
+                  <!--<p> hello </p>-->
+                </div>
+              </div>
+
+              <div class="categories-item">
+                <div class="categories_title">
+                  <h2 class="box_grey">
+                    <a href="#">Patient Management<img src="/images/icons/noun_35773_a5.png"
+                        alt="Icon for Patient Management" /></a>
+                  </h2>
+                </div>
+                <div class="categories_desc">
+                  <ul>
+                    <li>
+                      <a href="/newptinteract.htm#skip">Choose Appropriate Algorithm</a>
+                    </li>
+                    <li><a href="/contamonly.htm#skip">Contamination</a></li>
+                    <li>
+                      <a href="/exposureonly.htm#skip">Exposure <br />(Acute Radiation Syndrome)</a>
+                    </li>
+                    <li>
+                      <a href="/exposurecontam.htm#skip">Exposure + Contamination</a>
+                    </li>
+                    <li><a href="/radtriage.htm">Triage Guidelines</a></li>
+                    <li>
+                      <a href="/adultorderform.htm">Hospital Orders Template</a>
+                    </li>
+                    <li>
+                      <a href="/medical_countermeasures.htm">Medical Countermeasures</a><br /><br />
+                    </li>
+                  </ul>
+
+                  <!--<p>hello</p>-->
+                </div>
+              </div>
+
+              <div class="categories-item">
+                <div class="categories_title">
+                  <h2 class="box_grey">
+                    <a href="#">Initial Incident Activities
+                      <img src="/images/icons/noun_8688_a5.png" alt="Icon for Initial Incident Activities" /></a>
+                  </h2>
+                </div>
+                <div class="categories_desc">
+                  <ul>
+                    <li>
+                      <a href="/newtype.htm">Discovering an Incident</a>
+                    </li>
+                    <li>
+                      <a href="/describing_incident.htm">Describing an Incident</a>
+                      <hr style="
+                            text-align: left;
+                            margin-bottom: 0px;
+                            width: 120px;
+                            margin-top: 25px;
+                          " />
+                      <br />
+                    </li>
+                    <li><a href="/onsite.htm">On-site Activities</a></li>
+                    <li><a href="/radtriage.htm">Triage Guidelines</a></li>
+                    <li>
+                      <a href="/victimtransport.htm">Transport Victims</a>
+                    </li>
+                    <li>
+                      <a href="/hospitalprep.htm">Hospital Activities</a>
+                    </li>
+                  </ul>
+
+                  <!--<p>hello</p>-->
+                </div>
+              </div>
+
+              <div class="categories-item">
+                <div class="categories_title">
+                  <h2 class="box_grey">
+                    <a href="#">Management Modifiers
+                      <img src="/images/icons/noun_23525_a5.png" alt="Icon for Management Modifiers" /></a>
+                  </h2>
+                </div>
+                <div class="categories_desc clearfix">
+                  <ul>
+                    <li><a href="/radtrauma.htm">Radiation + Trauma</a></li>
+                    <li>
+                      <a href="/burns.htm">Burn Triage and Treatment</a>
+                    </li>
+                    <li><a href="/masscasualty.htm">Mass Casualty</a></li>
+                    <li><a href="/psych.htm">Psychological Issues</a></li>
+                    <li>
+                      <a href="/specialpops.htm">At-risk / Special Needs Populations</a>
+                      <p style="line-height: 70px">&nbsp;</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="categories-item">
+                <div class="categories_title">
+                  <h2 class="box_grey">
+                    <a href="#">Practical Guidance
+                      <img src="/images/icons/noun_41545_a5.png" alt="Icon for Practical Guidance" /></a>
+                  </h2>
+                </div>
+                <div class="categories_desc clearfix">
+                  <ul>
+                    <li>
+                      <a href="/bloodtransfusion.htm">Use of Blood Products</a>
+                    </li>
+                    <li>
+                      <a href="/surveillance.htm">Population Monitoring</a>
+                    </li>
+                    <li>
+                      <a href="/ext_contamination.htm">Decontamination Procedures</a>
+                    </li>
+                    <li>
+                      <a href="/followup.htm">Follow-up Instructions</a>
+                    </li>
+                    <li>
+                      <a href="/deceased.htm">Management of the Deceased</a>
+                    </li>
+                    <li>
+                      <a href="/responseplan.htm">Develop a Response Plan</a>
+                    </li>
+                  </ul>
+                  <p style="line-height: 26px">&nbsp;</p>
+                  <span class="more"><a href="/practicalguidance.htm">More...</a></span>
+                </div>
+                <!--<div class="service_meta_bot"><a href="#" class="link-more">Other Audiences</a></div>-->
+              </div>
+
+              <div class="categories-item">
+                <div class="categories_title">
+                  <h2 class="box_grey">
+                    <a href="#">Other Audiences
+                      <img src="/images/icons/noun_38516_a5.png" alt="Icon for Other Audiences" /></a>
+                  </h2>
+                </div>
+                <div class="categories_desc clearfix">
+                  <ul>
+                    <li>
+                      <a href="/remm_FirstResponder.htm">First Responders</a>
+                    </li>
+                    <li>
+                      <a href="/remm_MentalHealth.htm">Mental Health Professionals</a>
+                    </li>
+                    <li><a href="/remm_Hospital.htm">Hospital Staff</a></li>
+                    <li>
+                      <a href="/remm_pio.htm">Public Information Officers</a>
+                    </li>
+                    <li>
+                      <a href="/remm_RadSafetyProtection.htm">Radiation Safety Officers</a>
+                    </li>
+                    <li><a href="/remm_Preplanning.htm">Planners</a></li>
+                    <li>
+                      <a href="/remm_Drill.htm">Trainers: Practices &amp; Drills</a>
+                    </li>
+                  </ul>
+
+                  <p style="line-height: 1px">&nbsp;</p>
+                  <span class="more"><a href="/otheraudiences.htm">More...</a></span>
+                </div>
+                <!--<div class="service_meta_bot"><a href="#" class="link-more">More Audience Groups</a></div>-->
+              </div>
+            </div>
+            <!-- /categories list-->
+          </div>
+        </article>
+        <!--post details-->
+      </div>
+      <!--/content-->
+    </div>
+  </div>
+  <!--/middle-->
+  <aside>
+    <div style="
+          margin: 0px auto;
+          background-color: #eee;
+          width: 940px;
+          border: 1px solid #cfcfcf;
+          box-shadow: 0 0 12px rgba(171, 139, 110, 0.38);
+        ">
+      <!-- Insert to your webpage where you want to display the carousel -->
+      <!-- Renamed from #amazingcarousel-container-1. That id got its
+           "padding: 12px 48px" from carouselengine/initcarousel-1.css, so the
+           layout silently depended on the carousel engine. Padding is set
+           inline here instead; nothing on this page reads that stylesheet now. -->
+      <div id="remm-gallery-container" style="padding: 12px 48px">
+        <span style="color: #a50202; font-weight: bold">REMM Multimedia Library</span>
+        <!-- SWIPER slider (replaces the Amazing Carousel markup). Each
+             <a class="glightbox"> is bound by GLightbox. Arrows sit OUTSIDE
+             .swiper so the slide strip clips cleanly at exactly 3 slides.
+
+             The six illustration slides open their WHOLE wrapper page as an
+             inline slide: /remm-gallery.js fetches the page same-origin and
+             injects its .content_area into the matching container below. That
+             is deliberate -- an iframe (what html5lightbox used) is what the
+             Azure security review flagged, and the dev auth wall bounces iframe
+             document requests. A fetch() is a subresource request, the same
+             class that already carries the session for these thumbnails.
+
+             The containers ship EMPTY; content is pulled from the live wrapper
+             pages, so nothing is duplicated here and edits to those pages still
+             flow through. If a fetch fails the slide falls back to the
+             animation named in data-remm-gif. -->
+        <div class="remm-gallery-outer">
+
+          <div id="remm-gallery" class="swiper remm-gallery" aria-label="REMM Multimedia Library">
+            <div class="swiper-wrapper">
+
+              <div class="swiper-slide remm-slide">
+                <a href="#remm-page-dirtybomb" class="glightbox" data-gallery="remm"
+                   data-glightbox="type: inline"
+                   data-remm-page="/dirtybombimage.htm"
+                   data-remm-gif="/RemmMockup_files/exploding_rdd_new.gif"
+                   data-remm-title="Dirty Bomb">
+                  <img src="/images1/rdd.png" alt="Dirty Bomb" />
+                </a>
+                <div class="remm-slide-title">Dirty Bomb</div>
+              </div>
+
+              <div class="swiper-slide remm-slide">
+                <a href="#remm-page-contamination" class="glightbox" data-gallery="remm"
+                   data-glightbox="type: inline"
+                   data-remm-page="/contamimage_top1.htm"
+                   data-remm-gif="/RemmMockup_files/full_body_contamination_new.gif"
+                   data-remm-title="Contamination">
+                  <img src="/images1/contamination.png" alt="Contamination" />
+                </a>
+                <div class="remm-slide-title">Contamination</div>
+              </div>
+
+              <div class="swiper-slide remm-slide">
+                <a href="#remm-page-exposure" class="glightbox" data-gallery="remm"
+                   data-glightbox="type: inline"
+                   data-remm-page="/exposureimage_top1.htm"
+                   data-remm-gif="/RemmMockup_files/exsposure_fullbody_new.gif"
+                   data-remm-title="Exposure">
+                  <img src="/images1/exposure.png" alt="Exposure" />
+                </a>
+                <div class="remm-slide-title">Exposure</div>
+              </div>
+
+              <div class="swiper-slide remm-slide">
+                <a href="#remm-page-shrapnel" class="glightbox" data-gallery="remm"
+                   data-glightbox="type: inline"
+                   data-remm-page="/contamimage_3.htm"
+                   data-remm-gif="/RemmMockup_files/wound_contamination_shrapnel_new.gif"
+                   data-remm-title="Contamination: shrapnel">
+                  <img src="/images1/shrapnel.png" alt="Contamination: shrapnel" />
+                </a>
+                <div class="remm-slide-title">Contamination: shrapnel</div>
+              </div>
+
+              <div class="swiper-slide remm-slide">
+                <a href="#remm-page-aircraft" class="glightbox" data-gallery="remm"
+                   data-glightbox="type: inline"
+                   data-remm-page="/disperse_aircraft.htm"
+                   data-remm-gif="/RemmMockup_files/plane_radiation_new.gif"
+                   data-remm-title="RDD, non-explosive">
+                  <img src="/images1/airplane.png" alt="RDD, non-explosive" />
+                </a>
+                <div class="remm-slide-title">RDD, non-explosive</div>
+              </div>
+
+              <div class="swiper-slide remm-slide">
+                <a href="#remm-page-redmetro" class="glightbox" data-gallery="remm"
+                   data-glightbox="type: inline"
+                   data-remm-page="/red_metro.htm"
+                   data-remm-gif="/RemmMockup_files/radiation_under_seat_new.gif"
+                   data-remm-title="Radiological exposure device">
+                  <img src="/images1/red.png" alt="Radiological exposure device" />
+                </a>
+                <div class="remm-slide-title">Radiological exposure device</div>
+              </div>
+
+              <!-- YouTube: embed URL rewritten to watch URL for GLightbox's
+                   detector. is-video adds the play-button overlay that
+                   Amazing Carousel drew via showplayvideo:true. -->
+              <div class="swiper-slide remm-slide is-video">
+                <a href="https://www.youtube.com/watch?v=H0thHKr-17o" class="glightbox"
+                   data-gallery="remm" data-glightbox="type: video; title: Radiation principles;">
+                  <img src="/images1/radvideo1.png" alt="Radiation principles" />
+                </a>
+                <div class="remm-slide-title">Radiation principles</div>
+              </div>
+
+              <div class="swiper-slide remm-slide is-video">
+                <a href="https://www.youtube.com/watch?v=mySIzIk3ZUM" class="glightbox"
+                   data-gallery="remm" data-glightbox="type: video; title: Radiation shielding;">
+                  <img src="/images1/radvideo2.png" alt="Radiation shielding" />
+                </a>
+                <div class="remm-slide-title">Radiation shielding</div>
+              </div>
+
+            </div>
+
+            <!-- Pagination stays inside: vertical padding causes no bleed -->
+            <div class="swiper-pagination"></div>
+          </div>
+
+          <!-- Arrows OUTSIDE the .swiper element, in the gutter -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+
+        </div>
+        <!-- End SWIPER slider -->
+
+        <!-- Filled at runtime by /remm-gallery.js -- see the note above. -->
+        <div class="remm-inline-pages">
+          <div id="remm-page-dirtybomb" class="remm-page"></div>
+          <div id="remm-page-contamination" class="remm-page"></div>
+          <div id="remm-page-exposure" class="remm-page"></div>
+          <div id="remm-page-shrapnel" class="remm-page"></div>
+          <div id="remm-page-aircraft" class="remm-page"></div>
+          <div id="remm-page-redmetro" class="remm-page"></div>
+        </div>
+        <div style="margin-top: 35px">
+          <a href="/imagegallery_cat1.htm">Radiation Incidents</a>
+          &nbsp;&nbsp;
+          <a href="/imagegallery_cat2.htm">Radiation Basics</a> &nbsp;&nbsp;
+          <a href="/imagegallery_cat3.htm">Exposure (ARS)</a> &nbsp;&nbsp;
+          <a href="/imagegallery_cat4.htm">Contamination</a> &nbsp;&nbsp;
+          <a href="/imagegallery_cat5.htm">Radiation Safety</a> &nbsp;&nbsp;
+          <a href="/imagegallery_cat6.htm">Triage &amp; Transport</a>
+          &nbsp;&nbsp;
+          <a href="/imagegallery_videoall.htm">All Videos</a> &nbsp;&nbsp;
+        </div>
+      </div>
+      <!-- End of body section HTML codes -->
+    </div>
+  </aside>
+
+  <!--Footer-->
+  <div id="includefooter"></div>
+  <!--Footer End-->
+
+  <!--<script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>-->
+  <script src="/js/bootstrap.min.js"></script>
+
+  <!-- Slider + lightbox, SELF-HOSTED (no CDN) -- see /js/VENDOR-LICENSES.txt.
+       swiper-bundle includes Navigation + Pagination (no ES-module setup).
+       remm-gallery.js is shared with imagegallery.htm. -->
+  <script src="/js/swiper-bundle.min.js"></script>
+  <script src="/js/glightbox.min.js"></script>
+  <script src="/js/remm-gallery.js"></script>
+
+  <script>
+    //<![CDATA[
+    var usasearch_config = {
+      siteHandle: "radiationemergencymedicalmanageme",
+    };
+
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "//search.usa.gov/javascripts/remote.loader.js";
+    document.getElementsByTagName("head")[0].appendChild(script);
+
+    //]]>
+  </script>
+</body>
+
+</html>

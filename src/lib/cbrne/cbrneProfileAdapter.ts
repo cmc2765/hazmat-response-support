@@ -8,6 +8,8 @@ import type {
 } from "./cbrneTypes.js";
 import { domainsForCbrneLane, type CbrneSearchLane } from "./searchCbrneRecords.js";
 import { hydrateCbrneDatabase } from "./hydrateCbrneDatabase.js";
+import { authoritativeFactsForRecord } from "../../data/cbrne/authoritative/authoritativeSourceFacts.js";
+import { findRadionuclidePhysicsRecord } from "../../data/cbrne/authoritative/radionuclidePhysics.js";
 
 const SECTION_GROUPS = Object.freeze({
   overviewFacts: ["IDENTITY"] as readonly CbrneFieldGroup[],
@@ -109,6 +111,8 @@ export function adaptCbrneProfile(
   const missingFieldCount = sectionFactGroups.filter((sectionFacts) => sectionFacts.every((fact) => fact.value === null)).length;
   const availableFacts = facts.filter((fact) => fact.value !== null);
   const sourceNames = [...new Set(availableFacts.map((fact) => fact.sourceName))];
+  const authoritativeFacts = authoritativeFactsForRecord(record.id);
+  const sourceArtifactIds = [...new Set(authoritativeFacts.map((fact) => fact.sourceArtifactId))];
   const requiresSmeReviewCount = availableFacts.filter((fact) => fact.verificationStatus === "Requires SME Review").length;
   const conflictingSourcesCount = availableFacts.filter((fact) => fact.verificationStatus === "Conflicting Sources").length;
   const dataStatusBadges = [...new Set([
@@ -146,6 +150,8 @@ export function adaptCbrneProfile(
     actionCards: actionTitles(record).map((title, index) => actionCard(title, actionSources[index])),
     limitations: [...safetyLimitationsForDomain(record.domain)],
     dataStatusBadges,
+    authoritativeFacts,
+    radionuclidePhysics: findRadionuclidePhysicsRecord(record.id),
     sourceStatus: {
       sourcePacksLoaded: database.importReports.filter((report) => report.valid && report.recordIds.includes(record.id)).length,
       sourceFactCount: availableFacts.length,
@@ -153,6 +159,9 @@ export function adaptCbrneProfile(
       requiresSmeReviewCount,
       conflictingSourcesCount,
       missingFieldCount,
+      sourceArtifactIds,
+      sourceArtifactCount: sourceArtifactIds.length,
+      factLevelProvenanceCount: authoritativeFacts.length,
       lastImportUpdate: record.updatedAt,
       warnings: [...database.warnings],
     },
