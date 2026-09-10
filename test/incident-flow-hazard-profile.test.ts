@@ -36,9 +36,11 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
 
     expect(loader).toContain("chemical.guidanceEligible === false");
     expect(loader).toContain("const recordPromise = buildFullChemicalRecord(chemical).catch");
-    expect(loader).toContain("const profileResponse = await fetchJson(profileUrl);");
-    expect(loader.indexOf("updateChemicalCard(profileRecord);")).toBeLessThan(loader.indexOf("const record = await recordPromise;"));
-    expect(loader).toContain("if (String(selectedChemicalId) !== String(chosenChemicalId)) return;");
+    expect(loader).toContain("profileResponse = await fetchJson(profileUrl);");
+    expect(loader.indexOf("updateChemicalCard(profileRecord);")).toBeLessThan(loader.indexOf("void recordPromise.then((record) =>"));
+    expect(loader).toContain("const isCurrentProfileRequest = () => profileRequestId === latestChemicalProfileRequest");
+    expect(loader).toContain("if (!profile) {");
+    expect(loader).toContain("Database information for ${chosenChemicalName || 'this chemical'} could not be loaded.");
     expect(loader).toContain("setHazardProfileMode('chemical');");
     expect(loader).toContain("updateChemicalCard(profileRecord);");
   });

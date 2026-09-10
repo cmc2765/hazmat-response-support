@@ -2515,6 +2515,12 @@ function isChemicalCompanionSelection(chemical) {
   return /^\d+$/.test(String(candidate ?? '').trim()) && Number(candidate) > 0;
 }
 
+function normalizeChemicalSelectionId(value) {
+  if (value === null || value === undefined || value === '') return null;
+  const normalized = String(value).trim();
+  return /^\d+$/.test(normalized) && Number(normalized) > 0 ? Number(normalized) : value;
+}
+
 function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
   const synonyms = parseJsonField(chem.synonyms, []);
   const cas = parseJsonField(chem.cas, []) || [];
@@ -4546,6 +4552,7 @@ document.getElementById('hazard-profile-save-btn')?.addEventListener('click', (e
 });
 let chemicalSearchTimer = null;
 let latestChemicalSearch = 0;
+let latestChemicalProfileRequest = 0;
 let activeChemical = null;
 let selectedChemicalId = null;
 let activeChemicalRecord = null;
@@ -5017,7 +5024,7 @@ function syncPlumeChemicalSelection() {
 }
 
 function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {}) {
-  const nextSelectedChemicalId = chemical?.selectedChemicalId ?? chemical?.ChemicalID ?? chemical?.id ?? null;
+  const nextSelectedChemicalId = normalizeChemicalSelectionId(chemical?.selectedChemicalId ?? chemical?.ChemicalID ?? chemical?.id ?? null);
   const changed = String(selectedChemicalId ?? '') !== String(nextSelectedChemicalId ?? '');
   if (changed) {
     activeChemicalRecord = null;
@@ -5115,9 +5122,10 @@ async function openChemical(chemical, facilityName = '') {
     setChemicalSearchStatus(chemical.reviewWarning || 'This transport identifier has not been verified against a Chemical Companion master chemical record. Do not use it for IDLH, PPE, plume, decon, or medical guidance until reviewed.', 'error');
     return;
   }
-  setActiveChemical(chemical);
-  const chosenChemicalId = chemical.selectedChemicalId ?? chemical.ChemicalID ?? chemical.id;
+  const chosenChemicalId = normalizeChemicalSelectionId(chemical.selectedChemicalId ?? chemical.ChemicalID ?? chemical.id);
   const chosenChemicalName = chemical.ChemicalName || chemical.name;
+  const profileRequestId = ++latestChemicalProfileRequest;
+  setActiveChemical({ ...chemical, selectedChemicalId: chosenChemicalId });
   console.info('[chemical-companion] selection', {
     selectedChemicalId: chosenChemicalId,
     ChemicalName: chosenChemicalName,
@@ -5125,10 +5133,7 @@ async function openChemical(chemical, facilityName = '') {
   latestChemicalSearch += 1;
   window.clearTimeout(chemicalSearchTimer);
   setChemicalSearchStatus(`Loading ${chemical.name || 'chemical'}…`, 'loading');
-  const profileParams = new URLSearchParams();
-  if (chemical.UnnaNumber && chemical.UnnaNumber !== 'Not available') profileParams.set('identifier', chemical.UnnaNumber);
-  if (chemical.ProperShippingName) profileParams.set('shippingName', chemical.ProperShippingName);
-  const profileUrl = `/api/chemicals/${encodeURIComponent(chosenChemicalId)}/profile${profileParams.size ? `?${profileParams}` : ''}`;
+  const profileUrl = `/api/chemicals/${encodeURIComponent(chosenChemicalId)}/profile`;
   // The Chemical Companion profile is the primary display contract. Start the
   // optional legacy enrichment in parallel, but never make the profile wait on
   // NPG, ERG, threshold, or guide-library requests.
@@ -5136,62 +5141,85 @@ async function openChemical(chemical, facilityName = '') {
       console.warn('[chemical-companion] optional profile enrichment failed', error);
       return null;
     });
-  const profileResponse = await fetchJson(profileUrl);
-  if (String(selectedChemicalId) !== String(chosenChemicalId)) return;
-
-  const profile = profileResponse && !profileResponse.error ? profileResponse : null;
-  const profileRecord = profile ? {
-    id: String(chosenChemicalId),
-    selectedChemicalId: chosenChemicalId,
-    name: profile.header?.name || chosenChemicalName,
-    un: profile.header?.un || 'N/A',
-    ergGuide: profile.header?.ergGuide || 'N/A',
-    dotClass: profile.header?.hazardClass || profile.header?.hazard || 'N/A',
-    idlh: formatIdlh(profile.header?.idlh || profile.exposures?.idlh || ''),
-    summarySources: chemicalProfileSources(profile),
-    profile: { ...profile, activeTab: 'overview' },
-  } : null;
-
-  if (profileRecord) {
-    activeChemicalRecord = profileRecord;
-    applyChemicalContainerProfile();
-    updateActiveIncidentRecord();
-    renderIncidentCommandSnapshot();
-    try {
-      updateChemicalCard(profileRecord);
-      setHazardProfileMode('chemical');
-      setChemicalSearchStatus('');
-    } catch (error) {
-      console.error('[chemical-companion] profile render failed', error);
-      setHazardProfileMode('empty');
-      setChemicalSearchStatus('The database profile loaded, but the display could not render it. Refresh and try again.', 'error');
-      return;
-    }
-  }
-
-  const record = await recordPromise;
-  if (String(selectedChemicalId) !== String(chosenChemicalId)) return;
-  if (!profileRecord && !record) {
+  const isCurrentProfileRequest = () => profileRequestId === latestChemicalProfileRequest
+    && String(selectedChemicalId) === String(chosenChemicalId);
+  const showProfileLoadError = (message) => {
+    if (profileRequestId !== latestChemicalProfileRequest) return false;
     setHazardProfileMode('empty');
-    setChemicalSearchStatus(`Database information for ${chosenChemicalName || 'this chemical'} could not be loaded.`, 'error');
-    return;
-  }
-  activeChemicalRecord = profileRecord ? { ...record, ...profileRecord } : record;
-  applyChemicalContainerProfile();
-  updateActiveIncidentRecord();
-  renderIncidentCommandSnapshot();
-  if (!profileRecord) {
+    setChemicalSearchStatus(message, 'error');
+    return true;
+  };
+  const renderEnrichmentFallback = (record) => {
+    if (!record || !isCurrentProfileRequest()) return;
     try {
-      updateChemicalCard(activeChemicalRecord);
+      activeChemicalRecord = record;
+      applyChemicalContainerProfile();
+      updateActiveIncidentRecord();
+      renderIncidentCommandSnapshot();
+      updateChemicalCard(record);
       setHazardProfileMode('chemical');
       setChemicalSearchStatus('The primary Chemical Profile was unavailable; showing available linked database data.', 'error');
     } catch (error) {
       console.error('[chemical-companion] fallback profile render failed', error);
-      setHazardProfileMode('empty');
-      setChemicalSearchStatus('Chemical information could not be displayed.', 'error');
-      return;
+      showProfileLoadError('Chemical information could not be displayed.');
     }
+  };
+
+  let profileResponse;
+  try {
+    profileResponse = await fetchJson(profileUrl);
+  } catch (error) {
+    console.error('[chemical-companion] profile request failed', error);
   }
+  if (!isCurrentProfileRequest()) {
+    showProfileLoadError(`Loading ${chosenChemicalName || 'the selected chemical'} was cancelled because the selection changed.`);
+    return;
+  }
+
+  const profile = profileResponse && !profileResponse.error ? profileResponse : null;
+  if (!profile) {
+    showProfileLoadError(`Database information for ${chosenChemicalName || 'this chemical'} could not be loaded.`);
+    void recordPromise.then(renderEnrichmentFallback);
+    return;
+  }
+
+  let profileRecord;
+  try {
+    profileRecord = {
+      id: String(chosenChemicalId),
+      selectedChemicalId: chosenChemicalId,
+      name: profile.header?.name || chosenChemicalName,
+      un: profile.header?.un || 'N/A',
+      ergGuide: profile.header?.ergGuide || 'N/A',
+      dotClass: profile.header?.hazardClass || profile.header?.hazard || 'N/A',
+      idlh: formatIdlh(profile.header?.idlh || profile.exposures?.idlh || ''),
+      summarySources: chemicalProfileSources(profile),
+      profile: { ...profile, activeTab: 'overview' },
+    };
+    activeChemicalRecord = profileRecord;
+    applyChemicalContainerProfile();
+    updateActiveIncidentRecord();
+    renderIncidentCommandSnapshot();
+    updateChemicalCard(profileRecord);
+    setHazardProfileMode('chemical');
+    setChemicalSearchStatus('');
+  } catch (error) {
+    console.error('[chemical-companion] profile render failed', error);
+    showProfileLoadError('The database profile loaded, but the display could not render it. Refresh and try again.');
+    return;
+  }
+
+  void recordPromise.then((record) => {
+    if (!record || !isCurrentProfileRequest()) return;
+    try {
+      activeChemicalRecord = { ...record, ...profileRecord };
+      applyChemicalContainerProfile();
+      updateActiveIncidentRecord();
+      renderIncidentCommandSnapshot();
+    } catch (error) {
+      console.warn('[chemical-companion] optional profile enrichment render failed', error);
+    }
+  });
   if (window.matchMedia('(max-width: 1199px)').matches) {
     chemicalIdResults?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else {
@@ -5200,7 +5228,7 @@ async function openChemical(chemical, facilityName = '') {
 }
 
 function companionChemicalForUi(row) {
-  const selectedId = row?.ChemicalID;
+  const selectedId = normalizeChemicalSelectionId(row?.ChemicalID);
   return {
     ...row,
     id: selectedId === null || selectedId === undefined ? `transport-${row?.sourceIdentifierId}` : String(selectedId),
