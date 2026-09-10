@@ -8,6 +8,7 @@ dotenv.config();
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import Database from "better-sqlite3";
 import * as schema from "./schema.js";
+import { reconcileNpgProjection } from "./npg-projection.js";
 
 const SQLITE_PATH = process.env.SQLITE_PATH ?? "./local.db";
 
@@ -31,6 +32,8 @@ export function getDb(): DbClient {
     CREATE INDEX IF NOT EXISTS idx_incidents_status ON incidents(status);
   `);
   _client = drizzle(conn, { schema });
+  const count = reconcileNpgProjection(_client);
+  console.log(`[db] npg projection reconciled: ${count} records`);
   console.log(`[db] SQLite at ${SQLITE_PATH}`);
   return _client;
 }

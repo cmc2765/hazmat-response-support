@@ -4,6 +4,10 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import type { Hono } from "hono";
+import { asc, eq } from "drizzle-orm";
+import { ALL_NPG } from "../../src/data/all-npg.js";
+import { NPG } from "../../src/data/npg.js";
+import * as schema from "../src/schema.js";
 
 let app: Hono;
 
@@ -58,6 +62,133 @@ describe("API routes", () => {
     const res = await app.request("/api/manifest");
     const body = (await res.json()) as { sources: { cameo: { recordCount: number } } };
     expect(body.sources.cameo.recordCount).toBeGreaterThan(200);
+  });
+
+  it("reconciles the complete canonical NPG projection and manifest", async () => {
+    const response = await app.request("/api/npg?limit=200&offset=0");
+    expect(response.status).toBe(200);
+    const firstPage = await response.json() as {
+      records: Array<{ id: string; cas: string | null }>;
+      total: number;
+      count: number;
+      offset: number;
+      limit: number;
+      hasMore: boolean;
+    };
+    expect(firstPage).toMatchObject({ total: ALL_NPG.length, count: 200, offset: 0, limit: 200, hasMore: true });
+
+    const records = [...firstPage.records];
+    for (let offset = firstPage.count; offset < firstPage.total; offset += firstPage.limit) {
+      const pageResponse = await app.request(`/api/npg?limit=${firstPage.limit}&offset=${offset}`);
+      expect(pageResponse.status).toBe(200);
+      const page = await pageResponse.json() as typeof firstPage;
+      records.push(...page.records);
+    }
+
+    expect(records).toHaveLength(ALL_NPG.length);
+    expect(new Set(records.map((record) => record.id))).toEqual(new Set(ALL_NPG.map((record) => record.id)));
+    expect(records.filter((record) => record.cas == null)).toHaveLength(ALL_NPG.filter((record) => !record.cas).length);
+    expect(new Set(records.filter((record) => record.cas).map((record) => record.cas)).size)
+      .toBe(ALL_NPG.filter((record) => record.cas).length);
+
+    const manifestResponse = await app.request("/api/manifest");
+    const manifest = await manifestResponse.json() as { sources: { nioshNpg: { recordCount: number } } };
+    expect(manifest.sources.nioshNpg.recordCount).toBe(ALL_NPG.length);
+  });
+
+  it("keeps curated and compact-only NPG records addressable by source ID", async () => {
+    const compactOnly = ALL_NPG.find((record) => !NPG.some((curated) => curated.id === record.id));
+    expect(compactOnly).toBeDefined();
+
+    const compactResponse = await app.request(`/api/npg/${encodeURIComponent(compactOnly!.id)}`);
+    expect(compactResponse.status).toBe(200);
+    expect(await compactResponse.json()).toMatchObject({ id: compactOnly!.id, cas: compactOnly!.cas ?? null });
+
+    const sulfurDioxideResponse = await app.request("/api/npg/sulfur-dioxide");
+    expect(sulfurDioxideResponse.status).toBe(200);
+    expect(await sulfurDioxideResponse.json()).toMatchObject({ id: "sulfur-dioxide", name: "Sulfur dioxide", cas: "7446-09-5" });
+  });
+
+  it("keeps NPG reconciliation idempotent and isolated from incidents", async () => {
+    const incident = {
+      incidentId: "npg-reconciliation-incident",
+      incidentName: "NPG reconciliation safety check",
+      status: "Active",
+    };
+    const saved = await app.request("/api/incidents", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ incidents: [incident] }),
+    });
+    expect(saved.status).toBe(200);
+
+    const { getDb } = await import("../src/db.js");
+    const { reconcileNpgProjection } = await import("../src/npg-projection.js");
+    const db = getDb();
+    await db.insert(schema.npgRecords).values({
+      id: "obsolete-npg-test-record",
+      name: "Obsolete NPG test record",
+      cas: null,
+      synonyms: "[]",
+      exposureLimits: "{}",
+      physical: "{}",
+      health: "{}",
+      ppe: "{}",
+      reactivity: "{}",
+      sources: "[]",
+    });
+    const incidentsBefore = await (await app.request("/api/incidents")).json();
+    const projectionBefore = await db.select({ id: schema.npgRecords.id, cas: schema.npgRecords.cas, name: schema.npgRecords.name })
+      .from(schema.npgRecords).orderBy(asc(schema.npgRecords.id));
+
+    expect(reconcileNpgProjection(db)).toBe(ALL_NPG.length);
+    expect(reconcileNpgProjection(db)).toBe(ALL_NPG.length);
+
+    const projectionAfter = await db.select({ id: schema.npgRecords.id, cas: schema.npgRecords.cas, name: schema.npgRecords.name })
+      .from(schema.npgRecords).orderBy(asc(schema.npgRecords.id));
+    const completeProjection = await db.select().from(schema.npgRecords);
+    const incidentsAfter = await (await app.request("/api/incidents")).json() as { incidents: unknown[] };
+    expect(projectionBefore).toHaveLength(ALL_NPG.length + 1);
+    expect(new Set(projectionAfter.map((record) => JSON.stringify(record)))).toEqual(new Set(
+      ALL_NPG.map((record) => JSON.stringify({ id: record.id, cas: record.cas ?? null, name: record.name })),
+    ));
+    expect(projectionAfter.some((record) => record.id === "obsolete-npg-test-record")).toBe(false);
+    for (const curated of NPG) {
+      expect(completeProjection.find((record) => record.id === curated.id)).toMatchObject({
+        id: curated.id,
+        name: curated.name,
+        synonyms: JSON.stringify(curated.synonyms ?? []),
+        cas: curated.cas ?? null,
+        rtecs: curated.rtecs ?? null,
+        formula: curated.formula ?? null,
+        exposureLimits: JSON.stringify(curated.exposureLimits ?? {}),
+        physical: JSON.stringify(curated.physical ?? {}),
+        health: JSON.stringify(curated.health ?? {}),
+        ppe: JSON.stringify(curated.ppe ?? {}),
+        reactivity: JSON.stringify(curated.reactivity ?? {}),
+        sources: JSON.stringify(curated.sources ?? []),
+      });
+    }
+    expect(incidentsAfter).toEqual(incidentsBefore);
+
+    const duplicateCasRows = await db.select({ cas: schema.npgRecords.cas }).from(schema.npgRecords)
+      .where(eq(schema.npgRecords.cas, "7446-09-5"));
+    expect(duplicateCasRows).toHaveLength(1);
+    expect(incidentsAfter.incidents).toContainEqual(expect.objectContaining(incident));
+  });
+
+  it("keeps NPG API identifier boundaries and sync completeness", async () => {
+    const numericResponse = await app.request("/api/npg/102");
+    expect(numericResponse.status).toBe(404);
+
+    const syncResponse = await app.request("/api/sync/npg-reconciliation-client");
+    expect(syncResponse.status).toBe(200);
+    const sync = await syncResponse.json() as {
+      npg: Array<{ id: string }>;
+      manifest: Array<{ key: string; recordCount: number }>;
+    };
+    expect(sync.npg).toHaveLength(ALL_NPG.length);
+    expect(sync.manifest.find((source) => source.key === "nioshNpg")?.recordCount).toBe(ALL_NPG.length);
   });
 
   it("serves Hazard ID and the backward-compatible Chemical ID alias", async () => {

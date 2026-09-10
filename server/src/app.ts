@@ -19,7 +19,7 @@ import { Hono } from "hono";
 import type { Context } from "hono";
 import { logger } from "hono/logger";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { eq, sql } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -498,8 +498,30 @@ app.get("/api/chemicals/:id", async (c) => {
 // ─── NPG ────────────────────────────────────────────────────────────────
 app.get("/api/npg", async (c) => {
   const db = getDb();
-  const rows = await db.select().from(schema.npgRecords).limit(500);
-  return c.json({ records: rows });
+  const rawLimit = c.req.query("limit");
+  const rawOffset = c.req.query("offset");
+  const limit = rawLimit == null ? 100 : Number(rawLimit);
+  const offset = rawOffset == null ? 0 : Number(rawOffset);
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 500) {
+    return c.json({ error: "limit must be an integer from 1 to 500" }, 400);
+  }
+  if (!Number.isSafeInteger(offset) || offset < 0) {
+    return c.json({ error: "offset must be a non-negative integer" }, 400);
+  }
+
+  const [{ total }] = await db.select({ total: sql<number>`count(*)` }).from(schema.npgRecords);
+  const records = await db.select().from(schema.npgRecords)
+    .orderBy(asc(schema.npgRecords.id))
+    .limit(limit)
+    .offset(offset);
+  return c.json({
+    records,
+    total,
+    count: records.length,
+    offset,
+    limit,
+    hasMore: offset + records.length < total,
+  });
 });
 
 app.get("/api/npg/:id", async (c) => {
