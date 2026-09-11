@@ -309,13 +309,37 @@ const coordinationFacts: AuthoritativeSourceFact[] = [
   },
 ];
 
+function preserveSourceRepresentation(fact: AuthoritativeSourceFact): AuthoritativeSourceFact {
+  const artifact = findSourceArtifact(fact.sourceArtifactId);
+  const physics = fact.factId.startsWith("nndc-half-life-")
+    ? RADIONUCLIDE_PHYSICS_RECORDS.find((record) => fact.canonicalRecordId === record.canonicalRecordId)
+    : null;
+  const sourceLocator = artifact?.artifactType === "PDF" && !/^Page\s+\d+/i.test(fact.sourceLocator)
+    ? `Page 1 — ${fact.sourceLocator}`
+    : fact.sourceLocator;
+  return {
+    ...fact,
+    sourceArtifactSha256: artifact?.sha256 ?? null,
+    valueOriginal: fact.value,
+    unitsOriginal: fact.units,
+    valueNormalized: physics?.halfLifeSeconds ?? fact.value,
+    unitsNormalized: physics?.halfLifeSeconds === null || physics?.halfLifeSeconds === undefined ? fact.units : "s",
+    normalizationMethod: physics?.halfLifeSeconds === null || physics?.halfLifeSeconds === undefined
+      ? "SOURCE_VALUE_PRESERVED"
+      : "ENSDF half-life converted to seconds using the evaluated source unit",
+    sourceLocator,
+    applicability: null,
+    context: null,
+  };
+}
+
 export const CBRNE_AUTHORITATIVE_SOURCE_FACTS: readonly AuthoritativeSourceFact[] = Object.freeze([
   ...identityFacts,
   ...candidateIdentityFacts,
   ...radionuclideFacts,
   ...projectedFacts,
   ...coordinationFacts,
-]);
+].map(preserveSourceRepresentation));
 
 export function authoritativeFactsForRecord(recordId: string) {
   return CBRNE_AUTHORITATIVE_SOURCE_FACTS.filter((fact) => fact.canonicalRecordId === recordId);

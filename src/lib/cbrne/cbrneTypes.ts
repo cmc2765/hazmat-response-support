@@ -179,4 +179,6 @@ export type CbrneProfile = {
     lastImportUpdate: string;
     warnings: string[];
   };
+  guidedResponseReadiness?: import("./guidedResponseReadiness.js").GuidedResponseDataReadiness;
+  guidedResponseEvidence?: import("./guidedResponseReadiness.js").GuidedResponseEvidence[];
 };

@@ -75,7 +75,16 @@ export type AuthoritativeSourceFact = {
   field: string;
   value: string | number | boolean | null;
   units: string | null;
+  /** The exact source representation is retained alongside any normalized projection. */
+  valueOriginal?: string | number | boolean | null;
+  unitsOriginal?: string | null;
+  valueNormalized?: string | number | boolean | null;
+  unitsNormalized?: string | null;
+  normalizationMethod?: string | null;
+  applicability?: string | null;
+  context?: Record<string, string | number | boolean | null> | null;
   sourceArtifactId: string;
+  sourceArtifactSha256?: string | null;
   sourceAgency: string;
   sourceFamily: string;
   sourceDocumentTitle: string;
@@ -94,6 +103,63 @@ export type AuthoritativeSourceFact = {
   limitations: string[];
   superseded: boolean;
   supersededBy: string | null;
+};
+
+export type ExtractionDisposition =
+  | "EXTRACTED"
+  | "STRUCTURED_DATA_IMPORTED"
+  | "IDENTITY_ONLY"
+  | "REFERENCE_ONLY"
+  | "NO_RELEVANT_OPERATIONAL_FACTS"
+  | "DUPLICATE_REUSED"
+  | "SUPERSEDED_REFERENCE"
+  | "MANUAL_EXTRACTION_REQUIRED"
+  | "PARSER_LIMITATION"
+  | "ARTIFACT_INTEGRITY_FAILED"
+  | "SOURCE_NOT_PRESENT"
+  | "INTENTIONALLY_EXCLUDED";
+
+export type ArtifactHashValidation = "VERIFIED" | "NOT_APPLICABLE" | "FAILED" | "MISSING";
+
+export type SourceArtifactExtractionManifest = {
+  sourceArtifactId: string;
+  acquisitionDisposition: SourceArtifactStatus;
+  extractionDisposition: ExtractionDisposition;
+  parser: SourceArtifact["parseMethod"] | "NOT_RUN";
+  hashValidation: ArtifactHashValidation;
+  sourceArtifactSha256: string | null;
+  expectedFileType: SourceArtifactType;
+  usableContentBytes: number | null;
+  pagesSectionsRecordsProcessed: { pages: number | null; sections: number; records: number };
+  identitiesLinked: string[];
+  factsProduced: string[];
+  warnings: string[];
+  parserLimitations: string[];
+  reviewRequirements: string[];
+  duplicateOf: string | null;
+  supersededBy: string | null;
+};
+
+export type CbrneCompletenessState =
+  | "SOURCE_BACKED_PENDING_REVIEW"
+  | "SOURCE_BACKED"
+  | "NOT_APPLICABLE"
+  | "SOURCE_NOT_AVAILABLE"
+  | "SOURCE_ARTIFACT_MISSING"
+  | "EXTRACTION_FAILED"
+  | "IDENTITY_AMBIGUOUS"
+  | "CONFLICTING_SOURCES";
+
+export const CBRNE_COMPLETENESS_DOMAINS = [
+  "IDENTITY", "CHARACTERISTICS", "HEALTH", "EXPOSURE_GUIDANCE", "RESPONDER_SAFETY", "PPE", "DETECTION",
+  "SAMPLING", "ANALYSIS", "DECONTAMINATION", "MEDICAL", "PROTECTIVE_ACTION", "COMMAND_COORDINATION", "SOURCE_PROVENANCE",
+] as const;
+
+export type CbrneCompletenessDomain = (typeof CBRNE_COMPLETENESS_DOMAINS)[number];
+
+export type CbrneDomainCompletenessMatrix = {
+  canonicalRecordId: string;
+  domains: Record<CbrneCompletenessDomain, CbrneCompletenessState>;
 };
 
 export type ChemicalCwaIdentity = {

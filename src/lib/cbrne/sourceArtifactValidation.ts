@@ -42,13 +42,36 @@ export function validateArtifactIntegrity(artifact: SourceArtifact, repositoryRo
     errors.push(`${artifact.sourceArtifactId} is missing acquired-file metadata`);
     return errors;
   }
-  const calculated = sha256File(`${repositoryRoot}/${artifact.localSnapshotPath}`);
+  const filePath = `${repositoryRoot}/${artifact.localSnapshotPath}`;
+  let bytes: Buffer;
+  try {
+    bytes = readFileSync(filePath);
+  } catch {
+    errors.push(`${artifact.sourceArtifactId} local snapshot is not readable`);
+    return errors;
+  }
+  if (bytes.length === 0) errors.push(`${artifact.sourceArtifactId} has no usable content`);
+  const calculated = createHash("sha256").update(bytes).digest("hex");
   if (calculated !== artifact.sha256) errors.push(`${artifact.sourceArtifactId} SHA-256 mismatch`);
+  if (artifact.fileSize !== bytes.length) errors.push(`${artifact.sourceArtifactId} file size does not match the registry`);
   if (artifact.fileSize < 256 && artifact.contentType !== "application/json") errors.push(`${artifact.sourceArtifactId} is implausibly small`);
   const expectedContentType = artifact.artifactType === "PDF" ? "application/pdf"
     : artifact.artifactType === "JSON_API" || artifact.artifactType === "DATASET" ? "application/json"
       : "text/html";
   if (artifact.contentType !== expectedContentType) errors.push(`${artifact.sourceArtifactId} content type does not match ${artifact.artifactType}`);
+  if (artifact.artifactType === "PDF" && bytes.subarray(0, 5).toString("ascii") !== "%PDF-") {
+    errors.push(`${artifact.sourceArtifactId} does not contain a PDF signature`);
+  }
+  if (artifact.artifactType === "JSON_API" || artifact.artifactType === "DATASET") {
+    try {
+      JSON.parse(bytes.toString("utf8"));
+    } catch {
+      errors.push(`${artifact.sourceArtifactId} is not valid JSON`);
+    }
+  }
+  if (artifact.artifactType === "WEB_PAGE" && !/<html[\s>]/i.test(bytes.toString("utf8"))) {
+    errors.push(`${artifact.sourceArtifactId} does not contain recognizable HTML`);
+  }
   if (!artifact.parsed || artifact.parseMethod === "NOT_PARSED") errors.push(`${artifact.sourceArtifactId} did not pass format parsing`);
   if (artifact.currentStatus === "DUPLICATE" && !artifact.duplicateOf) errors.push(`${artifact.sourceArtifactId} does not identify its canonical duplicate`);
   return errors;

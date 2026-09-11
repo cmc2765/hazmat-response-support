@@ -5,6 +5,7 @@ export type AuthoritativeFactConflict = {
   fieldGroup: AuthoritativeSourceFact["fieldGroup"];
   field: string;
   units: string | null;
+  context: AuthoritativeSourceFact["context"];
   factIds: string[];
   values: Array<AuthoritativeSourceFact["value"]>;
 };
@@ -16,7 +17,7 @@ function comparisonValue(value: AuthoritativeSourceFact["value"]) {
 export function detectAuthoritativeFactConflicts(facts: readonly AuthoritativeSourceFact[]) {
   const groups = new Map<string, AuthoritativeSourceFact[]>();
   for (const fact of facts.filter((candidate) => !candidate.superseded && candidate.value !== null && candidate.reviewStatus !== "REJECTED")) {
-    const key = JSON.stringify([fact.canonicalRecordId, fact.fieldGroup, fact.field, fact.units]);
+    const key = JSON.stringify([fact.canonicalRecordId, fact.fieldGroup, fact.field, fact.units, fact.applicability, fact.context]);
     groups.set(key, [...(groups.get(key) ?? []), fact]);
   }
   const conflicts: AuthoritativeFactConflict[] = [];
@@ -28,6 +29,7 @@ export function detectAuthoritativeFactConflicts(facts: readonly AuthoritativeSo
       fieldGroup: group[0].fieldGroup,
       field: group[0].field,
       units: group[0].units,
+      context: group[0].context ?? null,
       factIds: group.map((fact) => fact.factId),
       values,
     });

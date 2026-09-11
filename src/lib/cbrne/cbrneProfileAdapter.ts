@@ -10,6 +10,7 @@ import { domainsForCbrneLane, type CbrneSearchLane } from "./searchCbrneRecords.
 import { hydrateCbrneDatabase } from "./hydrateCbrneDatabase.js";
 import { authoritativeFactsForRecord } from "../../data/cbrne/authoritative/authoritativeSourceFacts.js";
 import { findRadionuclidePhysicsRecord } from "../../data/cbrne/authoritative/radionuclidePhysics.js";
+import { guidedResponseEvidenceForRecord, guidedResponseReadinessForRecord } from "./guidedResponseReadiness.js";
 
 const SECTION_GROUPS = Object.freeze({
   overviewFacts: ["IDENTITY"] as readonly CbrneFieldGroup[],
@@ -165,6 +166,8 @@ export function adaptCbrneProfile(
       lastImportUpdate: record.updatedAt,
       warnings: [...database.warnings],
     },
+    guidedResponseReadiness: guidedResponseReadinessForRecord(record.id),
+    guidedResponseEvidence: guidedResponseEvidenceForRecord(record.id),
   };
 }
 
