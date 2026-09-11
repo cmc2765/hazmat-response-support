@@ -16,6 +16,7 @@ function runtime(extra: string) {
   return `
     ${declaration('normalizeChemicalSelectionId')}
     ${declaration('companionChemicalForUi')}
+    ${declaration('chemicalProfileRecord')}
     let chemicalSearchTimer = null;
     let latestChemicalSearch = 0;
     let latestChemicalProfileRequest = 0;
@@ -141,5 +142,26 @@ describe('Hazard ID Chemical Companion profile loader', () => {
     });
     expect(result.statuses.some((status: { message: string }) => status.message.includes('Loading'))).toBe(true);
     expect(result.statuses.at(-1).state).not.toBe('loading');
+  });
+
+  it('keeps canonical identifiers and verified NIOSH provenance on the active profile record', async () => {
+    const fetchJson = vi.fn().mockResolvedValue({
+      selectedChemicalId: 102,
+      header: {
+        name: 'Sulfur dioxide', cas: '7446-09-5', un: '1079', ergGuide: '125', idlh: '100 ppm',
+      },
+      niosh: { status: 'VERIFIED_NIOSH', sourceRecordId: 'sulfur-dioxide' },
+      sources: ['Chemical Companion', 'NIOSH Pocket Guide', 'ERG 2024'],
+    });
+    const result = await runInNewContext(runtime(`
+      await openChemical(companionChemicalForUi(${JSON.stringify(sulfurDioxideSearchRow)}));
+      return ({ record: activeChemicalRecord });
+    `), context({ fetchJson, chemicalProfileSources: (profile: Record<string, unknown>) => profile.sources || [] }));
+
+    expect(result.record).toMatchObject({
+      id: '102', selectedChemicalId: 102, name: 'Sulfur dioxide', cas: '7446-09-5',
+      un: '1079', ergGuide: '125', idlh: '100 ppm', nioshSourceId: 'sulfur-dioxide',
+      nioshIdentityStatus: 'VERIFIED_NIOSH',
+    });
   });
 });

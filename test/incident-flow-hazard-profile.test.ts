@@ -97,6 +97,13 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
     expect(script).toContain("idlh: chemicalData.idlh || ''");
     expect(script).toContain("const chemicalData = selectedChemicalOperationalData({ incident, profile });");
     expect(script).toContain("const chemicalData = selectedChemicalOperationalData();");
+    expect(script).toContain("nioshSourceId: firstChemicalDataValue(niosh.sourceRecordId, incident?.nioshSourceId)");
+    expect(script).toContain("['IDLH Source', model.nioshSourceId ? `NIOSH · ${model.nioshSourceId}` : noCurrentDataText]");
+    expect(script).toContain("chemicalSources: chemicalProfile ? chemicalProfileSources(chemicalProfile) : (existingIncident?.chemicalSources || [])");
+    expect(script).toContain("const ppeSource = profile.ppeRecommendation || profile.ppeRespiratory || incident.ppeSummary;");
+    expect(script).toContain("const persistedMedicalSource = incident.medicalSummary || profile.medical;");
+    expect(script).toContain("const medicalSource = profile.medical || persistedMedicalSource;");
+    expect(script).toContain("status: operationalStatus(ppeSource?.status || ppeSource?.recommendationStatus");
   });
 
   it("uses compact expandable Guided Response decision panels", () => {

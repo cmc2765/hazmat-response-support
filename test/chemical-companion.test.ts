@@ -123,7 +123,7 @@ describe('normalizeChemicalProfile', () => {
 
     expect(profile).toMatchObject({
       selectedChemicalId: 102,
-      header: { name: 'Sulfur dioxide', idlh: '100 ppm' },
+      header: { name: 'Sulfur dioxide', cas: '7446-09-5', un: '1079', ergGuide: '125', idlh: '100 ppm' },
       niosh: {
         status: NIOSH_IDENTITY_STATUS.VERIFIED_NIOSH,
         sourceRecordId: 'sulfur-dioxide',
@@ -133,6 +133,25 @@ describe('normalizeChemicalProfile', () => {
     expect(profile.sourceLinks).toContainEqual(expect.objectContaining({
       sourceName: 'NIOSH', sourceRecordId: 'sulfur-dioxide', sourceIdentifierType: 'CAS',
     }));
+  });
+
+  it.each([
+    ['sulfur dioxide', 'Exact Chemical Companion master name'],
+    ['7446-09-5', 'Exact CAS number'],
+    ['1079', 'Exact Chemical Companion master UN number'],
+  ])('resolves sulfur dioxide by %s through the public search route', async (query, matchReason) => {
+    const response = await app.request(`/api/chemicals/search?q=${encodeURIComponent(query)}`);
+    expect(response.status).toBe(200);
+    const results = (await response.json()).chemicals;
+    expect(results[0]).toMatchObject({
+      ChemicalID: 102,
+      ChemicalName: 'Sulfur dioxide',
+      CasNumber: '7446-09-5',
+      UnnaNumber: '1079',
+      ErgNumber: '125',
+      matchReason,
+      guidanceEligible: true,
+    });
   });
 
   it('keeps Chemical Companion IDs out of the NPG identifier namespace', async () => {

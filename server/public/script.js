@@ -1037,6 +1037,7 @@ function selectedChemicalOperationalData({ record = activeChemicalRecord, chemic
     advanced.IDLH,
     incident?.idlh,
   );
+  const niosh = profile.niosh || {};
   return {
     chemicalName,
     selectedChemicalId: firstChemicalDataValue(chemical?.selectedChemicalId, chemical?.id, profile.selectedChemicalId, profile.id, incident?.selectedChemicalId),
@@ -1046,6 +1047,13 @@ function selectedChemicalOperationalData({ record = activeChemicalRecord, chemic
     hazardClass,
     primaryHazard: firstChemicalDataValue(profile.header?.hazard, incident?.primaryHazard, hazardClass),
     idlh: idlh ? formatIdlh(idlh) : '',
+    nioshSourceId: firstChemicalDataValue(niosh.sourceRecordId, incident?.nioshSourceId),
+    nioshIdentityStatus: firstChemicalDataValue(niosh.status, incident?.nioshIdentityStatus),
+    chemicalSources: firstChemicalDataValue(
+      profile.sources,
+      profile.header?.sources,
+      incident?.chemicalSources,
+    ),
     initialIsolation: firstChemicalDataValue(profile.isolationErg?.initialIsolationDistance, record?.commandFacts?.initialIsolation),
     protectiveAction: firstChemicalDataValue(profile.isolationErg?.protectiveActionDistance, record?.commandFacts?.protectiveAction),
     profile,
@@ -1133,7 +1141,11 @@ function buildIncidentCommandViewModel() {
     || [incident.windSpeed && `Wind ${incident.windSpeed} mph`, incident.windDirection && `from ${incident.windDirection}°`].filter(Boolean).join(' ');
   const notes = Array.isArray(incident.incidentNotes) ? incident.incidentNotes : [];
   const monitoring = incidentCommandMonitoringState(incident);
-  const profile = incident.chemicalProfile || {};
+  const activeSelectionMatchesIncident = String(activeChemical?.selectedChemicalId ?? activeChemical?.id ?? '')
+    === String(incident.selectedChemicalId ?? '');
+  const profile = incident.chemicalProfile
+    || (activeSelectionMatchesIncident ? activeChemicalRecord?.profile : null)
+    || {};
   const chemicalData = selectedChemicalOperationalData({ incident, profile });
   const hazards = [chemicalData.chemicalName, chemicalData.primaryHazard].filter(Boolean);
   const sourceStatus = incident.sourceStatuses || {};
@@ -1143,19 +1155,25 @@ function buildIncidentCommandViewModel() {
     incident.protectiveActionSummary,
     plume ? 'Plume available for protective-action review' : 'Protective-action assessment pending',
   );
-  const ppePending = incident.chemicalName ? 'PPE review pending for the identified product' : 'Identify the hazard to calculate PPE requirements';
+  // Prefer the current Chemical Companion domain record over a previously
+  // persisted summary. A pending CBRNE/PPE fact must not replace verified
+  // ordinary chemical PPE guidance for the same incident.
+  const ppeSource = profile.ppeRecommendation || profile.ppeRespiratory || incident.ppeSummary;
+  const persistedMedicalSource = incident.medicalSummary || profile.medical;
+  const medicalSource = profile.medical || persistedMedicalSource;
+  const ppePending = chemicalData.chemicalName ? 'PPE review pending for the identified product' : 'Identify the hazard to calculate PPE requirements';
   const ppeSummary = incidentCommandSummary(
-    incident.ppeSummary || profile.ppeRecommendation || profile.ppeRespiratory,
+    ppeSource,
     ppePending,
   );
-  const deconPending = incident.chemicalName ? 'Product-specific decon review pending' : 'Identify the hazard to load decon guidance';
+  const deconPending = chemicalData.chemicalName ? 'Product-specific decon review pending' : 'Identify the hazard to load decon guidance';
   const deconSummary = incidentCommandSummary(
     profile.decon,
     deconPending,
   );
-  const medicalPending = incident.chemicalName ? 'Medical guidance review pending' : 'Identify the hazard to load medical guidance';
+  const medicalPending = chemicalData.chemicalName ? 'Medical guidance review pending' : 'Identify the hazard to load medical guidance';
   const medicalSummary = incidentCommandSummary(
-    incident.medicalSummary || profile.medical,
+    medicalSource,
     medicalPending,
   );
   const hasPpe = ppeSummary !== ppePending;
@@ -1166,9 +1184,9 @@ function buildIncidentCommandViewModel() {
     : 'No facility or scene location linked';
   const tacticalStatus = [
     { id: 'protective', icon: '🛡️', label: 'Protective Actions', available: Boolean(incident.protectiveActionSummary || plume), status: operationalStatus(sourceStatus.protectiveActions, incident.protectiveActionSummary ? 'Available' : 'Assessment Pending'), summary: protectiveSummary, actionLabel: 'Open', target: 'details' },
-    { id: 'ppe', icon: '🥽', label: 'PPE Requirements', available: hasPpe, status: operationalStatus(incident.ppeSummary?.status, hasPpe ? 'Source Backed' : 'Review Pending'), summary: ppeSummary, actionLabel: 'Open', target: 'lookup' },
+    { id: 'ppe', icon: '🥽', label: 'PPE Requirements', available: hasPpe, status: operationalStatus(ppeSource?.status || ppeSource?.recommendationStatus, hasPpe ? 'Source Backed' : 'Review Pending'), summary: ppeSummary, actionLabel: 'Open', target: 'lookup' },
     { id: 'decon', icon: '💧', label: 'Decon', available: hasDecon, status: hasDecon ? 'Available' : 'Review Pending', summary: deconSummary, actionLabel: 'Open', target: 'lookup' },
-    { id: 'medical', icon: '❤️', label: 'Medical', available: hasMedical, status: operationalStatus(sourceStatus.medical, hasMedical ? 'Available' : 'Review Pending'), summary: medicalSummary, actionLabel: 'Open', target: 'lookup', lifeSafety: true },
+    { id: 'medical', icon: '❤️', label: 'Medical', available: hasMedical, status: operationalStatus(medicalSource?.status, hasMedical ? 'Available' : 'Review Pending'), summary: medicalSummary, actionLabel: 'Open', target: 'lookup', lifeSafety: true },
     { id: 'eplan', icon: '🏭', label: 'Facility / E-Plan', available: Boolean(location), status: incident.facilityName ? 'Facility Identified' : (location ? 'Scene Located' : 'Not Linked'), summary: facilitySummary, actionLabel: 'Review', target: 'details' },
     { id: 'plume', icon: '☁️', label: 'Plume', available: Boolean(plume || incident.plumeMapImage), status: plume || incident.plumeMapImage ? 'Plotted' : 'Not Plotted', summary: plume || incident.plumeMapImage ? plumeStatus : 'No plume run saved for this incident', actionLabel: plume || incident.plumeMapImage ? 'View' : 'Plot', target: 'plume' },
     { id: 'monitoring', icon: '📡', label: 'Monitoring', available: monitoring.available, status: monitoring.status, summary: monitoring.summary, actionLabel: monitoring.available ? 'Open' : 'Deploy', target: 'monitor' },
@@ -1186,6 +1204,8 @@ function buildIncidentCommandViewModel() {
     hazardClass: incidentCommandValue(hazardClass),
     primaryHazard: incidentCommandValue(chemicalData.primaryHazard, 'Hazard classification pending'),
     idlh: incidentCommandValue(chemicalData.idlh, 'IDLH not established for this incident'),
+    nioshSourceId: incidentCommandValue(chemicalData.nioshSourceId, ''),
+    nioshIdentityStatus: incidentCommandValue(chemicalData.nioshIdentityStatus, ''),
     operationalMode,
     protectiveActionsSummary: protectiveSummary,
     entryTeamPpe: ppeSummary,
@@ -1310,7 +1330,8 @@ function renderIncidentCommandDashboard() {
     ['Incident Name', model.incidentName], ['Status', model.status], ['Location', model.location],
     ['Date / Time Started', model.startTime ? new Date(model.startTime).toLocaleString() : noCurrentDataText],
     ['Elapsed Time', model.elapsedTime], ['Chemical(s) / Hazard(s)', incidentCommandValue(model.hazards)], ['Hazard Class', model.hazardClass],
-    ['Primary Hazard', model.primaryHazard, true], ['IDLH', model.idlh, true, 'idlh'], ['Operational Mode', model.operationalMode],
+    ['Primary Hazard', model.primaryHazard, true], ['IDLH', model.idlh, true, 'idlh'],
+    ['IDLH Source', model.nioshSourceId ? `NIOSH · ${model.nioshSourceId}` : noCurrentDataText], ['Operational Mode', model.operationalMode],
     ['Protective Actions Summary', model.protectiveActionsSummary], ['Entry Team PPE', model.entryTeamPpe],
     ['DECON Team PPE', model.deconTeamPpe], ['Medical Concerns', model.medicalConcerns, true],
     ['Plume / Threat Zone Status', model.plumeStatus], ['Weather Snapshot', model.weatherSnapshot],
@@ -1513,6 +1534,9 @@ function getIncidentFormData() {
     unNumber: chemicalData.unNumber || '',
     ergGuide: chemicalData.ergGuide || '',
     idlh: chemicalData.idlh || '',
+    nioshSourceId: chemicalData.nioshSourceId || '',
+    nioshIdentityStatus: chemicalData.nioshIdentityStatus || '',
+    chemicalSources: chemicalProfile ? chemicalProfileSources(chemicalProfile) : (existingIncident?.chemicalSources || []),
     hazardClass: chemicalData.hazardClass || '',
     primaryHazard: chemicalData.primaryHazard || '',
     chemicalProfile,
@@ -1727,6 +1751,8 @@ function appendChemicalProfileToIncidentReport(container, profile) {
     ['UN/NA number', header.un],
     ['ERG guide', header.ergGuide],
     ['IDLH', header.idlh],
+    ['IDLH source', profile.niosh?.status === 'VERIFIED_NIOSH' && profile.niosh?.sourceRecordId
+      ? `NIOSH · ${profile.niosh.sourceRecordId}` : ''],
     ['Primary hazard', header.hazard],
   ]);
   const sections = [
@@ -2631,9 +2657,10 @@ function chemicalRecordFromApi(chem, npg, thresholdRows, guideData, ergTable) {
     ergTable: hasGreenTable ? ergTable : null,
     dotClass: hazardClass.join(' / ') || 'N/A',
     physicalState: physical.bp ? `Boiling point ${formatTempFahrenheit(physical.bp)} (see physical data)` : 'Not modeled in this dataset',
-    idlh: exposureLimits.idlh
-      ? formatIdlh(exposureLimits.idlh)
-      : (isChemicalCompanionSelection(chem) ? 'NIOSH linkage requires verification' : 'Not in NIOSH dataset'),
+    // Companion selections load authoritative NIOSH linkage from the primary
+    // profile endpoint. Legacy enrichment must not manufacture a linkage
+    // warning while that independent request is in flight or unavailable.
+    idlh: exposureLimits.idlh ? formatIdlh(exposureLimits.idlh) : 'N/A',
     aeGL: formatThresholdGroup(thresholdRows, 'AEGL'),
     erpg: formatThresholdGroup(thresholdRows, 'ERPG'),
     pac: formatThresholdGroup(thresholdRows, 'TEEL'),
@@ -5093,17 +5120,29 @@ async function restoreSelectedChemical() {
     if (selectedChemicalId !== selectionAtStart) return;
     if (chemical && !chemical.error) {
       setActiveChemical(chemical, { persist: false, clearOverlay: false });
-      const record = await buildFullChemicalRecord(chemical);
-      const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(savedId)}/profile`);
-      const profile = profileResponse && !profileResponse.error ? profileResponse : null;
-      const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'overview' }, name: record.name } : record;
-      if (String(activeChemical?.id) === String(savedId)) {
-        activeChemicalRecord = combinedRecord;
-        applyChemicalContainerProfile();
-        restoreIncidentContainerData();
-        updateActiveIncidentRecord();
-        renderIncidentCommandSnapshot();
+      const recordPromise = buildFullChemicalRecord(chemical).catch(() => null);
+      const profileRecord = await fetchPrimaryChemicalProfile(chemical);
+      if (String(activeChemical?.id) !== String(savedId)) return;
+      const record = profileRecord || await recordPromise;
+      if (!record) {
+        setIncidentStatus(`Database information for ${chemical.name || 'this chemical'} could not be loaded.`);
         syncPlumeChemicalSelection();
+        return;
+      }
+      activeChemicalRecord = profileRecord || record;
+      applyChemicalContainerProfile();
+      restoreIncidentContainerData();
+      updateActiveIncidentRecord();
+      renderIncidentCommandSnapshot();
+      syncPlumeChemicalSelection();
+      if (profileRecord) {
+        void recordPromise.then((enrichment) => {
+          if (!enrichment || String(activeChemical?.id) !== String(savedId)) return;
+          activeChemicalRecord = { ...enrichment, ...profileRecord };
+          applyChemicalContainerProfile();
+          updateActiveIncidentRecord();
+          renderIncidentCommandSnapshot();
+        });
       }
     } else syncPlumeChemicalSelection();
   } catch {
@@ -5117,6 +5156,37 @@ function setChemicalSearchStatus(message, state = '') {
   if (!chemicalSearchStatus) return;
   chemicalSearchStatus.textContent = message;
   chemicalSearchStatus.dataset.state = state;
+}
+
+function chemicalProfileRecord(chemical, profile) {
+  const selectedId = normalizeChemicalSelectionId(
+    chemical?.selectedChemicalId ?? chemical?.ChemicalID ?? chemical?.id,
+  );
+  const header = profile?.header || {};
+  const idlh = header.idlh || profile?.exposures?.idlh || '';
+  return {
+    id: String(selectedId),
+    selectedChemicalId: selectedId,
+    name: header.name || chemical?.ChemicalName || chemical?.name || 'Select a chemical',
+    cas: header.cas || chemical?.cas || chemical?.CasNumber || '',
+    un: header.un || chemical?.un || chemical?.UnnaNumber || 'N/A',
+    ergGuide: header.ergGuide || chemical?.ergGuide || chemical?.ErgNumber || 'N/A',
+    dotClass: header.hazardClass || header.hazard || chemical?.dotClass || 'N/A',
+    idlh: formatIdlh(idlh),
+    nioshSourceId: profile?.niosh?.sourceRecordId || '',
+    nioshIdentityStatus: profile?.niosh?.status || '',
+    summarySources: chemicalProfileSources(profile),
+    profile: { ...profile, activeTab: 'overview' },
+  };
+}
+
+async function fetchPrimaryChemicalProfile(chemical) {
+  const selectedId = normalizeChemicalSelectionId(
+    chemical?.selectedChemicalId ?? chemical?.ChemicalID ?? chemical?.id,
+  );
+  if (selectedId === null || selectedId === undefined || selectedId === '') return null;
+  const profile = await fetchJson(`/api/chemicals/${encodeURIComponent(selectedId)}/profile`);
+  return profile && !profile.error ? chemicalProfileRecord(chemical, profile) : null;
 }
 
 function clearChemicalSuggestions() {
@@ -5196,17 +5266,7 @@ async function openChemical(chemical, facilityName = '') {
 
   let profileRecord;
   try {
-    profileRecord = {
-      id: String(chosenChemicalId),
-      selectedChemicalId: chosenChemicalId,
-      name: profile.header?.name || chosenChemicalName,
-      un: profile.header?.un || 'N/A',
-      ergGuide: profile.header?.ergGuide || 'N/A',
-      dotClass: profile.header?.hazardClass || profile.header?.hazard || 'N/A',
-      idlh: formatIdlh(profile.header?.idlh || profile.exposures?.idlh || ''),
-      summarySources: chemicalProfileSources(profile),
-      profile: { ...profile, activeTab: 'overview' },
-    };
+    profileRecord = chemicalProfileRecord(chemical, profile);
     activeChemicalRecord = profileRecord;
     applyChemicalContainerProfile();
     updateActiveIncidentRecord();
@@ -5669,16 +5729,34 @@ async function selectIncidentProduct(chemical) {
   }
   setActiveChemical(chemical);
   setIncidentStatus(`Loading ${chemical.name}…`);
-  const record = await buildFullChemicalRecord(chemical);
-  const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(chemical.selectedChemicalId ?? chemical.id)}/profile`);
-  const profile = profileResponse && !profileResponse.error ? profileResponse : null;
-  const combinedRecord = profile ? { ...record, profile: { ...profile, activeTab: 'overview' }, name: record.name } : record;
-  if (activeChemical?.id !== chemical.id) return;
-  activeChemicalRecord = combinedRecord;
+  const recordPromise = buildFullChemicalRecord(chemical).catch(() => null);
+  const profileRecord = await fetchPrimaryChemicalProfile(chemical);
+  if (String(activeChemical?.id) !== String(chemical.selectedChemicalId ?? chemical.id)) return;
+  if (profileRecord) {
+    activeChemicalRecord = profileRecord;
+    applyChemicalContainerProfile();
+    updateActiveIncidentRecord();
+    renderIncidentCommandSnapshot();
+    setIncidentStatus(`${chemical.name} selected for the active incident.`);
+    void recordPromise.then((record) => {
+      if (!record || String(activeChemical?.id) !== String(profileRecord.id)) return;
+      activeChemicalRecord = { ...record, ...profileRecord };
+      applyChemicalContainerProfile();
+      updateActiveIncidentRecord();
+      renderIncidentCommandSnapshot();
+    });
+    return;
+  }
+  const record = await recordPromise;
+  if (!record || String(activeChemical?.id) !== String(chemical.selectedChemicalId ?? chemical.id)) {
+    setIncidentStatus(`Database information for ${chemical.name || 'this chemical'} could not be loaded.`);
+    return;
+  }
+  activeChemicalRecord = record;
   applyChemicalContainerProfile();
   updateActiveIncidentRecord();
   renderIncidentCommandSnapshot();
-  setIncidentStatus(`${chemical.name} selected for the active incident.`);
+  setIncidentStatus('The primary Chemical Profile was unavailable; showing available linked database data.');
 }
 
 async function searchIncidentProducts(value) {
@@ -5717,13 +5795,14 @@ async function selectPlumeChemical(chemical) {
   setText('plume-input-status', `Loading ${chemical.name}…`);
   setActiveChemical(chemical);
   const chosenId = chemical.selectedChemicalId ?? chemical.id;
-  const record = await buildFullChemicalRecord(chemical);
-  const profileResponse = await fetchJson(`/api/chemicals/${encodeURIComponent(chosenId)}/profile`);
-  const profile = profileResponse && !profileResponse.error ? profileResponse : null;
+  const recordPromise = buildFullChemicalRecord(chemical).catch(() => null);
+  const profileRecord = await fetchPrimaryChemicalProfile(chemical);
   if (String(activeChemical?.id) !== String(chosenId)) return;
-  activeChemicalRecord = profile
-    ? { ...record, profile: { ...profile, activeTab: 'overview' }, name: record.name }
-    : record;
+  activeChemicalRecord = profileRecord || await recordPromise;
+  if (!activeChemicalRecord) {
+    setText('plume-input-status', `Database information for ${chemical.name || 'this chemical'} could not be loaded.`);
+    return;
+  }
   applyChemicalContainerProfile();
   restoreIncidentContainerData();
   updateActiveIncidentRecord();
@@ -5732,6 +5811,15 @@ async function selectPlumeChemical(chemical) {
   const availability = await getPlumeModeAvailability();
   updateOperationalPlumeReadiness(availability.result, null, availability.summary);
   scheduleAutomaticPlanningPlume();
+  if (profileRecord) {
+    void recordPromise.then((record) => {
+      if (!record || String(activeChemical?.id) !== String(chosenId)) return;
+      activeChemicalRecord = { ...record, ...profileRecord };
+      applyChemicalContainerProfile();
+      updateActiveIncidentRecord();
+      renderIncidentCommandSnapshot();
+    });
+  }
 }
 
 async function searchPlumeChemicals(value) {
