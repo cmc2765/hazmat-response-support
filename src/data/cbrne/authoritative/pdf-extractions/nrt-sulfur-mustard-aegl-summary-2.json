@@ -1,0 +1,333 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-sulfur-mustard-aegl-summary-2",
+  "sourceArtifactSha256": "9615f0403a8bbecd2842fe852580b7f226c40091dd25c18ce8511f93e9521e04",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "I_FORM_XFA_PDF",
+  "pageCount": 4,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "1U.S. Army Public Health Command Chemical Agent Health-Based Standards and Guidelines Summary Table 2:Criteria for Water, Soil, Waste, as of July 2011Approved for public release, distribution unlimitedPreventive Medicine Data:  AR 40-5ePHN No:  0711-03, ",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "July 2011Public Health Notice",
+          "role": "BODY"
+        }
+      ],
+      "text": "1U.S. Army Public Health Command Chemical Agent Health-Based Standards and Guidelines Summary Table 2:Criteria for Water, Soil, Waste, as of July 2011Approved for public release, distribution unlimitedPreventive Medicine Data: AR 40-5ePHN No: 0711-03, July 2011Public Health Notice",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 2,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "2Contact the USAPHC, Army Institute of Public Health, Environmental Medicine Program, 410-436-2714 for more information.Use of trademark names(s) does not imply endorsement by the U.S. Army but is intended only toassist in the ",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "identification of a specific product.",
+          "role": "BODY"
+        }
+      ],
+      "text": "2Contact the USAPHC, Army Institute of Public Health, Environmental Medicine Program, 410-436-2714 for more information.Use of trademark names(s) does not imply endorsement by the U.S. Army but is intended only toassist in the identification of a specific product.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 2,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "1 USAPHC*Chemical Agent Health-Based Standards and Guidelines Summary Table2. Criteriafor Water, Soil, Waste, etc. (as of July 2011)**MediaStandard NamePopulationExposure ScenarioH/HD/HT (Mustard)GA (Tabun)GB (Sarin)GD/GFVXLewisiteNotes/StatusWaterMFWS",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Military FieldWater Standards  ug/LDesigned for military but conservative assumptions can addresscivilian applicationsShort term (~7 day)  high volume (15 L/day) consumption 47a,b,4a,b\u00034a,b\u00034a,b\u00034a,b\u000327a,bThese new multi-service criteria ( 2010 a) ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "supersede old values\u0003tprevious Field Drinking water Standards (FDWS)are now referred to as these MFWS . However actual values  are based on same toxicological assessment as past b[These values supersedes  two previous sets of military FDWS (2005) ",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "which includetwo sets of values, one for 5/L/day consumption, the other for 15 L/day consumption) as well as even older criteria (200 ug/L for Mustard agents/Lewisite and 20 ug/L for nerve agents)].\u0003\u0000\u0003All nerve agent values reflect lowest estimated ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "ingestion toxicity based on GD. See Notes.  SoilHealth Based Environmental Screening Levels (HBESL)HBESL \u0003tResidentialmg/kgGeneral population: adults and childrenDaily exposure, lifetime0.01c,d,e, f,n2.8c,d,e,n1.3c,d,e,n0.22c,d,e,n0.042c,d,e,n0.3c,d,e,n",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "See Note 1 on Soil HBESL on back of table.HBESL \u0003tIndustrial \u0001ug/kg General adult populationFrequent exposure 250 days/yr for 30 yrs0.3c,d,n68c,d,n32c,d,n5.2c,d,n1.1c,d,n3.7c,d,nWaste(solid and liquid)HWCLsolemg/kgSolid Hazardous Waste (HW) Control Limit",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Worker civilian/DoDPossible occasional exposure at HW treatment facility6.7h,i,n680h,i,n320h,i,n52h,i,n10h,i,n37h,i,nWere derived by Army (ref h, i) using the chronic toxicity criteria below with risk assessment model similar to that used by EPA Region IX ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "Tj",
+          "text": "and assumptions denoting specific exposure scenarios associated with waste materials and workers potentially exposed to them. Values were initially documented in a Department of Army proposed hazardous waste management rule presented to the State of Utah (",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "ref i) and later in an October 2000 CHPPM memo to PMCD (ref g). Values are endorsed in DA Policy (ref f, n) for site specific use/consideration. HWC liqemg/LLiquid HW Control LimitWorker civilian/DoDPossible occasional exposure at HW treatment facility0.7",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "h,i,n20h,i,n8.3h,i,n0.3h,i,n0.08h,i,n3.3h,i,nNHWCLemg/kgNon-HWControl Limit (e.g., HWexemption level)Worker civilian/DoDAt non HW disposal facility, possible occasional exposures0.3h,i,f68h,i,f32h,i,f5.2h,i,f1.1h,i,f3.7h,i,fChronic Toxicity Reference ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Criteria(Used in risk assessment calculations)RfD Reference Dosemg/kg/dayGeneral population: adults and childrenLifetime ingested dose at or below which no adverse health effects expected0.000007j, k, l0.00004j, k, l0.00002j, k, l0.000004j, k, l0.0000006",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "j, k, l0.0001j, k, lNRC/COT (ref j, 1999) gave general endorsement of values; addressed in Final DA OTSG endorsement letter of final RFDs (ref k, 2000); most current documentation of basis and overall status of these values is in peer reviewed article: ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "ref lCancer Slope Factor(mg/kg/day)-1General population: adults and childrenRepresents the potency of the agent by ingestion to cause increased cancer risk7.7j, k, lNot determined to be a carcinogenThe NRC/COT ref j endorsed a less conservative HD ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Slope Factorof [1.6 mg/kg/day-1has currently endorsed use of the 7.7; refk, ref l.Inhalation Unit Risk(ug/m3)-1General population: adults and childrenRepresents the potency of the agent by inhalation to cause increased cancer risk4.1x10E-3",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "See Table 20 HD HCD, November 2000 ref m.",
+          "role": "BODY"
+        }
+      ],
+      "text": "1 USAPHC*Chemical Agent Health-Based Standards and Guidelines Summary Table2. Criteriafor Water, Soil, Waste, etc. (as of July 2011)**MediaStandard NamePopulationExposure ScenarioH/HD/HT (Mustard)GA (Tabun)GB (Sarin)GD/GFVXLewisiteNotes/StatusWaterMFWS Military FieldWater Standards ug/LDesigned for military but conservative assumptions can addresscivilian applicationsShort term (~7 day) high volume (15 L/day) consumption 47a,b,4a,b\u00034a,b\u00034a,b\u00034a,b\u000327a,bThese new multi-service criteria ( 2010 a) supersede old values\u0003tprevious Field Drinking water Standards (FDWS)are now referred to as these MFWS . However actual values are based on same toxicological assessment as past b[These values supersedes two previous sets of military FDWS (2005) which includetwo sets of values, one for 5/L/day consumption, the other for 15 L/day consumption) as well as even older criteria (200 ug/L for Mustard agents/Lewisite and 20 ug/L for nerve agents)].\u0003\u0000\u0003All nerve agent values reflect lowest estimated ingestion toxicity based on GD. See Notes. SoilHealth Based Environmental Screening Levels (HBESL)HBESL \u0003tResidentialmg/kgGeneral population: adults and childrenDaily exposure, lifetime0.01c,d,e, f,n2.8c,d,e,n1.3c,d,e,n0.22c,d,e,n0.042c,d,e,n0.3c,d,e,n See Note 1 on Soil HBESL on back of table.HBESL \u0003tIndustrial \u0001ug/kg General adult populationFrequent exposure 250 days/yr for 30 yrs0.3c,d,n68c,d,n32c,d,n5.2c,d,n1.1c,d,n3.7c,d,nWaste(solid and liquid)HWCLsolemg/kgSolid Hazardous Waste (HW) Control Limit Worker civilian/DoDPossible occasional exposure at HW treatment facility6.7h,i,n680h,i,n320h,i,n52h,i,n10h,i,n37h,i,nWere derived by Army (ref h, i) using the chronic toxicity criteria below with risk assessment model similar to that used by EPA Region IX and assumptions denoting specific exposure scenarios associated with waste materials and workers potentially exposed to them. Values were initially documented in a Department of Army proposed hazardous waste management rule presented to the State of Utah ( ref i) and later in an October 2000 CHPPM memo to PMCD (ref g). Values are endorsed in DA Policy (ref f, n) for site specific use/consideration. HWC liqemg/LLiquid HW Control LimitWorker civilian/DoDPossible occasional exposure at HW treatment facility0.7 h,i,n20h,i,n8.3h,i,n0.3h,i,n0.08h,i,n3.3h,i,nNHWCLemg/kgNon-HWControl Limit (e.g., HWexemption level)Worker civilian/DoDAt non HW disposal facility, possible occasional exposures0.3h,i,f68h,i,f32h,i,f5.2h,i,f1.1h,i,f3.7h,i,fChronic Toxicity Reference Criteria(Used in risk assessment calculations)RfD Reference Dosemg/kg/dayGeneral population: adults and childrenLifetime ingested dose at or below which no adverse health effects expected0.000007j, k, l0.00004j, k, l0.00002j, k, l0.000004j, k, l0.0000006 j, k, l0.0001j, k, lNRC/COT (ref j, 1999) gave general endorsement of values; addressed in Final DA OTSG endorsement letter of final RFDs (ref k, 2000); most current documentation of basis and overall status of these values is in peer reviewed article: ref lCancer Slope Factor(mg/kg/day)-1General population: adults and childrenRepresents the potency of the agent by ingestion to cause increased cancer risk7.7j, k, lNot determined to be a carcinogenThe NRC/COT ref j endorsed a less conservative HD Slope Factorof [1.6 mg/kg/day-1has currently endorsed use of the 7.7; refk, ref l.Inhalation Unit Risk(ug/m3)-1General population: adults and childrenRepresents the potency of the agent by inhalation to cause increased cancer risk4.1x10E-3 See Table 20 HD HCD, November 2000 ref m.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 15,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "2NOTES and REFERENCES for Chemical Agent Multi Media/Toxicity Standards Status Table: Existing and Proposed Criteria as of July 2011*  USAPHC was formerly known as the U.S.Army Center for Health Promotion and Preventive Medicine (USACHPPM).",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Application of military drinking water criteria (MFWS):It is noted that contamination of large water supplies with warfare agents is relatively unlikely die to effects of hydrolysis, d",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "ilution, and the neutralizing effects of common water treatment processes (*e.g. chlorine). The cited MFWS values were designed for a military scenario in which smaller containerized water supplies directly used for consumption might be intentionally cont",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "aminated with significant amounts of agents. Theoretically this situation could result in residual agent levels of concern for several days. The values here assume up to 30 days exposurefor up to 15 liters/day consumption which thoughdoes occurinextr",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "eme heat military environments with high physical activity -is an extremely high rate of drinking water consumption not anticipated for civilians.  By comparisonUSEPA basis its drinking water standards on a 2 L/day consumption rate.  As such,MFWS would ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "be appropriate screening criteria for ageneral population scenariowhere ingestion rates range from 1-2 liters/day and where most releases to a water supply would involve the hydrolysis, dilution, and treatment processes. It also noted that the nerve age",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "nt values all reflect the most acutely toxic ingestion  estimate which was based on GD \u0000±a single criteria is used because most field detection kits/techniques do not differentiate the type of nerve agent.Alternatively,the ATSDR Oral Minimal Risk Levels",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "(MRLs) are presently available for sulfur mustard agent HD which mayalso be useful for specific screening assessments-HD MRL for acute-\u0000G\u0000X\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000\u0000\u0014\u0000\u0017\u0000\u0003\u0000G\u0000D\u0000\\\u0000V\u0000\u0003\u0000L\u0000V\u0000\u0003a dose value 0.0005 mg/kg/day(not a concentration \u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "must be converted); MRL for intermediate-duration exposure of 15 to 364 days is 0.00007 mg/kg/day;(ATSDR 2003).(Soil) HBESLs:were endorsed by headquarters Army (ESOH) in May 1999 (ref c) were derived (by Army, ref d\u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "which had criteria reevaluated ( and reaffirmed) in 2007;see ref d1)) using chronic toxicity criteria below with risk assessment model and assumption like that used by USEPA Reg IX to develop soil preliminary remediation goals (PRGs). ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "These are conservative screening criteria for assessing potential long term human exposure/ contact with soil contaminated from (liquid) agent (ambient vapor alone is not expected to result in deposition or soil contamination",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "). Also identified as criteria to determine public release of decontaminated items/ property (ref e)Note that where there is potential HD or VX soil contamination, breakdown products may also warrant evaluation (see App fof ref d,and ref g).REFERENCES:a.",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "TB Med 577, Sanitary Controland Surveillance of Field Water Supplies, May 2010.b.Memorandum, DASG-HS-PE, 16 April 1997, Subject: Tri-Service FieldWater Standardsfor Nerve Agents.c.Memorandum, Headquarters Department of the Army, Office of",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "the Assistant Secretary for Installations, Logistics, and Environment, SUBJ: Derivation of HealthBased Environmental Screening Levels (HBESLs) for Chemical Warfare Agents, May 28,1999.d.USACHPPM/ORNL Technical Report: Health Based Environmental",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Screening Levels for Chemical Warfare Agents, March 1999.e.ORNL\u0000\u0012\u00007\u00000\u0000\u0003\u0000\u0013\u0000\u001b\u0000\u0013\u0000\u0003\u0000\u000b\u0000\u0015\u0000\u0013\u0000\u0013\u0000\u001a\u0000\f\u0000\u0003\u0000:\u0000D\u0000W\u0000V\u0000R\u0000Q\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000'\u0000R\u0000O\u0000L\u0000V\u0000O\u0000D\u0000J\u0000H\u0000U\u0000\u0003\u0000³\u0000\u0003\u00005\u0000H-\u0000(\u0000Y\u0000D\u0000O\u0000X\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000\u0014\u0000\u001c\u0000\u001c\u0000\u001c\u0000\u0003\u0000+\u0000%\u0000(\u00006\u0000/\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000&\u0000:\u0000$\u0000´2007.f.DA Pamphlet385-61, ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Toxic Chemical Agent Safety Standards, 17 December 2008.g.Munro et al; The Sources, Fate, and Toxicity of Chemical Warfare Agent DegradationProducts, Environmental  Health Perspectives, Volume 107, Number 12, December 1999, pp933-974.h.",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Memorandum, Department of the Army \u0000±Centerfor Health Promotion and Preventive Medicine; MCHB-TS-EES; SUBJ: Response to State of Oregon Comments on the Utah Chemical Agent Rule (UCAR), 23 October 2000; NOTE: This response includes USACHPPM Information",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Paper \u0000³\u00000\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000&\u0000U\u0000L\u0000W\u0000H\u0000U\u0000L\u0000D\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000:\u0000D\u0000U\u0000I\u0000Dre Agent (CWA)-\u0000&\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000:\u0000D\u0000V\u0000W\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u00000\u0000H\u0000G\u0000L\u0000D\u0000´10 October 2000 as well as USACHPPM Technical Paper: ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "\u0000³\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000:\u0000D\u0000U\u0000I\u0000D\u0000U\u0000H\u0000\u0003\u0000$\u0000J\u0000H\u0000Q\u0000W\u0000\u0003\u0000+\u0000H\u0000D\u0000O\u0000W\u0000K\u0000\u0003\u0000%\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000:\u0000D\u0000V\u0000W\u0000H\u0000\u0003\u0000&\u0000R\u0000Q\u0000W\u0000U\u0000R\u0000O\u0000\u0003\u0000/\u0000L\u0000P\u0000L\u0000W\u0000V\u0000´dated September 2000.i.U.S. Army-Proposed Utah Chemical Agent Rule (UCAR), May 1999(Volume 1, Section XI. Development of Health Based Waste ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "ManagementConcentration Levels.\u0000´j.Review of \u0000W\u0000K\u0000H\u0000\u0003\u00008\u00006\u0000\u0003\u0000$\u0000U\u0000P\u0000\\\u0000¶\u0000V\u0000\u0003\u0000+\u0000H\u0000D\u0000O\u0000W\u0000K\u0000\u0003\u00005\u0000L\u0000V\u0000N\u0000\u0003\u0000$\u0000V\u0000V\u0000H\u0000V\u0000V\u0000P\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u00002\u0000U\u0000D\u0000O\u0000\u0003\u0000(\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u00006\u0000L\u0000[\u0000\u0003\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000:\u0000D\u0000U\u0000I\u0000D\u0000U\u0000H\u0000\u0003\u0000$\u0000J\u0000H\u0000Q\u0000W\u0000V",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": ", National Research Council, National Academy Press, WashDC, 1999.www.nap.edu.k.Memorandum, (Army OTSG) MCHB-CG-PPM, Chronic Toxicological Criteria for Chemical Warfare Compounds, 16 February 2000.l.Opresko, D.M., et al, 2001",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": ". Chemical Warfare Agents: Current Status of Oral Reference Doses, Reviews of Environmental Contamination and ToxicologyVol.172 pp 65-85.m.USACHPPM Technical Report:Evaluation of Airborne Exposure Limits for Sulfur Mustard (HD): ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Occupational and General Population Exposure Criteria, Technical Report 47-EM-3767-00, November 2000.n.Memorandum, Department of the Army, Subject: Interim Guidance for Chemical Warfare Material (CMW) Responses,April 1, 2009.",
+          "role": "BODY"
+        }
+      ],
+      "text": "2NOTES and REFERENCES for Chemical Agent Multi Media/Toxicity Standards Status Table: Existing and Proposed Criteria as of July 2011* USAPHC was formerly known as the U.S.Army Center for Health Promotion and Preventive Medicine (USACHPPM). Application of military drinking water criteria (MFWS):It is noted that contamination of large water supplies with warfare agents is relatively unlikely die to effects of hydrolysis, d ilution, and the neutralizing effects of common water treatment processes (*e.g. chlorine). The cited MFWS values were designed for a military scenario in which smaller containerized water supplies directly used for consumption might be intentionally cont aminated with significant amounts of agents. Theoretically this situation could result in residual agent levels of concern for several days. The values here assume up to 30 days exposurefor up to 15 liters/day consumption which thoughdoes occurinextr eme heat military environments with high physical activity -is an extremely high rate of drinking water consumption not anticipated for civilians. By comparisonUSEPA basis its drinking water standards on a 2 L/day consumption rate. As such,MFWS would be appropriate screening criteria for ageneral population scenariowhere ingestion rates range from 1-2 liters/day and where most releases to a water supply would involve the hydrolysis, dilution, and treatment processes. It also noted that the nerve age nt values all reflect the most acutely toxic ingestion estimate which was based on GD \u0000±a single criteria is used because most field detection kits/techniques do not differentiate the type of nerve agent.Alternatively,the ATSDR Oral Minimal Risk Levels (MRLs) are presently available for sulfur mustard agent HD which mayalso be useful for specific screening assessments-HD MRL for acute-\u0000G\u0000X\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000\u0000\u0014\u0000\u0017\u0000\u0003\u0000G\u0000D\u0000\\\u0000V\u0000\u0003\u0000L\u0000V\u0000\u0003a dose value 0.0005 mg/kg/day(not a concentration \u0000± must be converted); MRL for intermediate-duration exposure of 15 to 364 days is 0.00007 mg/kg/day;(ATSDR 2003).(Soil) HBESLs:were endorsed by headquarters Army (ESOH) in May 1999 (ref c) were derived (by Army, ref d\u0000± which had criteria reevaluated ( and reaffirmed) in 2007;see ref d1)) using chronic toxicity criteria below with risk assessment model and assumption like that used by USEPA Reg IX to develop soil preliminary remediation goals (PRGs). These are conservative screening criteria for assessing potential long term human exposure/ contact with soil contaminated from (liquid) agent (ambient vapor alone is not expected to result in deposition or soil contamination ). Also identified as criteria to determine public release of decontaminated items/ property (ref e)Note that where there is potential HD or VX soil contamination, breakdown products may also warrant evaluation (see App fof ref d,and ref g).REFERENCES:a. TB Med 577, Sanitary Controland Surveillance of Field Water Supplies, May 2010.b.Memorandum, DASG-HS-PE, 16 April 1997, Subject: Tri-Service FieldWater Standardsfor Nerve Agents.c.Memorandum, Headquarters Department of the Army, Office of the Assistant Secretary for Installations, Logistics, and Environment, SUBJ: Derivation of HealthBased Environmental Screening Levels (HBESLs) for Chemical Warfare Agents, May 28,1999.d.USACHPPM/ORNL Technical Report: Health Based Environmental Screening Levels for Chemical Warfare Agents, March 1999.e.ORNL\u0000\u0012\u00007\u00000\u0000\u0003\u0000\u0013\u0000\u001b\u0000\u0013\u0000\u0003\u0000 \u0000\u0015\u0000\u0013\u0000\u0013\u0000\u001a\u0000 \u0000\u0003\u0000:\u0000D\u0000W\u0000V\u0000R\u0000Q\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000'\u0000R\u0000O\u0000L\u0000V\u0000O\u0000D\u0000J\u0000H\u0000U\u0000\u0003\u0000³\u0000\u0003\u00005\u0000H-\u0000(\u0000Y\u0000D\u0000O\u0000X\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000\u0014\u0000\u001c\u0000\u001c\u0000\u001c\u0000\u0003\u0000+\u0000%\u0000(\u00006\u0000/\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000&\u0000:\u0000$\u0000´2007.f.DA Pamphlet385-61, Toxic Chemical Agent Safety Standards, 17 December 2008.g.Munro et al; The Sources, Fate, and Toxicity of Chemical Warfare Agent DegradationProducts, Environmental Health Perspectives, Volume 107, Number 12, December 1999, pp933-974.h. Memorandum, Department of the Army \u0000±Centerfor Health Promotion and Preventive Medicine; MCHB-TS-EES; SUBJ: Response to State of Oregon Comments on the Utah Chemical Agent Rule (UCAR), 23 October 2000; NOTE: This response includes USACHPPM Information Paper \u0000³\u00000\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000&\u0000U\u0000L\u0000W\u0000H\u0000U\u0000L\u0000D\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000:\u0000D\u0000U\u0000I\u0000Dre Agent (CWA)-\u0000&\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000:\u0000D\u0000V\u0000W\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u00000\u0000H\u0000G\u0000L\u0000D\u0000´10 October 2000 as well as USACHPPM Technical Paper: \u0000³\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000:\u0000D\u0000U\u0000I\u0000D\u0000U\u0000H\u0000\u0003\u0000$\u0000J\u0000H\u0000Q\u0000W\u0000\u0003\u0000+\u0000H\u0000D\u0000O\u0000W\u0000K\u0000\u0003\u0000%\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000:\u0000D\u0000V\u0000W\u0000H\u0000\u0003\u0000&\u0000R\u0000Q\u0000W\u0000U\u0000R\u0000O\u0000\u0003\u0000/\u0000L\u0000P\u0000L\u0000W\u0000V\u0000´dated September 2000.i.U.S. Army-Proposed Utah Chemical Agent Rule (UCAR), May 1999(Volume 1, Section XI. Development of Health Based Waste ManagementConcentration Levels.\u0000´j.Review of \u0000W\u0000K\u0000H\u0000\u0003\u00008\u00006\u0000\u0003\u0000$\u0000U\u0000P\u0000\\\u0000¶\u0000V\u0000\u0003\u0000+\u0000H\u0000D\u0000O\u0000W\u0000K\u0000\u0003\u00005\u0000L\u0000V\u0000N\u0000\u0003\u0000$\u0000V\u0000V\u0000H\u0000V\u0000V\u0000P\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u00002\u0000U\u0000D\u0000O\u0000\u0003\u0000(\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u00006\u0000L\u0000[\u0000\u0003\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000:\u0000D\u0000U\u0000I\u0000D\u0000U\u0000H\u0000\u0003\u0000$\u0000J\u0000H\u0000Q\u0000W\u0000V , National Research Council, National Academy Press, WashDC, 1999.www.nap.edu.k.Memorandum, (Army OTSG) MCHB-CG-PPM, Chronic Toxicological Criteria for Chemical Warfare Compounds, 16 February 2000.l.Opresko, D.M., et al, 2001 . Chemical Warfare Agents: Current Status of Oral Reference Doses, Reviews of Environmental Contamination and ToxicologyVol.172 pp 65-85.m.USACHPPM Technical Report:Evaluation of Airborne Exposure Limits for Sulfur Mustard (HD): Occupational and General Population Exposure Criteria, Technical Report 47-EM-3767-00, November 2000.n.Memorandum, Department of the Army, Subject: Interim Guidance for Chemical Warfare Material (CMW) Responses,April 1, 2009.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 23,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

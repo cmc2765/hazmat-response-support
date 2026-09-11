@@ -1,0 +1,1780 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-chemical-soman-gd",
+  "sourceArtifactSha256": "ab2b411956fe0a3c7f8be93ce13887b04780b466802817e68d93015ca1392c3f",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 10,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Soman (GD)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 1of 10NRT Quick ReferenceGuide: Soman (GD)GHS: Acute Toxicity, Category 1H310 \u0000±Fatal in contact with skinH330 \u0000±Fatal if inhaled1. Agent CharacteristicsAgent CharacteristicsAgent Classification:Schedule 1 Chemical Warfare Nerve Agent; ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Soman (GD); CAS: 96-64-0Description:Soman(Pinacoyl methylphosphonofluoridate) is a colorless liquid that with aging may discolor to dark brown; generally odorless, but sometimes has odor of camphor or rotting fruit. Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "is a lethal cholinesterase inhibitor with a mechanism of toxicity similar to organophosphate insecticides, though it is much more toxic. Environmental breakdown products of Soman, including methylphosphonic acid (MPA) and pinacoyl methyl phospho",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "nic acid (PMPA), are relatively non-toxic. Other breakdown products include fluoride ions, which may convert to hydrofluoric acid (HF) depending on the pH. Somancan react violently with bases, weak acids, and strong oxidizers, and may decompose when in co",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "ntact with metals, producing highly flammable hydrogen gas. Somanis combustible but not easily ignited; when heated, Somanvapors can form explosive mixtures with air.Persistence:Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "\u0000L\u0000V\u0000\u0003\u0000F\u0000R\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000\u0003\u0000³\u0000O\u0000R\u0000Z\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000W\u0000´\u0000\u0003\u0000F\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000Z\u0000D\u0000U\u0000I\u0000D\u0000U\u0000H\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0011\u0000\u0003\u00009\u0000D\u0000S\u0000R\u0000U\u0000\u001d\u0000\u0003\u0000P\u0000L\u0000Q\u0000X\u0000W\u0000H\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000K\u0000R\u0000X\u0000U\u0000V\u0000\u001e\u0000\u0003\u0000O\u0000L\u0000T\u0000X\u0000L\u0000G\u0000\u001d\u0000\u0003\u0000K\u0000R\u0000X\u0000U\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "days. Persistence will depend upon the amount and purity of the agent, method of release, environmental conditions, and the types of surfaces and materials impacted. Porous, permeable, organic, or polymeric materials such as carpets and ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "vinyl tiles can accumulate Soman\u0000Y\u0000D\u0000S\u0000R\u0000U\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000O\u0000L\u0000T\u0000X\u0000L\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000F\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000³\u0000V\u0000L\u0000Q\u0000N\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000W\u0000K\u0000H\u0000U\u0000H\u0000E\u0000\\\u0000\u0003\u0000S\u0000U\u0000R\u0000O\u0000R\u0000Q\u0000J\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000F\u0000H\u0000\u00112. Physical PropertiesPhysical PropertiesMolecular Weight:182.17g/molFormula:C7H16FO",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "2PVapor Density:6.3(air = 1)Flash Point:250°F/121°CVapor Pressure:0.40mm Hg (77°F/25°C)Liquid Density:1.02g/mL (77°F/25°C)Volatility:3,900\u0000±3,930mg/m3(77°F/25°C)Aqueous Solubility:21 g/L (68°F/20°C)Boiling Point:332.6\u0000±392°F/167\u0000±200°CNon-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "aqueous Solubility:Lipids, common organic solvents, alcohols, gasoline, oils, fatsMelting/Freezing Point:-43.6°F/-42°CHydrolysis (t1/2):45hours (pH 6.65)(68°F/20°C)Note:physical properties are listed at/near STP unless otherwise indicated",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Conversion Factors:ppm = mg/m3x 0.1342; mg/m3= ppm x 7.4513. Release ScenariosRelease ScenariosAIR RELEASE SCENARIOS ARE ASSUMED MOST PROBABLE; HOWEVER, OTHER RELEASE SCENARIOS AND EXPOSURE ROUTES SHOULD BE CONSIDERED.Open Areas:Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "has low volatility but may still be present as a liquid or aerosol, and the primary release/attack scenario is anairborne release. Somanis expected to degrade in the environment fairly rapidly; however, liquid Somanon surfaces generally persists for ho",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "urs to days. Environmental conditions will affect the degradation and evaporation rates of Somanwith cooler conditions enhancing persistence. Somanvapors are heavier than air, so vapors can accumulate in lower terrains. Somanvapors can form explosive mi",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "xtures with air.Water/Water Systems:If released into natural waters or water systems, Somanwill likely hydrolyze with a half-life of about 45 hoursat pH 6.65, withpersistence depending on released amount and environmental conditions. Hydrolysis byprod",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "ucts have comparatively low toxicity so may only be relevantif large amounts of Somanare released. Certain water system components may act as sinks for Soman, prolonging its persistence long past initial release. Vapor hazards may be associated with Soman-",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "contaminated waters due to volatilization of Somanfrom water body into air above.Indoor Facility:Somancould potentially be dispersed as a vapor or an aerosol inside a building or facility; HVAC systems could be impacted. Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "vapors are heavier than air so vapors can accumulate in lower levels, basements, floor drains, or utility corridors inside the buildings.Other:Somanwill decompose when heated or when combusted in a fire to form HF, fluoride ions, and toxic gases, inclu",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "ding phosphorous oxides. If Somanis released into the air as a liquid spray (aerosol), it has the potential to contaminate agricultural products. If Somanis released as a vapor, it is unlikely to contaminate agricultural products.4. Health Effects",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Health Effects4.1. Onset:Onset of symptoms is dose and route dependent. After exposure, symptoms may occur within seconds if Somanis present in vapor form or within minutes to hours if in liquid form. Even a relatively low dose exposure to Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "can be fatal and immediate administration of an antidote is critical (see First Aid below).",
+          "role": "BODY"
+        }
+      ],
+      "text": "Soman (GD) [July2022Update(nrt.org): January 2015Page 1of 10NRT Quick ReferenceGuide: Soman (GD)GHS: Acute Toxicity, Category 1H310 \u0000±Fatal in contact with skinH330 \u0000±Fatal if inhaled1. Agent CharacteristicsAgent CharacteristicsAgent Classification:Schedule 1 Chemical Warfare Nerve Agent; Soman (GD); CAS: 96-64-0Description:Soman(Pinacoyl methylphosphonofluoridate) is a colorless liquid that with aging may discolor to dark brown; generally odorless, but sometimes has odor of camphor or rotting fruit. Soman is a lethal cholinesterase inhibitor with a mechanism of toxicity similar to organophosphate insecticides, though it is much more toxic. Environmental breakdown products of Soman, including methylphosphonic acid (MPA) and pinacoyl methyl phospho nic acid (PMPA), are relatively non-toxic. Other breakdown products include fluoride ions, which may convert to hydrofluoric acid (HF) depending on the pH. Somancan react violently with bases, weak acids, and strong oxidizers, and may decompose when in co ntact with metals, producing highly flammable hydrogen gas. Somanis combustible but not easily ignited; when heated, Somanvapors can form explosive mixtures with air.Persistence:Soman \u0000L\u0000V\u0000\u0003\u0000F\u0000R\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000\u0003\u0000³\u0000O\u0000R\u0000Z\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000W\u0000´\u0000\u0003\u0000F\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000Z\u0000D\u0000U\u0000I\u0000D\u0000U\u0000H\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0011\u0000\u0003\u00009\u0000D\u0000S\u0000R\u0000U\u0000\u001d\u0000\u0003\u0000P\u0000L\u0000Q\u0000X\u0000W\u0000H\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000K\u0000R\u0000X\u0000U\u0000V\u0000\u001e\u0000\u0003\u0000O\u0000L\u0000T\u0000X\u0000L\u0000G\u0000\u001d\u0000\u0003\u0000K\u0000R\u0000X\u0000U\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003 days. Persistence will depend upon the amount and purity of the agent, method of release, environmental conditions, and the types of surfaces and materials impacted. Porous, permeable, organic, or polymeric materials such as carpets and vinyl tiles can accumulate Soman\u0000Y\u0000D\u0000S\u0000R\u0000U\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000O\u0000L\u0000T\u0000X\u0000L\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000F\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000³\u0000V\u0000L\u0000Q\u0000N\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000W\u0000K\u0000H\u0000U\u0000H\u0000E\u0000\\\u0000\u0003\u0000S\u0000U\u0000R\u0000O\u0000R\u0000Q\u0000J\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000F\u0000H\u0000\u00112. Physical PropertiesPhysical PropertiesMolecular Weight:182.17g/molFormula:C7H16FO 2PVapor Density:6.3(air = 1)Flash Point:250°F/121°CVapor Pressure:0.40mm Hg (77°F/25°C)Liquid Density:1.02g/mL (77°F/25°C)Volatility:3,900\u0000±3,930mg/m3(77°F/25°C)Aqueous Solubility:21 g/L (68°F/20°C)Boiling Point:332.6\u0000±392°F/167\u0000±200°CNon- aqueous Solubility:Lipids, common organic solvents, alcohols, gasoline, oils, fatsMelting/Freezing Point:-43.6°F/-42°CHydrolysis (t1/2):45hours (pH 6.65)(68°F/20°C)Note:physical properties are listed at/near STP unless otherwise indicated Conversion Factors:ppm = mg/m3x 0.1342; mg/m3= ppm x 7.4513. Release ScenariosRelease ScenariosAIR RELEASE SCENARIOS ARE ASSUMED MOST PROBABLE; HOWEVER, OTHER RELEASE SCENARIOS AND EXPOSURE ROUTES SHOULD BE CONSIDERED.Open Areas:Soman has low volatility but may still be present as a liquid or aerosol, and the primary release/attack scenario is anairborne release. Somanis expected to degrade in the environment fairly rapidly; however, liquid Somanon surfaces generally persists for ho urs to days. Environmental conditions will affect the degradation and evaporation rates of Somanwith cooler conditions enhancing persistence. Somanvapors are heavier than air, so vapors can accumulate in lower terrains. Somanvapors can form explosive mi xtures with air.Water/Water Systems:If released into natural waters or water systems, Somanwill likely hydrolyze with a half-life of about 45 hoursat pH 6.65, withpersistence depending on released amount and environmental conditions. Hydrolysis byprod ucts have comparatively low toxicity so may only be relevantif large amounts of Somanare released. Certain water system components may act as sinks for Soman, prolonging its persistence long past initial release. Vapor hazards may be associated with Soman- contaminated waters due to volatilization of Somanfrom water body into air above.Indoor Facility:Somancould potentially be dispersed as a vapor or an aerosol inside a building or facility; HVAC systems could be impacted. Soman vapors are heavier than air so vapors can accumulate in lower levels, basements, floor drains, or utility corridors inside the buildings.Other:Somanwill decompose when heated or when combusted in a fire to form HF, fluoride ions, and toxic gases, inclu ding phosphorous oxides. If Somanis released into the air as a liquid spray (aerosol), it has the potential to contaminate agricultural products. If Somanis released as a vapor, it is unlikely to contaminate agricultural products.4. Health Effects Health Effects4.1. Onset:Onset of symptoms is dose and route dependent. After exposure, symptoms may occur within seconds if Somanis present in vapor form or within minutes to hours if in liquid form. Even a relatively low dose exposure to Soman can be fatal and immediate administration of an antidote is critical (see First Aid below).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 25,
+        "repeatedHeaderFooterBlockCount": 3,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Soman (GD)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 2of 104.2. Signs/Symptoms:Initial symptoms will vary depending on dose and exposure route. The following is a general list of possible symptoms. The severity of effects depends upon the dosage.Initial effects from a sublethal amount of ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Somanby vapor exposure are different from initial effects from a similar amount of liquid Somanon skin.Mild/Moderate:\u0000xVapor, small dose: Reduction in pupil size (miosis), dimness of vision, runny nose (rhinorrhea), tightness of chest ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "(dyspnea), difficulty in breathing, headache, and salivation. Time of onset:seconds to minutes after exposure.\u0000xLiquid on skin, small to moderate dose:Sweating or muscle twitching at site of exposure, nausea, vomiting, feeling of weakness.Time of onset:",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "10 minutes to 18 hours after exposure.Moderate/Severe:\u0000xVapor, large dose:All of the above, plus sudden loss of consciousness, convulsions, temporary cessation of breathing (apnea), paralysis from reduced muscle tone (flaccid paralysis), copious nasal se",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "cretions, increased miosis(to level of pinpointing of pupils).\u0000xLiquid on skin, large dose:All of the above, plus sudden loss of consciousness, convulsions, temporary cessation of breathing (apnea), paralysis from reduced muscle tone (flaccid paralysis)",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": ", copious nasal secretions, diarrhea.Severe: All of the above, plus severe breathing difficulty or cessation of breathing; generalized muscular twitching, weakness, or paralysis; convulsions; loss of consciousness, involuntary defecation and urination, ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "coma, death.Vapor, time of onset:seconds to minutes after exposure; Skin, time of onset:minutes to an hour after exposure.4.3. Exposure Routes:Inhalation:A primary exposure route; inhalation of very small concentrations can produce health effects.Skin:",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Direct contact with liquid agent is especially toxic. Moderate to severe signs/symptoms occur at, but are not limited to, the site of contact. Exposure canalso result fromdermalabsorption of vapors.Eyes:",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Eyes are the most sensitive target organs of nerve agent exposure. Miosis (reduction in pupil size) will typically be the first sign of exposure.Ingestion:Contaminated drinking water and foods are the most likely route for ingestion of Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": ". Target organ from ingestion is the gastrointestinal tract.5. Effect LevelsEffect Levels5.1. Air(inhalation vapor hazard):Acute Exposure Guideline Levels (AEGLs) for general population one-time exposure emergency scenarios for Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "(complete definitions are available at: https://www.epa.gov/aegl).AEGL Level in mg/m3, at various exposure durations10 min.30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effects0.00350.00200.00140.000700.00050AEGL 2: ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Potentially irreversible effects or impaired ability to escape0.0440.0250.0180.00850.0065AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethality0.380.190.130.0700.051",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "American Industrial Hygiene Association (AIHA) Emergency Response Planning Guidelines (ERPGTM)are not established/determinedfor Soman.5.2. Dermal (liquid hazard):Effectsare likely to appear within minutes to hours of dermal exposure, with variation in ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "latency and severity of reportedhealth effects depending on dose, duration, and anatomical area of contact, as well as temperature of surrounding area. Clinical manifestations range from sweating, muscle twitching, and gastrointestinal ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "distress following limited exposure (one small drop on skin) to convulsions, paralysis, loss of consciousness, and death.6.Exposure GuidelinesExposure Guidelines6.1.U.S. Army Public Health Command (USAPHC) Airborne Exposure Limits (AELs): (refer to:",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "USAPHC AR 40-5e, PHN No. 0711-02, July 2011[original source: Department of the Army Office of the Surgeon General Memorandum, Subject: Nerve Agent ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Percutaneous Exposure Criteria and Airborne Exposure Levels (AELs) for GD, GF for use in Interim DA Guidance on USAPHCIDLH= 0.05mg/m3; workers should remove themselves immediately from exposure if the concentration is reached at any point in timeUSAPHC",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "STEL = 0.00005mg/m3(5× 10-5); exposure at the STEL should not exceed 15 minutes or occur more than 4 times per day, and 60 minutes should pass between successive exposures at this concentrationUSAPHCWorker Population Limit (WPL) = 0.00003 mg/m3(3 × 10-5)",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "USAPHCGeneral Population Limit (GPL) = 0.000001 mg/m3(1 × 10-6)6.2. Occupational:(NA = not available)NIOSH IDLH= NAOSHA PEL = NANIOSH REL-TWA= NAACGIH TLV-TWA= NA",
+          "role": "BODY"
+        }
+      ],
+      "text": "Soman (GD) [July2022Update(nrt.org): January 2015Page 2of 104.2. Signs/Symptoms:Initial symptoms will vary depending on dose and exposure route. The following is a general list of possible symptoms. The severity of effects depends upon the dosage.Initial effects from a sublethal amount of Somanby vapor exposure are different from initial effects from a similar amount of liquid Somanon skin.Mild/Moderate:\u0000xVapor, small dose: Reduction in pupil size (miosis), dimness of vision, runny nose (rhinorrhea), tightness of chest (dyspnea), difficulty in breathing, headache, and salivation. Time of onset:seconds to minutes after exposure.\u0000xLiquid on skin, small to moderate dose:Sweating or muscle twitching at site of exposure, nausea, vomiting, feeling of weakness.Time of onset: 10 minutes to 18 hours after exposure.Moderate/Severe:\u0000xVapor, large dose:All of the above, plus sudden loss of consciousness, convulsions, temporary cessation of breathing (apnea), paralysis from reduced muscle tone (flaccid paralysis), copious nasal se cretions, increased miosis(to level of pinpointing of pupils).\u0000xLiquid on skin, large dose:All of the above, plus sudden loss of consciousness, convulsions, temporary cessation of breathing (apnea), paralysis from reduced muscle tone (flaccid paralysis) , copious nasal secretions, diarrhea.Severe: All of the above, plus severe breathing difficulty or cessation of breathing; generalized muscular twitching, weakness, or paralysis; convulsions; loss of consciousness, involuntary defecation and urination, coma, death.Vapor, time of onset:seconds to minutes after exposure; Skin, time of onset:minutes to an hour after exposure.4.3. Exposure Routes:Inhalation:A primary exposure route; inhalation of very small concentrations can produce health effects.Skin: Direct contact with liquid agent is especially toxic. Moderate to severe signs/symptoms occur at, but are not limited to, the site of contact. Exposure canalso result fromdermalabsorption of vapors.Eyes: Eyes are the most sensitive target organs of nerve agent exposure. Miosis (reduction in pupil size) will typically be the first sign of exposure.Ingestion:Contaminated drinking water and foods are the most likely route for ingestion of Soman . Target organ from ingestion is the gastrointestinal tract.5. Effect LevelsEffect Levels5.1. Air(inhalation vapor hazard):Acute Exposure Guideline Levels (AEGLs) for general population one-time exposure emergency scenarios for Soman (complete definitions are available at: https://www.epa.gov/aegl).AEGL Level in mg/m3, at various exposure durations10 min.30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effects0.00350.00200.00140.000700.00050AEGL 2: Potentially irreversible effects or impaired ability to escape0.0440.0250.0180.00850.0065AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethality0.380.190.130.0700.051 American Industrial Hygiene Association (AIHA) Emergency Response Planning Guidelines (ERPGTM)are not established/determinedfor Soman.5.2. Dermal (liquid hazard):Effectsare likely to appear within minutes to hours of dermal exposure, with variation in latency and severity of reportedhealth effects depending on dose, duration, and anatomical area of contact, as well as temperature of surrounding area. Clinical manifestations range from sweating, muscle twitching, and gastrointestinal distress following limited exposure (one small drop on skin) to convulsions, paralysis, loss of consciousness, and death.6.Exposure GuidelinesExposure Guidelines6.1.U.S. Army Public Health Command (USAPHC) Airborne Exposure Limits (AELs): (refer to: USAPHC AR 40-5e, PHN No. 0711-02, July 2011[original source: Department of the Army Office of the Surgeon General Memorandum, Subject: Nerve Agent Percutaneous Exposure Criteria and Airborne Exposure Levels (AELs) for GD, GF for use in Interim DA Guidance on USAPHCIDLH= 0.05mg/m3; workers should remove themselves immediately from exposure if the concentration is reached at any point in timeUSAPHC STEL = 0.00005mg/m3(5× 10-5); exposure at the STEL should not exceed 15 minutes or occur more than 4 times per day, and 60 minutes should pass between successive exposures at this concentrationUSAPHCWorker Population Limit (WPL) = 0.00003 mg/m3(3 × 10-5) USAPHCGeneral Population Limit (GPL) = 0.000001 mg/m3(1 × 10-6)6.2. Occupational:(NA = not available)NIOSH IDLH= NAOSHA PEL = NANIOSH REL-TWA= NAACGIH TLV-TWA= NA",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 24,
+        "repeatedHeaderFooterBlockCount": 3,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Soman (GD)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 3of 10NIOSH REL-STEL= NAACGIH TLV-STEL= NA6.3. Population:Soil: USAPHC Health Based Environmental Screening Levels (HBESL)= 5.2 mg/kg over worklifefor Industrial Soil; 0.22mg/kg over lifetime for Residential Soil.Drinking Water: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "EPA Provisional Advisory Levels (PALs): see below for more information.EPA Provisional Advisory Level (PAL):PALs represent chemical concentrations in air or water above which varying health effects (PAL1, PAL2, PAL3) are expected \u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "they are developed for 24-hour, 30-day, and 90-day exposure durations. In the event of a nationally significant or large-scale chemical release, EPA can provide PALs to appropriate end-users and stakeholders as needed (PALs",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "are not currently available to the public) to evaluate the severity of the situation, identify potential human health outcomes, and determine the most appropriate course of action; contact: CESER@epa.gov",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": ", for information on and access to the PALs. (Note: PALs are not intended to define cleanup levels.)7. PersonnelSafetyPersonnel SafetyNote:Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options,",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "and personnel decontamination may vary depending upon the amount and purity of agent, site conditions,and the release scenario. Additional information on personnel safety and PPE selection criteria can be found at: www.cdc.gov/niosh/ershdb",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": ". We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.7.1. Medical:Pre-incident:A baseline cholinesterase activity determination and an annual physical and respiratory function exam.During Incident:",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per HEALTH EFFECTSsection above and treat accordingly as per First Aid section below.Post-incident:Post-incident medical surveillance is required.7.2. First Aid:",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Immediately remove person from affected area and remove contaminated clothing and articles. Wash bare skin immediately with water, or warm, soapy water if available, at normal household pressures (~50-60 psi) for three ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "minutes, ensure thorough soaking. Rinse eyes exposed to liquid agent with potable water for 15 minutes.ANTIDOTE: Atropine, 2-PAM Chloride injections (Duo Dote/Mark II kits)/ATNAA-Antidote Treatment Nerve Agent Autoinjector. An",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "tidote kit should only be administered as per pre-incident training.Recommended dosagesof atropine and 2-PAM Chloride injections will vary depending on patient age and physical findings (mild/moderate or severe). ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "\u0000)\u0000R\u0000O\u0000O\u0000R\u0000Z\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000G\u0000L\u0000U\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000D\u0000G\u0000K\u0000Hre to all SOPs or recommendations developed byindividual\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0011Other:RSDL (Reactive Skin Decontamination Lotion), an FDA-",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "cleared kit with a sponge impregnated with a lotion to remove or neutralize chemical warfare agents from contaminated skin. Apply RSDL immediately to area of skin with suspected exposure to a chemical wa",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "rfare agent (do not wait for symptoms) and wipe affected area using a scrubbing action, rinse with water when time permits.After administering first aid, send person for follow-up medical attention and evaluation. If cleared to resume work, continueto mo",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "nitor for signs/symptoms and treat accordingly.7.3. Personal Protective Equipment (PPE):GENERAL INFORMATION:NIOSH-certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSH-",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and protective clothing should be used. Level A protection should be used until monitoring results confirm identity and concentration of contaminant. Pre",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "-incident training and exercises on the proper use of PPE are recommended.Per NIOSH guidance \u0000±LEVEL A:Recommended for the initial response to a Somanincident. NIOSH-certified CBRN full-face-piece SCBA operated in pressure-demand mode with Level A suit",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "that provides protection against CBRN agents. Level A provides the greatest level of skin (totally-encapsulating chemical protective suitand chemical-resistant inner and outer gloves, along with chemical-resistant boots with steel toeand shank",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when the Somanconcentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure.LEVEL B:",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Pressure-demand SCBA(NIOSH-certified CBRN full-face-piece SCBA)with Level B protective suitthat provides protection against CBRN agents. Level B provides the highest level of respiratory protection (SCBA) when a ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "lesser level of skin protection is required. Select Level B when the Somanconcentration is unknown or above the IDLH or AEGL-2,and when dermal exposure is less of a risk. Level B differs from Level A in that it typically incorporates a non-",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight(hooded chemical-resistant outer suit and chemical-resistant inner and outer gloves, along with chemical-",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "resistant boots with steel toe and shank).LEVEL C:May be selected when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use of APRor PAPR (i.e., < IDLH, warnin",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "g properties) are met. Level C may be appropriate ",
+          "role": "BODY"
+        }
+      ],
+      "text": "Soman (GD) [July2022Update(nrt.org): January 2015Page 3of 10NIOSH REL-STEL= NAACGIH TLV-STEL= NA6.3. Population:Soil: USAPHC Health Based Environmental Screening Levels (HBESL)= 5.2 mg/kg over worklifefor Industrial Soil; 0.22mg/kg over lifetime for Residential Soil.Drinking Water: EPA Provisional Advisory Levels (PALs): see below for more information.EPA Provisional Advisory Level (PAL):PALs represent chemical concentrations in air or water above which varying health effects (PAL1, PAL2, PAL3) are expected \u0000± they are developed for 24-hour, 30-day, and 90-day exposure durations. In the event of a nationally significant or large-scale chemical release, EPA can provide PALs to appropriate end-users and stakeholders as needed (PALs are not currently available to the public) to evaluate the severity of the situation, identify potential human health outcomes, and determine the most appropriate course of action; contact: CESER@epa.gov , for information on and access to the PALs. (Note: PALs are not intended to define cleanup levels.)7. PersonnelSafetyPersonnel SafetyNote:Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options, and personnel decontamination may vary depending upon the amount and purity of agent, site conditions,and the release scenario. Additional information on personnel safety and PPE selection criteria can be found at: www.cdc.gov/niosh/ershdb . We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.7.1. Medical:Pre-incident:A baseline cholinesterase activity determination and an annual physical and respiratory function exam.During Incident: Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per HEALTH EFFECTSsection above and treat accordingly as per First Aid section below.Post-incident:Post-incident medical surveillance is required.7.2. First Aid: Immediately remove person from affected area and remove contaminated clothing and articles. Wash bare skin immediately with water, or warm, soapy water if available, at normal household pressures (~50-60 psi) for three minutes, ensure thorough soaking. Rinse eyes exposed to liquid agent with potable water for 15 minutes.ANTIDOTE: Atropine, 2-PAM Chloride injections (Duo Dote/Mark II kits)/ATNAA-Antidote Treatment Nerve Agent Autoinjector. An tidote kit should only be administered as per pre-incident training.Recommended dosagesof atropine and 2-PAM Chloride injections will vary depending on patient age and physical findings (mild/moderate or severe). \u0000)\u0000R\u0000O\u0000O\u0000R\u0000Z\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000G\u0000L\u0000U\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000D\u0000G\u0000K\u0000Hre to all SOPs or recommendations developed byindividual\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0011Other:RSDL (Reactive Skin Decontamination Lotion), an FDA- cleared kit with a sponge impregnated with a lotion to remove or neutralize chemical warfare agents from contaminated skin. Apply RSDL immediately to area of skin with suspected exposure to a chemical wa rfare agent (do not wait for symptoms) and wipe affected area using a scrubbing action, rinse with water when time permits.After administering first aid, send person for follow-up medical attention and evaluation. If cleared to resume work, continueto mo nitor for signs/symptoms and treat accordingly.7.3. Personal Protective Equipment (PPE):GENERAL INFORMATION:NIOSH-certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSH- approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and protective clothing should be used. Level A protection should be used until monitoring results confirm identity and concentration of contaminant. Pre -incident training and exercises on the proper use of PPE are recommended.Per NIOSH guidance \u0000±LEVEL A:Recommended for the initial response to a Somanincident. NIOSH-certified CBRN full-face-piece SCBA operated in pressure-demand mode with Level A suit that provides protection against CBRN agents. Level A provides the greatest level of skin (totally-encapsulating chemical protective suitand chemical-resistant inner and outer gloves, along with chemical-resistant boots with steel toeand shank ), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when the Somanconcentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure.LEVEL B: Pressure-demand SCBA(NIOSH-certified CBRN full-face-piece SCBA)with Level B protective suitthat provides protection against CBRN agents. Level B provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when the Somanconcentration is unknown or above the IDLH or AEGL-2,and when dermal exposure is less of a risk. Level B differs from Level A in that it typically incorporates a non- encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight(hooded chemical-resistant outer suit and chemical-resistant inner and outer gloves, along with chemical- resistant boots with steel toe and shank).LEVEL C:May be selected when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use of APRor PAPR (i.e., < IDLH, warnin g properties) are met. Level C may be appropriate",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 29,
+        "repeatedHeaderFooterBlockCount": 3,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Soman (GD)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 4of 10when decontaminating personnel or equipment. Level C still incorporates hooded chemical-resistant outer suitthat provides protection against CBRN agents,chemical-resistant inner and outer gloves, and chemical-resistant boots with ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "steel toe and shank.\u0000xFor air levels greater than AEGL-2:NIOSH-certified CBRN tight-fitting PAPR with a filter or a combination organic vapor, acid gas, and particulate cartridge/filter combination or a continuous flow respirator.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "For air levels greater than AEGL-1: NIOSH-certified CBRN tight-fitting APR with a canister-type gas mask or CBRN PAPR.LEVEL D:Select Level D when the contaminant is known and the concentration is below the appropriate occupational exposure limits",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "or less than AEGL-1 for the stated duration times.PPE includes coveralls or other work clothes, boots, and gloves.Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and the risks of dermal exposure a",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "re known, and must be accompanied by on-site monitoring.8. Personnel DecontaminationPersonnel Decontamination8.1. Personnel Decontamination Procedure:Tents, berms, and collection vessels should be able to maintain copious amounts of ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "wastewater in a contained and safe manner. Procedures should be in place to treat and replace contaminated materials used during the decontamination process as well as replace necessary chemicals and decontamination solutions.Prior to entering the hot ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "zone, all personnel are required to familiarize themselves with the site-specific personnel decontamination procedures.Personnel decontamination should take place in a decontamination area comprised of two decontamination corridors (one for entering and o",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "ne for exiting). Position corridors upwind and uphill of release area; exit should be upwind and uphill of entrance. Detergent and water solution (pH>8, but <10.5), soft brushes, and durable 6-mil polyethylene bags should be provided.Personnel decontamina",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "tion area workers need to wear appropriate PPE as indicated below. Be aware that absorbed agent can be released from clothing and skin as a gas.Conduct personnel decontamination per NIOSH ERSH-DB: ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "https://www.cdc.gov/niosh/ershdb/emergencyresponsecard_29750003.html\u0000xEmergencyResponders: Use soft brush to wash PPE with soap and detergent solution in a downward motion, getting into all folds. Repeat washing and ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "rinsing until thoroughly clean. Remove PPE by rolling downward from head; avoid pulling PPE over the head. Remove SCBA last, and place all PPE in polyethylene bags.\u0000xPatient/victim",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": ": Remove all clothing down to at least undergarments, and place in polyethylene bags. Thoroughly wash and rinse skin with soap and water solution, taking care not to break the skin and covering all open wounds. Cover patient/victim ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "(e.g., blanket, towels, Tyvek) and move to treatment area.If available in decontamination kit, applyRSDL immediately to area of skin with suspected exposure to a chemical warfare agent (do not wait for symptoms) ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "and wipe affected area using a scrubbing action, rinse with water when time permits.8.2. Personnel Decontamination Procedures by Zone/Step:(attendants will verbally direct personnel through each step)Conducted in Hot Zone (exclusion zone)1Equipment Drop",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Place equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Conducted in Warm Zone (contamination reduction zone)2Sample DropPlace samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Outer Boot and Glove WashThe purpose of this step is to enable physical removal of gross contamination if contamination is visible. If ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "gross contamination is not visible, this step may be skipped. Wash outer boots and then outer gloves using designated decontaminating agents as specified in HASP (e.g., soap and water, trisodium phosphate substitute, or diluted bleach).4Glove, Boot, ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "and Suit WashWash all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Start with decontaminating boots and gloves, then work on suit from the top down, ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "including SCBA/PAPR casing. Decontamination personnel should conduct this step. Care should be taken to ensure that all areas are decontaminated, including around zipper, arms, front torso, and any other area that ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "could have come in contact with contamination. The solution used for decontamination should be contained, collected, and disposed of properly from the decontamination line.5Outer Glove, Boot, and Suit RemovalWhile sitting on a stool, remove outer bo",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "ots and outer gloves. Undo the SCBA/PAPR belt and hold in hand. While touching only the inside of suit, carefully roll suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may requir",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "e decontamination personnel to assist either by holding SCBA/PAPR unit or assisting in suit removal.",
+          "role": "BODY"
+        }
+      ],
+      "text": "Soman (GD) [July2022Update(nrt.org): January 2015Page 4of 10when decontaminating personnel or equipment. Level C still incorporates hooded chemical-resistant outer suitthat provides protection against CBRN agents,chemical-resistant inner and outer gloves, and chemical-resistant boots with steel toe and shank.\u0000xFor air levels greater than AEGL-2:NIOSH-certified CBRN tight-fitting PAPR with a filter or a combination organic vapor, acid gas, and particulate cartridge/filter combination or a continuous flow respirator.\u0000x For air levels greater than AEGL-1: NIOSH-certified CBRN tight-fitting APR with a canister-type gas mask or CBRN PAPR.LEVEL D:Select Level D when the contaminant is known and the concentration is below the appropriate occupational exposure limits or less than AEGL-1 for the stated duration times.PPE includes coveralls or other work clothes, boots, and gloves.Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and the risks of dermal exposure a re known, and must be accompanied by on-site monitoring.8. Personnel DecontaminationPersonnel Decontamination8.1. Personnel Decontamination Procedure:Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to treat and replace contaminated materials used during the decontamination process as well as replace necessary chemicals and decontamination solutions.Prior to entering the hot zone, all personnel are required to familiarize themselves with the site-specific personnel decontamination procedures.Personnel decontamination should take place in a decontamination area comprised of two decontamination corridors (one for entering and o ne for exiting). Position corridors upwind and uphill of release area; exit should be upwind and uphill of entrance. Detergent and water solution (pH>8, but <10.5), soft brushes, and durable 6-mil polyethylene bags should be provided.Personnel decontamina tion area workers need to wear appropriate PPE as indicated below. Be aware that absorbed agent can be released from clothing and skin as a gas.Conduct personnel decontamination per NIOSH ERSH-DB: https://www.cdc.gov/niosh/ershdb/emergencyresponsecard_29750003.html\u0000xEmergencyResponders: Use soft brush to wash PPE with soap and detergent solution in a downward motion, getting into all folds. Repeat washing and rinsing until thoroughly clean. Remove PPE by rolling downward from head; avoid pulling PPE over the head. Remove SCBA last, and place all PPE in polyethylene bags.\u0000xPatient/victim : Remove all clothing down to at least undergarments, and place in polyethylene bags. Thoroughly wash and rinse skin with soap and water solution, taking care not to break the skin and covering all open wounds. Cover patient/victim (e.g., blanket, towels, Tyvek) and move to treatment area.If available in decontamination kit, applyRSDL immediately to area of skin with suspected exposure to a chemical warfare agent (do not wait for symptoms) and wipe affected area using a scrubbing action, rinse with water when time permits.8.2. Personnel Decontamination Procedures by Zone/Step:(attendants will verbally direct personnel through each step)Conducted in Hot Zone (exclusion zone)1Equipment Drop Place equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later. Conducted in Warm Zone (contamination reduction zone)2Sample DropPlace samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of- custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Outer Boot and Glove WashThe purpose of this step is to enable physical removal of gross contamination if contamination is visible. If gross contamination is not visible, this step may be skipped. Wash outer boots and then outer gloves using designated decontaminating agents as specified in HASP (e.g., soap and water, trisodium phosphate substitute, or diluted bleach).4Glove, Boot, and Suit WashWash all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Start with decontaminating boots and gloves, then work on suit from the top down, including SCBA/PAPR casing. Decontamination personnel should conduct this step. Care should be taken to ensure that all areas are decontaminated, including around zipper, arms, front torso, and any other area that could have come in contact with contamination. The solution used for decontamination should be contained, collected, and disposed of properly from the decontamination line.5Outer Glove, Boot, and Suit RemovalWhile sitting on a stool, remove outer bo ots and outer gloves. Undo the SCBA/PAPR belt and hold in hand. While touching only the inside of suit, carefully roll suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may requir e decontamination personnel to assist either by holding SCBA/PAPR unit or assisting in suit removal.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 28,
+        "repeatedHeaderFooterBlockCount": 3,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 4,
+      "humanPageNumber": 5,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Soman (GD)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 5of 106Mask RemovalWith inner gloves, remove the mask. Remove cartridge filters and place into designated container. Put mask into mask wash. Decontamination personnel will clean each mask and SCBA/PAPR assembly prior to return to service.",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "7Inner Glove RemovalRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container.Conducted in Cold Zone (support zone)8Quadrant MonitoringUsing appropriate Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "air monitoring equipment, screen personnel for residual contamination by dividing body into 4 sections: upper right and left sides of the body, and lower left and rightsides. If positive, perform ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "spot decontamination immediately and direct person to showers.9Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "personal shower is not immediately available then, at the minimum, hands and face should be washed thoroughly.10Medical MonitoringReport to medical monitoring station for post-entry monitoring and report to appropriate personnel for ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "debriefing. Observe for any obvious sign of Somanexposure. Using criteria listed above in PERSONNEL SAFETY section of this QRG, administer Duo Dote antidote and notify site Health and Safety officer.Emergency Egress Corridor:",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Establish an emergency egress line to use for quickly decontaminating personnel who have medical emergencies while in the hot zone. Personnel must be decontaminated prior to receiving treatment from ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "emergency medical technicians or transported to a hospital.Hand-Wash Station:A hand-wash station should be available for personnel to clean up following entry. However, this may not be available initially at the scene or weather condit",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "ions may prohibit their use. If a hand-wash station is not available, personnel should wash their hands and face as soon as possible.Caution:Avoid waterless hand cleaners, which contain solvents (alcohols) that could increase risk of dermal exposure to S",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "oman.9. Field DetectionField DetectionReal-time field screening tools (results not confirmatory or quantitative): Caution should be given to equipment that has not been properly evaluated. False positive and false negatives may occur in the ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "presence of interferents common in the environment.The following is a summary of minimum screening concentration ranges or levels for equipment procured by many EPA and HAZMAT response teams. Other screening tools may be used by these teams and other agen",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "cies and responders, some with similar capabilities and limitations.9.1. Minimum Screening Ranges/Levels for Air/(Vapor):Field Equipment:ppmmg/m3JCAD M4A1, at 30 secs [30 mins/pre-concentrator(detected as Nerve agent)0.013 [0.000130.1[0.001AP2C/AP4C(",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "detected as G-agent)0.0013 / 0.00130.01 / 0.01MX-908 Vapor Mode0.10.66Dräger (CDS Kit)0.0250.19MINICAMS\u0000(Near real-time; at 5 minutes)0.0000130.00019.2. Minimum Screening Ranges/Levels for Vapor/Liquid:Field Equipment:ppm(vapor)mg/m3(vapor)mL(liquid)M256/",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "M256A1(15-20mins)(detected as Nerve agent)0.0007/ 0.00070.005/ 0.005NAM8(absence/presence as Nerve G-agent)NANA0.02Note: M256 is combined 2 kits with 12 disposable sampler/detectors and a booklet of M8 paper.NA = not applicable9.3. ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Minimum Screening Ranges/Levels for Water:Field Equipment:mg/LM272 (detected as G-agent)0.0210. Environmental SamplingEnvironmental SamplingNote: This section on sampling contains general guidelines and does not replace the need for a site-",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "specific sampling plan10.1. Sampling Concerns:Detection, sampling equipment and procedures, and analytical techniques will be site-specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "porous); 3) the purpose of sampling (e.g., characterization, decontamination efficacy, and clearance); and 4) specific laboratory requirements. The U.S. Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "chemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSIS section below,(https://www.epa.gov/emergency-response/environmental-response-laboratory-network). For ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "questions on environmental sampling for Somancall EPA/HQ-EOC at 202-564-3850.",
+          "role": "BODY"
+        }
+      ],
+      "text": "Soman (GD) [July2022Update(nrt.org): January 2015Page 5of 106Mask RemovalWith inner gloves, remove the mask. Remove cartridge filters and place into designated container. Put mask into mask wash. Decontamination personnel will clean each mask and SCBA/PAPR assembly prior to return to service. 7Inner Glove RemovalRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container.Conducted in Cold Zone (support zone)8Quadrant MonitoringUsing appropriate Soman air monitoring equipment, screen personnel for residual contamination by dividing body into 4 sections: upper right and left sides of the body, and lower left and rightsides. If positive, perform spot decontamination immediately and direct person to showers.9Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available then, at the minimum, hands and face should be washed thoroughly.10Medical MonitoringReport to medical monitoring station for post-entry monitoring and report to appropriate personnel for debriefing. Observe for any obvious sign of Somanexposure. Using criteria listed above in PERSONNEL SAFETY section of this QRG, administer Duo Dote antidote and notify site Health and Safety officer.Emergency Egress Corridor: Establish an emergency egress line to use for quickly decontaminating personnel who have medical emergencies while in the hot zone. Personnel must be decontaminated prior to receiving treatment from emergency medical technicians or transported to a hospital.Hand-Wash Station:A hand-wash station should be available for personnel to clean up following entry. However, this may not be available initially at the scene or weather condit ions may prohibit their use. If a hand-wash station is not available, personnel should wash their hands and face as soon as possible.Caution:Avoid waterless hand cleaners, which contain solvents (alcohols) that could increase risk of dermal exposure to S oman.9. Field DetectionField DetectionReal-time field screening tools (results not confirmatory or quantitative): Caution should be given to equipment that has not been properly evaluated. False positive and false negatives may occur in the presence of interferents common in the environment.The following is a summary of minimum screening concentration ranges or levels for equipment procured by many EPA and HAZMAT response teams. Other screening tools may be used by these teams and other agen cies and responders, some with similar capabilities and limitations.9.1. Minimum Screening Ranges/Levels for Air/(Vapor):Field Equipment:ppmmg/m3JCAD M4A1, at 30 secs [30 mins/pre-concentrator(detected as Nerve agent)0.013 [0.000130.1[0.001AP2C/AP4C( detected as G-agent)0.0013 / 0.00130.01 / 0.01MX-908 Vapor Mode0.10.66Dräger (CDS Kit)0.0250.19MINICAMS\u0000(Near real-time; at 5 minutes)0.0000130.00019.2. Minimum Screening Ranges/Levels for Vapor/Liquid:Field Equipment:ppm(vapor)mg/m3(vapor)mL(liquid)M256/ M256A1(15-20mins)(detected as Nerve agent)0.0007/ 0.00070.005/ 0.005NAM8(absence/presence as Nerve G-agent)NANA0.02Note: M256 is combined 2 kits with 12 disposable sampler/detectors and a booklet of M8 paper.NA = not applicable9.3. Minimum Screening Ranges/Levels for Water:Field Equipment:mg/LM272 (detected as G-agent)0.0210. Environmental SamplingEnvironmental SamplingNote: This section on sampling contains general guidelines and does not replace the need for a site- specific sampling plan10.1. Sampling Concerns:Detection, sampling equipment and procedures, and analytical techniques will be site-specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non- porous); 3) the purpose of sampling (e.g., characterization, decontamination efficacy, and clearance); and 4) specific laboratory requirements. The U.S. Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSIS section below,(https://www.epa.gov/emergency-response/environmental-response-laboratory-network). For questions on environmental sampling for Somancall EPA/HQ-EOC at 202-564-3850.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 24,
+        "repeatedHeaderFooterBlockCount": 3,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 5,
+      "humanPageNumber": 6,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Soman (GD)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 6of 1010.2. Sample Locations and Planning:Initially consider air monitoring to ensure worker safety and to determine if there ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "is a vapor plume that could impact other areas. Characterization sampling is initiated by targeted or judgmental sampling \u0000W\u0000R\u0000\u0003\u0000L\u0000G\u0000H\u0000Q\u0000W\u0000L\u0000I\u0000\\\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000D\u0000O\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000S\u0000D\u0000W",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "hs, and media or objects potentially acting as sinks. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling (e.g., grid, statis",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "tical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted or the amount released. BecauseSomanhas very low ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000P\u0000E\u0000L\u0000H\u0000Q\u0000W\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000K\u0000H\u0000O\u0000S\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000³\u0000F\u0000O\u0000H\u0000D\u0000U\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000´\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000L\u0000Q\u0000F\u0000O\u0000X\u0000G\u0000H\u0000Gin the sampling plan.Note:Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "breaks down in most environmental conditions to numerous breakdown products, especially fluoride ions and methylphosphonic acid (MPA),which may be used as markers to determine the extent of contamination of the parent Soman(GD)",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": ". See ANALYSIS section below to ensure sampling procedures are compatible with all analytes. Some preparation techniques for both Somanand its breakdown products are a",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000H\u0000\u0003\u0000,\u0000Q\u0000I\u0000R\u0000U\u0000P\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003Documents (https://www.epa.gov/esam/sample-collection-information-documents-scids). These provide general information reg",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "arding sampling procedures for different media, sampling supplies, sample size, container, holding time, preservation, packaging, and shipping, supporting collection of samples.Caution: Pre-incident training on administration of antidote kit is recommende",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "d (see First Aid under PERSONNEL SAFETY section above).10.3. Types of Samples:Air(Vapors are heavier than air): Samples are collected using appropriate solid phase absorbent media (tubes) at breathing zone level (~5 ft.) or air sampler (",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "e.g., SUMMA canister)to assess inhalation exposure.To assess off gassing from surfaces and at ground levels,collect air samples at ~6 in.Concurrent air monitoring for Somanis recommended.Water:",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Water should be collected in appropriate containers with addition of appropriate de-chlorinating agents and preservatives to minimize Somandegradation andhydrolysis prior to analysis.Concurrent air monitoring for Somanis recommended.Soil:",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "\u0000)\u0000R\u0000U\u0000\u0003\u0000O\u0000R\u0000F\u0000D\u0000O\u0000L\u0000]\u0000H\u0000G\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000´\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000Z\u0000K\u0000H\u0000U\u0000H\u0000\u0003\u0000V\u0000R\u0000L\u0000O\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000\u0003(i.e., neat liquid, aerosol or liquid droplets), surface soil samples should be taken from a non-vegetat",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "ed area to a depth of less than one inch. Sub-surface soil samples are typicallynot necessary unless a large amount of liquid was poured on the ground, or if an underlying aquifer is endangered.Concurrent air monitoring for Somanis recommended.",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Surface Wipes:Wipe samples are often desired to indicate absence of Somanon non-porous surfaces. Concurrent air monitoringfor Somanis recommended.Bulk:For hot spot areas where liquid Somandeposition may occur on porous surfaces (e.g",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "., concrete, asphalt), actual pieces (chips) or cores of contaminated surface may be obtained using appropriate tools (scabbling, coring,or drills) for subsequent laboratory extraction analysis. Bulk samples of suspected sink materials may be recommended ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "to rule out secondary vapor phase disposition or absorption of Somaninto these materials. Concurrent air monitoringfor Somanis recommended.Other Sample Matrices:Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.11. Packaging/Shipping: CWA",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Environmental Samples for Site CharacterizationPackaging and Shipping: CWAEnvironmental Samples For Site CharacterizationThe packaging and shipping of environmental samples potentially contaminated with a chemical warfare agent (CWA) ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "would be subject to complex and restrictive regulations established primarily by DOT for ground transportation (49 CFR Parts 171-180), and by DOT, ICAO, and IATA for air transportation (in addition to other regulations by CDC, USPS, ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "OSHA). Transportation of Soman-contaminated waste for treatment and disposal is covered under the WASTE MANAGEMENT section below.Samples can be collected from environmental media that include surface and subsurface soil, groundwater, surface water, ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "drinking water, dust, air, and solids other than soil (e.g., building materials). Given the wide range of potential environmental media and complex regulatory requirements,the approach would likely be situationally dependent.CAUTION:",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Environmental samples potentially contaminated with CWA should not be introduced into commercial transportation as an undeclared hazardous material. Hazard classification, packaging, and hazard communication are the ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "\u0000V\u0000K\u0000L\u0000S\u0000S\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000L\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000X\u0000Q\u0000G\u0000H\u0000U\u0000\u0003\u0000'\u00002\u00007\u0000¶\u0000V\u0000\u0003\u0000+\u0000D\u0000]\u0000D\u0000U\u0000G\u0000R\u0000X\u0000V\u0000\u0003\u00000\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D\u0000O\u0000V\u0000\u0003\u00005\u0000H\u0000J\u0000X\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000\u000b\u0000\u0017\u0000\u001c\u0000\u0003\u0000&\u0000)\u00005\u0000\u0003\u00003\u0000D\u0000U\u0000W\u0000V\u0000\u0003\u0000\u0014\u0000\u001a\u0000\u0014-180).",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "A summary of key packaging and shipping considerations for environmental samples with unknown concentrations of a potential unknown CWA is:\u0000xTransport of pure Soman (GD)is forbidden other than via military (Technical Escort Unit) transport in accordance ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "with 49 CFR §173.7.\u0000xIf the collected sample contains or is suspected to contain hazardous materials, as defined in 49 CFR §171.8, the shippermust determine the appropriate UN ID Number, the Proper Shipping Name (PSN), and the Packing Group ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "(PG) from the Hazardous Materials Table in 49 CFR §107.101. The table will then direct the shipper to the type of hazard and handling labels needed, the appropriate packaging (inner and outer packaging), and any special provisions.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "The designated shipper (EPA personnel or contractors) must be trained and certified according to the requirements found in 49 CFR §172.704 (a)(2) and/or by IATA Dangerous Goods (DG) 1.5 requirements for shipments by air.\u0000xContact the sample-",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "receiving laboratory to determine if they have additional packaging, shipping, or labeling requirements.",
+          "role": "BODY"
+        }
+      ],
+      "text": "Soman (GD) [July2022Update(nrt.org): January 2015Page 6of 1010.2. Sample Locations and Planning:Initially consider air monitoring to ensure worker safety and to determine if there is a vapor plume that could impact other areas. Characterization sampling is initiated by targeted or judgmental sampling \u0000W\u0000R\u0000\u0003\u0000L\u0000G\u0000H\u0000Q\u0000W\u0000L\u0000I\u0000\\\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000D\u0000O\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000S\u0000D\u0000W hs, and media or objects potentially acting as sinks. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling (e.g., grid, statis tical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted or the amount released. BecauseSomanhas very low \u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000P\u0000E\u0000L\u0000H\u0000Q\u0000W\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000K\u0000H\u0000O\u0000S\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000³\u0000F\u0000O\u0000H\u0000D\u0000U\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000´\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000L\u0000Q\u0000F\u0000O\u0000X\u0000G\u0000H\u0000Gin the sampling plan.Note:Soman breaks down in most environmental conditions to numerous breakdown products, especially fluoride ions and methylphosphonic acid (MPA),which may be used as markers to determine the extent of contamination of the parent Soman(GD) . See ANALYSIS section below to ensure sampling procedures are compatible with all analytes. Some preparation techniques for both Somanand its breakdown products are a \u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000H\u0000\u0003\u0000,\u0000Q\u0000I\u0000R\u0000U\u0000P\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003Documents (https://www.epa.gov/esam/sample-collection-information-documents-scids). These provide general information reg arding sampling procedures for different media, sampling supplies, sample size, container, holding time, preservation, packaging, and shipping, supporting collection of samples.Caution: Pre-incident training on administration of antidote kit is recommende d (see First Aid under PERSONNEL SAFETY section above).10.3. Types of Samples:Air(Vapors are heavier than air): Samples are collected using appropriate solid phase absorbent media (tubes) at breathing zone level (~5 ft.) or air sampler ( e.g., SUMMA canister)to assess inhalation exposure.To assess off gassing from surfaces and at ground levels,collect air samples at ~6 in.Concurrent air monitoring for Somanis recommended.Water: Water should be collected in appropriate containers with addition of appropriate de-chlorinating agents and preservatives to minimize Somandegradation andhydrolysis prior to analysis.Concurrent air monitoring for Somanis recommended.Soil: \u0000)\u0000R\u0000U\u0000\u0003\u0000O\u0000R\u0000F\u0000D\u0000O\u0000L\u0000]\u0000H\u0000G\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000´\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000Z\u0000K\u0000H\u0000U\u0000H\u0000\u0003\u0000V\u0000R\u0000L\u0000O\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000\u0003(i.e., neat liquid, aerosol or liquid droplets), surface soil samples should be taken from a non-vegetat ed area to a depth of less than one inch. Sub-surface soil samples are typicallynot necessary unless a large amount of liquid was poured on the ground, or if an underlying aquifer is endangered.Concurrent air monitoring for Somanis recommended. Surface Wipes:Wipe samples are often desired to indicate absence of Somanon non-porous surfaces. Concurrent air monitoringfor Somanis recommended.Bulk:For hot spot areas where liquid Somandeposition may occur on porous surfaces (e.g ., concrete, asphalt), actual pieces (chips) or cores of contaminated surface may be obtained using appropriate tools (scabbling, coring,or drills) for subsequent laboratory extraction analysis. Bulk samples of suspected sink materials may be recommended to rule out secondary vapor phase disposition or absorption of Somaninto these materials. Concurrent air monitoringfor Somanis recommended.Other Sample Matrices:Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.11. Packaging/Shipping: CWA Environmental Samples for Site CharacterizationPackaging and Shipping: CWAEnvironmental Samples For Site CharacterizationThe packaging and shipping of environmental samples potentially contaminated with a chemical warfare agent (CWA) would be subject to complex and restrictive regulations established primarily by DOT for ground transportation (49 CFR Parts 171-180), and by DOT, ICAO, and IATA for air transportation (in addition to other regulations by CDC, USPS, OSHA). Transportation of Soman-contaminated waste for treatment and disposal is covered under the WASTE MANAGEMENT section below.Samples can be collected from environmental media that include surface and subsurface soil, groundwater, surface water, drinking water, dust, air, and solids other than soil (e.g., building materials). Given the wide range of potential environmental media and complex regulatory requirements,the approach would likely be situationally dependent.CAUTION: Environmental samples potentially contaminated with CWA should not be introduced into commercial transportation as an undeclared hazardous material. Hazard classification, packaging, and hazard communication are the \u0000V\u0000K\u0000L\u0000S\u0000S\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000L\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000X\u0000Q\u0000G\u0000H\u0000U\u0000\u0003\u0000'\u00002\u00007\u0000¶\u0000V\u0000\u0003\u0000+\u0000D\u0000]\u0000D\u0000U\u0000G\u0000R\u0000X\u0000V\u0000\u0003\u00000\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D\u0000O\u0000V\u0000\u0003\u00005\u0000H\u0000J\u0000X\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000 \u0000\u0017\u0000\u001c\u0000\u0003\u0000&\u0000)\u00005\u0000\u0003\u00003\u0000D\u0000U\u0000W\u0000V\u0000\u0003\u0000\u0014\u0000\u001a\u0000\u0014-180). A summary of key packaging and shipping considerations for environmental samples with unknown concentrations of a potential unknown CWA is:\u0000xTransport of pure Soman (GD)is forbidden other than via military (Technical Escort Unit) transport in accordance with 49 CFR §173.7.\u0000xIf the collected sample contains or is suspected to contain hazardous materials, as defined in 49 CFR §171.8, the shippermust determine the appropriate UN ID Number, the Proper Shipping Name (PSN), and the Packing Group (PG) from the Hazardous Materials Table in 49 CFR §107.101. The table will then direct the shipper to the type of hazard and handling labels needed, the appropriate packaging (inner and outer packaging), and any special provisions.\u0000x The designated shipper (EPA personnel or contractors) must be trained and certified according to the requirements found in 49 CFR §172.704 (a)(2) and/or by IATA Dangerous Goods (DG) 1.5 requirements for shipments by air.\u0000xContact the sample- receiving laboratory to determine if they have additional packaging, shipping, or labeling requirements.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 33,
+        "repeatedHeaderFooterBlockCount": 3,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 6,
+      "humanPageNumber": 7,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Soman (GD)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 7of 10Note that there is no UN ID for Soman (GD)listed in the Hazardous Materials Table (49 CFR §172.101). Therefore, the ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "most likely classification would be UN3381, Toxic by inhalation liquid, n.o.s. with an LC50 lower than or equal to 200 mL/m3and saturated vapor concentration greater than or equal to 500 LC50, PG I. In the US, non-bulk packaging would ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "then be in accordance with 49 CFR §173.226.Use of Mobile labs:Another consideration would be use of an on-site mobile laboratory for CWA analysis. This could ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "eliminate the shipper's responsibility for transporting the collected samples containing a substance thatmight be considered forbidden for transport by air or a hazardous material or DG by ground or air transport to an off-site labora",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "tory. In addition, there may be public concern about shipping samples off-site, or reluctance of commercial shipping companies to accept and transport samples from a known CWA-contaminated site. EPA maintains mobile laboratory assets (PHILIS mobile laborat",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "ories: https://www.epa.gov/emergency-response/philis-portable-high-throughput-integrated-laboratory-identification-system) in NJ and CO thatare capable of analyzing CWAs, including Soman, in environmental matrices, down to health-",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "based risk clearance levels. Access to the PHILIS mobile labs for a CWA incident can be obtained fromEPA HQ/EOC at 202-564-3850. EPA also has access to the US Army CBRNE assets, including shipping and analysis, throughinter-",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "agency agreements as described in theCOORDINATION WITH OTHER AGENCIESsection below. 12. AnalysisAnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil).Few laboratories ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "currently have the capability to determine Soman, particularly for large numbers of samples and for the various types of \u0000H\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000P\u0000H\u0000G\u0000L\u0000D\u0000\u0011\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00005\u0000/\u00001\u0000\u0003\u0000O\u0000D\u0000E\u0000V\u0000\u0003(https://www.epa.gov/emergency-response/environmental-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "response-laboratory-network)that are specially trained and equipped for the analysis of Soman, will use sample prep and analytical methods from ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000$\u0000Q\u0000D\u0000O\u0000\\\u0000W\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u00000\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000\u000b\u0000(\u00006\u0000$\u00000\u0000\f\u0000\u0003\u00003\u0000U\u0000R\u0000J\u0000U\u0000D\u0000P\u0000V\u0000\u0003\u0000\u000bhttps://www.epa.gov/esam). For access to the nearest ERLN laboratory specially trained and equipped for Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "analysis, and methods provided in EP\u0000$\u0000¶\u0000V\u0000\u0003ESAM, contact EPA/HQ-EOC at 202-564-\u0000\u0016\u0000\u001b\u0000\u0018\u0000\u0013\u0000\u0011\u0000\u0003\u00007\u0000K\u0000H\u0000\u0003\u0000(\u00005\u0000/\u00001\u0000\u0003\u0000D\u0000O\u0000V\u0000R\u0000\u0003\u0000P\u0000D\u0000L\u0000Q\u0000W\u0000D\u0000L\u0000Q\u0000V\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Compendium of Environmental Testing Laboratories (CETL), a database of commercial, federal, state,",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "and academic laboratories,which can be queried for specific analyses and matrices. Analysis on environmental matrices for toxic organics, metals, biological and radiological agents, as well as several of the CWAs, including Somanand its breakdown products",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": ", can be obtained by querying the database of laboratories \u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000(\u00007\u0000/\u0000\u0003(https://cfext.epa.gov/cetl/lblogin.cfm?action=None); prior registration for access to CETL website is necessary.13. ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Coordination with Other Agencies: CWA Field ActivitiesCoordination With Other Agencies: CWAField ActivitiesNumerous agencies other than EPA may be involved in a chemical agent response incident. Every attempt should be made ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "to integrate assets and design a uniform approach to sampling procedures, quality assurance, and data sharing. Every attempt should be made to coordinate activities, share data, and maintain chain-of-custody integrity throughout all phases ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "of the response, amongst all agencies involved.Civilian:",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "\u00007\u0000K\u0000H\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000*\u0000X\u0000D\u0000U\u0000G\u0000\u0003\u0000&\u0000L\u0000Y\u0000L\u0000O\u0000\u0003\u00006\u0000X\u0000S\u0000S\u0000R\u0000U\u0000W\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000\u000b\u0000&\u00006\u00007\u0000\f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00008\u0000\u0011\u00006\u0000\u0011\u0000\u0003\u0000&\u0000R\u0000D\u0000V\u0000W\u0000\u0003\u0000*\u0000X\u0000D\u0000U\u0000G\u0000\u0003\u0000³\u00006\u0000W\u0000U\u0000L\u0000N\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000V\u0000´\u0000\u0003\u0000G\u0000H\u0000S\u0000O\u0000R\u0000\\\u0000\u0003\u0000V\u0000X\u0000U\u0000Y\u0000H\u0000\\\u0000\u0003\u0000W\u0000H\u0000D\u0000P\u0000V\u0000\u000f\u0000\u0003response vehicles, an",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "d mobile labs to hazardous chemical incidents throughout the United States. Many CSTs and Strike Teams have the capabilities to sample, prepare, and analyze certain types of environmental samples for CWA analysis. CSTs have analytical equipment that can pr",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "ovide screening or presumptive data results for CWAs. The OSC should discuss site-specific types of samples, data quality, and chain-of-custody requirements with Strike Teams and CSTs before integrating their capabilities into the overall CWA response. Oth",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "er agencies, such as the FBI, may be present on-site preforming tasks, such as evidence retrieval, whichare specific for their agency.Military:EPA\u0000¶\u0000VSpecial Teams(ERT and CMAD)haveaccess to Department of Defense(DOD)assets through Inter-Agency Agre",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000\u000b\u0000,\u0000$\u0000$\u0000\f\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00008\u00006\u0000\u0003\u0000$\u0000U\u0000P\u0000\\\u0000¶\u0000V\u0000\u0003\u0000&\u0000R\u0000P\u0000E\u0000D\u0000W\u0000\u0003\u0000&\u0000D\u0000S\u0000D\u0000E\u0000L\u0000O\u0000L\u0000W\u0000L\u0000H\u0000V\u0000\u0003\u0000'\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000&\u0000R\u0000P\u0000P\u0000D\u0000Q\u0000G\u0000\u000f\u0000\u0003\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Center (CBC) at Aberdeen Proving Ground, MD. The CBC has expertise and deployable assets for CWAairmonitoring(i.e., M\u0000,\u00001\u0000,\u0000&\u0000$\u00000\u00006\u0000), sampling, analysis, decontamination, and waste transport and disposal through their ongoing ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "demilitarization activities at former chemical agent munitions facilities in the US and abroad.\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000V\u0000X\u0000S\u0000S\u0000R\u0000U\u0000W\u0000\u0003\u0000W\u0000R\u0000\u0003Federal OSCs at a CBRN response or incident can be arranged through EPA/HQ-EOC at 202-564-",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "3850. Consultation or training for EPA personnel and partners that do not need to go throughEPA/HQ-\u0000(\u00002\u0000&\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000U\u0000U\u0000D\u0000Q\u0000J\u0000H\u0000G\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00005\u00007-Special Team at 732-321-6660. Additional CBRNEsupport can be ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "obtained v\u0000L\u0000D\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'-Special Team, including support forchemical,biological, and radiologicalagent response throughEPA/HQ-EOC at 202-564-3850.14. Environmental Decontamination/Cleanup",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Environmental Decontamination/Cleanup14.1. Decontamination/Cleanup Planning:Once site controls are in place, develop a site-specific decontamination/cleanup plan. Environmental decontamination may ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000\u0003\u0000D\u0000\u0003\u0000³\u0000W\u0000L\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000D\u0000F\u0000K\u0000´\u0000\u0003\u0000X\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u0000Y\u0000D\u0000U\u0000L\u0000H\u0000W\u0000\\\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000H\u0000F\u0000K\u0000Q\u0000L\u0000T\u0000X\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000V\u0000\u0011\u0000\u0003\u0000&\u0000D\u0000O\u0000O\u0000\u0003\u0000(\u00003\u0000$\u0000\u0012\u0000+\u00004-EOC at 202-564-3850 for more information.",
+          "role": "BODY"
+        }
+      ],
+      "text": "Soman (GD) [July2022Update(nrt.org): January 2015Page 7of 10Note that there is no UN ID for Soman (GD)listed in the Hazardous Materials Table (49 CFR §172.101). Therefore, the most likely classification would be UN3381, Toxic by inhalation liquid, n.o.s. with an LC50 lower than or equal to 200 mL/m3and saturated vapor concentration greater than or equal to 500 LC50, PG I. In the US, non-bulk packaging would then be in accordance with 49 CFR §173.226.Use of Mobile labs:Another consideration would be use of an on-site mobile laboratory for CWA analysis. This could eliminate the shipper's responsibility for transporting the collected samples containing a substance thatmight be considered forbidden for transport by air or a hazardous material or DG by ground or air transport to an off-site labora tory. In addition, there may be public concern about shipping samples off-site, or reluctance of commercial shipping companies to accept and transport samples from a known CWA-contaminated site. EPA maintains mobile laboratory assets (PHILIS mobile laborat ories: https://www.epa.gov/emergency-response/philis-portable-high-throughput-integrated-laboratory-identification-system) in NJ and CO thatare capable of analyzing CWAs, including Soman, in environmental matrices, down to health- based risk clearance levels. Access to the PHILIS mobile labs for a CWA incident can be obtained fromEPA HQ/EOC at 202-564-3850. EPA also has access to the US Army CBRNE assets, including shipping and analysis, throughinter- agency agreements as described in theCOORDINATION WITH OTHER AGENCIESsection below. 12. AnalysisAnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil).Few laboratories currently have the capability to determine Soman, particularly for large numbers of samples and for the various types of \u0000H\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000P\u0000H\u0000G\u0000L\u0000D\u0000\u0011\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00005\u0000/\u00001\u0000\u0003\u0000O\u0000D\u0000E\u0000V\u0000\u0003(https://www.epa.gov/emergency-response/environmental- response-laboratory-network)that are specially trained and equipped for the analysis of Soman, will use sample prep and analytical methods from \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000$\u0000Q\u0000D\u0000O\u0000\\\u0000W\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u00000\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000 \u0000(\u00006\u0000$\u00000\u0000 \u0000\u0003\u00003\u0000U\u0000R\u0000J\u0000U\u0000D\u0000P\u0000V\u0000\u0003\u0000 https://www.epa.gov/esam). For access to the nearest ERLN laboratory specially trained and equipped for Soman analysis, and methods provided in EP\u0000$\u0000¶\u0000V\u0000\u0003ESAM, contact EPA/HQ-EOC at 202-564-\u0000\u0016\u0000\u001b\u0000\u0018\u0000\u0013\u0000\u0011\u0000\u0003\u00007\u0000K\u0000H\u0000\u0003\u0000(\u00005\u0000/\u00001\u0000\u0003\u0000D\u0000O\u0000V\u0000R\u0000\u0003\u0000P\u0000D\u0000L\u0000Q\u0000W\u0000D\u0000L\u0000Q\u0000V\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Compendium of Environmental Testing Laboratories (CETL), a database of commercial, federal, state, and academic laboratories,which can be queried for specific analyses and matrices. Analysis on environmental matrices for toxic organics, metals, biological and radiological agents, as well as several of the CWAs, including Somanand its breakdown products , can be obtained by querying the database of laboratories \u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000(\u00007\u0000/\u0000\u0003(https://cfext.epa.gov/cetl/lblogin.cfm?action=None); prior registration for access to CETL website is necessary.13. Coordination with Other Agencies: CWA Field ActivitiesCoordination With Other Agencies: CWAField ActivitiesNumerous agencies other than EPA may be involved in a chemical agent response incident. Every attempt should be made to integrate assets and design a uniform approach to sampling procedures, quality assurance, and data sharing. Every attempt should be made to coordinate activities, share data, and maintain chain-of-custody integrity throughout all phases of the response, amongst all agencies involved.Civilian: \u00007\u0000K\u0000H\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000*\u0000X\u0000D\u0000U\u0000G\u0000\u0003\u0000&\u0000L\u0000Y\u0000L\u0000O\u0000\u0003\u00006\u0000X\u0000S\u0000S\u0000R\u0000U\u0000W\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000 \u0000&\u00006\u00007\u0000 \u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00008\u0000\u0011\u00006\u0000\u0011\u0000\u0003\u0000&\u0000R\u0000D\u0000V\u0000W\u0000\u0003\u0000*\u0000X\u0000D\u0000U\u0000G\u0000\u0003\u0000³\u00006\u0000W\u0000U\u0000L\u0000N\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000V\u0000´\u0000\u0003\u0000G\u0000H\u0000S\u0000O\u0000R\u0000\\\u0000\u0003\u0000V\u0000X\u0000U\u0000Y\u0000H\u0000\\\u0000\u0003\u0000W\u0000H\u0000D\u0000P\u0000V\u0000\u000f\u0000\u0003response vehicles, an d mobile labs to hazardous chemical incidents throughout the United States. Many CSTs and Strike Teams have the capabilities to sample, prepare, and analyze certain types of environmental samples for CWA analysis. CSTs have analytical equipment that can pr ovide screening or presumptive data results for CWAs. The OSC should discuss site-specific types of samples, data quality, and chain-of-custody requirements with Strike Teams and CSTs before integrating their capabilities into the overall CWA response. Oth er agencies, such as the FBI, may be present on-site preforming tasks, such as evidence retrieval, whichare specific for their agency.Military:EPA\u0000¶\u0000VSpecial Teams(ERT and CMAD)haveaccess to Department of Defense(DOD)assets through Inter-Agency Agre \u0000H\u0000P\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000 \u0000,\u0000$\u0000$\u0000 \u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00008\u00006\u0000\u0003\u0000$\u0000U\u0000P\u0000\\\u0000¶\u0000V\u0000\u0003\u0000&\u0000R\u0000P\u0000E\u0000D\u0000W\u0000\u0003\u0000&\u0000D\u0000S\u0000D\u0000E\u0000L\u0000O\u0000L\u0000W\u0000L\u0000H\u0000V\u0000\u0003\u0000'\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000&\u0000R\u0000P\u0000P\u0000D\u0000Q\u0000G\u0000\u000f\u0000\u0003\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003 Center (CBC) at Aberdeen Proving Ground, MD. The CBC has expertise and deployable assets for CWAairmonitoring(i.e., M\u0000,\u00001\u0000,\u0000&\u0000$\u00000\u00006\u0000), sampling, analysis, decontamination, and waste transport and disposal through their ongoing demilitarization activities at former chemical agent munitions facilities in the US and abroad.\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000V\u0000X\u0000S\u0000S\u0000R\u0000U\u0000W\u0000\u0003\u0000W\u0000R\u0000\u0003Federal OSCs at a CBRN response or incident can be arranged through EPA/HQ-EOC at 202-564- 3850. Consultation or training for EPA personnel and partners that do not need to go throughEPA/HQ-\u0000(\u00002\u0000&\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000U\u0000U\u0000D\u0000Q\u0000J\u0000H\u0000G\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00005\u00007-Special Team at 732-321-6660. Additional CBRNEsupport can be obtained v\u0000L\u0000D\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'-Special Team, including support forchemical,biological, and radiologicalagent response throughEPA/HQ-EOC at 202-564-3850.14. Environmental Decontamination/Cleanup Environmental Decontamination/Cleanup14.1. Decontamination/Cleanup Planning:Once site controls are in place, develop a site-specific decontamination/cleanup plan. Environmental decontamination may \u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000\u0003\u0000D\u0000\u0003\u0000³\u0000W\u0000L\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000D\u0000F\u0000K\u0000´\u0000\u0003\u0000X\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u0000Y\u0000D\u0000U\u0000L\u0000H\u0000W\u0000\\\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000H\u0000F\u0000K\u0000Q\u0000L\u0000T\u0000X\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000V\u0000\u0011\u0000\u0003\u0000&\u0000D\u0000O\u0000O\u0000\u0003\u0000(\u00003\u0000$\u0000\u0012\u0000+\u00004-EOC at 202-564-3850 for more information.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 33,
+        "repeatedHeaderFooterBlockCount": 3,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 7,
+      "humanPageNumber": 8,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Soman (GD)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 8of 10General Considerations:A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers public safety, total cost, impact on the area, wastes generated, time the areaor item will bein",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "accessible and/orout of service,as well asany socio-economic, public health, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be collected, treated, and disposed of properly. Waste ha",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "ndling and disposal must be addressed as early in the decontamination and cleanup process as possible (see WASTE MANAGEMENT section below).Disposal Option: The urgency to restore an area or itemas quickly as possible may result in the outright and timely",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "removal and disposal of contaminated materials. Certain materials may be impacted by thedecontamination products, and/or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation:Somandegrades via natural pr",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "ocesses. Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "must be considered in the overall cost/benefit evaluation. This option is more passive than other options but is non-destructive to materials.Given Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "\u0000¶\u0000V\u0000\u0003\u0000P\u0000R\u0000G\u0000H\u0000U\u0000D\u0000W\u0000H\u0000\u0003\u0000Y\u0000R\u0000O\u0000D\u0000W\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u000f\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000D\u0000W\u0000W\u0000H\u0000Q\u0000X\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000W\u0000D\u0000N\u0000H\u0000\u0003\u0000K\u0000R\u0000X\u0000U\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000G\u0000D\u0000\\\u0000V\u0000\u0003\u0000G\u0000H\u0000S\u0000H\u0000Q\u0000G\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000L\u0000P\u0000S\u0000D\u0000F\u0000W\u0000H\u0000G\u0000\u0003\u0000P\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D\u0000O\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000H\u0000Qvironmental conditions.Fix-in-Place Option:",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "The contaminated area may be resistant to decontamination products or may be unable or impractical to be treated. Physical barriers can be used to immobilize thecontaminationand prevent itfrom coming into contact with the environment or the public. Thi",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "s can be a temporary or permanent solution.14.2. Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas into fivebroad categories: 1) surfaces or hot spots, 2) large volumetric spaces, 3) sensitive equipme",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "nt or items, 4) aqueous solutions, and 5) water systems. Areas in each category may be treated using one or more unique decontamination processes in a tiered approach to the overall site-specific decontamination strategy.Cautions:\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Decontamination products may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of bleach results in release of chlorine vapors). Strong oxidizers, such as hypochlorite, may react violently wit",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "h organics.\u0000xDirt, grime, and other coatings (organic load) can reduce the efficacy of decontamination; pre-cleaning surfaces with soap and water may be needed before the application of decontamination formulations but resulting pre-cleaning ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "rinsates require containment to avoid agent spread.\u0000xAll statements about decontamination efficacy are based upon Sarin(GB) and have not been verified for Soman (GD). Because hydrolysis has been identified as a major degradation pathway for both Somanand ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "Sarinand because the hydrolysis rate of Somanis similar to that of Sarin, the limited data available for Somansuggest similar efficacy.For additionalinformation, contact the EPA/HQ-EOC at 202-564-3850.Surfaces/Hot Spots:This category is for areas sm",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "aller in size but with higher levels of agent contamination. They may require more rigorous decontamination products and methods. Excess Somanliquid should be absorbed using,e.g., vermiculite or dry sand,and transferred into a sealed container and dispo",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "sed according to WASTE MANAGEMENT section below. Decontamination of remaining Somanoccurs mainly through hydrolysis, which occurs faster at high pHs, although other mechanisms may cause and/or catalyze (speed up) Somandestruction. Hydrolysis of Somanpro",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "duces fluoride ions,which may form HF at low pH. Application of the following decontamination solutions and formulations ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000H\u0000I\u0000I\u0000L\u0000F\u0000D\u0000F\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000I\u0000R\u0000O\u0000O\u0000R\u0000Z\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000S\u0000S\u0000O\u0000L\u0000F\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000V\u0000¶\u0000\u0003\u0000G\u0000L\u0000U\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000V.1)Hypochlorite-containing solutions: Hypochlorite can be corrosive to certain surfaces and materials and should be ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "\u0000U\u0000L\u0000Q\u0000V\u0000H\u0000G\u0000\u0003\u0000W\u0000K\u0000R\u0000U\u0000R\u0000X\u0000J\u0000K\u0000O\u0000\\\u0000\u0003\u0000D\u0000I\u0000W\u0000H\u0000U\u0000Z\u0000D\u0000U\u0000G\u0000V\u0000\u0011\u0000\u0003\u0000+\u0000R\u0000X\u0000V\u0000H\u0000K\u0000R\u0000O\u0000G\u0000\u0003\u0000E\u0000O\u0000H\u0000D\u0000F\u0000K\u0000\u0003\u0000V\u0000R\u0000O\u0000X\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000\u000b\u0000\u0000\u0018\u0000\b\u0000\u0003\u0000V\u0000R\u0000G\u0000L\u0000X\u0000P\u0000\u0003\u0000K\u0000\\\u0000S\u0000R\u0000F\u0000K\u0000O\u0000R\u0000U\u0000L\u0000W\u0000H\u0000\f\u0000\u0003areeffectivefor Somanwith efficacy achieved with contact time of 15-",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "60 minutes depending on surface material. Calcium hypochlorite, present in commercial products, such as HTH (10% hypochlorite solution), is better for surfaces with high concentrations of liquids in localized areas. Note that lowering the pH of ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "hypochlorite solutions is not required and may be counterproductive.2)Hydroxide (e.g., sodium, potassium \u0000±10% solution)reactsrapidlywith Soman, but solutions are very damaging to many surfaces and should be rinsed thoroughly after use.3)Other high pH sol",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "utions, such as sodium carbonate (10% solution),have been shown to decontaminate surfaces but slower than decontamination with sodium or potassium hydroxide, which have higher pH.4)Proprietary decontamination technologies such as EasyDecon DF-200®, ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Decon7 (D7), Dahlgren Decon®, CASCAD®, Decon Green®, or L-Gel® have been shown to be effective against Somanon the order of minutes to hours, but not all have been thoroughly tested. Availability, cost, andthe need for specialized equipment to apply the ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "decontaminant may limit their use early in the response.Large Volumetric Spaces:This category is for areas larger in size but with lower levels of agent contamination. These areasmay require less aggressive but more broadly applied decontaminat",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "ion products and methods.1)Forced or Hot Air ventilation methods are recommended for vapor plume contaminationor lowsurfaceconcentration of Somanin large volumetric spaces, including HVAC systems, or open areas; efficacy typically can be achievedin ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "hours to days with less waste and adverse impacts to materials.Capture technologies,such as activated carbon containing air filters, would be required to prevent transfer of theSomanvapor to the outside environment or prevent recirculation ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "into other surrounding spaces.",
+          "role": "BODY"
+        }
+      ],
+      "text": "Soman (GD) [July2022Update(nrt.org): January 2015Page 8of 10General Considerations:A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers public safety, total cost, impact on the area, wastes generated, time the areaor item will bein accessible and/orout of service,as well asany socio-economic, public health, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be collected, treated, and disposed of properly. Waste ha ndling and disposal must be addressed as early in the decontamination and cleanup process as possible (see WASTE MANAGEMENT section below).Disposal Option: The urgency to restore an area or itemas quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may be impacted by thedecontamination products, and/or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation:Somandegrades via natural pr ocesses. Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than other options but is non-destructive to materials.Given Soman \u0000¶\u0000V\u0000\u0003\u0000P\u0000R\u0000G\u0000H\u0000U\u0000D\u0000W\u0000H\u0000\u0003\u0000Y\u0000R\u0000O\u0000D\u0000W\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u000f\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000D\u0000W\u0000W\u0000H\u0000Q\u0000X\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000W\u0000D\u0000N\u0000H\u0000\u0003\u0000K\u0000R\u0000X\u0000U\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000G\u0000D\u0000\\\u0000V\u0000\u0003\u0000G\u0000H\u0000S\u0000H\u0000Q\u0000G\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000L\u0000P\u0000S\u0000D\u0000F\u0000W\u0000H\u0000G\u0000\u0003\u0000P\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D\u0000O\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000H\u0000Qvironmental conditions.Fix-in-Place Option: The contaminated area may be resistant to decontamination products or may be unable or impractical to be treated. Physical barriers can be used to immobilize thecontaminationand prevent itfrom coming into contact with the environment or the public. Thi s can be a temporary or permanent solution.14.2. Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas into fivebroad categories: 1) surfaces or hot spots, 2) large volumetric spaces, 3) sensitive equipme nt or items, 4) aqueous solutions, and 5) water systems. Areas in each category may be treated using one or more unique decontamination processes in a tiered approach to the overall site-specific decontamination strategy.Cautions:\u0000x Decontamination products may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of bleach results in release of chlorine vapors). Strong oxidizers, such as hypochlorite, may react violently wit h organics.\u0000xDirt, grime, and other coatings (organic load) can reduce the efficacy of decontamination; pre-cleaning surfaces with soap and water may be needed before the application of decontamination formulations but resulting pre-cleaning rinsates require containment to avoid agent spread.\u0000xAll statements about decontamination efficacy are based upon Sarin(GB) and have not been verified for Soman (GD). Because hydrolysis has been identified as a major degradation pathway for both Somanand Sarinand because the hydrolysis rate of Somanis similar to that of Sarin, the limited data available for Somansuggest similar efficacy.For additionalinformation, contact the EPA/HQ-EOC at 202-564-3850.Surfaces/Hot Spots:This category is for areas sm aller in size but with higher levels of agent contamination. They may require more rigorous decontamination products and methods. Excess Somanliquid should be absorbed using,e.g., vermiculite or dry sand,and transferred into a sealed container and dispo sed according to WASTE MANAGEMENT section below. Decontamination of remaining Somanoccurs mainly through hydrolysis, which occurs faster at high pHs, although other mechanisms may cause and/or catalyze (speed up) Somandestruction. Hydrolysis of Somanpro duces fluoride ions,which may form HF at low pH. Application of the following decontamination solutions and formulations \u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000H\u0000I\u0000I\u0000L\u0000F\u0000D\u0000F\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000I\u0000R\u0000O\u0000O\u0000R\u0000Z\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000S\u0000S\u0000O\u0000L\u0000F\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000V\u0000¶\u0000\u0003\u0000G\u0000L\u0000U\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000V.1)Hypochlorite-containing solutions: Hypochlorite can be corrosive to certain surfaces and materials and should be \u0000U\u0000L\u0000Q\u0000V\u0000H\u0000G\u0000\u0003\u0000W\u0000K\u0000R\u0000U\u0000R\u0000X\u0000J\u0000K\u0000O\u0000\\\u0000\u0003\u0000D\u0000I\u0000W\u0000H\u0000U\u0000Z\u0000D\u0000U\u0000G\u0000V\u0000\u0011\u0000\u0003\u0000+\u0000R\u0000X\u0000V\u0000H\u0000K\u0000R\u0000O\u0000G\u0000\u0003\u0000E\u0000O\u0000H\u0000D\u0000F\u0000K\u0000\u0003\u0000V\u0000R\u0000O\u0000X\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000 \u0000\u0000\u0018\u0000\b\u0000\u0003\u0000V\u0000R\u0000G\u0000L\u0000X\u0000P\u0000\u0003\u0000K\u0000\\\u0000S\u0000R\u0000F\u0000K\u0000O\u0000R\u0000U\u0000L\u0000W\u0000H\u0000 \u0000\u0003areeffectivefor Somanwith efficacy achieved with contact time of 15- 60 minutes depending on surface material. Calcium hypochlorite, present in commercial products, such as HTH (10% hypochlorite solution), is better for surfaces with high concentrations of liquids in localized areas. Note that lowering the pH of hypochlorite solutions is not required and may be counterproductive.2)Hydroxide (e.g., sodium, potassium \u0000±10% solution)reactsrapidlywith Soman, but solutions are very damaging to many surfaces and should be rinsed thoroughly after use.3)Other high pH sol utions, such as sodium carbonate (10% solution),have been shown to decontaminate surfaces but slower than decontamination with sodium or potassium hydroxide, which have higher pH.4)Proprietary decontamination technologies such as EasyDecon DF-200®, Decon7 (D7), Dahlgren Decon®, CASCAD®, Decon Green®, or L-Gel® have been shown to be effective against Somanon the order of minutes to hours, but not all have been thoroughly tested. Availability, cost, andthe need for specialized equipment to apply the decontaminant may limit their use early in the response.Large Volumetric Spaces:This category is for areas larger in size but with lower levels of agent contamination. These areasmay require less aggressive but more broadly applied decontaminat ion products and methods.1)Forced or Hot Air ventilation methods are recommended for vapor plume contaminationor lowsurfaceconcentration of Somanin large volumetric spaces, including HVAC systems, or open areas; efficacy typically can be achievedin hours to days with less waste and adverse impacts to materials.Capture technologies,such as activated carbon containing air filters, would be required to prevent transfer of theSomanvapor to the outside environment or prevent recirculation into other surrounding spaces.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 32,
+        "repeatedHeaderFooterBlockCount": 3,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 8,
+      "humanPageNumber": 9,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Soman (GD)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 9of 102)Fumigations with modified vaporous hydrogen peroxide (mVHP®; a combination of ammonia and hydrogen peroxide vapor) or chlorine dioxide (ClO2) are expected to be effective against Soman. However, the time to ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "implement any of these fumigation approaches should be balanced against the expected degree of natural attenuation associated with the relatively high volatility of Soman.3)Steam application has been reported to be effective against Soman",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "on surfaces. Steam also transfers Somaninto the condensate.Sensitive Equipment orItems:1)Forced or Hot Air ventilation may be used for Somanand can be used either in-situ or ex-situ to decontaminate these items.",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Collective protection using activated carbon air filters would be required to prevent transfer of the Somanvapor to the outside environment or preventrecirculation into other surrounding spaces.2)Modified VHP® fumigation(mVHP®)canbe used on these",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "items with less corrosion to electronics than e.g., dilute hypochlorite solutions.Aqueous Solutions:Somandegrades via hydrolysis but may persist in aqueous solutions, depending on initial concentration and environmentalconditions,such as pH and temperature",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": ". If the aqueous solutions result from decontamination operations involving bleach or other high pH conditions, significant Somandegradation may occur. Avoid any additional release t",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "o water systems, drains, or sewers (e.g., through inappropriate disposal). Contain liquid or transfer liquid to appropriate containers and dispose according to WASTE MANAGEMENT section below.Water Systems:",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Hydrolysis and removal of contaminated water will lessen Somancontamination in water systems, but Soman may persist in hydraulic dead ends and via sorption to system components (e.g., plastics) that act as sinks for Soman. It may be necessary to isolate p",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "otentially affected portions of the system to evaluate them and implementdecontamination. A contaminated water system may transfer Somanto building and premise plumbing, which then may also require decontamination.Verification of Decontamination: Site a",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "nd situation specific. Please contact EPA/HQ-EOC at 202-564-3850 for further assistance.15. WasteManagementWaste Management15.1.Transportation:Federal requirements for the commercial transport of hazardous materials and procedures for ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "exemptions are specified inHow to Comply with Federal Hazardous Materials Regulations, available at: https://www.fmcsa.dot.gov/regulations/hazardous-materials/how-comply-federal-hazardous-materials-regulations. Soman(GD) ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "should not be offered for commercial transportation without being rendered safe by neutralization. Contact the PHMSA Hazardous Materials Information Center at 1-800-467-4922 or infocntr@dot.govto discuss specific cases. ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Additional resources on packaging, labeling, and shipping are available at: https://www.phmsa.dot.gov/standards-rulemaking/hazmat/hazardous-materials-regulations. Detailed state regulations can be found at www.envcap.org/.",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "This QRG is intended to apply to Federal OSCs in the first 24-48 hours of a response. Once determined, the concentrations of Somanin individual waste streams should be used to determine which transportation requirements apply. For instance, ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "certain requirements may apply to waste streams with concentrated agent, but may not apply to waste streams such as soil containing dilute concentrations of agent.15.2. Waste Management:",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Under the Resource Conservation and Recovery Act (RCRA), waste is classified as hazardous waste (subtitle C) or solid waste (subtitle D). The RCRA regulations generally define a waste to be hazardous if it is: (1) a listed waste (40 CFR §261.31-",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "§261.32); (2) exhibits specific characteristics (40 CFR §261.21-§261.24); or (3) is a discarded commercial chemical product, off specification species, container residue, or spill residue listed in 40 CFR §261.33. Soman (GD)is ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "not listed under 40 CFR §261.31-33, but Soman-contaminated waste may be considered reactive hazardous waste, chemical code D003, if, when mixed with water, it generates toxic gases, vapors, or fumes in a quantity sufficient to ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "present a danger to human health or the environment (40 CFR §261.23(a)(4)). Listed or characteristic waste may be land disposed only if the waste meets the applicable treatment standards (40 CFR §268.40).It is the responsibility of the waste ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "generator to make a hazardous waste determination (40 CFR §262.11).The states (except for Alaska and Iowa) have the primary responsibility to implement the hazardous waste regulations and ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "can impose more stringent requirements or requirements broader in scope than the federal program. Several states, including CO, IN, KY,MD, OR, and UT, have their own waste designations for chemical agents, which may be applicable for the cleanup of Soman-",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "contaminated residues, decomposition products,soils, and debris. It is critical to open a dialogue with state regulators as early as possible.Management of toxic decomposition products, associated residual decontamination solutions, local waste acceptance ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "criteria, and transportation and handling requirements should be considered.High pH aqueous decontamination solution waste may be considered corrosive hazardous waste, chemical code D002, if it has a pH greater than or equal to 12.5 (40 CFR §261.22).",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "EPA/CMAD can provide Federal OSCs with information and support to address knowledge gaps for dealing with wastes contaminated with diluteconcentrations of CWA; contact EPA/HQ-EOC at 202-564-3850.",
+          "role": "BODY"
+        }
+      ],
+      "text": "Soman (GD) [July2022Update(nrt.org): January 2015Page 9of 102)Fumigations with modified vaporous hydrogen peroxide (mVHP®; a combination of ammonia and hydrogen peroxide vapor) or chlorine dioxide (ClO2) are expected to be effective against Soman. However, the time to implement any of these fumigation approaches should be balanced against the expected degree of natural attenuation associated with the relatively high volatility of Soman.3)Steam application has been reported to be effective against Soman on surfaces. Steam also transfers Somaninto the condensate.Sensitive Equipment orItems:1)Forced or Hot Air ventilation may be used for Somanand can be used either in-situ or ex-situ to decontaminate these items. Collective protection using activated carbon air filters would be required to prevent transfer of the Somanvapor to the outside environment or preventrecirculation into other surrounding spaces.2)Modified VHP® fumigation(mVHP®)canbe used on these items with less corrosion to electronics than e.g., dilute hypochlorite solutions.Aqueous Solutions:Somandegrades via hydrolysis but may persist in aqueous solutions, depending on initial concentration and environmentalconditions,such as pH and temperature . If the aqueous solutions result from decontamination operations involving bleach or other high pH conditions, significant Somandegradation may occur. Avoid any additional release t o water systems, drains, or sewers (e.g., through inappropriate disposal). Contain liquid or transfer liquid to appropriate containers and dispose according to WASTE MANAGEMENT section below.Water Systems: Hydrolysis and removal of contaminated water will lessen Somancontamination in water systems, but Soman may persist in hydraulic dead ends and via sorption to system components (e.g., plastics) that act as sinks for Soman. It may be necessary to isolate p otentially affected portions of the system to evaluate them and implementdecontamination. A contaminated water system may transfer Somanto building and premise plumbing, which then may also require decontamination.Verification of Decontamination: Site a nd situation specific. Please contact EPA/HQ-EOC at 202-564-3850 for further assistance.15. WasteManagementWaste Management15.1.Transportation:Federal requirements for the commercial transport of hazardous materials and procedures for exemptions are specified inHow to Comply with Federal Hazardous Materials Regulations, available at: https://www.fmcsa.dot.gov/regulations/hazardous-materials/how-comply-federal-hazardous-materials-regulations. Soman(GD) should not be offered for commercial transportation without being rendered safe by neutralization. Contact the PHMSA Hazardous Materials Information Center at 1-800-467-4922 or infocntr@dot.govto discuss specific cases. Additional resources on packaging, labeling, and shipping are available at: https://www.phmsa.dot.gov/standards-rulemaking/hazmat/hazardous-materials-regulations. Detailed state regulations can be found at www.envcap.org/. This QRG is intended to apply to Federal OSCs in the first 24-48 hours of a response. Once determined, the concentrations of Somanin individual waste streams should be used to determine which transportation requirements apply. For instance, certain requirements may apply to waste streams with concentrated agent, but may not apply to waste streams such as soil containing dilute concentrations of agent.15.2. Waste Management: Under the Resource Conservation and Recovery Act (RCRA), waste is classified as hazardous waste (subtitle C) or solid waste (subtitle D). The RCRA regulations generally define a waste to be hazardous if it is: (1) a listed waste (40 CFR §261.31- §261.32); (2) exhibits specific characteristics (40 CFR §261.21-§261.24); or (3) is a discarded commercial chemical product, off specification species, container residue, or spill residue listed in 40 CFR §261.33. Soman (GD)is not listed under 40 CFR §261.31-33, but Soman-contaminated waste may be considered reactive hazardous waste, chemical code D003, if, when mixed with water, it generates toxic gases, vapors, or fumes in a quantity sufficient to present a danger to human health or the environment (40 CFR §261.23(a)(4)). Listed or characteristic waste may be land disposed only if the waste meets the applicable treatment standards (40 CFR §268.40).It is the responsibility of the waste generator to make a hazardous waste determination (40 CFR §262.11).The states (except for Alaska and Iowa) have the primary responsibility to implement the hazardous waste regulations and can impose more stringent requirements or requirements broader in scope than the federal program. Several states, including CO, IN, KY,MD, OR, and UT, have their own waste designations for chemical agents, which may be applicable for the cleanup of Soman- contaminated residues, decomposition products,soils, and debris. It is critical to open a dialogue with state regulators as early as possible.Management of toxic decomposition products, associated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered.High pH aqueous decontamination solution waste may be considered corrosive hazardous waste, chemical code D002, if it has a pH greater than or equal to 12.5 (40 CFR §261.22). EPA/CMAD can provide Federal OSCs with information and support to address knowledge gaps for dealing with wastes contaminated with diluteconcentrations of CWA; contact EPA/HQ-EOC at 202-564-3850.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 29,
+        "repeatedHeaderFooterBlockCount": 3,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 9,
+      "humanPageNumber": 10,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Soman (GD)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 10of 10EPA alsorecommends the creation of pre-incident waste management plans as a preparedness measure for chemical agent releases, and has created an All-Hazards Waste Management Planning Tool",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "to help state, local, territorial, and tribal waste management officials coordinate and prepare these plans. Access to the All-Hazards Waste Management Planning Tool requires pre-registration (https://wasteplan.epa.gov/).",
+          "role": "BODY"
+        }
+      ],
+      "text": "Soman (GD) [July2022Update(nrt.org): January 2015Page 10of 10EPA alsorecommends the creation of pre-incident waste management plans as a preparedness measure for chemical agent releases, and has created an All-Hazards Waste Management Planning Tool to help state, local, territorial, and tribal waste management officials coordinate and prepare these plans. Access to the All-Hazards Waste Management Planning Tool requires pre-registration (https://wasteplan.epa.gov/).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 7,
+        "repeatedHeaderFooterBlockCount": 3,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    }
+  ]
+}

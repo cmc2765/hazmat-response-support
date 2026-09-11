@@ -1,0 +1,470 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-chemical-arsine",
+  "sourceArtifactSha256": "32f0cd2846aa33331a01eb6cab1c2043adb1f288f45800b5179818c70f4488de",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+  "pageCount": 3,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [],
+      "text": "",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 0,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "Updated April 2017(replaced previous version datedDecember2012)Page 2of 3NRT Quick Reference Guide: Arsine (SA)Continued[April2017Personnel SafetyNote: Personal Protective Equipment (PPE) selection (levels A-",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "D), medical surveillance requirements, First Aid options and personnel decontamination may vary depending upon the amount and purity of agent, site conditions and the release scenario. Additional information on personnel safety and PPE selection ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "criteria can be found at: www.cdc.gov/niosh/ershdb.  We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.Medical: Pre-incident:Annual physical and respiratory function exam.DuringIncident:Conduct periodic on-",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "site medical monitoring, observe for any signs and symptoms as per Health Effects section above and treat accordingly as per First Aid section below.First Aid: Immediately remove person from affected area and remove contaminated clothing and articles. ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "Compressed liquid:Observe and treat for frostbite. Wash bare skin immediately with water, or warm, soapy water if available, at normal household pressures (~50-60 psi) for three minutes, ensure thorough ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "soaking. Rinse eyes exposed to liquid agent with potable water for 15 minutes. Gas: Observe and treat for respiratory distress and maintain clear airway, initial effects may be delayed up to 24 hours. Administer oxygen if respiratory distress develops. ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Antidote: THERE IS NO ANTIDOTE.Send person for follow-up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms and treat accordingly.Post Incident:D",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "ue to delayed effects, ensure suspected or confirmed exposed persons are aware of symptoms listed in the Health Effects section of this QRG, and to immediately seek medical attention if anyof these symptoms occur. Post-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "incident medical surveillance is highly recommended.Personal Protective Equipment (PPE):GENERAL INFORMATION:NIOSH-certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSH-",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and protective clothing should be used. Pre-incident training and exercises on the proper use of PPE are recommended. Per NIOSH guidance LEVEL A:",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Recommended for the initial response to an SA incident. Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when the SA",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "concentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure. LEVEL B:Provides the highest level of res",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "piratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when the SAconcentration is unknown or above the IDLH or AEGL-2 and dermal exposure is less of a risk. Level B differs from Level A in that it typically incorpor",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "ates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.LEVEL C:Select Level C when the contaminant identity and concentration are known and the respiratory protectio",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "n criteria factors for the use of APR or PAPR (i.e., < IDLH, warning properties) are met. Level C may be appropriate when decontaminating personnel or equipment. Note: SA has limited inhalation warning properties; use APR/PAPR with caution.LEVEL D:Selec",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "t Level D when the contaminant is known and the concentration is below the appropriate occupational exposure limits for the stated duration times. Note: AEGL-1 values are not available for SA; therefore, other exposure values such as PEL, REL must be used.",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and risks of dermal exposure are known, and must be accompanied by on-site monitoring.Field DetectionReal-time field screening tools (results not ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "confirmatory or quantitative): Caution should be given to equipment that has not been properly evaluated. False positive and false negatives may occur in the presence of interferents common in the environment.The following is a summary of minimum screenin",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "g concentration ranges or levels for equipment procured by many EPA and HAZMAT response teams. Other screening tools may be used by these teams and other agencies and responders, some with similar capabilities and limitations. NOTE: Detection equipment ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "does not measure contaminant levels. Rather, they detect the presence of SA at levels as listed below.Minimum Screening Ranges/Levels for AirAP4C (as Arsenic)Honeywell SPMDrägerArsine tubeDrägerCDS Kit (tubes)Dräger XS/XXS (sensors)MultiRAE*ppbRAE*",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Screening Levels for WaterHACH (as Arsenic)ppm0.150.015-0.1500.050.100.0210.0010.005-0.010 µg/Lmg/m30.470.047-0.470.160.320.063.20.003*RAE instruments detect SA with standard photoionization detector (PID) using 10.6 eV",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "lamp; if calibrating with isobutylene, correction factor = 1.9 with PIDSamplingNote: This section on sampling contains general guidelines and does not replace the need for a site-specific sampling plan (See Key References Cited/Used) Sampling Concerns:",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Detection, sampling equipment and procedures, and analytical techniques will be site-specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g., charact",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "erization, decontamination efficacy and clearance); and 4) specific laboratory requirements. Because SAis reactive and volatile, field detection instead of laboratory analysis of samplesfor SA and/or arsenicmay suffice and sometimes be necessary to achi",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "eve many goals of sampling.The U.S. Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSI",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "S section below (www2.epa.gov/emergency-response/environmental-response-laboratory-network). For sampling questions, call the EPA/HQ-EOC at 202-564-3850.Sample Locations and Planning:",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Initially consider air monitoring to ensure worker safety and to determine if there is an SA cloud that could impact other areas. Characterization sampling is initiated by targeted or judgmental sampling to identify hot spots, ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "potential agent flow paths, and media or objectspotentially acting as sinks. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "sampling (e.g., grid, statistical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted orthe amount released. Because SAis reactive and generally not persistent, sampling for a variety of arsenic-c",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "ontaining compounds along with SA to help to clear areas should be included in the sampling plan.Note: SA is highly volatile and reactive, forming a variety of arsenic breakdown and reaction by-products. Laboratory analysis may need to include these ad",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "ditional breakdown and reaction by-products. See ANALYSIS section below to ensure sampling procedures are compatible with all analytes. Concurrent air monitoring for SA is recommended for all matrices.Types of Samples: Air:On-site SA monitors may ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "provide sufficiently accurate real-time results. For lab analysis, samples are collected using appropriate solid phase absorbent media at breathing zone level (~5 ft.) to assess inhalation exposure and at ground levels (~6 in.) to assess off gassing at sur",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "faces.Water: SA is soluble in aqueous solutions but is expected to diffuse out of the bulk water phase or decompose to arsenical compounds. Arsenic is easy to analyze in the field by colorimetric/titrimetric methods and can be used as a marker for SA cont",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "amination.Soil:For localized hot spot areas where soil deposition may occur, surface soil samples may be analyzed for SA and arsenic-containing breakdown and reaction by-products and should be taken from a non-vegetated area to a depth of less than one",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "inch.",
+          "role": "BODY"
+        }
+      ],
+      "text": "Updated April 2017(replaced previous version datedDecember2012)Page 2of 3NRT Quick Reference Guide: Arsine (SA)Continued[April2017Personnel SafetyNote: Personal Protective Equipment (PPE) selection (levels A- D), medical surveillance requirements, First Aid options and personnel decontamination may vary depending upon the amount and purity of agent, site conditions and the release scenario. Additional information on personnel safety and PPE selection criteria can be found at: www.cdc.gov/niosh/ershdb. We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.Medical: Pre-incident:Annual physical and respiratory function exam.DuringIncident:Conduct periodic on- site medical monitoring, observe for any signs and symptoms as per Health Effects section above and treat accordingly as per First Aid section below.First Aid: Immediately remove person from affected area and remove contaminated clothing and articles. Compressed liquid:Observe and treat for frostbite. Wash bare skin immediately with water, or warm, soapy water if available, at normal household pressures (~50-60 psi) for three minutes, ensure thorough soaking. Rinse eyes exposed to liquid agent with potable water for 15 minutes. Gas: Observe and treat for respiratory distress and maintain clear airway, initial effects may be delayed up to 24 hours. Administer oxygen if respiratory distress develops. Antidote: THERE IS NO ANTIDOTE.Send person for follow-up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms and treat accordingly.Post Incident:D ue to delayed effects, ensure suspected or confirmed exposed persons are aware of symptoms listed in the Health Effects section of this QRG, and to immediately seek medical attention if anyof these symptoms occur. Post- incident medical surveillance is highly recommended.Personal Protective Equipment (PPE):GENERAL INFORMATION:NIOSH-certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSH- approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and protective clothing should be used. Pre-incident training and exercises on the proper use of PPE are recommended. Per NIOSH guidance LEVEL A: Recommended for the initial response to an SA incident. Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when the SA concentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure. LEVEL B:Provides the highest level of res piratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when the SAconcentration is unknown or above the IDLH or AEGL-2 and dermal exposure is less of a risk. Level B differs from Level A in that it typically incorpor ates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.LEVEL C:Select Level C when the contaminant identity and concentration are known and the respiratory protectio n criteria factors for the use of APR or PAPR (i.e., < IDLH, warning properties) are met. Level C may be appropriate when decontaminating personnel or equipment. Note: SA has limited inhalation warning properties; use APR/PAPR with caution.LEVEL D:Selec t Level D when the contaminant is known and the concentration is below the appropriate occupational exposure limits for the stated duration times. Note: AEGL-1 values are not available for SA; therefore, other exposure values such as PEL, REL must be used. Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and risks of dermal exposure are known, and must be accompanied by on-site monitoring.Field DetectionReal-time field screening tools (results not confirmatory or quantitative): Caution should be given to equipment that has not been properly evaluated. False positive and false negatives may occur in the presence of interferents common in the environment.The following is a summary of minimum screenin g concentration ranges or levels for equipment procured by many EPA and HAZMAT response teams. Other screening tools may be used by these teams and other agencies and responders, some with similar capabilities and limitations. NOTE: Detection equipment does not measure contaminant levels. Rather, they detect the presence of SA at levels as listed below.Minimum Screening Ranges/Levels for AirAP4C (as Arsenic)Honeywell SPMDrägerArsine tubeDrägerCDS Kit (tubes)Dräger XS/XXS (sensors)MultiRAE*ppbRAE* Screening Levels for WaterHACH (as Arsenic)ppm0.150.015-0.1500.050.100.0210.0010.005-0.010 µg/Lmg/m30.470.047-0.470.160.320.063.20.003*RAE instruments detect SA with standard photoionization detector (PID) using 10.6 eV lamp; if calibrating with isobutylene, correction factor = 1.9 with PIDSamplingNote: This section on sampling contains general guidelines and does not replace the need for a site-specific sampling plan (See Key References Cited/Used) Sampling Concerns: Detection, sampling equipment and procedures, and analytical techniques will be site-specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g., charact erization, decontamination efficacy and clearance); and 4) specific laboratory requirements. Because SAis reactive and volatile, field detection instead of laboratory analysis of samplesfor SA and/or arsenicmay suffice and sometimes be necessary to achi eve many goals of sampling.The U.S. Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSI S section below (www2.epa.gov/emergency-response/environmental-response-laboratory-network). For sampling questions, call the EPA/HQ-EOC at 202-564-3850.Sample Locations and Planning: Initially consider air monitoring to ensure worker safety and to determine if there is an SA cloud that could impact other areas. Characterization sampling is initiated by targeted or judgmental sampling to identify hot spots, potential agent flow paths, and media or objectspotentially acting as sinks. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling (e.g., grid, statistical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted orthe amount released. Because SAis reactive and generally not persistent, sampling for a variety of arsenic-c ontaining compounds along with SA to help to clear areas should be included in the sampling plan.Note: SA is highly volatile and reactive, forming a variety of arsenic breakdown and reaction by-products. Laboratory analysis may need to include these ad ditional breakdown and reaction by-products. See ANALYSIS section below to ensure sampling procedures are compatible with all analytes. Concurrent air monitoring for SA is recommended for all matrices.Types of Samples: Air:On-site SA monitors may provide sufficiently accurate real-time results. For lab analysis, samples are collected using appropriate solid phase absorbent media at breathing zone level (~5 ft.) to assess inhalation exposure and at ground levels (~6 in.) to assess off gassing at sur faces.Water: SA is soluble in aqueous solutions but is expected to diffuse out of the bulk water phase or decompose to arsenical compounds. Arsenic is easy to analyze in the field by colorimetric/titrimetric methods and can be used as a marker for SA cont amination.Soil:For localized hot spot areas where soil deposition may occur, surface soil samples may be analyzed for SA and arsenic-containing breakdown and reaction by-products and should be taken from a non-vegetated area to a depth of less than one inch.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 35,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "Updated April 2017(replaced previous version datedDecember2012)Page 3of 3NRT Quick Reference Guide: Arsine (SA)Continued[April2017Surface Wipes:Although SA is very volatile, wipe samples are often desired to indicate SA and arsenic-containing breakdown",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "and reaction by-products, on non-porous surfaces.Bulk:Although SA is very volatile, for hot spot areas where liquid SA deposition may occur on porous surfaces (e.g., concrete, asphalt), actual pieces or cores ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "of contaminated surface may be obtained using appropriate tools (scabbling, coring or drills) for subsequent laboratory extraction analysis for SA and any arsenic-containing breakdown and reaction by-products.Other Sample Matrices:Contact EPA/HQ-EOC at 202",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "Tj",
+          "text": "-564-3850 for sampling instructions.Sample Packaging and Shipping: The packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA and IATA. Contact the sample-",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "receiving laboratory to determine if they have additional packaging, shipping or labeling requirements.AnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil). ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "The ERLN will use uniform, compatible sample prep and analytical methods. (See www2.epa.gov/emergency-response/environmental-response-laboratory-network).SA and arsenic-compounds such as total arsenic",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "may be accurately determined in the field using available meters and field kits. For access to the nearest ERLN laboratory specially trained and equipped for analysis of SAand its reaction by-products, contact the EPA/HQ-EOC at 202-564-3850.",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Decontamination/CleanupDO NOT USE WATER DIRECTLY ON LIQUID SA. Use water spray to knock down vapors or to divert vapor cloud drift. Vapor can react explosively with air and oxidizing materials. Prevent wastewater from further contaminating the environmen",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "t. Avoid use of acids, oxidizers, or heating as they release toxic arsenic fumes.SA is so volatile that it will dissipate quickly. As a gas, SA does not persist in the environment. SAgas can bestable for days in air and will only slowly degrade in air b",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "y UV light into nonvolatile, oxidized compounds.Moist environments will enhance SA gas decomposition. Most decontaminationeffortswill not necessarily be for SA itself, but for decomposition by-products such as the toxic arsenic (III) compounds or somewh",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "at less toxic arsenic (V) compounds. Separate, long-term decontamination strategies will need to be developed if those decomposition by-products are of concern in a particular situation. This decontamination/cleanup section refers to the SA itself.",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Decontamination/Cleanup Planning: Once site controls are in place, develop a site-specific decontamination/cleanup plan. Decontamination may require a tiered approach using a variety of techniques and products. Call the EPA/HQ-EOC at 202-564-3850 for ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "more information.General Considerations: A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers: public safety, total cost, impact on the facility, wastes generated, as well as the time the facilit",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "y or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be collected, treated and disposed of properly. Waste handling and d",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "isposal must be addressed as early in the decontamination and cleanup process as possible (see Waste Management section below). Disposal Option:The urgency to restore a facility as quickly as possible may result in the outright and timely removal and dis",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "posal of contaminated materials. Certain materials may be resistant to decontamination formulations, or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation:SAdissipates via natural processes. Environment",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "al monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "in the overall cost/benefit evaluation. This option is more passive than other options but is non-destructive to materials.Fix-in-Place Option:SAdissipates rapidly via natural processes, as such a Fix-in-Place Option may not be required or feasible. P",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "hysical barriers can be used to separate and immobilize the agent contamination from coming into contact with the environment or the public. This can be atemporary or permanent solution. Solid or liquid SAdecomposition residues or wastes may require a se",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "parate decontamination evaluation process. Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas based on presence of: 1) liquid SA, 2) gaseous SA, or 3) aqueous solutions of SA.Strategy for Liquid SA:Do",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "not allow direct contact with water. Actions that promote safe volatilization of liquid SAmay be useful since SAin gaseous form can be allowedto dissipate; volatilization may be a slow process depending on site conditions.Strategy for Gaseous SA:",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Aerate spaces where gaseous SAmay be present. Forced air ventilation methods are recommended for SAcloud contamination or low concentration of SA gasin large volumetric spaces or open areas.Strategy for Aqueous Solutions of SA:If SAis present in solution, ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "hydrolysis will occur to produce arsenic compounds. Decontamination may be necessary for those decomposition by-products.Sensitive Equipment and Items:For difficult-to-clean equipment thought to be contaminated with small amounts of SA, additional",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "options for consideration include aeration followed by flushing with water.CAUTION: Decontamination/neutralization products may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use.Verification of ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Decontamination:Site and situation specific. Please contact EPA/HQ-EOC at 202-564-3850for further assistance.Waste ManagementCAUTION:Federal requirements for transporting hazardous materials and procedures for exemptions are specified in ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. Theseregulationsdiffer fromstate-to-state.Detailedstateregulationscanbefoundat www.envcap.org/.Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat.",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Waste Management: Under the Resource Conservation and Recovery Act (RCRA), solid waste can be classified as hazardous (subtitle C) or non-hazardous ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "(subtitle D).  The RCRA regulations generally define a waste as hazardous if it is: (1) a listed waste (40 CFR §261.31, §261.32),(2) exhibits specific characteristics (40 CFR §261.21-261.24) or (3) is a discarded commercial chemical product, off-",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "specification species, container residue, or spill residue thereof (40 CFR §261.33). Wastes containing arsenic compounds are likely to be characterized as hazardous due to toxicity, waste code D004 (§261.24). Arsenic-",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "containing waste is approved for land disposal only if the concentration in the waste or treatment residual does not exceed 1.4 mg/L for wastewaters or 5 mg/L by TCLP for non-wastewaters (§268.40). ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "The States (except for Alaska and Iowa) have the primary responsibility to implement the hazardous waste regulations and can impose more stringent requirements than the Federal program, so it is critical to open a dialogue with regulat",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "ors as early as possible.  Management of toxic decomposition products, associated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered.  The EPA has developed I-WASTE, a web-",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "based tool that contains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility.  Access to this d",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "ecision support tool requires pre-registration (www2.ergweb.com/bdrtool/login.asp).",
+          "role": "BODY"
+        }
+      ],
+      "text": "Updated April 2017(replaced previous version datedDecember2012)Page 3of 3NRT Quick Reference Guide: Arsine (SA)Continued[April2017Surface Wipes:Although SA is very volatile, wipe samples are often desired to indicate SA and arsenic-containing breakdown and reaction by-products, on non-porous surfaces.Bulk:Although SA is very volatile, for hot spot areas where liquid SA deposition may occur on porous surfaces (e.g., concrete, asphalt), actual pieces or cores of contaminated surface may be obtained using appropriate tools (scabbling, coring or drills) for subsequent laboratory extraction analysis for SA and any arsenic-containing breakdown and reaction by-products.Other Sample Matrices:Contact EPA/HQ-EOC at 202 -564-3850 for sampling instructions.Sample Packaging and Shipping: The packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA and IATA. Contact the sample- receiving laboratory to determine if they have additional packaging, shipping or labeling requirements.AnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil). The ERLN will use uniform, compatible sample prep and analytical methods. (See www2.epa.gov/emergency-response/environmental-response-laboratory-network).SA and arsenic-compounds such as total arsenic may be accurately determined in the field using available meters and field kits. For access to the nearest ERLN laboratory specially trained and equipped for analysis of SAand its reaction by-products, contact the EPA/HQ-EOC at 202-564-3850. Decontamination/CleanupDO NOT USE WATER DIRECTLY ON LIQUID SA. Use water spray to knock down vapors or to divert vapor cloud drift. Vapor can react explosively with air and oxidizing materials. Prevent wastewater from further contaminating the environmen t. Avoid use of acids, oxidizers, or heating as they release toxic arsenic fumes.SA is so volatile that it will dissipate quickly. As a gas, SA does not persist in the environment. SAgas can bestable for days in air and will only slowly degrade in air b y UV light into nonvolatile, oxidized compounds.Moist environments will enhance SA gas decomposition. Most decontaminationeffortswill not necessarily be for SA itself, but for decomposition by-products such as the toxic arsenic (III) compounds or somewh at less toxic arsenic (V) compounds. Separate, long-term decontamination strategies will need to be developed if those decomposition by-products are of concern in a particular situation. This decontamination/cleanup section refers to the SA itself. Decontamination/Cleanup Planning: Once site controls are in place, develop a site-specific decontamination/cleanup plan. Decontamination may require a tiered approach using a variety of techniques and products. Call the EPA/HQ-EOC at 202-564-3850 for more information.General Considerations: A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers: public safety, total cost, impact on the facility, wastes generated, as well as the time the facilit y or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be collected, treated and disposed of properly. Waste handling and d isposal must be addressed as early in the decontamination and cleanup process as possible (see Waste Management section below). Disposal Option:The urgency to restore a facility as quickly as possible may result in the outright and timely removal and dis posal of contaminated materials. Certain materials may be resistant to decontamination formulations, or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation:SAdissipates via natural processes. Environment al monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than other options but is non-destructive to materials.Fix-in-Place Option:SAdissipates rapidly via natural processes, as such a Fix-in-Place Option may not be required or feasible. P hysical barriers can be used to separate and immobilize the agent contamination from coming into contact with the environment or the public. This can be atemporary or permanent solution. Solid or liquid SAdecomposition residues or wastes may require a se parate decontamination evaluation process. Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas based on presence of: 1) liquid SA, 2) gaseous SA, or 3) aqueous solutions of SA.Strategy for Liquid SA:Do not allow direct contact with water. Actions that promote safe volatilization of liquid SAmay be useful since SAin gaseous form can be allowedto dissipate; volatilization may be a slow process depending on site conditions.Strategy for Gaseous SA: Aerate spaces where gaseous SAmay be present. Forced air ventilation methods are recommended for SAcloud contamination or low concentration of SA gasin large volumetric spaces or open areas.Strategy for Aqueous Solutions of SA:If SAis present in solution, hydrolysis will occur to produce arsenic compounds. Decontamination may be necessary for those decomposition by-products.Sensitive Equipment and Items:For difficult-to-clean equipment thought to be contaminated with small amounts of SA, additional options for consideration include aeration followed by flushing with water.CAUTION: Decontamination/neutralization products may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use.Verification of Decontamination:Site and situation specific. Please contact EPA/HQ-EOC at 202-564-3850for further assistance.Waste ManagementCAUTION:Federal requirements for transporting hazardous materials and procedures for exemptions are specified in www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. Theseregulationsdiffer fromstate-to-state.Detailedstateregulationscanbefoundat www.envcap.org/.Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat. Waste Management: Under the Resource Conservation and Recovery Act (RCRA), solid waste can be classified as hazardous (subtitle C) or non-hazardous (subtitle D). The RCRA regulations generally define a waste as hazardous if it is: (1) a listed waste (40 CFR §261.31, §261.32),(2) exhibits specific characteristics (40 CFR §261.21-261.24) or (3) is a discarded commercial chemical product, off- specification species, container residue, or spill residue thereof (40 CFR §261.33). Wastes containing arsenic compounds are likely to be characterized as hazardous due to toxicity, waste code D004 (§261.24). Arsenic- containing waste is approved for land disposal only if the concentration in the waste or treatment residual does not exceed 1.4 mg/L for wastewaters or 5 mg/L by TCLP for non-wastewaters (§268.40). The States (except for Alaska and Iowa) have the primary responsibility to implement the hazardous waste regulations and can impose more stringent requirements than the Federal program, so it is critical to open a dialogue with regulat ors as early as possible. Management of toxic decomposition products, associated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered. The EPA has developed I-WASTE, a web- based tool that contains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility. Access to this d ecision support tool requires pre-registration (www2.ergweb.com/bdrtool/login.asp).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 34,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    }
+  ]
+}

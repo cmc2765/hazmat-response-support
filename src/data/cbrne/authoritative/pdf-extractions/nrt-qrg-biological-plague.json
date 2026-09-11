@@ -1,0 +1,2322 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-biological-plague",
+  "sourceArtifactSha256": "af4c782d522c8d285fef8bf997ce2b98a79a7c154fb245ec365f93707cb11990",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 10,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Yersinia pesti",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "s(Plague)Q",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "RGs are intended for FederalOSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2022 Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Page 1of 10NRT Quick ReferenceGuide: Yersinia pestis (Plague)QRG PURPOSE:Given that a Federal OSC/RPM leading an emergency response to an environmental release may not know the extent of aerosolized Y. pestis bacteria or contaminationin the first 24-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "48 hours of a response, this document provides information on the general characteristics, effects, and decontamination methodsfor a Y. pestis bacterial incident. This QRG does not address protective methods for public health or healthcare workers.1. ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Agent CharacteristicsAgent Classification:\u000b×\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u001e\u000b×Type:\u000b×\u0000%\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000DDescription:Yersiniapestisis a pathogenicGram-negative bacteriumthatcan persist in the environment in a cycle oftransmission betweenfleas and animals (e.g., prairie ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "dogs, andother rodents). Humans can be incidentally infected by contact with infected animals or fleas,orby inhalation of infectiousrespiratorydroplets. Pets (e.g., domesticcatsanddogs) may alsotransmit",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "\u0000±or bring",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "-infected fleas into the homeor other buildings.Plague, the disease caused by",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": ", most often presents inthree forms:1)Pneumonic plagueaffects the respiratory system and is transmissiblefromperson-to-person and viaaerosolin an intentional release scenario. An intentional release dispersing ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "into the air canlead to primary pneumonic plague among exposed persons. Pneumonic plague may occur secondarily toother clinical formsandcan benaturally occurring butisrare. Pneumonic plague can present as respiratory/flu-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "like symptoms early in the course of disease.2)\u0000%\u0000X\u0000E\u0000R\u0000Q\u0000L\u0000F\u000b×\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u000b×\u0000L\u0000V\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000O\u0000\\\u0000P\u0000S\u0000K\u0000D\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000L\u0000Vthemost common\u0000F\u0000O\u0000L\u0000Q\u0000L\u0000F\u0000D\u0000O\u000b×\u0000I\u0000R\u0000U\u0000P\u0000\u0011\u000b×\u0000%\u0000X\u0000E\u0000R\u0000Q\u0000L\u0000F\u0000\u0003\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u0000\u0003\u0000L\u0000V\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "characterized primarily by swollen, tender lymph nodes (called buboes).3)\u00006\u0000H\u0000S\u0000W\u0000L\u0000F\u0000H\u0000P\u0000L\u0000F\u000b×\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u000b×\u0000L\u0000V\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000E\u0000O\u0000R\u0000R\u0000G\u0000V\u0000W\u0000U\u0000H\u0000D\u0000P\u000b×\u0000D\u0000Q\u0000G\u000b×\u0000R\u0000I\u0000W\u0000H\u0000Q",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "\u0000R\u0000F\u0000F\u0000X\u0000U\u0000V\u000b×\u0000D\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000U\u0000H\u0000V\u0000X\u0000O\u0000W\u0000\u0003\u0000R\u0000I\u000b×\u0000X\u0000Q\u0000W\u0000U\u0000H\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000E\u0000X\u0000E\u0000R\u0000Q\u0000L\u0000F\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000S\u0000Q\u0000H\u0000X\u0000P\u0000R\u0000Q\u0000L\u0000F\u0000\u0003\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u0000\u0011\u000b×\u00006\u0000H\u0000S\u0000W\u0000L\u0000F\u0000H\u0000P\u0000L\u0000F\u0000\u0003\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u0000\u0003\u0000W\u0000\\\u0000S\u0000L\u0000F\u0000D\u0000O\u0000O\u0000\\\u0000\u0003\u0000S\u0000U\u0000H\u0000V\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000Q\u0000R\u0000Q-specific symptoms (fever,",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "lethargy), and can manifest withoutan obvious exposure route.Categorical Definition:Biosafety Level:BSL-3Bioterrorism Agent:Category AHHS/CDC Select Agent:Tier 1CERCLA/NCP:Pollutant/ContaminantUSDA Select Agent:Tier 1Waste/DOT:Category ACharacteristics:",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Persistence/StabilityInfectivityLethalityPerson-to-Person TransmissionSources of TransmissionOn exposed surfaces, ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "\u000b×\u0000L\u0000V\u0000\u0003\u0000U\u0000D\u0000S\u0000L\u0000G\u0000O\u0000\\\u0000\u0003inactivated by sunlight, desiccation,andheating,\u0000D\u0000Q\u0000G\u000b×doesnotsurvive long without a host.",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "\u000b×\u0000F\u0000D\u0000Q\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000P\u0000X\u0000O\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000P\u0000R\u0000G\u0000L\u0000I\u0000L\u0000H\u0000G\u0000\u0003\u0000W\u0000R\u0000\u0003be stable in the environment.In soil, ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "can remain viable and infectious from a few days to months.Some strains of ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "have been recovered from water sources after 48 months.Highly infectious if Y. pestisis aerosolized(intentional release)High for pneumonic plague. Most patients will die if not treated early in the disease course. If prompt and effective treatment is ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "received,lethality drops significantly.(see HEALTH EFFECTS section)Pneumonic: yesOther clinical forms: noSee EXPOSURE ROUTES sectionPublic Health Interventions:\u000b×\u00007\u0000R\u0000\u0003\u0000U\u0000H\u0000G\u0000X\u0000F\u0000Htherisk of transmission, these steps should be taken: 1) avoid contact with",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "infectedanimalsorpersons; 2) ensure\u000b×\u0000D\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000V\u0000X\u0000U\u0000Y\u0000H\u0000L\u0000O\u0000O\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000L\u0000Q\u0000G\u0000L\u0000Y\u0000L\u0000G\u0000X\u0000D\u0000O\u0000Vpotentiallyexposed to",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "bacteriaand consider post-exposure prophylaxis; and3) practice droplet precautions\u000b×aroundsuspected cases of pneumonic plague.2. Exposure RoutesInhalation:",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "\u000b×\u00003\u0000U\u0000L\u0000P\u0000D\u0000U\u0000\\\u0000\u0003\u0000U\u0000R\u0000X\u0000W\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000S\u0000Q\u0000H\u0000X\u0000P\u0000R\u0000Q\u0000L\u0000F\u0000\u0003\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u0000\u0011\u0000\u0003\u00007\u0000U\u0000D\u0000Q\u0000V\u0000P\u0000L\u0000V\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000W\u0000D\u0000N\u0000H\u0000\u0003\u0000S\u0000O\u0000D\u0000F\u0000H\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000V\u0000R\u0000P\u0000H\u0000R\u0000Q\u0000H\u0000\u0003\u0000E\u0000U\u0000H\u0000D\u0000W\u0000K\u0000H\u0000V\u0000\u0003\u0000L\u0000Q\u000b×",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "\u0000E\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000D\u000b×\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000Z\u0000D\u0000V\u0000\u001d\u000b×\u0000\u000b\u0000\u0014\u0000\f\u0000D\u0000H\u0000U\u0000R\u0000V\u0000R\u0000O\u0000L\u0000]\u0000H\u0000G\u000b×\u0000Y\u0000L\u0000D\u000b×\u0000D\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000H\u0000U\u0000V\u0000D\u0000O\u0000\u0003\u0000G\u0000H\u0000Y\u0000L\u0000F\u0000H\u0000\u000f\u000b×\u0000R\u0000U\u000b×\u0000\u000b\u0000\u0015\u0000\f\u000b×\u0000V\u0000X\u0000V\u0000S\u0000H\u0000Q\u0000G\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000L\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000G\u0000U\u0000R\u0000S\u0000O\u0000H\u0000W\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000H\u0000G\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000\u0003or animal.",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "Dermal:\u000b×\u00003\u0000U\u0000L\u0000P\u0000D\u0000U\u0000\\\u0000\u0003route of exposure for bubonic plague is from the bite of an infected flea or from direct contact with infected tissues or body fluids. If this were an intentional release scenario, infection via direct contact with objects and ",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "surfaces (fomites) is possible, allowing ",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "to enter the body through a break in the skin (open cut, wound, or abrasion).Ingestion:\u000b×\u00009\u0000H\u0000U\u0000\\\u0000\u0003\u0000U\u0000D\u0000U\u0000H\u0000\u000fmayoccurfrom ingesting contaminated food or water.Eyes:\u000b×\u00005\u0000D\u0000U\u0000H\u0000O\u0000\\\u0000\u000f\u0000\u0003\u0000L\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Qof the eyecan occurafter",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000D\u0000H\u0000U\u0000R\u0000V\u0000R\u0000O\u0000L\u0000]\u0000H\u0000G\u000b×Y. pestis\u000b×\u0000R\u0000U\u0000\u0003\u0000E\u0000R\u0000G\u0000\\\u0000\u0003\u0000I\u0000O\u0000X\u0000L\u0000G\u0000V.",
+          "role": "BODY"
+        }
+      ],
+      "text": "s(Plague)Q [ 2022 Update: Page 1of 10NRT Quick ReferenceGuide: Yersinia pestis (Plague)QRG PURPOSE:Given that a Federal OSC/RPM leading an emergency response to an environmental release may not know the extent of aerosolized Y. pestis bacteria or contaminationin the first 24- 48 hours of a response, this document provides information on the general characteristics, effects, and decontamination methodsfor a Y. pestis bacterial incident. This QRG does not address protective methods for public health or healthcare workers.1. Agent CharacteristicsAgent Classification: ×\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u001e ×Type: ×\u0000%\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000DDescription:Yersiniapestisis a pathogenicGram-negative bacteriumthatcan persist in the environment in a cycle oftransmission betweenfleas and animals (e.g., prairie dogs, andother rodents). Humans can be incidentally infected by contact with infected animals or fleas,orby inhalation of infectiousrespiratorydroplets. Pets (e.g., domesticcatsanddogs) may alsotransmit \u0000±or bring -infected fleas into the homeor other buildings.Plague, the disease caused by , most often presents inthree forms:1)Pneumonic plagueaffects the respiratory system and is transmissiblefromperson-to-person and viaaerosolin an intentional release scenario. An intentional release dispersing into the air canlead to primary pneumonic plague among exposed persons. Pneumonic plague may occur secondarily toother clinical formsandcan benaturally occurring butisrare. Pneumonic plague can present as respiratory/flu- like symptoms early in the course of disease.2)\u0000%\u0000X\u0000E\u0000R\u0000Q\u0000L\u0000F ×\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H ×\u0000L\u0000V\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000O\u0000\\\u0000P\u0000S\u0000K\u0000D\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000L\u0000Vthemost common\u0000F\u0000O\u0000L\u0000Q\u0000L\u0000F\u0000D\u0000O ×\u0000I\u0000R\u0000U\u0000P\u0000\u0011 ×\u0000%\u0000X\u0000E\u0000R\u0000Q\u0000L\u0000F\u0000\u0003\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u0000\u0003\u0000L\u0000V\u0000\u0003 characterized primarily by swollen, tender lymph nodes (called buboes).3)\u00006\u0000H\u0000S\u0000W\u0000L\u0000F\u0000H\u0000P\u0000L\u0000F ×\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H ×\u0000L\u0000V\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000E\u0000O\u0000R\u0000R\u0000G\u0000V\u0000W\u0000U\u0000H\u0000D\u0000P ×\u0000D\u0000Q\u0000G ×\u0000R\u0000I\u0000W\u0000H\u0000Q \u0000R\u0000F\u0000F\u0000X\u0000U\u0000V ×\u0000D\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000U\u0000H\u0000V\u0000X\u0000O\u0000W\u0000\u0003\u0000R\u0000I ×\u0000X\u0000Q\u0000W\u0000U\u0000H\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000E\u0000X\u0000E\u0000R\u0000Q\u0000L\u0000F\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000S\u0000Q\u0000H\u0000X\u0000P\u0000R\u0000Q\u0000L\u0000F\u0000\u0003\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u0000\u0011 ×\u00006\u0000H\u0000S\u0000W\u0000L\u0000F\u0000H\u0000P\u0000L\u0000F\u0000\u0003\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u0000\u0003\u0000W\u0000\\\u0000S\u0000L\u0000F\u0000D\u0000O\u0000O\u0000\\\u0000\u0003\u0000S\u0000U\u0000H\u0000V\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000Q\u0000R\u0000Q-specific symptoms (fever, lethargy), and can manifest withoutan obvious exposure route.Categorical Definition:Biosafety Level:BSL-3Bioterrorism Agent:Category AHHS/CDC Select Agent:Tier 1CERCLA/NCP:Pollutant/ContaminantUSDA Select Agent:Tier 1Waste/DOT:Category ACharacteristics: Persistence/StabilityInfectivityLethalityPerson-to-Person TransmissionSources of TransmissionOn exposed surfaces, ×\u0000L\u0000V\u0000\u0003\u0000U\u0000D\u0000S\u0000L\u0000G\u0000O\u0000\\\u0000\u0003inactivated by sunlight, desiccation,andheating,\u0000D\u0000Q\u0000G ×doesnotsurvive long without a host. ×\u0000F\u0000D\u0000Q\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000P\u0000X\u0000O\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000P\u0000R\u0000G\u0000L\u0000I\u0000L\u0000H\u0000G\u0000\u0003\u0000W\u0000R\u0000\u0003be stable in the environment.In soil, can remain viable and infectious from a few days to months.Some strains of have been recovered from water sources after 48 months.Highly infectious if Y. pestisis aerosolized(intentional release)High for pneumonic plague. Most patients will die if not treated early in the disease course. If prompt and effective treatment is received,lethality drops significantly.(see HEALTH EFFECTS section)Pneumonic: yesOther clinical forms: noSee EXPOSURE ROUTES sectionPublic Health Interventions: ×\u00007\u0000R\u0000\u0003\u0000U\u0000H\u0000G\u0000X\u0000F\u0000Htherisk of transmission, these steps should be taken: 1) avoid contact with infectedanimalsorpersons; 2) ensure ×\u0000D\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000V\u0000X\u0000U\u0000Y\u0000H\u0000L\u0000O\u0000O\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000L\u0000Q\u0000G\u0000L\u0000Y\u0000L\u0000G\u0000X\u0000D\u0000O\u0000Vpotentiallyexposed to bacteriaand consider post-exposure prophylaxis; and3) practice droplet precautions ×aroundsuspected cases of pneumonic plague.2. Exposure RoutesInhalation: ×\u00003\u0000U\u0000L\u0000P\u0000D\u0000U\u0000\\\u0000\u0003\u0000U\u0000R\u0000X\u0000W\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000S\u0000Q\u0000H\u0000X\u0000P\u0000R\u0000Q\u0000L\u0000F\u0000\u0003\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u0000\u0011\u0000\u0003\u00007\u0000U\u0000D\u0000Q\u0000V\u0000P\u0000L\u0000V\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000W\u0000D\u0000N\u0000H\u0000\u0003\u0000S\u0000O\u0000D\u0000F\u0000H\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000V\u0000R\u0000P\u0000H\u0000R\u0000Q\u0000H\u0000\u0003\u0000E\u0000U\u0000H\u0000D\u0000W\u0000K\u0000H\u0000V\u0000\u0003\u0000L\u0000Q × \u0000E\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000D ×\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000Z\u0000D\u0000V\u0000\u001d ×\u0000 \u0000\u0014\u0000 \u0000D\u0000H\u0000U\u0000R\u0000V\u0000R\u0000O\u0000L\u0000]\u0000H\u0000G ×\u0000Y\u0000L\u0000D ×\u0000D\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000H\u0000U\u0000V\u0000D\u0000O\u0000\u0003\u0000G\u0000H\u0000Y\u0000L\u0000F\u0000H\u0000\u000f ×\u0000R\u0000U ×\u0000 \u0000\u0015\u0000 ×\u0000V\u0000X\u0000V\u0000S\u0000H\u0000Q\u0000G\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000L\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000G\u0000U\u0000R\u0000S\u0000O\u0000H\u0000W\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000H\u0000G\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000\u0003or animal. Dermal: ×\u00003\u0000U\u0000L\u0000P\u0000D\u0000U\u0000\\\u0000\u0003route of exposure for bubonic plague is from the bite of an infected flea or from direct contact with infected tissues or body fluids. If this were an intentional release scenario, infection via direct contact with objects and surfaces (fomites) is possible, allowing to enter the body through a break in the skin (open cut, wound, or abrasion).Ingestion: ×\u00009\u0000H\u0000U\u0000\\\u0000\u0003\u0000U\u0000D\u0000U\u0000H\u0000\u000fmayoccurfrom ingesting contaminated food or water.Eyes: ×\u00005\u0000D\u0000U\u0000H\u0000O\u0000\\\u0000\u000f\u0000\u0003\u0000L\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Qof the eyecan occurafter \u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000D\u0000H\u0000U\u0000R\u0000V\u0000R\u0000O\u0000L\u0000]\u0000H\u0000G ×Y. pestis ×\u0000R\u0000U\u0000\u0003\u0000E\u0000R\u0000G\u0000\\\u0000\u0003\u0000I\u0000O\u0000X\u0000L\u0000G\u0000V.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 44,
+        "repeatedHeaderFooterBlockCount": 18,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Yersinia pesti",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "s(Plague)Q",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "RGs are intended for FederalOSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2022 Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Page 2of 103. Health EffectsClinicalFormsIncubation PeriodSigns and SymptomsLethalityPneumonic1-3days after inhalation exposureThe first signs are fever, cough, muscle aches, and headache, with progression to chest pain, difficulty breathing, and ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "hemoptysis (coughing blood).Pneumonic plague is highly lethal when untreated or when antibiotic treatment is started more than 24 hours after the onset of symptoms. Untreated, the fatality rate of pneumonic plague approaches 100%.Bubonic2-8 days following",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "intradermalexposurevia:\u0000xflea bites;\u0000xmicroabrasions, orother breaks in the skinFever, chills, weakness, headache, and buboes(either singular or in clusters)willoccur,occasionallyfollowed by nausea and vomiting. The bubo is an extremely painful ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "bump resulting from a swollen, tender lymph node, usually in the groin, armpit, or neck.Without prompt treatment, or if left untreated, bubonic plague, with a fatality rate of 50% to 60%, can progress to pneumonic or septicemic plague.Septicemic",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Poorly defined; likely within days ofexposureFever, chills,lethargy,abdominal pain, nausea, vomiting, diarrhea, and shock.Without prompt treatment, or if left untreated, the fatality rate of septicemic plague approaches 100%.Note:Early treatment(within 24h",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "ours)with antibiotics is effective in treating all clinical forms of plague.The above table describesthe primarymanifestationsof plague, but if untreated,the bacterium may spread and cause multiple forms of the disease.Less common forms of plague includ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "e pharyngeal, ocular, and meningeal.4. Effect Levels and Exposure GuidelinesEffect Levels: ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "is categorized as a Tier 1 Select Agent due in part to its low infectious dose and high case-fatality rate in untreated infection.Exposure Guidelines:Not established.In the absence of exposure guidelines, it is imperative to minimize exposure to as low",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "as reasonably achievable.5. Release ScenariosIntentional releases of",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "may include:aerosolization;contamination of food, water resources, and other environments;and/or introduction of infected animals or vectors (fleas).Pneumonic plague is a communicabledisease.Potential Primary Release:\u0000xAir:",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "\u000b×\u0000$\u0000V\u0000\u0003\u0000L\u0000Q\u0000K\u0000D\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "\u000b×\u0000F\u0000D\u0000Q\u0000\u0003\u0000F\u0000D\u0000X\u0000V\u0000H\u0000\u0003\u0000S\u0000Q\u0000H\u0000X\u0000P\u0000R\u0000Q\u0000L\u0000F\u0000\u0003\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u0000\u000fintentional releases\u0000R\u0000I\u0000\u0003\u0000D\u0000H\u0000U\u0000R\u0000V\u0000R\u0000O\u0000L\u0000]\u0000H\u0000G\u000b×Y.pestis\u000b×\u0000D\u0000U\u0000Hconsidered ahigh consequence scenario.Aerosol dissemination can occur through liquid spraying, or by dry powderrelease.\u0000xWater:",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Infection can occur by ingestionofcontaminated drinking water.\u0000xFood:Infection can occur by direct contact withcontaminated or infectedraw meat or animal carcassesor ingestion of contaminated food.",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "remains viable in food for varied amounts of time depending on the media and conditions.PotentialSecondary Spread:After an aerosol release has deposited ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "onto fomites (objects and surfaces)or environmental media(e.g., soil, water), there is a potential forexposure viareaerosolization.\u0000xAir:Persons with pneumonic plague can infect others via infectious respiratory droplets from coughing, talking,and",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "breathing.",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "is typically considered unstable in the environment, therefore,person-to-person transmission may becomea mechanism for pneumonic plague spread following an intentional aerosol release.\u0000xEnzootic:Vector(flea)andreservoir (primarily rodent)",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "control may be required to mitigate the potentialfor ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "transmissionamong non-human (primarily rodent) hosts, especiallyin areas with natural enzootic cycles of infection of rodents and their fleas.\u0000xEpizootic:Infected rodents or fleas can cause epizootic outbreaks of Y. pestisamong other animals",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": ", which could be a mechanism for plague spread following an intentional aerosol release.Those infected non-human hosts (including domestic pets, such as cats and dogs) may also transmit plague to humans.Most human plague cases are associated ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "with epizootic, rather than enzootic transmission.Note:Non-aerosol releases of",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "(i.e., contamination of food, water, soil) could lead tobubonic, septicemic,or pharyngeal plague.6. Personnel SafetyNOTE:Check with the site Health and Safety Officer regarding personal protective equipment (PPE) selection, medical ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "surveillance requirements, and other safety measures included in the site-specific Health and Safety Plan (HASP). PPE selection (Levels A-D), first aid procedures, and personnel decontamination may vary depending on potential exposure ",
+          "role": "BODY"
+        }
+      ],
+      "text": "s(Plague)Q [ 2022 Update: Page 2of 103. Health EffectsClinicalFormsIncubation PeriodSigns and SymptomsLethalityPneumonic1-3days after inhalation exposureThe first signs are fever, cough, muscle aches, and headache, with progression to chest pain, difficulty breathing, and hemoptysis (coughing blood).Pneumonic plague is highly lethal when untreated or when antibiotic treatment is started more than 24 hours after the onset of symptoms. Untreated, the fatality rate of pneumonic plague approaches 100%.Bubonic2-8 days following intradermalexposurevia:\u0000xflea bites;\u0000xmicroabrasions, orother breaks in the skinFever, chills, weakness, headache, and buboes(either singular or in clusters)willoccur,occasionallyfollowed by nausea and vomiting. The bubo is an extremely painful bump resulting from a swollen, tender lymph node, usually in the groin, armpit, or neck.Without prompt treatment, or if left untreated, bubonic plague, with a fatality rate of 50% to 60%, can progress to pneumonic or septicemic plague.Septicemic Poorly defined; likely within days ofexposureFever, chills,lethargy,abdominal pain, nausea, vomiting, diarrhea, and shock.Without prompt treatment, or if left untreated, the fatality rate of septicemic plague approaches 100%.Note:Early treatment(within 24h ours)with antibiotics is effective in treating all clinical forms of plague.The above table describesthe primarymanifestationsof plague, but if untreated,the bacterium may spread and cause multiple forms of the disease.Less common forms of plague includ e pharyngeal, ocular, and meningeal.4. Effect Levels and Exposure GuidelinesEffect Levels: is categorized as a Tier 1 Select Agent due in part to its low infectious dose and high case-fatality rate in untreated infection.Exposure Guidelines:Not established.In the absence of exposure guidelines, it is imperative to minimize exposure to as low as reasonably achievable.5. Release ScenariosIntentional releases of may include:aerosolization;contamination of food, water resources, and other environments;and/or introduction of infected animals or vectors (fleas).Pneumonic plague is a communicabledisease.Potential Primary Release:\u0000xAir: ×\u0000$\u0000V\u0000\u0003\u0000L\u0000Q\u0000K\u0000D\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I ×\u0000F\u0000D\u0000Q\u0000\u0003\u0000F\u0000D\u0000X\u0000V\u0000H\u0000\u0003\u0000S\u0000Q\u0000H\u0000X\u0000P\u0000R\u0000Q\u0000L\u0000F\u0000\u0003\u0000S\u0000O\u0000D\u0000J\u0000X\u0000H\u0000\u000fintentional releases\u0000R\u0000I\u0000\u0003\u0000D\u0000H\u0000U\u0000R\u0000V\u0000R\u0000O\u0000L\u0000]\u0000H\u0000G ×Y.pestis ×\u0000D\u0000U\u0000Hconsidered ahigh consequence scenario.Aerosol dissemination can occur through liquid spraying, or by dry powderrelease.\u0000xWater: Infection can occur by ingestionofcontaminated drinking water.\u0000xFood:Infection can occur by direct contact withcontaminated or infectedraw meat or animal carcassesor ingestion of contaminated food. remains viable in food for varied amounts of time depending on the media and conditions.PotentialSecondary Spread:After an aerosol release has deposited onto fomites (objects and surfaces)or environmental media(e.g., soil, water), there is a potential forexposure viareaerosolization.\u0000xAir:Persons with pneumonic plague can infect others via infectious respiratory droplets from coughing, talking,and breathing. is typically considered unstable in the environment, therefore,person-to-person transmission may becomea mechanism for pneumonic plague spread following an intentional aerosol release.\u0000xEnzootic:Vector(flea)andreservoir (primarily rodent) control may be required to mitigate the potentialfor transmissionamong non-human (primarily rodent) hosts, especiallyin areas with natural enzootic cycles of infection of rodents and their fleas.\u0000xEpizootic:Infected rodents or fleas can cause epizootic outbreaks of Y. pestisamong other animals , which could be a mechanism for plague spread following an intentional aerosol release.Those infected non-human hosts (including domestic pets, such as cats and dogs) may also transmit plague to humans.Most human plague cases are associated with epizootic, rather than enzootic transmission.Note:Non-aerosol releases of (i.e., contamination of food, water, soil) could lead tobubonic, septicemic,or pharyngeal plague.6. Personnel SafetyNOTE:Check with the site Health and Safety Officer regarding personal protective equipment (PPE) selection, medical surveillance requirements, and other safety measures included in the site-specific Health and Safety Plan (HASP). PPE selection (Levels A-D), first aid procedures, and personnel decontamination may vary depending on potential exposure",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 38,
+        "repeatedHeaderFooterBlockCount": 15,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Yersinia pesti",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "s(Plague)Q",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "RGs are intended for FederalOSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2022 Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Page 3of 10route, site conditions, specific job tasks, and release scenario. Responders should always check their own internal procedures (i.e., SOPs), if applicable.The PPE L",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "evels listed below are general suggestions only. The final determination will be made by the Health and Safety Officer on site. For decontamination of workers, see PERSONNEL DECONTAMINATION section below. This PERSONNEL SAFETY section includes medical requ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "irements, first aid procedures, and PPE selection for all hazards that may be present during response in an agent-contaminated environment (e.g., ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": ", chemical decontaminants, heat stress). Donning and doffing of PPE must be carefully planned before entry into a contaminated area; once in the contaminated area,PPE should not be modified. Doffing of PPE, after proceeding through the personnel ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "decontamination line, should be performed slowly and deliberately to reduce the possibility of self-exposure or cross-contamination.6.1. MedicalRequirements:\u0000xPre-deployment:Must be current on annual physical and medical evaluations for respirator use.",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Seek prophylaxis provided per specific agency policy.There is no U.S.Food & Drug Administration approved humanY. Pestisvaccine.Note that local, state, and federal authorities may imposequarantine orisolation restrictions for individuals working in an agent",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "-contaminated environment. Before responding to a site, check with pertinent authorities for anyrestrictions and monitoringrequirements for responders exposed to an agent-contaminated environment.\u0000xDuring Incident:Conduct periodic on-",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "site medical monitoring as necessary per site-specific HASP. Report all signs and symptoms as listed under HEALTH EFFECTS section above, or other general adverse health effects such as ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "fatigue, heat stress, and behavioral health, and treat according to First Aid section below. Monitoring of exposed workers(e.g., fever watch)may be required by the site Health and Safety Officer or public health officials.\u0000xTreatments Available:",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Seek medical attention per specific agency policyor guidance. Consult program/agency health and safety officer regarding pre-deployment antibiotic prophylaxis and emergency medical treatment. Treatment is ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "supportive care accompanied with antibiotics, such as gentamicin, ciprofloxacin, or doxycycline.\u0000xPost Incident:Off-site monitoring may be required by site Health and Safety Officers or public health officials for a period following last exposure. Post-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "exposure prophylaxis may be made available as necessary by medical professionalsaccording to specific agency policyor guidance.6.2. First Aid:CAUTION:Workers rendering first aid must be properly trained and useappropriate PPE as indicated below to avoid ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "potential exposure.\u0000xDuring Incident:Conduct medical monitoring, use PPE as designated by the HASP, record the PPE levels used, monitor for fever, headache, weakness,and other signs/symptoms as listed under HEALTH EFFECTS section above ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses. \u0000xPost Incident:Continue to monitor for signs/symptoms and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses.",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "6.3. Personal Protective Equipment (PPE):NOTE:PPE recommendations below are for Federal OSC/RPMs and emergency response teams conducting environmental response activities (e.g., environmental cleanup, decontamination, waste management) during and ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "following an environmental release of ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "bacteria. This is not intended for public health or healthcare workers involved in a suspected or confirmed ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "incident.\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u0000&\u0000R\u0000Q\u0000V\u0000H\u0000T\u0000X\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u00000\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000$\u0000G\u0000Y\u0000L\u0000V\u0000R\u0000U\u0000\\\u0000\u0003\u0000'\u0000L\u0000Y\u0000L\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000\u000b\u0000&\u00000\u0000$\u0000'\u0000\f\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u00003\u00003\u0000(\u0000\u0003\u0000J\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000)\u0000H\u0000G\u0000H\u0000U\u0000D\u0000O\u0000\u0003\u00002\u00006\u0000&\u0000\u0012\u00005\u00003\u00000\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003emergency response to",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "\u0000D\u0000\u0003\u0000E\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0011\u0000\u0003\u0000)\u0000R\u0000U\u0000\u0003\u0000D\u0000G\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000G\u0000H\u0000W\u0000D\u0000L\u0000O\u0000V\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000R\u0000V\u0000W\u0000\u0003\u0000U\u0000H\u0000F\u0000H\u0000Q\u0000W\u0000\u0003\u0000Y\u0000H\u0000U\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "Biological Response Personnel Decontamination Line Standard Operating Procedure (SOP), which can be found at:response.epa.gov/BioResponse_Decontamination_Line_SOP(website registration is required).General Information: Responders should use NIOSH-",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "approved chemical, biological, radiological, nuclear (CBRN) respirators [self-contained breathing apparatus (SCBA), full-facepiece powered air purifying respirator (PAPR), or full-aerosolized ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "bacteria.When selecting appropriate levels of PPE, information regarding potential of exposures to non-biological hazards (e.g., decontaminants) should be factored into any selection decisions.For use of APRs or PAPRs, only those incorporating canister(s)",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "/cartridge(s)labeled CBRN are appropriate for use in suspected or known CBRN environments. Canisters/cartridgesfor APRs/PAPRs may be adversely affected by an increase ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "in moisture and spray from certain work tasks, including during environmental cleanup and decontamination.Canisters and cartridges should be stored as specified by their manufacturer, and remain sealed until fitted to the respirator just prior ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "to use. Canisters and cartridges that have had the vacuum seal broken or are otherwise damaged should be removed from possible service.",
+          "role": "BODY"
+        }
+      ],
+      "text": "s(Plague)Q [ 2022 Update: Page 3of 10route, site conditions, specific job tasks, and release scenario. Responders should always check their own internal procedures (i.e., SOPs), if applicable.The PPE L evels listed below are general suggestions only. The final determination will be made by the Health and Safety Officer on site. For decontamination of workers, see PERSONNEL DECONTAMINATION section below. This PERSONNEL SAFETY section includes medical requ irements, first aid procedures, and PPE selection for all hazards that may be present during response in an agent-contaminated environment (e.g., , chemical decontaminants, heat stress). Donning and doffing of PPE must be carefully planned before entry into a contaminated area; once in the contaminated area,PPE should not be modified. Doffing of PPE, after proceeding through the personnel decontamination line, should be performed slowly and deliberately to reduce the possibility of self-exposure or cross-contamination.6.1. MedicalRequirements:\u0000xPre-deployment:Must be current on annual physical and medical evaluations for respirator use. Seek prophylaxis provided per specific agency policy.There is no U.S.Food & Drug Administration approved humanY. Pestisvaccine.Note that local, state, and federal authorities may imposequarantine orisolation restrictions for individuals working in an agent -contaminated environment. Before responding to a site, check with pertinent authorities for anyrestrictions and monitoringrequirements for responders exposed to an agent-contaminated environment.\u0000xDuring Incident:Conduct periodic on- site medical monitoring as necessary per site-specific HASP. Report all signs and symptoms as listed under HEALTH EFFECTS section above, or other general adverse health effects such as fatigue, heat stress, and behavioral health, and treat according to First Aid section below. Monitoring of exposed workers(e.g., fever watch)may be required by the site Health and Safety Officer or public health officials.\u0000xTreatments Available: Seek medical attention per specific agency policyor guidance. Consult program/agency health and safety officer regarding pre-deployment antibiotic prophylaxis and emergency medical treatment. Treatment is supportive care accompanied with antibiotics, such as gentamicin, ciprofloxacin, or doxycycline.\u0000xPost Incident:Off-site monitoring may be required by site Health and Safety Officers or public health officials for a period following last exposure. Post- exposure prophylaxis may be made available as necessary by medical professionalsaccording to specific agency policyor guidance.6.2. First Aid:CAUTION:Workers rendering first aid must be properly trained and useappropriate PPE as indicated below to avoid potential exposure.\u0000xDuring Incident:Conduct medical monitoring, use PPE as designated by the HASP, record the PPE levels used, monitor for fever, headache, weakness,and other signs/symptoms as listed under HEALTH EFFECTS section above and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses. \u0000xPost Incident:Continue to monitor for signs/symptoms and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses. 6.3. Personal Protective Equipment (PPE):NOTE:PPE recommendations below are for Federal OSC/RPMs and emergency response teams conducting environmental response activities (e.g., environmental cleanup, decontamination, waste management) during and following an environmental release of bacteria. This is not intended for public health or healthcare workers involved in a suspected or confirmed incident.\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u0000&\u0000R\u0000Q\u0000V\u0000H\u0000T\u0000X\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u00000\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000$\u0000G\u0000Y\u0000L\u0000V\u0000R\u0000U\u0000\\\u0000\u0003\u0000'\u0000L\u0000Y\u0000L\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000 \u0000&\u00000\u0000$\u0000'\u0000 \u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u00003\u00003\u0000(\u0000\u0003\u0000J\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000)\u0000H\u0000G\u0000H\u0000U\u0000D\u0000O\u0000\u0003\u00002\u00006\u0000&\u0000\u0012\u00005\u00003\u00000\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003emergency response to \u0000D\u0000\u0003\u0000E\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0011\u0000\u0003\u0000)\u0000R\u0000U\u0000\u0003\u0000D\u0000G\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000G\u0000H\u0000W\u0000D\u0000L\u0000O\u0000V\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000R\u0000V\u0000W\u0000\u0003\u0000U\u0000H\u0000F\u0000H\u0000Q\u0000W\u0000\u0003\u0000Y\u0000H\u0000U\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003 Biological Response Personnel Decontamination Line Standard Operating Procedure (SOP), which can be found at:response.epa.gov/BioResponse_Decontamination_Line_SOP(website registration is required).General Information: Responders should use NIOSH- approved chemical, biological, radiological, nuclear (CBRN) respirators [self-contained breathing apparatus (SCBA), full-facepiece powered air purifying respirator (PAPR), or full-aerosolized bacteria.When selecting appropriate levels of PPE, information regarding potential of exposures to non-biological hazards (e.g., decontaminants) should be factored into any selection decisions.For use of APRs or PAPRs, only those incorporating canister(s) /cartridge(s)labeled CBRN are appropriate for use in suspected or known CBRN environments. Canisters/cartridgesfor APRs/PAPRs may be adversely affected by an increase in moisture and spray from certain work tasks, including during environmental cleanup and decontamination.Canisters and cartridges should be stored as specified by their manufacturer, and remain sealed until fitted to the respirator just prior to use. Canisters and cartridges that have had the vacuum seal broken or are otherwise damaged should be removed from possible service.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 36,
+        "repeatedHeaderFooterBlockCount": 11,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Yersinia pesti",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "s(Plague)Q",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "RGs are intended for FederalOSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2022 Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Page 4of 10PPE Levels for emergency response to a suspected biological agent incidentare based on scenario risks from highest to lowest level of protection:\u0000xLEVEL A:NIOSH-approved CBRN full-facepiece SCBA operated in pressure demand mode, a totally-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "encapsulating chemical protective (TECP) suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when anyof the following are met:a) the event is ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "uncharacterized and/or uncontrolled, b) the type(s) of agent is unknown, c) the dissemination method is unknown, d) dissemination via an aerosol-generating device is still occurring, e) other conditions may present a vapor or splash hazard, or f) ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "decontaminating workers in TECP suits (because of potential for reaerosolization). Per NIOSH guidance, Level A provides the greatest level of skin (TECP), respiratory (SCBA), and eye protection.\u0000xLEVEL B:NIOSH-approved CBRN or non-CBRN full-",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "facepiece SCBA operated in pressure demand mode, a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when both",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": ": a) aerosol is no longer being generated and b) other conditions may present additional hazards, such as a lesser splash hazard. Per NIOSH guidance, Level B provides the highest level of respiratory protection (SCBA) when a lesser level",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "of skin protection is required. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.\u0000xLEVEL C:NIOSH-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "approved CBRN or non-CBRN APR tight-fitting PAPR,a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots.This level is appropriate when the aerosol is",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "no longer being generated and either:a) the agent and hazard level has been defined orb) a small item on site can be easily bagged.Per NIOSH guidance, Level C can be selected when the agent identity and concentration are known and the respiratory prote",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "ction criteria factors for the use of APR or PAPR (i.e., warning properties) are met.\u0000xLEVEL D:Disposable hooded coveralls, gloves, and foot coverings can be worn when a risk assessment has determined there is no further risk of exposure to",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "or other hazards that would necessitate the use of respiratory protection, during post-incident operations.Other Workers:PPE recommendations for non-emergency response workers must be developed in the HASP for the site-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "specific scenario. PPE recommendations will vary by job type, type of exposure (e.g., airborne or surface/liquid/soil hazard), and additional site hazards (e.g., chemical, physical).NOTE",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": ": Downgrading PPE levels may be considered only when the identity and concentration of the agent is known and the risks of reaerosolization or dermal exposure are known to be extremely low. Decisions regarding downgrading of PPE ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "levels are only made at the discretion of the site Health and Safety Officer after conducting a risk assessment and must be accompanied by on-site monitoring.The selection of PPE must address all site hazards.Also refer to NIOSH PPE Levels: ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "https://www.cdc.gov/niosh/docs/2009-132/default.html.When selecting protective clothing, responders should consider the amount of blood and body fluids (i.e., bloodborne ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "pathogens (BBP) hazards), along with any chemical exposure hazards from decontaminants, and data on fabric performance (i.e., material thickness, fluid resistance) and seam construction. All gloves (other than additional outer task-",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "specific work gloves) must be National Fire Protection Association (NFPA) 1999 compliant for medical use. Pre-incident training and exercises on the proper use of PPE are recommended.7. Personnel Decontamination7.1. Personnel Decontamination Procedure:NOTE",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": ":Individuals involved in decontamination of personnel must use PPE as indicated in the PERSONNEL SAFETY section above to avoid the potential for exposure. Be sure to cover all abraded skin prior to donning PPE and take care to avoid abrasion of the skin du",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "ring all personnel decontamination operations. Level C PPE is appropriate when decontaminating personnel from a suspected orconfirmedenvironmental release ofaerosolized",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "bacteriaincident. If a higher level of PPE (A or B) is used, the steps below may need to be modified per thesite-specificHASP.",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000Q\u0000H\u0000O\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000S\u0000U\u0000R\u0000F\u0000H\u0000G\u0000X\u0000U\u0000H\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000)\u0000H\u0000G\u0000H\u0000U\u0000D\u0000O\u0000\u0003\u00002\u00006\u0000&\u0000\u0012\u00005\u00003\u00000\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000H\u0000P\u0000H\u0000U\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "a biological agent: for additional details, please reference the most recent version of EPA\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003Personnel Decontamination Line Standard Operating Procedure (SOP), which can be found at: ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "response.epa.gov/BioResponse_Decontamination_Line_SOP(website registration is required).WARNING: DO NOT BEGIN ANY WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "(see WASTE MANAGEMENT section below). All waste/trash generated from personnel decontamination procedures must be disposed ofas outlined in the site-specific Waste Management Plan.7.2. Personnel Decontamination Procedures by Zone/Step:",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "Prior to entering the Exclusion Zone, all personnel are required to familiarize themselves with the site-specific personnel decontamination procedures. When using tents or enclosures, a negative air machine(s) should be incorporated into the ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "personnel decon line, pulling HEPA-filtered air from the cleanest areas to areas with contamination (Support Zone to Exclusion Zone). Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "contained and safe manner. Procedures should be in place to treat, replace, and dispose of contaminated materials used during the decon process in case the setup itself cannot be properly deconned/disinfected. In addition, procedures should ",
+          "role": "BODY"
+        }
+      ],
+      "text": "s(Plague)Q [ 2022 Update: Page 4of 10PPE Levels for emergency response to a suspected biological agent incidentare based on scenario risks from highest to lowest level of protection:\u0000xLEVEL A:NIOSH-approved CBRN full-facepiece SCBA operated in pressure demand mode, a totally- encapsulating chemical protective (TECP) suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when anyof the following are met:a) the event is uncharacterized and/or uncontrolled, b) the type(s) of agent is unknown, c) the dissemination method is unknown, d) dissemination via an aerosol-generating device is still occurring, e) other conditions may present a vapor or splash hazard, or f) decontaminating workers in TECP suits (because of potential for reaerosolization). Per NIOSH guidance, Level A provides the greatest level of skin (TECP), respiratory (SCBA), and eye protection.\u0000xLEVEL B:NIOSH-approved CBRN or non-CBRN full- facepiece SCBA operated in pressure demand mode, a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when both : a) aerosol is no longer being generated and b) other conditions may present additional hazards, such as a lesser splash hazard. Per NIOSH guidance, Level B provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.\u0000xLEVEL C:NIOSH- approved CBRN or non-CBRN APR tight-fitting PAPR,a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots.This level is appropriate when the aerosol is no longer being generated and either:a) the agent and hazard level has been defined orb) a small item on site can be easily bagged.Per NIOSH guidance, Level C can be selected when the agent identity and concentration are known and the respiratory prote ction criteria factors for the use of APR or PAPR (i.e., warning properties) are met.\u0000xLEVEL D:Disposable hooded coveralls, gloves, and foot coverings can be worn when a risk assessment has determined there is no further risk of exposure to or other hazards that would necessitate the use of respiratory protection, during post-incident operations.Other Workers:PPE recommendations for non-emergency response workers must be developed in the HASP for the site- specific scenario. PPE recommendations will vary by job type, type of exposure (e.g., airborne or surface/liquid/soil hazard), and additional site hazards (e.g., chemical, physical).NOTE : Downgrading PPE levels may be considered only when the identity and concentration of the agent is known and the risks of reaerosolization or dermal exposure are known to be extremely low. Decisions regarding downgrading of PPE levels are only made at the discretion of the site Health and Safety Officer after conducting a risk assessment and must be accompanied by on-site monitoring.The selection of PPE must address all site hazards.Also refer to NIOSH PPE Levels: https://www.cdc.gov/niosh/docs/2009-132/default.html.When selecting protective clothing, responders should consider the amount of blood and body fluids (i.e., bloodborne pathogens (BBP) hazards), along with any chemical exposure hazards from decontaminants, and data on fabric performance (i.e., material thickness, fluid resistance) and seam construction. All gloves (other than additional outer task- specific work gloves) must be National Fire Protection Association (NFPA) 1999 compliant for medical use. Pre-incident training and exercises on the proper use of PPE are recommended.7. Personnel Decontamination7.1. Personnel Decontamination Procedure:NOTE :Individuals involved in decontamination of personnel must use PPE as indicated in the PERSONNEL SAFETY section above to avoid the potential for exposure. Be sure to cover all abraded skin prior to donning PPE and take care to avoid abrasion of the skin du ring all personnel decontamination operations. Level C PPE is appropriate when decontaminating personnel from a suspected orconfirmedenvironmental release ofaerosolized bacteriaincident. If a higher level of PPE (A or B) is used, the steps below may need to be modified per thesite-specificHASP. \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000Q\u0000H\u0000O\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000S\u0000U\u0000R\u0000F\u0000H\u0000G\u0000X\u0000U\u0000H\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000)\u0000H\u0000G\u0000H\u0000U\u0000D\u0000O\u0000\u0003\u00002\u00006\u0000&\u0000\u0012\u00005\u00003\u00000\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000H\u0000P\u0000H\u0000U\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003 a biological agent: for additional details, please reference the most recent version of EPA\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003Personnel Decontamination Line Standard Operating Procedure (SOP), which can be found at: response.epa.gov/BioResponse_Decontamination_Line_SOP(website registration is required).WARNING: DO NOT BEGIN ANY WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED (see WASTE MANAGEMENT section below). All waste/trash generated from personnel decontamination procedures must be disposed ofas outlined in the site-specific Waste Management Plan.7.2. Personnel Decontamination Procedures by Zone/Step: Prior to entering the Exclusion Zone, all personnel are required to familiarize themselves with the site-specific personnel decontamination procedures. When using tents or enclosures, a negative air machine(s) should be incorporated into the personnel decon line, pulling HEPA-filtered air from the cleanest areas to areas with contamination (Support Zone to Exclusion Zone). Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to treat, replace, and dispose of contaminated materials used during the decon process in case the setup itself cannot be properly deconned/disinfected. In addition, procedures should",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 36,
+        "repeatedHeaderFooterBlockCount": 9,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 4,
+      "humanPageNumber": 5,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Yersinia pesti",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "s(Plague)Q",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "RGs are intended for FederalOSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2022 Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Page 5of 10be implemented to replace necessary spent chemicals and decontamination solutions and containerize for disposal if necessary.\u0000xFor additional details on personnel decontamination procedures, see ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00003\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000Q\u0000H\u0000O\u0000\u0003Decontamination Line Standard Operating Procedure (response.epa.gov/BioResponse_Decontamination_Line_SOP).\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "All waste/trash (e.g., wipes, towels, booties, gloves, inner suits, cartridge filters) generated from personnel decontamination procedures must be disposed of as outlined in the site-specific Waste Management Plan.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Decon Line Attendant (DLA) will verbally direct personnel through each step.Conducted in ExclusionZone (Hot Zone)1Tool and Instrument DropsPlace equipment taken into the Hot Zone on a plastic covered table or container provided prior to ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.Conducted in Contamination Reduction Zone (Warm Zone)2Sample DropPlace ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Doff Booties and Work or ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Task PPEAny work or task-specific PPE is to be disposed of in designated containeror can be placed into a designated bin to be cleaned for reuse. Check for breaches in PPE and identify any gross contamination. Remove any gross contamination with wipes ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "and place into designatedcontainer. Sit on bench and remove booties and place in designatedcontainer.4Wet Operations \u0000±Outer Boot and Glove Wash (1stand 2ndGross Decon Wash)The purpose of this step is to remove gross contamination, such as dirt or ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "grime from boots and gloves. If gross contamination is not visible, this step may be skipped. Wash outer boots by stepping in decon basins with designated decontamination solutions and then outer gloves using designated decontamination solutions in glove w",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "ash basin as specified in HASP (1:10 diluted bleach). 5Wet Operations \u0000±Full Decon of Gloves, Boots, PAPR,and Outer SuitStep from the 1st and 2nd Gross Decontamination Wash into a contained area (large tub or basin) at this ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "station in the decon line to wash boots and gloves. Keep PAPR and masks on face and body. Turn off PAPR and cover the outside of the cartridge loosely to avoid saturation with water. Washall outer ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Use fine mist tip on sprayer to prevent cross contamination. Start with decontaminating boots and gloves, then work on suit from",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "the top down, including PAPR. Decontamination personnel should conduct this step. Care should be taken to ensure all areas are wetted, including around zipper, arms, front torso, and any other area that could have been contaminated. Used decontamination s",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "olution and aqueous waste should be contained, collected, and disposed of properly.6Wet Operations \u0000±Doff Outer Boots, Gloves,and Outer SuitWhile sitting on a stool, remove outer boots and outer gloves. Undo the PAPR belt and hold in hand. While touch",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "ing only the inside of suit, remove outer suit by carefully rolling suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontamination personnel to assist either by hol",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "ding PAPR unit or assisting in suit removal.7Dry Operations \u0000±Inner Suit Wipe and RemovalConducted by DLA \u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "\u0000:\u0000K\u0000L\u0000O\u0000H\u0000\u0003\u0000W\u0000R\u0000X\u0000F\u0000K\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000O\u0000\\\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000L\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u000f\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000E\u0000\\\u0000\u0003carefully rolling it inside out while progressing slowly, using a downward motion, from the hood ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "head/shoulders area, to the hands and sleeves, all the way down to the feet. Wipe down the zipper, hood ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "\u0000Q\u0000H\u0000D\u0000U\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000V\u0000N\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000X\u0000I\u0000I\u0000V\u0000\u0003\u0000\u000b\u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000L\u0000Q\u0000\u0003\u0000\u0019\u0000\u0003\u0000L\u0000Q\u0000F\u0000K\u0000H\u0000V\u0000\u0003\u0000D\u0000E\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000U\u0000L\u0000V\u0000W\u0000\f\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000D\u0000\u0003\u0000S\u0000D\u0000S\u0000H\u0000U\u0000\u0003towel wetted with",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "new decontamination solution. Step out of suit while holding PAPR with mask on and place inner suit in designated container.8PAPR and Mask RemovalPut on a new pair of gloves over the inner gloves (provided by DLA). With new gloves on, doff PAPR mask a",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "nd hose by looking downward and pulling the mask down from the top of head and away from chin. Remove cartridge filters and place intoadesignated container. Put mask and hose into designated containers for cleaning. Decontamination personnel will clean e",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "ach mask and PAPR assembly prior to return to service. 9Inner Glove Removal,and Hand and Face WashRemove inner gloves by only touching outside of first glove and then only inside of second glove(outer). Place gloves into designated ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "container. Wash hands and then face with soap and warm water after all PPE has been doffed and prior to entering the personal shower.Conducted inSupportZone (Cold Zone)10Personal ShowerPersonnel should shower using copious quantities of soap and wat",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "er for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available, at the minimum, hands and face should be washed thoroughly.11Medical MonitoringReport to the medical monitoring station for post-entry monit",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "oring and if necessary, meet with appropriate personnel for debriefing.Emergency Egress Corridor:Establish an emergency egress line to use for quickly decontaminating personnel with medical emergencies while in the Exclusion Zone. Depending on the sever",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "ity of the injury or illness, personnel may have to be quickly gross or dry deconned only and have PPE and clothing removed. Prior to receiving treatment from ",
+          "role": "BODY"
+        }
+      ],
+      "text": "s(Plague)Q [ 2022 Update: Page 5of 10be implemented to replace necessary spent chemicals and decontamination solutions and containerize for disposal if necessary.\u0000xFor additional details on personnel decontamination procedures, see \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00003\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000Q\u0000H\u0000O\u0000\u0003Decontamination Line Standard Operating Procedure (response.epa.gov/BioResponse_Decontamination_Line_SOP).\u0000x All waste/trash (e.g., wipes, towels, booties, gloves, inner suits, cartridge filters) generated from personnel decontamination procedures must be disposed of as outlined in the site-specific Waste Management Plan.\u0000x Decon Line Attendant (DLA) will verbally direct personnel through each step.Conducted in ExclusionZone (Hot Zone)1Tool and Instrument DropsPlace equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.Conducted in Contamination Reduction Zone (Warm Zone)2Sample DropPlace samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Doff Booties and Work or Task PPEAny work or task-specific PPE is to be disposed of in designated containeror can be placed into a designated bin to be cleaned for reuse. Check for breaches in PPE and identify any gross contamination. Remove any gross contamination with wipes and place into designatedcontainer. Sit on bench and remove booties and place in designatedcontainer.4Wet Operations \u0000±Outer Boot and Glove Wash (1stand 2ndGross Decon Wash)The purpose of this step is to remove gross contamination, such as dirt or grime from boots and gloves. If gross contamination is not visible, this step may be skipped. Wash outer boots by stepping in decon basins with designated decontamination solutions and then outer gloves using designated decontamination solutions in glove w ash basin as specified in HASP (1:10 diluted bleach). 5Wet Operations \u0000±Full Decon of Gloves, Boots, PAPR,and Outer SuitStep from the 1st and 2nd Gross Decontamination Wash into a contained area (large tub or basin) at this station in the decon line to wash boots and gloves. Keep PAPR and masks on face and body. Turn off PAPR and cover the outside of the cartridge loosely to avoid saturation with water. Washall outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Use fine mist tip on sprayer to prevent cross contamination. Start with decontaminating boots and gloves, then work on suit from the top down, including PAPR. Decontamination personnel should conduct this step. Care should be taken to ensure all areas are wetted, including around zipper, arms, front torso, and any other area that could have been contaminated. Used decontamination s olution and aqueous waste should be contained, collected, and disposed of properly.6Wet Operations \u0000±Doff Outer Boots, Gloves,and Outer SuitWhile sitting on a stool, remove outer boots and outer gloves. Undo the PAPR belt and hold in hand. While touch ing only the inside of suit, remove outer suit by carefully rolling suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontamination personnel to assist either by hol ding PAPR unit or assisting in suit removal.7Dry Operations \u0000±Inner Suit Wipe and RemovalConducted by DLA \u0000± \u0000:\u0000K\u0000L\u0000O\u0000H\u0000\u0003\u0000W\u0000R\u0000X\u0000F\u0000K\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000O\u0000\\\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000L\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u000f\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000E\u0000\\\u0000\u0003carefully rolling it inside out while progressing slowly, using a downward motion, from the hood head/shoulders area, to the hands and sleeves, all the way down to the feet. Wipe down the zipper, hood \u0000Q\u0000H\u0000D\u0000U\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000V\u0000N\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000X\u0000I\u0000I\u0000V\u0000\u0003\u0000 \u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000L\u0000Q\u0000\u0003\u0000\u0019\u0000\u0003\u0000L\u0000Q\u0000F\u0000K\u0000H\u0000V\u0000\u0003\u0000D\u0000E\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000U\u0000L\u0000V\u0000W\u0000 \u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000D\u0000\u0003\u0000S\u0000D\u0000S\u0000H\u0000U\u0000\u0003towel wetted with new decontamination solution. Step out of suit while holding PAPR with mask on and place inner suit in designated container.8PAPR and Mask RemovalPut on a new pair of gloves over the inner gloves (provided by DLA). With new gloves on, doff PAPR mask a nd hose by looking downward and pulling the mask down from the top of head and away from chin. Remove cartridge filters and place intoadesignated container. Put mask and hose into designated containers for cleaning. Decontamination personnel will clean e ach mask and PAPR assembly prior to return to service. 9Inner Glove Removal,and Hand and Face WashRemove inner gloves by only touching outside of first glove and then only inside of second glove(outer). Place gloves into designated container. Wash hands and then face with soap and warm water after all PPE has been doffed and prior to entering the personal shower.Conducted inSupportZone (Cold Zone)10Personal ShowerPersonnel should shower using copious quantities of soap and wat er for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available, at the minimum, hands and face should be washed thoroughly.11Medical MonitoringReport to the medical monitoring station for post-entry monit oring and if necessary, meet with appropriate personnel for debriefing.Emergency Egress Corridor:Establish an emergency egress line to use for quickly decontaminating personnel with medical emergencies while in the Exclusion Zone. Depending on the sever ity of the injury or illness, personnel may have to be quickly gross or dry deconned only and have PPE and clothing removed. Prior to receiving treatment from",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 33,
+        "repeatedHeaderFooterBlockCount": 7,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 5,
+      "humanPageNumber": 6,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Yersinia pesti",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "s(Plague)Q",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "RGs are intended for FederalOSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2022 Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Page 6of 10emergency medical technicians (EMT) or being transported to a hospital, personnel must be decontaminated to minimize potential exposure to others. The clothing of the person being transported will comply with the ambulance/EMT requirements.Note:",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "All work in the Exclusion Zone must come to a stop until the Emergency Egress Corridor is clear and reset.8. Environmental SamplingNote:Environmental samples refer to samples collected from environmental matrices and do not include forensic or ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "clinical samples collected by other agencies.8.1. EnvironmentalSampling:Before collecting samples (bullet order may vary):\u0000xIdentify and coordinate with law enforcement agency, in charge, to ensure site access and initiate information sharing.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Identify and coordinate with the public health jurisdiction and public health laboratories that may be involved, and initiate information sharing. This may include initiating contact of the EPA/HQ-EOC (202-564-3850) for ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Environmental Response Laboratory Network (ERLN) laboratories and other laboratories such as \u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003Laboratory Response Network(LRN)able to analyze the site-specific types of environmental samples. Laboratory capacity for ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "analysis of environmental samples may be limited. Clearly identify and discuss with the laboratory its sample acceptance criteria since most labs cannot analyze all types of media, nor can they dispose of sometypes of left-over samples.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Create a sampling plan as part of a quality assurance project plan. The sampling plan should include sample handling, packing, and transportation requirements so that ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Y. pestis ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "bacteria remain viable during the process. Site-specific sampling plans will be affected by: 1) type of release, whether the release was intentional vs. unintentional (accidental or naturally occurring) and the characteristics of the ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Y. pestis ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "preparation; 2) type of contaminated surfaces (e.g., porous vs. non-porous, indoor vs. outdoor); and 3) sampling objectives (e.g., site characterization -pre-decontamination vs. post-decontamination sampling). \u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "Follow sampling procedures, and packaging and shipping requirements. The eSAM (https://www.epa.gov/esam/sample-collection-information-documents-scids) provides general information regarding ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "sampling procedures supporting collection of samples to be analyzed for Y. pestis.These procedures encompass different media, sampling supplies (e.g., swabs, sponge-sticks, filter cartridges/cassettes), sample size, container, ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "holding time, preservation, packaging, and shipping. For additional information and for other sample matrices, contact the EPA/HQ-EOC at 202-564-3850. Packaging and shipping of samples are subject to strict regulations established by ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "DOT, CDC, USPS, OSHA, and IATA. Contact the sample-receiving laboratory to determine if they have additional packaging, shipping, or labeling requirements. 8.2.SamplingStrategy and Methods:1.The Data Quality Objective (DQO) ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "process provides a framework for sampling design. Site-specific information informs the creation of a conceptual model, sampling objectives, response boundaries, and an analytical statement that ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "\u0000L\u0000Q\u0000F\u0000O\u0000X\u0000G\u0000H\u0000V\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000U\u0000H\u0000V\u0000X\u0000O\u0000W\u0000V\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000Z\u0000L\u0000O\u0000O\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000R\u0000E\u0000W\u0000D\u0000L\u0000Q\u0000H\u0000G\u0000\u0011\u0000\u0003\u0000\u000b\u0000³\u0000*\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000Q\u0000\u0003\u00006\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000D\u0000W\u0000L\u0000F\u0000\u0003\u00003\u0000O\u0000D\u0000Q\u0000Q\u0000L\u0000Q\u0000J\u0000\u0003\u00008\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000'\u0000D\u0000W\u0000D\u0000\u0003\u00004\u0000X\u0000D\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u00002\u0000E\u0000M\u0000H\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000V\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "\u00003\u0000U\u0000R\u0000F\u0000H\u0000V\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000(\u00003\u0000$\u0000\u0003\u00004\u0000$\u0000\u0012\u0000*-4: https://www.epa.gov/sites/production/files/2015-06/documents/g4-final.pdf).2.Create a conceptual model of the incident to provide a situational awareness summary of the site. Maps and drawings ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "can be illustrated with site-specific data to capture the currentunderstanding of the incident. Include potential fate and transport, weather conditions, tracking of contaminant, and data obtained from other responders, such as law ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "enforcement and public health.3.Create and prioritize sampling objectives based on the conceptual model and what data will bring additional understanding to the incident.4.",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Create boundaries for the sampling objectives based on the conceptual model and restraints, such as available resources and laboratory capacity.5.Use sampling design tools to ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "develop sampling designs that meet the objectives and select the most appropriate sample design. Site-specific factors will affect sampling objectives and the sample design (number, type, and location). Examples of sample design tools include: \u0000xTrade-",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "off Tool for Sampling (TOTS): https://tots.epa.gov/. TOTS is an online tool to estimate and optimize cost, time, and resources for sampling plans.\u0000xVisual Sample Plan (VSP): https://www.pnnl.gov/projects/visual-sample-plan",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": ". VSP is a statistical software tool for generating probabilistic sampling designs.\u0000x\u0000³\u0000*\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000&\u0000K\u0000R\u0000R\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000'\u0000H\u0000V\u0000L\u0000J\u0000Q\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000(\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000'\u0000D\u0000W\u0000D\u0000\u0003\u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000´\u0000\u0003\u0000(\u00003\u0000$\u0000\u0003\u00004\u0000$\u0000\u0012\u0000*-",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "5S: https://www.epa.gov/sites/production/files/2015-06/documents/g5s-final.pdf.6.Use validated/verified sampling methods and consider using innovative sampling methods if they are sufficiently advantageous for achieving objectives (seeeSAM: ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "https://www.epa.gov/esam/sample-collection-information-documents-scids).a.Surface: Sponge-Stick and Wipe Sampling (for non-porous surfaces):Sterile macrofoam sponges or sterile gauze wipes moistened with sterile 1X phosphate-",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "buffered saline supplemented with 0.05% Tween-20 (PBST) or sterile neutralizing buffer (for post-decontamination sampling) are used to sample 100 in2(sponge) or 144 in2",
+          "role": "BODY"
+        }
+      ],
+      "text": "s(Plague)Q [ 2022 Update: Page 6of 10emergency medical technicians (EMT) or being transported to a hospital, personnel must be decontaminated to minimize potential exposure to others. The clothing of the person being transported will comply with the ambulance/EMT requirements.Note: All work in the Exclusion Zone must come to a stop until the Emergency Egress Corridor is clear and reset.8. Environmental SamplingNote:Environmental samples refer to samples collected from environmental matrices and do not include forensic or clinical samples collected by other agencies.8.1. EnvironmentalSampling:Before collecting samples (bullet order may vary):\u0000xIdentify and coordinate with law enforcement agency, in charge, to ensure site access and initiate information sharing.\u0000x Identify and coordinate with the public health jurisdiction and public health laboratories that may be involved, and initiate information sharing. This may include initiating contact of the EPA/HQ-EOC (202-564-3850) for Environmental Response Laboratory Network (ERLN) laboratories and other laboratories such as \u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003Laboratory Response Network(LRN)able to analyze the site-specific types of environmental samples. Laboratory capacity for analysis of environmental samples may be limited. Clearly identify and discuss with the laboratory its sample acceptance criteria since most labs cannot analyze all types of media, nor can they dispose of sometypes of left-over samples.\u0000x Create a sampling plan as part of a quality assurance project plan. The sampling plan should include sample handling, packing, and transportation requirements so that bacteria remain viable during the process. Site-specific sampling plans will be affected by: 1) type of release, whether the release was intentional vs. unintentional (accidental or naturally occurring) and the characteristics of the preparation; 2) type of contaminated surfaces (e.g., porous vs. non-porous, indoor vs. outdoor); and 3) sampling objectives (e.g., site characterization -pre-decontamination vs. post-decontamination sampling). \u0000x Follow sampling procedures, and packaging and shipping requirements. The eSAM (https://www.epa.gov/esam/sample-collection-information-documents-scids) provides general information regarding sampling procedures supporting collection of samples to be analyzed for Y. pestis.These procedures encompass different media, sampling supplies (e.g., swabs, sponge-sticks, filter cartridges/cassettes), sample size, container, holding time, preservation, packaging, and shipping. For additional information and for other sample matrices, contact the EPA/HQ-EOC at 202-564-3850. Packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, and IATA. Contact the sample-receiving laboratory to determine if they have additional packaging, shipping, or labeling requirements. 8.2.SamplingStrategy and Methods:1.The Data Quality Objective (DQO) process provides a framework for sampling design. Site-specific information informs the creation of a conceptual model, sampling objectives, response boundaries, and an analytical statement that \u0000L\u0000Q\u0000F\u0000O\u0000X\u0000G\u0000H\u0000V\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000U\u0000H\u0000V\u0000X\u0000O\u0000W\u0000V\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000Z\u0000L\u0000O\u0000O\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000R\u0000E\u0000W\u0000D\u0000L\u0000Q\u0000H\u0000G\u0000\u0011\u0000\u0003\u0000 \u0000³\u0000*\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000Q\u0000\u0003\u00006\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000D\u0000W\u0000L\u0000F\u0000\u0003\u00003\u0000O\u0000D\u0000Q\u0000Q\u0000L\u0000Q\u0000J\u0000\u0003\u00008\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000'\u0000D\u0000W\u0000D\u0000\u0003\u00004\u0000X\u0000D\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u00002\u0000E\u0000M\u0000H\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000V\u0000\u0003 \u00003\u0000U\u0000R\u0000F\u0000H\u0000V\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000(\u00003\u0000$\u0000\u0003\u00004\u0000$\u0000\u0012\u0000*-4: https://www.epa.gov/sites/production/files/2015-06/documents/g4-final.pdf).2.Create a conceptual model of the incident to provide a situational awareness summary of the site. Maps and drawings can be illustrated with site-specific data to capture the currentunderstanding of the incident. Include potential fate and transport, weather conditions, tracking of contaminant, and data obtained from other responders, such as law enforcement and public health.3.Create and prioritize sampling objectives based on the conceptual model and what data will bring additional understanding to the incident.4. Create boundaries for the sampling objectives based on the conceptual model and restraints, such as available resources and laboratory capacity.5.Use sampling design tools to develop sampling designs that meet the objectives and select the most appropriate sample design. Site-specific factors will affect sampling objectives and the sample design (number, type, and location). Examples of sample design tools include: \u0000xTrade- off Tool for Sampling (TOTS): https://tots.epa.gov/. TOTS is an online tool to estimate and optimize cost, time, and resources for sampling plans.\u0000xVisual Sample Plan (VSP): https://www.pnnl.gov/projects/visual-sample-plan . VSP is a statistical software tool for generating probabilistic sampling designs.\u0000x\u0000³\u0000*\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000&\u0000K\u0000R\u0000R\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000'\u0000H\u0000V\u0000L\u0000J\u0000Q\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000(\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000'\u0000D\u0000W\u0000D\u0000\u0003\u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000´\u0000\u0003\u0000(\u00003\u0000$\u0000\u0003\u00004\u0000$\u0000\u0012\u0000*- 5S: https://www.epa.gov/sites/production/files/2015-06/documents/g5s-final.pdf.6.Use validated/verified sampling methods and consider using innovative sampling methods if they are sufficiently advantageous for achieving objectives (seeeSAM: https://www.epa.gov/esam/sample-collection-information-documents-scids).a.Surface: Sponge-Stick and Wipe Sampling (for non-porous surfaces):Sterile macrofoam sponges or sterile gauze wipes moistened with sterile 1X phosphate- buffered saline supplemented with 0.05% Tween-20 (PBST) or sterile neutralizing buffer (for post-decontamination sampling) are used to sample 100 in2(sponge) or 144 in2",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 34,
+        "repeatedHeaderFooterBlockCount": 9,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 6,
+      "humanPageNumber": 7,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Yersinia pesti",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "s(Plague)Q",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "RGs are intended for FederalOSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2022 Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Page 7of 10(wipe) area of flat non-porous surfaces. If this wetting solution is not available, use sterile de-ionized water. Do NOT use dry wipes or sponges. b.Surface: Swab Sampling (for non-porous surfaces):S",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "terile swabs moistened with sterile 1X phosphate-buffered saline with 0.05% Tween-20 (PBST) or sterile neutralizing buffer (for post-decontamination sampling) are used to sample 4 in2 area of non-porous, small, hard-to-reach,",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "or irregular shaped surfaces (e.g., keyboards, air register vanes). c.Surface: Micro-Vacuum Sampling (for porous and/or irregular shaped surfaces):37mm Cassettes, pre-",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "\u0000O\u0000R\u0000D\u0000G\u0000H\u0000G\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u0017\u0000\u0018\u0002\u001d\u0000P\u0000\u0003\u0000P\u0000L\u0000[\u0000H\u0000G\u0000\u0003\u0000F\u0000H\u0000O\u0000O\u0000X\u0000O\u0000R\u0000V\u0000H\u0000\u0003\u0000I\u0000L\u0000O\u0000W\u0000H\u0000U\u0000\u0003\u0000\u000b\u00000\u0000&\u0000(\u0000\f\u0000\u0003\u0000\u000b\u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u00006\u0000.\u0000&\u0000\u0003\u0000\u0015\u0000\u0015\u0000\u0018-3-\u0000\u0013\u0000\u0014\u0000\f\u0000\u000f\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u001b\u0002\u001d\u0000P\u0000\u0003\u0000S\u0000R\u0000U\u0000H\u0000\u0003\u0000V\u0000L\u0000]\u0000H\u0000\u0003\u00000\u0000&\u0000(\u0000\u0003\u0000\u000b\u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u0000=\u0000H\u0000I\u0000R\u0000Q\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "\u0000\u001a\u0000\u0016\u0000\u0017\u0000\u0018\u0000&\u0000&\u0000\f\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u0016\u0002\u001d\u0000P\u0000\u0003\u00003\u00007\u0000)\u0000(\u0000\u0003\u0000I\u0000L\u0000O\u0000W\u0000H\u0000U\u0000V\u0000\u0003\u0000\u000b\u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u00006\u0000.\u0000&\u0000\u0003\u0000\u0015\u0000\u0015\u0000\u0018-1723), are used in conjunction with personal sampling pumps \u0000\u000b\u0000\u0000\u0018\u0000\u0003lpm air flow rate) or an equivalent vacuum source to collect samples from a 144 in2area.d.Air: ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Air samples can be collected using low-volume air filtration sampling (e.g., MCE, PTFE, gelatin filter), impactors, or impinger methods. Selection of the technique required for air sampling is based primarily on site-specific sampling objectives and strate",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "gies, the analyses to be performed, conditions of the indoor environment, fate and transport of the pathogen, and the physiological characteristics of the pathogen, including pathogen size. Refer to the sampling methods and manufacturer instructions for fl",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "ow rates and sampling times (see eSAM: https://www.epa.gov/esam/sample-collection-information-documents-scids). Ensure that the appropriate pump is used for the selectedsampling method.e.Water:",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "can persist in water, so samples mayneed to be collected based upon theDQOs. Interferents, such as oxidants (free chlorine), may be present and need to be neutralized immediately upon collection. For drinking water syst",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "ems, residual free chlorine levels can vary substantially throughout the system and may be minimal in some locations, but it should be assumed that samples contain free chlorine that will need to be neutralized with a sodium thiosulfate or other neutralize",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "r at the concentration specified by the sampling protocol \u0000\u000b\u0000V\u0000H\u0000H\u0000\u0003\u0000³\u00006\u0000D\u0000P\u0000S\u0000O\u0000H\u0000\u0003\u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000,\u0000Q\u0000I\u0000R\u0000U\u0000P\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000'\u0000R\u0000F\u0000X\u0000P\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000\u000b\u00006\u0000&\u0000,\u0000'\u0000V\u0000\f\u0000´\u0000\u001d\u0000\u0003eSAM: https://www.epa.gov/esam/sample-collection-information-documents-scids. ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Even for a drinking water system, in which residual oxidant levels can vary substantially throughout the system and may be minimal in some locations, assume that a sample contains an oxidant and neutralize according to the sampling protocol.f.Soil:",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "For areas where soil deposition of the agent is suspected to have occurred (i.e., where aerosols or liquid droplets have been present), soil samples of predetermined depth can be collected. The depth of sample and handling of vegetation s",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "hould be prescribed based on site-specific objectives.g.Animal and Wildlife Samples:Upon confirmation of an outbreak, ensure responsible agencies are notified immediately because plague is a reportable zoonotic vector-",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "borne disease. Notify the state veterinarian for animal fatality. Federal points of contact include the CDC Emergency Operations Center at 770-488-7100 and theUSDA/APHIS Emergency Operations Center (24/7) at 301-436-3110 or via email at jdoc@usda.gov.8",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": ".3. Field Detection:Note:Field Detection technologies and other similar analytical techniques listed here cannot distinguish between viable and non-viable ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": ". Culture-based methods performed within an approved fixed laboratory may be necessary to adequately assess risk, but it could take 5 or more days for results.Available technologies:The following table summarizes available technology platformsthat",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "responders may be able touse toobtain results in ashort time frame. TheCivil Support Team (CST) mobile laboratory(Analytical Laboratory /or local public health labora\u0000W\u0000R\u0000U\u0000L\u0000H\u0000V\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u00005\u00001\u0000\u000f\u0000\u0003are usually",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "equipped with such technologyplatforms. Contact the EPA/HQ-EOC (202-564-3850) for available resources for rapid sample analysis.PlatformAvailabilityWhere usedPotential purposesImmunoassay (Hand-Held Assay [HHACSTFieldSuggestive of presence/absence ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "through immunological features.Immunoassay (Lateral Flow Assay [LFA) CommercialFieldSuggestive of presence/absence through immunological features.PCRCSTMobile Lab (ALS)Detection of Y. pestisgenes.9. Laboratory AnalysisNote: ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "Many laboratories will not be able to perform analysis on all environmental sample types and matrices, so it is vital to consult with the laboratory to understand their capabilities before sending samples.Laboratory availability:Contact the EPA/HQ-EOC (202",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "-564-3850) for Environmental Response Laboratory Network (ERLN) laboratories equipped for culture and PCR-based detection of ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "in environmental samples. Additional ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "\u0000O\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000F\u0000D\u0000S\u0000D\u0000F\u0000L\u0000W\u0000\\\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000W\u0000K\u0000U\u0000R\u0000X\u0000J\u0000K\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00001\u0000H\u0000W\u0000Z\u0000R\u0000U\u0000N\u0000\u0003\u0000\u000b\u0000/\u00005\u00001\u0000\f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000,\u0000Q\u0000W\u0000H\u0000J\u0000U\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000&\u0000R\u0000Q\u0000V\u0000R\u0000U\u0000W\u0000L\u0000X\u0000P\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "of Laboratory Networks (ICLN).Analytical goals: Analytical goals may change as the response progresses, and laboratory analysis can follow a tiered ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "approach, or algorithm, when implementing different analytical methods, particularly when needed to address a large number of samples. For example, some methods are generally more rapid than more definitive, and might be used during the initia",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "l stages of response to evaluate the extent of contamination. Such methods also might be used to identify samples ",
+          "role": "BODY"
+        }
+      ],
+      "text": "s(Plague)Q [ 2022 Update: Page 7of 10(wipe) area of flat non-porous surfaces. If this wetting solution is not available, use sterile de-ionized water. Do NOT use dry wipes or sponges. b.Surface: Swab Sampling (for non-porous surfaces):S terile swabs moistened with sterile 1X phosphate-buffered saline with 0.05% Tween-20 (PBST) or sterile neutralizing buffer (for post-decontamination sampling) are used to sample 4 in2 area of non-porous, small, hard-to-reach, or irregular shaped surfaces (e.g., keyboards, air register vanes). c.Surface: Micro-Vacuum Sampling (for porous and/or irregular shaped surfaces):37mm Cassettes, pre- \u0000O\u0000R\u0000D\u0000G\u0000H\u0000G\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u0017\u0000\u0018\u0002\u001d\u0000P\u0000\u0003\u0000P\u0000L\u0000[\u0000H\u0000G\u0000\u0003\u0000F\u0000H\u0000O\u0000O\u0000X\u0000O\u0000R\u0000V\u0000H\u0000\u0003\u0000I\u0000L\u0000O\u0000W\u0000H\u0000U\u0000\u0003\u0000 \u00000\u0000&\u0000(\u0000 \u0000\u0003\u0000 \u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u00006\u0000.\u0000&\u0000\u0003\u0000\u0015\u0000\u0015\u0000\u0018-3-\u0000\u0013\u0000\u0014\u0000 \u0000\u000f\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u001b\u0002\u001d\u0000P\u0000\u0003\u0000S\u0000R\u0000U\u0000H\u0000\u0003\u0000V\u0000L\u0000]\u0000H\u0000\u0003\u00000\u0000&\u0000(\u0000\u0003\u0000 \u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u0000=\u0000H\u0000I\u0000R\u0000Q\u0000\u0003 \u0000\u001a\u0000\u0016\u0000\u0017\u0000\u0018\u0000&\u0000&\u0000 \u0000\u0003\u0000R\u0000U\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u0016\u0002\u001d\u0000P\u0000\u0003\u00003\u00007\u0000)\u0000(\u0000\u0003\u0000I\u0000L\u0000O\u0000W\u0000H\u0000U\u0000V\u0000\u0003\u0000 \u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u00006\u0000.\u0000&\u0000\u0003\u0000\u0015\u0000\u0015\u0000\u0018-1723), are used in conjunction with personal sampling pumps \u0000 \u0000\u0000\u0018\u0000\u0003lpm air flow rate) or an equivalent vacuum source to collect samples from a 144 in2area.d.Air: Air samples can be collected using low-volume air filtration sampling (e.g., MCE, PTFE, gelatin filter), impactors, or impinger methods. Selection of the technique required for air sampling is based primarily on site-specific sampling objectives and strate gies, the analyses to be performed, conditions of the indoor environment, fate and transport of the pathogen, and the physiological characteristics of the pathogen, including pathogen size. Refer to the sampling methods and manufacturer instructions for fl ow rates and sampling times (see eSAM: https://www.epa.gov/esam/sample-collection-information-documents-scids). Ensure that the appropriate pump is used for the selectedsampling method.e.Water: can persist in water, so samples mayneed to be collected based upon theDQOs. Interferents, such as oxidants (free chlorine), may be present and need to be neutralized immediately upon collection. For drinking water syst ems, residual free chlorine levels can vary substantially throughout the system and may be minimal in some locations, but it should be assumed that samples contain free chlorine that will need to be neutralized with a sodium thiosulfate or other neutralize r at the concentration specified by the sampling protocol \u0000 \u0000V\u0000H\u0000H\u0000\u0003\u0000³\u00006\u0000D\u0000P\u0000S\u0000O\u0000H\u0000\u0003\u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000,\u0000Q\u0000I\u0000R\u0000U\u0000P\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000'\u0000R\u0000F\u0000X\u0000P\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000 \u00006\u0000&\u0000,\u0000'\u0000V\u0000 \u0000´\u0000\u001d\u0000\u0003eSAM: https://www.epa.gov/esam/sample-collection-information-documents-scids. Even for a drinking water system, in which residual oxidant levels can vary substantially throughout the system and may be minimal in some locations, assume that a sample contains an oxidant and neutralize according to the sampling protocol.f.Soil: For areas where soil deposition of the agent is suspected to have occurred (i.e., where aerosols or liquid droplets have been present), soil samples of predetermined depth can be collected. The depth of sample and handling of vegetation s hould be prescribed based on site-specific objectives.g.Animal and Wildlife Samples:Upon confirmation of an outbreak, ensure responsible agencies are notified immediately because plague is a reportable zoonotic vector- borne disease. Notify the state veterinarian for animal fatality. Federal points of contact include the CDC Emergency Operations Center at 770-488-7100 and theUSDA/APHIS Emergency Operations Center (24/7) at 301-436-3110 or via email at jdoc@usda.gov.8 .3. Field Detection:Note:Field Detection technologies and other similar analytical techniques listed here cannot distinguish between viable and non-viable . Culture-based methods performed within an approved fixed laboratory may be necessary to adequately assess risk, but it could take 5 or more days for results.Available technologies:The following table summarizes available technology platformsthat responders may be able touse toobtain results in ashort time frame. TheCivil Support Team (CST) mobile laboratory(Analytical Laboratory /or local public health labora\u0000W\u0000R\u0000U\u0000L\u0000H\u0000V\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u00005\u00001\u0000\u000f\u0000\u0003are usually equipped with such technologyplatforms. Contact the EPA/HQ-EOC (202-564-3850) for available resources for rapid sample analysis.PlatformAvailabilityWhere usedPotential purposesImmunoassay (Hand-Held Assay [HHACSTFieldSuggestive of presence/absence through immunological features.Immunoassay (Lateral Flow Assay [LFA) CommercialFieldSuggestive of presence/absence through immunological features.PCRCSTMobile Lab (ALS)Detection of Y. pestisgenes.9. Laboratory AnalysisNote: Many laboratories will not be able to perform analysis on all environmental sample types and matrices, so it is vital to consult with the laboratory to understand their capabilities before sending samples.Laboratory availability:Contact the EPA/HQ-EOC (202 -564-3850) for Environmental Response Laboratory Network (ERLN) laboratories equipped for culture and PCR-based detection of in environmental samples. Additional \u0000O\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000F\u0000D\u0000S\u0000D\u0000F\u0000L\u0000W\u0000\\\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000W\u0000K\u0000U\u0000R\u0000X\u0000J\u0000K\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00001\u0000H\u0000W\u0000Z\u0000R\u0000U\u0000N\u0000\u0003\u0000 \u0000/\u00005\u00001\u0000 \u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000,\u0000Q\u0000W\u0000H\u0000J\u0000U\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000&\u0000R\u0000Q\u0000V\u0000R\u0000U\u0000W\u0000L\u0000X\u0000P\u0000\u0003 of Laboratory Networks (ICLN).Analytical goals: Analytical goals may change as the response progresses, and laboratory analysis can follow a tiered approach, or algorithm, when implementing different analytical methods, particularly when needed to address a large number of samples. For example, some methods are generally more rapid than more definitive, and might be used during the initia l stages of response to evaluate the extent of contamination. Such methods also might be used to identify samples",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 37,
+        "repeatedHeaderFooterBlockCount": 10,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 7,
+      "humanPageNumber": 8,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Yersinia pesti",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "s(Plague)Q",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "RGs are intended for FederalOSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2022 Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Page 8of 10that should be analyzed using more extensive methods. These more extensive analytical methods should be considered for use when: 1) earlier analysis indicates the presence of ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": ", 2) a smaller subset of samples requires analysis, or 3) as required for a tiered approach to environmental decontamination/cleanup. Depending on the goals of the decontamination/cleanup phase, ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Y. pestis ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "viabilityassessment methods may be needed for sample analysis.Analytical methods: \u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00006\u0000$\u00000\u0000\u0003\u0000\u000bhttps://www.epa.gov/esam/selected-analytical-methods-environmental-remediation-and-",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "recovery-sam).10. Environmental Decontamination/CleanupWARNING: DO NOT BEGIN DECONTAMINATION WORK UNTIL ACOMPREHENSIVEWASTE MANAGEMENT PLAN HAS BEEN DEVELOPED (see WASTE MANAGEMENT section of this document).",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "CAUTION: Spraying decontamination solutions may reaerosolize contamination. For more detailed decontamination information, contact EPA/HQ-EOC at 202-564-3850.CAUTION:",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Decontaminant solutions or fumigants have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of bleach results in chlorine vapors, while fumigants may be used at concentrations above their IDLH l",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "evels).10.1. Decontamination/Cleanup Planning:A site-",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "ICS channels. Responders should develop a plan that considers: 1) nature of contamination,including physical properties and how it entered the facility; 2) extent of contamination, including the amount and possible pathways that have or could ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "have spread the contamination; and 3) decontamination of items for re-use and/or disposal.General Considerations: An evaluation should be undertaken that considers public safety and the environment, total cost, impact on the facility, and ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "wastes generated, as well as the time the facility or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. It is advisable to isolate the contaminated area. Large ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "volumes of decontamination wastes may be generated that will need to be collected, treated, and properly disposed of.Disposal Option:Certainmaterials may be resistant to decontamination techniques, or it may be more cost effective to ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "dispose of the items and replace than to decontaminate and restore. In general, for porous materials that are non-essential (e.g., carpet, upholstered furniture), consideration should be given to removing and managing these items as contaminated waste.",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Natural Attenuation:Itis not advisable to rely on natural attenuation as a decontamination option.Temporary Barrier Option:If the contaminated area cannot be immediately remediated, a temporary barrier option may be",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "desirable in which physical barriers (e.g., plastic sheeting) are used to immobilize and prevent the agent contamination from spreading. Such options are a temporary solution until a final decontamination and disposal strategy can be ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "implemented. A negative air machine (HEPA filter equipped) can also be used to keep contamination contained inside of a contaminated facility.Decontamination Strategy:Dealing with gross decontamination or the source of c",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "ontamination has been the first step in many historical biological agent responses. A site-specific decontamination strategy can be developed by designating contaminated areas into several broad categories: 1)contaminated materials, 2) surfaces requiring ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "remediation,3) large volumetric spaces, and 4) sensitive and irreplaceable items. CAUTION:The decontamination strategies presented below for each of the fourbroad categories may need to be adjusted to ensure decontamination under site-specific conditions.",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Agent preparation and other factors may impact associated decontamination strategies and should be considered to pose a health hazard until proven otherwise.Contaminated Materials:For removal of visible powders, animal carcasses",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "and waste materials, or other contaminated objects or materials, such material may be transferred carefully into containers, with care being taken to minimize reaerosolization.Further guidance on carcass handling and disposal can be obtained at: ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "https://www.epa.gov/agriculture/agriculture-and-carcass-disposal.Surfaces Requiring Remediation:Dirt, grime, and other coatings can reduce the effectiveness of decontamination; pre-",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "cleaning surfaces with soap and water may be needed before the application of decontamination solutionsbut the resulting pre-cleaningrinsatesmay contain and spread contaminants.Decontamination solutions should be deployed as a low-pressure spray ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "(<30 psi) whenever possible to avoid potential reaerosolization of agent.Prior to using decontamination solutions,product-specific safety requirements should be incorporated into thesite-specific HASP.A strategy for visible material is to gently cover ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "any contaminated areas with towel(s) or wipes (overlapping each other if necessary) and apply decontamination solution (see options listed below) starting at the perimeter and wetting towards the center of the contaminated area. Ensure sufficient contact t",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "ime (e.g., at least 15 (wetted) minutes, dependent on option) is ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000H\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000H\u0000D\u0000F\u0000K\u0000\u0003\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000N\u0000H\u0000S\u0000W\u0000\u0003\u0000³\u0000V\u0000R\u0000S\u0000S\u0000L\u0000Q\u0000J\u0000´\u0000\u0003\u0000Z\u0000H\u0000W\u0000\u0003\u0000G\u0000X\u0000U\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000\u0011\u0000\u0003\u00005\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u000b\u0000V\u0000\f\u0000\u0003\u0000W\u0000K\u0000H\u0000Q\u0000\u0003\u0000Z\u0000L\u0000S\u0000H\u0000\u0003\u0000X\u0000S\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000U\u0000H\u0000V\u0000L\u0000G\u0000X\u0000D\u0000O\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "dampness/drops of decontamination solution until the surface is dry. Reapply decontamination solution to the bare surface and wipe up again with more towel(s) then let surface air dry. All contaminated decontamination materials (e.g., fabric ",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "towels, wipes) used in the decontamination process should be labeled and properly discarded,as designated by the waste management specialist.Paper towels should be avoided, unless this is the only option, because they can break into smaller ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "pieces making the removal more difficult.",
+          "role": "BODY"
+        }
+      ],
+      "text": "s(Plague)Q [ 2022 Update: Page 8of 10that should be analyzed using more extensive methods. These more extensive analytical methods should be considered for use when: 1) earlier analysis indicates the presence of , 2) a smaller subset of samples requires analysis, or 3) as required for a tiered approach to environmental decontamination/cleanup. Depending on the goals of the decontamination/cleanup phase, viabilityassessment methods may be needed for sample analysis.Analytical methods: \u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00006\u0000$\u00000\u0000\u0003\u0000 https://www.epa.gov/esam/selected-analytical-methods-environmental-remediation-and- recovery-sam).10. Environmental Decontamination/CleanupWARNING: DO NOT BEGIN DECONTAMINATION WORK UNTIL ACOMPREHENSIVEWASTE MANAGEMENT PLAN HAS BEEN DEVELOPED (see WASTE MANAGEMENT section of this document). CAUTION: Spraying decontamination solutions may reaerosolize contamination. For more detailed decontamination information, contact EPA/HQ-EOC at 202-564-3850.CAUTION: Decontaminant solutions or fumigants have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of bleach results in chlorine vapors, while fumigants may be used at concentrations above their IDLH l evels).10.1. Decontamination/Cleanup Planning:A site- \u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003 ICS channels. Responders should develop a plan that considers: 1) nature of contamination,including physical properties and how it entered the facility; 2) extent of contamination, including the amount and possible pathways that have or could have spread the contamination; and 3) decontamination of items for re-use and/or disposal.General Considerations: An evaluation should be undertaken that considers public safety and the environment, total cost, impact on the facility, and wastes generated, as well as the time the facility or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. It is advisable to isolate the contaminated area. Large volumes of decontamination wastes may be generated that will need to be collected, treated, and properly disposed of.Disposal Option:Certainmaterials may be resistant to decontamination techniques, or it may be more cost effective to dispose of the items and replace than to decontaminate and restore. In general, for porous materials that are non-essential (e.g., carpet, upholstered furniture), consideration should be given to removing and managing these items as contaminated waste. Natural Attenuation:Itis not advisable to rely on natural attenuation as a decontamination option.Temporary Barrier Option:If the contaminated area cannot be immediately remediated, a temporary barrier option may be desirable in which physical barriers (e.g., plastic sheeting) are used to immobilize and prevent the agent contamination from spreading. Such options are a temporary solution until a final decontamination and disposal strategy can be implemented. A negative air machine (HEPA filter equipped) can also be used to keep contamination contained inside of a contaminated facility.Decontamination Strategy:Dealing with gross decontamination or the source of c ontamination has been the first step in many historical biological agent responses. A site-specific decontamination strategy can be developed by designating contaminated areas into several broad categories: 1)contaminated materials, 2) surfaces requiring remediation,3) large volumetric spaces, and 4) sensitive and irreplaceable items. CAUTION:The decontamination strategies presented below for each of the fourbroad categories may need to be adjusted to ensure decontamination under site-specific conditions. Agent preparation and other factors may impact associated decontamination strategies and should be considered to pose a health hazard until proven otherwise.Contaminated Materials:For removal of visible powders, animal carcasses and waste materials, or other contaminated objects or materials, such material may be transferred carefully into containers, with care being taken to minimize reaerosolization.Further guidance on carcass handling and disposal can be obtained at: https://www.epa.gov/agriculture/agriculture-and-carcass-disposal.Surfaces Requiring Remediation:Dirt, grime, and other coatings can reduce the effectiveness of decontamination; pre- cleaning surfaces with soap and water may be needed before the application of decontamination solutionsbut the resulting pre-cleaningrinsatesmay contain and spread contaminants.Decontamination solutions should be deployed as a low-pressure spray (<30 psi) whenever possible to avoid potential reaerosolization of agent.Prior to using decontamination solutions,product-specific safety requirements should be incorporated into thesite-specific HASP.A strategy for visible material is to gently cover any contaminated areas with towel(s) or wipes (overlapping each other if necessary) and apply decontamination solution (see options listed below) starting at the perimeter and wetting towards the center of the contaminated area. Ensure sufficient contact t ime (e.g., at least 15 (wetted) minutes, dependent on option) is \u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000H\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000H\u0000D\u0000F\u0000K\u0000\u0003\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000N\u0000H\u0000S\u0000W\u0000\u0003\u0000³\u0000V\u0000R\u0000S\u0000S\u0000L\u0000Q\u0000J\u0000´\u0000\u0003\u0000Z\u0000H\u0000W\u0000\u0003\u0000G\u0000X\u0000U\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000\u0011\u0000\u0003\u00005\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000 \u0000V\u0000 \u0000\u0003\u0000W\u0000K\u0000H\u0000Q\u0000\u0003\u0000Z\u0000L\u0000S\u0000H\u0000\u0003\u0000X\u0000S\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000U\u0000H\u0000V\u0000L\u0000G\u0000X\u0000D\u0000O\u0000\u0003 dampness/drops of decontamination solution until the surface is dry. Reapply decontamination solution to the bare surface and wipe up again with more towel(s) then let surface air dry. All contaminated decontamination materials (e.g., fabric towels, wipes) used in the decontamination process should be labeled and properly discarded,as designated by the waste management specialist.Paper towels should be avoided, unless this is the only option, because they can break into smaller pieces making the removal more difficult.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 38,
+        "repeatedHeaderFooterBlockCount": 9,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 8,
+      "humanPageNumber": 9,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Yersinia pesti",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "s(Plague)Q",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "RGs are intended for FederalOSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2022 Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Page 9of 10Large Volumetric Spaces:Increasing temperature and relative humidity (RH) may be a decontamination optionfor indoor environments(EPA 600/R-15). Exact treatment conditions will be site and surfacespecific.10.2.Decontaminants/Disinfectants:",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "For a list of EPA-registered disinfectants that can be used against ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "on hard, non-porous surfaces, refer to List H: EPA's Registered Antimicrobial Products Effective Against Methicillin Resistant Staphylococcus aureus(MRSA) and Vancomycin Resistant Enterococcus faecalisor faecium(VRE",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "). This list includes hospital disinfectants with EPA-registered productlabel claims against gram-negative bacteria similar to ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "including the closely related Yersinia enterocolitica. When using products on List H, follow the label directions for hospital disinfection,including application method, contact time,and dilution instructions,if appropriate,",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "in order to ensure efficacy. For uses and applications not \u0000V\u0000S\u0000H\u0000F\u0000L\u0000I\u0000L\u0000H\u0000G\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000O\u0000D\u0000E\u0000H\u0000O\u0000\u000f\u0000\u0003\u0000(\u00003\u0000$\u0000\u0003\u0000K\u0000D\u0000V\u0000\u0003\u0000Q\u0000R\u0000W\u0000\u0003\u0000H\u0000Y\u0000D\u0000O\u0000X\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000¶\u0000V\u0000\u0003\u0000V\u0000D\u0000I\u0000H\u0000W\u0000\\\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000H\u0000I\u0000I\u0000L\u0000F\u0000D\u0000F\u0000\\\u0000\u0011",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "In addition to the List H disinfectants, ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "is expected to be inactivated by products and/or chemistries that have been shown to be effective against harder to inactivate bacterial spores, including spores from Bacillus anthracisor Clostridium difficile(List K), which can include products ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "for volumetric decontamination. Products should be used as specified on the product lab\u0000H\u0000O\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000D\u0000F\u0000F\u0000R\u0000U\u0000G\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000V\u0000W\u0000U\u0000X\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0011",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Of note, EPA defines disinfectants as substances that destroy or irreversibly inactivate bacteria, fungi, and viruses, but not necessarily bacterial spores in the inanimate environment. EPA definesdecontaminants assubstances that destroy or ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "irreversibly inactivate Bacillus anthracisspores (or EPA accepted surrogate) in the inanimate environment.Section 18 of the Federal Insecticide, Fungicide and Rodenticide Act (FIFRA) authorizes EPA to exempt state and federal ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "agencies from provisions of FIFRA and allow unregistered uses of pesticides to address emergency conditions. Under such an exemption, EPA allows limited use of a pesticide in defined geographic areas for a finite time, once EPA confirms that ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "the situation meets that statutory definition of \"emergency condition\" and determines that the emergency use will not cause unreasonable adverse effects to health or to the environment. Additional information can be found on the EPA Section 18 website",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": ". If such an exemption is needed, contact the EPA/HQ-EOC at 202-564-3850 for information on FIFRA Section 18 exemptions.Sensitive and Irreplaceable Items:Certainitems, usually those which are sensitive or valued for a variety of reasons ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "(e.g., mission criticality, personal or societal significance, rarity, and cost) may need to be decontaminated rather than managed as waste. Some of these items, however, will be devalued or rendered unusable if they are chemically or ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "physically incompatible with decontaminants. Irradiation and chemical sterilization may be useful in decontaminating items that are to be returned to owners. These items will need to be bagged and tagged prior to removal from the ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "contaminated area to be treated ex-situ. Such options may include:1)Ethylene oxide sterilization can be used to decontaminate items in an off-site sterilization chamber.2)Gamma irradiation and electron beam technologies can be used to inactivate ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "biological agentsat off-site locations. This procedure may destroy magnetic media.3)Ultraviolet-C light produced with a mercury bulb is generally effective in inactivating biological agents,provided no shading occurs.",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Appropriate SMEs should be consulted for application of thethreemethodslisted above. Direct experimental data for Y. pestisare minimal for those threetreatment technologies.",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "Large sensitive items may require additional protection from the decontaminant being used for treatment of the contaminated area and may need to be treated with an optional method that is compatible with the item.Verification of Decontamination: Site and ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "situation specific.Thelocalpublichealthdepartmentmayhavejurisdictionoververification.Consult EPA/HQ-EOC at 202-564-3850 for more information.11. Waste Management for Environmental Contamination from Biological Incident11.1. Transportation:",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Federal requirements for the commercial transport of hazardous materials, including Division 6.2 Infectious Substances,and procedures for exemptions are specified inHow to Comply with Federal Hazardous Materials Regulations, available at: ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "https://www.fmcsa.dot.gov/regulations/hazardous-materials/how-comply-federal-hazardous-materials-regulations. Contact the PHMSA Hazardous Materials Information Center at 1-800-467-4922 or infocntr@dot.govto discuss specific ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "cases. Additional resources on packaging, labeling, and shipping are available at: https://www.phmsa.dot.gov/standards-rulemaking/hazmat/hazardous-materials-regulations. Detailed state regulations can be found at www.envcap.org/.",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "Y. pestis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "bacteria is classified as a DOT/HMR Category A infectious substance (also classified as UN2814, Infectious substances, affecting humans).The specific requirements for authorized packaging and materials for transporting a Category A infectious substance",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "are listed in 49 CFR §173.196. In addition, each packaging must meet specific test standards in accordance with 49 CFR §178.609. See the guidance in \"Managing Solid Waste Contaminated with a ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "\u0000&\u0000D\u0000W\u0000H\u0000J\u0000R\u0000U\u0000\\\u0000\u0003\u0000$\u0000\u0003\u0000,\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u00006\u0000X\u0000E\u0000V\u0000W\u0000D\u0000Q\u0000F\u0000H\u0000´\u0000\u0003\u0000\u000bJune 2022), which can be found at: https://www.phmsa.dot.gov/transporting-infectious-substances/planning-guidance-handling-category-solid-waste.On-",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "site treatment (e.g., autoclaving, portable incinerators, chemical disinfection) prior to transport for off-site disposal may ease the requirements for special transportation permits.",
+          "role": "BODY"
+        }
+      ],
+      "text": "s(Plague)Q [ 2022 Update: Page 9of 10Large Volumetric Spaces:Increasing temperature and relative humidity (RH) may be a decontamination optionfor indoor environments(EPA 600/R-15). Exact treatment conditions will be site and surfacespecific.10.2.Decontaminants/Disinfectants: For a list of EPA-registered disinfectants that can be used against on hard, non-porous surfaces, refer to List H: EPA's Registered Antimicrobial Products Effective Against Methicillin Resistant Staphylococcus aureus(MRSA) and Vancomycin Resistant Enterococcus faecalisor faecium(VRE ). This list includes hospital disinfectants with EPA-registered productlabel claims against gram-negative bacteria similar to including the closely related Yersinia enterocolitica. When using products on List H, follow the label directions for hospital disinfection,including application method, contact time,and dilution instructions,if appropriate, in order to ensure efficacy. For uses and applications not \u0000V\u0000S\u0000H\u0000F\u0000L\u0000I\u0000L\u0000H\u0000G\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000O\u0000D\u0000E\u0000H\u0000O\u0000\u000f\u0000\u0003\u0000(\u00003\u0000$\u0000\u0003\u0000K\u0000D\u0000V\u0000\u0003\u0000Q\u0000R\u0000W\u0000\u0003\u0000H\u0000Y\u0000D\u0000O\u0000X\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000¶\u0000V\u0000\u0003\u0000V\u0000D\u0000I\u0000H\u0000W\u0000\\\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000H\u0000I\u0000I\u0000L\u0000F\u0000D\u0000F\u0000\\\u0000\u0011 In addition to the List H disinfectants, is expected to be inactivated by products and/or chemistries that have been shown to be effective against harder to inactivate bacterial spores, including spores from Bacillus anthracisor Clostridium difficile(List K), which can include products for volumetric decontamination. Products should be used as specified on the product lab\u0000H\u0000O\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000D\u0000F\u0000F\u0000R\u0000U\u0000G\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000V\u0000W\u0000U\u0000X\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0011 Of note, EPA defines disinfectants as substances that destroy or irreversibly inactivate bacteria, fungi, and viruses, but not necessarily bacterial spores in the inanimate environment. EPA definesdecontaminants assubstances that destroy or irreversibly inactivate Bacillus anthracisspores (or EPA accepted surrogate) in the inanimate environment.Section 18 of the Federal Insecticide, Fungicide and Rodenticide Act (FIFRA) authorizes EPA to exempt state and federal agencies from provisions of FIFRA and allow unregistered uses of pesticides to address emergency conditions. Under such an exemption, EPA allows limited use of a pesticide in defined geographic areas for a finite time, once EPA confirms that the situation meets that statutory definition of \"emergency condition\" and determines that the emergency use will not cause unreasonable adverse effects to health or to the environment. Additional information can be found on the EPA Section 18 website . If such an exemption is needed, contact the EPA/HQ-EOC at 202-564-3850 for information on FIFRA Section 18 exemptions.Sensitive and Irreplaceable Items:Certainitems, usually those which are sensitive or valued for a variety of reasons (e.g., mission criticality, personal or societal significance, rarity, and cost) may need to be decontaminated rather than managed as waste. Some of these items, however, will be devalued or rendered unusable if they are chemically or physically incompatible with decontaminants. Irradiation and chemical sterilization may be useful in decontaminating items that are to be returned to owners. These items will need to be bagged and tagged prior to removal from the contaminated area to be treated ex-situ. Such options may include:1)Ethylene oxide sterilization can be used to decontaminate items in an off-site sterilization chamber.2)Gamma irradiation and electron beam technologies can be used to inactivate biological agentsat off-site locations. This procedure may destroy magnetic media.3)Ultraviolet-C light produced with a mercury bulb is generally effective in inactivating biological agents,provided no shading occurs. Appropriate SMEs should be consulted for application of thethreemethodslisted above. Direct experimental data for Y. pestisare minimal for those threetreatment technologies. Large sensitive items may require additional protection from the decontaminant being used for treatment of the contaminated area and may need to be treated with an optional method that is compatible with the item.Verification of Decontamination: Site and situation specific.Thelocalpublichealthdepartmentmayhavejurisdictionoververification.Consult EPA/HQ-EOC at 202-564-3850 for more information.11. Waste Management for Environmental Contamination from Biological Incident11.1. Transportation: Federal requirements for the commercial transport of hazardous materials, including Division 6.2 Infectious Substances,and procedures for exemptions are specified inHow to Comply with Federal Hazardous Materials Regulations, available at: https://www.fmcsa.dot.gov/regulations/hazardous-materials/how-comply-federal-hazardous-materials-regulations. Contact the PHMSA Hazardous Materials Information Center at 1-800-467-4922 or infocntr@dot.govto discuss specific cases. Additional resources on packaging, labeling, and shipping are available at: https://www.phmsa.dot.gov/standards-rulemaking/hazmat/hazardous-materials-regulations. Detailed state regulations can be found at www.envcap.org/. bacteria is classified as a DOT/HMR Category A infectious substance (also classified as UN2814, Infectious substances, affecting humans).The specific requirements for authorized packaging and materials for transporting a Category A infectious substance are listed in 49 CFR §173.196. In addition, each packaging must meet specific test standards in accordance with 49 CFR §178.609. See the guidance in \"Managing Solid Waste Contaminated with a \u0000&\u0000D\u0000W\u0000H\u0000J\u0000R\u0000U\u0000\\\u0000\u0003\u0000$\u0000\u0003\u0000,\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u00006\u0000X\u0000E\u0000V\u0000W\u0000D\u0000Q\u0000F\u0000H\u0000´\u0000\u0003\u0000 June 2022), which can be found at: https://www.phmsa.dot.gov/transporting-infectious-substances/planning-guidance-handling-category-solid-waste.On- site treatment (e.g., autoclaving, portable incinerators, chemical disinfection) prior to transport for off-site disposal may ease the requirements for special transportation permits.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 39,
+        "repeatedHeaderFooterBlockCount": 11,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 9,
+      "humanPageNumber": 10,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Yersinia pesti",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "s(Plague)Q",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "RGs are intended for FederalOSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2022 Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Page 10of 1011.2. Waste Management:WARNING: DEVELOP ACOMPREHENSIVEWASTE MANAGEMENT PLAN PRIOR TO ANY DECONTAMINATION/CLEANUP WORK.There is no federal regulatory framework that addresses management of waste from biological contamination incidents, ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "therefore, waste management decision making for biologicalcontamination incidents is done at the state and local level. Waste generated from assessment and cleanup activities should be incinerated, autoclaved, or chemically disinfected (see ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "ENVIRONMENTAL DECONTAMINATION/CLEANUP section above) to be sure the bacterial agent(s) were inactivated.Complex aqueous matrices, such as contaminated wastewater or decontamination effluents, may have significant oxidant ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "demand, requiring additional chemical disinfectant. Porous materials present challenges to waste treatment processes. Waste disposal for agent-contaminated wastes generated from the decontamination activities will be problematic.",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Disposal of aqueous waste, even if chemically treated, via discharge to sanitary sewer may require consultation with the appropriate authorities. Landfills willing to take these wastes (even if treated) may be limited due to state or local ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "requirements. It may be prohibitively expensive or impractical to dispose of large quantities of infectious wastes through incineration dueto a limited number of medical/infectious waste incinerators nationally. Incineration in a commercial ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "hazardous waste combustor is possible on a case-by-case basis. Assuming that agent-contaminated wastewater is accepted by local wastewater facilities, even if pre-treated, it may be difficult to dispose of resulting sludge.",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Although testing may be desired to satisfy waste acceptance criteria specified by state regulators and/or a treatment/disposal facility, there are very limited options for measuring Y. pestisbacteria in common waste matrices (see ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "SAMPLING AND ANALYSIS section above). Therefore, other approaches (e.g., proof of compliance with minimum operating conditions of on-site treatment equipment) could be used to specify waste acceptance criteria.All waste disposal ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "options, and waste acceptance criteria, should be investigated as early into the response process as possible.EPA has developed an online tool to help communities and facilities develop pre-incident waste management plans. This tool can be found at ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "https://wasteplan.epa.gov/(website registrationisrequired).EPA has developed I-WASTE, a web-based tool(iwaste.epa.gov)that contains links towaste transportation guidance, ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "treatment and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility.",
+          "role": "BODY"
+        }
+      ],
+      "text": "s(Plague)Q [ 2022 Update: Page 10of 1011.2. Waste Management:WARNING: DEVELOP ACOMPREHENSIVEWASTE MANAGEMENT PLAN PRIOR TO ANY DECONTAMINATION/CLEANUP WORK.There is no federal regulatory framework that addresses management of waste from biological contamination incidents, therefore, waste management decision making for biologicalcontamination incidents is done at the state and local level. Waste generated from assessment and cleanup activities should be incinerated, autoclaved, or chemically disinfected (see ENVIRONMENTAL DECONTAMINATION/CLEANUP section above) to be sure the bacterial agent(s) were inactivated.Complex aqueous matrices, such as contaminated wastewater or decontamination effluents, may have significant oxidant demand, requiring additional chemical disinfectant. Porous materials present challenges to waste treatment processes. Waste disposal for agent-contaminated wastes generated from the decontamination activities will be problematic. Disposal of aqueous waste, even if chemically treated, via discharge to sanitary sewer may require consultation with the appropriate authorities. Landfills willing to take these wastes (even if treated) may be limited due to state or local requirements. It may be prohibitively expensive or impractical to dispose of large quantities of infectious wastes through incineration dueto a limited number of medical/infectious waste incinerators nationally. Incineration in a commercial hazardous waste combustor is possible on a case-by-case basis. Assuming that agent-contaminated wastewater is accepted by local wastewater facilities, even if pre-treated, it may be difficult to dispose of resulting sludge. Although testing may be desired to satisfy waste acceptance criteria specified by state regulators and/or a treatment/disposal facility, there are very limited options for measuring Y. pestisbacteria in common waste matrices (see SAMPLING AND ANALYSIS section above). Therefore, other approaches (e.g., proof of compliance with minimum operating conditions of on-site treatment equipment) could be used to specify waste acceptance criteria.All waste disposal options, and waste acceptance criteria, should be investigated as early into the response process as possible.EPA has developed an online tool to help communities and facilities develop pre-incident waste management plans. This tool can be found at https://wasteplan.epa.gov/(website registrationisrequired).EPA has developed I-WASTE, a web-based tool(iwaste.epa.gov)that contains links towaste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 19,
+        "repeatedHeaderFooterBlockCount": 7,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    }
+  ]
+}

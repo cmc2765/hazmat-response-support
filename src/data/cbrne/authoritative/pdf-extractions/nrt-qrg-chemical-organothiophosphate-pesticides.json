@@ -1,0 +1,1348 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-chemical-organothiophosphate-pesticides",
+  "sourceArtifactSha256": "69fbef7ac85f03259d5c95aa8f61b28cc2c0c6a6386b84679e54a235460c4941",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 6,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [],
+      "text": "",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 0,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "Updated November 2018(replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "Tj",
+          "text": "2012)Page 2of 6",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Organothiophosphate (OTP)Pesticid",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "es: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "including",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "Tj",
+          "text": "Parathion, ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Methyl Parathion, Disulfoton, Phorate, Chlorpyrifos",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "Tj",
+          "text": ",",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Malathion",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "Tj",
+          "text": "",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Continued[November",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "2018Physical PropertiesPhysical properties are listed at/near STP unless otherwise indicated,and refer only to the OTP.  Physical properties of formulations of OTPs may vary substantially from those listedbecauseingredients such ascarrier solvents ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "will contribute to overall physical properties.NA=not available.OTPVapor Pressure(mm Hg)Boiling PointMelting/FreezingPointFlash PointSpecific GravityAqueous Solubility(mg/L)Non-aqueous SolubilityParathion/ Ethyl parathion6.7x10-6(68ºF/20ºC)707°F/375°C",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "43°F/6°C392°F/200°C (decomposes)Commercial productincludedhydrocarbon solvents, such as toluene or xylene,which are flammable1.27(77°F/25°C)11(68ºF/20ºC)Miscible with most organic solvents;Slightly soluble in petroleum oils; soluble in alcohols,",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "esters, ethers, ketones, animal and vegetable oils, and aromatic hydrocarbons; Soluble in chloroformMethyl parathion1.5x10-6(68ºF/20ºC)289°F/143°C99°F /37°C248°F/120°C(decomposes)Commercial product included xylene, which isflammable1.36(68°F/20°C)55",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "(68ºF/20ºC)Soluble in most organic solvents;Sparingly soluble in petroleum ether andsomemineral oilsDisulfoton2x10-4(68°F/20°C)270-271°F/132-133°C-13°F/-25°C180°F/82°C (decomposes)1.14(68°F/20°C)16(68ºF/20ºC)Soluble in most organic liquids and fatty oils; ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Miscible in some organic solventsPhorate8x10-4(68°F/20°C)257-261°F/125-127°C-45°F/-7°C320°F/160°C(decomposes)1.16(77°F/25°C)50(77°F/25°C)Soluble in most organic solvents;Miscible with xylene, carbon tetrachloride, dioxane, vegetable oils",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Chlorpyrifos",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "1.87x10-6 (77°F/25°C)320°F/160°C(decomposes)108°F/42°C320°F/160°C(decomposes)1.40 (Liquid at 110°F)(68°F/20°C)1.4(77°F/25°C)Soluble in many organic solvents",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Malathion",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "4x10-6 (77ºF/25ºC)140°F/60°C(decomposes)37°F/3°C325°F/163°C(decomposes)1.21(68°F/20°C)145(68ºF/20ºC)Miscible with many organic solvents including alcohols, esters, ketones, ethers, aromatic and alkylated aromatic hydrocarbons,and vegetable oils",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Soluble in ethanol, benzene,and ethyl etherRelease ScenariosNOTE: The chemical and physical properties of the ingredients of formulated/commercial OTP products may determine the characteristics, nature, ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "and impact of OTP release, causing marked differences from the descriptions below. Technical-gradeOTP products have high concentration of active OTP ingredient.",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Some ingredients, such as solvents, may present hazards greater than the active OTP ingredient. Illegal, off-label use increases the number of release scenarios (e.g., improper indoor or outdoor application may result in secondary water contamination).",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Open Areas:While OTPs by themselves are difficult to directly disperse in air due to their volatility, some OTP formulations are sprayedas liquid solutions or applied as dry powders, potentiall",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "y resulting in inhalation, skin absorption, and dermal contact hazards. Depending on the application techniques (e.g., sprayer or crop duster), clouds of aerosolized OTP may drift from the initial release point, and the volatility of OTP itself, while low,",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "may lead to localized hazards.  Aerosols containing OTPsare generally heavier than air, so will tend to accumulate in lower terrains. Liquid OTPs and their formulations will result in localized areas of surface contamination.  Water/Water Systems:OTPs ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "released into water will hydrolyze depending on their compound-specific hydrolysis rate at the ambient pH, with persistence depending on released amount and environmental conditions. Hydrolysis rates vary greatly among OTPs and can be very sensitive to pH;",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "thus, an OTP could potentially persist for weeks depending on overall dilution and breakdown processes. Aerosols containing OTPsmay settle on and dissolve into water bodies. If released into water systems such as reservoirs, treatment plants, distributio",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "n systems, public fountains or pools, treatment processes can further break down the OTP compound. However, if the water system uses an oxidative process at the treatment plant or residual chlorine or chloramine is added to maintain residual disinfection, ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "toxic oxons, sulfoxides, and sulfones may be an ingestion hazard. For water systems, plumbing, surfaces, and equipment that have contacted contaminated water must be evaluated for decontamination along with the bulk water. Avoid any additional release to w",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "ater systems, drains, or sewers (e.g., through inappropriate disposal).Indoor Facility:While OTP compounds can be difficult to directly disperse in air due to their volatility, some OTP formulations are sprayed or applied as dry powders, potentially resu",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "lting in inhalation, skin absorption, and dermal contact hazards. However, a toxic aerosol contamination may occur inside a building or facility through spraying or other aerosolization techniques that tend towards the fine aerosols that may be transported",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "through a facility by its HVAC system or other air movement. Despite low volatility, OTP vapors may be transported in the same manner and even if not present at toxicconcentrations, will distribute sulfur-like odors (described under AGENT CHARACTERISTICS",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": ") throughout a facility. Particularly if applied in violation of their product labeling or restricted use classification, OTPs can also persist on indoor materials like baseboards, linens, and floors.Fire/Combustion:Liquid formulations of OTPs containing",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "organic solvents may be flammable, and will produce irritating or toxic fumes (or gases) in a fire. Decomposition and toxic fumes produced on burning or heating OTPs may also present inhalation hazards for the following organic contaminants: nitrogen oxid",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "es, phosphorus oxides, or sulfur oxides; and sometimes hydrogen chloride or phosgenein the case of chlorpyrifos and other chlorine-containing OTPs.Health EffectsOnset:Onset of symptoms is dose and route dependent. ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "Symptoms may occur within hours after dermal and/or inhalation exposure from spraying. Oral ingestion either intentionally or from food contaminated with OTPs will also take several hours before onset of systemic (affects the whole body) symptoms.Signs/S",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "ymptoms: Appearance and severity of symptoms will vary depending upon exposure route, concentration and duration. However, the following is a general list of possible symptoms.There are possible delayed effects for up to 12 hours.",
+          "role": "BODY"
+        }
+      ],
+      "text": "2012)Page 2of 6 es: Parathion, ,  2018Physical PropertiesPhysical properties are listed at/near STP unless otherwise indicated,and refer only to the OTP. Physical properties of formulations of OTPs may vary substantially from those listedbecauseingredients such ascarrier solvents will contribute to overall physical properties.NA=not available.OTPVapor Pressure(mm Hg)Boiling PointMelting/FreezingPointFlash PointSpecific GravityAqueous Solubility(mg/L)Non-aqueous SolubilityParathion/ Ethyl parathion6.7x10-6(68ºF/20ºC)707°F/375°C 43°F/6°C392°F/200°C (decomposes)Commercial productincludedhydrocarbon solvents, such as toluene or xylene,which are flammable1.27(77°F/25°C)11(68ºF/20ºC)Miscible with most organic solvents;Slightly soluble in petroleum oils; soluble in alcohols, esters, ethers, ketones, animal and vegetable oils, and aromatic hydrocarbons; Soluble in chloroformMethyl parathion1.5x10-6(68ºF/20ºC)289°F/143°C99°F /37°C248°F/120°C(decomposes)Commercial product included xylene, which isflammable1.36(68°F/20°C)55 (68ºF/20ºC)Soluble in most organic solvents;Sparingly soluble in petroleum ether andsomemineral oilsDisulfoton2x10-4(68°F/20°C)270-271°F/132-133°C-13°F/-25°C180°F/82°C (decomposes)1.14(68°F/20°C)16(68ºF/20ºC)Soluble in most organic liquids and fatty oils; Miscible in some organic solventsPhorate8x10-4(68°F/20°C)257-261°F/125-127°C-45°F/-7°C320°F/160°C(decomposes)1.16(77°F/25°C)50(77°F/25°C)Soluble in most organic solvents;Miscible with xylene, carbon tetrachloride, dioxane, vegetable oils 1.87x10-6 (77°F/25°C)320°F/160°C(decomposes)108°F/42°C320°F/160°C(decomposes)1.40 (Liquid at 110°F)(68°F/20°C)1.4(77°F/25°C)Soluble in many organic solvents 4x10-6 (77ºF/25ºC)140°F/60°C(decomposes)37°F/3°C325°F/163°C(decomposes)1.21(68°F/20°C)145(68ºF/20ºC)Miscible with many organic solvents including alcohols, esters, ketones, ethers, aromatic and alkylated aromatic hydrocarbons,and vegetable oils Soluble in ethanol, benzene,and ethyl etherRelease ScenariosNOTE: The chemical and physical properties of the ingredients of formulated/commercial OTP products may determine the characteristics, nature, and impact of OTP release, causing marked differences from the descriptions below. Technical-gradeOTP products have high concentration of active OTP ingredient. Some ingredients, such as solvents, may present hazards greater than the active OTP ingredient. Illegal, off-label use increases the number of release scenarios (e.g., improper indoor or outdoor application may result in secondary water contamination). Open Areas:While OTPs by themselves are difficult to directly disperse in air due to their volatility, some OTP formulations are sprayedas liquid solutions or applied as dry powders, potentiall y resulting in inhalation, skin absorption, and dermal contact hazards. Depending on the application techniques (e.g., sprayer or crop duster), clouds of aerosolized OTP may drift from the initial release point, and the volatility of OTP itself, while low, may lead to localized hazards. Aerosols containing OTPsare generally heavier than air, so will tend to accumulate in lower terrains. Liquid OTPs and their formulations will result in localized areas of surface contamination. Water/Water Systems:OTPs released into water will hydrolyze depending on their compound-specific hydrolysis rate at the ambient pH, with persistence depending on released amount and environmental conditions. Hydrolysis rates vary greatly among OTPs and can be very sensitive to pH; thus, an OTP could potentially persist for weeks depending on overall dilution and breakdown processes. Aerosols containing OTPsmay settle on and dissolve into water bodies. If released into water systems such as reservoirs, treatment plants, distributio n systems, public fountains or pools, treatment processes can further break down the OTP compound. However, if the water system uses an oxidative process at the treatment plant or residual chlorine or chloramine is added to maintain residual disinfection, toxic oxons, sulfoxides, and sulfones may be an ingestion hazard. For water systems, plumbing, surfaces, and equipment that have contacted contaminated water must be evaluated for decontamination along with the bulk water. Avoid any additional release to w ater systems, drains, or sewers (e.g., through inappropriate disposal).Indoor Facility:While OTP compounds can be difficult to directly disperse in air due to their volatility, some OTP formulations are sprayed or applied as dry powders, potentially resu lting in inhalation, skin absorption, and dermal contact hazards. However, a toxic aerosol contamination may occur inside a building or facility through spraying or other aerosolization techniques that tend towards the fine aerosols that may be transported through a facility by its HVAC system or other air movement. Despite low volatility, OTP vapors may be transported in the same manner and even if not present at toxicconcentrations, will distribute sulfur-like odors (described under AGENT CHARACTERISTICS ) throughout a facility. Particularly if applied in violation of their product labeling or restricted use classification, OTPs can also persist on indoor materials like baseboards, linens, and floors.Fire/Combustion:Liquid formulations of OTPs containing organic solvents may be flammable, and will produce irritating or toxic fumes (or gases) in a fire. Decomposition and toxic fumes produced on burning or heating OTPs may also present inhalation hazards for the following organic contaminants: nitrogen oxid es, phosphorus oxides, or sulfur oxides; and sometimes hydrogen chloride or phosgenein the case of chlorpyrifos and other chlorine-containing OTPs.Health EffectsOnset:Onset of symptoms is dose and route dependent. Symptoms may occur within hours after dermal and/or inhalation exposure from spraying. Oral ingestion either intentionally or from food contaminated with OTPs will also take several hours before onset of systemic (affects the whole body) symptoms.Signs/S ymptoms: Appearance and severity of symptoms will vary depending upon exposure route, concentration and duration. However, the following is a general list of possible symptoms.There are possible delayed effects for up to 12 hours.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 39,
+        "repeatedHeaderFooterBlockCount": 15,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "Updated November 2018(replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "Tj",
+          "text": "2012)Page 3of 6",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Organothiophosphate (OTP)Pesticid",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "es: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "including",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "Tj",
+          "text": "Parathion, ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Methyl Parathion, Disulfoton, Phorate, Chlorpyrifos",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "Tj",
+          "text": ",",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Malathion",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "Tj",
+          "text": "",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Continued[November",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "2018Health Effects(continued)Mild: Headache, giddiness, nervousness, blurred vision, weakness, nausea, abdominal cramps, diarrhea, and discomfort in the chest.Moderate",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": ": Sweating, miosis (pinpoint pupils), tearing, salivation and other excessive respiratory tract secretion, vomiting, cyanosis(bluish discoloration of ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "skin), papilledema (swelling of optic nerve inside the eye) causing vision disturbances, uncontrollable muscle twitching. Severe: Severely poisoned patients may develop convulsions, coma, loss of reflexes, and fecal incontinence. Delayed effects",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": ": Paralysis of respiratory, cranial motor, neck flexor, and proximal limb muscles in 1 to 4 days after apparent recovery fromcholinergic          toxicity, and prior to the development of delayed peripheral neuropathy.Exposure Routes:Inhalation: ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Toxic inhalation of OTPvapor is not typically the primary route of exposure at ordinary temperatures because of its low volatility, but toxic effects can occur after inhalation.Skin: Dermal exposure to OTPs",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "does not generally burn or irritate the skin, but dermal exposure produces systemic (affects the whole body) toxicity. Dermal contact is the primary route of exposure.Eyes: Exposure to eyes may result in aching pain about the eyes and blurred vision for ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "distant objects.Ingestion: OTPs are rapidly absorbed by ingestion resulting in acute systemic (affects the whole body) toxicity.Other:Certain populations (children, pregnant and nursing women, and the elderly) are potentially at higher risk. Certain gen",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "etic traits may increase susceptibility. The detection of an odor characteristic of OTPsmay not provide adequate warning of hazardous concentrations.Effect LevelsAir: Acute Exposure Guideline Levels (AEGLs)for general population one-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "time exposure emergency scenarios for OTPs(complete definitions are available in Key References Cited/Used in NRT Quick Reference Guides for Toxic Industrial Chemicals). It should be noted thatsomeAEGL-1 values are not recommended(NR) due to insufficient d",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "ata. AEGLsare not available for disulfoton,and chlorpyrifos; only Interim AEGLs are available for phorate.In the AEGLs table below: MAL=malathion, METP=methyl parathion, PAR=parathion/ethyl-parathion, PHO=phorate.AEGL Level in mg/m3",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": ", at various exposure durations10 min.30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effectsMAL=15METP=NRPAR =NRPHO =NR15NRNRNR15NRNRNR15NRNRNR15NRNRNRAEGL 2: Potentially irreversible effects or impaired ability to escapeMAL=150METP=2.1PAR =2.8PHO =0.073150",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "1.51.90.051201.21.50.04770.730.960.01500.370.480.005AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethalityMAL=500METP=6.4PAR =3.6PHO =0.225004.42.50.153903.52.00.122502.21.30.0311401.10.630.015Exposure GuidelinesNote:",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "(NA = not available); Caution: carrier solvents used in commercial formulations may change toxicological properties.Regional Screening Levels (RSLs) May 2018, where: Target Cancer Risk (TR) = 1 x 10-6, Target Hazard Quotient (THQ) = 1.0. THQ may vary ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "depending on remediation versus removal activities and chemical complexity of incident.AIHA Emergency Response Planning Guidelines (ERPG):ERPG-1, ERPG-2, and ERPG-3 values are not available for any of OTPs in tables below.Parathion/ Ethyl parathion",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "NIOSH IDLH= 10 mg/m3NIOSH STEL= NARSL Industrial Soil= 4900 mg/kgNIOSH REL= 0.05 mg/m3OSHA PEL = 0.1 mg/m3RSL Residential Soil= 380 mg/kgACGIH TLV-TWA= 0.05 mg/m³ (inhalable fraction and vapor)RfD= 6.0×10-3mg/kg/day    / RfC= NA Drinking Water: NA",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "RSL Tap Water= 0.086 mg/LMethyl parathionNIOSH IDLH= NANIOSH STEL= NARSL Industrial Soil= 210 mg/kgNIOSH REL= 0.2 mg/m3OSHA PEL = NARSL Residential Soil= 16 mg/kgACGIH TLV-TWA= 0.02 mg/m3(inhalable fraction and vapor)RfD= 2.5×10-4mg/kg/day    / RfC= NA ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Drinking Water: for 1 day (child) = 0.3 mg/L; 10 days (child) = 0.3mg/L; Lifetime = 0.001mg/LDisulfotonNIOSH IDLH= NANIOSH STEL= NARSL Industrial Soil= 33 mg/kgNIOSH REL= 0.1 mg/m3OSHA PEL = NARSL Residential Soil= 2.5 mg/kgACGIH TLV-TWA= 0.05 mg/m3",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "(inhalable fraction and vapor)RfD = 4.0×10-5mg/kg/day/ RfC= NADrinking Water: for 1 day (child) = 0.01 mg/L; 10 days (child) =0.01 mg/L; Lifetime = 0.0007 mg/LPhorateNIOSH IDLH= NANIOSH STEL= 0.2 mg/m3RSL Industrial Soil= 160 mg/kgNIOSH REL= 0.05 mg/m3TWA ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "OSHA PEL = NARSL Residential Soil= 13 mg/kgACGIH TLV-TWA= 0.05mg/m³ (inhalable fraction and vapor)RfD= 2.0×10-4mg/kg/day/ RfC= NADrinking Water: NARSL Tap Water= 0.003 mg/L",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "Chlorpyrifos",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "NIOSH IDLH= NA NIOSH STEL= 0.6 mg/m3RSL Industrial Soil= 820 mg/kgNIOSH REL= 0.2 mg/m3OSHA PEL = NARSL Residential Soil= 63 mg/kgACGIH TLV-TWA= 0.1mg/m³ (inhalable RfD= 1.0×10-3mg/kg/day/ RfC= NADrinking Water: for 1 day (child) = 0.03 mg/L;10 ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "days (child) =0.03 mg/L; Lifetime = 0.002 mg/L",
+          "role": "BODY"
+        }
+      ],
+      "text": "2012)Page 3of 6 es: Parathion, ,  2018Health Effects(continued)Mild: Headache, giddiness, nervousness, blurred vision, weakness, nausea, abdominal cramps, diarrhea, and discomfort in the chest.Moderate : Sweating, miosis (pinpoint pupils), tearing, salivation and other excessive respiratory tract secretion, vomiting, cyanosis(bluish discoloration of skin), papilledema (swelling of optic nerve inside the eye) causing vision disturbances, uncontrollable muscle twitching. Severe: Severely poisoned patients may develop convulsions, coma, loss of reflexes, and fecal incontinence. Delayed effects : Paralysis of respiratory, cranial motor, neck flexor, and proximal limb muscles in 1 to 4 days after apparent recovery fromcholinergic toxicity, and prior to the development of delayed peripheral neuropathy.Exposure Routes:Inhalation: Toxic inhalation of OTPvapor is not typically the primary route of exposure at ordinary temperatures because of its low volatility, but toxic effects can occur after inhalation.Skin: Dermal exposure to OTPs does not generally burn or irritate the skin, but dermal exposure produces systemic (affects the whole body) toxicity. Dermal contact is the primary route of exposure.Eyes: Exposure to eyes may result in aching pain about the eyes and blurred vision for distant objects.Ingestion: OTPs are rapidly absorbed by ingestion resulting in acute systemic (affects the whole body) toxicity.Other:Certain populations (children, pregnant and nursing women, and the elderly) are potentially at higher risk. Certain gen etic traits may increase susceptibility. The detection of an odor characteristic of OTPsmay not provide adequate warning of hazardous concentrations.Effect LevelsAir: Acute Exposure Guideline Levels (AEGLs)for general population one- time exposure emergency scenarios for OTPs(complete definitions are available in Key References Cited/Used in NRT Quick Reference Guides for Toxic Industrial Chemicals). It should be noted thatsomeAEGL-1 values are not recommended(NR) due to insufficient d ata. AEGLsare not available for disulfoton,and chlorpyrifos; only Interim AEGLs are available for phorate.In the AEGLs table below: MAL=malathion, METP=methyl parathion, PAR=parathion/ethyl-parathion, PHO=phorate.AEGL Level in mg/m3 , at various exposure durations10 min.30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effectsMAL=15METP=NRPAR =NRPHO =NR15NRNRNR15NRNRNR15NRNRNR15NRNRNRAEGL 2: Potentially irreversible effects or impaired ability to escapeMAL=150METP=2.1PAR =2.8PHO =0.073150 1.51.90.051201.21.50.04770.730.960.01500.370.480.005AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethalityMAL=500METP=6.4PAR =3.6PHO =0.225004.42.50.153903.52.00.122502.21.30.0311401.10.630.015Exposure GuidelinesNote: (NA = not available); Caution: carrier solvents used in commercial formulations may change toxicological properties.Regional Screening Levels (RSLs) May 2018, where: Target Cancer Risk (TR) = 1 x 10-6, Target Hazard Quotient (THQ) = 1.0. THQ may vary depending on remediation versus removal activities and chemical complexity of incident.AIHA Emergency Response Planning Guidelines (ERPG):ERPG-1, ERPG-2, and ERPG-3 values are not available for any of OTPs in tables below.Parathion/ Ethyl parathion NIOSH IDLH= 10 mg/m3NIOSH STEL= NARSL Industrial Soil= 4900 mg/kgNIOSH REL= 0.05 mg/m3OSHA PEL = 0.1 mg/m3RSL Residential Soil= 380 mg/kgACGIH TLV-TWA= 0.05 mg/m³ (inhalable fraction and vapor)RfD= 6.0×10-3mg/kg/day / RfC= NA Drinking Water: NA RSL Tap Water= 0.086 mg/LMethyl parathionNIOSH IDLH= NANIOSH STEL= NARSL Industrial Soil= 210 mg/kgNIOSH REL= 0.2 mg/m3OSHA PEL = NARSL Residential Soil= 16 mg/kgACGIH TLV-TWA= 0.02 mg/m3(inhalable fraction and vapor)RfD= 2.5×10-4mg/kg/day / RfC= NA Drinking Water: for 1 day (child) = 0.3 mg/L; 10 days (child) = 0.3mg/L; Lifetime = 0.001mg/LDisulfotonNIOSH IDLH= NANIOSH STEL= NARSL Industrial Soil= 33 mg/kgNIOSH REL= 0.1 mg/m3OSHA PEL = NARSL Residential Soil= 2.5 mg/kgACGIH TLV-TWA= 0.05 mg/m3 (inhalable fraction and vapor)RfD = 4.0×10-5mg/kg/day/ RfC= NADrinking Water: for 1 day (child) = 0.01 mg/L; 10 days (child) =0.01 mg/L; Lifetime = 0.0007 mg/LPhorateNIOSH IDLH= NANIOSH STEL= 0.2 mg/m3RSL Industrial Soil= 160 mg/kgNIOSH REL= 0.05 mg/m3TWA OSHA PEL = NARSL Residential Soil= 13 mg/kgACGIH TLV-TWA= 0.05mg/m³ (inhalable fraction and vapor)RfD= 2.0×10-4mg/kg/day/ RfC= NADrinking Water: NARSL Tap Water= 0.003 mg/L NIOSH IDLH= NA NIOSH STEL= 0.6 mg/m3RSL Industrial Soil= 820 mg/kgNIOSH REL= 0.2 mg/m3OSHA PEL = NARSL Residential Soil= 63 mg/kgACGIH TLV-TWA= 0.1mg/m³ (inhalable RfD= 1.0×10-3mg/kg/day/ RfC= NADrinking Water: for 1 day (child) = 0.03 mg/L;10 days (child) =0.03 mg/L; Lifetime = 0.002 mg/L",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 33,
+        "repeatedHeaderFooterBlockCount": 14,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "Updated November 2018(replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "Tj",
+          "text": "2012)Page 4of 6",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Organothiophosphate (OTP)Pesticid",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "es: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "including",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "Tj",
+          "text": "Parathion, ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Methyl Parathion, Disulfoton, Phorate, Chlorpyrifos",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "Tj",
+          "text": ",",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Malathion",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "Tj",
+          "text": "",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Continued[November",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "2018Exposure Guidelines(continued)",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Malathion",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "NIOSH IDLH= 250 mg/m3NIOSH STEL= NARSL Industrial Soil= 16000 mg/kgNIOSH REL= 10 mg/m3OSHA PEL = 15 mg/m3(total dust)RSL Residential Soil= 1300 mg/kgACGIH TLV-TWA= 1 mg/m3(inhalable fraction RfD = 2.0×10-2mg/kg/day     / RfC= NADrinking Water: ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "for 1 day (child) = 0.2 mg/L; 10 days (child) = 0.2mg/L; Lifetime = 0.5mg/LPersonnel SafetyNote: Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options and personnel decontamination may ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "vary depending upon the amount and purity of agent, site conditions and the release scenario. Additional information on personnel safety and PPE selection criteria can be found at: www.cdc.gov/niosh/ershdb",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": ". We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.Medical: Pre-incident:Abaseline cholinesterase activity determination and an annual physical and respiratory function exam.DuringIncident:",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per Health Effects section above and treat accordingly as per First Aid section below.First Aid: Immediately remove person from affected ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "area and remove contaminated clothing and articles.Avoid direct contact with OTP-contaminated clothing, which should bepromptly bagged.Keep the affected person warm and at rest. Wash bare skinand hairimmediately with water, or warm, soapy water if ava",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "ilable, at normal household pressures (~50-60 psi) for three minutes, ensure thorough soaking.See PPE section below for CAUTION about wearing protective gloves.The possibility of OTP pesticide sequestered under fingernails or in skin folds should not be ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "overlooked. Rinse eyes exposed to agent withcopious amounts ofpotable water for 15 minutes. In cases of ingestion, do not induce vomiting or drink fluids. ANTIDOTE: Atropine sulfate, pralidoxime chloride (DuoDote®/Mark I). Antidote kit should only be ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "administeredpost-exposure by trained personnel as per pre-incident guidelines. Send person for follow-up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms and treat accordingly.Post Incident:Post-incide",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "nt medical surveillance is required.Personal Protective Equipment (PPE):CAUTION: Parathionand other OTPsarevery dangerous poisons. OTPsrapidly enter the body on contact with all skin surfaces and eyes. ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Exposed persons must receive prompt medical treatment or they may die.See First Aid section above.CAUTION: Prevent skin contact, wear protective gloves. EPA pesticide labels for OTPs recommend chemical-resistant gloves, such as barrier laminate,impermeable",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "butyl \u0000\u000b\u0000\u0000\u0003\u0000\u0014\u0000\u0017\u0000\u0003\u0000P\u0000L\u0000O\u0000\f, nitrile\u0000\u000b\u0000\u0000\u0003\u0000\u0014\u0000\u0017\u0000\u0003\u0000P\u0000L\u0000O\u0000\f, or Viton. Latex or PVC gloves provide no protection against skin absorption. Nitrile gloves have exhibited some defects following exposure to chlorpyrifos. ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Chemical resistance necessary for protective gloves may depend on any solvents used in OTP and concentration of OTP. Useprotectivegloves per the site-specific Health and Safety Plan (HASP).Decontaminate the outer (primary) protective gloves (see ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "recommended chemical-resistant gloves above) with 5% bleach (sodium hypochlorite) solution before doffinggloves.Doffingprotective gloves carefully after useis importantto prevent contaminating skin or surfaces/materialsthat may contact skin. ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "If protective gloves are reused, store properly and check for leaks or wear before using again.GENERAL INFORMATION:NIOSH-approved Self Contained Breathing Apparatus (SCBA), NIOSH-approved Air Purifying Respirators (APR) or ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Powered Air Purifying Respirators (PAPR), full-face masks, and protective clothing should be used. Pre-incident training and exercises on the proper use of PPE are recommended. Per NIOSH guidance LEVEL A:Recommended for the initial response to an OTPin",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "cident. Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when the OTPconcentration is unknown or above the IDLH or AEGL-",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "2, and when there is a potential of ocular or dermal exposure.LEVEL B:Provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when the OTP",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "concentration is unknown or above the IDLH or AEGL-2 and dermal exposure is less of a risk. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "resistant outer suit that provides protection against most liquids but is not vapor tight.LEVEL C:Select Level C when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use ofAPR or ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "PAPR (i.e., < IDLH, warning properties) are met. Level C may be appropriate when decontaminating personnel or equipment. Use APR/PAPR with caution.LEVEL D:Select Level D when the contaminant is known and the concentration is below the appropria",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "te occupational exposure limits for the stated duration times. Note: AEGL-1 values are not available for parathion, methyl parathion, ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "disulfoton, phorate, ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "and chlorpyrifos; therefore, other inhalation exposure values,such as ACGIH TLV or NIOSH RELs,must be used. In addition, OSHA PELsare not available for ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "methyl parathion, ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "disulfoton, phorate, and chlorpyrifos.Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and risks of dermal exposure are known, and must be accompanied by on-site monitoring.CAUTION:Clothing wet with OTP-",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "contaminated materials must be removed immediately.Ifrespondersclothing is accidentally contaminated withaconcentratedOTP, remove immediately, put in a plastic bag, and dispose with OTP-contaminated waste. Do not try to wash OTP-contaminated clothing.",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "Field DetectionReal-time field screening tools (results not confirmatory or quantitative): Caution should be given to equipment that has not been properly evaluated. ",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "False positive and false negatives may occur in the presence of interferents common in the environment.The following is a summary of minimum screening concentration ranges or levels for equipment procured by",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "many EPA and HAZMAT response teams. Other screening tools may be used by these teams and other agencies and responders, some with similar capabilities and limitations. NOTE: Detection equipment does not measure contaminant levels. Rather,they detect the ",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "presence of an OTPpesticide at levels as low as listed below.Minimum Screening Ranges/Levels for AirDrägertube-Phosphoric acid estersAP2C/AP4C(flame photometric)Screening Levels for WaterMisc. ACh-E inhibitor/ immuno-assay kits, i.e.: misc. ",
+          "role": "BODY"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "organophosphates (OP) compoundsHACH -Eclox test kit;Abraxis -OP/Carbamate Test Kit*ppm0.05 (as Dichlorvos)Responds to phosphorus.Possible cross sensitivity to OTPs and other OPs(concentration ranges unknown)*1.2 ug/L malathion, not available ",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "for methyl parathion,",
+          "role": "BODY"
+        },
+        {
+          "order": 46,
+          "operator": "TJ",
+          "text": "disulfoton, phorate, ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 47,
+          "operator": "TJ",
+          "text": "and chlorpyrifos;*0.8 ug/L parathion (in water)mg/m30.45 (as Dichlorvos)",
+          "role": "BODY"
+        }
+      ],
+      "text": "2012)Page 4of 6 es: Parathion, ,  2018Exposure Guidelines(continued) NIOSH IDLH= 250 mg/m3NIOSH STEL= NARSL Industrial Soil= 16000 mg/kgNIOSH REL= 10 mg/m3OSHA PEL = 15 mg/m3(total dust)RSL Residential Soil= 1300 mg/kgACGIH TLV-TWA= 1 mg/m3(inhalable fraction RfD = 2.0×10-2mg/kg/day / RfC= NADrinking Water: for 1 day (child) = 0.2 mg/L; 10 days (child) = 0.2mg/L; Lifetime = 0.5mg/LPersonnel SafetyNote: Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options and personnel decontamination may vary depending upon the amount and purity of agent, site conditions and the release scenario. Additional information on personnel safety and PPE selection criteria can be found at: www.cdc.gov/niosh/ershdb . We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.Medical: Pre-incident:Abaseline cholinesterase activity determination and an annual physical and respiratory function exam.DuringIncident: Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per Health Effects section above and treat accordingly as per First Aid section below.First Aid: Immediately remove person from affected area and remove contaminated clothing and articles.Avoid direct contact with OTP-contaminated clothing, which should bepromptly bagged.Keep the affected person warm and at rest. Wash bare skinand hairimmediately with water, or warm, soapy water if ava ilable, at normal household pressures (~50-60 psi) for three minutes, ensure thorough soaking.See PPE section below for CAUTION about wearing protective gloves.The possibility of OTP pesticide sequestered under fingernails or in skin folds should not be overlooked. Rinse eyes exposed to agent withcopious amounts ofpotable water for 15 minutes. In cases of ingestion, do not induce vomiting or drink fluids. ANTIDOTE: Atropine sulfate, pralidoxime chloride (DuoDote®/Mark I). Antidote kit should only be administeredpost-exposure by trained personnel as per pre-incident guidelines. Send person for follow-up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms and treat accordingly.Post Incident:Post-incide nt medical surveillance is required.Personal Protective Equipment (PPE):CAUTION: Parathionand other OTPsarevery dangerous poisons. OTPsrapidly enter the body on contact with all skin surfaces and eyes. Exposed persons must receive prompt medical treatment or they may die.See First Aid section above.CAUTION: Prevent skin contact, wear protective gloves. EPA pesticide labels for OTPs recommend chemical-resistant gloves, such as barrier laminate,impermeable butyl \u0000 \u0000\u0000\u0003\u0000\u0014\u0000\u0017\u0000\u0003\u0000P\u0000L\u0000O\u0000 , nitrile\u0000 \u0000\u0000\u0003\u0000\u0014\u0000\u0017\u0000\u0003\u0000P\u0000L\u0000O\u0000 , or Viton. Latex or PVC gloves provide no protection against skin absorption. Nitrile gloves have exhibited some defects following exposure to chlorpyrifos. Chemical resistance necessary for protective gloves may depend on any solvents used in OTP and concentration of OTP. Useprotectivegloves per the site-specific Health and Safety Plan (HASP).Decontaminate the outer (primary) protective gloves (see recommended chemical-resistant gloves above) with 5% bleach (sodium hypochlorite) solution before doffinggloves.Doffingprotective gloves carefully after useis importantto prevent contaminating skin or surfaces/materialsthat may contact skin. If protective gloves are reused, store properly and check for leaks or wear before using again.GENERAL INFORMATION:NIOSH-approved Self Contained Breathing Apparatus (SCBA), NIOSH-approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and protective clothing should be used. Pre-incident training and exercises on the proper use of PPE are recommended. Per NIOSH guidance LEVEL A:Recommended for the initial response to an OTPin cident. Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when the OTPconcentration is unknown or above the IDLH or AEGL- 2, and when there is a potential of ocular or dermal exposure.LEVEL B:Provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when the OTP concentration is unknown or above the IDLH or AEGL-2 and dermal exposure is less of a risk. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical- resistant outer suit that provides protection against most liquids but is not vapor tight.LEVEL C:Select Level C when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use ofAPR or PAPR (i.e., < IDLH, warning properties) are met. Level C may be appropriate when decontaminating personnel or equipment. Use APR/PAPR with caution.LEVEL D:Select Level D when the contaminant is known and the concentration is below the appropria te occupational exposure limits for the stated duration times. Note: AEGL-1 values are not available for parathion, methyl parathion, and chlorpyrifos; therefore, other inhalation exposure values,such as ACGIH TLV or NIOSH RELs,must be used. In addition, OSHA PELsare not available for disulfoton, phorate, and chlorpyrifos.Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and risks of dermal exposure are known, and must be accompanied by on-site monitoring.CAUTION:Clothing wet with OTP- contaminated materials must be removed immediately.Ifrespondersclothing is accidentally contaminated withaconcentratedOTP, remove immediately, put in a plastic bag, and dispose with OTP-contaminated waste. Do not try to wash OTP-contaminated clothing. Field DetectionReal-time field screening tools (results not confirmatory or quantitative): Caution should be given to equipment that has not been properly evaluated. False positive and false negatives may occur in the presence of interferents common in the environment.The following is a summary of minimum screening concentration ranges or levels for equipment procured by many EPA and HAZMAT response teams. Other screening tools may be used by these teams and other agencies and responders, some with similar capabilities and limitations. NOTE: Detection equipment does not measure contaminant levels. Rather,they detect the presence of an OTPpesticide at levels as low as listed below.Minimum Screening Ranges/Levels for AirDrägertube-Phosphoric acid estersAP2C/AP4C(flame photometric)Screening Levels for WaterMisc. ACh-E inhibitor/ immuno-assay kits, i.e.: misc. organophosphates (OP) compoundsHACH -Eclox test kit;Abraxis -OP/Carbamate Test Kit*ppm0.05 (as Dichlorvos)Responds to phosphorus.Possible cross sensitivity to OTPs and other OPs(concentration ranges unknown)*1.2 ug/L malathion, not available for methyl parathion, and chlorpyrifos;*0.8 ug/L parathion (in water)mg/m30.45 (as Dichlorvos)",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 48,
+        "repeatedHeaderFooterBlockCount": 19,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 4,
+      "humanPageNumber": 5,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "Updated November 2018(replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "Tj",
+          "text": "2012)Page 5of 6",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Organothiophosphate (OTP)Pesticid",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "es: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "including",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "Tj",
+          "text": "Parathion, ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Methyl Parathion, Disulfoton, Phorate, Chlorpyrifos",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "Tj",
+          "text": ",",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Malathion",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "Tj",
+          "text": "",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Continued[November",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "2018SamplingNote: This section on sampling contains general guidelines and does not replace the need for a site-specific sampling plan (See Key References Cited/Used) Sampling Concerns:",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Detection, sampling equipment and procedures, and analytical techniques will be site-specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "porous); 3) the purpose of sampling (e.g., characterization, decontamination efficacy,and clearance); and 4) specific laboratory requirements. Not all laboratories have the capability to determine OTP (or oxidationby-products,e.g.,oxons) in all ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "types of media.The U.S. Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for chemical agent analysis of ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSIS section below (www2.epa.gov/emergency-response/environmental-response-laboratory-network). For sampling questions, call EPA/HQ-EOC at 202-564-3850.",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Concurrent air sampling is recommended during all sampling activities.Sample Locations and Planning: Initially consider air monitoring to ensure worker safety and to determine if theOTP release could result inavapor and/or aerosol cloud",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "that could impact other areas. Characterization sampling is initiated by targeted or judgmental sampling to identify hot spots, potential agent ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "flow paths, and media or objects potentially acting as sinks. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probab",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "ilistic sampling (e.g., grid, statistical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted or the amount released. Because OTPsare persistent liquids/chemicals, sample priorities should include ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "surfaces that could bepotentially contaminated with aerosol/liquid.Note: Under specific reaction conditions,oxidation by-products, including oxons, may form in many sample types. Samples should be analyzed for the presence of agent anditsby-products",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "(including oxons, sulfoxides and/or sulfones). See ANALYSIS section below to ensure sampling procedures are compatible with all analytes.Types of Samples: Air:Samplesarecollectedusingappropriatesolidphaseabsorbent media at breathingzonelevel (~5ft.)toasse",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "Tj",
+          "text": "ssinhalationexposureandatgroundlevels(~6in.)toassessoffgassingatsurfaces. Concurrent air monitoring is recommended.Water: Water should be collected in appropriate containers with addition of appropriate preservatives.To rule out contamination concerns, lab",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "analyses should include oxons, sulfoxides and/or sulfones.Concurrent air monitoring is recommended.Soil:For localized hot spot areas where soil deposition may occur, surface soil samples should be taken from a non-",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "vegetated area to a depth of less than one inch.Sub-surface soil samples are typically not necessary unless a large amount of liquid was poured on the ground, or if an underlying aquifer is endangered.Concurrent air monitoring is recommended.Surface Wipes:",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Wipe samples are often desired to indicate absence of OTP on non-porous surfaces. Concurrent air monitoring is recommended.Bulk:For hot spot areas where liquid OTPdeposition may occur on porous surfaces (e.g., concrete, asphalt), actual pieces or",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "cores of contaminated surface may be obtained using appropriate tools (scabbling, coring or drills) for subsequent laboratory extraction analysis.Concurrent air monitoring is recommended.Other Sample Matrices:Contact EPA/HQ-EOC at 202-564-",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "3850 for sampling instructions.Sample Packaging and Shipping: The packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA and IATA. Contact the sample-receiving laboratory to ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "determine if they have additional packaging, shipping or labeling requirements.AnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil). The ERLN will use uniform, compatible sample prep and analytical ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "methods. (See www2.epa.gov/emergency-response/environmental-response-laboratory-network).For access to the nearest ERLN laboratory specially trained and equipped for analysis of OTPs and their by-products(including oxons, sulfoxides and/or sulfones)",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": ", contact the EPA/HQ-EOC at 202-564-3850.Decontamination/CleanupCAUTION: OTP oxidation by-products (e.g.,oxons, sulfoxides, and/or sulfones)can be equally or more toxic to humans than the original chemical. ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Decontamination should consider all these forms to reduce potential for exposure to such toxic substances. For decontamination information, contact the EPA/HQ-EOC at 202-564-3850.Decontamination/Cleanup Planning: ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "Once site controls are in place, develop a site-specific decontamination/cleanup plan. Decontamination may require a tiered approach using a variety of techniques and products. Call the EPA/HQ-EOC at 202-564-3850 for more information.",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "General Considerations: A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers: public safety, total cost, impact on the facility, wastes generated, as well as the time the facility o",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "r item will be out of service and any socio-economic, psychological, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be collected, treated and disposed of properly. Waste handling and disp",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "osal must be addressed as early in the decontamination and cleanup process as possible (see WASTE MANAGEMENTsection below). Disposal Option:The urgency to restore a facility as quickly as possible may result in the outright and timely removal and dispos",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "al of contaminated materials. Certain materials may be resistant to decontamination formulations, or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation:OTPs can degrade rather slowly, depending on enviro",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "nmental conditions, via natural processes. Oxons, sulfoxides, and sulfones may degrade at different rates than the OTP. Such degradation can be quicker than the parent OTP but should not be assumed. Environmental monitoring must be maintained during decont",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "amination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This o",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "ption is more passive than other options but is non-destructive to materials. The potential formation of oxons andsulfoxides/sulfones of equal or greater toxicity from OTPs by oxidation in air must be considered.Fix-in-Place Option:The contaminated area",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "may be resistant to decontamination products or may be unable or impractical to be treated;as such a Fix-in-Place option may not be required or feasible. Physical barriers can be used to separate and immobilize the agent contamination from coming into ",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "contact with the environment or the public. This can be a temporary or permanent solution. Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas into 4 broad categories: 1) surfaces or hotspots, 2) large",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "volumetric spaces, 3) sensitive equipment or items, and 4) aqueous solutions containing OTPs. Areas in each category may be treated using one or more unique decontamination processes in a tiered approach to the overall site-specific decontamination strate",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "gy. It is advisable to choose a decontamination solution containing a strong oxidant, such as chlorine or peroxide, which will help decompose oxons and sulfoxides/sulfones formed at lower concentrations of oxidant. A uniform application at high oxidant con",
+          "role": "BODY"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "centration will be required to maximize destruction of parent compound, oxons, and sulfoxides/sulfones.BecauseOTP refers to a number of chemical compounds, the decontamination procedures described below are not compound-specific, and may need to be adapt",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "ed for site-specific conditions. Decontamination studies for some OTP compounds are not available; in this case, decontamination processes for surfaces or items described here are based on expected reaction chemistry studied during decontamination of organ",
+          "role": "BODY"
+        },
+        {
+          "order": 46,
+          "operator": "TJ",
+          "text": "ophosphate chemical warfare agents (the only compounds for which studies are known to exist), while decontamination processes of aqueous solutions are based on degradation of agricultural OTPs.It may be necessary to verify the efficacy of a selected decon",
+          "role": "BODY"
+        },
+        {
+          "order": 47,
+          "operator": "TJ",
+          "text": "taminant for a particular OTP under site-specific conditions. ",
+          "role": "BODY"
+        }
+      ],
+      "text": "2012)Page 5of 6 es: Parathion, ,  2018SamplingNote: This section on sampling contains general guidelines and does not replace the need for a site-specific sampling plan (See Key References Cited/Used) Sampling Concerns: Detection, sampling equipment and procedures, and analytical techniques will be site-specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non- porous); 3) the purpose of sampling (e.g., characterization, decontamination efficacy,and clearance); and 4) specific laboratory requirements. Not all laboratories have the capability to determine OTP (or oxidationby-products,e.g.,oxons) in all types of media.The U.S. Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSIS section below (www2.epa.gov/emergency-response/environmental-response-laboratory-network). For sampling questions, call EPA/HQ-EOC at 202-564-3850. Concurrent air sampling is recommended during all sampling activities.Sample Locations and Planning: Initially consider air monitoring to ensure worker safety and to determine if theOTP release could result inavapor and/or aerosol cloud that could impact other areas. Characterization sampling is initiated by targeted or judgmental sampling to identify hot spots, potential agent flow paths, and media or objects potentially acting as sinks. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probab ilistic sampling (e.g., grid, statistical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted or the amount released. Because OTPsare persistent liquids/chemicals, sample priorities should include surfaces that could bepotentially contaminated with aerosol/liquid.Note: Under specific reaction conditions,oxidation by-products, including oxons, may form in many sample types. Samples should be analyzed for the presence of agent anditsby-products (including oxons, sulfoxides and/or sulfones). See ANALYSIS section below to ensure sampling procedures are compatible with all analytes.Types of Samples: Air:Samplesarecollectedusingappropriatesolidphaseabsorbent media at breathingzonelevel (~5ft.)toasse ssinhalationexposureandatgroundlevels(~6in.)toassessoffgassingatsurfaces. Concurrent air monitoring is recommended.Water: Water should be collected in appropriate containers with addition of appropriate preservatives.To rule out contamination concerns, lab analyses should include oxons, sulfoxides and/or sulfones.Concurrent air monitoring is recommended.Soil:For localized hot spot areas where soil deposition may occur, surface soil samples should be taken from a non- vegetated area to a depth of less than one inch.Sub-surface soil samples are typically not necessary unless a large amount of liquid was poured on the ground, or if an underlying aquifer is endangered.Concurrent air monitoring is recommended.Surface Wipes: Wipe samples are often desired to indicate absence of OTP on non-porous surfaces. Concurrent air monitoring is recommended.Bulk:For hot spot areas where liquid OTPdeposition may occur on porous surfaces (e.g., concrete, asphalt), actual pieces or cores of contaminated surface may be obtained using appropriate tools (scabbling, coring or drills) for subsequent laboratory extraction analysis.Concurrent air monitoring is recommended.Other Sample Matrices:Contact EPA/HQ-EOC at 202-564- 3850 for sampling instructions.Sample Packaging and Shipping: The packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA and IATA. Contact the sample-receiving laboratory to determine if they have additional packaging, shipping or labeling requirements.AnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil). The ERLN will use uniform, compatible sample prep and analytical methods. (See www2.epa.gov/emergency-response/environmental-response-laboratory-network).For access to the nearest ERLN laboratory specially trained and equipped for analysis of OTPs and their by-products(including oxons, sulfoxides and/or sulfones) , contact the EPA/HQ-EOC at 202-564-3850.Decontamination/CleanupCAUTION: OTP oxidation by-products (e.g.,oxons, sulfoxides, and/or sulfones)can be equally or more toxic to humans than the original chemical. Decontamination should consider all these forms to reduce potential for exposure to such toxic substances. For decontamination information, contact the EPA/HQ-EOC at 202-564-3850.Decontamination/Cleanup Planning: Once site controls are in place, develop a site-specific decontamination/cleanup plan. Decontamination may require a tiered approach using a variety of techniques and products. Call the EPA/HQ-EOC at 202-564-3850 for more information. General Considerations: A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers: public safety, total cost, impact on the facility, wastes generated, as well as the time the facility o r item will be out of service and any socio-economic, psychological, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be collected, treated and disposed of properly. Waste handling and disp osal must be addressed as early in the decontamination and cleanup process as possible (see WASTE MANAGEMENTsection below). Disposal Option:The urgency to restore a facility as quickly as possible may result in the outright and timely removal and dispos al of contaminated materials. Certain materials may be resistant to decontamination formulations, or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation:OTPs can degrade rather slowly, depending on enviro nmental conditions, via natural processes. Oxons, sulfoxides, and sulfones may degrade at different rates than the OTP. Such degradation can be quicker than the parent OTP but should not be assumed. Environmental monitoring must be maintained during decont amination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This o ption is more passive than other options but is non-destructive to materials. The potential formation of oxons andsulfoxides/sulfones of equal or greater toxicity from OTPs by oxidation in air must be considered.Fix-in-Place Option:The contaminated area may be resistant to decontamination products or may be unable or impractical to be treated;as such a Fix-in-Place option may not be required or feasible. Physical barriers can be used to separate and immobilize the agent contamination from coming into contact with the environment or the public. This can be a temporary or permanent solution. Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas into 4 broad categories: 1) surfaces or hotspots, 2) large volumetric spaces, 3) sensitive equipment or items, and 4) aqueous solutions containing OTPs. Areas in each category may be treated using one or more unique decontamination processes in a tiered approach to the overall site-specific decontamination strate gy. It is advisable to choose a decontamination solution containing a strong oxidant, such as chlorine or peroxide, which will help decompose oxons and sulfoxides/sulfones formed at lower concentrations of oxidant. A uniform application at high oxidant con centration will be required to maximize destruction of parent compound, oxons, and sulfoxides/sulfones.BecauseOTP refers to a number of chemical compounds, the decontamination procedures described below are not compound-specific, and may need to be adapt ed for site-specific conditions. Decontamination studies for some OTP compounds are not available; in this case, decontamination processes for surfaces or items described here are based on expected reaction chemistry studied during decontamination of organ ophosphate chemical warfare agents (the only compounds for which studies are known to exist), while decontamination processes of aqueous solutions are based on degradation of agricultural OTPs.It may be necessary to verify the efficacy of a selected decon taminant for a particular OTP under site-specific conditions.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 48,
+        "repeatedHeaderFooterBlockCount": 13,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 5,
+      "humanPageNumber": 6,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "Updated November 2018(replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "Tj",
+          "text": "2012)Page 6of 6",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Organothiophosphate (OTP)Pesticid",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "es: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "including",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "Tj",
+          "text": "Parathion, ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Methyl Parathion, Disulfoton, Phorate, Chlorpyrifos",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "Tj",
+          "text": ",",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Malathion",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "Tj",
+          "text": "",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Continued[November",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "2018Decontamination/Cleanup(continued)Surfaces/Hot Spots: This category is for areas smaller in size but with higher levels of agent contamination. They may require more rigorous decontamination products and methods. 1) Hypochlorite Solutions: ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Hypochlorite can be very damaging (corrosive) to certain surfaces and materials, and should be rinsed thoroughly afterwards. Household bleach (5.0% sodium hypochlorite) is expected to be effective for OTPs but may result in oxon formationif insufficient ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "bleach is used on a given area. Calcium hypochlorite, present in commercial products, such as HTH (10% hypochlorite solution), is better for surfaces with high concentrations of liquids in localized areas. 2) Aqueous peroxide solutions may ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "be effective in breaking down OTPs; however, potential oxon and sulfoxides/sulfones formation requires additional monitoring to ensure sufficient amounts of decontamination product has been used.Large Volumetric Spaces:",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "This category is for areas larger in size but with lower levels of agent contamination. 1) Monitored Natural Attenuation is more passive than other decontamination options and is non-destructive to materials. This option may be preferable give",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "n the scope and severity of contamination. 2)Forced or Hot Air ventilation methods are recommended for large volumetric spaces or open areas with low concentration of OTPs; efficacy typically can be achieved with less waste and adverse impacts to material",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "s. 3) Fumigation with modified vaporous hydrogen peroxide (mVHP) or chlorine dioxide (ClO2) may be effective against OTPs although these fumigants have not been studied, particularly with respect to oxon and sulfoxide/sulfone degradation. HVAC systems ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "in large indoor spaces may require a separate decontamination strategy, which could include the use of hot air ventilation orfumigation. Sensitive Equipment and Items: 1)Forced or Hot Air ventilation may be used for OTPsand can be used either in-situ or ex",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "Tj",
+          "text": "-situ to decontaminate these items. The low volatility of all six OTPsmay necessitate high operating temperatures. 2) mVHP fumigation can be used on these items with less corrosion to electronics than dilute hypochlorite solutions.Aqueous Solutions:",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Chlorination and other oxidative processes in the drinking water treatment and distribution system can result in significant oxidation of OTPs and formation of stable OTP oxons and sulfoxides/sulfones, depending on the OTP. To avoid formation of oxons and ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "sulfoxides/sulfones or to treat water already contaminated with them, aggressive oxidation may be necessary (e.g., high concentrations of chlorine or stronger oxidants such as ozone or hydroxyl radial",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "s generated through advanced oxidation processes). Sorbents such as activated carbon may also be useful in such cases. Effectiveness of oxidation and sorption will depend on site-specific conditions and the OTP of interest, so should be verified.Cautions:",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Decontamination solutions or fumigants may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of bleach results in chlorine vapors, while fumigants may be used at concentrations above their ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "IDLH levels). Strong oxidizers, such as hypochlorite, may react violently with organics. Proprietary decontamination products such as Ultra Kleen, DF-200, and SDF have been shown to be effective against some of the OTPs on the order of minutes to hours, bu",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "t not all have been tested and may lead to formation of oxons and sulfoxides/sulfones. Formulations should be chosen that do not allow the formation of oxons and sulfoxides/sulfones. None of these products have been officially endorsed for OTP decontaminat",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "ion.Availability, cost, and the need for specialized equipment may limit their use early in the response. Dirt, grime, and other coatings can reduce the efficacy of decontamination; pre-cleaning surfaces with soap and water may be needed before the applic",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "ation of decontamination formulations but resulting pre-cleaning rinsates may contain and spread OTPs and toxic by-products.Verification of Decontamination:Site and situation specific. Please contact EPA/HQ-EOC at 202-564-3850for further assistance.Wa",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "ste ManagementCAUTION:Federal requirements for transporting hazardous materials and procedures for exemptions are specified in www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "OTP pesticides are considered Hazard Class 6.1 (poison) for transportation purposes. Methyl parathion is also considered Hazard Class 3 (flammable liquid).Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat.",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "Detailed state regulations can be found at www.envcap.org/.Waste Management:Under the Resource Conservation and Recovery Act (RCRA), solid waste can be classified as hazardous (subtitle C) or non-hazardous ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "(subtitle D). The RCRA regulations generally define a waste as hazardous if it is: (1) a listed waste (40 CFR §261.31, §261.32), (2) exhibits specific characteristics (40 CFR §261.21-261.24) or (3) is a discarded commercial chemical product, off-",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "specification species, container residue, or spill residue thereof (40 CFR §261.33). Methyl parathion, parathion, phorate, and disulfoton are listed under RCRA chemical codes P071, P089, P094, and P039, respectively, for ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "discarded commercial chemical products (§261.33). Methyl parathion waste may also be ignitable hazardous waste, chemical codeD001, if it is a solid and burns so vigorousl",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "y and persistently that it creates a hazard or is a liquid and has a flash point < 60ºC (§261.21). Malathion and chlorpyrifosare not regulated under RCRA. OTP pesticides are also regulated under CERCLA. The reportable quantity threshold for malathion and ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "methyl parathion is 100 lb, the threshold for parathion and phorate is 10 lb, and the threshold for disulfoton and chlorpyrifos is 1 lb.The States(except for Alaska and Iowa) have the primary responsibility to implement the hazardous waste regulations an",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "d can impose more stringent requirements than the Federal program, so it is critical to open a dialogue with regulators as early as possible. Management of toxic decomposition products, associated residual decontamination solutions, local waste acceptance ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "criteria, and transportation and handling requirements should be considered. The EPA has developed I-WASTE, a web-based tool that contains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidan",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "ce, and guidance to minimize the potential for contaminating thetreatment or disposal facility.Access to this decision support tool requires pre-registration (www2.ergweb.com/bdrtool/login.asp).",
+          "role": "BODY"
+        }
+      ],
+      "text": "2012)Page 6of 6 es: Parathion, ,  2018Decontamination/Cleanup(continued)Surfaces/Hot Spots: This category is for areas smaller in size but with higher levels of agent contamination. They may require more rigorous decontamination products and methods. 1) Hypochlorite Solutions: Hypochlorite can be very damaging (corrosive) to certain surfaces and materials, and should be rinsed thoroughly afterwards. Household bleach (5.0% sodium hypochlorite) is expected to be effective for OTPs but may result in oxon formationif insufficient bleach is used on a given area. Calcium hypochlorite, present in commercial products, such as HTH (10% hypochlorite solution), is better for surfaces with high concentrations of liquids in localized areas. 2) Aqueous peroxide solutions may be effective in breaking down OTPs; however, potential oxon and sulfoxides/sulfones formation requires additional monitoring to ensure sufficient amounts of decontamination product has been used.Large Volumetric Spaces: This category is for areas larger in size but with lower levels of agent contamination. 1) Monitored Natural Attenuation is more passive than other decontamination options and is non-destructive to materials. This option may be preferable give n the scope and severity of contamination. 2)Forced or Hot Air ventilation methods are recommended for large volumetric spaces or open areas with low concentration of OTPs; efficacy typically can be achieved with less waste and adverse impacts to material s. 3) Fumigation with modified vaporous hydrogen peroxide (mVHP) or chlorine dioxide (ClO2) may be effective against OTPs although these fumigants have not been studied, particularly with respect to oxon and sulfoxide/sulfone degradation. HVAC systems in large indoor spaces may require a separate decontamination strategy, which could include the use of hot air ventilation orfumigation. Sensitive Equipment and Items: 1)Forced or Hot Air ventilation may be used for OTPsand can be used either in-situ or ex -situ to decontaminate these items. The low volatility of all six OTPsmay necessitate high operating temperatures. 2) mVHP fumigation can be used on these items with less corrosion to electronics than dilute hypochlorite solutions.Aqueous Solutions: Chlorination and other oxidative processes in the drinking water treatment and distribution system can result in significant oxidation of OTPs and formation of stable OTP oxons and sulfoxides/sulfones, depending on the OTP. To avoid formation of oxons and sulfoxides/sulfones or to treat water already contaminated with them, aggressive oxidation may be necessary (e.g., high concentrations of chlorine or stronger oxidants such as ozone or hydroxyl radial s generated through advanced oxidation processes). Sorbents such as activated carbon may also be useful in such cases. Effectiveness of oxidation and sorption will depend on site-specific conditions and the OTP of interest, so should be verified.Cautions: Decontamination solutions or fumigants may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of bleach results in chlorine vapors, while fumigants may be used at concentrations above their IDLH levels). Strong oxidizers, such as hypochlorite, may react violently with organics. Proprietary decontamination products such as Ultra Kleen, DF-200, and SDF have been shown to be effective against some of the OTPs on the order of minutes to hours, bu t not all have been tested and may lead to formation of oxons and sulfoxides/sulfones. Formulations should be chosen that do not allow the formation of oxons and sulfoxides/sulfones. None of these products have been officially endorsed for OTP decontaminat ion.Availability, cost, and the need for specialized equipment may limit their use early in the response. Dirt, grime, and other coatings can reduce the efficacy of decontamination; pre-cleaning surfaces with soap and water may be needed before the applic ation of decontamination formulations but resulting pre-cleaning rinsates may contain and spread OTPs and toxic by-products.Verification of Decontamination:Site and situation specific. Please contact EPA/HQ-EOC at 202-564-3850for further assistance.Wa ste ManagementCAUTION:Federal requirements for transporting hazardous materials and procedures for exemptions are specified in www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. OTP pesticides are considered Hazard Class 6.1 (poison) for transportation purposes. Methyl parathion is also considered Hazard Class 3 (flammable liquid).Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat. Detailed state regulations can be found at www.envcap.org/.Waste Management:Under the Resource Conservation and Recovery Act (RCRA), solid waste can be classified as hazardous (subtitle C) or non-hazardous (subtitle D). The RCRA regulations generally define a waste as hazardous if it is: (1) a listed waste (40 CFR §261.31, §261.32), (2) exhibits specific characteristics (40 CFR §261.21-261.24) or (3) is a discarded commercial chemical product, off- specification species, container residue, or spill residue thereof (40 CFR §261.33). Methyl parathion, parathion, phorate, and disulfoton are listed under RCRA chemical codes P071, P089, P094, and P039, respectively, for discarded commercial chemical products (§261.33). Methyl parathion waste may also be ignitable hazardous waste, chemical codeD001, if it is a solid and burns so vigorousl y and persistently that it creates a hazard or is a liquid and has a flash point < 60ºC (§261.21). Malathion and chlorpyrifosare not regulated under RCRA. OTP pesticides are also regulated under CERCLA. The reportable quantity threshold for malathion and methyl parathion is 100 lb, the threshold for parathion and phorate is 10 lb, and the threshold for disulfoton and chlorpyrifos is 1 lb.The States(except for Alaska and Iowa) have the primary responsibility to implement the hazardous waste regulations an d can impose more stringent requirements than the Federal program, so it is critical to open a dialogue with regulators as early as possible. Management of toxic decomposition products, associated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered. The EPA has developed I-WASTE, a web-based tool that contains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidan ce, and guidance to minimize the potential for contaminating thetreatment or disposal facility.Access to this decision support tool requires pre-registration (www2.ergweb.com/bdrtool/login.asp).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 39,
+        "repeatedHeaderFooterBlockCount": 13,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    }
+  ]
+}

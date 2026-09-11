@@ -83,6 +83,8 @@ export type AuthoritativeSourceFact = {
   normalizationMethod?: string | null;
   applicability?: string | null;
   context?: Record<string, string | number | boolean | null> | null;
+  /** Controlled semantic subdomain for facts imported from targeted extraction. */
+  subdomain?: string | null;
   sourceArtifactId: string;
   sourceArtifactSha256?: string | null;
   sourceAgency: string;
@@ -121,6 +123,45 @@ export type ExtractionDisposition =
 
 export type ArtifactHashValidation = "VERIFIED" | "NOT_APPLICABLE" | "FAILED" | "MISSING";
 
+export type PdfFailureCategory =
+  | "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX"
+  | "B_MULTI_COLUMN_TEXT"
+  | "C_TABLE_EXTRACTION_FAILURE"
+  | "D_FONT_ENCODING_ISSUE"
+  | "E_TEXT_LAYER_EMPTY"
+  | "F_SCANNED_IMAGE_PDF"
+  | "G_MIXED_TEXT_AND_IMAGE"
+  | "H_PAGE_ORDER_READING_ORDER_FAILURE"
+  | "I_FORM_XFA_PDF"
+  | "J_ENCRYPTED_OR_PROTECTED"
+  | "K_MALFORMED_PDF"
+  | "L_PARSER_TIMEOUT"
+  | "M_PARSER_OUTPUT_TOO_NOISY"
+  | "N_LOCATOR_MAPPING_FAILURE"
+  | "O_OTHER";
+
+export type PdfPageTextBlock = {
+  order: number;
+  operator: "Tj" | "TJ";
+  text: string;
+  role: "BODY" | "REPEATED_HEADER_FOOTER";
+};
+
+export type PdfPageExtraction = {
+  pdfPageIndex: number;
+  humanPageNumber: number | null;
+  parser: "PDF_STRUCTURE";
+  extractionMethod: "EMBEDDED_TEXT" | "OCR";
+  textBlocks: PdfPageTextBlock[];
+  text: string;
+  quality: {
+    nonWhitespaceTextBlockCount: number;
+    repeatedHeaderFooterBlockCount: number;
+    suspiciousTokens: string[];
+    warnings: string[];
+  };
+};
+
 export type SourceArtifactExtractionManifest = {
   sourceArtifactId: string;
   acquisitionDisposition: SourceArtifactStatus;
@@ -138,12 +179,43 @@ export type SourceArtifactExtractionManifest = {
   reviewRequirements: string[];
   duplicateOf: string | null;
   supersededBy: string | null;
+  failureCategory?: PdfFailureCategory | null;
+  pdfPages?: PdfPageExtraction[] | null;
+  pageExtractionArtifactPath?: string | null;
 };
 
 export type CbrneExtractionCheckpoint = {
   status: "IN_PROGRESS" | "COMPLETE";
   completedArtifactCount: number;
   lastCompletedArtifactId: string | null;
+};
+
+export type CbrneSemanticExtractionDisposition =
+  | "FACTS_EXTRACTED"
+  | "NO_SAFE_FACTS_ADMITTED"
+  | "SEMANTIC_REVIEW_REQUIRED";
+
+export type CbrneSemanticExtractionCheckpoint = {
+  status: "IN_PROGRESS" | "COMPLETE";
+  expectedArtifactCount: number;
+  completedArtifactCount: number;
+  lastCompletedArtifactId: string | null;
+};
+
+export type CbrneSemanticExtractionArtifactResult = {
+  sourceArtifactId: string;
+  sourceArtifactSha256: string;
+  disposition: CbrneSemanticExtractionDisposition;
+  pagesProcessed: number;
+  blocksProcessed: number;
+  operationalSectionsFound: string[];
+  factsCreated: string[];
+  duplicateFactsSkipped: string[];
+  rejectedUnsafeFactCandidates: number;
+  identitiesLinked: string[];
+  domainsUpdated: string[];
+  ignoredSectionCategories: string[];
+  parserSemanticLimitations: string[];
 };
 
 export type CbrneCompletenessState =

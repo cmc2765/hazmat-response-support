@@ -1,0 +1,1142 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-chemical-phosphine",
+  "sourceArtifactSha256": "be37cc07de61704c89348e3a5771079a228e5f7b0d51a6f4633c0efdf3953022",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 5,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [],
+      "text": "",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 0,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "2018Page 2of 5",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "Tj",
+          "text": "P",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "hosphine; Aluminum, Magnesium, and Zinc Phosphide",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "Tj",
+          "text": "",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Release Scenarios",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "(continued)",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Water/Water Systems:Solid phosphides released into natural waters or water systems will generate phosphine gas, which can resultin an inhalation hazard. Phosphine gas is non-reactive with and only slightly soluble in water, so if released into",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "natural waters or water systems, it is expected to volatilize from the water and could result in an inhalation hazard. Introduction of phosphine gas or solid phosphides to water/water systems is an unlikely release scenario.Indoor Facility:",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Due to its volatility, phosphine gas could potentially be dispersed inside a building or facility; HVAC systems could be impacted. Explosive ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "vapors can be formed. Phosphine gas is heavier than air and can accumulate in lower levels or utility corridors inside the building.  Other:",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Routine fumigation of food, produce, grain, etc. does not contaminate the product being fumigated with phosphine. If solid phosphides are mixed with the product, generation of phosphine gas may be possible under certain conditions, e.g., residually moist ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "products. Contamination of agricultural products isan unlikely scenario. There have been reports of phosphine gas exposure from the emesis (vomit) of humans and animals who have ingested solid phosphide pesticides.Also see above General Statement.",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Health EffectsOnset: Onset of symptoms is dose and route dependent. Symptoms may occur within seconds after exposure tophosphine gas (severe respiratoryirritation) or liquid (frostbite, or skin/eye burns).Symptoms from phosphine gas may also be delaye",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "d for severalhours after inhalation exposure. For zinc phosphide, after oral ingestion either intentionallyor from food contaminated with zinc phosphide,onset of systemic (affects the whole body) symptomsmay be delayed forseveral hours.Signs/Symptoms",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": ": Appearance and severity of symptoms will vary depending upon exposure route, concentration and duration. However, the following is a general list of possible symptoms.Symptoms can be delayed by several hours.Mild:Headache, cough, tightne",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "ss and pain in the chest, shortness of breath, dizziness,andlethargy.Moderate: In addition to mild symptoms, symptoms can also include dyspnea (breathing difficulty), muscle pain, chills, tremors, incoordination, seizures, and coma. Gastrointestinal ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "symptoms include nausea, vomiting, abdominal pain, and diarrhea.Severe: Pulmonary(lung)edema and cardiac arrhythmias. Impaired kidney andliver functionmay occur.Exposure above the OEL may result in unconsciousness or death.Caution:Zinc phosphide is",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "very toxicwhen ingested, because it reacts with water and acid in the stomach causing severe irritation.Severe symptoms of vascular collapse and extensive liver and kidney damagemay resultin deathafter about 30 hours.Exposure Routes:Inhalation: ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "The primary route of exposure is inhalation ofphosphine gas. Phosphidescan be absorbed into the body by inhalation oftheirvaporsoraerosols,anddusts.Skin: Contact with phosphides, especially aluminum phosphide,canirritatethe skin and mucous ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "membranes. Phosphidesare toxic whenabsorbed into the body through the skin and mucous membranes.Contact with liquid phosphine can cause frostbite or skin burns.Eyes: Contact with phosphides, especially aluminum phosphide, can irritate the eyes. Contact",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "with liquid phosphine can cause frostbite or burnthe eyes.Ingestion: Phosphidescan be absorbed into the body by ingestion, and can resultin acute systemic toxicityafter ingestion, see Cautionin above section.Effect LevelsAir: Acute Exposure ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Guideline Levels (AEGLs)for general population one-time exposure emergency scenarios (complete definitions are available in Key References Cited/Used in NRT Quick Reference Guides for Toxic Industrial Chemicals). It should be noted thatsomeAEGL-1 values",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "are not recommended(NR) due to insufficient data. In the AEGLs table below: PH3=",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "phosphine",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 27,
+          "operator": "Tj",
+          "text": ", AlP=aluminum phosphide, Mg3P2=magnesium phosphide, Zn3P2=zinc ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "phosphide",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 29,
+          "operator": "Tj",
+          "text": ".AEGL Level in ppm, at various exposure durations10 min.30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effectsPH3=NRAlP= NRMg3P2=NRZn3P2= NRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRAEGL 2: Potentially irreversible effects or impaired ability to escapePH3=4AlP=4Mg3P2=",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "Tj",
+          "text": "2Zn3P2=2442222110.50.50.250.250.250.250.130.13AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethalityPH3=7.2AlP=7.2Mg3P2=3.6Zn3P2=3.67.27.23.63.63.63.61.81.80.90.90.450.450.450.450.230.23Exposure GuidelinesPhosphine(PH3) Gas",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "(NA = not available)NIOSH IDLH= 50 ppmNIOSHSTEL= 1 ppm (1 mg/m3)Soil:see table belowNIOSH REL= 0.3 ppm TWA (0.4 mg/m3)OSHA PEL = 0.3 ppm TWA (0.4 mg/m3)Drinking Water:see table belowACGIH TLV-TWA= 0.05ppm; 0.15ppm (ceiling)as STELInhalation RfC= ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "0.0003 mg/m3Oral RfD= 0.00025 mg/kg/dayAIHAERPG-1= NAAIHAERPG-2= 0.5 ppmAIHAERPG-3= 5 ppm",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "Phosphide",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "(NA = not available)NIOSH IDLHNIOSH RELOSHA PELACGIH TLV-TWAAlPNANANANAMg3P2NANANANAZn3P2NANANANARegional Screening Levels (RSLs)May2018, where: Target Cancer Risk (TR) = 1 x 10-6, Target Hazard Quotient (THQ) = 1.0. THQ may vary depending on remediation v",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "ersus removal activities and chemical complexity of incident.(NA = not available)Phosphide/PhosphineRSLResidential Soil(mg/kg)RSLIndustrial Soil(mg/kg)TapWater (ug/L)AlP314708.0Mg3P2NANANAZn3P2233506.0PH3233500.57",
+          "role": "BODY"
+        }
+      ],
+      "text": "2018Page 2of 5 P  Release Scenarios Water/Water Systems:Solid phosphides released into natural waters or water systems will generate phosphine gas, which can resultin an inhalation hazard. Phosphine gas is non-reactive with and only slightly soluble in water, so if released into natural waters or water systems, it is expected to volatilize from the water and could result in an inhalation hazard. Introduction of phosphine gas or solid phosphides to water/water systems is an unlikely release scenario.Indoor Facility: Due to its volatility, phosphine gas could potentially be dispersed inside a building or facility; HVAC systems could be impacted. Explosive vapors can be formed. Phosphine gas is heavier than air and can accumulate in lower levels or utility corridors inside the building. Other: Routine fumigation of food, produce, grain, etc. does not contaminate the product being fumigated with phosphine. If solid phosphides are mixed with the product, generation of phosphine gas may be possible under certain conditions, e.g., residually moist products. Contamination of agricultural products isan unlikely scenario. There have been reports of phosphine gas exposure from the emesis (vomit) of humans and animals who have ingested solid phosphide pesticides.Also see above General Statement. Health EffectsOnset: Onset of symptoms is dose and route dependent. Symptoms may occur within seconds after exposure tophosphine gas (severe respiratoryirritation) or liquid (frostbite, or skin/eye burns).Symptoms from phosphine gas may also be delaye d for severalhours after inhalation exposure. For zinc phosphide, after oral ingestion either intentionallyor from food contaminated with zinc phosphide,onset of systemic (affects the whole body) symptomsmay be delayed forseveral hours.Signs/Symptoms : Appearance and severity of symptoms will vary depending upon exposure route, concentration and duration. However, the following is a general list of possible symptoms.Symptoms can be delayed by several hours.Mild:Headache, cough, tightne ss and pain in the chest, shortness of breath, dizziness,andlethargy.Moderate: In addition to mild symptoms, symptoms can also include dyspnea (breathing difficulty), muscle pain, chills, tremors, incoordination, seizures, and coma. Gastrointestinal symptoms include nausea, vomiting, abdominal pain, and diarrhea.Severe: Pulmonary(lung)edema and cardiac arrhythmias. Impaired kidney andliver functionmay occur.Exposure above the OEL may result in unconsciousness or death.Caution:Zinc phosphide is very toxicwhen ingested, because it reacts with water and acid in the stomach causing severe irritation.Severe symptoms of vascular collapse and extensive liver and kidney damagemay resultin deathafter about 30 hours.Exposure Routes:Inhalation: The primary route of exposure is inhalation ofphosphine gas. Phosphidescan be absorbed into the body by inhalation oftheirvaporsoraerosols,anddusts.Skin: Contact with phosphides, especially aluminum phosphide,canirritatethe skin and mucous membranes. Phosphidesare toxic whenabsorbed into the body through the skin and mucous membranes.Contact with liquid phosphine can cause frostbite or skin burns.Eyes: Contact with phosphides, especially aluminum phosphide, can irritate the eyes. Contact with liquid phosphine can cause frostbite or burnthe eyes.Ingestion: Phosphidescan be absorbed into the body by ingestion, and can resultin acute systemic toxicityafter ingestion, see Cautionin above section.Effect LevelsAir: Acute Exposure Guideline Levels (AEGLs)for general population one-time exposure emergency scenarios (complete definitions are available in Key References Cited/Used in NRT Quick Reference Guides for Toxic Industrial Chemicals). It should be noted thatsomeAEGL-1 values are not recommended(NR) due to insufficient data. In the AEGLs table below: PH3= , AlP=aluminum phosphide, Mg3P2=magnesium phosphide, Zn3P2=zinc .AEGL Level in ppm, at various exposure durations10 min.30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effectsPH3=NRAlP= NRMg3P2=NRZn3P2= NRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRNRAEGL 2: Potentially irreversible effects or impaired ability to escapePH3=4AlP=4Mg3P2= 2Zn3P2=2442222110.50.50.250.250.250.250.130.13AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethalityPH3=7.2AlP=7.2Mg3P2=3.6Zn3P2=3.67.27.23.63.63.63.61.81.80.90.90.450.450.450.450.230.23Exposure GuidelinesPhosphine(PH3) Gas (NA = not available)NIOSH IDLH= 50 ppmNIOSHSTEL= 1 ppm (1 mg/m3)Soil:see table belowNIOSH REL= 0.3 ppm TWA (0.4 mg/m3)OSHA PEL = 0.3 ppm TWA (0.4 mg/m3)Drinking Water:see table belowACGIH TLV-TWA= 0.05ppm; 0.15ppm (ceiling)as STELInhalation RfC= 0.0003 mg/m3Oral RfD= 0.00025 mg/kg/dayAIHAERPG-1= NAAIHAERPG-2= 0.5 ppmAIHAERPG-3= 5 ppm (NA = not available)NIOSH IDLHNIOSH RELOSHA PELACGIH TLV-TWAAlPNANANANAMg3P2NANANANAZn3P2NANANANARegional Screening Levels (RSLs)May2018, where: Target Cancer Risk (TR) = 1 x 10-6, Target Hazard Quotient (THQ) = 1.0. THQ may vary depending on remediation v ersus removal activities and chemical complexity of incident.(NA = not available)Phosphide/PhosphineRSLResidential Soil(mg/kg)RSLIndustrial Soil(mg/kg)TapWater (ug/L)AlP314708.0Mg3P2NANANAZn3P2233506.0PH3233500.57",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 36,
+        "repeatedHeaderFooterBlockCount": 8,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "2018Page 3of 5",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "Tj",
+          "text": "P",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "hosphine; Aluminum, Magnesium, and Zinc Phosphide",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "Tj",
+          "text": "",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Personnel SafetyNote: Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options and personnel decontamination may ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "vary depending upon the amount and purity of agent, site conditions and the release scenario. Additional information on personnel safety and PPE selection criteria can be found at: www.cdc.gov/niosh/ershdb",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": ". We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.Medical: Pre-incident:Annual physical and respiratory function exams.DuringIncident:Conduct periodic on-site medical monitoring, observe for any signs ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "and symptoms as per Health Effects section above and treat accordingly as per First Aid section below.First Aid: Immediately remove person from affected area and remove contaminated clothing and articles.Compressed liquid:Observe and treat for frostbite ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "and chemical burns. Wash bare skin immediately with water, or warm, soapy water if available, at normal household pressures (~50-60 psi) for three minutes, ensure thorough soaking.Rinse eyes exposed to liquid agent with potable water for 15 minutes. Gas",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": ": Observe and treat for respiratory distress and maintain clear airway.Caution:When performing CPR, or artificial respiration, use pocket mask with a one-way valve or other proper respiratory medical device (not mouth-to-",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "mouth) to prevent accidental exposure to responder from potential off-gassing of phosphine gas from affected person.Antidote: THERE IS NO ANTIDOTE.Send person for follow-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms and treat accordingly.Post Incident:Post-incident medical surveillance is highly recommended.Personal Protective Equipment (PPE):GENERAL INFORMATION:",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "NIOSH-approved Self Contained Breathing Apparatus (SCBA), NIOSH-approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and protective clothing should be used. Pre-incide",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "nt training and exercises on the proper use of PPE are recommended.CAUTION: Phosphineis a flammable gas that can bepyrophoric (spontaneously igniting in air). Phosphine may form mixtures with air that do not ignitespontaneously, but are flammable or ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "explosiveat ambient temperatures. Ignited phosphinegasmay cause thermal burnrisks.Chemical-resistant PPE may ignite and melton skin, and may contribute to severity of burn injuries from short-duration thermal hazards.Per NIOSH guidance LEVEL A:",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "Recommended for the initial response to a",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "phosphine",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 20,
+          "operator": "Tj",
+          "text": "incident. Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when the ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "phosphine",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 22,
+          "operator": "Tj",
+          "text": "concentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure.LEVEL B:Provides the highest level of respiratory protection (SCBA)when a lesser level of skin protection is required. Select Level B when the ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "phosphine",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "concentration is unknown or above the IDLH or AEGL-2 and dermal exposure is less of a risk. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that pro",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "vides protection against most liquids but is not vapor tight.LEVEL C:Select Level C when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use of APR or PAPR (i.e., < IDLH, warning properties) ar",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "e met. Level C may be appropriate when decontaminating personnel or equipment. Note: Phosphine may have limited inhalation warning properties due toolfactoryfatigue; use APR/PAPR with caution.LEVEL D:Select Level D when the contaminant is known and th",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "e concentration is below the appropriate occupational exposure limitsfor the stated duration times. Note: AEGL-1 values are not available for",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "phosphine",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 29,
+          "operator": "Tj",
+          "text": ";therefore, other exposure values such as ACGIH TLVmust be used.Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and risks of dermal exposure are known, and must be accompanied by on-site monitoring.",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "Field DetectionReal-time field screening tools (results not confirmatory or quantitative): Caution should be given to equipment that has not been properly evaluated. ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "False positive and false negatives may occur in the presence of interferents common in the environment.Follow manufacturers standards for any applicable correction factors.The following ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "is a summary of minimum screening concentration ranges or levels for equipment procured by many EPA and HAZMAT response teams. Other screening tools may be used by these teams and other agencies and responders, some with similar capabilities and limitation",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "s. CAUTION: Phosphide pesticides decompose on contact with waterand moisture in air, producing phosphine(PH3)gas; monitoring for phosphinegasis highly recommended for phosphide pesticides.NOTE: Detection equipment does not measure contaminant ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "levels. Rather, they detect the presence of phosphine gas at levels as low as listed below.Minimum Screening Ranges/Levels for AirDrägerTubes(Phosphine Tube 0.01a)DrägerSensorsXS/XXS PH3MultiRAE(PH3sensor)MultiRAE(PID)ppbRAE(PID)HoneywellSPM(Hydrides)",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Screening Levels for WaterasPhosphates Total, ortho-/metaColorimetric(HACH, various)ppm0.010.010.110.0010.030.1 mg/Lmg/m30.0140.0140.141.40.00140.04SamplingNote: This section on sampling contains general guidelines and does not replace the need for a site",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "Tj",
+          "text": "-specific sampling plan (See Key References Cited/Used) Sampling Concerns:Detection, sampling equipment and procedures, and analytical techniques will be site-specific and depend on: 1) physical state of the ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g., characterization, decontamination efficacy and clearance); and 4) specific laboratory requirements. Because phosphine gas andsolid",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "phosphide",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "pesticides are reactive and volatile, field detection of reaction by-products (non-volatile oxyacids of phosphorous and inorganic phosphates) may suffice to achieve sampling goals in specific matrices, i.e., waters and soils.CAUTION: To avoid",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "risk of severe personal injury, care must be taken when handling and preparing solid phosphide pesticide samples (e.g., tablets, pellets,dust) for analysis since phosphine gas may be released and/or buildup of flammable/e",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "xplosive concentrations of phosphine gas in sampling containers can occur (even a closed plastic bag).Unreacted, or partially spent solid phosphide pesticidesamplingresidues must be handled and treated to reduce the above risks.The U.S. Environmental P",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "rotection Agency (EPA) has set up mobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSIS section below (www2.epa.gov/emergency-",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "response/environmental-response-laboratory-network).For sampling questions, call EPA/HQ-",
+          "role": "BODY"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "EOC at 202",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 45,
+          "operator": "Tj",
+          "text": "-564-3850.Concurrent air sampling is recommended during all sampling activities.Sample Locations and Planning: Initially consider air monitoring to ensure worker safety and to determine ifthere is",
+          "role": "BODY"
+        },
+        {
+          "order": 46,
+          "operator": "TJ",
+          "text": "phosphine",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 47,
+          "operator": "TJ",
+          "text": "presentthat could impact other areas. Characterization sampling is initiated by targeted or judgmental sampling to identify hot spots, potential agent flow paths, and media or objects ",
+          "role": "BODY"
+        },
+        {
+          "order": 48,
+          "operator": "TJ",
+          "text": "potentially acting as sinks. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of ",
+          "role": "BODY"
+        },
+        {
+          "order": 49,
+          "operator": "TJ",
+          "text": "decontamination. More thorough probabilistic sampling (e.g., grid, statistical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted or the amount released.Because ",
+          "role": "BODY"
+        },
+        {
+          "order": 50,
+          "operator": "TJ",
+          "text": "phosphine",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 51,
+          "operator": "TJ",
+          "text": "is reactive and generally not persistent, air sampling for a variety of compounds along with",
+          "role": "BODY"
+        },
+        {
+          "order": 52,
+          "operator": "TJ",
+          "text": "phosphine ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 53,
+          "operator": "TJ",
+          "text": "to help to clear areas should be included in the sampling plan.Concurrent air monitoring for phosphineis recommended during all sampling activities.",
+          "role": "BODY"
+        }
+      ],
+      "text": "2018Page 3of 5 P  Personnel SafetyNote: Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options and personnel decontamination may vary depending upon the amount and purity of agent, site conditions and the release scenario. Additional information on personnel safety and PPE selection criteria can be found at: www.cdc.gov/niosh/ershdb . We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.Medical: Pre-incident:Annual physical and respiratory function exams.DuringIncident:Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per Health Effects section above and treat accordingly as per First Aid section below.First Aid: Immediately remove person from affected area and remove contaminated clothing and articles.Compressed liquid:Observe and treat for frostbite and chemical burns. Wash bare skin immediately with water, or warm, soapy water if available, at normal household pressures (~50-60 psi) for three minutes, ensure thorough soaking.Rinse eyes exposed to liquid agent with potable water for 15 minutes. Gas : Observe and treat for respiratory distress and maintain clear airway.Caution:When performing CPR, or artificial respiration, use pocket mask with a one-way valve or other proper respiratory medical device (not mouth-to- mouth) to prevent accidental exposure to responder from potential off-gassing of phosphine gas from affected person.Antidote: THERE IS NO ANTIDOTE.Send person for follow- up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms and treat accordingly.Post Incident:Post-incident medical surveillance is highly recommended.Personal Protective Equipment (PPE):GENERAL INFORMATION: NIOSH-approved Self Contained Breathing Apparatus (SCBA), NIOSH-approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and protective clothing should be used. Pre-incide nt training and exercises on the proper use of PPE are recommended.CAUTION: Phosphineis a flammable gas that can bepyrophoric (spontaneously igniting in air). Phosphine may form mixtures with air that do not ignitespontaneously, but are flammable or explosiveat ambient temperatures. Ignited phosphinegasmay cause thermal burnrisks.Chemical-resistant PPE may ignite and melton skin, and may contribute to severity of burn injuries from short-duration thermal hazards.Per NIOSH guidance LEVEL A: Recommended for the initial response to a incident. Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when the concentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure.LEVEL B:Provides the highest level of respiratory protection (SCBA)when a lesser level of skin protection is required. Select Level B when the concentration is unknown or above the IDLH or AEGL-2 and dermal exposure is less of a risk. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that pro vides protection against most liquids but is not vapor tight.LEVEL C:Select Level C when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use of APR or PAPR (i.e., < IDLH, warning properties) ar e met. Level C may be appropriate when decontaminating personnel or equipment. Note: Phosphine may have limited inhalation warning properties due toolfactoryfatigue; use APR/PAPR with caution.LEVEL D:Select Level D when the contaminant is known and th e concentration is below the appropriate occupational exposure limitsfor the stated duration times. Note: AEGL-1 values are not available for ;therefore, other exposure values such as ACGIH TLVmust be used.Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and risks of dermal exposure are known, and must be accompanied by on-site monitoring. Field DetectionReal-time field screening tools (results not confirmatory or quantitative): Caution should be given to equipment that has not been properly evaluated. False positive and false negatives may occur in the presence of interferents common in the environment.Follow manufacturers standards for any applicable correction factors.The following is a summary of minimum screening concentration ranges or levels for equipment procured by many EPA and HAZMAT response teams. Other screening tools may be used by these teams and other agencies and responders, some with similar capabilities and limitation s. CAUTION: Phosphide pesticides decompose on contact with waterand moisture in air, producing phosphine(PH3)gas; monitoring for phosphinegasis highly recommended for phosphide pesticides.NOTE: Detection equipment does not measure contaminant levels. Rather, they detect the presence of phosphine gas at levels as low as listed below.Minimum Screening Ranges/Levels for AirDrägerTubes(Phosphine Tube 0.01a)DrägerSensorsXS/XXS PH3MultiRAE(PH3sensor)MultiRAE(PID)ppbRAE(PID)HoneywellSPM(Hydrides) Screening Levels for WaterasPhosphates Total, ortho-/metaColorimetric(HACH, various)ppm0.010.010.110.0010.030.1 mg/Lmg/m30.0140.0140.141.40.00140.04SamplingNote: This section on sampling contains general guidelines and does not replace the need for a site -specific sampling plan (See Key References Cited/Used) Sampling Concerns:Detection, sampling equipment and procedures, and analytical techniques will be site-specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g., characterization, decontamination efficacy and clearance); and 4) specific laboratory requirements. Because phosphine gas andsolid pesticides are reactive and volatile, field detection of reaction by-products (non-volatile oxyacids of phosphorous and inorganic phosphates) may suffice to achieve sampling goals in specific matrices, i.e., waters and soils.CAUTION: To avoid risk of severe personal injury, care must be taken when handling and preparing solid phosphide pesticide samples (e.g., tablets, pellets,dust) for analysis since phosphine gas may be released and/or buildup of flammable/e xplosive concentrations of phosphine gas in sampling containers can occur (even a closed plastic bag).Unreacted, or partially spent solid phosphide pesticidesamplingresidues must be handled and treated to reduce the above risks.The U.S. Environmental P rotection Agency (EPA) has set up mobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSIS section below (www2.epa.gov/emergency- response/environmental-response-laboratory-network).For sampling questions, call EPA/HQ- -564-3850.Concurrent air sampling is recommended during all sampling activities.Sample Locations and Planning: Initially consider air monitoring to ensure worker safety and to determine ifthere is presentthat could impact other areas. Characterization sampling is initiated by targeted or judgmental sampling to identify hot spots, potential agent flow paths, and media or objects potentially acting as sinks. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling (e.g., grid, statistical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted or the amount released.Because is reactive and generally not persistent, air sampling for a variety of compounds along with to help to clear areas should be included in the sampling plan.Concurrent air monitoring for phosphineis recommended during all sampling activities.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 54,
+        "repeatedHeaderFooterBlockCount": 13,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "2018Page 4of 5",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "Tj",
+          "text": "P",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "hosphine; Aluminum, Magnesium, and Zinc Phosphide",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "Tj",
+          "text": "",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Sampling",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "(continued)",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Note: Phosphineis highly volatile and reactive, so reaction by-products, mainly non-volatile oxyacids of phosphorous and inorganic phosphates,may be detected in the field and used as markers to determine the extent of contamination of the parent ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "phosphine",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 11,
+          "operator": "Tj",
+          "text": ". Under specific reaction conditions, reaction by-productsmay form in many sample types. Samples should be analyzed for the presence of agent anditsreaction by-products. See ANALYSIS ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "section below to ensure sampling procedures are compatible with all analytes.Types of Samples: Air:Samplesarecollectedusingappropriatesolidphaseabsorbent media at breathingzonelevel (~5ft.)toassessinhalationexposureandatgroundlevels(~6in.)toassessoffgassin",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "Tj",
+          "text": "gatsurfaces.Water: Water should be collected in appropriate containers with addition of appropriate preservatives. Concurrent air monitoring is recommended.Soil:",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "For localized hot spot areas where soil deposition may occur, surface soil samples should be taken from a non-vegetated area to a depth of less than one inch.Sub-surface soil samples are typically not necessary unless a large amount of liquid was poured ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "on the ground, or if an underlying aquifer is endangered.Concurrent air monitoring is recommended.Surface Wipes:Wipe samples mayindicate absence of phosphide contamination on non-porous surfaces. Concurrent air monitoring is recommended.Bulk:For hot ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "spot areas where liquid phosphinedeposition may occur on porous surfaces (e.g., concrete, asphalt), actual pieces or cores of contaminated surface may be obtained using appropriate tools (scabbling, coring or drills) for subsequent laboratory extraction a",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "nalysis.Concurrent air monitoring is recommended.Other Sample Matrices:Contact EPA/HQ-",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "EOC at 202",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 19,
+          "operator": "Tj",
+          "text": "-564-3850 for sampling instructions.Sample Packaging and Shipping: The packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA and IATA. Contact the sample-",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "receiving laboratory to determine if they have additional packaging, shipping or labeling requirements.AnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil). ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "The ERLN will use uniform, compatible sample prep and analytical methods. (See www2.epa.gov/emergency-response/environmental-response-laboratory-network).Phosphates and other phosphine pesticide ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "breakdown products may be accurately determined in the field using available meters and field kits. Care must be taken when handling and preparing samples for analysis since phosphine gas may be generated. Prepare samples under a fume hood using GLP. ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "To avoidrisksfrom explosion hazard, consider usingportable blast shield inside fume hood.For access to the nearest ERLN laboratory specially trained and equipped for analysis of ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "phosphine ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "pesticides and their reaction by-products, contact the EPA/HQ-",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "EOC at 202",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 27,
+          "operator": "Tj",
+          "text": "-564-3850.Decontamination/CleanupCAUTION: DO NOT PUT WATER OR ALLOW MOISTURE IN CONTACT WITH SOLID PHOSPHIDE CONTAINING PRODUCTS. Avoid use of oxidizers in presence of gaseous or liquid phosphine. Phosphine can explode in presence of powerful oxidizers. ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Liquid phosphine will quickly dissipate from a leaking compressed gas container, Phosphine is so volatile and reactive that unless present in confined spaces it ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "will either dissipate rapidly or be consumed by reaction with the atmosphere and/or surfaces/materials it encounters. Hence, mostdecontamination will not necessarily be for phosphine gas itself, but for reaction by-products, mostly non-",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "volatile oxyacids of phosphorous and inorganic phosphates. Separate, long-term decontamination strategies will need to be developed if those by-products are of concern in a specific situation. This decontamination section refers to ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "solid phosphides and phosphine gas only.Decontamination/Cleanup Planning: Once site controls are in place, develop a site-specific decontamination/cleanup plan. Decontamination may require a ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "tiered approach using a variety of techniques and products. Call the EPA/HQ-",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "EOC at 202",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 34,
+          "operator": "Tj",
+          "text": "-564-3850 for more information.General Considerations: A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers: public safety, total ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "cost, impact on the facility, wastes generated, as well as the time the facility or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. Large volumes of deco",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "ntamination wastes may be generated that will need to be collected, treated and disposed of properly. Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible (see Waste Management section below). Dispo",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "sal Option:The urgency to restore a facility as quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may be resistant to decontamination formulations, or may be cheaper to discard and ",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "replace than to decontaminate and restore.Monitored Natural Attenuation",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "Phosphine",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 40,
+          "operator": "Tj",
+          "text": ":",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "Phosphine",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "gasdissipates rapidly (hours) via natural processes. Environmental monitoring must be maintained during decontamination and recovery phases.Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant ",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "containment measures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than other options but is non-destructive to materials. ",
+          "role": "BODY"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "Monitored Natural Attenuation Solid Phosphides: Not recommended. Solid phosphides do not evaporate appreciably over months to years, but may instead hydrolyze in presence of moisture to create highly toxic and explosive phosphine gas.Fix-in-Place Option:",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "Phosphine ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 46,
+          "operator": "TJ",
+          "text": "dissipates rapidly via natural processes, as such a Fix-in-Place Option will not be required or feasible.In the presence of solid phosphides, physical barriers can be used to separate and immobi",
+          "role": "BODY"
+        },
+        {
+          "order": 47,
+          "operator": "TJ",
+          "text": "lize the agent contamination from encountering the environment or the public. This can be a temporary or permanent solution.Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas based on presence of: 1) li",
+          "role": "BODY"
+        },
+        {
+          "order": 48,
+          "operator": "TJ",
+          "text": "quid phosphine, 2) gaseous phosphine, 3) solid phosphides, and 4) aqueous solutions containing phosphine and/or solid phosphides.EPA-approved labels for registered pesticides are intended to provide information for small spills/leaks and are not intended ",
+          "role": "BODY"
+        },
+        {
+          "order": 49,
+          "operator": "TJ",
+          "text": "to provide guidance on decontamination/cleanup for emergency responses.Strategy for Liquid Phosphine:Actions that promote safe volatilization of liquid phosphine may be useful since phosphine in gaseous form can be allowed to dissipate; volatilization ma",
+          "role": "BODY"
+        },
+        {
+          "order": 50,
+          "operator": "TJ",
+          "text": "y be a slow process depending on site conditions.Strategy for Gaseous Phosphine: Phosphine gas is extremely flammable and may react explosively with air, so Hot Air ventilation is NOT recommended. Forced Air ventilation methods are suggested for low conce",
+          "role": "BODY"
+        },
+        {
+          "order": 51,
+          "operator": "TJ",
+          "text": "ntration of phosphine gas in volumetric spaces or open areas.Strategy for Solid Phosphides:Intact tablets, pellets, or other forms containing solid phosphides may be transferred into air-tight containers with care being taken that dust is not dispersed ",
+          "role": "BODY"
+        },
+        {
+          "order": 52,
+          "operator": "TJ",
+          "text": "into the air. All necessary precautions should be taken to prevent large quantities of solid phosphides from encountering liquid or airborne acids, water, or humid atmospheres.The residue after shoveling, or small spills, may be removed by dry HEPA vacuum",
+          "role": "BODY"
+        },
+        {
+          "order": 53,
+          "operator": "TJ",
+          "text": "ing. ",
+          "role": "BODY"
+        },
+        {
+          "order": 54,
+          "operator": "TJ",
+          "text": "Phosphide",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 55,
+          "operator": "Tj",
+          "text": "-containing pesticide label instructions may identify use of a wet deactivation strategy by placing residue in water with detergent. Thisstrategy requires respiratory protection and controlled air ventilation due to formation of phosphine ga",
+          "role": "BODY"
+        },
+        {
+          "order": 56,
+          "operator": "TJ",
+          "text": "s; see strategy for aqueous solution of phosphine or solid phosphides section.Strategy for Aqueous Solutions of Phosphine or Solid Phosphides: Warning: Highly toxic and explosive phosphine may be present near aqueous solutions. If phosphine or phosphides ",
+          "role": "BODY"
+        },
+        {
+          "order": 57,
+          "operator": "TJ",
+          "text": "are present in solution, contain liquid or transfer liquid to appropriate containers. Phosphine degrades or dissipates slowly(days) from an open water system. Unreacted phosphine gas requires subsequent management; see above strategy for gaseous phosphine",
+          "role": "BODY"
+        },
+        {
+          "order": 58,
+          "operator": "TJ",
+          "text": ". The dissipation time will depend on amount initially present and environmental conditions, and can be decreased by agitation. Oxidation with excess sodium hypochlorite (bleach) can convert dissolved phosphine and residual phosphides to less toxic compoun",
+          "role": "BODY"
+        },
+        {
+          "order": 59,
+          "operator": "TJ",
+          "text": "ds, but insufficient reaction conditions (e.g., when large quantities of phosphides are present) may lead to additional toxic by-products. ",
+          "role": "BODY"
+        }
+      ],
+      "text": "2018Page 4of 5 P  Sampling Note: Phosphineis highly volatile and reactive, so reaction by-products, mainly non-volatile oxyacids of phosphorous and inorganic phosphates,may be detected in the field and used as markers to determine the extent of contamination of the parent . Under specific reaction conditions, reaction by-productsmay form in many sample types. Samples should be analyzed for the presence of agent anditsreaction by-products. See ANALYSIS section below to ensure sampling procedures are compatible with all analytes.Types of Samples: Air:Samplesarecollectedusingappropriatesolidphaseabsorbent media at breathingzonelevel (~5ft.)toassessinhalationexposureandatgroundlevels(~6in.)toassessoffgassin gatsurfaces.Water: Water should be collected in appropriate containers with addition of appropriate preservatives. Concurrent air monitoring is recommended.Soil: For localized hot spot areas where soil deposition may occur, surface soil samples should be taken from a non-vegetated area to a depth of less than one inch.Sub-surface soil samples are typically not necessary unless a large amount of liquid was poured on the ground, or if an underlying aquifer is endangered.Concurrent air monitoring is recommended.Surface Wipes:Wipe samples mayindicate absence of phosphide contamination on non-porous surfaces. Concurrent air monitoring is recommended.Bulk:For hot spot areas where liquid phosphinedeposition may occur on porous surfaces (e.g., concrete, asphalt), actual pieces or cores of contaminated surface may be obtained using appropriate tools (scabbling, coring or drills) for subsequent laboratory extraction a nalysis.Concurrent air monitoring is recommended.Other Sample Matrices:Contact EPA/HQ- -564-3850 for sampling instructions.Sample Packaging and Shipping: The packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA and IATA. Contact the sample- receiving laboratory to determine if they have additional packaging, shipping or labeling requirements.AnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil). The ERLN will use uniform, compatible sample prep and analytical methods. (See www2.epa.gov/emergency-response/environmental-response-laboratory-network).Phosphates and other phosphine pesticide breakdown products may be accurately determined in the field using available meters and field kits. Care must be taken when handling and preparing samples for analysis since phosphine gas may be generated. Prepare samples under a fume hood using GLP. To avoidrisksfrom explosion hazard, consider usingportable blast shield inside fume hood.For access to the nearest ERLN laboratory specially trained and equipped for analysis of pesticides and their reaction by-products, contact the EPA/HQ- -564-3850.Decontamination/CleanupCAUTION: DO NOT PUT WATER OR ALLOW MOISTURE IN CONTACT WITH SOLID PHOSPHIDE CONTAINING PRODUCTS. Avoid use of oxidizers in presence of gaseous or liquid phosphine. Phosphine can explode in presence of powerful oxidizers. Liquid phosphine will quickly dissipate from a leaking compressed gas container, Phosphine is so volatile and reactive that unless present in confined spaces it will either dissipate rapidly or be consumed by reaction with the atmosphere and/or surfaces/materials it encounters. Hence, mostdecontamination will not necessarily be for phosphine gas itself, but for reaction by-products, mostly non- volatile oxyacids of phosphorous and inorganic phosphates. Separate, long-term decontamination strategies will need to be developed if those by-products are of concern in a specific situation. This decontamination section refers to solid phosphides and phosphine gas only.Decontamination/Cleanup Planning: Once site controls are in place, develop a site-specific decontamination/cleanup plan. Decontamination may require a tiered approach using a variety of techniques and products. Call the EPA/HQ- -564-3850 for more information.General Considerations: A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers: public safety, total cost, impact on the facility, wastes generated, as well as the time the facility or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. Large volumes of deco ntamination wastes may be generated that will need to be collected, treated and disposed of properly. Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible (see Waste Management section below). Dispo sal Option:The urgency to restore a facility as quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may be resistant to decontamination formulations, or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation : gasdissipates rapidly (hours) via natural processes. Environmental monitoring must be maintained during decontamination and recovery phases.Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than other options but is non-destructive to materials. Monitored Natural Attenuation Solid Phosphides: Not recommended. Solid phosphides do not evaporate appreciably over months to years, but may instead hydrolyze in presence of moisture to create highly toxic and explosive phosphine gas.Fix-in-Place Option: dissipates rapidly via natural processes, as such a Fix-in-Place Option will not be required or feasible.In the presence of solid phosphides, physical barriers can be used to separate and immobi lize the agent contamination from encountering the environment or the public. This can be a temporary or permanent solution.Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas based on presence of: 1) li quid phosphine, 2) gaseous phosphine, 3) solid phosphides, and 4) aqueous solutions containing phosphine and/or solid phosphides.EPA-approved labels for registered pesticides are intended to provide information for small spills/leaks and are not intended to provide guidance on decontamination/cleanup for emergency responses.Strategy for Liquid Phosphine:Actions that promote safe volatilization of liquid phosphine may be useful since phosphine in gaseous form can be allowed to dissipate; volatilization ma y be a slow process depending on site conditions.Strategy for Gaseous Phosphine: Phosphine gas is extremely flammable and may react explosively with air, so Hot Air ventilation is NOT recommended. Forced Air ventilation methods are suggested for low conce ntration of phosphine gas in volumetric spaces or open areas.Strategy for Solid Phosphides:Intact tablets, pellets, or other forms containing solid phosphides may be transferred into air-tight containers with care being taken that dust is not dispersed into the air. All necessary precautions should be taken to prevent large quantities of solid phosphides from encountering liquid or airborne acids, water, or humid atmospheres.The residue after shoveling, or small spills, may be removed by dry HEPA vacuum ing. -containing pesticide label instructions may identify use of a wet deactivation strategy by placing residue in water with detergent. Thisstrategy requires respiratory protection and controlled air ventilation due to formation of phosphine ga s; see strategy for aqueous solution of phosphine or solid phosphides section.Strategy for Aqueous Solutions of Phosphine or Solid Phosphides: Warning: Highly toxic and explosive phosphine may be present near aqueous solutions. If phosphine or phosphides are present in solution, contain liquid or transfer liquid to appropriate containers. Phosphine degrades or dissipates slowly(days) from an open water system. Unreacted phosphine gas requires subsequent management; see above strategy for gaseous phosphine . The dissipation time will depend on amount initially present and environmental conditions, and can be decreased by agitation. Oxidation with excess sodium hypochlorite (bleach) can convert dissolved phosphine and residual phosphides to less toxic compoun ds, but insufficient reaction conditions (e.g., when large quantities of phosphides are present) may lead to additional toxic by-products.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 60,
+        "repeatedHeaderFooterBlockCount": 14,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 4,
+      "humanPageNumber": 5,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "2018Page 5of 5",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "Tj",
+          "text": "P",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "hosphine; Aluminum, Magnesium, and Zinc Phosphide",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "Tj",
+          "text": "",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Decontamination/Cleanup",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "(continued)",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Sensitive Equipment and Items:For difficult-to-clean equipment thought to be contaminated with small amounts of solid phosphides, additional options for ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "consideration include flushing with detergent and water, although the residual aqueous solution may contain phosphine gas that requires controlled air ventilation methods.CAUTION:Decontamination/neutralization",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "products may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use.Verification of Decontamination:Site and situation specific. Please contact EPA/HQ-",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "EOC at 202",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 13,
+          "operator": "Tj",
+          "text": "-564-3850for further assistance.Waste ManagementTransportation:Federal requirements for transporting hazardous materials and procedures for exemptions are specified atwww.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Phosphine is considered Hazard Class 2.3, subsidiary Class 2.1 for transportation purposes, and aluminum phosphide, magnesium phosphide, and zinc phosphide are considered Hazard Class 4.3, subsidiary Class 6.1 for transportation purposes.",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat.Detailed state regulations can be found at www.envcap.org/.Waste Management:",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Under the Resource Conservation and Recovery Act (RCRA), solid waste can be classified as hazardouswaste(subtitle C) or solid waste(subtitle D). The RCRA regulations generally define a waste to behazardous if it is: (1) a listed waste (40 CFR §261.31-2",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "61.32), (2) exhibits specific characteristics (40 CFR §261.21-261.24) or (3) is a discarded commercial chemical product, off-specification species, container residue, or spill residue listed in 40 CFR §261.33.Phosphine is listed under RCRA chemical code P",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "096 for discarded commercial chemical products (40 CFR§261.33), aluminum phosphide is listed under RCRA chemical code P006, zinc phosphide greater than 10% in concentration is listed under RCRA chemical code P122, and zinc phosphide less than or equal to ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "10% in concentration is listed under RCRA chemical code U249. Phosphine, aluminum phosphide, magnesium phosphide, and zinc phosphide waste can also be ignitable hazardous waste, chemical code D001, if it is in compressed gas form or if it is capable of cau",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "sing fire through friction, absorption of moisture, or spontaneous chemical changes (40 CFR§261.21). Listed or characteristic waste may be land disposed only if the waste meets the applicable treatment standards (40 CFR §268.40). Phosphine, aluminum ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "phosphide, and zinc phosphide are also regulated under the Comprehensive Environmental Response, Compensation, and Liability Act (CERCLA) with reportable quantity thresholds of 100 pounds (40 CFR §302.4).The States(except for Alaska and Iowa) have the pr",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "imary responsibility to implement the hazardous waste regulations and can impose more stringent requirements than the Federalprogram, so it is critical to open a dialogue with regulators as early as possible. Management of toxic decomposition products, as",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "sociated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered. The EPA has developed I-WASTE, a web-based tool that contains links to waste transportation guidance, treatment",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility.Access to this decision support tool requires pre-registration (",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "www2.ergweb.com/bdrtool/login.asp).",
+          "role": "BODY"
+        }
+      ],
+      "text": "2018Page 5of 5 P  Decontamination/Cleanup Sensitive Equipment and Items:For difficult-to-clean equipment thought to be contaminated with small amounts of solid phosphides, additional options for consideration include flushing with detergent and water, although the residual aqueous solution may contain phosphine gas that requires controlled air ventilation methods.CAUTION:Decontamination/neutralization products may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use.Verification of Decontamination:Site and situation specific. Please contact EPA/HQ- -564-3850for further assistance.Waste ManagementTransportation:Federal requirements for transporting hazardous materials and procedures for exemptions are specified atwww.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. Phosphine is considered Hazard Class 2.3, subsidiary Class 2.1 for transportation purposes, and aluminum phosphide, magnesium phosphide, and zinc phosphide are considered Hazard Class 4.3, subsidiary Class 6.1 for transportation purposes. Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat.Detailed state regulations can be found at www.envcap.org/.Waste Management: Under the Resource Conservation and Recovery Act (RCRA), solid waste can be classified as hazardouswaste(subtitle C) or solid waste(subtitle D). The RCRA regulations generally define a waste to behazardous if it is: (1) a listed waste (40 CFR §261.31-2 61.32), (2) exhibits specific characteristics (40 CFR §261.21-261.24) or (3) is a discarded commercial chemical product, off-specification species, container residue, or spill residue listed in 40 CFR §261.33.Phosphine is listed under RCRA chemical code P 096 for discarded commercial chemical products (40 CFR§261.33), aluminum phosphide is listed under RCRA chemical code P006, zinc phosphide greater than 10% in concentration is listed under RCRA chemical code P122, and zinc phosphide less than or equal to 10% in concentration is listed under RCRA chemical code U249. Phosphine, aluminum phosphide, magnesium phosphide, and zinc phosphide waste can also be ignitable hazardous waste, chemical code D001, if it is in compressed gas form or if it is capable of cau sing fire through friction, absorption of moisture, or spontaneous chemical changes (40 CFR§261.21). Listed or characteristic waste may be land disposed only if the waste meets the applicable treatment standards (40 CFR §268.40). Phosphine, aluminum phosphide, and zinc phosphide are also regulated under the Comprehensive Environmental Response, Compensation, and Liability Act (CERCLA) with reportable quantity thresholds of 100 pounds (40 CFR §302.4).The States(except for Alaska and Iowa) have the pr imary responsibility to implement the hazardous waste regulations and can impose more stringent requirements than the Federalprogram, so it is critical to open a dialogue with regulators as early as possible. Management of toxic decomposition products, as sociated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered. The EPA has developed I-WASTE, a web-based tool that contains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility.Access to this decision support tool requires pre-registration ( www2.ergweb.com/bdrtool/login.asp).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 26,
+        "repeatedHeaderFooterBlockCount": 6,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    }
+  ]
+}

@@ -65,6 +65,8 @@ export type CbrneFieldGroup =
   | "HAZARDS"
   | "SYMPTOMS"
   | "DETECTION"
+  | "SAMPLING"
+  | "ANALYSIS"
   | "PPE"
   | "ISOLATION_STANDOFF"
   | "DECON"

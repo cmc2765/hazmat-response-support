@@ -1,0 +1,2542 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-chemical-cyclosarin-gf",
+  "sourceArtifactSha256": "44a9f3206ea8321271cab4db0547b269eee8dad4ea0cce95b3cfe80fc4fa2278",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 10,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(GF)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 1of 10NRT Quick ReferenceGuide: Cyclosarin (GF)GHS: Acute Toxicity, Category 1H310 \u0000±Fatal in contact with skinH330 \u0000±Fatal if inhaled1. Agent CharacteristicsAgent CharacteristicsAgent Classification:",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Schedule 1 Chemical Warfare Nerve Agent; Cyclosarin (GF); CAS: 329-99-7Description:",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "(Cyclohexyl methylphosphonofluoridate) is a colorless liquid, generally odorless. ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "is a lethal cholinesterase inhibitor with a mechanism of toxicity similar to organophosphate insecticides, though it is much more toxic. Environmental breakdown products of ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": ",including methylphosphonic acid (MPA) and cyclohexyl methylphosphonic acid (CMPA), are relatively non-toxic. Other breakdown products include fluoride ions, which may convert to hydrofluoric acid (HF) depending on the pH. ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "can react violently with strong oxidizers and may decompose when in contact with metals, producing highly flammable hydrogen gas. ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "is combustible but not easily ignited; when heated, ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "vapors can form explosive mixtures with air.Persistence:",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "\u0000L\u0000V\u0000\u0003\u0000F\u0000R\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000\u0003\u0000³moderately \u0000O\u0000R\u0000Z\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000W\u0000´\u0000\u0003\u0000F\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000Z\u0000D\u0000U\u0000I\u0000D\u0000U\u0000H\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0011\u0000\u0003\u00009\u0000D\u0000S\u0000R\u0000U\u0000\u001d\u0000\u0003\u0000P\u0000L\u0000Q\u0000X\u0000W\u0000H\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000K\u0000R\u0000X\u0000U\u0000V\u0000\u001e\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "liquid: hours to days. Persistence will depend upon the amount and purity of the agent, method of release, environmental conditions, and the types of surfaces and materials impacted. Porous, permeable, organic, or polymeric materials such as ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "carpets and vinyl tiles can accumulate ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "\u0000Y\u0000D\u0000S\u0000R\u0000U\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000O\u0000L\u0000T\u0000X\u0000L\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000F\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000³\u0000V\u0000L\u0000Q\u0000N\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000W\u0000K\u0000H\u0000U\u0000H\u0000E\u0000\\\u0000\u0003\u0000S\u0000U\u0000R\u0000O\u0000R\u0000Q\u0000J\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000F\u0000H\u0000\u00112. Physical PropertiesPhysical PropertiesMolecular Weight:180.16g/molFormula:C7H14FO2PVapor Density:6.2(air = 1)",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Flash Point:201.2°F/94°CVapor Pressure:0.08\u0000±0.093 mm Hg (77°F/25°C)Liquid Density:1.13g/mL (77°F/25°C)Volatility:817\u0000±898mg/m3(77°F/25°C)Aqueous Solubility:37 g/L (68°F/20°C)Boiling Point:442.4\u0000±462.2°F/228\u0000±239°CNon-aqueous Solubility:Lipids, common ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "organic solvents, alcohols, gasoline, oils, fatsMelting/Freezing Point:-22  \u0000±-58°F / -30 \u0000±-50°C; MP = -12°C(below -30°C, a metastable crystalline form of GF is produced,which slowly converts into a stable form that melts at -12°C)Hydrolysis (t1/2):42",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "hours (pH ~7)(77°F/25°C)Note:physical properties are listed at/near STP unless otherwise indicatedConversion Factors:ppm = mg/m3x0.1357; mg/m3= ppm x 7.3703. Release ScenariosRelease Scenarios",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "AIR RELEASE SCENARIOS ARE ASSUMED MOST PROBABLE; HOWEVER, OTHER RELEASE SCENARIOS AND EXPOSURE ROUTES SHOULD BE CONSIDERED.Open Areas:",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "has low volatility but may still be present as a liquid or aerosol, and the primary release/attack scenario is anairborne release. ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "is expected to degrade in the environment fairly rapidly; however, liquid ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "on surfaces generally persists for hours to days. Environmental conditions will affect the degradation and evaporation rates of ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "with cooler conditions enhancing persistence. ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "vapors are heavier than air, so vapors can accumulate in lower terrains. ",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "vapors can form explosive mixtures with air.Water/Water Systems:If released into natural waters or water systems, ",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "will likely hydrolyze with a half-life estimated at 42 hours at pH ~7, withpersistence depending on released amount and environmental conditions. Hydrolysis byproducts have comparatively low toxicity so may only be relevantif large amounts of ",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "are released. Certain water system components may act as sinks for Cyclosarin, prolonging its persistence long pasttheinitial release. Vapor hazards may be associated with ",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 46,
+          "operator": "TJ",
+          "text": "-contaminated waters due to volatilization of ",
+          "role": "BODY"
+        },
+        {
+          "order": 47,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 48,
+          "operator": "TJ",
+          "text": "fromthewater body intotheair above.Indoor Facility:",
+          "role": "BODY"
+        },
+        {
+          "order": 49,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 50,
+          "operator": "TJ",
+          "text": "could potentially be dispersed as a vapor or an aerosol inside a building or facility; HVAC systems could be impacted. ",
+          "role": "BODY"
+        },
+        {
+          "order": 51,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 52,
+          "operator": "TJ",
+          "text": "vapors are heavier than air so vapors can accumulate in lower levels, basements, floor drains, or utility corridors inside the buildings.Other:Cyclosarinwill decompose when heated or when combusted in a fire to form HF, fluoride ions, and toxic gases, ",
+          "role": "BODY"
+        },
+        {
+          "order": 53,
+          "operator": "TJ",
+          "text": "including phosphorous oxides. If ",
+          "role": "BODY"
+        },
+        {
+          "order": 54,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 55,
+          "operator": "TJ",
+          "text": "is released into the air as a liquid spray (aerosol), it has the potential to contaminate agricultural products. If ",
+          "role": "BODY"
+        },
+        {
+          "order": 56,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 57,
+          "operator": "TJ",
+          "text": "is released as a vapor, it is unlikely to contaminate agricultural products.",
+          "role": "BODY"
+        }
+      ],
+      "text": "(GF) [July2022Update(nrt.org): January 2015Page 1of 10NRT Quick ReferenceGuide: Cyclosarin (GF)GHS: Acute Toxicity, Category 1H310 \u0000±Fatal in contact with skinH330 \u0000±Fatal if inhaled1. Agent CharacteristicsAgent CharacteristicsAgent Classification: Schedule 1 Chemical Warfare Nerve Agent; Cyclosarin (GF); CAS: 329-99-7Description: (Cyclohexyl methylphosphonofluoridate) is a colorless liquid, generally odorless. is a lethal cholinesterase inhibitor with a mechanism of toxicity similar to organophosphate insecticides, though it is much more toxic. Environmental breakdown products of ,including methylphosphonic acid (MPA) and cyclohexyl methylphosphonic acid (CMPA), are relatively non-toxic. Other breakdown products include fluoride ions, which may convert to hydrofluoric acid (HF) depending on the pH. can react violently with strong oxidizers and may decompose when in contact with metals, producing highly flammable hydrogen gas. is combustible but not easily ignited; when heated, vapors can form explosive mixtures with air.Persistence: \u0000L\u0000V\u0000\u0003\u0000F\u0000R\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000\u0003\u0000³moderately \u0000O\u0000R\u0000Z\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000W\u0000´\u0000\u0003\u0000F\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000Z\u0000D\u0000U\u0000I\u0000D\u0000U\u0000H\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0011\u0000\u0003\u00009\u0000D\u0000S\u0000R\u0000U\u0000\u001d\u0000\u0003\u0000P\u0000L\u0000Q\u0000X\u0000W\u0000H\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000K\u0000R\u0000X\u0000U\u0000V\u0000\u001e\u0000\u0003 liquid: hours to days. Persistence will depend upon the amount and purity of the agent, method of release, environmental conditions, and the types of surfaces and materials impacted. Porous, permeable, organic, or polymeric materials such as carpets and vinyl tiles can accumulate \u0000Y\u0000D\u0000S\u0000R\u0000U\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000O\u0000L\u0000T\u0000X\u0000L\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000F\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000³\u0000V\u0000L\u0000Q\u0000N\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000W\u0000K\u0000H\u0000U\u0000H\u0000E\u0000\\\u0000\u0003\u0000S\u0000U\u0000R\u0000O\u0000R\u0000Q\u0000J\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000F\u0000H\u0000\u00112. Physical PropertiesPhysical PropertiesMolecular Weight:180.16g/molFormula:C7H14FO2PVapor Density:6.2(air = 1) Flash Point:201.2°F/94°CVapor Pressure:0.08\u0000±0.093 mm Hg (77°F/25°C)Liquid Density:1.13g/mL (77°F/25°C)Volatility:817\u0000±898mg/m3(77°F/25°C)Aqueous Solubility:37 g/L (68°F/20°C)Boiling Point:442.4\u0000±462.2°F/228\u0000±239°CNon-aqueous Solubility:Lipids, common organic solvents, alcohols, gasoline, oils, fatsMelting/Freezing Point:-22 \u0000±-58°F / -30 \u0000±-50°C; MP = -12°C(below -30°C, a metastable crystalline form of GF is produced,which slowly converts into a stable form that melts at -12°C)Hydrolysis (t1/2):42 hours (pH ~7)(77°F/25°C)Note:physical properties are listed at/near STP unless otherwise indicatedConversion Factors:ppm = mg/m3x0.1357; mg/m3= ppm x 7.3703. Release ScenariosRelease Scenarios AIR RELEASE SCENARIOS ARE ASSUMED MOST PROBABLE; HOWEVER, OTHER RELEASE SCENARIOS AND EXPOSURE ROUTES SHOULD BE CONSIDERED.Open Areas: has low volatility but may still be present as a liquid or aerosol, and the primary release/attack scenario is anairborne release. is expected to degrade in the environment fairly rapidly; however, liquid on surfaces generally persists for hours to days. Environmental conditions will affect the degradation and evaporation rates of with cooler conditions enhancing persistence. vapors are heavier than air, so vapors can accumulate in lower terrains. vapors can form explosive mixtures with air.Water/Water Systems:If released into natural waters or water systems, will likely hydrolyze with a half-life estimated at 42 hours at pH ~7, withpersistence depending on released amount and environmental conditions. Hydrolysis byproducts have comparatively low toxicity so may only be relevantif large amounts of are released. Certain water system components may act as sinks for Cyclosarin, prolonging its persistence long pasttheinitial release. Vapor hazards may be associated with -contaminated waters due to volatilization of fromthewater body intotheair above.Indoor Facility: could potentially be dispersed as a vapor or an aerosol inside a building or facility; HVAC systems could be impacted. vapors are heavier than air so vapors can accumulate in lower levels, basements, floor drains, or utility corridors inside the buildings.Other:Cyclosarinwill decompose when heated or when combusted in a fire to form HF, fluoride ions, and toxic gases, including phosphorous oxides. If is released into the air as a liquid spray (aerosol), it has the potential to contaminate agricultural products. If is released as a vapor, it is unlikely to contaminate agricultural products.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 58,
+        "repeatedHeaderFooterBlockCount": 26,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(GF)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 2of 104. Health EffectsHealth Effects4.1. Onset:Onset of symptoms is dose and route dependent. After exposure, symptoms may occur within seconds if ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "is present in vapor form or within minutes to hours if in liquid form. Even a relatively low dose exposure to ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "can be fatal and immediate administration of an antidote is critical (see First Aid below).4.2. Signs/Symptoms:Initial symptoms will vary depending on dose and exposure route. The following is a general list of ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "possible symptoms. The severity of effects depends upon the dosage.Initial effects from a sublethal amount of ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "by vapor exposure are different from initial effects from a similar amount of liquid ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "on skin.Mild/Moderate:\u0000xVapor, small dose: Reduction in pupil size (miosis), dimness of vision, runny nose (rhinorrhea), tightness of chest (dyspnea), difficulty in breathing, headache, and salivation. Time of onset:seconds to minutes after exposure.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Liquid on skin, small to moderate dose:Sweating or muscle twitching at site of exposure, nausea, vomiting, feeling of weakness.Time of onset:10 minutes to 18 hours after exposure.Moderate/Severe:\u0000xVapor, large dose:All of the above, plus s",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "udden loss of consciousness, convulsions, temporary cessation of breathing (apnea), paralysis from reduced muscle tone (flaccid paralysis), copious nasal secretions, increased miosis(to level of pinpointing of pupils).\u0000xLiquid on skin, large dose:",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "All of the above, plus sudden loss of consciousness, convulsions, temporary cessation of breathing (apnea), paralysis from reduced muscle tone (flaccid paralysis), copious nasal secretions, diarrhea.Severe: ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "All of the above, plus severe breathing difficulty or cessation of breathing; generalized muscular twitching, weakness, or paralysis; convulsions; loss of consciousness, involuntary defecation and urination, coma, death.Vapor, time of onset:",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "seconds to minutes after exposure; Skin, time of onset:minutes to an hour after exposure.4.3. Exposure Routes:Inhalation:A primary exposure route; inhalation of very small concentrations can produce health effects.Skin:",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Direct contact with liquid agent is especially toxic. Moderate to severe signs/symptoms occur at, but are not limited to, the site of contact. Exposure can also result fromdermalabsorption of vapors.Eyes:Eyes are the most sensitive target organs of ne",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "rve agent exposure. Miosis (reduction in pupil size) will typically be the first sign of exposure.Ingestion:Contaminated drinking water and foods are the most likely route for ingestion of ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": ". Target organ from ingestion is the gastrointestinal tract.5. Effect LevelsEffect Levels5.1. Air(inhalation vapor hazard):Acute Exposure Guideline Levels (AEGLs) for general population one-time exposure emergency scenarios for ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "(complete definitions are available at: https://www.epa.gov/aegl).AEGL Level in mg/m3, at various exposure durations10 min.30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effects0.00350.00200.00140.000700.00050AEGL 2: ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Potentially irreversible effects or impaired ability to escape0.0440.0250.0180.00850.0065AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethality0.380.190.130.0700.051American ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Industrial Hygiene Association (AIHA) Emergency Response Planning Guidelines (ERPGTM)are not established/determinedfor ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": ".5.2. Dermal (liquid hazard):Effectsare likely to appear within minutes to hours of dermal exposure, with variation in latency and severity of reportedhealth effects depending on dose, duration, and anatomical area of contact, as well as ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "temperature of surrounding area. Clinical manifestations range from sweating, muscle twitching, and gastrointestinal distress following limited exposure (one small drop on skin) to convulsions, paralysis, loss of consciousness, and death.6.",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Exposure GuidelinesExposure Guidelines6.1.U.S. Army Public Health Command (USAPHC) Airborne Exposure Limits (AELs): (refer to:USAPHC AR 40-5e, PHN No. 0711-02, July 2011[original source: ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "Department of the Army Office of the Surgeon General Memorandum, Subject: Nerve Agent Percutaneous Exposure Criteria and Airborne Exposure Levels (AELs) for GD, GF for use in Interim DA Guidance on USAPHCIDLH = 0.05mg/m3",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "; workers should remove themselves immediately from exposure if the concentration is reached at any point in timeUSAPHCSTEL = 0.00005mg/m3(5× 10-5); exposure at the STEL should not exceed 15 minutes or occur more than 4 times ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "per day, and 60 minutes should pass between successive exposures at this concentration",
+          "role": "BODY"
+        }
+      ],
+      "text": "(GF) [July2022Update(nrt.org): January 2015Page 2of 104. Health EffectsHealth Effects4.1. Onset:Onset of symptoms is dose and route dependent. After exposure, symptoms may occur within seconds if is present in vapor form or within minutes to hours if in liquid form. Even a relatively low dose exposure to can be fatal and immediate administration of an antidote is critical (see First Aid below).4.2. Signs/Symptoms:Initial symptoms will vary depending on dose and exposure route. The following is a general list of possible symptoms. The severity of effects depends upon the dosage.Initial effects from a sublethal amount of by vapor exposure are different from initial effects from a similar amount of liquid on skin.Mild/Moderate:\u0000xVapor, small dose: Reduction in pupil size (miosis), dimness of vision, runny nose (rhinorrhea), tightness of chest (dyspnea), difficulty in breathing, headache, and salivation. Time of onset:seconds to minutes after exposure.\u0000x Liquid on skin, small to moderate dose:Sweating or muscle twitching at site of exposure, nausea, vomiting, feeling of weakness.Time of onset:10 minutes to 18 hours after exposure.Moderate/Severe:\u0000xVapor, large dose:All of the above, plus s udden loss of consciousness, convulsions, temporary cessation of breathing (apnea), paralysis from reduced muscle tone (flaccid paralysis), copious nasal secretions, increased miosis(to level of pinpointing of pupils).\u0000xLiquid on skin, large dose: All of the above, plus sudden loss of consciousness, convulsions, temporary cessation of breathing (apnea), paralysis from reduced muscle tone (flaccid paralysis), copious nasal secretions, diarrhea.Severe: All of the above, plus severe breathing difficulty or cessation of breathing; generalized muscular twitching, weakness, or paralysis; convulsions; loss of consciousness, involuntary defecation and urination, coma, death.Vapor, time of onset: seconds to minutes after exposure; Skin, time of onset:minutes to an hour after exposure.4.3. Exposure Routes:Inhalation:A primary exposure route; inhalation of very small concentrations can produce health effects.Skin: Direct contact with liquid agent is especially toxic. Moderate to severe signs/symptoms occur at, but are not limited to, the site of contact. Exposure can also result fromdermalabsorption of vapors.Eyes:Eyes are the most sensitive target organs of ne rve agent exposure. Miosis (reduction in pupil size) will typically be the first sign of exposure.Ingestion:Contaminated drinking water and foods are the most likely route for ingestion of . Target organ from ingestion is the gastrointestinal tract.5. Effect LevelsEffect Levels5.1. Air(inhalation vapor hazard):Acute Exposure Guideline Levels (AEGLs) for general population one-time exposure emergency scenarios for (complete definitions are available at: https://www.epa.gov/aegl).AEGL Level in mg/m3, at various exposure durations10 min.30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effects0.00350.00200.00140.000700.00050AEGL 2: Potentially irreversible effects or impaired ability to escape0.0440.0250.0180.00850.0065AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethality0.380.190.130.0700.051American Industrial Hygiene Association (AIHA) Emergency Response Planning Guidelines (ERPGTM)are not established/determinedfor .5.2. Dermal (liquid hazard):Effectsare likely to appear within minutes to hours of dermal exposure, with variation in latency and severity of reportedhealth effects depending on dose, duration, and anatomical area of contact, as well as temperature of surrounding area. Clinical manifestations range from sweating, muscle twitching, and gastrointestinal distress following limited exposure (one small drop on skin) to convulsions, paralysis, loss of consciousness, and death.6. Exposure GuidelinesExposure Guidelines6.1.U.S. Army Public Health Command (USAPHC) Airborne Exposure Limits (AELs): (refer to:USAPHC AR 40-5e, PHN No. 0711-02, July 2011[original source: Department of the Army Office of the Surgeon General Memorandum, Subject: Nerve Agent Percutaneous Exposure Criteria and Airborne Exposure Levels (AELs) for GD, GF for use in Interim DA Guidance on USAPHCIDLH = 0.05mg/m3 ; workers should remove themselves immediately from exposure if the concentration is reached at any point in timeUSAPHCSTEL = 0.00005mg/m3(5× 10-5); exposure at the STEL should not exceed 15 minutes or occur more than 4 times per day, and 60 minutes should pass between successive exposures at this concentration",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 35,
+        "repeatedHeaderFooterBlockCount": 11,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(GF)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 3of 10USAPHCWorker Population Limit (WPL) = 0.00003 mg/m3(3 × 10-5)USAPHCGeneral Population Limit (GPL) = 0.000001 mg/m3(1 × 10-6)6.2. Occupational:(NA = not available)NIOSH IDLH= NAOSHA PEL = NANIOSH REL-TWA= NAACGIH TLV-TWA= NANIOSH REL-",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "STEL= NAACGIH TLV-STEL= NA6.3. Population:Soil: USAPHC Health Based Environmental Screening Levels (HBESL)= 5.2 mg/kg overwork lifefor Industrial Soil; 0.22mg/kg over lifetime for Residential Soil.Drinking Water: ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "EPA Provisional Advisory Levels (PALs): see below for more information.EPA Provisional Advisory Level (PAL):PALs represent chemical concentrations in air or water above which varying health effects (PAL1, PAL2, PAL3) are expected \u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "they are developed for 24-hour, 30-day, and 90-day exposure durations. In the event of a nationally significant or large-scale chemical release, EPA can provide PALs to appropriate end-users and stakeholders as needed (PALs",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "are not currently available to the public) to evaluate the severity of the situation, identify potential human health outcomes, and determine the most appropriate course of action; contact: CESER@epa.gov",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": ", for information on and access to the PALs. (Note: PALs are not intended to define cleanup levels.)7. PersonnelSafetyPersonnel SafetyNote:Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options,",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "and personnel decontamination may vary depending upon the amount and purity of agent, site conditions,and the release scenario. Additional information on personnel safety and PPE selection criteria can be found at: www.cdc.gov/niosh/ershdb",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": ". We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.7.1. Medical:Pre-incident:A baseline cholinesterase activity determination and an annual physical and respiratory function exam.During Incident:",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per HEALTH EFFECTSsection above and treat accordingly as per First Aid section below.Post-incident:Post-incident medical surveillance is required.7.2. First Aid:",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Immediately remove person from affected area and remove contaminated clothing and articles. Wash bare skin immediately with water, or warm, soapy water if available, at normal household pressures (~50-60 psi) for three ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "minutes, ensure thorough soaking. Rinse eyes exposed to liquid agent with potable water for 15 minutes.ANTIDOTE: Atropine, 2-PAM Chloride injections (Duo Dote/Mark II kits)/ATNAA-Antidote Treatment Nerve Agent Autoinjector",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": ". Antidote kit should only be administered as per pre-incident training.Recommended dosagesof atropine and 2-PAM Chloride injections will vary depending on patient age and physical findings (mild/moderate or severe). ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "\u0000)\u0000R\u0000O\u0000O\u0000R\u0000Z\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000G\u0000L\u0000U\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003adhere to all SOPs or recommendations developed byindividual\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0011Other:RSDL (Reactive Skin Decontamination Lotion), an FDA-",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "cleared kit with a sponge impregnated with a lotion to remove or neutralize chemical warfare agents from contaminated skin. Apply RSDL immediately to area of skin with ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "suspected exposure to a chemical warfare agent (do not wait for symptoms) and wipe affected area using a scrubbing action, rinse with water when time permits.After administering first aid, send person for follow-",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "up medical attention and evaluation. If cleared to resume work, continueto monitor for signs/symptoms and treat accordingly.7.3. Personal Protective Equipment (PPE):GENERAL INFORMATION:NIOSH-",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSH-approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and protective clothing should be used. ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Level A protection should be used until monitoring results confirm identity and concentration of contaminant. Pre-incident training and exercises on the proper use of PPE are recommended.Per NIOSH guidance \u0000±LEVEL A:",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Recommended for the initial response to a ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "incident. NIOSH-certified CBRN full-face-piece SCBA operated in pressure-demand mode with Level A suitthat provides protection against CBRN agents. Level A provides the greatest level of skin (totally-encapsulating chemical protective suitand chemical-",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "resistant inner and outer gloves, along with chemical-resistant boots with steel toeand shank), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when the ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "concentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure.LEVEL B:Pressure-demand SCBA(NIOSH-certified CBRN full-face-piece SCBA)with Level B protective suitthat providesprotection against CBRN agents",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": ". Level B provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when the ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "concentration is unknown or above the IDLH or AEGL-2,and when dermal exposure is less of a risk. Level B differs from Level A in that it typically ",
+          "role": "BODY"
+        }
+      ],
+      "text": "(GF) [July2022Update(nrt.org): January 2015Page 3of 10USAPHCWorker Population Limit (WPL) = 0.00003 mg/m3(3 × 10-5)USAPHCGeneral Population Limit (GPL) = 0.000001 mg/m3(1 × 10-6)6.2. Occupational:(NA = not available)NIOSH IDLH= NAOSHA PEL = NANIOSH REL-TWA= NAACGIH TLV-TWA= NANIOSH REL- STEL= NAACGIH TLV-STEL= NA6.3. Population:Soil: USAPHC Health Based Environmental Screening Levels (HBESL)= 5.2 mg/kg overwork lifefor Industrial Soil; 0.22mg/kg over lifetime for Residential Soil.Drinking Water: EPA Provisional Advisory Levels (PALs): see below for more information.EPA Provisional Advisory Level (PAL):PALs represent chemical concentrations in air or water above which varying health effects (PAL1, PAL2, PAL3) are expected \u0000± they are developed for 24-hour, 30-day, and 90-day exposure durations. In the event of a nationally significant or large-scale chemical release, EPA can provide PALs to appropriate end-users and stakeholders as needed (PALs are not currently available to the public) to evaluate the severity of the situation, identify potential human health outcomes, and determine the most appropriate course of action; contact: CESER@epa.gov , for information on and access to the PALs. (Note: PALs are not intended to define cleanup levels.)7. PersonnelSafetyPersonnel SafetyNote:Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options, and personnel decontamination may vary depending upon the amount and purity of agent, site conditions,and the release scenario. Additional information on personnel safety and PPE selection criteria can be found at: www.cdc.gov/niosh/ershdb . We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.7.1. Medical:Pre-incident:A baseline cholinesterase activity determination and an annual physical and respiratory function exam.During Incident: Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per HEALTH EFFECTSsection above and treat accordingly as per First Aid section below.Post-incident:Post-incident medical surveillance is required.7.2. First Aid: Immediately remove person from affected area and remove contaminated clothing and articles. Wash bare skin immediately with water, or warm, soapy water if available, at normal household pressures (~50-60 psi) for three minutes, ensure thorough soaking. Rinse eyes exposed to liquid agent with potable water for 15 minutes.ANTIDOTE: Atropine, 2-PAM Chloride injections (Duo Dote/Mark II kits)/ATNAA-Antidote Treatment Nerve Agent Autoinjector . Antidote kit should only be administered as per pre-incident training.Recommended dosagesof atropine and 2-PAM Chloride injections will vary depending on patient age and physical findings (mild/moderate or severe). \u0000)\u0000R\u0000O\u0000O\u0000R\u0000Z\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000G\u0000L\u0000U\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003adhere to all SOPs or recommendations developed byindividual\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0011Other:RSDL (Reactive Skin Decontamination Lotion), an FDA- cleared kit with a sponge impregnated with a lotion to remove or neutralize chemical warfare agents from contaminated skin. Apply RSDL immediately to area of skin with suspected exposure to a chemical warfare agent (do not wait for symptoms) and wipe affected area using a scrubbing action, rinse with water when time permits.After administering first aid, send person for follow- up medical attention and evaluation. If cleared to resume work, continueto monitor for signs/symptoms and treat accordingly.7.3. Personal Protective Equipment (PPE):GENERAL INFORMATION:NIOSH- certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSH-approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and protective clothing should be used. Level A protection should be used until monitoring results confirm identity and concentration of contaminant. Pre-incident training and exercises on the proper use of PPE are recommended.Per NIOSH guidance \u0000±LEVEL A: Recommended for the initial response to a incident. NIOSH-certified CBRN full-face-piece SCBA operated in pressure-demand mode with Level A suitthat provides protection against CBRN agents. Level A provides the greatest level of skin (totally-encapsulating chemical protective suitand chemical- resistant inner and outer gloves, along with chemical-resistant boots with steel toeand shank), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when the concentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure.LEVEL B:Pressure-demand SCBA(NIOSH-certified CBRN full-face-piece SCBA)with Level B protective suitthat providesprotection against CBRN agents . Level B provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when the concentration is unknown or above the IDLH or AEGL-2,and when dermal exposure is less of a risk. Level B differs from Level A in that it typically",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 32,
+        "repeatedHeaderFooterBlockCount": 7,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(GF)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 4of 10incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight(hooded chemical-resistant outer suit and chemical-resistant inner and outer glove",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "s, along with chemical-resistant boots with steel toe and shank).LEVEL C:May be selected when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use of APR",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "or PAPR (i.e., < IDLH, warning properties) are met. Level C may be appropriate when decontaminating personnel or equipment. Level C still incorporates hooded chemical-resistant outer suitthat provides protection against CBRN agents,chemical-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "resistant inner and outer gloves, and chemical-resistant boots with steel toe and shank.\u0000xFor air levels greater than AEGL-2:NIOSH-certified CBRN tight-fitting PAPR with a filter or a combination organic vapor, acid gas, and particulate cartr",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "idge/filter combination or a continuous flow respirator.\u0000xFor air levels greater than AEGL-1: NIOSH-certified CBRN tight-fitting APR with a canister-type gas mask or CBRN PAPR.LEVEL D:Select Level D when the contaminant is known and the concentration is b",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "elow the appropriate occupational exposure limitsor less than AEGL-1 for the stated duration times.PPE includes coveralls or other work clothes, boots, and gloves.",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and the risks of dermal exposure are known, and must be accompanied by on-site monitoring.8. Personnel DecontaminationPersonnel Decontamination8.1. ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Personnel Decontamination Procedure:Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to treat and replace ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "contaminated materials used during the decontamination process as well as replace necessary chemicals and decontamination solutions.Prior to entering the hot zone, all personnel are required to familiarize themselves with the site-specific personnel ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "decontamination procedures.Personnel decontamination should take place in a decontamination area comprised of two decontamination corridors (one for entering and one for exiting). Position corridors upwind and uphill of release area; exit should",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "be upwind and uphill of entrance. Detergent and water solution (pH>8, but <10.5), soft brushes, and durable 6-mil polyethylene bags should be provided.Personnel decontamination area workers need to wear appropriate PPE as indicated below. Be aware that a",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "bsorbed agent can be released from clothing and skin as a gas.\u0000xEmergencyResponders: Use soft brush to wash PPE with soap and detergent solution in a downward motion, getting into all folds. Repeat washing and rinsing until thoroughly clean. Remove PPE by ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "rolling downward from head; avoid pulling PPE over the head. Remove SCBA last, and place all PPE in polyethylene bags.\u0000xPatient/victim: Remove all clothing down to at least undergarments, and place in polyethylene bags. Thoroughly wash ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "and rinse skin with soap and water solution, taking care not to break the skin and covering all open wounds. Cover patient/victim (e.g., blanket, towels, Tyvek) and move to treatment area.If available in decontamination kit, apply ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "RSDL immediately to area of skin with suspected exposure to a chemical warfare agent (do not wait for symptoms) and wipe affected area using a scrubbing action, rinse with water when time permits.8.2. Personnel Decontamination Procedures by Zone/Step:",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "(attendants will verbally direct personnel through each step)Conducted in Hot Zone (exclusion zone)1Equipment DropPlace equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.Conducted in Warm Zone (contamination reduction zone)2Sample Drop",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Place samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Outer Boot ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "and Glove WashThe purpose of this step is to enable physical removal of gross contamination if contamination is visible. If gross contamination is not visible, this step may be skipped. Wash outer boots and then outer gloves using ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "designated decontaminating agents as specified in HASP (e.g., soap and water, trisodium phosphate substitute, or diluted bleach).4Glove, Boot, and Suit Wash",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Wash all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Start with decontaminating boots and gloves, then work on suit from the top down, including SCBA/",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "PAPR casing. Decontamination personnel should conduct this step. Care should be taken to ensure that all areas are decontaminated, including around zipper, arms, front torso, and any other area that could have come in contact with contamination. The soluti",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "on used for decontamination should be contained, collected, and disposed of properly from the decontamination line.",
+          "role": "BODY"
+        }
+      ],
+      "text": "(GF) [July2022Update(nrt.org): January 2015Page 4of 10incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight(hooded chemical-resistant outer suit and chemical-resistant inner and outer glove s, along with chemical-resistant boots with steel toe and shank).LEVEL C:May be selected when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use of APR or PAPR (i.e., < IDLH, warning properties) are met. Level C may be appropriate when decontaminating personnel or equipment. Level C still incorporates hooded chemical-resistant outer suitthat provides protection against CBRN agents,chemical- resistant inner and outer gloves, and chemical-resistant boots with steel toe and shank.\u0000xFor air levels greater than AEGL-2:NIOSH-certified CBRN tight-fitting PAPR with a filter or a combination organic vapor, acid gas, and particulate cartr idge/filter combination or a continuous flow respirator.\u0000xFor air levels greater than AEGL-1: NIOSH-certified CBRN tight-fitting APR with a canister-type gas mask or CBRN PAPR.LEVEL D:Select Level D when the contaminant is known and the concentration is b elow the appropriate occupational exposure limitsor less than AEGL-1 for the stated duration times.PPE includes coveralls or other work clothes, boots, and gloves. Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and the risks of dermal exposure are known, and must be accompanied by on-site monitoring.8. Personnel DecontaminationPersonnel Decontamination8.1. Personnel Decontamination Procedure:Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to treat and replace contaminated materials used during the decontamination process as well as replace necessary chemicals and decontamination solutions.Prior to entering the hot zone, all personnel are required to familiarize themselves with the site-specific personnel decontamination procedures.Personnel decontamination should take place in a decontamination area comprised of two decontamination corridors (one for entering and one for exiting). Position corridors upwind and uphill of release area; exit should be upwind and uphill of entrance. Detergent and water solution (pH>8, but <10.5), soft brushes, and durable 6-mil polyethylene bags should be provided.Personnel decontamination area workers need to wear appropriate PPE as indicated below. Be aware that a bsorbed agent can be released from clothing and skin as a gas.\u0000xEmergencyResponders: Use soft brush to wash PPE with soap and detergent solution in a downward motion, getting into all folds. Repeat washing and rinsing until thoroughly clean. Remove PPE by rolling downward from head; avoid pulling PPE over the head. Remove SCBA last, and place all PPE in polyethylene bags.\u0000xPatient/victim: Remove all clothing down to at least undergarments, and place in polyethylene bags. Thoroughly wash and rinse skin with soap and water solution, taking care not to break the skin and covering all open wounds. Cover patient/victim (e.g., blanket, towels, Tyvek) and move to treatment area.If available in decontamination kit, apply RSDL immediately to area of skin with suspected exposure to a chemical warfare agent (do not wait for symptoms) and wipe affected area using a scrubbing action, rinse with water when time permits.8.2. Personnel Decontamination Procedures by Zone/Step: (attendants will verbally direct personnel through each step)Conducted in Hot Zone (exclusion zone)1Equipment DropPlace equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.Conducted in Warm Zone (contamination reduction zone)2Sample Drop Place samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Outer Boot and Glove WashThe purpose of this step is to enable physical removal of gross contamination if contamination is visible. If gross contamination is not visible, this step may be skipped. Wash outer boots and then outer gloves using designated decontaminating agents as specified in HASP (e.g., soap and water, trisodium phosphate substitute, or diluted bleach).4Glove, Boot, and Suit Wash Wash all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Start with decontaminating boots and gloves, then work on suit from the top down, including SCBA/ PAPR casing. Decontamination personnel should conduct this step. Care should be taken to ensure that all areas are decontaminated, including around zipper, arms, front torso, and any other area that could have come in contact with contamination. The soluti on used for decontamination should be contained, collected, and disposed of properly from the decontamination line.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 28,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 4,
+      "humanPageNumber": 5,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(GF)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 5of 105Outer Glove, Boot, and Suit RemovalWhile sitting on a stool, remove outer boots and outer gloves. Undo the SCBA/PAPR belt and hold in hand. ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "While touching only the inside of suit, carefully roll suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontamination personnel to assist either by holding SCBA",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "/PAPR unit or assisting in suit removal.6Mask RemovalWith inner gloves, remove the mask. Remove cartridge filters and place into designated container. Put mask into mask wash. Decontamination personnel will clean each mask and SCBA/PAPR assembly prior to ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "return to service.7Inner Glove RemovalRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container.Conducted in Cold Zone (support zone)8Quadrant MonitoringUsing appropriate ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "air monitoring equipment, screen personnel for residual contamination by dividing body into 4 sections: upper right and left sides of the body, and lower left and right sides. If positive, perform spot decontaminatio",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "n immediately and direct person to showers.9Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available then, at the ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "minimum, hands and face should be washed thoroughly.10Medical MonitoringReport to medical monitoring station for post-entry monitoring and report to appropriate personnel for debriefing. Observe for any obvious sign of ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "exposure. Using criteria listed above in PERSONNEL SAFETY section of this QRG, administer Duo Dote antidote and notify site Health and Safety officer.Emergency Egress Corridor:",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Establish an emergency egress line to use for quickly decontaminating personnel who have medical emergencies while in the hot zone. Personnel must be decontaminated prior to receiving treatment from ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "emergency medical technicians or transported to a hospital.Hand-Wash Station:A hand-wash station should be available for personnel to clean up following entry. However, this ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "may not be available initially at the scene or weather conditions may prohibit their use. If a hand-wash station is not available, personnel should wash their hands and face as soon as possible.Caution:Avoid waterless hand cleaners, w",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "hich contain solvents (alcohols) that could increase risk of dermal exposure to ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": ".9. Field DetectionField DetectionReal-time field screening tools (results not confirmatory or quantitative): Caution should be given to equipment that has ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "not been properly evaluated. False positive and false negatives may occur in the presence of interferents common in the environment.The following is a summary of minimum screening concentration ranges or levels for equipment procured by many EPA and HAZMA",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "T response teams. Other screening tools may be used by these teams and other agencies and responders, some with similar capabilities and limitations.9.1. Minimum Screening Ranges/Levels for Air/(Vapor):Field Equipment:ppmmg/m3JCAD M4A1, at 30 secs [",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "30 mins/pre-concentrator(detected as Nerve agent)0.014[0.000140.1[0.001AP2C/AP4C(detected as G-agent)0.0014/ 0.00140.01 / 0.01MX-908 Vapor ModeNANADräger (CDS Kit)0.0250.18MINICAMS\u0000(Near real-time; at 5 minutes)NANANote: NA = not applicable9.2. ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Minimum Screening Ranges/Levels for Vapor/Liquid:Field Equipment:ppm(vapor)mg/m3(vapor)mL(liquid)M256/M256A1(15-20mins)(detected as Nerve agent)0.037/ 0.0370.005/ 0.005NAM8(absence/presence as Nerve G-agent)NANA0.02",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Note: M256 is combined 2 kits with 12 disposable sampler/detectors and a booklet of M8 paper.NA = not applicable9.3. Minimum Screening Ranges/Levels for Water:Field Equipment:mg/LM272 (detected as G-agent)0.0210. Environmental Sampling",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Environmental SamplingNote: This section on sampling contains general guidelines and does not replace the need for a site-specific sampling plan10.1. Sampling Concerns:Detection, sampling equipment and procedures, and analytical techniques will be site-",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g., characterization, decontamination efficacy, and clearance); and 4) specific laboratory ",
+          "role": "BODY"
+        }
+      ],
+      "text": "(GF) [July2022Update(nrt.org): January 2015Page 5of 105Outer Glove, Boot, and Suit RemovalWhile sitting on a stool, remove outer boots and outer gloves. Undo the SCBA/PAPR belt and hold in hand. While touching only the inside of suit, carefully roll suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontamination personnel to assist either by holding SCBA /PAPR unit or assisting in suit removal.6Mask RemovalWith inner gloves, remove the mask. Remove cartridge filters and place into designated container. Put mask into mask wash. Decontamination personnel will clean each mask and SCBA/PAPR assembly prior to return to service.7Inner Glove RemovalRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container.Conducted in Cold Zone (support zone)8Quadrant MonitoringUsing appropriate air monitoring equipment, screen personnel for residual contamination by dividing body into 4 sections: upper right and left sides of the body, and lower left and right sides. If positive, perform spot decontaminatio n immediately and direct person to showers.9Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available then, at the minimum, hands and face should be washed thoroughly.10Medical MonitoringReport to medical monitoring station for post-entry monitoring and report to appropriate personnel for debriefing. Observe for any obvious sign of exposure. Using criteria listed above in PERSONNEL SAFETY section of this QRG, administer Duo Dote antidote and notify site Health and Safety officer.Emergency Egress Corridor: Establish an emergency egress line to use for quickly decontaminating personnel who have medical emergencies while in the hot zone. Personnel must be decontaminated prior to receiving treatment from emergency medical technicians or transported to a hospital.Hand-Wash Station:A hand-wash station should be available for personnel to clean up following entry. However, this may not be available initially at the scene or weather conditions may prohibit their use. If a hand-wash station is not available, personnel should wash their hands and face as soon as possible.Caution:Avoid waterless hand cleaners, w hich contain solvents (alcohols) that could increase risk of dermal exposure to .9. Field DetectionField DetectionReal-time field screening tools (results not confirmatory or quantitative): Caution should be given to equipment that has not been properly evaluated. False positive and false negatives may occur in the presence of interferents common in the environment.The following is a summary of minimum screening concentration ranges or levels for equipment procured by many EPA and HAZMA T response teams. Other screening tools may be used by these teams and other agencies and responders, some with similar capabilities and limitations.9.1. Minimum Screening Ranges/Levels for Air/(Vapor):Field Equipment:ppmmg/m3JCAD M4A1, at 30 secs [ 30 mins/pre-concentrator(detected as Nerve agent)0.014[0.000140.1[0.001AP2C/AP4C(detected as G-agent)0.0014/ 0.00140.01 / 0.01MX-908 Vapor ModeNANADräger (CDS Kit)0.0250.18MINICAMS\u0000(Near real-time; at 5 minutes)NANANote: NA = not applicable9.2. Minimum Screening Ranges/Levels for Vapor/Liquid:Field Equipment:ppm(vapor)mg/m3(vapor)mL(liquid)M256/M256A1(15-20mins)(detected as Nerve agent)0.037/ 0.0370.005/ 0.005NAM8(absence/presence as Nerve G-agent)NANA0.02 Note: M256 is combined 2 kits with 12 disposable sampler/detectors and a booklet of M8 paper.NA = not applicable9.3. Minimum Screening Ranges/Levels for Water:Field Equipment:mg/LM272 (detected as G-agent)0.0210. Environmental Sampling Environmental SamplingNote: This section on sampling contains general guidelines and does not replace the need for a site-specific sampling plan10.1. Sampling Concerns:Detection, sampling equipment and procedures, and analytical techniques will be site- specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g., characterization, decontamination efficacy, and clearance); and 4) specific laboratory",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 28,
+        "repeatedHeaderFooterBlockCount": 7,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 5,
+      "humanPageNumber": 6,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(GF)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 6of 10requirements. The U.S. Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Envi",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "ronmental Response Laboratory Network (ERLN), see ANALYSIS section below,(https://www.epa.gov/emergency-response/environmental-response-laboratory-network). For questions on environmental sampling for ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "call EPA/HQ-EOC at 202-564-3850.10.2. Sample Locations and Planning:Initially consider air monitoring to ensure worker safety and to determine if there is a vapor plume that could impact other areas.",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Characterization sampling is initiated by targeted or judgmental sampling ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "\u0000W\u0000R\u0000\u0003\u0000L\u0000G\u0000H\u0000Q\u0000W\u0000L\u0000I\u0000\\\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000D\u0000O\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000S\u0000D\u0000W\u0000K\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000P\u0000H\u0000G\u0000L\u0000D\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000R\u0000E\u0000M\u0000H\u0000F\u0000W\u0000V\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000D\u0000O\u0000O\u0000\\\u0000\u0003\u0000D\u0000F\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000V\u0000L\u0000Q\u0000N\u0000V\u0000\u0011\u0000\u0003\u0000$\u0000G\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000E\u0000L\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling (e.g., grid, statistical approach) may be required for the clearance ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "phase or if there are large uncertainties about the area impacted or the amount released. Because ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "has very low\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000P\u0000E\u0000L\u0000H\u0000Q\u0000W\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000K\u0000H\u0000O\u0000S\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000³\u0000F\u0000O\u0000H\u0000D\u0000U\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000´\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000L\u0000Q\u0000F\u0000O\u0000X\u0000G\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0011Note:",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "breaks down in most environmental conditions to numerous breakdown products, especially fluoride ions and methylphosphonic acid (MPA),which may be used as markers to determine the extent of contamination of the parent",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "(GF). See ANALYSIS section below to ensure sampling procedures are compatible with all analytes. Some preparation techniques for both",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "and its \u0000E\u0000U\u0000H\u0000D\u0000N\u0000G\u0000R\u0000Z\u0000Q\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000H\u0000\u0003\u0000,\u0000Q\u0000I\u0000R\u0000U\u0000P\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003Collection Documents (https://www.epa.gov/esam/sample-collection-information-documents-scids). These provide ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "general information regarding sampling procedures for different media, sampling supplies, sample size, container, holding time,preservation, packaging, and shipping, supporting collection of samples.Caution: Pre-incident training on ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "administration of antidote kit is recommended (see First Aid under PERSONNEL SAFETY section above).10.3. Types of Samples:Air(Vapors are heavier than air): Samples are collected using appropriate solid phase absorbent media (tubes) at breathing ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "zone level (~5 ft.) or air sampler (e.g., SUMMA canister)to assess inhalation exposure.To assess off gassing from surfaces and at ground levels,collect air samples at ~6 in.Concurrent air monitoring for ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "is recommended.Water:Water should be collected in appropriate containers with addition of appropriate de-chlorinating agents and preservatives to minimize ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "degradation and hydrolysis prior to analysis.Concurrent air monitoring for ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "is recommended.Soil:\u0000)\u0000R\u0000U\u0000\u0003\u0000O\u0000R\u0000F\u0000D\u0000O\u0000L\u0000]\u0000H\u0000G\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000´\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000Z\u0000K\u0000H\u0000U\u0000H\u0000\u0003\u0000V\u0000R\u0000L\u0000O\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000\u0003(i.e., neat liquid, aerosol or liquid droplets), surface soil samples should be taken from a non-",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "vegetated area to a depth of less than one inch. Sub-surface soil samples are typicallynot necessary unless a large amount of liquid was poured on the ground, or if an underlying aquifer is endangered.Concurrent air monitoring for ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "is recommended.Surface Wipes:Wipe samples are often desired to indicate absence of ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "on non-porous surfaces. Concurrent air monitoringfor ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "is recommended.Bulk:For hot spot areas where liquid ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "deposition may occur on porous surfaces (e.g., concrete, asphalt), actual pieces (chips) or cores of contaminated surface may be obtained using appropriate tools (scabbling, coring,or drills) for subsequent laboratory extraction analysis. Bulk samples of",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "suspected sink materials may be recommended to rule out secondary vapor phase disposition or absorption of ",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "into these materials. Concurrent air monitoringfor ",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "is recommended.Other Sample Matrices:Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.11. Packaging/Shipping: CWA Environmental Samples for Site CharacterizationPackaging and Shipping: CWAEnvironmental Samples For Site Characterization",
+          "role": "BODY"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "The packaging and shipping of environmental samples potentially contaminated with a chemical warfare agent (CWA) would be subject to complex and restrictive regulations established primarily by DOT for ground transportation (49 CFR Parts 171-180), and by D",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "OT, ICAO, and IATA for air transportation (in addition to other regulations by CDC, USPS, OSHA). Transportation of ",
+          "role": "BODY"
+        },
+        {
+          "order": 46,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 47,
+          "operator": "TJ",
+          "text": "-contaminated waste for treatment and disposal is covered under the WASTE MANAGEMENT section below.Samples can be collected from environmental media that include surface and subsurface soil, groundwater, surface water, ",
+          "role": "BODY"
+        },
+        {
+          "order": 48,
+          "operator": "TJ",
+          "text": "drinking water, dust, air, and solids other than soil (e.g., building materials). Given the wide range of potential environmental media and complex regulatory requirements, the approach would likely be situationally dependent.CAUTION:",
+          "role": "BODY"
+        },
+        {
+          "order": 49,
+          "operator": "TJ",
+          "text": "Environmental samples potentially contaminated with CWA should not be introduced into commercial transportation as an undeclared hazardous material. Hazard classification, packaging, and hazard communication are the ",
+          "role": "BODY"
+        },
+        {
+          "order": 50,
+          "operator": "TJ",
+          "text": "\u0000V\u0000K\u0000L\u0000S\u0000S\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000L\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000X\u0000Q\u0000G\u0000H\u0000U\u0000\u0003\u0000'\u00002\u00007\u0000¶\u0000V\u0000\u0003\u0000+\u0000D\u0000]\u0000D\u0000U\u0000G\u0000R\u0000X\u0000V\u0000\u0003\u00000\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D\u0000O\u0000V\u0000\u0003\u00005\u0000H\u0000J\u0000X\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000\u000b\u0000\u0017\u0000\u001c\u0000\u0003\u0000&\u0000)\u00005\u0000\u0003\u00003\u0000D\u0000U\u0000W\u0000V\u0000\u0003\u0000\u0014\u0000\u001a\u0000\u0014-180).",
+          "role": "BODY"
+        },
+        {
+          "order": 51,
+          "operator": "TJ",
+          "text": "A summary of key packaging and shipping considerations for environmental samples with unknown concentrations of a potential unknown CWA is:\u0000xTransport of pure Cyclosarin (GF)",
+          "role": "BODY"
+        },
+        {
+          "order": 52,
+          "operator": "TJ",
+          "text": "is forbidden other than via military (Technical Escort Unit) transport in accordance with 49 CFR §173.7.\u0000xIf the collected sample contains or is suspected to contain hazardous materials, as defined in 49 CFR §171.8, the ",
+          "role": "BODY"
+        },
+        {
+          "order": 53,
+          "operator": "TJ",
+          "text": "shipper must determine the appropriate UN ID Number, the Proper Shipping Name (PSN), and the Packing Group (PG) from the Hazardous Materials Table in 49 CFR §107.101. The table will then direct the shipper to the type of hazard and handling labels neede",
+          "role": "BODY"
+        },
+        {
+          "order": 54,
+          "operator": "TJ",
+          "text": "d, the appropriate packaging (inner and outer packaging), and any special provisions.",
+          "role": "BODY"
+        }
+      ],
+      "text": "(GF) [July2022Update(nrt.org): January 2015Page 6of 10requirements. The U.S. Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Envi ronmental Response Laboratory Network (ERLN), see ANALYSIS section below,(https://www.epa.gov/emergency-response/environmental-response-laboratory-network). For questions on environmental sampling for call EPA/HQ-EOC at 202-564-3850.10.2. Sample Locations and Planning:Initially consider air monitoring to ensure worker safety and to determine if there is a vapor plume that could impact other areas. Characterization sampling is initiated by targeted or judgmental sampling \u0000W\u0000R\u0000\u0003\u0000L\u0000G\u0000H\u0000Q\u0000W\u0000L\u0000I\u0000\\\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000D\u0000O\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000S\u0000D\u0000W\u0000K\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000P\u0000H\u0000G\u0000L\u0000D\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000R\u0000E\u0000M\u0000H\u0000F\u0000W\u0000V\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000D\u0000O\u0000O\u0000\\\u0000\u0003\u0000D\u0000F\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000V\u0000L\u0000Q\u0000N\u0000V\u0000\u0011\u0000\u0003\u0000$\u0000G\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000E\u0000L\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003 random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling (e.g., grid, statistical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted or the amount released. Because has very low\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000P\u0000E\u0000L\u0000H\u0000Q\u0000W\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000K\u0000H\u0000O\u0000S\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000³\u0000F\u0000O\u0000H\u0000D\u0000U\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000´\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000L\u0000Q\u0000F\u0000O\u0000X\u0000G\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0011Note: breaks down in most environmental conditions to numerous breakdown products, especially fluoride ions and methylphosphonic acid (MPA),which may be used as markers to determine the extent of contamination of the parent (GF). See ANALYSIS section below to ensure sampling procedures are compatible with all analytes. Some preparation techniques for both and its \u0000E\u0000U\u0000H\u0000D\u0000N\u0000G\u0000R\u0000Z\u0000Q\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000H\u0000\u0003\u0000,\u0000Q\u0000I\u0000R\u0000U\u0000P\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003Collection Documents (https://www.epa.gov/esam/sample-collection-information-documents-scids). These provide general information regarding sampling procedures for different media, sampling supplies, sample size, container, holding time,preservation, packaging, and shipping, supporting collection of samples.Caution: Pre-incident training on administration of antidote kit is recommended (see First Aid under PERSONNEL SAFETY section above).10.3. Types of Samples:Air(Vapors are heavier than air): Samples are collected using appropriate solid phase absorbent media (tubes) at breathing zone level (~5 ft.) or air sampler (e.g., SUMMA canister)to assess inhalation exposure.To assess off gassing from surfaces and at ground levels,collect air samples at ~6 in.Concurrent air monitoring for is recommended.Water:Water should be collected in appropriate containers with addition of appropriate de-chlorinating agents and preservatives to minimize degradation and hydrolysis prior to analysis.Concurrent air monitoring for is recommended.Soil:\u0000)\u0000R\u0000U\u0000\u0003\u0000O\u0000R\u0000F\u0000D\u0000O\u0000L\u0000]\u0000H\u0000G\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000´\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000Z\u0000K\u0000H\u0000U\u0000H\u0000\u0003\u0000V\u0000R\u0000L\u0000O\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000\u0003(i.e., neat liquid, aerosol or liquid droplets), surface soil samples should be taken from a non- vegetated area to a depth of less than one inch. Sub-surface soil samples are typicallynot necessary unless a large amount of liquid was poured on the ground, or if an underlying aquifer is endangered.Concurrent air monitoring for is recommended.Surface Wipes:Wipe samples are often desired to indicate absence of on non-porous surfaces. Concurrent air monitoringfor is recommended.Bulk:For hot spot areas where liquid deposition may occur on porous surfaces (e.g., concrete, asphalt), actual pieces (chips) or cores of contaminated surface may be obtained using appropriate tools (scabbling, coring,or drills) for subsequent laboratory extraction analysis. Bulk samples of suspected sink materials may be recommended to rule out secondary vapor phase disposition or absorption of into these materials. Concurrent air monitoringfor is recommended.Other Sample Matrices:Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.11. Packaging/Shipping: CWA Environmental Samples for Site CharacterizationPackaging and Shipping: CWAEnvironmental Samples For Site Characterization The packaging and shipping of environmental samples potentially contaminated with a chemical warfare agent (CWA) would be subject to complex and restrictive regulations established primarily by DOT for ground transportation (49 CFR Parts 171-180), and by D OT, ICAO, and IATA for air transportation (in addition to other regulations by CDC, USPS, OSHA). Transportation of -contaminated waste for treatment and disposal is covered under the WASTE MANAGEMENT section below.Samples can be collected from environmental media that include surface and subsurface soil, groundwater, surface water, drinking water, dust, air, and solids other than soil (e.g., building materials). Given the wide range of potential environmental media and complex regulatory requirements, the approach would likely be situationally dependent.CAUTION: Environmental samples potentially contaminated with CWA should not be introduced into commercial transportation as an undeclared hazardous material. Hazard classification, packaging, and hazard communication are the \u0000V\u0000K\u0000L\u0000S\u0000S\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000L\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000X\u0000Q\u0000G\u0000H\u0000U\u0000\u0003\u0000'\u00002\u00007\u0000¶\u0000V\u0000\u0003\u0000+\u0000D\u0000]\u0000D\u0000U\u0000G\u0000R\u0000X\u0000V\u0000\u0003\u00000\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D\u0000O\u0000V\u0000\u0003\u00005\u0000H\u0000J\u0000X\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000 \u0000\u0017\u0000\u001c\u0000\u0003\u0000&\u0000)\u00005\u0000\u0003\u00003\u0000D\u0000U\u0000W\u0000V\u0000\u0003\u0000\u0014\u0000\u001a\u0000\u0014-180). A summary of key packaging and shipping considerations for environmental samples with unknown concentrations of a potential unknown CWA is:\u0000xTransport of pure Cyclosarin (GF) is forbidden other than via military (Technical Escort Unit) transport in accordance with 49 CFR §173.7.\u0000xIf the collected sample contains or is suspected to contain hazardous materials, as defined in 49 CFR §171.8, the shipper must determine the appropriate UN ID Number, the Proper Shipping Name (PSN), and the Packing Group (PG) from the Hazardous Materials Table in 49 CFR §107.101. The table will then direct the shipper to the type of hazard and handling labels neede d, the appropriate packaging (inner and outer packaging), and any special provisions.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 55,
+        "repeatedHeaderFooterBlockCount": 19,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 6,
+      "humanPageNumber": 7,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(GF)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 7of 10\u0000xThe designated shipper (EPA personnel or contractors) must be trained and certified according to the requirements found in 49 CFR §172.704 (a)(2) and/or by IATA DangerousGoods (DG) 1.5 requirements for shipments by air.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Contact the sample-receiving laboratory to determine if they have additional packaging, shipping, or labeling requirements.Note that there is no UN ID for Cyclosarin (GF)listed in the Hazardous MaterialsTable (49 CFR §172.101). Therefore, ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "the most likely classification would be UN3381, Toxic by inhalation liquid, n.o.s. with an LC50 lower than or equal to 200 mL/m3and saturated vapor concentration greater than or equal to 500 LC50, PG I. In the US, non-bulk packaging would ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "then be in accordance with 49 CFR §173.226.Use of Mobile labs:Another consideration would be use of an on-site mobile laboratory for CWA analysis. This could ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "eliminate the shipper's responsibility for transporting the collected samples containing a substance thatmight be considered forbidden for transport by air or a hazardous material or DG by ground or air transport to an off-site labora",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "tory. In addition, there may be public concern about shipping samples off-site, or reluctance of commercial shipping companies to accept and transport samples from a known CWA-contaminated site. EPA maintains mobile laboratory assets (PHILIS mobile laborat",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "ories: https://www.epa.gov/emergency-response/philis-portable-high-throughput-integrated-laboratory-identification-system) inNJ and CO thatare capable of analyzing CWAs, including ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": ", in environmental matrices, down to health-based risk clearance levels. Access to the PHILIS mobile labs for a CWA incident can be obtained fromEPA HQ/EOC at 202-564-3850. EPA also has access to the US Army CBRNE ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "assets, including shipping and analysis, throughinter-agency agreements as described in theCOORDINATION WITH OTHER AGENCIESsection below. 12. AnalysisAnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil).",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Few laboratories currently have the capability to determine ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": ", particularly for large numbers of samples and for the various types \u0000R\u0000I\u0000\u0003\u0000H\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000P\u0000H\u0000G\u0000L\u0000D\u0000\u0011\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00005\u0000/\u00001\u0000\u0003\u0000O\u0000D\u0000E\u0000V(https://www.epa.gov/emergency-response/environmental-response-laboratory-network)",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "that are specially trained and equipped for the analysis of ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": ", will use sample prep and \u0000D\u0000Q\u0000D\u0000O\u0000\\\u0000W\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000$\u0000Q\u0000D\u0000O\u0000\\\u0000W\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u00000\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000\u000b\u0000(\u00006\u0000$\u00000\u0000\f\u0000\u0003\u00003\u0000U\u0000R\u0000J\u0000U\u0000D\u0000P\u0000V\u0000\u0003(https://www.epa.gov/esam",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "). For access to the nearest ERLN laboratory specially trained and equipped for ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "analysi\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00006\u0000$\u00000\u0000\u000f\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000F\u0000W\u0000\u0003\u0000(\u00003\u0000$\u0000\u0012\u0000+\u00004-EOC at 202-564-3850. The ERLN also maintains \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Compendium of Environmental Testing Laboratories (CETL)",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": ", a database of commercial, federal, state,and academic laboratories,which can be queried for specific analyses and matrices. Analysis on environmental matrices for toxic organics, metals, biological and radiological agents, as well as several of the CWAs",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": ", including ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "and its breakdown products, can be obtained by querying the database of laboratories \u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000(\u00007\u0000/\u0000\u0003(https://cfext.epa.gov/cetl/lblogin.cfm?action=None); prior registration for access to CETL website is necessary.13. ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Coordination with Other Agencies: CWA Field ActivitiesCoordination With Other Agencies: CWAField ActivitiesNumerous agencies other than EPA may be involved in a chemical agent response incident. Every attempt should be made ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "to integrate assets and design a uniform approach to sampling procedures, quality assurance, and data sharing. Every attempt should be made to coordinate activities, share data, and maintain chain-of-custody integrity throughout all phases ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "of the response, amongst all agencies involved.Civilian:",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "\u00007\u0000K\u0000H\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000*\u0000X\u0000D\u0000U\u0000G\u0000\u0003\u0000&\u0000L\u0000Y\u0000L\u0000O\u0000\u0003\u00006\u0000X\u0000S\u0000S\u0000R\u0000U\u0000W\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000\u000b\u0000&\u00006\u00007\u0000\f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00008\u0000\u0011\u00006\u0000\u0011\u0000\u0003\u0000&\u0000R\u0000D\u0000V\u0000W\u0000\u0003\u0000*\u0000X\u0000D\u0000U\u0000G\u0000\u0003\u0000³\u00006\u0000W\u0000U\u0000L\u0000N\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000V\u0000´\u0000\u0003\u0000G\u0000H\u0000S\u0000O\u0000R\u0000\\\u0000\u0003\u0000V\u0000X\u0000U\u0000Y\u0000H\u0000\\\u0000\u0003\u0000W\u0000H\u0000D\u0000P\u0000V\u0000\u000f\u0000\u0003response vehicles, an",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "d mobile labs to hazardous chemical incidents throughout the United States. Many CSTs and Strike Teams have the capabilities to sample, prepare, and analyze certain types of environmental samples for CWA analysis. CSTs have analytical equipment that can pr",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "ovide screening or presumptive data results for CWAs. The OSC should discuss site-specific types of samples, data quality, and chain-of-custody requirements with Strike Teams and CSTs before integrating their capabilities into the overall CWA response. Oth",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "er agencies, such as the FBI, may be present on-site preforming tasks, such as evidence retrieval, whichare specific for their agency.Military:EPA\u0000¶\u0000VSpecial Teams(ERT and CMAD)haveaccess to Department of Defense(DOD)assets through Inter-Agency Agre",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000\u000b\u0000,\u0000$\u0000$\u0000\f\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00008\u00006\u0000\u0003\u0000$\u0000U\u0000P\u0000\\\u0000¶\u0000V\u0000\u0003\u0000&\u0000R\u0000P\u0000E\u0000D\u0000W\u0000\u0003\u0000&\u0000D\u0000S\u0000D\u0000E\u0000L\u0000O\u0000L\u0000W\u0000L\u0000H\u0000V\u0000\u0003\u0000'\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000&\u0000R\u0000P\u0000P\u0000D\u0000Q\u0000G\u0000\u000f\u0000\u0003\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "Center (CBC) at Aberdeen Proving Ground, MD. The CBC has expertise and deployable assets for CWAairmonitoring(i.e., M\u0000,\u00001\u0000,\u0000&\u0000$\u00000\u00006\u0000), sampling, analysis, decontamination, and waste transport and disposal through their ongoing ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "demilitarization activities at former chemical agent munitions facilities in the US and abroad.\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000V\u0000X\u0000S\u0000S\u0000R\u0000U\u0000W\u0000\u0003\u0000W\u0000R\u0000\u0003Federal OSCs at a CBRN response or incident can be arranged through EPA/HQ-EOC at 202-564-",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "3850. Consultation or training for EPA personnel and partners that do not need to go throughEPA/HQ-\u0000(\u00002\u0000&\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000U\u0000U\u0000D\u0000Q\u0000J\u0000H\u0000G\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00005\u00007-Special Team at 732-321-6660. Additional CBRNEsupport can be ",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "obtained\u0000Y\u0000L\u0000D\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'-Special Team, including support forchemical,biological, and radiologicalagent response throughEPA/HQ-EOC at 202-564-3850.",
+          "role": "BODY"
+        }
+      ],
+      "text": "(GF) [July2022Update(nrt.org): January 2015Page 7of 10\u0000xThe designated shipper (EPA personnel or contractors) must be trained and certified according to the requirements found in 49 CFR §172.704 (a)(2) and/or by IATA DangerousGoods (DG) 1.5 requirements for shipments by air.\u0000x Contact the sample-receiving laboratory to determine if they have additional packaging, shipping, or labeling requirements.Note that there is no UN ID for Cyclosarin (GF)listed in the Hazardous MaterialsTable (49 CFR §172.101). Therefore, the most likely classification would be UN3381, Toxic by inhalation liquid, n.o.s. with an LC50 lower than or equal to 200 mL/m3and saturated vapor concentration greater than or equal to 500 LC50, PG I. In the US, non-bulk packaging would then be in accordance with 49 CFR §173.226.Use of Mobile labs:Another consideration would be use of an on-site mobile laboratory for CWA analysis. This could eliminate the shipper's responsibility for transporting the collected samples containing a substance thatmight be considered forbidden for transport by air or a hazardous material or DG by ground or air transport to an off-site labora tory. In addition, there may be public concern about shipping samples off-site, or reluctance of commercial shipping companies to accept and transport samples from a known CWA-contaminated site. EPA maintains mobile laboratory assets (PHILIS mobile laborat ories: https://www.epa.gov/emergency-response/philis-portable-high-throughput-integrated-laboratory-identification-system) inNJ and CO thatare capable of analyzing CWAs, including , in environmental matrices, down to health-based risk clearance levels. Access to the PHILIS mobile labs for a CWA incident can be obtained fromEPA HQ/EOC at 202-564-3850. EPA also has access to the US Army CBRNE assets, including shipping and analysis, throughinter-agency agreements as described in theCOORDINATION WITH OTHER AGENCIESsection below. 12. AnalysisAnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil). Few laboratories currently have the capability to determine , particularly for large numbers of samples and for the various types \u0000R\u0000I\u0000\u0003\u0000H\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000P\u0000H\u0000G\u0000L\u0000D\u0000\u0011\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00005\u0000/\u00001\u0000\u0003\u0000O\u0000D\u0000E\u0000V(https://www.epa.gov/emergency-response/environmental-response-laboratory-network) that are specially trained and equipped for the analysis of , will use sample prep and \u0000D\u0000Q\u0000D\u0000O\u0000\\\u0000W\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000$\u0000Q\u0000D\u0000O\u0000\\\u0000W\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u00000\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000 \u0000(\u00006\u0000$\u00000\u0000 \u0000\u0003\u00003\u0000U\u0000R\u0000J\u0000U\u0000D\u0000P\u0000V\u0000\u0003(https://www.epa.gov/esam ). For access to the nearest ERLN laboratory specially trained and equipped for analysi\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00006\u0000$\u00000\u0000\u000f\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000F\u0000W\u0000\u0003\u0000(\u00003\u0000$\u0000\u0012\u0000+\u00004-EOC at 202-564-3850. The ERLN also maintains \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Compendium of Environmental Testing Laboratories (CETL) , a database of commercial, federal, state,and academic laboratories,which can be queried for specific analyses and matrices. Analysis on environmental matrices for toxic organics, metals, biological and radiological agents, as well as several of the CWAs , including and its breakdown products, can be obtained by querying the database of laboratories \u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000(\u00007\u0000/\u0000\u0003(https://cfext.epa.gov/cetl/lblogin.cfm?action=None); prior registration for access to CETL website is necessary.13. Coordination with Other Agencies: CWA Field ActivitiesCoordination With Other Agencies: CWAField ActivitiesNumerous agencies other than EPA may be involved in a chemical agent response incident. Every attempt should be made to integrate assets and design a uniform approach to sampling procedures, quality assurance, and data sharing. Every attempt should be made to coordinate activities, share data, and maintain chain-of-custody integrity throughout all phases of the response, amongst all agencies involved.Civilian: \u00007\u0000K\u0000H\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000*\u0000X\u0000D\u0000U\u0000G\u0000\u0003\u0000&\u0000L\u0000Y\u0000L\u0000O\u0000\u0003\u00006\u0000X\u0000S\u0000S\u0000R\u0000U\u0000W\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000 \u0000&\u00006\u00007\u0000 \u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00008\u0000\u0011\u00006\u0000\u0011\u0000\u0003\u0000&\u0000R\u0000D\u0000V\u0000W\u0000\u0003\u0000*\u0000X\u0000D\u0000U\u0000G\u0000\u0003\u0000³\u00006\u0000W\u0000U\u0000L\u0000N\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000V\u0000´\u0000\u0003\u0000G\u0000H\u0000S\u0000O\u0000R\u0000\\\u0000\u0003\u0000V\u0000X\u0000U\u0000Y\u0000H\u0000\\\u0000\u0003\u0000W\u0000H\u0000D\u0000P\u0000V\u0000\u000f\u0000\u0003response vehicles, an d mobile labs to hazardous chemical incidents throughout the United States. Many CSTs and Strike Teams have the capabilities to sample, prepare, and analyze certain types of environmental samples for CWA analysis. CSTs have analytical equipment that can pr ovide screening or presumptive data results for CWAs. The OSC should discuss site-specific types of samples, data quality, and chain-of-custody requirements with Strike Teams and CSTs before integrating their capabilities into the overall CWA response. Oth er agencies, such as the FBI, may be present on-site preforming tasks, such as evidence retrieval, whichare specific for their agency.Military:EPA\u0000¶\u0000VSpecial Teams(ERT and CMAD)haveaccess to Department of Defense(DOD)assets through Inter-Agency Agre \u0000H\u0000P\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000 \u0000,\u0000$\u0000$\u0000 \u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00008\u00006\u0000\u0003\u0000$\u0000U\u0000P\u0000\\\u0000¶\u0000V\u0000\u0003\u0000&\u0000R\u0000P\u0000E\u0000D\u0000W\u0000\u0003\u0000&\u0000D\u0000S\u0000D\u0000E\u0000L\u0000O\u0000L\u0000W\u0000L\u0000H\u0000V\u0000\u0003\u0000'\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000&\u0000R\u0000P\u0000P\u0000D\u0000Q\u0000G\u0000\u000f\u0000\u0003\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003 Center (CBC) at Aberdeen Proving Ground, MD. The CBC has expertise and deployable assets for CWAairmonitoring(i.e., M\u0000,\u00001\u0000,\u0000&\u0000$\u00000\u00006\u0000), sampling, analysis, decontamination, and waste transport and disposal through their ongoing demilitarization activities at former chemical agent munitions facilities in the US and abroad.\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000V\u0000X\u0000S\u0000S\u0000R\u0000U\u0000W\u0000\u0003\u0000W\u0000R\u0000\u0003Federal OSCs at a CBRN response or incident can be arranged through EPA/HQ-EOC at 202-564- 3850. Consultation or training for EPA personnel and partners that do not need to go throughEPA/HQ-\u0000(\u00002\u0000&\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000U\u0000U\u0000D\u0000Q\u0000J\u0000H\u0000G\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00005\u00007-Special Team at 732-321-6660. Additional CBRNEsupport can be obtained\u0000Y\u0000L\u0000D\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000,\u0000$\u0000$\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'-Special Team, including support forchemical,biological, and radiologicalagent response throughEPA/HQ-EOC at 202-564-3850.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 40,
+        "repeatedHeaderFooterBlockCount": 9,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 7,
+      "humanPageNumber": 8,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(GF)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 8of 1014. Environmental Decontamination/CleanupEnvironmental Decontamination/Cleanup14.1. Decontamination/Cleanup Planning:Once site controls are in place, develop a site-specific decontamination/cleanup plan. Environmental d",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "econtamination may \u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000\u0003\u0000D\u0000\u0003\u0000³\u0000W\u0000L\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000D\u0000F\u0000K\u0000´\u0000\u0003\u0000X\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u0000Y\u0000D\u0000U\u0000L\u0000H\u0000W\u0000\\\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000H\u0000F\u0000K\u0000Q\u0000L\u0000T\u0000X\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000V\u0000\u0011\u0000\u0003\u0000&\u0000D\u0000O\u0000O\u0000\u0003\u0000(\u00003\u0000$\u0000\u0012\u0000+\u00004-EOC at 202-564-3850 for more information.General Considerations:",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers public safety, total cost, impact on the area, wastes generated, time the areaor item will beinaccessible and/orout of service,as well as",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "any socio-economic, public health, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be collected, treated, and disposed of properly",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": ". Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible (see WASTE MANAGEMENT section below).Disposal Option: The urgency to restore an area or itemas quickly as possible may result in the outright ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "and timely removal and disposal of contaminated materials. Certain materials may be impacted by thedecontamination products, and/or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation:",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "degradesvia natural processes. Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than other options but is non-destructive to materials.Given ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "\u0000¶\u0000V\u0000\u0003lowvolatility, this attenuation may take hours to days depending on impacted material and environmental conditions.Fix-in-Place Option:The contaminated area may be resistant to decontamination products or may be unable or ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "impractical to be treated. Physical barriers can be used to immobilize thecontaminationand prevent itfrom coming into contact with the environment or the public. This can be a temporary or permanent solution.14.2. Decontamination Strategy:",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "A decontamination strategy can be developed by designating contaminated areas into fivebroad categories: 1) surfaces or hot spots, 2) large volumetric spaces, 3) sensitive equipment or items, 4) aqueous solutions, and 5) water systems. Areas in ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "each category may be treated using one or more unique decontamination processes in a tiered approach to the overall site-specific decontamination strategy.Cautions:\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Decontamination products may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of bleach results in release of chlorine vapors). Strong oxidizers, such as hypochlorite, may react violently wit",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "h organics.\u0000xDirt, grime, and other coatings (organic load) can reduce the efficacy of decontamination; pre-cleaning surfaces with soap and water may be needed before the application of decontamination formulations but resulting pre-cleaning ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "rinsates require containment to avoid agent spread.\u0000xAll statements about decontamination efficacy are based upon Sarin(GB) and have not been verified for ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Cyclosarin ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "(GF). Because hydrolysis has been identified as a major degradation pathway for both Cyclosarinand Sarinand because the hydrolysis rate of ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "is similar to that of Sarin, the limited data available for ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "suggest similar efficacy.For additionalinformation, contact the EPA/HQ-EOC at 202-564-3850.Surfaces/Hot Spots:This category is for areas smaller in size but with higher levels of agent contamination. They may ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "require more rigorous decontamination products and methods. Excess ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "liquid should be absorbed using,e.g., vermiculite or dry sand,and transferred into a sealed container and disposed according to WASTE MANAGEMENT section below. Decontamination of remaining ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "occurs mainly through hydrolysis, which occurs faster at high pHs, although other mechanisms may cause and/or catalyze (speed up) ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "destruction. Hydrolysis of ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "produces fluoride ions,which may form HF at low pH. Application of the following decontamination solutions and ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "\u0000I\u0000R\u0000U\u0000P\u0000X\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000H\u0000I\u0000I\u0000L\u0000F\u0000D\u0000F\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000I\u0000R\u0000O\u0000O\u0000R\u0000Z\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000S\u0000S\u0000O\u0000L\u0000F\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000V\u0000¶\u0000\u0003\u0000G\u0000L\u0000U\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000V.1)Hypochlorite-",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "containing solutions: Hypochlorite can be corrosive to certain surfaces and materials and should be ",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "\u0000U\u0000L\u0000Q\u0000V\u0000H\u0000G\u0000\u0003\u0000W\u0000K\u0000R\u0000U\u0000R\u0000X\u0000J\u0000K\u0000O\u0000\\\u0000\u0003\u0000D\u0000I\u0000W\u0000H\u0000U\u0000Z\u0000D\u0000U\u0000G\u0000V\u0000\u0011\u0000\u0003\u0000+\u0000R\u0000X\u0000V\u0000H\u0000K\u0000R\u0000O\u0000G\u0000\u0003\u0000E\u0000O\u0000H\u0000D\u0000F\u0000K\u0000\u0003\u0000V\u0000R\u0000O\u0000X\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000\u000b\u0000\u0000\u0018\u0000\b\u0000\u0003\u0000V\u0000R\u0000G\u0000L\u0000X\u0000P\u0000\u0003\u0000K\u0000\\\u0000S\u0000R\u0000F\u0000K\u0000O\u0000R\u0000U\u0000L\u0000W\u0000H\u0000\f\u0000\u0003may beeffective for ",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "with efficacyexpected to beachieved with contact time of 15-60 minutes depending on surface material. Calcium hypochlorite, present in commercial products, such as HTH (10% hypochlorite solution), is better for ",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "surfaces with high concentrations of liquids in localized areas. Note that lowering the pH of hypochlorite solutions is not required and may be counterproductive.2)Hydroxide (e.g., sodium, potassium \u0000±10% solution)is expected to reactrapidly with ",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": ", but solutions are very damaging to many surfaces and should be rinsed thoroughly after use.3)Other high pH solutions, such as sodium carbonate (10% solution),are expected todecontaminate surfaces but ",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "slower than decontamination with sodium or potassium hydroxide, which have higher pH.4)Proprietary decontamination technologies such as EasyDecon DF-200®, Decon7 (D7), Dahlgren Decon®, CASCAD®, Decon Green®, or L-Gel® may be effective against ",
+          "role": "BODY"
+        },
+        {
+          "order": 46,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 47,
+          "operator": "TJ",
+          "text": "on the order of minutes to hours, but not ",
+          "role": "BODY"
+        }
+      ],
+      "text": "(GF) [July2022Update(nrt.org): January 2015Page 8of 1014. Environmental Decontamination/CleanupEnvironmental Decontamination/Cleanup14.1. Decontamination/Cleanup Planning:Once site controls are in place, develop a site-specific decontamination/cleanup plan. Environmental d econtamination may \u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000\u0003\u0000D\u0000\u0003\u0000³\u0000W\u0000L\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000D\u0000F\u0000K\u0000´\u0000\u0003\u0000X\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u0000Y\u0000D\u0000U\u0000L\u0000H\u0000W\u0000\\\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000H\u0000F\u0000K\u0000Q\u0000L\u0000T\u0000X\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000V\u0000\u0011\u0000\u0003\u0000&\u0000D\u0000O\u0000O\u0000\u0003\u0000(\u00003\u0000$\u0000\u0012\u0000+\u00004-EOC at 202-564-3850 for more information.General Considerations: A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers public safety, total cost, impact on the area, wastes generated, time the areaor item will beinaccessible and/orout of service,as well as any socio-economic, public health, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be collected, treated, and disposed of properly . Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible (see WASTE MANAGEMENT section below).Disposal Option: The urgency to restore an area or itemas quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may be impacted by thedecontamination products, and/or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation: degradesvia natural processes. Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than other options but is non-destructive to materials.Given \u0000¶\u0000V\u0000\u0003lowvolatility, this attenuation may take hours to days depending on impacted material and environmental conditions.Fix-in-Place Option:The contaminated area may be resistant to decontamination products or may be unable or impractical to be treated. Physical barriers can be used to immobilize thecontaminationand prevent itfrom coming into contact with the environment or the public. This can be a temporary or permanent solution.14.2. Decontamination Strategy: A decontamination strategy can be developed by designating contaminated areas into fivebroad categories: 1) surfaces or hot spots, 2) large volumetric spaces, 3) sensitive equipment or items, 4) aqueous solutions, and 5) water systems. Areas in each category may be treated using one or more unique decontamination processes in a tiered approach to the overall site-specific decontamination strategy.Cautions:\u0000x Decontamination products may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of bleach results in release of chlorine vapors). Strong oxidizers, such as hypochlorite, may react violently wit h organics.\u0000xDirt, grime, and other coatings (organic load) can reduce the efficacy of decontamination; pre-cleaning surfaces with soap and water may be needed before the application of decontamination formulations but resulting pre-cleaning rinsates require containment to avoid agent spread.\u0000xAll statements about decontamination efficacy are based upon Sarin(GB) and have not been verified for (GF). Because hydrolysis has been identified as a major degradation pathway for both Cyclosarinand Sarinand because the hydrolysis rate of is similar to that of Sarin, the limited data available for suggest similar efficacy.For additionalinformation, contact the EPA/HQ-EOC at 202-564-3850.Surfaces/Hot Spots:This category is for areas smaller in size but with higher levels of agent contamination. They may require more rigorous decontamination products and methods. Excess liquid should be absorbed using,e.g., vermiculite or dry sand,and transferred into a sealed container and disposed according to WASTE MANAGEMENT section below. Decontamination of remaining occurs mainly through hydrolysis, which occurs faster at high pHs, although other mechanisms may cause and/or catalyze (speed up) destruction. Hydrolysis of produces fluoride ions,which may form HF at low pH. Application of the following decontamination solutions and \u0000I\u0000R\u0000U\u0000P\u0000X\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000H\u0000I\u0000I\u0000L\u0000F\u0000D\u0000F\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000I\u0000R\u0000O\u0000O\u0000R\u0000Z\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000S\u0000S\u0000O\u0000L\u0000F\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000V\u0000¶\u0000\u0003\u0000G\u0000L\u0000U\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000V.1)Hypochlorite- containing solutions: Hypochlorite can be corrosive to certain surfaces and materials and should be \u0000U\u0000L\u0000Q\u0000V\u0000H\u0000G\u0000\u0003\u0000W\u0000K\u0000R\u0000U\u0000R\u0000X\u0000J\u0000K\u0000O\u0000\\\u0000\u0003\u0000D\u0000I\u0000W\u0000H\u0000U\u0000Z\u0000D\u0000U\u0000G\u0000V\u0000\u0011\u0000\u0003\u0000+\u0000R\u0000X\u0000V\u0000H\u0000K\u0000R\u0000O\u0000G\u0000\u0003\u0000E\u0000O\u0000H\u0000D\u0000F\u0000K\u0000\u0003\u0000V\u0000R\u0000O\u0000X\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000 \u0000\u0000\u0018\u0000\b\u0000\u0003\u0000V\u0000R\u0000G\u0000L\u0000X\u0000P\u0000\u0003\u0000K\u0000\\\u0000S\u0000R\u0000F\u0000K\u0000O\u0000R\u0000U\u0000L\u0000W\u0000H\u0000 \u0000\u0003may beeffective for with efficacyexpected to beachieved with contact time of 15-60 minutes depending on surface material. Calcium hypochlorite, present in commercial products, such as HTH (10% hypochlorite solution), is better for surfaces with high concentrations of liquids in localized areas. Note that lowering the pH of hypochlorite solutions is not required and may be counterproductive.2)Hydroxide (e.g., sodium, potassium \u0000±10% solution)is expected to reactrapidly with , but solutions are very damaging to many surfaces and should be rinsed thoroughly after use.3)Other high pH solutions, such as sodium carbonate (10% solution),are expected todecontaminate surfaces but slower than decontamination with sodium or potassium hydroxide, which have higher pH.4)Proprietary decontamination technologies such as EasyDecon DF-200®, Decon7 (D7), Dahlgren Decon®, CASCAD®, Decon Green®, or L-Gel® may be effective against on the order of minutes to hours, but not",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 48,
+        "repeatedHeaderFooterBlockCount": 16,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 8,
+      "humanPageNumber": 9,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(GF)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 9of 10all have been thoroughly tested. Availability, cost, and the need for specialized equipment to apply the decontaminant may limit their use early in the response.Large Volumetric Spaces:",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "This category is for areas larger in size but with lower levels of agent contamination. These areasmay require less aggressive but more broadly applied decontamination products and methods.1)F",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "orced or Hot Air ventilation methods are recommended for vapor plume contamination or lowsurfaceconcentration of ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "in large volumetric spaces, including HVAC systems, or open areas; efficacymay betypically achieved in hours to days with less waste and adverse impacts to materials.Capture technologies, such as activated ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "carbon containing air filters, would be required to prevent transfer of the ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "vapor to the outside environmentor prevent recirculation into other surrounding spaces.2)Fumigations with modified vaporous hydrogen peroxide (mVHP®; a combination of ammonia and hydrogen peroxide vapor) or chlorine dioxide (ClO2",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": ") are expected to be effective against ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": ". However, the time to implement any of these fumigation approaches should be balanced against the expected degree of natural attenuation associated with the relatively high volatility of Cyclosarin.3)",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Steam application has been reported to be effective against ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "on surfaces. Steam also transfers ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "into the condensate.Sensitive Equipment orItems:1)Forced or Hot Air ventilation may be used for ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "and can be used either in-situ or ex-situ to decontaminate these items.Collective protection using activated carbon air filters would be required to prevent transfer of the ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "vapor to the outside environment or preventrecirculation into other surrounding spaces.2)Modified VHP® fumigation(mVHP®)canbe used on theseitems with less corrosion to electronics than e.g., dilute hypochlorite solutions.Aqueous Solutions:",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "degrades via hydrolysis but may persist in aqueous solutions, depending on initial concentration and environmentalconditions,such as pH and temperature. If the aqueous solutions result from decontamination operations involving bleach or other high pH co",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "nditions, significant ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "degradation may occur. Avoid any additional release to water systems, drains, or sewers (e.g., through inappropriate disposal). Contain liquid or transfer liquid to appropriate containers and dispose according to WASTE MANAGEMENT section below.",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "Water Systems:Hydrolysis and removal of contaminated water will lessen ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "contamination in water systems, but ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "may persist in hydraulic dead ends and via sorption to system components (e.g., plastics) that act as sinks for ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": ". It may be necessary to isolate potentially affected portions of the system to evaluate them and implementdecontamination. A contaminated water system may transfer ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "to building and premise plumbing, which then may also require decontamination.Verification of Decontamination: Site and situation specific. Please contact EPA/HQ-EOC at 202-564-3850 for further assistance.15. WasteManagementWaste Management15.1.",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "Transportation:Federal requirements for the commercial transport of hazardous materials and procedures for exemptions are specified in How to Comply with Federal Hazardous Materials Regulations, available at: https://www.fmcsa.dot.gov/regulations/hazardous",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "-materials/how-comply-federal-hazardous-materials-regulations. Cyclosarin (GF) should not be offered for commercial transportation without being rendered safe by neutralization. Contact the PHMSA Hazardous Materials Information Center at 1-800-467-4922 or ",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "infocntr@dot.govto discuss specific cases. Additional resources on packaging, labeling, and shipping areavailable at: https://www.phmsa.dot.gov/standards-rulemaking/hazmat/hazardous-materials-regulations. Detailed state regulations can be found at ",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "www.envcap.org/.This QRG is intended to apply to Federal OSCs in the first 24-48 hours of a response. Once determined, the concentrations of ",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "in individual waste streams should be used to determine which transportation requirements apply. For instance, certain requirements may apply to waste streams with concentrated agent, but may not apply to waste streams ",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "such as soil containing dilute concentrations of agent.15.2. Waste Management:Under the Resource Conservation and Recovery Act (RCRA), waste is classified as hazardous waste (subtitle C) or solid ",
+          "role": "BODY"
+        },
+        {
+          "order": 46,
+          "operator": "TJ",
+          "text": "waste (subtitle D). The RCRA regulations generally define a waste to be hazardous if it is: (1) a listed waste (40 CFR §261.31-§261.32); (2) exhibits specific characteristics (40 CFR §261.21-§261.24); or (3) is a discarded commercial ",
+          "role": "BODY"
+        },
+        {
+          "order": 47,
+          "operator": "TJ",
+          "text": "chemical product, off specification species, container residue, or spill residue listed in 40 CFR §261.33. ",
+          "role": "BODY"
+        },
+        {
+          "order": 48,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 49,
+          "operator": "TJ",
+          "text": "(GF)is not listed under 40 CFR §261.31-33, but ",
+          "role": "BODY"
+        },
+        {
+          "order": 50,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 51,
+          "operator": "TJ",
+          "text": "-contaminated waste may be considered reactive hazardous waste, chemical code D003, if, when mixed with water, it generates toxic gases, vapors, or fumes in a quantity sufficient to present a danger to human health or the environment (40 CFR §261.23(a)(4",
+          "role": "BODY"
+        },
+        {
+          "order": 52,
+          "operator": "TJ",
+          "text": ")). Listed or characteristic waste may be land disposed only if the waste meets the applicable treatment standards (40 CFR §268.40).It is the responsibility of the waste generator to make a hazardous waste determination (40 CFR §262.11).",
+          "role": "BODY"
+        },
+        {
+          "order": 53,
+          "operator": "TJ",
+          "text": "The states (except forAlaska and Iowa) have the primary responsibility to implement the hazardous waste regulations and can impose more stringent requirements or requirements broader in scope than the federal program. Several states, ",
+          "role": "BODY"
+        },
+        {
+          "order": 54,
+          "operator": "TJ",
+          "text": "including CO, IN, KY, MD, OR, andUT, have their own waste designations for chemical agents, which may be applicable ",
+          "role": "BODY"
+        }
+      ],
+      "text": "(GF) [July2022Update(nrt.org): January 2015Page 9of 10all have been thoroughly tested. Availability, cost, and the need for specialized equipment to apply the decontaminant may limit their use early in the response.Large Volumetric Spaces: This category is for areas larger in size but with lower levels of agent contamination. These areasmay require less aggressive but more broadly applied decontamination products and methods.1)F orced or Hot Air ventilation methods are recommended for vapor plume contamination or lowsurfaceconcentration of in large volumetric spaces, including HVAC systems, or open areas; efficacymay betypically achieved in hours to days with less waste and adverse impacts to materials.Capture technologies, such as activated carbon containing air filters, would be required to prevent transfer of the vapor to the outside environmentor prevent recirculation into other surrounding spaces.2)Fumigations with modified vaporous hydrogen peroxide (mVHP®; a combination of ammonia and hydrogen peroxide vapor) or chlorine dioxide (ClO2 ) are expected to be effective against . However, the time to implement any of these fumigation approaches should be balanced against the expected degree of natural attenuation associated with the relatively high volatility of Cyclosarin.3) Steam application has been reported to be effective against on surfaces. Steam also transfers into the condensate.Sensitive Equipment orItems:1)Forced or Hot Air ventilation may be used for and can be used either in-situ or ex-situ to decontaminate these items.Collective protection using activated carbon air filters would be required to prevent transfer of the vapor to the outside environment or preventrecirculation into other surrounding spaces.2)Modified VHP® fumigation(mVHP®)canbe used on theseitems with less corrosion to electronics than e.g., dilute hypochlorite solutions.Aqueous Solutions: degrades via hydrolysis but may persist in aqueous solutions, depending on initial concentration and environmentalconditions,such as pH and temperature. If the aqueous solutions result from decontamination operations involving bleach or other high pH co nditions, significant degradation may occur. Avoid any additional release to water systems, drains, or sewers (e.g., through inappropriate disposal). Contain liquid or transfer liquid to appropriate containers and dispose according to WASTE MANAGEMENT section below. Water Systems:Hydrolysis and removal of contaminated water will lessen contamination in water systems, but may persist in hydraulic dead ends and via sorption to system components (e.g., plastics) that act as sinks for . It may be necessary to isolate potentially affected portions of the system to evaluate them and implementdecontamination. A contaminated water system may transfer to building and premise plumbing, which then may also require decontamination.Verification of Decontamination: Site and situation specific. Please contact EPA/HQ-EOC at 202-564-3850 for further assistance.15. WasteManagementWaste Management15.1. Transportation:Federal requirements for the commercial transport of hazardous materials and procedures for exemptions are specified in How to Comply with Federal Hazardous Materials Regulations, available at: https://www.fmcsa.dot.gov/regulations/hazardous -materials/how-comply-federal-hazardous-materials-regulations. Cyclosarin (GF) should not be offered for commercial transportation without being rendered safe by neutralization. Contact the PHMSA Hazardous Materials Information Center at 1-800-467-4922 or infocntr@dot.govto discuss specific cases. Additional resources on packaging, labeling, and shipping areavailable at: https://www.phmsa.dot.gov/standards-rulemaking/hazmat/hazardous-materials-regulations. Detailed state regulations can be found at www.envcap.org/.This QRG is intended to apply to Federal OSCs in the first 24-48 hours of a response. Once determined, the concentrations of in individual waste streams should be used to determine which transportation requirements apply. For instance, certain requirements may apply to waste streams with concentrated agent, but may not apply to waste streams such as soil containing dilute concentrations of agent.15.2. Waste Management:Under the Resource Conservation and Recovery Act (RCRA), waste is classified as hazardous waste (subtitle C) or solid waste (subtitle D). The RCRA regulations generally define a waste to be hazardous if it is: (1) a listed waste (40 CFR §261.31-§261.32); (2) exhibits specific characteristics (40 CFR §261.21-§261.24); or (3) is a discarded commercial chemical product, off specification species, container residue, or spill residue listed in 40 CFR §261.33. (GF)is not listed under 40 CFR §261.31-33, but -contaminated waste may be considered reactive hazardous waste, chemical code D003, if, when mixed with water, it generates toxic gases, vapors, or fumes in a quantity sufficient to present a danger to human health or the environment (40 CFR §261.23(a)(4 )). Listed or characteristic waste may be land disposed only if the waste meets the applicable treatment standards (40 CFR §268.40).It is the responsibility of the waste generator to make a hazardous waste determination (40 CFR §262.11). The states (except forAlaska and Iowa) have the primary responsibility to implement the hazardous waste regulations and can impose more stringent requirements or requirements broader in scope than the federal program. Several states, including CO, IN, KY, MD, OR, andUT, have their own waste designations for chemical agents, which may be applicable",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 55,
+        "repeatedHeaderFooterBlockCount": 20,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 9,
+      "humanPageNumber": 10,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(GF)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[July2022Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "January 2015Page 10of 10for the cleanup of ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Cyclosarin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "-contaminated residues, decomposition products,soils, and debris. It is critical to open a dialogue with state regulators as early as possible.",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Management of toxic decomposition products, associated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered.High pH aqueous decontamination solution waste may be considered ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "corrosive hazardous waste, chemical code D002, if it has a pH greater than or equal to 12.5 (40 CFR §261.22).EPA/CMAD can provide Federal OSCs with information and support to address knowledge gaps for dealing with wastes contaminated with dilute concentr",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "ations of CWA; contact EPA/HQ-EOC at 202-564-3850.EPA alsorecommends the creation of pre-incident waste management plans as a preparedness measure for chemical agent releases, and has created an All-Hazards Waste Management Planning Tool",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "to help state, local, territorial, and tribal waste management officials coordinate and prepare these plans. Access to the All-Hazards Waste Management Planning Tool requires pre-registration (https://wasteplan.epa.gov/).",
+          "role": "BODY"
+        }
+      ],
+      "text": "(GF) [July2022Update(nrt.org): January 2015Page 10of 10for the cleanup of -contaminated residues, decomposition products,soils, and debris. It is critical to open a dialogue with state regulators as early as possible. Management of toxic decomposition products, associated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered.High pH aqueous decontamination solution waste may be considered corrosive hazardous waste, chemical code D002, if it has a pH greater than or equal to 12.5 (40 CFR §261.22).EPA/CMAD can provide Federal OSCs with information and support to address knowledge gaps for dealing with wastes contaminated with dilute concentr ations of CWA; contact EPA/HQ-EOC at 202-564-3850.EPA alsorecommends the creation of pre-incident waste management plans as a preparedness measure for chemical agent releases, and has created an All-Hazards Waste Management Planning Tool to help state, local, territorial, and tribal waste management officials coordinate and prepare these plans. Access to the All-Hazards Waste Management Planning Tool requires pre-registration (https://wasteplan.epa.gov/).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 12,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    }
+  ]
+}

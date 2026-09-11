@@ -1,0 +1,519 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-chemical-tets",
+  "sourceArtifactSha256": "f34aebf97d2b7aac93db529610b60ed6691253b8e22b4eb7505501d478c00fa5",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+  "pageCount": 2,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "June2013NRT Quick Reference Guide:Tetramethylenedisulfotetramine(TETS)11For references,please see Key References Cites/Used in National Response Team (NRT) Quick Reference Guides (QRGs) for Toxic Industrial Chemicals. QRGs are intended for Federal ",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "OSC/RPMs.Agent CharacteristicsAgent Classification: Toxic Industrial Chemical; CAS: 80-12-6; Formula:C4H8N4O4S2;Molecular Weight:240.28g/mol.Description: Odorless, colorless, tasteless, solid/crystalline powder rodenticide, banned world-",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "wide.  TETS is still available, illegally, in parts of China and in many U.S. cities with substantial immigrant populations.  TETS acts on the nervous system, inhibiting the gamma-aminobutyric acid (GABA) neurotransmitter thatregulates nerve ",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "cell excitability, leading to overstimulation of the nervous system, severe convulsions,and possibly death.TETSis notflammable but can decompose upon combustion forming toxic gases including various oxide compounds of nitrogen and sulfur (NOx, SOx).",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "Persistence:  TETS",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "\u0000L\u0000V\u0000\u0003\u0000F\u0000R\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000³\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000W\u0000´\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000Z\u0000D\u0000W\u0000H\u0000U\u0000\u0003\u0000X\u0000Q\u0000G\u0000H\u0000U\u0000\u0003\u0000Q\u0000R\u0000U\u0000P\u0000D\u0000O\u0000\u0003\u0000H\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000F\u0000R\u0000Q\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0011\u0000\u0003\u0000\u0003\u00003\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000Z\u0000L\u0000O\u0000O\u0000\u0003\u0000G\u0000H\u0000S\u0000H\u0000Q\u0000G\u0000\u0003\u0000X\u0000S\u0000R\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "amount, method of release, environmental conditions,& the types of surfaces & materials impacted.Physical properties are listed at/near STP unless otherwise indicated. Vapor PressureVolatilityFreezing PointVapor DensityBoiling PointFlash PointAqueous ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "SolubilitySolubleGas DensityNA -solidNA -solidNA -solid NA -solidNA -decomposes at 500°F/260°C to SOx, NOx,   etc.vaporsNA -decomposes at 500°F/260°C to SOx, NOx, etc. vapors 0.25 g/L acetoneNA -solidRelease ScenariosINGESTION ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "SCENARIOS ARE ASSUMED MOST PROBABLE; HOWEVER,OTHER RELEASE SCENARIOS & EXPOSURE ROUTES SHOULD BE CONSIDERED.Open Areas: TETSis a solid ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "and the primary release/attack scenarios are as food/water ingestion or airborne particulate inhalation releases. Airborne TETS particulates would deposit on surfaces or accumulate in lower terrains and follow prevailing winds.  Water/Water Systems: ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "TETS is soluble and stable in water and can be considered a drinking water hazard. For water systemsplumbing, surfaces,and equipment that have contacted contaminated water must be evaluated for TETSalong with the bulk water.Indoor Facility:TETS",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "could potentially be dispersed as solid particulates inside a building or facility; HVAC systems could be impacted. TETS airborne particulates that are heavier (less buoyant) than air will accumulate in lowe",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "r levels and utility corridors or deposit on surfaces inside the building.Food Supply Chain:TETS presents a threat to public water and food supplies and has been implicated in numerous accidental and intentional poisoning cases in the US and abroad.  The",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "re is apotential for contaminating the food supply chainwith TETS,including food processing, distributioncenters, and livestock facilities.Health EffectsOnsetTETS is a potent neurotoxic rodenticide that acts as a non-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "competitive GABA antagonist that can cause seizures. Symptoms may occur rapidly after intake of contaminant (< 30 min); however, prolonged exposure may lead to permanent or persistent neurologic effects.Signs/Symptoms ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Regardless of route the following range of effects may occur depending on the dose.Mild:Ingestion:Exposure can cause headache, dizziness, fatigue, nausea, vomiting, and abdominal pain. Inhalation & Dermal:Limited evidence report ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "systemic effects that affect the main target organ (central nervous system) similar to ingestion.Moderate -Severe: Causes agitation, fast heartbeat, palpitations, epileptic seizures, fainting, incontinence, foaming at the mouth, multiple organ ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "dysfunction, coma, and/or death. Post exposure: Permanent or persistent effects include irritability, hallucinations, memory impairment, and recurring seizures.Exposure RoutesIngestion:TETS exposure is primarily by ingestion, and is",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "the most likely route of exposure for TETS poisoning. Inhalation:  Occupational exposuresthrough inhalation have occurred, in spite of the ban on the manufacturing of TETS.Dermal:TETS is not absorbed through intact skin, but can be absorbed through bre",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "aks in the skin.Other:There is a high risk of accidental ingestion by children, and poisoning by suicide and homicide. If poisoning is suspected the Local Health Department should be notified immediately.Effect Levels",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "TETS is not registered by the U.S. Environmental Protection Agency for use in the U.S.; and its importation, manufacture, anduse in the United States areillegal.Exposure guidelines are not readily available;the only exposure guidelines are for ingestion: ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Provisional Advisory Levels (PAL-3)for general public for 1 day = 0.0065ppm.PAL-3 represents the assumed continuous exposure concentration above which can cause lethality in the general population, including all ages and sensitive subpopulations. The",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "lethal dose in humans is 5-12 mg (total dose).Personnel SafetyNotePersonal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options and personnel decon may vary depending upon the agent, site,&",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "the release scenario. General information on personnel safety and PPE selection criteria can be found atwww.cdc.gov/niosh/ershdbMedicalPre-incident: Annual physical and respiratory function exams. During Incident: Conduct periodic on-",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "site medical monitoring, observe for any signs & symptoms as per Health Effects section above and treat accordingly as per First Aid section below.First AidImmediately remove person from the ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "affected area, remove contaminated articles. Wash bare skin with warm soapy water, and rinse eyes with plain water for 10-15 minutes if exposed to TETS.Antidote: No proven antidote is available for TETS. Treatment shouldfollow accepted modalities for a",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "poisoned, altered,and seizing patient.  Send person for follow up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms & treat accordingly.PPEGENERAL INFORMATION: NIOSH-",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, & protective clothing should be used. Pre-incident t",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "raining & exercises on the proper use of PPE is recommended. Per NIOSH guidance -LEVEL A:Recommended for the initial response to a TETSincident where TETSlevels and ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "exposure risks are unknown. Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), & eyeprotection when the contaminant identity or concentration is unknown. Select Level A when the TETSconcentration is un",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "known & when there is a potential of ocular or dermal exposure. LEVEL B:Provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when the TETSconcentration is unknown & dermal exposure",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "is less of a risk. Level B differs from Level A in that it incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not airtight. LEVEL C:Select Level C when the contaminant i",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "dentity & concentration are known & the respiratory protection criteria factors for the use of APR or PAPR are met. Level C may be appropriate when decontaminating personnel or equipment. LEVEL D:Select Level D when the contaminant is known & the concentr",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "ation is below any exposure guidelines for the stated duration times. Note:Inhalation, dermal and ocular exposure guidelines (IDLH, AEGLs, TLVs) have not been established for TETS.Inhalation hazards are primarily due to TETS particulates.  Appropriate P",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "PE & inhalation safeguards used for dusts and particulates should be employed.Downgrading PPE levels can be considered only when the contaminant identity, concentration & the risks of exposure are known,& must be accompanied by on-site monitoring ,i.e.,",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "real-time aerosol monitoring for particulate matter (PM).Field DetectionReal-time field screening tools (results not confirmatory or quantitative): At present there are no field detection tools specifically for TETS in air or water matrices.  False pos",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "itive & false negatives may occur in the presence of interferents common in the environment. The following is a summary of minimum screening levels for equipment procured by most EPA response teams. Other screening tools may be used by other agencies &",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "responders; some with similar capabilities & limitations. ",
+          "role": "BODY"
+        }
+      ],
+      "text": "June2013NRT Quick Reference Guide:Tetramethylenedisulfotetramine(TETS)11For references,please see Key References Cites/Used in National Response Team (NRT) Quick Reference Guides (QRGs) for Toxic Industrial Chemicals. QRGs are intended for Federal OSC/RPMs.Agent CharacteristicsAgent Classification: Toxic Industrial Chemical; CAS: 80-12-6; Formula:C4H8N4O4S2;Molecular Weight:240.28g/mol.Description: Odorless, colorless, tasteless, solid/crystalline powder rodenticide, banned world- wide. TETS is still available, illegally, in parts of China and in many U.S. cities with substantial immigrant populations. TETS acts on the nervous system, inhibiting the gamma-aminobutyric acid (GABA) neurotransmitter thatregulates nerve cell excitability, leading to overstimulation of the nervous system, severe convulsions,and possibly death.TETSis notflammable but can decompose upon combustion forming toxic gases including various oxide compounds of nitrogen and sulfur (NOx, SOx). Persistence: TETS \u0000L\u0000V\u0000\u0003\u0000F\u0000R\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000³\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000W\u0000´\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000Z\u0000D\u0000W\u0000H\u0000U\u0000\u0003\u0000X\u0000Q\u0000G\u0000H\u0000U\u0000\u0003\u0000Q\u0000R\u0000U\u0000P\u0000D\u0000O\u0000\u0003\u0000H\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000F\u0000R\u0000Q\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0011\u0000\u0003\u0000\u0003\u00003\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000Z\u0000L\u0000O\u0000O\u0000\u0003\u0000G\u0000H\u0000S\u0000H\u0000Q\u0000G\u0000\u0003\u0000X\u0000S\u0000R\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003 amount, method of release, environmental conditions,& the types of surfaces & materials impacted.Physical properties are listed at/near STP unless otherwise indicated. Vapor PressureVolatilityFreezing PointVapor DensityBoiling PointFlash PointAqueous SolubilitySolubleGas DensityNA -solidNA -solidNA -solid NA -solidNA -decomposes at 500°F/260°C to SOx, NOx, etc.vaporsNA -decomposes at 500°F/260°C to SOx, NOx, etc. vapors 0.25 g/L acetoneNA -solidRelease ScenariosINGESTION SCENARIOS ARE ASSUMED MOST PROBABLE; HOWEVER,OTHER RELEASE SCENARIOS & EXPOSURE ROUTES SHOULD BE CONSIDERED.Open Areas: TETSis a solid and the primary release/attack scenarios are as food/water ingestion or airborne particulate inhalation releases. Airborne TETS particulates would deposit on surfaces or accumulate in lower terrains and follow prevailing winds. Water/Water Systems: TETS is soluble and stable in water and can be considered a drinking water hazard. For water systemsplumbing, surfaces,and equipment that have contacted contaminated water must be evaluated for TETSalong with the bulk water.Indoor Facility:TETS could potentially be dispersed as solid particulates inside a building or facility; HVAC systems could be impacted. TETS airborne particulates that are heavier (less buoyant) than air will accumulate in lowe r levels and utility corridors or deposit on surfaces inside the building.Food Supply Chain:TETS presents a threat to public water and food supplies and has been implicated in numerous accidental and intentional poisoning cases in the US and abroad. The re is apotential for contaminating the food supply chainwith TETS,including food processing, distributioncenters, and livestock facilities.Health EffectsOnsetTETS is a potent neurotoxic rodenticide that acts as a non- competitive GABA antagonist that can cause seizures. Symptoms may occur rapidly after intake of contaminant (< 30 min); however, prolonged exposure may lead to permanent or persistent neurologic effects.Signs/Symptoms Regardless of route the following range of effects may occur depending on the dose.Mild:Ingestion:Exposure can cause headache, dizziness, fatigue, nausea, vomiting, and abdominal pain. Inhalation & Dermal:Limited evidence report systemic effects that affect the main target organ (central nervous system) similar to ingestion.Moderate -Severe: Causes agitation, fast heartbeat, palpitations, epileptic seizures, fainting, incontinence, foaming at the mouth, multiple organ dysfunction, coma, and/or death. Post exposure: Permanent or persistent effects include irritability, hallucinations, memory impairment, and recurring seizures.Exposure RoutesIngestion:TETS exposure is primarily by ingestion, and is the most likely route of exposure for TETS poisoning. Inhalation: Occupational exposuresthrough inhalation have occurred, in spite of the ban on the manufacturing of TETS.Dermal:TETS is not absorbed through intact skin, but can be absorbed through bre aks in the skin.Other:There is a high risk of accidental ingestion by children, and poisoning by suicide and homicide. If poisoning is suspected the Local Health Department should be notified immediately.Effect Levels TETS is not registered by the U.S. Environmental Protection Agency for use in the U.S.; and its importation, manufacture, anduse in the United States areillegal.Exposure guidelines are not readily available;the only exposure guidelines are for ingestion: Provisional Advisory Levels (PAL-3)for general public for 1 day = 0.0065ppm.PAL-3 represents the assumed continuous exposure concentration above which can cause lethality in the general population, including all ages and sensitive subpopulations. The lethal dose in humans is 5-12 mg (total dose).Personnel SafetyNotePersonal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options and personnel decon may vary depending upon the agent, site,& the release scenario. General information on personnel safety and PPE selection criteria can be found atwww.cdc.gov/niosh/ershdbMedicalPre-incident: Annual physical and respiratory function exams. During Incident: Conduct periodic on- site medical monitoring, observe for any signs & symptoms as per Health Effects section above and treat accordingly as per First Aid section below.First AidImmediately remove person from the affected area, remove contaminated articles. Wash bare skin with warm soapy water, and rinse eyes with plain water for 10-15 minutes if exposed to TETS.Antidote: No proven antidote is available for TETS. Treatment shouldfollow accepted modalities for a poisoned, altered,and seizing patient. Send person for follow up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms & treat accordingly.PPEGENERAL INFORMATION: NIOSH- certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, & protective clothing should be used. Pre-incident t raining & exercises on the proper use of PPE is recommended. Per NIOSH guidance -LEVEL A:Recommended for the initial response to a TETSincident where TETSlevels and exposure risks are unknown. Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), & eyeprotection when the contaminant identity or concentration is unknown. Select Level A when the TETSconcentration is un known & when there is a potential of ocular or dermal exposure. LEVEL B:Provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when the TETSconcentration is unknown & dermal exposure is less of a risk. Level B differs from Level A in that it incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not airtight. LEVEL C:Select Level C when the contaminant i dentity & concentration are known & the respiratory protection criteria factors for the use of APR or PAPR are met. Level C may be appropriate when decontaminating personnel or equipment. LEVEL D:Select Level D when the contaminant is known & the concentr ation is below any exposure guidelines for the stated duration times. Note:Inhalation, dermal and ocular exposure guidelines (IDLH, AEGLs, TLVs) have not been established for TETS.Inhalation hazards are primarily due to TETS particulates. Appropriate P PE & inhalation safeguards used for dusts and particulates should be employed.Downgrading PPE levels can be considered only when the contaminant identity, concentration & the risks of exposure are known,& must be accompanied by on-site monitoring ,i.e., real-time aerosol monitoring for particulate matter (PM).Field DetectionReal-time field screening tools (results not confirmatory or quantitative): At present there are no field detection tools specifically for TETS in air or water matrices. False pos itive & false negatives may occur in the presence of interferents common in the environment. The following is a summary of minimum screening levels for equipment procured by most EPA response teams. Other screening tools may be used by other agencies & responders; some with similar capabilities & limitations.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 38,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "June2013Minimum Screening Levels:There are no available field detection methods for TETS in waters, or for TETS vapors in air.Aerosol monitoring could be used as a surrogate for TETS particulate matter (PM) in air.  The PM at 1, 2.5,and 10 µm and ",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "respirable and total PM size fractions can be measured in real-time.  Prior knowledge of the chemical composition of the PM would be needed to use real-time aerosol monitoring as an estimate of TETS particulates present in air.Minimum Screening Levels",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "TETS particulates in air as PM Thermo DataRAM 4000Particle mass/volume range0.0001-400 mg/m3Particle Size Range0.05 -4 µm SamplingNote: This section on sampling contains general guidelines & does not replace the need for a site-",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "specific sampling plan. See reference list for specifics. Sampling Concerns: Detection, sampling equipment & procedures, & analytical techniques will be highly site-specific & depend on: 1) physical state of the agent; 2) type ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "of surfaces contaminated (e.g., porous vs. nonporous); 3) the purpose of sampling (e.g.,characterization, decon efficacy,& clearance); & 4) specific laboratory requirements. Because TETS",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "is a solid, sampling for particulates in air may be necessary to achieve many goals of sampling. For sampling questions, call the EPA/HQ-EOC at 202-564-3850. Sample Locations & Planning: Initially consider air sampling to ensure worker safety &",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "to determine if there is a plume which could impact other areas. Characterization ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000L\u0000Q\u0000L\u0000W\u0000L\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000W\u0000D\u0000U\u0000J\u0000H\u0000W\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000M\u0000X\u0000G\u0000J\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000L\u0000G\u0000H\u0000Q\u0000W\u0000L\u0000I\u0000\\\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000D\u0000O\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000S\u0000D\u0000W\u0000K\u0000V\u0000\u000f\u0000\u0003\u0000\t\u0000\u0003\u0000P\u0000H\u0000G\u0000L\u0000D\u0000\u0003\u0000R\u0000U\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "objects potentially acting as sink. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decon. More thorough probabilistic sampling (e.g., grid, ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "statistical approach) will be required for the clearance phase or if there are large areas of uncertainties.Note: TETSmay form a variety of breakdown and reaction products under certain conditions including SOxand NOx.",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Other breakdown products or pH changes may be present and could be used as markersfor TETS contamination, butas yet have not been determined or verified.  Laboratory analysis would need to include these additional products if and when appropriate. See th",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "e ANALYSIS section below to ensure sampling procedures are compatible with all analytes. Concurrent air monitoring for TETSparticulates is recommended for all matrices.Types of Samples:Air: On-site particulate monitors may indicate the real-time results",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "for the presence of TETS. For lab analysis, samples are collected on air filters at breathing zone level (~5 ft.) to assess inhalation exposures.  Water: TETS",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "is soluble and stable in aqueous solutions.  Water samples must be collected in appropriate sample vessels, extracted and submitted for laboratory analysis. Soil: For localized hot spotareas where soil deposition may occur, surface soil samples should be",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "taken from a non-vegetated area to a depth of one inch or less and analyzed for TETS.  Surface Wipes: TETS is a solid; therefore,powders, particulates,and residues can be collected using surface wipe samples analyzed in the laboratories for presence of",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "TETS on non-porous surfaces. Bulk: TETS  bulk samples of actual pieces or cores of contaminated surfacesmay be collected athot spot areas where high levels of TETSdeposition occurred on porous surfaces (e.g., concrete, asphalt), using appropriate tool",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "s (scabbling, coring,or drills) and submitted for subsequent laboratory extraction and analysis for TETS.Other Sample Matrices:The contamination of the food supply chain, processing plants and agriculture livestock and products using TETS is possible",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": ".  Sampling of these matrices may be required, in cooperation with other federal agencies (USDA, FDA, etc.).  Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.Sample Packaging & Shipping: ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "The packaging & shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, & IATA. Contact the sample-receiving laboratory to determine if they haveadditional packaging, shipping or labeling requirements.AnalysisCAUTION: ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "The Environmental Response Laboratory Network (ERLN) will use uniform, compatible sample prep & analytical methods. (See www.epa.gov/sam).   Only a limited number of laboratories may be available for the analysis of TETS; contact the EPA/HQ-EOC at 202-564-",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "3850.Decontamination/CleanupDecon/Cleanup Planning: Once site controls are in place, develop a site specific decon",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0011\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000\u0003\u0000D\u0000\u0003\u0000³\u0000W\u0000L\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000D\u0000F\u0000K\u0000´\u0000\u0003\u0000X\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u0000Y\u0000D\u0000U\u0000L\u0000H\u0000W\u0000\\\u0000\u0003\u0000R\u0000I\u0000\u0003techniques and products. Call the EPA/HQ-EOC at 202-564-3850 for more information. ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "General Considerations:  A cost vs. benefit evaluation should be undertaken for each deconstrategy and approach which considers: public safety, total cost, impact on ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "the facility, wastes generated, as well as the time the facility or item will be out of service, and any socio-economic, psychological, and/or security impacts that may result. Large volumes of decon wastes may be generated,",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "which will need to be collected, treated, and disposed of properly. Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible (see Waste Management section below). Disposal Option: The urgency to restor",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "e a facility as quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may be resistant to decon formulations, or may be cheaper to discard and replace than to decon and restore. Monitor",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "ed Natural Attenuation: Not recommended: TETS does not evaporate or degrade appreciably over weeks to months under appropriateenvironmental conditions. Decon Strategy: A decontamination strategy can be developed by designating contaminated areas based on",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "presence of: 1) solid TETS, or 2) aqueous solutions containing TETS. Strategy for Solid TETS: For decon of TETS, solids may be transferred carefully into containers, with care being taken that dust is not dispersed intothe air. The residue after shoveli",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "ng, or small spills, may be removed by dry vacuuming with HEPA filtration. Solid TETS may be destroyed by dissolving it in solutions with pH >13 or pH <1.Strategy for Aqueous Solutions of TETS: TETS may be destroyed by adjusting the pH to >13 or <1. TETS ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "may be removed from water by activated carbon, and the contaminated carbon can then be incinerated.Sensitive Equipment and Items: For difficult-to-clean equipment thought to be contaminated with small amounts, additional options for consideration include ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "flushing with soap and water, although the residual aqueous solution may contain TETS which may be decontaminated as described above. Verification of Decon: Site & situation specific. Please contact ERT (732-321-6660) and/or CBRN CMAT (513-487-2420) for f",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "urther assistance. Waste ManagementCAUTION:Hazardous waste transportation &disposal are regulated federally; however, more stringent regulations may exist under state authority. These regulations differ from state-to-",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "state. Detailed state regulations can be found at http://www.envcap.org.Waste Management:The U.S. EPA considers a waste to be hazardous: (1) if it exhibits the characteristics of ignitability, corrosivity, reactivity, or toxicity as defined in 40 ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "CFR 261.21-261.24; (2) if it is specifically listed as a hazardous process waste (§261.21 and §261.32); or (3) if it is listed as a commercial chemical product that is discarded or spilled (§261.33).",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "Under the Resource Conservation and Recovery Act (RCRA), U.S. EPA has specifically listed many chemical wastes as hazardous. TETS is not a listed waste under 49CFR 172.101. ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Requirements for transporting hazardous materials, & procedure for exemption, are specified in www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": ".  TETS is Hazard Class 6.1, packing Group I, for transportation purposes. The U.S. EPA has developed a web-based Incident Waste Management Planning & Response Tool, which contains links to guida",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "nce related to waste transportation, contact information for potential treatment, disposal facilities, & state regulatory offices, packaging guidance to minimize risk to workers, & guidance to minimize the potential for contaminating the treatment or dispo",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "sal \u0000I\u0000D\u0000F\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0011\u0000\u0003\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000W\u0000R\u0000R\u0000O\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000V\u0000\u0003\u0000S\u0000U\u0000H-registration (www2.ergweb.com/bdrtool/login.asp). Current resources on packaging, labeling, and ",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "shipping are available at www.phmsa.dot.gov/hazmat",
+          "role": "BODY"
+        }
+      ],
+      "text": "June2013Minimum Screening Levels:There are no available field detection methods for TETS in waters, or for TETS vapors in air.Aerosol monitoring could be used as a surrogate for TETS particulate matter (PM) in air. The PM at 1, 2.5,and 10 µm and respirable and total PM size fractions can be measured in real-time. Prior knowledge of the chemical composition of the PM would be needed to use real-time aerosol monitoring as an estimate of TETS particulates present in air.Minimum Screening Levels TETS particulates in air as PM Thermo DataRAM 4000Particle mass/volume range0.0001-400 mg/m3Particle Size Range0.05 -4 µm SamplingNote: This section on sampling contains general guidelines & does not replace the need for a site- specific sampling plan. See reference list for specifics. Sampling Concerns: Detection, sampling equipment & procedures, & analytical techniques will be highly site-specific & depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. nonporous); 3) the purpose of sampling (e.g.,characterization, decon efficacy,& clearance); & 4) specific laboratory requirements. Because TETS is a solid, sampling for particulates in air may be necessary to achieve many goals of sampling. For sampling questions, call the EPA/HQ-EOC at 202-564-3850. Sample Locations & Planning: Initially consider air sampling to ensure worker safety & to determine if there is a plume which could impact other areas. Characterization \u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000L\u0000Q\u0000L\u0000W\u0000L\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000W\u0000D\u0000U\u0000J\u0000H\u0000W\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000M\u0000X\u0000G\u0000J\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000L\u0000G\u0000H\u0000Q\u0000W\u0000L\u0000I\u0000\\\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000D\u0000O\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000S\u0000D\u0000W\u0000K\u0000V\u0000\u000f\u0000\u0003\u0000 \u0000\u0003\u0000P\u0000H\u0000G\u0000L\u0000D\u0000\u0003\u0000R\u0000U\u0000\u0003 objects potentially acting as sink. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decon. More thorough probabilistic sampling (e.g., grid, statistical approach) will be required for the clearance phase or if there are large areas of uncertainties.Note: TETSmay form a variety of breakdown and reaction products under certain conditions including SOxand NOx. Other breakdown products or pH changes may be present and could be used as markersfor TETS contamination, butas yet have not been determined or verified. Laboratory analysis would need to include these additional products if and when appropriate. See th e ANALYSIS section below to ensure sampling procedures are compatible with all analytes. Concurrent air monitoring for TETSparticulates is recommended for all matrices.Types of Samples:Air: On-site particulate monitors may indicate the real-time results for the presence of TETS. For lab analysis, samples are collected on air filters at breathing zone level (~5 ft.) to assess inhalation exposures. Water: TETS is soluble and stable in aqueous solutions. Water samples must be collected in appropriate sample vessels, extracted and submitted for laboratory analysis. Soil: For localized hot spotareas where soil deposition may occur, surface soil samples should be taken from a non-vegetated area to a depth of one inch or less and analyzed for TETS. Surface Wipes: TETS is a solid; therefore,powders, particulates,and residues can be collected using surface wipe samples analyzed in the laboratories for presence of TETS on non-porous surfaces. Bulk: TETS bulk samples of actual pieces or cores of contaminated surfacesmay be collected athot spot areas where high levels of TETSdeposition occurred on porous surfaces (e.g., concrete, asphalt), using appropriate tool s (scabbling, coring,or drills) and submitted for subsequent laboratory extraction and analysis for TETS.Other Sample Matrices:The contamination of the food supply chain, processing plants and agriculture livestock and products using TETS is possible . Sampling of these matrices may be required, in cooperation with other federal agencies (USDA, FDA, etc.). Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.Sample Packaging & Shipping: The packaging & shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, & IATA. Contact the sample-receiving laboratory to determine if they haveadditional packaging, shipping or labeling requirements.AnalysisCAUTION: The Environmental Response Laboratory Network (ERLN) will use uniform, compatible sample prep & analytical methods. (See www.epa.gov/sam). Only a limited number of laboratories may be available for the analysis of TETS; contact the EPA/HQ-EOC at 202-564- 3850.Decontamination/CleanupDecon/Cleanup Planning: Once site controls are in place, develop a site specific decon \u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0011\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000\u0003\u0000D\u0000\u0003\u0000³\u0000W\u0000L\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000D\u0000F\u0000K\u0000´\u0000\u0003\u0000X\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u0000Y\u0000D\u0000U\u0000L\u0000H\u0000W\u0000\\\u0000\u0003\u0000R\u0000I\u0000\u0003techniques and products. Call the EPA/HQ-EOC at 202-564-3850 for more information. General Considerations: A cost vs. benefit evaluation should be undertaken for each deconstrategy and approach which considers: public safety, total cost, impact on the facility, wastes generated, as well as the time the facility or item will be out of service, and any socio-economic, psychological, and/or security impacts that may result. Large volumes of decon wastes may be generated, which will need to be collected, treated, and disposed of properly. Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible (see Waste Management section below). Disposal Option: The urgency to restor e a facility as quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may be resistant to decon formulations, or may be cheaper to discard and replace than to decon and restore. Monitor ed Natural Attenuation: Not recommended: TETS does not evaporate or degrade appreciably over weeks to months under appropriateenvironmental conditions. Decon Strategy: A decontamination strategy can be developed by designating contaminated areas based on presence of: 1) solid TETS, or 2) aqueous solutions containing TETS. Strategy for Solid TETS: For decon of TETS, solids may be transferred carefully into containers, with care being taken that dust is not dispersed intothe air. The residue after shoveli ng, or small spills, may be removed by dry vacuuming with HEPA filtration. Solid TETS may be destroyed by dissolving it in solutions with pH >13 or pH <1.Strategy for Aqueous Solutions of TETS: TETS may be destroyed by adjusting the pH to >13 or <1. TETS may be removed from water by activated carbon, and the contaminated carbon can then be incinerated.Sensitive Equipment and Items: For difficult-to-clean equipment thought to be contaminated with small amounts, additional options for consideration include flushing with soap and water, although the residual aqueous solution may contain TETS which may be decontaminated as described above. Verification of Decon: Site & situation specific. Please contact ERT (732-321-6660) and/or CBRN CMAT (513-487-2420) for f urther assistance. Waste ManagementCAUTION:Hazardous waste transportation &disposal are regulated federally; however, more stringent regulations may exist under state authority. These regulations differ from state-to- state. Detailed state regulations can be found at http://www.envcap.org.Waste Management:The U.S. EPA considers a waste to be hazardous: (1) if it exhibits the characteristics of ignitability, corrosivity, reactivity, or toxicity as defined in 40 CFR 261.21-261.24; (2) if it is specifically listed as a hazardous process waste (§261.21 and §261.32); or (3) if it is listed as a commercial chemical product that is discarded or spilled (§261.33). Under the Resource Conservation and Recovery Act (RCRA), U.S. EPA has specifically listed many chemical wastes as hazardous. TETS is not a listed waste under 49CFR 172.101. Requirements for transporting hazardous materials, & procedure for exemption, are specified in www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp . TETS is Hazard Class 6.1, packing Group I, for transportation purposes. The U.S. EPA has developed a web-based Incident Waste Management Planning & Response Tool, which contains links to guida nce related to waste transportation, contact information for potential treatment, disposal facilities, & state regulatory offices, packaging guidance to minimize risk to workers, & guidance to minimize the potential for contaminating the treatment or dispo sal \u0000I\u0000D\u0000F\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0011\u0000\u0003\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000W\u0000R\u0000R\u0000O\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000V\u0000\u0003\u0000S\u0000U\u0000H-registration (www2.ergweb.com/bdrtool/login.asp). Current resources on packaging, labeling, and shipping are available at www.phmsa.dot.gov/hazmat",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 40,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

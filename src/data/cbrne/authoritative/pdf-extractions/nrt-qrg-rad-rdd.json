@@ -1,0 +1,537 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-rad-rdd",
+  "sourceArtifactSha256": "64fc05a980c098307fc04e3a380233ec9a7f0f1ee8114a1304e0df3e9690c8ef",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+  "pageCount": 2,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "December2012FinalNRT Quick Reference Guide: Radiological Dispersion Device (RDD)11For references please see Key References Cited/Used in National Response Team (NRT) Quick Reference Guide (QRG) for Radiological WMD. QRGs are intended for Federal On-",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Scene Coordinators (OSCs) and Remedial Program Managers (RPMs).CharacteristicsAgent: Radiological WMD                                                            Type: RDD  Description: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "Any device that causes the purposeful dissemination of radioactive material without anuclear detonation. Methods of dispersal can include any passive or active deposition of unsealed radioactive material in the form of liquid, solid, aerosol,",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "or gas into the environment including air, water, soil,or food supply of a population. These devices can affect a range of populations from very small to very large depending on the dispersal potential of the device. Devices m",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "ay include but are not limited to explosive devices (Dirty Bomb), crop dusting aircraft, drinking water treatment facilities, HVAC systems, etc. Typical radionuclides include Americium 241, Californium 252, Cesium 137, Cobalt 60, Iridium ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "192, Plutonium 238, Polonium 210, Radium 226, and Strontium 90. Note: This list of dispersal devices & radionuclides is comprehensive BUT not all inclusive!Alpha RadiationBeta RadiationGamma RadiationHeavy, charged particle (Helium nucleus, 2 protons ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "& 2 neutrons). A light, sub-atomic particle (electron).Electromagnetic radiation (like visible light).Travels only a few inches in air; ca\u0000Q\u0000¶\u0000W\u0000\u0003\u0000S\u0000H\u0000Q\u0000H\u0000W\u0000U\u0000D\u0000W\u0000H\u0000\u0003human skin or clothing; thin paper or dust can prevent its detection.",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Travels several feet in air; can penetrate human skin & clothing; in human tissue travels < 1/8 inch; plastics & other lightweightmaterials prevent its detection. Travelsmany feet in air; can penetrate many inches in human tissue & most materials; mat",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "erialslike thick concrete, steel & lead prevent its detection.Harmful if inhaled or swallowed; not an external hazard.Harmful if inhaled/swallowed; not external hazard except to skin/eyes. Harmful if inhaled/swallowed; is an external hazard even at ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "several feet from the source. HALF-LIFE:  Rad materials decay by releasing alpha, beta or gamma radiation energy. If half-life of material is >100s of years, radiations may n\u0000R\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000³\u0000V\u0000H\u0000H\u0000Q\u0000´\u0000\u0003\u0000R\u0000Y\u0000H\u0000U\u0000\u0003\u0000V\u0000K\u0000R\u0000U\u0000W\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "measurement times. Each isotope has its own half-life. Health EffectsOnsetHealth effects from radiation exposures greater than 100-200 remare described by Acute Radiation Syndrome (ARS). Onset of ARS (\"prodromal\" phase) is indicated first by vomiting, ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "fever, & soon followed by diarrhea& headache, all usually withinhours of exposure. If symptoms are more severe & appear rapidly -indicates higher doses & more serious injury. There is significant individual variability of these symptomsbut,life-",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "threatening exposures will always present with these four symptoms.Effect Levels",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "\u0000&\u0000$\u00008\u00007\u0000,\u00002\u00001\u0000\u001d\u0000\u0003\u0000'\u0000R\u0000V\u0000H\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000K\u0000H\u0000D\u0000O\u0000W\u0000K\u0000\\\u0000\u0003\u0000D\u0000G\u0000X\u0000O\u0000W\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000\u0003\u0000\t\u0000\u0003\u0000G\u0000R\u0000Q\u0000·\u0000W\u0000\u0003\u0000D\u0000S\u0000S\u0000O\u0000\\\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000F\u0000K\u0000L\u0000O\u0000G\u0000U\u0000H\u0000Q\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000G\u0000H\u0000F\u0000O\u0000D\u0000U\u0000H\u0000G\u0000\u0003\u0000S\u0000U\u0000H\u0000J\u0000Q\u0000D\u0000Q\u0000W\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000V\u0000\u0011Lowest Dose with Observable effects: Short-Term Whole-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Body Dose aShort-Term Symptoms (nausea & vomiting within 4 hrs) 100rad(1Gy) 5 \u0000±30 (%)Lethality: Short-Term Whole-Body Dose aDeathbfrom Short-Term Radiation Exposure w/out Medical Treatment Death from Short-Term Radiation Exposure withMedical Treatment ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "200 (2Gy) 5 (%)<5 (%)300 (3Gy) 30 \u0000±50 (%)15 \u0000±30 (%)600 (6Gy) 95 \u0000±100 (%)50 (%)1,000 (10Gy) 100 (%)>90 (%)aShort-term refers to the radiation exposure during the initial response to the incident. The short-term effec",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "ts listed are likely to be reduced by about one-half if radiation exposure occurs over weeks. bShort-term deaths are likely to occur from 30 to 180 daysafter exposure and few if any after that time. Estimates are for healthy adults.Individuals with comb",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "ined insult of injuryand dose maybe at greater risk.Personal SafetyRULES OF THUMB: Unless performing lifesaving or critical operations, Ifno site specific rad H&S guidanceis available & any instrument displays >2mR/hr, back away, secure area & see",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "k rad H&S input.In all radiation responses: Decrease exposure time& frequency & increase distance & shielding DosimetryReal timeor self-reading dosimeter in addition to a dose of record dosimeter,like a Thermoluminescent Dosimeter (TLD)or Opticall",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "y Stimulated Luminescent (OSL),should be worn at all times.PPECAUTION: Regardless of PPE used, include dosimetry.Emergency Responders: Wear PPE as designated by site conditions or HASP & record levels worn.  PPE Levels,based on scenario risks-from",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "highest level of protection to leastare: 1)Level A protective suit with pressure-demand Self Contained Breathing Apparatus (SCBA),when: a) event is uncontrolled, b)the type(s) of airborne agent(s) is unknown, c)the disbursalmethod is unknown, d)disbursal",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "is still occurring or, e)disbursalhas stopped, but no information on duration of the disbursalof radioactive material, or what the exposure/dose rate may be. 2)Level B protective suit with Pressure-demand SCBA, when: a)RDD release is controll",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "ed or other conditionspresent a splash hazard. 3)Level C protection with full face-piece respirator with P100 filter or PAPR with HEPA filters when there is a risk of airborne contamination. 4)Level D protection when site conditions permit minimum prote",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "ction and no airborne radioactivity is present. Emergency Workers: PPE recommendations for other than emergency respondersmust be developed for site specific conditions in the HASP. PPEwill vary by job type (e.g., cleanup, decon), type of exposure (e.g.",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": ", airborne or surface/liquid/soil hazard), & other site hazards (e.g., chemical, physical).MedicalBaseline: Annual physical & respiratory function exams. During Incident: Conduct medical monitoring pre-entry and post exit from Control Zone.Post Incident: ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Monitor for signs/symptoms & seek medical attention, if necessary, ASAP.Treatment post exposure will depend on exposure pathway (e.g., internal v. external), amount of dose received and isotope(s) involved.First AidNOTE: COMMENCE LIFESAVING OR NE",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "CESSARY TREATMENTPRIOR TO PATIENT DECONIf signs/symptoms of illness occur, ensure medical attention is provided ASAP. Remove to nearest medical facility IF ANY ONEof the following exists:  If on-site decon is unsuccessful OR If a dose of >200 rem is",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "likely OR If serious injury is present.Field DetectionField Air Sampling: Use a Hi-Volair pump >10 cfm(e.g. RADECO 810) with a 4\" diameter cellulose filter. For ER sampling, a 10 minute \"grab\" sample is obtained at 35 cfm (i.e., 10,000m3total). Th",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "e sample count results can be used for respiratory protection determination by comparing filter count data against the AnnualLimits on Intake (ALIs) & Derived Air Concentrations (DACs) tables for occupational workers in 10CFR20, Appendix B. If sampling fo",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "r radioiodine, a Lo-Vol< 10 cfm w/filter and silver zeolite cartridge is typically used. (Note: Lo-Vols are large, require hours of run-time, and are not typically used for general rad ER work.)Continuous Air Monitoring (e.g.,ECAMS) devices provide real",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "time contaminant air concentration or filter samples for analysis. Flow rates, volumes and sampling times for all devices are set to ensure enough dust & particulates are collected to be able to determine the airborne radioactivity concentration. Many sta",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "te programs have air sampling programs whose data can provide background radiation air concentration info.  This internet sitehttp://www.crcpd.org/Map/RCPmap.htmprovides state radprograminfo. EPAoperates RADNET, a ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "national monitoring system for air, drinking water, precipitation & milk in various cities & monitors real time gamma radiation levels. EPA data can be accessed by contacting EPA's HQ EOC at 202-564-3850.Air Sample Analysis:When sampling",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": ", the filters collect dust & particulates with radioactive material attached.  The radioactivity on the filters can be counted using a handheld instrument (e.g., Geiger-Mueller pancake probe) or portable drawer counter (e.g., Ludlum 2929 or 3030) or sent t",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "o a lab. CAUTION: Short Lived Natural Radon Decay Products may cause high counts on filters that are counted immediately after sampling. Don appropriate respiratory protection based oninitial count as compared to ALI/DAC Tables as per Health Physics suppo",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "rt. Filters should be recounted a minimum of 4 hours later to allow for Radon Products to decay. Resultant activity can be assumed to be contaminant of interest. Respiratory Protection may be reduced based on recounted filters as per Health Physics support",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "advisement.",
+          "role": "BODY"
+        }
+      ],
+      "text": "December2012FinalNRT Quick Reference Guide: Radiological Dispersion Device (RDD)11For references please see Key References Cited/Used in National Response Team (NRT) Quick Reference Guide (QRG) for Radiological WMD. QRGs are intended for Federal On- Scene Coordinators (OSCs) and Remedial Program Managers (RPMs).CharacteristicsAgent: Radiological WMD Type: RDD Description: Any device that causes the purposeful dissemination of radioactive material without anuclear detonation. Methods of dispersal can include any passive or active deposition of unsealed radioactive material in the form of liquid, solid, aerosol, or gas into the environment including air, water, soil,or food supply of a population. These devices can affect a range of populations from very small to very large depending on the dispersal potential of the device. Devices m ay include but are not limited to explosive devices (Dirty Bomb), crop dusting aircraft, drinking water treatment facilities, HVAC systems, etc. Typical radionuclides include Americium 241, Californium 252, Cesium 137, Cobalt 60, Iridium 192, Plutonium 238, Polonium 210, Radium 226, and Strontium 90. Note: This list of dispersal devices & radionuclides is comprehensive BUT not all inclusive!Alpha RadiationBeta RadiationGamma RadiationHeavy, charged particle (Helium nucleus, 2 protons & 2 neutrons). A light, sub-atomic particle (electron).Electromagnetic radiation (like visible light).Travels only a few inches in air; ca\u0000Q\u0000¶\u0000W\u0000\u0003\u0000S\u0000H\u0000Q\u0000H\u0000W\u0000U\u0000D\u0000W\u0000H\u0000\u0003human skin or clothing; thin paper or dust can prevent its detection. Travels several feet in air; can penetrate human skin & clothing; in human tissue travels < 1/8 inch; plastics & other lightweightmaterials prevent its detection. Travelsmany feet in air; can penetrate many inches in human tissue & most materials; mat erialslike thick concrete, steel & lead prevent its detection.Harmful if inhaled or swallowed; not an external hazard.Harmful if inhaled/swallowed; not external hazard except to skin/eyes. Harmful if inhaled/swallowed; is an external hazard even at several feet from the source. HALF-LIFE: Rad materials decay by releasing alpha, beta or gamma radiation energy. If half-life of material is >100s of years, radiations may n\u0000R\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000³\u0000V\u0000H\u0000H\u0000Q\u0000´\u0000\u0003\u0000R\u0000Y\u0000H\u0000U\u0000\u0003\u0000V\u0000K\u0000R\u0000U\u0000W\u0000\u0003 measurement times. Each isotope has its own half-life. Health EffectsOnsetHealth effects from radiation exposures greater than 100-200 remare described by Acute Radiation Syndrome (ARS). Onset of ARS (\"prodromal\" phase) is indicated first by vomiting, fever, & soon followed by diarrhea& headache, all usually withinhours of exposure. If symptoms are more severe & appear rapidly -indicates higher doses & more serious injury. There is significant individual variability of these symptomsbut,life- threatening exposures will always present with these four symptoms.Effect Levels \u0000&\u0000$\u00008\u00007\u0000,\u00002\u00001\u0000\u001d\u0000\u0003\u0000'\u0000R\u0000V\u0000H\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000K\u0000H\u0000D\u0000O\u0000W\u0000K\u0000\\\u0000\u0003\u0000D\u0000G\u0000X\u0000O\u0000W\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000\u0003\u0000 \u0000\u0003\u0000G\u0000R\u0000Q\u0000·\u0000W\u0000\u0003\u0000D\u0000S\u0000S\u0000O\u0000\\\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000F\u0000K\u0000L\u0000O\u0000G\u0000U\u0000H\u0000Q\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000G\u0000H\u0000F\u0000O\u0000D\u0000U\u0000H\u0000G\u0000\u0003\u0000S\u0000U\u0000H\u0000J\u0000Q\u0000D\u0000Q\u0000W\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000V\u0000\u0011Lowest Dose with Observable effects: Short-Term Whole- Body Dose aShort-Term Symptoms (nausea & vomiting within 4 hrs) 100rad(1Gy) 5 \u0000±30 (%)Lethality: Short-Term Whole-Body Dose aDeathbfrom Short-Term Radiation Exposure w/out Medical Treatment Death from Short-Term Radiation Exposure withMedical Treatment 200 (2Gy) 5 (%)<5 (%)300 (3Gy) 30 \u0000±50 (%)15 \u0000±30 (%)600 (6Gy) 95 \u0000±100 (%)50 (%)1,000 (10Gy) 100 (%)>90 (%)aShort-term refers to the radiation exposure during the initial response to the incident. The short-term effec ts listed are likely to be reduced by about one-half if radiation exposure occurs over weeks. bShort-term deaths are likely to occur from 30 to 180 daysafter exposure and few if any after that time. Estimates are for healthy adults.Individuals with comb ined insult of injuryand dose maybe at greater risk.Personal SafetyRULES OF THUMB: Unless performing lifesaving or critical operations, Ifno site specific rad H&S guidanceis available & any instrument displays >2mR/hr, back away, secure area & see k rad H&S input.In all radiation responses: Decrease exposure time& frequency & increase distance & shielding DosimetryReal timeor self-reading dosimeter in addition to a dose of record dosimeter,like a Thermoluminescent Dosimeter (TLD)or Opticall y Stimulated Luminescent (OSL),should be worn at all times.PPECAUTION: Regardless of PPE used, include dosimetry.Emergency Responders: Wear PPE as designated by site conditions or HASP & record levels worn. PPE Levels,based on scenario risks-from highest level of protection to leastare: 1)Level A protective suit with pressure-demand Self Contained Breathing Apparatus (SCBA),when: a) event is uncontrolled, b)the type(s) of airborne agent(s) is unknown, c)the disbursalmethod is unknown, d)disbursal is still occurring or, e)disbursalhas stopped, but no information on duration of the disbursalof radioactive material, or what the exposure/dose rate may be. 2)Level B protective suit with Pressure-demand SCBA, when: a)RDD release is controll ed or other conditionspresent a splash hazard. 3)Level C protection with full face-piece respirator with P100 filter or PAPR with HEPA filters when there is a risk of airborne contamination. 4)Level D protection when site conditions permit minimum prote ction and no airborne radioactivity is present. Emergency Workers: PPE recommendations for other than emergency respondersmust be developed for site specific conditions in the HASP. PPEwill vary by job type (e.g., cleanup, decon), type of exposure (e.g. , airborne or surface/liquid/soil hazard), & other site hazards (e.g., chemical, physical).MedicalBaseline: Annual physical & respiratory function exams. During Incident: Conduct medical monitoring pre-entry and post exit from Control Zone.Post Incident: Monitor for signs/symptoms & seek medical attention, if necessary, ASAP.Treatment post exposure will depend on exposure pathway (e.g., internal v. external), amount of dose received and isotope(s) involved.First AidNOTE: COMMENCE LIFESAVING OR NE CESSARY TREATMENTPRIOR TO PATIENT DECONIf signs/symptoms of illness occur, ensure medical attention is provided ASAP. Remove to nearest medical facility IF ANY ONEof the following exists: If on-site decon is unsuccessful OR If a dose of >200 rem is likely OR If serious injury is present.Field DetectionField Air Sampling: Use a Hi-Volair pump >10 cfm(e.g. RADECO 810) with a 4\" diameter cellulose filter. For ER sampling, a 10 minute \"grab\" sample is obtained at 35 cfm (i.e., 10,000m3total). Th e sample count results can be used for respiratory protection determination by comparing filter count data against the AnnualLimits on Intake (ALIs) & Derived Air Concentrations (DACs) tables for occupational workers in 10CFR20, Appendix B. If sampling fo r radioiodine, a Lo-Vol< 10 cfm w/filter and silver zeolite cartridge is typically used. (Note: Lo-Vols are large, require hours of run-time, and are not typically used for general rad ER work.)Continuous Air Monitoring (e.g.,ECAMS) devices provide real time contaminant air concentration or filter samples for analysis. Flow rates, volumes and sampling times for all devices are set to ensure enough dust & particulates are collected to be able to determine the airborne radioactivity concentration. Many sta te programs have air sampling programs whose data can provide background radiation air concentration info. This internet sitehttp://www.crcpd.org/Map/RCPmap.htmprovides state radprograminfo. EPAoperates RADNET, a national monitoring system for air, drinking water, precipitation & milk in various cities & monitors real time gamma radiation levels. EPA data can be accessed by contacting EPA's HQ EOC at 202-564-3850.Air Sample Analysis:When sampling , the filters collect dust & particulates with radioactive material attached. The radioactivity on the filters can be counted using a handheld instrument (e.g., Geiger-Mueller pancake probe) or portable drawer counter (e.g., Ludlum 2929 or 3030) or sent t o a lab. CAUTION: Short Lived Natural Radon Decay Products may cause high counts on filters that are counted immediately after sampling. Don appropriate respiratory protection based oninitial count as compared to ALI/DAC Tables as per Health Physics suppo rt. Filters should be recounted a minimum of 4 hours later to allow for Radon Products to decay. Resultant activity can be assumed to be contaminant of interest. Respiratory Protection may be reduced based on recounted filters as per Health Physics support advisement.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 37,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "December2012FinalPortable FieldInstruments: When looking for radioactive material in particulate form (either alpha, beta, and/or gamma), the National Buy lists Ludlum 2241-2 meter with: 1) 44-9 ",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "for performing contamination surveys on surfaces with alpha, beta, and/or gamma, 2) 44-10 for low energy gamma radiation, 3) 43-68 for alpha and/or beta radiation, or 4) 43-90 for ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "alpha only. If alpha and/or beta radioactive materials are found on a smooth, flat surface, the 239-1F floor monitor could be used. A Ludlum 15 contains two separate probes that ",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "\u0000F\u0000D\u0000Q\u0000\u0003\u0000P\u0000H\u0000D\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000D\u0000O\u0000S\u0000K\u0000D\u0000\u000f\u0000\u0003\u0000E\u0000H\u0000W\u0000D\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000J\u0000D\u0000P\u0000P\u0000D\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000R\u0000Q\u0000H\u0000\u0003\u0000S\u0000U\u0000R\u0000E\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000I\u0000D\u0000V\u0000W\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000W\u0000K\u0000H\u0000U\u0000P\u0000D\u0000O\u0000\u0003\u0000Q\u0000H\u0000X\u0000W\u0000U\u0000R\u0000Q\u0000V\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000R\u0000W\u0000K\u0000H\u0000U\u0000\u0003\u0000S\u0000U\u0000R\u0000E\u0000H\u0000\u0011\u0000\u0003\u0000,\u0000I\u0000\u0003\u0000\u0015\u0000´\u0000\u0003\u0000V\u0000Z\u0000L\u0000S\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0012\u0000R\u0000U\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000I\u0000L\u0000O",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "ters are collected, the media can be counted using a Ludlum 3030 swipe counter. For identification/quantification of alpha, beta, gamma, and/or neutrons, a SAM 940 or SAM 935 can be used but may require advanced training prior ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "to use due to complexity of menus and interpretation of spectrum. For initial entry to determine exposure/dose rate measurements, Ludlum 192 can be used to determine low level ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "gamma radiation for turn back limits. If going into a high exposure/dose rate area > 1mR/hr, the field team member must use high range instrument such as the RO-20 or RO-2A.SamplingBEFOREOBTAINING SAMPLES: Identify sample transportation requirements.",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Contact EPA/HQ-EOC (202-564-3850)for info on labsto analyze rad samples.Clearly identify & coordinate with the lab to be used since most labs cannot analyze all types of environmentalmedia.Coordinate with investigative units (e.g.,FBI)",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "to ensure sample chain-of-custody is maintained between groups. Note: Detection/analytical equipment & sampling techniques will be highly site-speci\u0000¿c & depend on: 1)the characteristics of the RDD; 2) the type ofcontaminated surfaces (e.g., ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "porous v. nonporous); 3)the phases/purposes of sampling (initial ID v. post-decon sampling); 4)transportation regulations;5) the acceptance criteria of the analytical laboratory;&6) the sample decon requirements for the w",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "aste disposal facilities to be used. SAMPLE COLLECTION: A sampling plan should be created with Subject Matter Expert(SME)input if available. Initial sampling is conducted to define the affected area, determine if the contamination is airborne, and id",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "entify radiation type and radionuclide.  Further sampling can focus on determining the amount of contaminant present, once initial results identify the nuclide.Sampling Location Plans: NARAC will provide a preliminary model of the affected area based upon",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "current weather conditions and source estimations, probably within a couple hours of being notified of the event.  As time goes on the accuracy of this model will improve as results from ongoing samples and measurements are incorporated. The model outputs",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "can be used to guide the best locations for sampling activities.To determine if the contamination is airborne initially place air samplers close to ground zero and a considerable distance downrange. Knowing if the contamination is airborne directly affe",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "cts PPE selection and should be done first. The perimeter of the affected areacan be found using contamination measurements (cpm) taken 1-2 inches from surfaces and dose rate measurements (µR/hr) taken at waist height. If contamination is detected on a sw",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "ipe or if the meter reads 2-5 times above background, the area is likely contaminated. Water and soil sampling are also conducted to define the affected area, but usually follow air and surface measurements. All samples should be collected in accordance w",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "ith appropriate procedures.  A field log should also be kept during sampling activities to record time, location, and sample type as these are collected.  A consistent sampling ID or numbering scheme should be established before samples are collected.  Eac",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "\u0000K\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000\u0003\u0000P\u0000X\u0000V\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000,\u0000'\u0000·\u0000H\u0000G\u0000\u0003as they are collected.Types of Samples: Air, water, soil, contaminated surfaces (swipes). Air: See field detection section aboveWater",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": ": These are radionuclide specific; follow the SOP for sample collection information.These samples usually require a sample volume of at least 1 gal and may require chemical preservation.Soil: Obtain a sample from a non-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "vegetated area. A 5x5x1 inch deep sample (~ 1 lb) should be carefully placed in a plastic bag (try to keep the soil intact asmuch as possible).Contaminated Surfaces (Swipe Sampling): Using an appropriate swipe media, gently wipe a 100 cm2",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "area with gentle pressure.  This can be a (4 by 4 inch square) area of the surface, or a 1 meter long S pattern the width of the wipe. Sample Packaging & Shipping: Subject to DOT, USPS, OSHA & IATA regulations.Contact the sample-receiving lab for th",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "eir preservation,packaging, shipping & labeling requirements. laboratoryAnalysisPrior to sending any environmental samples, coordinate and prioritize the samples with the recipient laboratory.  The goal of laboratory analysis for environmental sampling ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "is to determine the presence or absence and amount of radioactivity and to identify the nuclide(s). Depending on the location, theremay be DOE, State, and Civil Support Teammobile laboratories available and ready to assist near the incident.",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Laboratory Information: Contact EPA/HQ-EOC (202-564-3850)Decontamination/CleanupCaution:  Resuspensionduringresponse activities, decon and cleanup activities belowshould be monitored, assessed and addressed, as needed, to protect public and worker safety",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": ".  Contamination Control:  Expedited vehicular decon will limit contaminant migration in support of emergency response, public relocation, mass caredecisions and access in & around contaminated zones.Employ tacking agents to mitigate contaminant re-",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "suspension in traffic areas; contain decon water, precipitation & surface water runoff -especially in high contamination area(s); perform gross decon ofareas of highest contamination; & protect water supplies & treatment facilities. Cleanup Methods:",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Decon and cleanup methods and technologies decisions are based upon radionuclide, chemical form, activity, dose, substrate, land/property use, and public a",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "nd worker exposure and cleanup goals.  Radiation cleanup largely relies upon removal of contaminated substrate or material (soil excavation, cement scarification, roof and siding removal, building demolition, etc.).        Cleanup of Surfaces:  (Non-destr",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "uctive or limited destruction methods).Particulate orliquid HEPA vacuumingwhen/if appropriateaqueous based washing or other surface treatments using chemicals, foam, acids, gels, strippable coating and fixing agents, etc.can reduce but not eliminateradioa",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "ctivity and are more effective on non-porous surfaces. These surface decon methods canbe used:(1) immediately open roadways and other critical infrastructure or key resources like subway stations, hospitals and fire equipment until more aggressive ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "decontamination can occur; (2) where low levels exist and only minimal reduction is required; or (3) where there is only very limited long-term exposure like power substations. Use of Water:  Minimize waterusagesto the extent practicable because of th",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "e difficultyinhandling and disposing liquid radioactivewaste.(See Waste ManagementSection below)Contact:For specific details contact the National Response Center at 1-800-424-8802 and ask for EPA ConsequenceManagement Assistance Team (CMAT). W",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "aste ManagementWaste Management\u0000±An RDD may result in millions of tons of radiological contaminated solids and billions of gallons of radiological contaminated aqueous liquids.  Most wastes (95 to 99+%) will be Class A (the lowest level) low level radiol",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "ogical wastes (LLRW).  There will be smaller amounts of Class B or Class C LLRW solid wastes.  Commercial facilities exist in the U.S. for disposal of LLRW (solid wastes) including Energy Solutions, U.S. Ecology, and Waste Control Specialists.  The cost an",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "d effort of transport of millions of tons of Class A LLRW over long distances may be prohibitive.  Approval for disposal of lower volumes of Class B & C LLRW facilities needs the cooperation of the states and municipalities along the route.  Collection and",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "management of contaminated liquids will be problematic due to the limited storage and treatment capabilities.WasteSegregation and Staging\u0000±Initialwaste streams will be mostly PPE, clothing and personal items from evacuees, and decon water but cleanup ",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "wastes will follow shortlyand need to be segregated.  Waste staging areas should be in the contaminated area;out of flood zones; and away from people,CI/KR, and locations targeted for early cleanup.  If available, use land/sea boxesroll-offs, drums, to",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "tes, bins, etc. Or, cover with plastic and tarps to keep wastes dry and prevent contaminant spread.  Fukushima wastes were containerized, placed over a bentonite (to adsorb cesium) andcovered with a tarp.Higher activity wastes from the blast zone and ar",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "eas immediately downwind of the blast zone (high contamination zone or HCZ) should be kept separate, sealed in appropriate containers, and stored in the HCZ.  Waste staging and interim storage may continue for some time awaiting permanent disposal.  Immedi",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "ately begin the following:\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "\u0000:\u0000D\u0000V\u0000W\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000Q\u0000L\u0000Q\u0000J\u0000\u0011\u0000\u0003\u0000\u0003\u0000,\u0000Q\u0000Y\u0000R\u0000O\u0000Y\u0000H\u0000\u0003\u0000V\u0000W\u0000D\u0000W\u0000H\u0000\u0003\u0000Z\u0000D\u0000V\u0000W\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000R\u0000I\u0000I\u0000L\u0000F\u0000L\u0000D\u0000O\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000F\u0000W\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00002\u0000I\u0000I\u0000L\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u00005\u0000H\u0000V\u0000R\u0000X\u0000U\u0000F\u0000H\u0000\u0003\u0000&\u0000R\u0000Q\u0000V\u0000H\u0000U\u0000Y\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u00005\u0000H",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "\u0000F\u0000R\u0000Y\u0000H\u0000U\u0000\\\u0000\u0003\u0000\u000b\u00002\u00005\u0000&\u00005\u0000\f\u0000\u0003\u0000W\u0000K\u0000U\u0000X\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00002\u0000&(202-564-3850)\u0000xMinimize aqueous liquid wastes:  Caution: Contact the sewageauthority before discharging to sanitary sewer. Use the minimum amount of wash down water; consider on-",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "site water treatment technologies; use advanced surface cleaning technologies; and use dry cleanup technologies.\u0000xC\u0000R\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000U\u0000\u0003\u0000S\u0000H\u0000U\u0000P\u0000D\u0000Q\u0000H\u0000Q\u0000W\u0000\u0003\u0000³\u0000R\u0000Q\u0000V\u0000L\u0000W\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000L\u0000Q-state",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "\u0000´\u0000\u0003\u0000V\u0000R\u0000O\u0000X\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000&\u0000O\u0000D\u0000V\u0000V\u0000\u0003\u0000$\u0000\u0003\u0000Z\u0000D\u0000V\u0000W\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000\u0003\u0000\u0003\u00000\u0000R\u0000V\u0000W\u0000\u0003\u0000V\u0000W\u0000D\u0000W\u0000H\u0000V\u0000¶\u0000\u0003\u0000U\u0000H\u0000J\u0000X\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000K\u0000D\u0000Y\u0000H\u0000\u0003\u0000H\u0000P\u0000H\u0000U\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0003\u0000Z\u0000D\u0000V\u0000W\u0000H\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000D\u0000O\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000I\u0000D\u0000F\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000S\u0000H\u0000U\u0000P\u0000L\u0000W\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000V\u0000L\u0000R\u0000Q\u0000V\u0000\u0011",
+          "role": "BODY"
+        }
+      ],
+      "text": "December2012FinalPortable FieldInstruments: When looking for radioactive material in particulate form (either alpha, beta, and/or gamma), the National Buy lists Ludlum 2241-2 meter with: 1) 44-9 for performing contamination surveys on surfaces with alpha, beta, and/or gamma, 2) 44-10 for low energy gamma radiation, 3) 43-68 for alpha and/or beta radiation, or 4) 43-90 for alpha only. If alpha and/or beta radioactive materials are found on a smooth, flat surface, the 239-1F floor monitor could be used. A Ludlum 15 contains two separate probes that \u0000F\u0000D\u0000Q\u0000\u0003\u0000P\u0000H\u0000D\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000D\u0000O\u0000S\u0000K\u0000D\u0000\u000f\u0000\u0003\u0000E\u0000H\u0000W\u0000D\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000J\u0000D\u0000P\u0000P\u0000D\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000R\u0000Q\u0000H\u0000\u0003\u0000S\u0000U\u0000R\u0000E\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000I\u0000D\u0000V\u0000W\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000W\u0000K\u0000H\u0000U\u0000P\u0000D\u0000O\u0000\u0003\u0000Q\u0000H\u0000X\u0000W\u0000U\u0000R\u0000Q\u0000V\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000R\u0000W\u0000K\u0000H\u0000U\u0000\u0003\u0000S\u0000U\u0000R\u0000E\u0000H\u0000\u0011\u0000\u0003\u0000,\u0000I\u0000\u0003\u0000\u0015\u0000´\u0000\u0003\u0000V\u0000Z\u0000L\u0000S\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0012\u0000R\u0000U\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000I\u0000L\u0000O ters are collected, the media can be counted using a Ludlum 3030 swipe counter. For identification/quantification of alpha, beta, gamma, and/or neutrons, a SAM 940 or SAM 935 can be used but may require advanced training prior to use due to complexity of menus and interpretation of spectrum. For initial entry to determine exposure/dose rate measurements, Ludlum 192 can be used to determine low level gamma radiation for turn back limits. If going into a high exposure/dose rate area > 1mR/hr, the field team member must use high range instrument such as the RO-20 or RO-2A.SamplingBEFOREOBTAINING SAMPLES: Identify sample transportation requirements. Contact EPA/HQ-EOC (202-564-3850)for info on labsto analyze rad samples.Clearly identify & coordinate with the lab to be used since most labs cannot analyze all types of environmentalmedia.Coordinate with investigative units (e.g.,FBI) to ensure sample chain-of-custody is maintained between groups. Note: Detection/analytical equipment & sampling techniques will be highly site-speci\u0000¿c & depend on: 1)the characteristics of the RDD; 2) the type ofcontaminated surfaces (e.g., porous v. nonporous); 3)the phases/purposes of sampling (initial ID v. post-decon sampling); 4)transportation regulations;5) the acceptance criteria of the analytical laboratory;&6) the sample decon requirements for the w aste disposal facilities to be used. SAMPLE COLLECTION: A sampling plan should be created with Subject Matter Expert(SME)input if available. Initial sampling is conducted to define the affected area, determine if the contamination is airborne, and id entify radiation type and radionuclide. Further sampling can focus on determining the amount of contaminant present, once initial results identify the nuclide.Sampling Location Plans: NARAC will provide a preliminary model of the affected area based upon current weather conditions and source estimations, probably within a couple hours of being notified of the event. As time goes on the accuracy of this model will improve as results from ongoing samples and measurements are incorporated. The model outputs can be used to guide the best locations for sampling activities.To determine if the contamination is airborne initially place air samplers close to ground zero and a considerable distance downrange. Knowing if the contamination is airborne directly affe cts PPE selection and should be done first. The perimeter of the affected areacan be found using contamination measurements (cpm) taken 1-2 inches from surfaces and dose rate measurements (µR/hr) taken at waist height. If contamination is detected on a sw ipe or if the meter reads 2-5 times above background, the area is likely contaminated. Water and soil sampling are also conducted to define the affected area, but usually follow air and surface measurements. All samples should be collected in accordance w ith appropriate procedures. A field log should also be kept during sampling activities to record time, location, and sample type as these are collected. A consistent sampling ID or numbering scheme should be established before samples are collected. Eac \u0000K\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000\u0003\u0000P\u0000X\u0000V\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000,\u0000'\u0000·\u0000H\u0000G\u0000\u0003as they are collected.Types of Samples: Air, water, soil, contaminated surfaces (swipes). Air: See field detection section aboveWater : These are radionuclide specific; follow the SOP for sample collection information.These samples usually require a sample volume of at least 1 gal and may require chemical preservation.Soil: Obtain a sample from a non- vegetated area. A 5x5x1 inch deep sample (~ 1 lb) should be carefully placed in a plastic bag (try to keep the soil intact asmuch as possible).Contaminated Surfaces (Swipe Sampling): Using an appropriate swipe media, gently wipe a 100 cm2 area with gentle pressure. This can be a (4 by 4 inch square) area of the surface, or a 1 meter long S pattern the width of the wipe. Sample Packaging & Shipping: Subject to DOT, USPS, OSHA & IATA regulations.Contact the sample-receiving lab for th eir preservation,packaging, shipping & labeling requirements. laboratoryAnalysisPrior to sending any environmental samples, coordinate and prioritize the samples with the recipient laboratory. The goal of laboratory analysis for environmental sampling is to determine the presence or absence and amount of radioactivity and to identify the nuclide(s). Depending on the location, theremay be DOE, State, and Civil Support Teammobile laboratories available and ready to assist near the incident. Laboratory Information: Contact EPA/HQ-EOC (202-564-3850)Decontamination/CleanupCaution: Resuspensionduringresponse activities, decon and cleanup activities belowshould be monitored, assessed and addressed, as needed, to protect public and worker safety . Contamination Control: Expedited vehicular decon will limit contaminant migration in support of emergency response, public relocation, mass caredecisions and access in & around contaminated zones.Employ tacking agents to mitigate contaminant re- suspension in traffic areas; contain decon water, precipitation & surface water runoff -especially in high contamination area(s); perform gross decon ofareas of highest contamination; & protect water supplies & treatment facilities. Cleanup Methods: Decon and cleanup methods and technologies decisions are based upon radionuclide, chemical form, activity, dose, substrate, land/property use, and public a nd worker exposure and cleanup goals. Radiation cleanup largely relies upon removal of contaminated substrate or material (soil excavation, cement scarification, roof and siding removal, building demolition, etc.). Cleanup of Surfaces: (Non-destr uctive or limited destruction methods).Particulate orliquid HEPA vacuumingwhen/if appropriateaqueous based washing or other surface treatments using chemicals, foam, acids, gels, strippable coating and fixing agents, etc.can reduce but not eliminateradioa ctivity and are more effective on non-porous surfaces. These surface decon methods canbe used:(1) immediately open roadways and other critical infrastructure or key resources like subway stations, hospitals and fire equipment until more aggressive decontamination can occur; (2) where low levels exist and only minimal reduction is required; or (3) where there is only very limited long-term exposure like power substations. Use of Water: Minimize waterusagesto the extent practicable because of th e difficultyinhandling and disposing liquid radioactivewaste.(See Waste ManagementSection below)Contact:For specific details contact the National Response Center at 1-800-424-8802 and ask for EPA ConsequenceManagement Assistance Team (CMAT). W aste ManagementWaste Management\u0000±An RDD may result in millions of tons of radiological contaminated solids and billions of gallons of radiological contaminated aqueous liquids. Most wastes (95 to 99+%) will be Class A (the lowest level) low level radiol ogical wastes (LLRW). There will be smaller amounts of Class B or Class C LLRW solid wastes. Commercial facilities exist in the U.S. for disposal of LLRW (solid wastes) including Energy Solutions, U.S. Ecology, and Waste Control Specialists. The cost an d effort of transport of millions of tons of Class A LLRW over long distances may be prohibitive. Approval for disposal of lower volumes of Class B & C LLRW facilities needs the cooperation of the states and municipalities along the route. Collection and management of contaminated liquids will be problematic due to the limited storage and treatment capabilities.WasteSegregation and Staging\u0000±Initialwaste streams will be mostly PPE, clothing and personal items from evacuees, and decon water but cleanup wastes will follow shortlyand need to be segregated. Waste staging areas should be in the contaminated area;out of flood zones; and away from people,CI/KR, and locations targeted for early cleanup. If available, use land/sea boxesroll-offs, drums, to tes, bins, etc. Or, cover with plastic and tarps to keep wastes dry and prevent contaminant spread. Fukushima wastes were containerized, placed over a bentonite (to adsorb cesium) andcovered with a tarp.Higher activity wastes from the blast zone and ar eas immediately downwind of the blast zone (high contamination zone or HCZ) should be kept separate, sealed in appropriate containers, and stored in the HCZ. Waste staging and interim storage may continue for some time awaiting permanent disposal. Immedi ately begin the following:\u0000x \u0000:\u0000D\u0000V\u0000W\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000Q\u0000L\u0000Q\u0000J\u0000\u0011\u0000\u0003\u0000\u0003\u0000,\u0000Q\u0000Y\u0000R\u0000O\u0000Y\u0000H\u0000\u0003\u0000V\u0000W\u0000D\u0000W\u0000H\u0000\u0003\u0000Z\u0000D\u0000V\u0000W\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000R\u0000I\u0000I\u0000L\u0000F\u0000L\u0000D\u0000O\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000F\u0000W\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00002\u0000I\u0000I\u0000L\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u00005\u0000H\u0000V\u0000R\u0000X\u0000U\u0000F\u0000H\u0000\u0003\u0000&\u0000R\u0000Q\u0000V\u0000H\u0000U\u0000Y\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u00005\u0000H \u0000F\u0000R\u0000Y\u0000H\u0000U\u0000\\\u0000\u0003\u0000 \u00002\u00005\u0000&\u00005\u0000 \u0000\u0003\u0000W\u0000K\u0000U\u0000X\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000(\u00002\u0000&(202-564-3850)\u0000xMinimize aqueous liquid wastes: Caution: Contact the sewageauthority before discharging to sanitary sewer. Use the minimum amount of wash down water; consider on- site water treatment technologies; use advanced surface cleaning technologies; and use dry cleanup technologies.\u0000xC\u0000R\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000U\u0000\u0003\u0000S\u0000H\u0000U\u0000P\u0000D\u0000Q\u0000H\u0000Q\u0000W\u0000\u0003\u0000³\u0000R\u0000Q\u0000V\u0000L\u0000W\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000L\u0000Q-state \u0000´\u0000\u0003\u0000V\u0000R\u0000O\u0000X\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000&\u0000O\u0000D\u0000V\u0000V\u0000\u0003\u0000$\u0000\u0003\u0000Z\u0000D\u0000V\u0000W\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000\u0003\u0000\u0003\u00000\u0000R\u0000V\u0000W\u0000\u0003\u0000V\u0000W\u0000D\u0000W\u0000H\u0000V\u0000¶\u0000\u0003\u0000U\u0000H\u0000J\u0000X\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000K\u0000D\u0000Y\u0000H\u0000\u0003\u0000H\u0000P\u0000H\u0000U\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0003\u0000Z\u0000D\u0000V\u0000W\u0000H\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000D\u0000O\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000I\u0000D\u0000F\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000S\u0000H\u0000U\u0000P\u0000L\u0000W\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000V\u0000L\u0000R\u0000Q\u0000V\u0000\u0011",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 44,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

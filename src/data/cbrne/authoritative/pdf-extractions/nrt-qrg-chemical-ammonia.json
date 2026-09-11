@@ -1,0 +1,1015 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-chemical-ammonia",
+  "sourceArtifactSha256": "fe7ec03214e1b73760469d775e24bf8359176eb8e7f1b745b14788c80862e221",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 4,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "April2020Page 1of 4NRT Quick Reference Guide: Anhydrous Ammonia [April2020QRGs are intended for FederalOSC/RPMsAgent CharacteristicsAgentClassification:Choking/pulmonary, lung damagingagent and Toxic Industrial ChemicalNOTE: For this QRG, ammonia refers to",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "anhydrous ammoniagas, unless otherwise specified.ChemicalCASFormulaMolecular WeightPhysical DescriptionSynonyms and Trade Names (examples)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "Anhydrous ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "Ammonia7664-41-7NH317.03 g/molClear colorless gas with a strong odorClear colorless liquid under pressure\u0000xNitro-Sil\u0000xAM-Fol\u0000xRefrigerant R717Ammonium Hydroxide1336-21-6NH4OH35.04 g/molColorless aqueous solution; NH3vaporscanarise from the solution\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "Aqueousammonia (30% or less NH3)\u0000xAmmonia waterDescription:Clear, colorless gas with a pungent suffocating odor, or a clear, colorless liquid under pressure. Ammonia is a toxic gas or liquid ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "that, when concentrated (~ 99%), is corrosive to tissues upon contact(e.g., eyes, skin, mouth, throat, lungs). Contact with unconfined ammonia liquid can causefrostbite.",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Exposure to ammonia in sufficient quantities can be fatal. One of the highest production-volume chemicals in the U.S., concentrated ammonia is used in manufacturing, refrigeration, and agriculture (as a fertilizer). Household ammonia solutions ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "are much less concentrated (~ 5-10%) and rarely cause burns, but can cause irritation. The lowest level at which humans can detect the odor of ammonia is ~ 5-10 ppm v/v, (odor threshold) andthisgenerally provides sufficient warning of exposure; however, ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "persons with prolonged exposure to ammonia will lose their ability to detect the odor (olfactory fatigue).Liquified anhydrous ammonia is stored and shipped in pressurized containers (e.g., tanks,",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "cylinders). Although the DOT requires liquefied anhydrous ammonia (UN1005) to be transported with a non-flammable gas placard, autoignition may occur at high temperatures (>1204°F, >650°C). When ammonia mixes with organic vapors and/or air it forms an exp",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "losive mixture. Pressurized containers may explode when heated. Ruptured containers or cylinders may rocket. Ammonia-air explosions have occurred from leaks in anhydrous ammonia refrigeration system equipment, especially in inadequately ventilated confined",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "spaces, where anaccumulating ammonia-airmixture (LEL=15%) was then ignited explosively by an ignition source. Ammonia reacts violently with strong oxidants, acids, halogens, and many heavy metals.Persistence: Ammonia\u0000L\u0000V\u0000\u0003\u0000F\u0000R\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000³\u0000Q\u0000R\u0000Q-",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "\u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000W\u0000\u0011\u0000´\u0000\u0003\u00009\u0000D\u0000S\u0000R\u0000U\u0000\u001d\u0000\u0003\u0000P\u0000L\u0000Q\u0000X\u0000W\u0000H\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000K\u0000R\u0000X\u0000U\u0000V\u0000\u001e\u0000\u0003\u0000O\u0000L\u0000T\u0000X\u0000L\u0000G\u0000\u001d\u0000\u0003\u0000U\u0000D\u0000S\u0000L\u0000G\u0000O\u0000\\\u0000\u0003\u0000H\u0000Y\u0000D\u0000S\u0000R\u0000U\u0000D\u0000W\u0000H\u0000V\u0000\u0003\u0000D\u0000W\u0000\u0003\u0000D\u0000P\u0000E\u0000L\u0000H\u0000Q\u0000W\u0000\u0003\u0000W\u0000H\u0000P\u0000S\u0000H\u0000U\u0000D\u0000W\u0000X\u0000U\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "pressures. Persistence will depend upon amount and purity of the agent, method of release, environmental conditions, and the types of surfaces and materials impacted.Note:At most environmentally significant pHs, ammonia partially ionizes;therefore,",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "many physical and chemical properties will be a function of pH. The amount of ammonia gas released from aqueous solution will increase with increasing pH, and the amount remaining in solution will increase at lower pHs.",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Anhydrous ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Ammonia(CAUTION:The NFPA diamond for ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "anhydrous ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "ammonia has a NOTE that theflammability hazard (red quadrant) may rise from 1 to 3 in a confined space)Physical PropertiesPhysical properties are listed at/near STP unless otherwise indicated. Conversion Factors: ppm = mg/m3x 0.7; mg/m3= ppm x 1.43.",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Vapor Density:0.5967 (air = 1)Boiling Point:-28°F (-33.35°C)Specific Gravity:0.7710 at 760 mm HgVapor Pressure:6460mm HgMelting/Freezing Point:-108°F (-77.7°C)Aqueous Solubility:solublein waterVolatility: Not established(high, is a gas)Explosive Range: ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "LEL = 15%; UEL= 28%Non-aqueous Solubility: chloroform, etherRelease ScenariosRELEASE OF GASEOUS AMMONIA (NH3) IS ASSUMED MOST PROBABLE; HOWEVER, OTHER RELEASE SCENARIOS AND EXPOSURE ROUTES SHOULD BE CONSIDERED.Open Areas:NH3is a gas and is",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "relatively easy to disperse, due to its volatility, and the primary release/attack scenario is an airborne release. DispersedNH3gas is expected to dissipate, hastened because ammonia gas is lighter than air. However, dissipation may take",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "minutes to hours, and dangerous concentrations can be present at the site of release or in the path ofanNH3plume. Under certain conditions, such as when compressed liquefiedammonia gas initially escapes a cylinder or vessel and comes into contact with",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "moisture in the air, it may form an \u0000³ammonia fog.\u0000´This fog is likely to remain low to the ground and could prevent ammonia gas from rising in the air, mixing and dissipating more easily. Ammonia gas can react with moisture in the ai",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "r to form aerosols of ammonium hydroxide (NH4OH),a corrosive, alkalinecompound, which can cause inhalation, dermal,and ocular hazards. Water/Water Systems:After gaseous release, ammonia can dissolve into bodies of water, forming ammonium hydroxide (NH4OH),",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "a corrosive, alkaline solution, which may exert toxic effects if present in high concentration. If a large plumeof NH3gasor vaporsis released, not all NH3may dissolve before the NH3plume",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "leaves the vicinity of the water. Excess ammonia may also be present in chlorinated drinking water systems as a result of equipment failure. Indoor Facility:NH3leaks in indoor facilities have occurred due to failure of",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "refrigeration systems that utilize anhydrous ammonia (e.g., ice rinks, industrial freezers, meat plants). Dangerous concentrations of ammonia gas can occurquickly in enclosed or poorly ventilated spaces, such as lower levels or utility ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "\u0000F\u0000R\u0000U\u0000U\u0000L\u0000G\u0000R\u0000U\u0000V\u0000\u0003\u0000L\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000E\u0000X\u0000L\u0000O\u0000G\u0000L\u0000Q\u0000J\u0000\u0011\u0000\u0003\u0000'\u0000X\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000D\u0000P\u0000P\u0000R\u0000Q\u0000L\u0000D\u0000¶\u0000V\u0000\u0003\u0000Y\u0000R\u0000O\u0000D\u0000W\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u000f\u0000\u0003\u0000+\u00009\u0000$\u0000&\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000V\u0000\u0003\u0000F\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000L\u0000P\u0000S\u0000D\u0000F\u0000W\u0000H\u0000G\u0000\u0011\u0000\u0003\u0000&\u0000R\u0000U\u0000U\u0000R\u0000V\u0000L\u0000Y\u0000H\u0000\u0003\u0000Y\u0000D\u0000S\u0000R\u0000U\u0000V\u0000\u000f\u0000\u0003\u0000L\u0000Q\u0000F\u0000O\u0000X\u0000G\u0000L\u0000Q\u0000Jammonium hydroxide",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "(NH4OH), can be formed in the presence of moisture. Combustion:Ammonia is flammable, and fire will produce irritating, corrosive, and/or toxic gases. When ammonia is heated to decomposition, it emits toxic fumes and nitrogen oxides.",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "During firefighting, never direct the jet of water spray directly at liquid ammonia.Other: Ammonia is a commonlyused fertilizer in agriculture,however,not on edible products. Ammonia released to an edible product may impart unpalatable ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "qualities to food when the gas reacts with moisture in the food.Health EffectsOnset: Onset of symptoms is dose and route dependent. Followingshort-term exposure to high concentrations of NH3gas or vapors,effectsoccur rapidly ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "although some respiratory symptoms may be delayed in onset.The full extent of eye damage may not be evident for up to one week after exposure.NH3is a severe irritant of the eyes, respiratory tract, gastrointestinal tract, and skin(frostb",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "ite and severe burns). It reacts with moisture in mucous membranesto produce ammonium hydroxide(NH4OH),a corrosive,alkaline compound. Effects from NH3exposure depend on duration of exposure and concentration of gas or liquid.(see Signs/ Symptoms below).",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "Signs/Symptoms: Appearance and severity of symptoms will vary depending upon exposure route, concentration and duration. However, the following is a general list of possible symptoms. Mildto Moderate: ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Rapid eye irritation and burning sensation. Nausea, emesis (vomiting), abdominal pain, and burns of mouth, pharynx (throat), esophagus, and stomach. Inhalation can causeirritation and burns of thenose, trachea (windpipe), ",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "lungs, shortness of breath, and chest pain.Severe: Severe corrosive eye injury, eyeredness and swelling, tearing, and temporary or permanent blindness.Swelling of lips, mouth, and larynx (voice box),andsevere burns of mouth, pharynx (throat),esophagus, ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "and stomach.Pulmonary edema (accumulated fluid in lungs) and pneumonia may also result from inhalation. Skin inflammation, blistering, necrosis (tissue death), and deep penetrating burns, especially on moist skin areas.Exposure to NH3in sufficient ",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "quantities can be fatal.",
+          "role": "BODY"
+        }
+      ],
+      "text": "April2020Page 1of 4NRT Quick Reference Guide: Anhydrous Ammonia [April2020QRGs are intended for FederalOSC/RPMsAgent CharacteristicsAgentClassification:Choking/pulmonary, lung damagingagent and Toxic Industrial ChemicalNOTE: For this QRG, ammonia refers to anhydrous ammoniagas, unless otherwise specified.ChemicalCASFormulaMolecular WeightPhysical DescriptionSynonyms and Trade Names (examples) Ammonia7664-41-7NH317.03 g/molClear colorless gas with a strong odorClear colorless liquid under pressure\u0000xNitro-Sil\u0000xAM-Fol\u0000xRefrigerant R717Ammonium Hydroxide1336-21-6NH4OH35.04 g/molColorless aqueous solution; NH3vaporscanarise from the solution\u0000x Aqueousammonia (30% or less NH3)\u0000xAmmonia waterDescription:Clear, colorless gas with a pungent suffocating odor, or a clear, colorless liquid under pressure. Ammonia is a toxic gas or liquid that, when concentrated (~ 99%), is corrosive to tissues upon contact(e.g., eyes, skin, mouth, throat, lungs). Contact with unconfined ammonia liquid can causefrostbite. Exposure to ammonia in sufficient quantities can be fatal. One of the highest production-volume chemicals in the U.S., concentrated ammonia is used in manufacturing, refrigeration, and agriculture (as a fertilizer). Household ammonia solutions are much less concentrated (~ 5-10%) and rarely cause burns, but can cause irritation. The lowest level at which humans can detect the odor of ammonia is ~ 5-10 ppm v/v, (odor threshold) andthisgenerally provides sufficient warning of exposure; however, persons with prolonged exposure to ammonia will lose their ability to detect the odor (olfactory fatigue).Liquified anhydrous ammonia is stored and shipped in pressurized containers (e.g., tanks, cylinders). Although the DOT requires liquefied anhydrous ammonia (UN1005) to be transported with a non-flammable gas placard, autoignition may occur at high temperatures (>1204°F, >650°C). When ammonia mixes with organic vapors and/or air it forms an exp losive mixture. Pressurized containers may explode when heated. Ruptured containers or cylinders may rocket. Ammonia-air explosions have occurred from leaks in anhydrous ammonia refrigeration system equipment, especially in inadequately ventilated confined spaces, where anaccumulating ammonia-airmixture (LEL=15%) was then ignited explosively by an ignition source. Ammonia reacts violently with strong oxidants, acids, halogens, and many heavy metals.Persistence: Ammonia\u0000L\u0000V\u0000\u0003\u0000F\u0000R\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000³\u0000Q\u0000R\u0000Q- \u0000S\u0000H\u0000U\u0000V\u0000L\u0000V\u0000W\u0000H\u0000Q\u0000W\u0000\u0011\u0000´\u0000\u0003\u00009\u0000D\u0000S\u0000R\u0000U\u0000\u001d\u0000\u0003\u0000P\u0000L\u0000Q\u0000X\u0000W\u0000H\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000K\u0000R\u0000X\u0000U\u0000V\u0000\u001e\u0000\u0003\u0000O\u0000L\u0000T\u0000X\u0000L\u0000G\u0000\u001d\u0000\u0003\u0000U\u0000D\u0000S\u0000L\u0000G\u0000O\u0000\\\u0000\u0003\u0000H\u0000Y\u0000D\u0000S\u0000R\u0000U\u0000D\u0000W\u0000H\u0000V\u0000\u0003\u0000D\u0000W\u0000\u0003\u0000D\u0000P\u0000E\u0000L\u0000H\u0000Q\u0000W\u0000\u0003\u0000W\u0000H\u0000P\u0000S\u0000H\u0000U\u0000D\u0000W\u0000X\u0000U\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003 pressures. Persistence will depend upon amount and purity of the agent, method of release, environmental conditions, and the types of surfaces and materials impacted.Note:At most environmentally significant pHs, ammonia partially ionizes;therefore, many physical and chemical properties will be a function of pH. The amount of ammonia gas released from aqueous solution will increase with increasing pH, and the amount remaining in solution will increase at lower pHs. Ammonia(CAUTION:The NFPA diamond for ammonia has a NOTE that theflammability hazard (red quadrant) may rise from 1 to 3 in a confined space)Physical PropertiesPhysical properties are listed at/near STP unless otherwise indicated. Conversion Factors: ppm = mg/m3x 0.7; mg/m3= ppm x 1.43. Vapor Density:0.5967 (air = 1)Boiling Point:-28°F (-33.35°C)Specific Gravity:0.7710 at 760 mm HgVapor Pressure:6460mm HgMelting/Freezing Point:-108°F (-77.7°C)Aqueous Solubility:solublein waterVolatility: Not established(high, is a gas)Explosive Range: LEL = 15%; UEL= 28%Non-aqueous Solubility: chloroform, etherRelease ScenariosRELEASE OF GASEOUS AMMONIA (NH3) IS ASSUMED MOST PROBABLE; HOWEVER, OTHER RELEASE SCENARIOS AND EXPOSURE ROUTES SHOULD BE CONSIDERED.Open Areas:NH3is a gas and is relatively easy to disperse, due to its volatility, and the primary release/attack scenario is an airborne release. DispersedNH3gas is expected to dissipate, hastened because ammonia gas is lighter than air. However, dissipation may take minutes to hours, and dangerous concentrations can be present at the site of release or in the path ofanNH3plume. Under certain conditions, such as when compressed liquefiedammonia gas initially escapes a cylinder or vessel and comes into contact with moisture in the air, it may form an \u0000³ammonia fog.\u0000´This fog is likely to remain low to the ground and could prevent ammonia gas from rising in the air, mixing and dissipating more easily. Ammonia gas can react with moisture in the ai r to form aerosols of ammonium hydroxide (NH4OH),a corrosive, alkalinecompound, which can cause inhalation, dermal,and ocular hazards. Water/Water Systems:After gaseous release, ammonia can dissolve into bodies of water, forming ammonium hydroxide (NH4OH), a corrosive, alkaline solution, which may exert toxic effects if present in high concentration. If a large plumeof NH3gasor vaporsis released, not all NH3may dissolve before the NH3plume leaves the vicinity of the water. Excess ammonia may also be present in chlorinated drinking water systems as a result of equipment failure. Indoor Facility:NH3leaks in indoor facilities have occurred due to failure of refrigeration systems that utilize anhydrous ammonia (e.g., ice rinks, industrial freezers, meat plants). Dangerous concentrations of ammonia gas can occurquickly in enclosed or poorly ventilated spaces, such as lower levels or utility \u0000F\u0000R\u0000U\u0000U\u0000L\u0000G\u0000R\u0000U\u0000V\u0000\u0003\u0000L\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000E\u0000X\u0000L\u0000O\u0000G\u0000L\u0000Q\u0000J\u0000\u0011\u0000\u0003\u0000'\u0000X\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000D\u0000P\u0000P\u0000R\u0000Q\u0000L\u0000D\u0000¶\u0000V\u0000\u0003\u0000Y\u0000R\u0000O\u0000D\u0000W\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u000f\u0000\u0003\u0000+\u00009\u0000$\u0000&\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000V\u0000\u0003\u0000F\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000L\u0000P\u0000S\u0000D\u0000F\u0000W\u0000H\u0000G\u0000\u0011\u0000\u0003\u0000&\u0000R\u0000U\u0000U\u0000R\u0000V\u0000L\u0000Y\u0000H\u0000\u0003\u0000Y\u0000D\u0000S\u0000R\u0000U\u0000V\u0000\u000f\u0000\u0003\u0000L\u0000Q\u0000F\u0000O\u0000X\u0000G\u0000L\u0000Q\u0000Jammonium hydroxide (NH4OH), can be formed in the presence of moisture. Combustion:Ammonia is flammable, and fire will produce irritating, corrosive, and/or toxic gases. When ammonia is heated to decomposition, it emits toxic fumes and nitrogen oxides. During firefighting, never direct the jet of water spray directly at liquid ammonia.Other: Ammonia is a commonlyused fertilizer in agriculture,however,not on edible products. Ammonia released to an edible product may impart unpalatable qualities to food when the gas reacts with moisture in the food.Health EffectsOnset: Onset of symptoms is dose and route dependent. Followingshort-term exposure to high concentrations of NH3gas or vapors,effectsoccur rapidly although some respiratory symptoms may be delayed in onset.The full extent of eye damage may not be evident for up to one week after exposure.NH3is a severe irritant of the eyes, respiratory tract, gastrointestinal tract, and skin(frostb ite and severe burns). It reacts with moisture in mucous membranesto produce ammonium hydroxide(NH4OH),a corrosive,alkaline compound. Effects from NH3exposure depend on duration of exposure and concentration of gas or liquid.(see Signs/ Symptoms below). Signs/Symptoms: Appearance and severity of symptoms will vary depending upon exposure route, concentration and duration. However, the following is a general list of possible symptoms. Mildto Moderate: Rapid eye irritation and burning sensation. Nausea, emesis (vomiting), abdominal pain, and burns of mouth, pharynx (throat), esophagus, and stomach. Inhalation can causeirritation and burns of thenose, trachea (windpipe), lungs, shortness of breath, and chest pain.Severe: Severe corrosive eye injury, eyeredness and swelling, tearing, and temporary or permanent blindness.Swelling of lips, mouth, and larynx (voice box),andsevere burns of mouth, pharynx (throat),esophagus, and stomach.Pulmonary edema (accumulated fluid in lungs) and pneumonia may also result from inhalation. Skin inflammation, blistering, necrosis (tissue death), and deep penetrating burns, especially on moist skin areas.Exposure to NH3in sufficient quantities can be fatal.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 39,
+        "repeatedHeaderFooterBlockCount": 3,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "April2020Page 2of 4",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Anhydrous ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "Ammonia\u0000²",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "[April2020",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "RPMsHealth Effects(continued)Exposure Routes:Inhalation: The primary route of NH3exposure is in gaseous form. Vapor exposure is absorbed in mucous membranes, including the nose,pharynx (throat), ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "nasopharynx (upper part of throat behind the nose), trachea (windpipe), and lungs,causing bronchiolar and alveolar edema, and airway destruction.Skin",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": ": Direct contact with moist skin may cause irritation and redness. High concentrations can cause blistering and severe skin burns, especially on most skin. Contact with NH3as liquefied compressed gas can cause frostbite and severe skin burns.Eyes",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": ": High concentrations can cause inflammation, tearing, and severe corrosive injury to surface and membranes of eye (e.g., corneal erosion). In cases of eye contact, ulceration (tissue damage) may result in late perfo",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "ration of cornea after weeks or months. Blindness may ensue.Ingestion: Ingestion is an uncommon route of exposure. Vapor exposure is absorbed in mucous membranes (e.g., esophagus, stomach).Effect LevelsAir: Acute Exposure Guideline Levels (AEGLs)",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "for general population one-time exposure emergency scenarios for NH3(complete definitions are available at: https://www.epa.gov/aegl).AEGL Level in ppm, at various exposure durations10 min.30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effects3030303030",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "AEGL 2: Potentially irreversible effects or impaired ability to escape220220160110110AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethality2,7001,6001,100550390",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Air: American Industrial Hygiene Association (AIHA) Emergency Response Planning Guidelines (ERPGTM)for general population short-term (1 hour) single exposures to airborne concentrations of NH3. AIHA ERPG Level in ppm1 hr.Note: ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "ERPGs may be used during emergency response to evaluate potential health effects to the public or emergency response personnel; however, AIHA ERPG 2019 Handbook\u0000V\u0000W\u0000D\u0000W\u0000H\u0000V\u0000\u0003\u0000³\u00007\u0000K\u0000H\u0000\u0003level",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "s are not to be used to determine safe limits for routine operations, as definitive delineators ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "\u0000E\u0000H\u0000W\u0000Z\u0000H\u0000H\u0000Q\u0000\u0003\u0000V\u0000D\u0000I\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000X\u0000Q\u0000V\u0000D\u0000I\u0000H\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000F\u0000R\u0000Q\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u000f\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000E\u0000D\u0000V\u0000L\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000T\u0000X\u0000D\u0000Q\u0000W\u0000L\u0000W\u0000D\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000U\u0000L\u0000V\u0000N\u0000\u0003\u0000D\u0000V\u0000V\u0000H\u0000V\u0000V\u0000P\u0000H\u0000Q\u0000W\u0000\u0011\u0000´ERPG-1: Mild, transient effects\u0004G\u0000\u000325ERPG-2: Serious, irreversi",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "ble effects\u0004G\u0000\u0003150ERPG-3: Life-threatening effects\u0004G\u0000\u00031500Exposure GuidelinesNote:(NA = not available)OccupationalNIOSH IDLH= 300 ppmNIOSHREL-STEL= 35 ppm (27 mg/m3) [15-ACGIH TLV-TWA= 25 ppm [8-NIOSH REL-TWA= 25 ppm (18 mg/m3) [10-OSHA PEL = ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "50 ppm (35 mg/m3) [8-hr ACGIH TLV-STEL= 35 ppm [15-PopulationRSL Industrial Soil= NARSL Residential Soil= NADrinking Water: for 1 day (child) = NA; 10 days (child) = NA; Lifetime = 30mg/LPersonnel SafetyNote: ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options and personnel decontamination may vary depending upon the amount and purity of agent, site conditions and the release s",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "cenario. Additional information on personnel safety and PPE selection criteria can be found at www.cdc.gov/niosh/ershdb. We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.Medical: Pre-incident:",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Annual physical and respiratory function exam.DuringIncident:Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per Health Effects section above and treat accordingly as per First Aid section below.First Aid: ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Immediately remove person from affected area and remove contaminated clothing and articles. Keep the affected person warm and at rest. Compressed liquid:Observe and treat for frostbite and chemical burns. ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Contaminated clothing could possibly be frozen to skin. Thaw frozen clothing from skin before removing. Wash bare skin immediately before removing clothes, with water, or warm, soapy water if available, at normal household pressures (~50-60 psi) for ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "minimum of 20 minutes, ensure thorough soaking. For liquid ammonia contact, seek immediate medical attention. Rinse eyes exposed to liquid agent with potable water for minimum of 20 minutes. Hold eyelids apart and away from eyeball for thorough rinsing.Gas",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": ": Observe and treat for respiratory distress and maintain clear airway. Administer oxygen if respiratory distress develops. Antidote: THERE IS NO ANTIDOTE.In cases of ingestion, rinse mouth and do not induce vomiting. ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "If conscious, give large amounts of water to drink. If unconscious, do not give anything by mouth. Send person for follow-up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms and treat accordingly.Post I",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "ncident:Post-incident medical surveillance is highly recommended.Personal Protective Equipment (PPE):Note: the recommendations below apply to both Anhydrous Ammonia (NH3) and ammonium hydroxide (NH4OH), ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "which is solution of ammonia in water up to 30% concentration. WARNING: Exposure to liquid or rapidly expanding gases may cause severe chemical burns and frostbite to the eyes, lungs and skin. ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "CAUTION: Adding water directly to liquid spills will increase volatilization of ammonia, thus increasing the possibility of exposure. Contain spill and runoff from entering drains, sewers, streams, lakes,",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "and water systems by utilizing methods such as diking, containment, and absorption.GENERAL INFORMATION:NIOSH-certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSH-",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and chemical-resistant protective clothing (such as neoprene, polytetrafluoroethylene. and butyl rubber) should be used. Pre-",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "incident training and exercises on the proper use of PPE are recommended. Per NIOSH guidance \u0000±LEVEL A:Recommended for the initial response to anNH3incident. Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "and eye protection when the contaminant identity or concentration is unknown. Select Level A when the NH3concentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure. LEVEL B:",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "Provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when the NH3concentration is unknown or above the IDLH or AEGL-",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "2 and dermal exposure is less of a risk. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.LEVEL C:",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "Select Level C when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use of APR or PAPR (i.e., < IDLH, warning properties) are met. Level C may be appropriate when decontaminating personn",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "el or equipment. Note:NH3may have limited inhalation warning properties due toolfactoryfatigue. Use APR/PAPR with caution.",
+          "role": "BODY"
+        }
+      ],
+      "text": "April2020Page 2of 4 Ammonia\u0000² [April2020 RPMsHealth Effects(continued)Exposure Routes:Inhalation: The primary route of NH3exposure is in gaseous form. Vapor exposure is absorbed in mucous membranes, including the nose,pharynx (throat), nasopharynx (upper part of throat behind the nose), trachea (windpipe), and lungs,causing bronchiolar and alveolar edema, and airway destruction.Skin : Direct contact with moist skin may cause irritation and redness. High concentrations can cause blistering and severe skin burns, especially on most skin. Contact with NH3as liquefied compressed gas can cause frostbite and severe skin burns.Eyes : High concentrations can cause inflammation, tearing, and severe corrosive injury to surface and membranes of eye (e.g., corneal erosion). In cases of eye contact, ulceration (tissue damage) may result in late perfo ration of cornea after weeks or months. Blindness may ensue.Ingestion: Ingestion is an uncommon route of exposure. Vapor exposure is absorbed in mucous membranes (e.g., esophagus, stomach).Effect LevelsAir: Acute Exposure Guideline Levels (AEGLs) for general population one-time exposure emergency scenarios for NH3(complete definitions are available at: https://www.epa.gov/aegl).AEGL Level in ppm, at various exposure durations10 min.30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effects3030303030 AEGL 2: Potentially irreversible effects or impaired ability to escape220220160110110AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethality2,7001,6001,100550390 Air: American Industrial Hygiene Association (AIHA) Emergency Response Planning Guidelines (ERPGTM)for general population short-term (1 hour) single exposures to airborne concentrations of NH3. AIHA ERPG Level in ppm1 hr.Note: ERPGs may be used during emergency response to evaluate potential health effects to the public or emergency response personnel; however, AIHA ERPG 2019 Handbook\u0000V\u0000W\u0000D\u0000W\u0000H\u0000V\u0000\u0003\u0000³\u00007\u0000K\u0000H\u0000\u0003level s are not to be used to determine safe limits for routine operations, as definitive delineators \u0000E\u0000H\u0000W\u0000Z\u0000H\u0000H\u0000Q\u0000\u0003\u0000V\u0000D\u0000I\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000X\u0000Q\u0000V\u0000D\u0000I\u0000H\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000F\u0000R\u0000Q\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u000f\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000E\u0000D\u0000V\u0000L\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000T\u0000X\u0000D\u0000Q\u0000W\u0000L\u0000W\u0000D\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000U\u0000L\u0000V\u0000N\u0000\u0003\u0000D\u0000V\u0000V\u0000H\u0000V\u0000V\u0000P\u0000H\u0000Q\u0000W\u0000\u0011\u0000´ERPG-1: Mild, transient effects\u0004G\u0000\u000325ERPG-2: Serious, irreversi ble effects\u0004G\u0000\u0003150ERPG-3: Life-threatening effects\u0004G\u0000\u00031500Exposure GuidelinesNote:(NA = not available)OccupationalNIOSH IDLH= 300 ppmNIOSHREL-STEL= 35 ppm (27 mg/m3) [15-ACGIH TLV-TWA= 25 ppm [8-NIOSH REL-TWA= 25 ppm (18 mg/m3) [10-OSHA PEL = 50 ppm (35 mg/m3) [8-hr ACGIH TLV-STEL= 35 ppm [15-PopulationRSL Industrial Soil= NARSL Residential Soil= NADrinking Water: for 1 day (child) = NA; 10 days (child) = NA; Lifetime = 30mg/LPersonnel SafetyNote: Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, First Aid options and personnel decontamination may vary depending upon the amount and purity of agent, site conditions and the release s cenario. Additional information on personnel safety and PPE selection criteria can be found at www.cdc.gov/niosh/ershdb. We also recommend that responders check their own internal procedures (i.e., SOPs), if applicable.Medical: Pre-incident: Annual physical and respiratory function exam.DuringIncident:Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per Health Effects section above and treat accordingly as per First Aid section below.First Aid: Immediately remove person from affected area and remove contaminated clothing and articles. Keep the affected person warm and at rest. Compressed liquid:Observe and treat for frostbite and chemical burns. Contaminated clothing could possibly be frozen to skin. Thaw frozen clothing from skin before removing. Wash bare skin immediately before removing clothes, with water, or warm, soapy water if available, at normal household pressures (~50-60 psi) for minimum of 20 minutes, ensure thorough soaking. For liquid ammonia contact, seek immediate medical attention. Rinse eyes exposed to liquid agent with potable water for minimum of 20 minutes. Hold eyelids apart and away from eyeball for thorough rinsing.Gas : Observe and treat for respiratory distress and maintain clear airway. Administer oxygen if respiratory distress develops. Antidote: THERE IS NO ANTIDOTE.In cases of ingestion, rinse mouth and do not induce vomiting. If conscious, give large amounts of water to drink. If unconscious, do not give anything by mouth. Send person for follow-up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms and treat accordingly.Post I ncident:Post-incident medical surveillance is highly recommended.Personal Protective Equipment (PPE):Note: the recommendations below apply to both Anhydrous Ammonia (NH3) and ammonium hydroxide (NH4OH), which is solution of ammonia in water up to 30% concentration. WARNING: Exposure to liquid or rapidly expanding gases may cause severe chemical burns and frostbite to the eyes, lungs and skin. CAUTION: Adding water directly to liquid spills will increase volatilization of ammonia, thus increasing the possibility of exposure. Contain spill and runoff from entering drains, sewers, streams, lakes, and water systems by utilizing methods such as diking, containment, and absorption.GENERAL INFORMATION:NIOSH-certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSH- approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and chemical-resistant protective clothing (such as neoprene, polytetrafluoroethylene. and butyl rubber) should be used. Pre- incident training and exercises on the proper use of PPE are recommended. Per NIOSH guidance \u0000±LEVEL A:Recommended for the initial response to anNH3incident. Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when the NH3concentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure. LEVEL B: Provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when the NH3concentration is unknown or above the IDLH or AEGL- 2 and dermal exposure is less of a risk. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.LEVEL C: Select Level C when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use of APR or PAPR (i.e., < IDLH, warning properties) are met. Level C may be appropriate when decontaminating personn el or equipment. Note:NH3may have limited inhalation warning properties due toolfactoryfatigue. Use APR/PAPR with caution.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 38,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "April2020Page 3of 4",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Anhydrous ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "Ammonia\u0000²",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "[April2020",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "RPMsPersonnel Safety(continued)LEVEL D:Select Level D when the contaminant is known, andtheconcentration is belowtheappropriate occupational exposure limits for the stated duration times. ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and risks of dermal exposure are known, and must be accompanied by on-site monitoring.Field DetectionReal-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "time field screening tools (results not confirmatory or quantitative): Caution should be given to equipment that has not beenproperly evaluated. False positive and false negatives may occur in the presence of interferents common in the environment.",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "The following is a summary of minimum screening concentration ranges or levels for equipment procured by many EPA and HAZMAT response teams. Other screening tools may be used by these ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "teams and other agencies and responders, some with similar capabilities and limitations. CAUTION:NH3reacts with water and moisture in air to form ammonium hydroxide (NH4OH); monitoring for NH4OH and changes in pH,as well as NH3, is therefore recommended.",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Minimum Screening Ranges/Levels for AirDrager Tubes(ammonia 2/a)Drager Sensors XS/XXS-NH3MultiRAE(NH3sensor)MultiRAE(PID)IP = 10.18 eVScreening Levels for Water as NH3-N(mg/L)Orion Ion-specific electrode (ISE)HACH colorimetric kits (various)pH numerous ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "meters and kitsppm2.03.0 / 4.01.01.00.010.010.1 pH unitmg/m31.42.1 / 2.80.70.7Environmental SamplingNote: This section on sampling contains general guidelines and does not replace the need for a site-specific sampling plan.Sampling Concerns:",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Detection, sampling equipment and procedures, and analytical techniques will be site-specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g., characterization,",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "decontamination efficacy and clearance); and 4) specific laboratory requirements. Because NH3 is reactive and volatile, field detection instead of laboratory analysis of samples may suffice and sometimes be necessary to achieve many goals of sampling.The",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "U.S. Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for toxic organic compounds andchemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSIS s",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "ection below (www2.epa.gov/emergency-response/environmental-response-laboratory-network). For sampling questions, call EPA/HQ-EOC at 202-564-3850.Sample Locations and Planning: ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Initially consider air monitoring to ensure worker safety and to determine if there is anNH3plumethat couldimpact other ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0011\u0000\u0003\u0000&\u0000K\u0000D\u0000U\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000L\u0000Q\u0000L\u0000W\u0000L\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000W\u0000D\u0000U\u0000J\u0000H\u0000W\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000M\u0000X\u0000G\u0000J\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000L\u0000G\u0000H\u0000Q\u0000W\u0000L\u0000I\u0000\\\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "ial agent flow paths, and media or objects potentially acting as sinks. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling (",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "e.g., grid, statistical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted or the amount released.Note: NH3is highly reactive, especially to moisture, so reaction by-products, ma",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "inly ammonium hydroxide(NH4OH, a strong base) may be formed, causinghigh pHs, which may be detected in the field by monitoring for changes in pH. Changes in pHcan be used as markersto determine the extentof contamination of the parent NH3",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": ". Laboratory analysis will be necessary for other NH3reaction by-products. See ANALYSIS section below to ensure sampling procedures are compatible with all analytes.Types of Samples:Air:On-site NH3monitors may provide sufficiently accurate real-",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "time results. For lab analysis, samplesarecollectedusingappropriatesolidphaseabsorbent or other media,at breathingzonelevel (~5ft.)toassessinhalationexposureandatgroundlevels(~6in.)toassessoffgassingatsurfaces.Water: Dissolved NH3formsNH4OH",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": ", which may change the pH of the water. Measuring the pH of the water may be sufficient. Concurrent air monitoringfor ammoniais recommended.Soil:",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "\u0000)\u0000R\u0000U\u0000\u0003\u0000O\u0000R\u0000F\u0000D\u0000O\u0000L\u0000]\u0000H\u0000G\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000´\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000Z\u0000K\u0000H\u0000U\u0000H\u0000\u0003\u0000V\u0000R\u0000L\u0000O\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000\u000f\u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000\u0003\u0000V\u0000R\u0000L\u0000O\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000Q\u0000D\u0000O\u0000\\\u0000]\u0000H\u0000G\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000S\u0000+,and should be taken from a non-vegetated ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "area to a depth of less than one inch. Measuring the pH of the soils may be sufficient. Concurrent air monitoringfor ammoniais recommended.Surface Wipes:Wipe samples maynotbeof concern due to ammonia\u0000¶\u0000Vvolatility. If wipe samples are desired to indicate",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "the presence of NH4OHon non-porous surfaces, measuring the pH of collected wipes may be sufficient. Concurrent air monitoringfor ammoniais recommended.Bulk:",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "\u0000%\u0000X\u0000O\u0000N\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000Q\u0000R\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000F\u0000R\u0000Q\u0000F\u0000H\u0000U\u0000Q\u0000\u0003\u0000G\u0000X\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000D\u0000P\u0000P\u0000R\u0000Q\u0000L\u0000D\u0000¶\u0000V\u0000\u0003\u0000Y\u0000R\u0000O\u0000D\u0000W\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0011Ifbulksamples are desired to indicate the presence of NH4OH on non-porous surfaces, measuring the pH of the bulk sample",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "may be sufficient. Concurrent air monitoringfor ammoniais recommended.Other Sample Matrices:Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.Sample Packaging and Shipping: The packaging and shipping of samples are subject to ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "strict regulations established by DOT, CDC, USPS, OSHA and IATA. Contact the sample-receiving laboratory to determine if they have additional packaging, shipping or labeling requirements.Analysis",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "CAUTION: Many labs may not be able to perform analysis on all matrices. Ammonia analysis methods can be found in the EPA Selected Analytical Methods for Environmental Remediation and Recovery (SAM) (https://www.epa.gov/homeland-security-research/sam",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "). Additional analytical methods for ammonia in air include NIOSH 6016 and OSHA ID-164. Reactive compounds such as ammonia gas(NH3)and ammonium hydroxide (NH4OH)may be accurately determined in ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "the field using available meters and field kits. For access to the nearest ERLN laboratory specially trained and equipped foranalysis of ammonia and its reaction by-products, contact the EPA/HQ-EOC at 202-564-3850. The ERLN will use uniform, compatible sa",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "mple prep and analytical methods. (See www2.epa.gov/emergency-response/environmental-response-laboratory-network).Environmental Decontamination/Cleanup",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "DO NOT USE WATER DIRECTLY ON LIQUID ANHYDROUS AMMONIA. Use water spray to knock down vapors or to divert vapor plume drift. If using water spray, plan for ammonia hydroxide (NH4",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "OH) formation, an alkaline and corrosive liquid. pH adjustment of spillages and decontamination runoff may be necessary before discharge to receiving waters and wastewater systems. Avoid allowing water spray or runoff to contact liquid anhydrous ammonia. ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "The amount of ammonia gas released from an aqueous ammonia solution increases with pH. Anhydrous ammonia is so volatile that it will predominantly dissipate into the atmosphere and would not require decontamination by degradation. Anhydrous ammonia reacts ",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "violently with strong oxidants, acids, halogens and heavy metals. Hence, most decontamination or cleanup will not necessarily be for the anhydrous ammonia itself, but for reaction by-products, including ammonium hydroxide. Separate, long-term decontaminati",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "on strategies will need to be developed if those by-products are of concern in a particular situation.",
+          "role": "BODY"
+        }
+      ],
+      "text": "April2020Page 3of 4 Ammonia\u0000² [April2020 RPMsPersonnel Safety(continued)LEVEL D:Select Level D when the contaminant is known, andtheconcentration is belowtheappropriate occupational exposure limits for the stated duration times. Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and risks of dermal exposure are known, and must be accompanied by on-site monitoring.Field DetectionReal- time field screening tools (results not confirmatory or quantitative): Caution should be given to equipment that has not beenproperly evaluated. False positive and false negatives may occur in the presence of interferents common in the environment. The following is a summary of minimum screening concentration ranges or levels for equipment procured by many EPA and HAZMAT response teams. Other screening tools may be used by these teams and other agencies and responders, some with similar capabilities and limitations. CAUTION:NH3reacts with water and moisture in air to form ammonium hydroxide (NH4OH); monitoring for NH4OH and changes in pH,as well as NH3, is therefore recommended. Minimum Screening Ranges/Levels for AirDrager Tubes(ammonia 2/a)Drager Sensors XS/XXS-NH3MultiRAE(NH3sensor)MultiRAE(PID)IP = 10.18 eVScreening Levels for Water as NH3-N(mg/L)Orion Ion-specific electrode (ISE)HACH colorimetric kits (various)pH numerous meters and kitsppm2.03.0 / 4.01.01.00.010.010.1 pH unitmg/m31.42.1 / 2.80.70.7Environmental SamplingNote: This section on sampling contains general guidelines and does not replace the need for a site-specific sampling plan.Sampling Concerns: Detection, sampling equipment and procedures, and analytical techniques will be site-specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g., characterization, decontamination efficacy and clearance); and 4) specific laboratory requirements. Because NH3 is reactive and volatile, field detection instead of laboratory analysis of samples may suffice and sometimes be necessary to achieve many goals of sampling.The U.S. Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for toxic organic compounds andchemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSIS s ection below (www2.epa.gov/emergency-response/environmental-response-laboratory-network). For sampling questions, call EPA/HQ-EOC at 202-564-3850.Sample Locations and Planning: Initially consider air monitoring to ensure worker safety and to determine if there is anNH3plumethat couldimpact other \u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0011\u0000\u0003\u0000&\u0000K\u0000D\u0000U\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000L\u0000Q\u0000L\u0000W\u0000L\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000W\u0000D\u0000U\u0000J\u0000H\u0000W\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000M\u0000X\u0000G\u0000J\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000L\u0000G\u0000H\u0000Q\u0000W\u0000L\u0000I\u0000\\\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W ial agent flow paths, and media or objects potentially acting as sinks. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling ( e.g., grid, statistical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted or the amount released.Note: NH3is highly reactive, especially to moisture, so reaction by-products, ma inly ammonium hydroxide(NH4OH, a strong base) may be formed, causinghigh pHs, which may be detected in the field by monitoring for changes in pH. Changes in pHcan be used as markersto determine the extentof contamination of the parent NH3 . Laboratory analysis will be necessary for other NH3reaction by-products. See ANALYSIS section below to ensure sampling procedures are compatible with all analytes.Types of Samples:Air:On-site NH3monitors may provide sufficiently accurate real- time results. For lab analysis, samplesarecollectedusingappropriatesolidphaseabsorbent or other media,at breathingzonelevel (~5ft.)toassessinhalationexposureandatgroundlevels(~6in.)toassessoffgassingatsurfaces.Water: Dissolved NH3formsNH4OH , which may change the pH of the water. Measuring the pH of the water may be sufficient. Concurrent air monitoringfor ammoniais recommended.Soil: \u0000)\u0000R\u0000U\u0000\u0003\u0000O\u0000R\u0000F\u0000D\u0000O\u0000L\u0000]\u0000H\u0000G\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000\u0003\u0000V\u0000S\u0000R\u0000W\u0000´\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000Z\u0000K\u0000H\u0000U\u0000H\u0000\u0003\u0000V\u0000R\u0000L\u0000O\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000\u000f\u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000\u0003\u0000V\u0000R\u0000L\u0000O\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000Q\u0000D\u0000O\u0000\\\u0000]\u0000H\u0000G\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000S\u0000+,and should be taken from a non-vegetated area to a depth of less than one inch. Measuring the pH of the soils may be sufficient. Concurrent air monitoringfor ammoniais recommended.Surface Wipes:Wipe samples maynotbeof concern due to ammonia\u0000¶\u0000Vvolatility. If wipe samples are desired to indicate the presence of NH4OHon non-porous surfaces, measuring the pH of collected wipes may be sufficient. Concurrent air monitoringfor ammoniais recommended.Bulk: \u0000%\u0000X\u0000O\u0000N\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000Q\u0000R\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000F\u0000R\u0000Q\u0000F\u0000H\u0000U\u0000Q\u0000\u0003\u0000G\u0000X\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000D\u0000P\u0000P\u0000R\u0000Q\u0000L\u0000D\u0000¶\u0000V\u0000\u0003\u0000Y\u0000R\u0000O\u0000D\u0000W\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0011Ifbulksamples are desired to indicate the presence of NH4OH on non-porous surfaces, measuring the pH of the bulk sample may be sufficient. Concurrent air monitoringfor ammoniais recommended.Other Sample Matrices:Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.Sample Packaging and Shipping: The packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA and IATA. Contact the sample-receiving laboratory to determine if they have additional packaging, shipping or labeling requirements.Analysis CAUTION: Many labs may not be able to perform analysis on all matrices. Ammonia analysis methods can be found in the EPA Selected Analytical Methods for Environmental Remediation and Recovery (SAM) (https://www.epa.gov/homeland-security-research/sam ). Additional analytical methods for ammonia in air include NIOSH 6016 and OSHA ID-164. Reactive compounds such as ammonia gas(NH3)and ammonium hydroxide (NH4OH)may be accurately determined in the field using available meters and field kits. For access to the nearest ERLN laboratory specially trained and equipped foranalysis of ammonia and its reaction by-products, contact the EPA/HQ-EOC at 202-564-3850. The ERLN will use uniform, compatible sa mple prep and analytical methods. (See www2.epa.gov/emergency-response/environmental-response-laboratory-network).Environmental Decontamination/Cleanup DO NOT USE WATER DIRECTLY ON LIQUID ANHYDROUS AMMONIA. Use water spray to knock down vapors or to divert vapor plume drift. If using water spray, plan for ammonia hydroxide (NH4 OH) formation, an alkaline and corrosive liquid. pH adjustment of spillages and decontamination runoff may be necessary before discharge to receiving waters and wastewater systems. Avoid allowing water spray or runoff to contact liquid anhydrous ammonia. The amount of ammonia gas released from an aqueous ammonia solution increases with pH. Anhydrous ammonia is so volatile that it will predominantly dissipate into the atmosphere and would not require decontamination by degradation. Anhydrous ammonia reacts violently with strong oxidants, acids, halogens and heavy metals. Hence, most decontamination or cleanup will not necessarily be for the anhydrous ammonia itself, but for reaction by-products, including ammonium hydroxide. Separate, long-term decontaminati on strategies will need to be developed if those by-products are of concern in a particular situation.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 40,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "April2020Page 4of 4",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Anhydrous ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "Ammonia\u0000²",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "[April2020",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "RPMsEnvironmental Decontamination/Cleanup (continued)This decontamination/cleanup section refers to the anhydrous ammonia itself.Decontamination/Cleanup Planning: Once site controls are in place, develop a site-",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "specific decontamination/cleanup plan. Decontamination may require a \u0000³\u0000W\u0000L\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000D\u0000F\u0000K\u0000´\u0000\u0003\u0000X\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u0000Y\u0000D\u0000U\u0000L\u0000H\u0000W\u0000\\\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000H\u0000F\u0000K\u0000Q\u0000L\u0000T\u0000X\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000V\u0000\u0011\u0000\u0003\u0000&\u0000D\u0000O\u0000O\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000\u0012\u0000+\u00004-EOC at 202-564-3850 for mor",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "e information.General Considerations: A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers: public safety, total cost, impact on the facility, wastes generated, as well as the time the facility o",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "r item will be out of service and any socio-economic, psychological, and/or security impacts that may result. Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible (see WASTE MANAGEMENT section below)",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": ". Disposal Option:The urgency to restore a facility as quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "be damaged by exposure to ammonia and may be cheaper to discard and replace rather than torestore.Monitored Natural Attenuation:Anhydrous ammonia dissipates via natural processes. Environmental monitoring must be maintained during decontamination ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than other options but is non-destructive to materials. Aqueous ammonia solutions wi",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "ll also dissipate, yet slower than anhydrous ammonia, resulting in more concentrated solutions.Fix-in-Place Option:",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "\u0000$\u0000Q\u0000K\u0000\\\u0000G\u0000U\u0000R\u0000X\u0000V\u0000\u0003\u0000D\u0000P\u0000P\u0000R\u0000Q\u0000L\u0000D\u0000\u0003\u0000G\u0000L\u0000V\u0000V\u0000L\u0000S\u0000D\u0000W\u0000H\u0000V\u0000\u0003\u0000U\u0000D\u0000S\u0000L\u0000G\u0000O\u0000\\\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000Q\u0000D\u0000W\u0000X\u0000U\u0000D\u0000O\u0000\u0003\u0000S\u0000U\u0000R\u0000F\u0000H\u0000V\u0000V\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000V\u0000X\u0000F\u0000K\u0000\u0003\u0000D\u0000\u0003\u0000³\u0000)\u0000L\u0000[-in-",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "\u00003\u0000O\u0000D\u0000F\u0000H\u0000\u0003\u00002\u0000S\u0000W\u0000L\u0000R\u0000Q\u0000´\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000Q\u0000R\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000I\u0000H\u0000D\u0000V\u0000L\u0000E\u0000O\u0000H\u0000\u0011\u0000\u0003\u00003\u0000K\u0000\\\u0000V\u0000L\u0000F\u0000D\u0000O\u0000\u0003barriers can be used to separate and immobilize the agent contamination from coming into contact with the environment or the publi",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "c. This can be a temporary or permanent solution. Solid or liquid anhydrous ammonia decomposition residues or wastes may require a separate decontamination evaluation process. Decontamination Strategy:",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "A decontamination strategy can be developed by designating contaminated areas based on presence of:1) liquid anhydrous ammonia, 2) gaseous anhydrous ammonia, or 3) ammonia containing solutions.Strategy for Liquid Anhydrous Ammonia: ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Do not allow direct contact with water. Actions that promote safe volatilization of liquid anhydrous ammonia may be useful since anhydrous ammonia in gaseous form is easier to decontaminate or allow to diss",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "ipate; volatilization may be a slow process depending on site conditions. Strategy for Gaseous Anhydrous Ammonia:Ventilate spaces where gaseous anhydrous ammonia may be present. Impact on materials should be assessed for mitigation efforts, especially wh",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "en in contact with liquid anhydrous ammonia. Mechanical, electrolytic, or chemical cleaning of corroded products may be needed. Forced or Hot Air ventilation methods are recommended for gaseous anhydrous ammonia contamination in large volumetricspaces or ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "open areas.Strategy for Aqueous Ammonia Solutions or Ammonium Hydroxide Solutions:Contain liquid or transfer liquid to appropriate containers and dispose according to WASTE MANAGEMENT sectionbelow.Sensitive Equipment and Items:For difficult-to-",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "clean equipment thought to be contaminated with small amounts of anhydrous ammonia, additional options for consideration include dissipation via monitored natural attenuation or flushing with water.Verification of Decontamination:Site a",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "nd situation specific. Please contact EPA/HQ-EOC at 202-564-3850 for further assistance.Waste ManagementTransportation:Federal requirements for transporting hazardous materials and procedures for exemptions are specified in www.fmcsa.dot.gov/safety-",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "security/hazmat/complyhmregs.htm#hmp. Anhydrous ammonia (UN1005) and ammonia solutions >50% (UN3118) are considered Division 2.2 (non-flammable,non-poisonous gas) and Class8 (corrosive) for transportation purposes. Ammonia hy",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "droxide (UN2672) is considered Class8 (corrosive) for transportation purposes. Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat. Detailed state regulations can be found at www.envcap.org/.Waste Management:",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Under the Resource Conservation and Recovery Act (RCRA), waste is classified as hazardous waste (subtitle C) or solid waste (subtitle D). The RCRA regulations generally define a waste to be hazardous if it is: (1) a listed waste (40 CFR §261.31-§261.32); (",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "2) exhibits specific characteristics (40 CFR §261.21-§261.24); or (3) is a discarded commercial chemical product, off specification species, container residue, or spill residue listed in 40 CFR §261.33. Concentrated ammonia waste may be corrosive hazardous",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "waste, chemical code D002, if it is aqueous with a pH greater than or equal to 12.5 or it corrodes steel (§261.22). Listed or characteristic waste may be land disposed only if the waste meets the applicable treatment standards (40 CFR §268.40). Under the ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "Comprehensive Environmental Response, Compensation, and Liability Act (CERCLA), ammonia and anhydrous ammonia have a reportable quantity threshold (RQ) of 100 lbs and ammonium hydroxide has a RQ of 1,000 lbs (40 CFR §302.4). The states (except for Alaska ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "and Iowa) have the primary responsibility to implement the hazardous waste regulations and can impose more stringent requirements than the federal program, so it is critical to open a dialogue with state regulators as early as possible. Management of toxic",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "decomposition products, associated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered. EPA has developed I-WASTE, a web-based tool that contains links to waste transporta",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "tion guidance, treatment and disposal facilities, state regulatory offices, ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "\u0000S\u0000D\u0000F\u0000N\u0000D\u0000J\u0000L\u0000Q\u0000J\u0000\u0003\u0000J\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000J\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000P\u0000L\u0000Q\u0000L\u0000P\u0000L\u0000]\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000D\u0000O\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0011\u0000\u0003\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E-based disposal tool requires pre-registration (",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "http://www2.ergweb.com/bdrtool/login.asp).EPA also recommends the creation of pre-incident waste management plans as a preparedness measure for chemical agent releases, and has created an All-Hazards Waste Management Planning Tool",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "to help state, local, territorial, and tribal waste management officials coordinate and prepare these plans. Access to the All-Hazards Waste Management Planning Tool requires pre-registration (https://wasteplan.epa.gov/).",
+          "role": "BODY"
+        }
+      ],
+      "text": "April2020Page 4of 4 Ammonia\u0000² [April2020 RPMsEnvironmental Decontamination/Cleanup (continued)This decontamination/cleanup section refers to the anhydrous ammonia itself.Decontamination/Cleanup Planning: Once site controls are in place, develop a site- specific decontamination/cleanup plan. Decontamination may require a \u0000³\u0000W\u0000L\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000D\u0000F\u0000K\u0000´\u0000\u0003\u0000X\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u0000Y\u0000D\u0000U\u0000L\u0000H\u0000W\u0000\\\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000H\u0000F\u0000K\u0000Q\u0000L\u0000T\u0000X\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000V\u0000\u0011\u0000\u0003\u0000&\u0000D\u0000O\u0000O\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000\u0012\u0000+\u00004-EOC at 202-564-3850 for mor e information.General Considerations: A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers: public safety, total cost, impact on the facility, wastes generated, as well as the time the facility o r item will be out of service and any socio-economic, psychological, and/or security impacts that may result. Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible (see WASTE MANAGEMENT section below) . Disposal Option:The urgency to restore a facility as quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may be damaged by exposure to ammonia and may be cheaper to discard and replace rather than torestore.Monitored Natural Attenuation:Anhydrous ammonia dissipates via natural processes. Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than other options but is non-destructive to materials. Aqueous ammonia solutions wi ll also dissipate, yet slower than anhydrous ammonia, resulting in more concentrated solutions.Fix-in-Place Option: \u0000$\u0000Q\u0000K\u0000\\\u0000G\u0000U\u0000R\u0000X\u0000V\u0000\u0003\u0000D\u0000P\u0000P\u0000R\u0000Q\u0000L\u0000D\u0000\u0003\u0000G\u0000L\u0000V\u0000V\u0000L\u0000S\u0000D\u0000W\u0000H\u0000V\u0000\u0003\u0000U\u0000D\u0000S\u0000L\u0000G\u0000O\u0000\\\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000Q\u0000D\u0000W\u0000X\u0000U\u0000D\u0000O\u0000\u0003\u0000S\u0000U\u0000R\u0000F\u0000H\u0000V\u0000V\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000V\u0000X\u0000F\u0000K\u0000\u0003\u0000D\u0000\u0003\u0000³\u0000)\u0000L\u0000[-in- \u00003\u0000O\u0000D\u0000F\u0000H\u0000\u0003\u00002\u0000S\u0000W\u0000L\u0000R\u0000Q\u0000´\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000Q\u0000R\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000I\u0000H\u0000D\u0000V\u0000L\u0000E\u0000O\u0000H\u0000\u0011\u0000\u0003\u00003\u0000K\u0000\\\u0000V\u0000L\u0000F\u0000D\u0000O\u0000\u0003barriers can be used to separate and immobilize the agent contamination from coming into contact with the environment or the publi c. This can be a temporary or permanent solution. Solid or liquid anhydrous ammonia decomposition residues or wastes may require a separate decontamination evaluation process. Decontamination Strategy: A decontamination strategy can be developed by designating contaminated areas based on presence of:1) liquid anhydrous ammonia, 2) gaseous anhydrous ammonia, or 3) ammonia containing solutions.Strategy for Liquid Anhydrous Ammonia: Do not allow direct contact with water. Actions that promote safe volatilization of liquid anhydrous ammonia may be useful since anhydrous ammonia in gaseous form is easier to decontaminate or allow to diss ipate; volatilization may be a slow process depending on site conditions. Strategy for Gaseous Anhydrous Ammonia:Ventilate spaces where gaseous anhydrous ammonia may be present. Impact on materials should be assessed for mitigation efforts, especially wh en in contact with liquid anhydrous ammonia. Mechanical, electrolytic, or chemical cleaning of corroded products may be needed. Forced or Hot Air ventilation methods are recommended for gaseous anhydrous ammonia contamination in large volumetricspaces or open areas.Strategy for Aqueous Ammonia Solutions or Ammonium Hydroxide Solutions:Contain liquid or transfer liquid to appropriate containers and dispose according to WASTE MANAGEMENT sectionbelow.Sensitive Equipment and Items:For difficult-to- clean equipment thought to be contaminated with small amounts of anhydrous ammonia, additional options for consideration include dissipation via monitored natural attenuation or flushing with water.Verification of Decontamination:Site a nd situation specific. Please contact EPA/HQ-EOC at 202-564-3850 for further assistance.Waste ManagementTransportation:Federal requirements for transporting hazardous materials and procedures for exemptions are specified in www.fmcsa.dot.gov/safety- security/hazmat/complyhmregs.htm#hmp. Anhydrous ammonia (UN1005) and ammonia solutions >50% (UN3118) are considered Division 2.2 (non-flammable,non-poisonous gas) and Class8 (corrosive) for transportation purposes. Ammonia hy droxide (UN2672) is considered Class8 (corrosive) for transportation purposes. Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat. Detailed state regulations can be found at www.envcap.org/.Waste Management: Under the Resource Conservation and Recovery Act (RCRA), waste is classified as hazardous waste (subtitle C) or solid waste (subtitle D). The RCRA regulations generally define a waste to be hazardous if it is: (1) a listed waste (40 CFR §261.31-§261.32); ( 2) exhibits specific characteristics (40 CFR §261.21-§261.24); or (3) is a discarded commercial chemical product, off specification species, container residue, or spill residue listed in 40 CFR §261.33. Concentrated ammonia waste may be corrosive hazardous waste, chemical code D002, if it is aqueous with a pH greater than or equal to 12.5 or it corrodes steel (§261.22). Listed or characteristic waste may be land disposed only if the waste meets the applicable treatment standards (40 CFR §268.40). Under the Comprehensive Environmental Response, Compensation, and Liability Act (CERCLA), ammonia and anhydrous ammonia have a reportable quantity threshold (RQ) of 100 lbs and ammonium hydroxide has a RQ of 1,000 lbs (40 CFR §302.4). The states (except for Alaska and Iowa) have the primary responsibility to implement the hazardous waste regulations and can impose more stringent requirements than the federal program, so it is critical to open a dialogue with state regulators as early as possible. Management of toxic decomposition products, associated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered. EPA has developed I-WASTE, a web-based tool that contains links to waste transporta tion guidance, treatment and disposal facilities, state regulatory offices, \u0000S\u0000D\u0000F\u0000N\u0000D\u0000J\u0000L\u0000Q\u0000J\u0000\u0003\u0000J\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000J\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000P\u0000L\u0000Q\u0000L\u0000P\u0000L\u0000]\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000S\u0000R\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000D\u0000O\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0011\u0000\u0003\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E-based disposal tool requires pre-registration ( http://www2.ergweb.com/bdrtool/login.asp).EPA also recommends the creation of pre-incident waste management plans as a preparedness measure for chemical agent releases, and has created an All-Hazards Waste Management Planning Tool to help state, local, territorial, and tribal waste management officials coordinate and prepare these plans. Access to the All-Hazards Waste Management Planning Tool requires pre-registration (https://wasteplan.epa.gov/).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 37,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

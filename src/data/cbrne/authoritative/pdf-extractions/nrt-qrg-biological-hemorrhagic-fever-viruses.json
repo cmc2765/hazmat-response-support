@@ -1,0 +1,1526 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-biological-hemorrhagic-fever-viruses",
+  "sourceArtifactSha256": "d4bee40196129709db4981e72f2236355c3699b4f8d78270b35e2d32f8bf929a",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 8,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Hemorrhagic Fever (HF) VirusesQRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2021Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2012Page 1of 8NRT Quick ReferenceGuide: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Hemorrhagic Fever (HF) Viruses",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "QRG PURPOSE:Given that a Federal OSC/RPM leading an emergency response to an environmental release may not know the specific type of hemorrhagic fever (HF) virus in the first 24-48 hours of a response, this document provides information on the general ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "characteristics,effects, and decontamination methods shared by some HF viruses. This QRG does not address protective methods for public health or healthcare workers.1. Agent CharacteristicsAgent Classification: Biological; Type:Virus; Family:Arenaviridae, ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Bunyaviridae, Filoviridae, Flaviviridae.Description: The viruses that cause hemorrhagic fevers are lipid-enveloped ribonucleic acid (RNA) viruses and can infect humans and animals. CDC lists HF viruses as Category A bioterrorism agents (i.e",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "., easily disseminated or transmitted from person to person; have potential for major public health impact and result in high mortality; require special action for public health preparedness).Natural transmission routes: The viruses are spread through con",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "tact* with body fluids and excreta of infected hosts (e.g., human and non-human). Contact with contaminated objects and surfaces (fomites)may also spread the viruses. Certain HF viruses are spread by vectors (e.g., mosquitoes, ticks). In some situations, ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "such as during invasive respiratory procedures (i.e., aerosol-generating procedures) on infectious patients, theviruses may also be aerosolized. Other transmission routes of concern: Although unlikely, HF viruses may be released as aerosols, either accid",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "entally or intentionally. If the release was intentional, contamination with higher viral concentrations may be present.Refer to www.cdc.gov/vhffor more information on diseases caused by HF viruses. Contact the EPA/HQ-EOC at 202-564-3850 and the CDC/HQ-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "EOC at 770-488-7100 for assistance during a response.Thetablebelowlists examples of the more hazardous HF viruses known to exist. The HF virusexamples below shouldbe handled in a Biosafety Level 4(BSL-4)laboratory, are on the HHS Select Agent",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "list, and are classified as Category A infectious substancesunder U.S. Department of Transportation (DOT) Hazardous Materials Regulations (see WASTE MANAGEMENT section below).",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "*Contact means that body fluids (including but not limited to blood, saliva, mucus, vomit, urine, or feces) from an infected ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "\u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000D\u0000Q\u0000L\u0000P\u0000D\u0000O\u0000\u0003\u0000\u000b\u0000D\u0000O\u0000L\u0000Y\u0000H\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000G\u0000H\u0000D\u0000G\u0000\f\u0000\u0003\u0000K\u0000D\u0000Y\u0000H\u0000\u0003\u0000W\u0000R\u0000X\u0000F\u0000K\u0000H\u0000G\u0000\u0003\u0000V\u0000R\u0000P\u0000H\u0000R\u0000Q\u0000H\u0000¶\u0000V\u0000\u0003\u0000H\u0000\\\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000Q\u0000R\u0000V\u0000H\u0000\u000f\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000P\u0000R\u0000X\u0000W\u0000K\u0000\u000f\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000R\u0000W\u0000K\u0000H\u0000U\u0000\u0003\u0000P\u0000X\u0000F\u0000R\u0000X\u0000V\u0000\u0003\u0000P\u0000H\u0000P\u0000E\u0000U\u0000D\u0000Q\u0000H\u0000V\u0000\u000f\u0000\u0003or non-",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "intact skin, such as an open cut, wound, or abrasion. Contact may be either direct, such as when touching an infectious patient or dead body or being exposed to droplets of infectious blood or body fluids, or indirect, such as when handling a contam",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "inated object.Filoviridae(selected genera of BSL-4 Filoviruses with virus speciesknown to cause disease in people)HF Virus (HF disease)Endemic RegionNatural ReservoirTransmission RoutesEbolavirus,1including Zaire ebolavirusspecies (Ebola Virus Disease ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "(EVD), or Ebola HF)Marburg1(Marburg HF)Sub-Saharan AfricaBatsContact* with blood or body fluids or objects contaminated with blood or body fluids of an infected animal or person. Infected non-human primates (monkeys) may serve as intermediary host.1Tier 1 ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Select Agent, one of a subset of biological agents and toxins that present the greatest risk of deliberate misuse with significant potential for mass casualties or devastating effect, and pose a severe threat to public health and safety.Arenaviridae",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "(selected BSL-4 Arenaviruses notassociated with secondary person-to-person transmission)HF Virus (HF disease)Endemic RegionNatural ReservoirTransmission RoutesJunin(Argentine HF)Guanarito(Venezuelan HF)Sabia(Brazilian HF)South America Rodent",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Contact* with infected-rodent urine or feces or materials contaminated with infected-rodent excrement; inhalation of aerosols comprised of particles from infected-rodent urine or saliva.Arenaviridae(selected BSL-",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "4 Arenaviruses associated with secondary person-to-person transmission as well as transmission in healthcare settings (e.g., fomites))HF Virus (HF disease)Endemic RegionNatural ReservoirTransmission RoutesMachupo(Bolivian HF)Chapare(Chapare HF)Bolivia",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "RodentContact* with infected-rodent urine or feces or materials contaminated with infected-rodent excrement; ingestion of food contaminated with infected-rodent excrement.Contact* with blood or body fluids of an infected person.Lassa(Lassa Fever)",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "West AfricaRodent(same as above for Machupoand Chapareviruses)",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2021Update: 2012Page 1of 8NRT Quick ReferenceGuide: QRG PURPOSE:Given that a Federal OSC/RPM leading an emergency response to an environmental release may not know the specific type of hemorrhagic fever (HF) virus in the first 24-48 hours of a response, this document provides information on the general characteristics,effects, and decontamination methods shared by some HF viruses. This QRG does not address protective methods for public health or healthcare workers.1. Agent CharacteristicsAgent Classification: Biological; Type:Virus; Family:Arenaviridae, Bunyaviridae, Filoviridae, Flaviviridae.Description: The viruses that cause hemorrhagic fevers are lipid-enveloped ribonucleic acid (RNA) viruses and can infect humans and animals. CDC lists HF viruses as Category A bioterrorism agents (i.e ., easily disseminated or transmitted from person to person; have potential for major public health impact and result in high mortality; require special action for public health preparedness).Natural transmission routes: The viruses are spread through con tact* with body fluids and excreta of infected hosts (e.g., human and non-human). Contact with contaminated objects and surfaces (fomites)may also spread the viruses. Certain HF viruses are spread by vectors (e.g., mosquitoes, ticks). In some situations, such as during invasive respiratory procedures (i.e., aerosol-generating procedures) on infectious patients, theviruses may also be aerosolized. Other transmission routes of concern: Although unlikely, HF viruses may be released as aerosols, either accid entally or intentionally. If the release was intentional, contamination with higher viral concentrations may be present.Refer to www.cdc.gov/vhffor more information on diseases caused by HF viruses. Contact the EPA/HQ-EOC at 202-564-3850 and the CDC/HQ- EOC at 770-488-7100 for assistance during a response.Thetablebelowlists examples of the more hazardous HF viruses known to exist. The HF virusexamples below shouldbe handled in a Biosafety Level 4(BSL-4)laboratory, are on the HHS Select Agent list, and are classified as Category A infectious substancesunder U.S. Department of Transportation (DOT) Hazardous Materials Regulations (see WASTE MANAGEMENT section below). *Contact means that body fluids (including but not limited to blood, saliva, mucus, vomit, urine, or feces) from an infected \u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000D\u0000Q\u0000L\u0000P\u0000D\u0000O\u0000\u0003\u0000 \u0000D\u0000O\u0000L\u0000Y\u0000H\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000G\u0000H\u0000D\u0000G\u0000 \u0000\u0003\u0000K\u0000D\u0000Y\u0000H\u0000\u0003\u0000W\u0000R\u0000X\u0000F\u0000K\u0000H\u0000G\u0000\u0003\u0000V\u0000R\u0000P\u0000H\u0000R\u0000Q\u0000H\u0000¶\u0000V\u0000\u0003\u0000H\u0000\\\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000Q\u0000R\u0000V\u0000H\u0000\u000f\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000P\u0000R\u0000X\u0000W\u0000K\u0000\u000f\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000R\u0000W\u0000K\u0000H\u0000U\u0000\u0003\u0000P\u0000X\u0000F\u0000R\u0000X\u0000V\u0000\u0003\u0000P\u0000H\u0000P\u0000E\u0000U\u0000D\u0000Q\u0000H\u0000V\u0000\u000f\u0000\u0003or non- intact skin, such as an open cut, wound, or abrasion. Contact may be either direct, such as when touching an infectious patient or dead body or being exposed to droplets of infectious blood or body fluids, or indirect, such as when handling a contam inated object.Filoviridae(selected genera of BSL-4 Filoviruses with virus speciesknown to cause disease in people)HF Virus (HF disease)Endemic RegionNatural ReservoirTransmission RoutesEbolavirus,1including Zaire ebolavirusspecies (Ebola Virus Disease (EVD), or Ebola HF)Marburg1(Marburg HF)Sub-Saharan AfricaBatsContact* with blood or body fluids or objects contaminated with blood or body fluids of an infected animal or person. Infected non-human primates (monkeys) may serve as intermediary host.1Tier 1 Select Agent, one of a subset of biological agents and toxins that present the greatest risk of deliberate misuse with significant potential for mass casualties or devastating effect, and pose a severe threat to public health and safety.Arenaviridae (selected BSL-4 Arenaviruses notassociated with secondary person-to-person transmission)HF Virus (HF disease)Endemic RegionNatural ReservoirTransmission RoutesJunin(Argentine HF)Guanarito(Venezuelan HF)Sabia(Brazilian HF)South America Rodent Contact* with infected-rodent urine or feces or materials contaminated with infected-rodent excrement; inhalation of aerosols comprised of particles from infected-rodent urine or saliva.Arenaviridae(selected BSL- 4 Arenaviruses associated with secondary person-to-person transmission as well as transmission in healthcare settings (e.g., fomites))HF Virus (HF disease)Endemic RegionNatural ReservoirTransmission RoutesMachupo(Bolivian HF)Chapare(Chapare HF)Bolivia RodentContact* with infected-rodent urine or feces or materials contaminated with infected-rodent excrement; ingestion of food contaminated with infected-rodent excrement.Contact* with blood or body fluids of an infected person.Lassa(Lassa Fever) West AfricaRodent(same as above for Machupoand Chapareviruses)",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 27,
+        "repeatedHeaderFooterBlockCount": 6,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Hemorrhagic Fever (HF) VirusesQRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2021Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2012Page 2of 8Bunyaviridae(selected genera of BSL-4 Bunyaviruses with known human-to-human transmission)HF Virus (HF disease)Endemic RegionNatural ReservoirTransmission RoutesNairovirus(Crimean-Congo HF)Europe, Asia, Africa, Middle EastTick",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Tick bite (mostly Hyalommagenus) orcontact* with blood or body fluids of infected person or contact with infected animal blood (e.g., cattle, sheep).Public Health Interventions:To reduce risk of transmission, these steps should be taken: (1) a",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "voiding contact with contaminated animals, persons, or objects; (2) active surveillance of individuals who have been exposed to the virus; and (3) isolation and investigation of ill persons, as necessary.Persistence/Stability: ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Known to persist in blood and body fluids or excreta (may vary by virus) of infected host for several weeks. HF virus persistence is affected by types of environmental matrices (e.g., porous surfaces; moisture-",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "\u0000U\u0000H\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000P\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D\u0000O\u0000\f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000L\u0000Q\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000V\u0000W\u0000D\u0000E\u0000L\u0000O\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000\u000b\u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u0000³\u0000Z\u0000H\u0000D\u0000S\u0000R\u0000Q\u0000V-\u0000J\u0000U\u0000D\u0000G\u0000H\u0000´\u0000\f\u0000\u00112. Exposure RoutesExposure routes vary by the type of HF ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "virus. Multiple exposure routes are possible for each HF virus.Dermal/mucous membranes:HF viruses are generally transmitted to humans through direct contact with blood or body ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "fluids of infected persons or animals or by indirect contact with contaminated objectsand surfaces (fomites). The HF viruses can enter the body through non-intact skin and mucous membranes.Vector-Borne:",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Some HF viruses can be transmitted to humans from infected arthropod vectors,such as ticks (e.g., Crimean-Congo HF virus) or mosquitos (e.g., DengueHF virusin Flaviviridaevirus family).Inhalation:For most HF vir",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "uses, the inhalation route is not as likely as other routes. However, HF viruses may be aerosolized under certain circumstances, such as aerosol-generating procedures during patient care, laboratory procedures, or decontamination/waste management activitie",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "s. Intentionally generated aerosols have been demonstrated to transmit the HF virus during animal experiments.Ingestion:Ingestion of meat or products from infected animals can transmit HF virus. It is possible that contaminated water or food can transmit",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "HF virus.3. Health EffectsOnset:Varies according to type of HF virus. See tablebelowfor incubation periodforexamples of HF viruses.3.1. Signs/Symptoms:HF virus infections can range from mild illness (e.g., flu-like symptoms) to severe, life-threatening ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "disease.\u0000xGeneral symptoms:Regardless of exposure route (i.e.,dermal/mucous membranes,inhalation, ingestion), infected individuals may exhibit initial signs and symptoms including fever, eye redness, fatigue, dizziness, muscle aches, loss ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "of strength, and exhaustion.\u0000xSevere:Severe cases may show signs of bleeding from under the skin, internal organs, or body orifices like the mouth, eyes, or ears. The most severely ill patients experience shock, multi-",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "organ failure, nervous system malfunction, delirium, seizures, and coma.3.2. EffectLevels:Specific effect levels are unknown.\u0000xInfectivity:Varies by type of HF virus.\u0000xInfective Dose:",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "The infective dose of HF virus appears to be low (1 to 10 viral particles).\u0000xLethality:Hemorrhagic fevers(diseases caused by HF viruses) have the potential to be lethal, especially if untreated.3.3.HF Virus DiseaseCharacteristics:HF disease / (HF virus)",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "IncubationPeriodMedical InterventionsEbola Virus Disease (EVD), or Ebola HF(Ebolavirus,1including Zaire ebolavirusspecies)2-21 days(average 8-10 days)Supportive Care; IT*FDA has approved Ebola vaccine rVSV-ZEBOV ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "for prevention of EVD; FDA found this vaccine safe and protective against only Zaire ebolavirusspecies.Marburg HF (Marburg1)5-10 daysSupportive CareArgentine HF (Junin)10-16 daysSupportive Care; IT*Venezuelan HF (Guanarito)7-14 daysSupportive Care; IT*",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Brazilian HF (Sabia)7-14 daysSupportive CareBolivian HF (Machupo)9-15 daysSupportive Care; IT*Chapare HF (Chapare)7-14 daysSupportive Care; IT*Lassa fever (Lassa)5-16 daysSupportive Care; IT*Crimean-Congo HF (Nairovirus)3-12 daysSupportive Care; IT*1",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Tier 1 Select Agent.* Investigative Therapy \u0000±NoFDA approved therapy available for HF viruses. Therapeutics (Ribavirin, Favipiravir, and neutralizing monoclonal antibodies (ZMapp)) have been used or are under investigation.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2021Update: 2012Page 2of 8Bunyaviridae(selected genera of BSL-4 Bunyaviruses with known human-to-human transmission)HF Virus (HF disease)Endemic RegionNatural ReservoirTransmission RoutesNairovirus(Crimean-Congo HF)Europe, Asia, Africa, Middle EastTick Tick bite (mostly Hyalommagenus) orcontact* with blood or body fluids of infected person or contact with infected animal blood (e.g., cattle, sheep).Public Health Interventions:To reduce risk of transmission, these steps should be taken: (1) a voiding contact with contaminated animals, persons, or objects; (2) active surveillance of individuals who have been exposed to the virus; and (3) isolation and investigation of ill persons, as necessary.Persistence/Stability: Known to persist in blood and body fluids or excreta (may vary by virus) of infected host for several weeks. HF virus persistence is affected by types of environmental matrices (e.g., porous surfaces; moisture- \u0000U\u0000H\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000P\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D\u0000O\u0000 \u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000L\u0000Q\u0000W\u0000H\u0000Q\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000V\u0000W\u0000D\u0000E\u0000L\u0000O\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000 \u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u0000³\u0000Z\u0000H\u0000D\u0000S\u0000R\u0000Q\u0000V-\u0000J\u0000U\u0000D\u0000G\u0000H\u0000´\u0000 \u0000\u00112. Exposure RoutesExposure routes vary by the type of HF virus. Multiple exposure routes are possible for each HF virus.Dermal/mucous membranes:HF viruses are generally transmitted to humans through direct contact with blood or body fluids of infected persons or animals or by indirect contact with contaminated objectsand surfaces (fomites). The HF viruses can enter the body through non-intact skin and mucous membranes.Vector-Borne: Some HF viruses can be transmitted to humans from infected arthropod vectors,such as ticks (e.g., Crimean-Congo HF virus) or mosquitos (e.g., DengueHF virusin Flaviviridaevirus family).Inhalation:For most HF vir uses, the inhalation route is not as likely as other routes. However, HF viruses may be aerosolized under certain circumstances, such as aerosol-generating procedures during patient care, laboratory procedures, or decontamination/waste management activitie s. Intentionally generated aerosols have been demonstrated to transmit the HF virus during animal experiments.Ingestion:Ingestion of meat or products from infected animals can transmit HF virus. It is possible that contaminated water or food can transmit HF virus.3. Health EffectsOnset:Varies according to type of HF virus. See tablebelowfor incubation periodforexamples of HF viruses.3.1. Signs/Symptoms:HF virus infections can range from mild illness (e.g., flu-like symptoms) to severe, life-threatening disease.\u0000xGeneral symptoms:Regardless of exposure route (i.e.,dermal/mucous membranes,inhalation, ingestion), infected individuals may exhibit initial signs and symptoms including fever, eye redness, fatigue, dizziness, muscle aches, loss of strength, and exhaustion.\u0000xSevere:Severe cases may show signs of bleeding from under the skin, internal organs, or body orifices like the mouth, eyes, or ears. The most severely ill patients experience shock, multi- organ failure, nervous system malfunction, delirium, seizures, and coma.3.2. EffectLevels:Specific effect levels are unknown.\u0000xInfectivity:Varies by type of HF virus.\u0000xInfective Dose: The infective dose of HF virus appears to be low (1 to 10 viral particles).\u0000xLethality:Hemorrhagic fevers(diseases caused by HF viruses) have the potential to be lethal, especially if untreated.3.3.HF Virus DiseaseCharacteristics:HF disease / (HF virus) IncubationPeriodMedical InterventionsEbola Virus Disease (EVD), or Ebola HF(Ebolavirus,1including Zaire ebolavirusspecies)2-21 days(average 8-10 days)Supportive Care; IT*FDA has approved Ebola vaccine rVSV-ZEBOV for prevention of EVD; FDA found this vaccine safe and protective against only Zaire ebolavirusspecies.Marburg HF (Marburg1)5-10 daysSupportive CareArgentine HF (Junin)10-16 daysSupportive Care; IT*Venezuelan HF (Guanarito)7-14 daysSupportive Care; IT* Brazilian HF (Sabia)7-14 daysSupportive CareBolivian HF (Machupo)9-15 daysSupportive Care; IT*Chapare HF (Chapare)7-14 daysSupportive Care; IT*Lassa fever (Lassa)5-16 daysSupportive Care; IT*Crimean-Congo HF (Nairovirus)3-12 daysSupportive Care; IT*1 Tier 1 Select Agent.* Investigative Therapy \u0000±NoFDA approved therapy available for HF viruses. Therapeutics (Ribavirin, Favipiravir, and neutralizing monoclonal antibodies (ZMapp)) have been used or are under investigation.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 24,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Hemorrhagic Fever (HF) VirusesQRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2021Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2012Page 3of 84. Release ScenariosA naturally occurring outbreak of HF virus is the most likely scenario that would result in environmental contamination.However, an intentional dissemination of HF viruses could occur: 1) by person-to-",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "person transmission by purposefully inserting an infected individual into a community; 2) through artificially produced aerosols or fomites; or 3) through release of an infected reservoir (e.g., non-",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "human primate (monkey), bat, rodent) or vector (e.g., tick, mosquito). Once HF viruses are transmitted person-to-person or from infected vectors, SECONDARY SPREAD is the major concern.CAUTION:",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Because scientific information on persistence of various HF viruses as a function of droplet/aerosol size and environmental conditions is limited, routes like the following should be considered as SOURCES ofSECONDARY SPREAD:\u0000xDermal Contact:",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Epidemiological evidence from HF outbreaks has shown that the major route of release to the population is through contact with non-intact skin (e.g., cuts, abrasions) and mucous membranes (e.g., nose, mouth, eyes).\u0000xFomites: Fomites are objects orsurface",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "s capableof transmitting infectious organisms (e.g., viruses). Contaminated medical instruments and waste (e.g., patient excreta, sharps, bedding, PPE) could initiate or amplify existing HF outbreaks.\u0000xSoil/Surfaces: Soils and",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "surfaces may become contaminated with infectious body fluids, excreta, and improperly disposed waste resulting in secondary spread.\u0000xWater/wastewater:While evidence is lacking for primary dissemination of HF viruses via water/wastewater during ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "naturally occurring outbreaks, HF viruses could potentially survive for long periods of time in water/wastewater contaminated with body fluids and excreta. Secondary spread of HF viruses may occur through a wastewater ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "collection/treatment process or lack thereof (e.g., sewer overflows). Appropriately implemented wastewater treatment protocols have been shown to inactivate some (and therefore perhaps all) HF viruses in the water, although surfaces ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "within water/wastewater systems may require separate decontamination procedures. Water-based activities that generate airborne particles, such as firefighting and splashing, may also result in secondary spread; however, ae",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "rosolization of HF viruses has been studied primarily for wastewater scenarios.\u0000xAirborne:In a naturally occurring outbreak, there is no evidence that airborne transmission occurs. However, if HF viruses were intentionally released in aerosols, the extent ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "of initial, physical spread will depend on many factors including agent characteristics, temperature, humidity, prevailing winds (for outdoor release), exposure to sunlight or ventilation patterns (for indoor release).5. Personnel SafetyNOTE:",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Check with the site Health and Safety Officer regarding personal protective equipment (PPE) selection, medical surveillance requirements, and other safety measures included in the site-specific Health and Safety Plan (HASP). PPE selection (Levels A-D), fi",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "rst aid procedures, and personnel decontamination may vary depending on potential exposure route, site conditions, specific job tasks, and release scenario. Responders should always check their own internal procedures (i.e., SOPs), if applicable.The PPE l",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "evels listed below are general suggestions only. The final determination will be made by the Health and Safety Officer on site. For decontamination of workers, see PERSONNEL DECONTAMINATION section below. This PERSONNEL SAFETY section includes medical requ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "irements, first aid procedures, and PPE selection for all hazards that may be present during a response in an HF-virus-contaminated environment (e.g., HF viruses, chemical decontaminants, heat stress). Donning and doffing of PPE must be carefully planned b",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "efore entry into a contaminated area; once in the contaminated area PPE should not be modified. Doffing of PPE, after proceeding through the personnel decontamination line, should be performed slowly and deliberately to reduce the possibility of self-expos",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "ure or cross-contamination. Note that local, state, and federal authorities may impose isolation restrictions for individuals working in an HF-virus-contaminated environment. Please check with pertinent authorities for additional restrictions and monitorin",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "g after responding to a site.5.1. MedicalRequirements:\u0000xPre-deployment:Must be current on annual physical and medical evaluations for respirator use. It may be appropriate ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "to vaccinate workers to Ebola virus, depending on the job hazard analysis as outlined in the HASP. The CDC recommends pre-exposure prophylaxis vaccinationwith rVSV-",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "\u0000=\u0000(\u0000%\u00002\u00009\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000D\u0000G\u0000X\u0000O\u0000W\u0000V\u0000\u0003\u0000\u0000\u0003\u0000\u0014\u0000\u001b\u0000\u0003\u0000\\\u0000H\u0000D\u0000U\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000D\u0000J\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00008\u0000\u0011\u00006\u0000\u0011\u0000\u0003population who are at potential risk of occupational exposure to Zaire ebolavirusspecies.\u0000xDuring Incident:Conduct periodic on-",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "site medical monitoring as necessary per site-specific HASP. Report all signs and symptoms as listed under HEALTH EFFECTS section above, or other general adverse health effects such as ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "fatigue, heat stress, and behavioral health, and treat according to First Aid section below. Monitoring of exposed workers may be required bythe site Health and Safety Officer or public health officials.\u0000xTreatments Available: ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Consult program/agency health and safety officer regarding emergency medical treatment. As of December 2020, there are two treatments approved by the U.S. Food and Drug Administration (FDA) to treat HF virus infections caused by theZaire ebolavirusspecies",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "\u0000\u000f\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000D\u0000G\u0000X\u0000O\u0000W\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000K\u0000L\u0000O\u0000G\u0000U\u0000H\u0000Q\u0000\u0011\u0000\u000f\u0000\u0003\u0000,\u0000Q\u0000P\u0000D\u0000]\u0000H\u0000E\u0000\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000F\u0000R\u0000P\u0000E\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000U\u0000H\u0000H\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "\u0000P\u0000R\u0000Q\u0000R\u0000F\u0000O\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000D\u0000Q\u0000W\u0000L\u0000E\u0000R\u0000G\u0000L\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000(\u0000E\u0000D\u0000Q\u0000J\u0000D\u0000\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000V\u0000L\u0000Q\u0000J\u0000O\u0000H\u0000\u0003\u0000P\u0000R\u0000Q\u0000R\u0000F\u0000O\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000D\u0000Q\u0000W\u0000L\u0000E\u0000R\u0000G\u0000\\\u0000\u0011\u0000\u0003\u0000%\u0000R\u0000W\u0000K\u0000\u0003\u0000P\u0000X\u0000V\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000G\u0000P\u0000L\u0000Q\u0000L\u0000V\u0000W\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000K\u0000H\u0000D\u0000O\u0000W\u0000K\u0000F\u0000D\u0000U\u0000H",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "professionals. For other HF viruses, treatment is supportive care only. Isolation procedures for infected workers should be strictly followed.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2021Update: 2012Page 3of 84. Release ScenariosA naturally occurring outbreak of HF virus is the most likely scenario that would result in environmental contamination.However, an intentional dissemination of HF viruses could occur: 1) by person-to- person transmission by purposefully inserting an infected individual into a community; 2) through artificially produced aerosols or fomites; or 3) through release of an infected reservoir (e.g., non- human primate (monkey), bat, rodent) or vector (e.g., tick, mosquito). Once HF viruses are transmitted person-to-person or from infected vectors, SECONDARY SPREAD is the major concern.CAUTION: Because scientific information on persistence of various HF viruses as a function of droplet/aerosol size and environmental conditions is limited, routes like the following should be considered as SOURCES ofSECONDARY SPREAD:\u0000xDermal Contact: Epidemiological evidence from HF outbreaks has shown that the major route of release to the population is through contact with non-intact skin (e.g., cuts, abrasions) and mucous membranes (e.g., nose, mouth, eyes).\u0000xFomites: Fomites are objects orsurface s capableof transmitting infectious organisms (e.g., viruses). Contaminated medical instruments and waste (e.g., patient excreta, sharps, bedding, PPE) could initiate or amplify existing HF outbreaks.\u0000xSoil/Surfaces: Soils and surfaces may become contaminated with infectious body fluids, excreta, and improperly disposed waste resulting in secondary spread.\u0000xWater/wastewater:While evidence is lacking for primary dissemination of HF viruses via water/wastewater during naturally occurring outbreaks, HF viruses could potentially survive for long periods of time in water/wastewater contaminated with body fluids and excreta. Secondary spread of HF viruses may occur through a wastewater collection/treatment process or lack thereof (e.g., sewer overflows). Appropriately implemented wastewater treatment protocols have been shown to inactivate some (and therefore perhaps all) HF viruses in the water, although surfaces within water/wastewater systems may require separate decontamination procedures. Water-based activities that generate airborne particles, such as firefighting and splashing, may also result in secondary spread; however, ae rosolization of HF viruses has been studied primarily for wastewater scenarios.\u0000xAirborne:In a naturally occurring outbreak, there is no evidence that airborne transmission occurs. However, if HF viruses were intentionally released in aerosols, the extent of initial, physical spread will depend on many factors including agent characteristics, temperature, humidity, prevailing winds (for outdoor release), exposure to sunlight or ventilation patterns (for indoor release).5. Personnel SafetyNOTE: Check with the site Health and Safety Officer regarding personal protective equipment (PPE) selection, medical surveillance requirements, and other safety measures included in the site-specific Health and Safety Plan (HASP). PPE selection (Levels A-D), fi rst aid procedures, and personnel decontamination may vary depending on potential exposure route, site conditions, specific job tasks, and release scenario. Responders should always check their own internal procedures (i.e., SOPs), if applicable.The PPE l evels listed below are general suggestions only. The final determination will be made by the Health and Safety Officer on site. For decontamination of workers, see PERSONNEL DECONTAMINATION section below. This PERSONNEL SAFETY section includes medical requ irements, first aid procedures, and PPE selection for all hazards that may be present during a response in an HF-virus-contaminated environment (e.g., HF viruses, chemical decontaminants, heat stress). Donning and doffing of PPE must be carefully planned b efore entry into a contaminated area; once in the contaminated area PPE should not be modified. Doffing of PPE, after proceeding through the personnel decontamination line, should be performed slowly and deliberately to reduce the possibility of self-expos ure or cross-contamination. Note that local, state, and federal authorities may impose isolation restrictions for individuals working in an HF-virus-contaminated environment. Please check with pertinent authorities for additional restrictions and monitorin g after responding to a site.5.1. MedicalRequirements:\u0000xPre-deployment:Must be current on annual physical and medical evaluations for respirator use. It may be appropriate to vaccinate workers to Ebola virus, depending on the job hazard analysis as outlined in the HASP. The CDC recommends pre-exposure prophylaxis vaccinationwith rVSV- \u0000=\u0000(\u0000%\u00002\u00009\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000D\u0000G\u0000X\u0000O\u0000W\u0000V\u0000\u0003\u0000\u0000\u0003\u0000\u0014\u0000\u001b\u0000\u0003\u0000\\\u0000H\u0000D\u0000U\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000D\u0000J\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00008\u0000\u0011\u00006\u0000\u0011\u0000\u0003population who are at potential risk of occupational exposure to Zaire ebolavirusspecies.\u0000xDuring Incident:Conduct periodic on- site medical monitoring as necessary per site-specific HASP. Report all signs and symptoms as listed under HEALTH EFFECTS section above, or other general adverse health effects such as fatigue, heat stress, and behavioral health, and treat according to First Aid section below. Monitoring of exposed workers may be required bythe site Health and Safety Officer or public health officials.\u0000xTreatments Available: Consult program/agency health and safety officer regarding emergency medical treatment. As of December 2020, there are two treatments approved by the U.S. Food and Drug Administration (FDA) to treat HF virus infections caused by theZaire ebolavirusspecies \u0000\u000f\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000D\u0000G\u0000X\u0000O\u0000W\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000K\u0000L\u0000O\u0000G\u0000U\u0000H\u0000Q\u0000\u0011\u0000\u000f\u0000\u0003\u0000,\u0000Q\u0000P\u0000D\u0000]\u0000H\u0000E\u0000\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000F\u0000R\u0000P\u0000E\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000U\u0000H\u0000H\u0000\u0003 \u0000P\u0000R\u0000Q\u0000R\u0000F\u0000O\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000D\u0000Q\u0000W\u0000L\u0000E\u0000R\u0000G\u0000L\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000(\u0000E\u0000D\u0000Q\u0000J\u0000D\u0000\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000V\u0000L\u0000Q\u0000J\u0000O\u0000H\u0000\u0003\u0000P\u0000R\u0000Q\u0000R\u0000F\u0000O\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000D\u0000Q\u0000W\u0000L\u0000E\u0000R\u0000G\u0000\\\u0000\u0011\u0000\u0003\u0000%\u0000R\u0000W\u0000K\u0000\u0003\u0000P\u0000X\u0000V\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000G\u0000P\u0000L\u0000Q\u0000L\u0000V\u0000W\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000K\u0000H\u0000D\u0000O\u0000W\u0000K\u0000F\u0000D\u0000U\u0000H professionals. For other HF viruses, treatment is supportive care only. Isolation procedures for infected workers should be strictly followed.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 32,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Hemorrhagic Fever (HF) VirusesQRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2021Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2012Page 4of 8\u0000xPost Incident:Off-site monitoring may be required by site Health and Safety Officers or public health officials for a period following last exposure.5.2. First Aid:CAUTION:",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Workers rendering first aid must be properly trained and use appropriate PPE as indicated below to avoid potential exposure.\u0000xDuring Incident:Conduct medical monitoring, use PPE as designated by the HASP, record the PPE levels used, ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "monitor for fever and other signs/symptoms as listed under HEALTH EFFECTS section above and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses.\u0000xPost Incident:",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Continue to monitor for signs/symptoms and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses.5.3. Personal Protective Equipment (PPE):NOTE: PPE ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "recommendations below are for Federal OSC/RPMs and emergency response teams conducting environmental response activities (e.g., environmental cleanup, decontamination, waste management) during and following an environmental release of HF viruses; not for p",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "ublic health or healthcare workers involved in a suspected or confirmed HF viral incident.",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u0000&\u0000R\u0000Q\u0000V\u0000H\u0000T\u0000X\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u00000\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000$\u0000G\u0000Y\u0000L\u0000V\u0000R\u0000U\u0000\\\u0000\u0003\u0000'\u0000L\u0000Y\u0000L\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000\u000b\u0000&\u00000\u0000$\u0000'\u0000\f\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u00003\u00003\u0000(\u0000\u0003\u0000J\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000)\u0000H\u0000G\u0000H\u0000U\u0000D\u0000O\u0000\u0003\u00002\u00006\u0000&\u0000\u0012\u00005\u00003\u00000\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003emergency responseto a biological agent",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": ": for additional details, please reference the most recent version of \u0000(\u00003\u0000$\u0000¶\u0000VCMAD Biological Response Personnel Decontamination Line Standard Operating Procedure (SOP).which can be found at: response.epa.gov/BioResponse_Decontamination_Line_SOP.",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "General Information:Responders should use NIOSH-approved Chemical, Biological, Radiological, Nuclear (CBRN) respirators [Self Contained Breathing Apparatus (SCBA), Full-facepiece Powered Air Purifying Respirator (PAPR), or Full-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "rotective clothing for an ongoing or uncontrolled environmental release of HF viruses. When selecting protective clothing, responders should consider the amount of blood and body fluids (i.e., bloodborne pathogens or BBP exposure hazards), along with any c",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "hemical exposure hazards, and data on fabric performance (i.e., material thickness, fluid resistance) and seam construction. All gloves (other than additional outer task-specific work gloves) must be National Fire Protection Association (NFPA) 1999 complia",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "nt for medical use. Pre-incident training and exercises on the proper use of PPE are recommended.\u0000xWhen anticipated risk of exposure to blood and body fluids is high:Use impermeable, splash-proof and chemical-resistant garments with integral hood and booti",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "es (socks) made of fabric and constructed with seams that meet requirements of ASTM International (formerly American Society for Testing and Materials) Standards: ASTM F1671 (Bloodborne Pathogen Penetration Resistance Test) and ASTM F1670 (Synthetic Blood ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "Penetration Resistance Test). Use a double suit, including an inner suit with integrated hood and booties (socks), for additional protection.\u0000xWhen anticipated risk of exposure to blood and body fluids is low:Use fluid-resistant, splash-proof, and chemical",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "-resistant garments with integrated hood and booties (socks) made of fabric and constructed with seams that meet requirements of ASTM F1670.",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "If CBRN respirators are not used, ensure protection is provided for all hazards (chemical and biological), including those from decontaminants. For use of APRs or PAPRs, only those incorporating canister(s) labeled CBRN are appropriate for use in suspected",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "or known CBRN environments. Canisters for APRs/PAPRs may be adversely affected by an increase in moisture and spray from certain work tasks, including during environmental cleanup and decontamination. Canisters that have been removed from their protective",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "packaging for any unknown period of time prior to use should not be viewed as providing the labeled protection. Canisters being consumed in known or suspected CBRN environments need to be freshly ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000S\u0000U\u0000R\u0000W\u0000H\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000S\u0000D\u0000F\u0000N\u0000D\u0000J\u0000L\u0000Q\u0000J\u0000\u0003\u0000M\u0000X\u0000V\u0000W\u0000\u0003\u0000Srior to donning.PPE Levels for emergency response to a suspected biological agent incident are based on scenario risks from ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "highest to lowest level of protection:\u0000xLEVEL A:NIOSH-approved CBRN full-facepiece SCBA operated in pressure demand mode, a totally encapsulating ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "chemical protective (TECP) outer suit that meets the OSHA Bloodborne Pathogens Standard (29 CFR 1910.1030) and ASTM International Standards: ASTM F1670 and ASTM F1671. The coverall must be coated, have taped seams, and be impermeable to a 1",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "0% bleach solution. The inner suit must have an integral elastic hood, a flap over the zipper, and booties. Also required are chemical-resistant gloves (inner and outer) and chemical-resistant boots. This level is appropriate when: a) the event is uncharac",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "terized and/or uncontrolled, b) the type(s) of agent is unknown, c) the dissemination method is unknown, d) potential for aerosolization (aerosol means infectious particles in the air) of the agent exists, e) other conditions may present a vapor or splash ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "hazard, or f) decontaminating workers in TECP suits (because of potential for re-aerosolization). Per NIOSH guidance, Level A provides the greatest level of skin (TECP), respiratory (SCBA), and eye protection when the agent identity or concentration is unk",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "nown.\u0000xLEVEL B:NIOSH-approved CBRN or non-CBRN full-facepiece SCBA operated in pressure demand mode, a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. T",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "his level is appropriate when: a) aerosol is no longer being generated, b) the agent is no longer a re-aerosolization threat, or c) other conditions may present additional hazards, such as a splash hazard. Per NIOSH guidance, Level B provides the highest l",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "evel of respiratory protection (SCBA) when a lesser level of skin ",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2021Update: 2012Page 4of 8\u0000xPost Incident:Off-site monitoring may be required by site Health and Safety Officers or public health officials for a period following last exposure.5.2. First Aid:CAUTION: Workers rendering first aid must be properly trained and use appropriate PPE as indicated below to avoid potential exposure.\u0000xDuring Incident:Conduct medical monitoring, use PPE as designated by the HASP, record the PPE levels used, monitor for fever and other signs/symptoms as listed under HEALTH EFFECTS section above and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses.\u0000xPost Incident: Continue to monitor for signs/symptoms and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses.5.3. Personal Protective Equipment (PPE):NOTE: PPE recommendations below are for Federal OSC/RPMs and emergency response teams conducting environmental response activities (e.g., environmental cleanup, decontamination, waste management) during and following an environmental release of HF viruses; not for p ublic health or healthcare workers involved in a suspected or confirmed HF viral incident. \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u0000&\u0000R\u0000Q\u0000V\u0000H\u0000T\u0000X\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u00000\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000$\u0000G\u0000Y\u0000L\u0000V\u0000R\u0000U\u0000\\\u0000\u0003\u0000'\u0000L\u0000Y\u0000L\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000 \u0000&\u00000\u0000$\u0000'\u0000 \u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u00003\u00003\u0000(\u0000\u0003\u0000J\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000)\u0000H\u0000G\u0000H\u0000U\u0000D\u0000O\u0000\u0003\u00002\u00006\u0000&\u0000\u0012\u00005\u00003\u00000\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003emergency responseto a biological agent : for additional details, please reference the most recent version of \u0000(\u00003\u0000$\u0000¶\u0000VCMAD Biological Response Personnel Decontamination Line Standard Operating Procedure (SOP).which can be found at: response.epa.gov/BioResponse_Decontamination_Line_SOP. General Information:Responders should use NIOSH-approved Chemical, Biological, Radiological, Nuclear (CBRN) respirators [Self Contained Breathing Apparatus (SCBA), Full-facepiece Powered Air Purifying Respirator (PAPR), or Full- rotective clothing for an ongoing or uncontrolled environmental release of HF viruses. When selecting protective clothing, responders should consider the amount of blood and body fluids (i.e., bloodborne pathogens or BBP exposure hazards), along with any c hemical exposure hazards, and data on fabric performance (i.e., material thickness, fluid resistance) and seam construction. All gloves (other than additional outer task-specific work gloves) must be National Fire Protection Association (NFPA) 1999 complia nt for medical use. Pre-incident training and exercises on the proper use of PPE are recommended.\u0000xWhen anticipated risk of exposure to blood and body fluids is high:Use impermeable, splash-proof and chemical-resistant garments with integral hood and booti es (socks) made of fabric and constructed with seams that meet requirements of ASTM International (formerly American Society for Testing and Materials) Standards: ASTM F1671 (Bloodborne Pathogen Penetration Resistance Test) and ASTM F1670 (Synthetic Blood Penetration Resistance Test). Use a double suit, including an inner suit with integrated hood and booties (socks), for additional protection.\u0000xWhen anticipated risk of exposure to blood and body fluids is low:Use fluid-resistant, splash-proof, and chemical -resistant garments with integrated hood and booties (socks) made of fabric and constructed with seams that meet requirements of ASTM F1670. If CBRN respirators are not used, ensure protection is provided for all hazards (chemical and biological), including those from decontaminants. For use of APRs or PAPRs, only those incorporating canister(s) labeled CBRN are appropriate for use in suspected or known CBRN environments. Canisters for APRs/PAPRs may be adversely affected by an increase in moisture and spray from certain work tasks, including during environmental cleanup and decontamination. Canisters that have been removed from their protective packaging for any unknown period of time prior to use should not be viewed as providing the labeled protection. Canisters being consumed in known or suspected CBRN environments need to be freshly \u0000U\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000S\u0000U\u0000R\u0000W\u0000H\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000S\u0000D\u0000F\u0000N\u0000D\u0000J\u0000L\u0000Q\u0000J\u0000\u0003\u0000M\u0000X\u0000V\u0000W\u0000\u0003\u0000Srior to donning.PPE Levels for emergency response to a suspected biological agent incident are based on scenario risks from highest to lowest level of protection:\u0000xLEVEL A:NIOSH-approved CBRN full-facepiece SCBA operated in pressure demand mode, a totally encapsulating chemical protective (TECP) outer suit that meets the OSHA Bloodborne Pathogens Standard (29 CFR 1910.1030) and ASTM International Standards: ASTM F1670 and ASTM F1671. The coverall must be coated, have taped seams, and be impermeable to a 1 0% bleach solution. The inner suit must have an integral elastic hood, a flap over the zipper, and booties. Also required are chemical-resistant gloves (inner and outer) and chemical-resistant boots. This level is appropriate when: a) the event is uncharac terized and/or uncontrolled, b) the type(s) of agent is unknown, c) the dissemination method is unknown, d) potential for aerosolization (aerosol means infectious particles in the air) of the agent exists, e) other conditions may present a vapor or splash hazard, or f) decontaminating workers in TECP suits (because of potential for re-aerosolization). Per NIOSH guidance, Level A provides the greatest level of skin (TECP), respiratory (SCBA), and eye protection when the agent identity or concentration is unk nown.\u0000xLEVEL B:NIOSH-approved CBRN or non-CBRN full-facepiece SCBA operated in pressure demand mode, a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. T his level is appropriate when: a) aerosol is no longer being generated, b) the agent is no longer a re-aerosolization threat, or c) other conditions may present additional hazards, such as a splash hazard. Per NIOSH guidance, Level B provides the highest l evel of respiratory protection (SCBA) when a lesser level of skin",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 32,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 4,
+      "humanPageNumber": 5,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Hemorrhagic Fever (HF) VirusesQRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2021Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2012Page 5of 8protection is required. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.\u0000xLEVEL C:NIOSH-",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "approved CBRN or non-CBRN APR or tight-fitting PAPR, a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "This level is appropriate when: a) aerosol is no longer being generated, b) the agent is no longer a re-aerosolization threat, c) the agent and hazard level has been defined, or d) small item that can be easily bagged. Per NIOSH guidance, Level C can be",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "selected when the agent identity and concentration are known and the respiratory protection criteria factors for the use of APR or PAPR (i.e., warning properties) are met.Other Workers:PPE recommendations for non-emergency response workers must be devel",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "oped in the HASP for the site-specific scenario. PPE recommendations will vary by job type (e.g., cleanup, decontamination), type of exposure (e.g., airborne or surface/liquid/soil hazard), and additional site hazards (e.g., chemical, physical).NOTE:Down",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "grading PPE levels may be considered only when the identity and concentration of the agent is known and the risks of re-aerosolization or dermal exposure are known to be extremely low. Decisions regarding downgrading of PPE levels are only made at the disc",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "retion of the site Health and Safety Officer after conducting a risk assessment and must be accompanied by on-site monitoring.6. Personnel Decontamination6.1. Personnel Decontamination Procedure:Note:",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Individuals involved in decontamination of personnel must use PPE as indicated in the PERSONNEL SAFETY section above to avoid the potential for exposure. Be sure to cover all abraded skin prior to donning PPE and take care to avoid abrasion of the skin du",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "ring all personnel decontamination operations. Level C PPE with NIOSH-approved CBRN or non-CBRN APR or PAPR is appropriate when decontaminating personnel potentially contaminated from a suspected or confirmed HF viral incident. If a higher level of PPE (A ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "or B) is used, the steps below may need to be modified per the site-specific HASP. \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000Q\u0000H\u0000O\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003procedures for Federal OSC/RPMs for emergency responseto ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "a biological agent: for additional details, please reference the most recent version of \u0000(\u00003\u0000$\u0000¶\u0000VCMAD Biological Response Personnel Decontamination Line Standard Operating Procedure (SOP), which can be found at: ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "response.epa.gov/BioResponse_Decontamination_Line_SOP.WARNING: DO NOT BEGIN ANY WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED(see WASTE MANAGEMENT section below). All waste/trash generated from personnel decontamination procedures ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "must be disposed of as outlined in thesite-specific Waste Management Plan.6.2. Personnel Decontamination Procedures by Zone/Step:Prior to entering the Exclusion Zone, all personnel are required to familiarize themselves with the site-specific personnel",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "decontamination procedures. When using tents or enclosures, a negative air machine(s) should be incorporated into the decon line, pulling HEPA-filtered air from the cleanest areas to areas with contamination (Support Zone to Exclusion Zone). Tents, berms,",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "and collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to treat, replace, and dispose of contaminated materials used during the decon process in case the setup itself c",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "annot be properly deconned/disinfected. In addition, procedures should be implemented to replace necessary spent chemicals and decontamination solutions and containerize for disposal if necessary.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "For additional details on personnel decontamination procedures, see EPA\u0000¶\u0000V\u0000\u0003CMAD Biological Response Personnel Decontamination Line SOP(response.epa.gov/BioResponse_Decontamination_Line_SOP).\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "All waste/trash (e.g., wipes, towels, booties, gloves, inner suits, cartridge filters) generated from personnel decontamination procedures must be disposed of as outlined in the site-specific Waste Management Plan.\u0000xDecon Line Attendant(DLA)w",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "ill verbally direct personnel through each step.Conducted in ExclusionZone (Hot Zone)1Tool and Instrument DropsPlace equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering the contamination reduction corri",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "dor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.Conducted in Contamination ReductionZone (Warm Zone)2Sample DropPlace samples in a container provided for sample decontamination. Care needs to ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "be taken to ensure that workers maintain chain-of-custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Doff Booties and Work or Task PPEAny work or task-specific PPE is to be disposed of in designate",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "d containeror can be placed into a designated bin to be cleaned for reuse. Check for breaches in PPE and identify any gross contamination. Remove any gross contamination with wipes and place into designatedcontainer. Sit on bench and remove booties and p",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "lace in designatedcontainer.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2021Update: 2012Page 5of 8protection is required. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.\u0000xLEVEL C:NIOSH- approved CBRN or non-CBRN APR or tight-fitting PAPR, a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when: a) aerosol is no longer being generated, b) the agent is no longer a re-aerosolization threat, c) the agent and hazard level has been defined, or d) small item that can be easily bagged. Per NIOSH guidance, Level C can be selected when the agent identity and concentration are known and the respiratory protection criteria factors for the use of APR or PAPR (i.e., warning properties) are met.Other Workers:PPE recommendations for non-emergency response workers must be devel oped in the HASP for the site-specific scenario. PPE recommendations will vary by job type (e.g., cleanup, decontamination), type of exposure (e.g., airborne or surface/liquid/soil hazard), and additional site hazards (e.g., chemical, physical).NOTE:Down grading PPE levels may be considered only when the identity and concentration of the agent is known and the risks of re-aerosolization or dermal exposure are known to be extremely low. Decisions regarding downgrading of PPE levels are only made at the disc retion of the site Health and Safety Officer after conducting a risk assessment and must be accompanied by on-site monitoring.6. Personnel Decontamination6.1. Personnel Decontamination Procedure:Note: Individuals involved in decontamination of personnel must use PPE as indicated in the PERSONNEL SAFETY section above to avoid the potential for exposure. Be sure to cover all abraded skin prior to donning PPE and take care to avoid abrasion of the skin du ring all personnel decontamination operations. Level C PPE with NIOSH-approved CBRN or non-CBRN APR or PAPR is appropriate when decontaminating personnel potentially contaminated from a suspected or confirmed HF viral incident. If a higher level of PPE (A or B) is used, the steps below may need to be modified per the site-specific HASP. \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000Q\u0000H\u0000O\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003procedures for Federal OSC/RPMs for emergency responseto a biological agent: for additional details, please reference the most recent version of \u0000(\u00003\u0000$\u0000¶\u0000VCMAD Biological Response Personnel Decontamination Line Standard Operating Procedure (SOP), which can be found at: response.epa.gov/BioResponse_Decontamination_Line_SOP.WARNING: DO NOT BEGIN ANY WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED(see WASTE MANAGEMENT section below). All waste/trash generated from personnel decontamination procedures must be disposed of as outlined in thesite-specific Waste Management Plan.6.2. Personnel Decontamination Procedures by Zone/Step:Prior to entering the Exclusion Zone, all personnel are required to familiarize themselves with the site-specific personnel decontamination procedures. When using tents or enclosures, a negative air machine(s) should be incorporated into the decon line, pulling HEPA-filtered air from the cleanest areas to areas with contamination (Support Zone to Exclusion Zone). Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to treat, replace, and dispose of contaminated materials used during the decon process in case the setup itself c annot be properly deconned/disinfected. In addition, procedures should be implemented to replace necessary spent chemicals and decontamination solutions and containerize for disposal if necessary.\u0000x For additional details on personnel decontamination procedures, see EPA\u0000¶\u0000V\u0000\u0003CMAD Biological Response Personnel Decontamination Line SOP(response.epa.gov/BioResponse_Decontamination_Line_SOP).\u0000x All waste/trash (e.g., wipes, towels, booties, gloves, inner suits, cartridge filters) generated from personnel decontamination procedures must be disposed of as outlined in the site-specific Waste Management Plan.\u0000xDecon Line Attendant(DLA)w ill verbally direct personnel through each step.Conducted in ExclusionZone (Hot Zone)1Tool and Instrument DropsPlace equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering the contamination reduction corri dor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.Conducted in Contamination ReductionZone (Warm Zone)2Sample DropPlace samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Doff Booties and Work or Task PPEAny work or task-specific PPE is to be disposed of in designate d containeror can be placed into a designated bin to be cleaned for reuse. Check for breaches in PPE and identify any gross contamination. Remove any gross contamination with wipes and place into designatedcontainer. Sit on bench and remove booties and p lace in designatedcontainer.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 28,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 5,
+      "humanPageNumber": 6,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Hemorrhagic Fever (HF) VirusesQRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2021Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2012Page 6of 84Wet Operations \u0000±Outer Boot and Glove Wash (1stand 2ndGross Decon Wash)The purpose of this step is to remove gross contamination, such as dirt or grime from boots and gloves. If gross contamination is not visible, this s",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "tep may be skipped. Wash outer boots by stepping in decon basins with designated decontamination solutions and then outer gloves using designated decontamination solutions in glove wash basin as specified in HASP (1:10 diluted bleach). 5Wet Operations \u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Full Decon of Gloves, Boots, PAPR,and Outer SuitStep from the 1st and 2nd Gross Decontamination Wash into a contained area (large tub or basin) at this station in the decon line to wash boots and gloves. Keep PAPR and masks on face and body. Turn off ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "PAPR and cover the outside of the cartridge loosely to avoid saturation with water. Washall outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "solution. Use fine mist tip on sprayer to prevent cross contamination. Start with decontaminating boots and gloves, then work on suit fromthe top down, including PAPR. Decontamination personnel should ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "conduct this step. Care should be taken to ensure all areas are wetted, including around zipper, arms, front torso, and any other area that could have been contaminated. Used decontamination solution and aqueous ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "waste should be contained, collected, and disposed of properly.6Wet Operations \u0000±Doff Outer Boots, Gloves,and Outer SuitWhile sitting on a stool, remove outer boots and outer gloves. Undo the PAPR belt and hold in hand. While touch",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "ing only the inside of suit, remove outer suit by carefully rolling suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontamination personnel to assist either by hol",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "ding PAPR unit or assisting in suit removal.7Dry Operations \u0000±Inner Suit Wipe and RemovalConducted by DLA \u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "\u0000:\u0000K\u0000L\u0000O\u0000H\u0000\u0003\u0000W\u0000R\u0000X\u0000F\u0000K\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000O\u0000\\\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000L\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u000f\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000E\u0000\\\u0000\u0003carefully rolling it inside out while progressing slowly, using a downward motion, from the hood ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "head/shoulders area, to the hands and sleeves, all the way down to the feet. Wipe down the zipper, hood ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "\u0000Q\u0000H\u0000D\u0000U\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000V\u0000N\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000X\u0000I\u0000I\u0000V\u0000\u0003\u0000\u000b\u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000L\u0000Q\u0000\u0003\u0000\u0019\u0000\u0003\u0000L\u0000Q\u0000F\u0000K\u0000H\u0000V\u0000\u0003\u0000D\u0000E\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000U\u0000L\u0000V\u0000W\u0000\f\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000D\u0000\u0003\u0000S\u0000D\u0000S\u0000H\u0000U\u0000\u0003towel wetted with",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "new decontamination solution. Step out of suit while holding PAPR with mask on and place inner suit in designated container.8PAPR and Mask RemovalPut on a new pair of gloves over the inner gloves (provided by DLA). With new gloves on, doff PAPR ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "mask and hose by looking downward and pulling the mask down from the top of head and away from chin. Remove cartridge filters and place intoadesignated container. Put mask and hose into designated containers for cleaning. Decontamination personnel will c",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "lean each mask and PAPR assembly prior to return to service. 9Inner Glove Removal,andHand and Face WashRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container. Wash ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "hands and then face with soap and warm water after all PPE has been doffed and prior to entering the personal shower.Conducted inSupportZone (Cold Zone)10Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "of 5 minutes and change into clean clothes. If a personal shower is not immediately available, at the minimum, hands and face should be washed thoroughly.11Medical MonitoringReport to the medical monitoring station for post-entry monitoring and if nec",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "essary, meet with appropriate personnel for debriefing.Emergency Egress Corridor:Establish an emergency egress line to use for quickly decontaminating personnel with medical emergencies while in the Exclusion Zone. Depending on the severity of the injur",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "y or illness, personnel may have to be quickly gross or dry deconned only and have PPE and clothing removed. Prior to receiving treatment from emergency medical technicians (EMT) or being transported to a hospital, personnel must be decontaminated to minim",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "ize potential exposure to others. The clothing of the person being transported will comply with the ambulance/EMT requirements.Note:All work in the Exclusion Zone must come to a stop until the Emergency Egress Corridor is clear and reset.7. ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Environmental SamplingEnvironmental sampling for HF viruses is not recommended due to the lack of evaluated sampling procedures and unjustified risk of exposure to the sample collection team and laboratorians.In the absence of sample collection ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "procedures, multiple lines of evidence should be used to determine clearance criteria.Responders should coordinate with public health officials to gather clinical information regarding diagnosis of individuals from the area of concern. Contact the EPA/HQ-",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "EOC at 202-564-3850 for consultation on environmental sampling and analysis. Contact the CDC/HQ-EOC at 770-488-7100 for clinical information during a public health emergency.8. Environmental Decontamination/Cleanup8.1. Decontamination/Cleanup Planning:",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "CAUTION: If negative air machines (NAMs) are used during the decontamination process, ensure they are equipped with a high-efficiency particulate air (HEPA) filter that is properly sealed within the NAM so that all air passes through the filter.",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "WARNING: DO NOT BEGIN FULL-SCALE DECONTAMINATION WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED.(See WASTE MANAGEMENT section below).",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2021Update: 2012Page 6of 84Wet Operations \u0000±Outer Boot and Glove Wash (1stand 2ndGross Decon Wash)The purpose of this step is to remove gross contamination, such as dirt or grime from boots and gloves. If gross contamination is not visible, this s tep may be skipped. Wash outer boots by stepping in decon basins with designated decontamination solutions and then outer gloves using designated decontamination solutions in glove wash basin as specified in HASP (1:10 diluted bleach). 5Wet Operations \u0000± Full Decon of Gloves, Boots, PAPR,and Outer SuitStep from the 1st and 2nd Gross Decontamination Wash into a contained area (large tub or basin) at this station in the decon line to wash boots and gloves. Keep PAPR and masks on face and body. Turn off PAPR and cover the outside of the cartridge loosely to avoid saturation with water. Washall outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Use fine mist tip on sprayer to prevent cross contamination. Start with decontaminating boots and gloves, then work on suit fromthe top down, including PAPR. Decontamination personnel should conduct this step. Care should be taken to ensure all areas are wetted, including around zipper, arms, front torso, and any other area that could have been contaminated. Used decontamination solution and aqueous waste should be contained, collected, and disposed of properly.6Wet Operations \u0000±Doff Outer Boots, Gloves,and Outer SuitWhile sitting on a stool, remove outer boots and outer gloves. Undo the PAPR belt and hold in hand. While touch ing only the inside of suit, remove outer suit by carefully rolling suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontamination personnel to assist either by hol ding PAPR unit or assisting in suit removal.7Dry Operations \u0000±Inner Suit Wipe and RemovalConducted by DLA \u0000± \u0000:\u0000K\u0000L\u0000O\u0000H\u0000\u0003\u0000W\u0000R\u0000X\u0000F\u0000K\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000O\u0000\\\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000L\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u000f\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000E\u0000\\\u0000\u0003carefully rolling it inside out while progressing slowly, using a downward motion, from the hood head/shoulders area, to the hands and sleeves, all the way down to the feet. Wipe down the zipper, hood \u0000Q\u0000H\u0000D\u0000U\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000V\u0000N\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000X\u0000I\u0000I\u0000V\u0000\u0003\u0000 \u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000L\u0000Q\u0000\u0003\u0000\u0019\u0000\u0003\u0000L\u0000Q\u0000F\u0000K\u0000H\u0000V\u0000\u0003\u0000D\u0000E\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000U\u0000L\u0000V\u0000W\u0000 \u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000D\u0000\u0003\u0000S\u0000D\u0000S\u0000H\u0000U\u0000\u0003towel wetted with new decontamination solution. Step out of suit while holding PAPR with mask on and place inner suit in designated container.8PAPR and Mask RemovalPut on a new pair of gloves over the inner gloves (provided by DLA). With new gloves on, doff PAPR mask and hose by looking downward and pulling the mask down from the top of head and away from chin. Remove cartridge filters and place intoadesignated container. Put mask and hose into designated containers for cleaning. Decontamination personnel will c lean each mask and PAPR assembly prior to return to service. 9Inner Glove Removal,andHand and Face WashRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container. Wash hands and then face with soap and warm water after all PPE has been doffed and prior to entering the personal shower.Conducted inSupportZone (Cold Zone)10Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available, at the minimum, hands and face should be washed thoroughly.11Medical MonitoringReport to the medical monitoring station for post-entry monitoring and if nec essary, meet with appropriate personnel for debriefing.Emergency Egress Corridor:Establish an emergency egress line to use for quickly decontaminating personnel with medical emergencies while in the Exclusion Zone. Depending on the severity of the injur y or illness, personnel may have to be quickly gross or dry deconned only and have PPE and clothing removed. Prior to receiving treatment from emergency medical technicians (EMT) or being transported to a hospital, personnel must be decontaminated to minim ize potential exposure to others. The clothing of the person being transported will comply with the ambulance/EMT requirements.Note:All work in the Exclusion Zone must come to a stop until the Emergency Egress Corridor is clear and reset.7. Environmental SamplingEnvironmental sampling for HF viruses is not recommended due to the lack of evaluated sampling procedures and unjustified risk of exposure to the sample collection team and laboratorians.In the absence of sample collection procedures, multiple lines of evidence should be used to determine clearance criteria.Responders should coordinate with public health officials to gather clinical information regarding diagnosis of individuals from the area of concern. Contact the EPA/HQ- EOC at 202-564-3850 for consultation on environmental sampling and analysis. Contact the CDC/HQ-EOC at 770-488-7100 for clinical information during a public health emergency.8. Environmental Decontamination/Cleanup8.1. Decontamination/Cleanup Planning: CAUTION: If negative air machines (NAMs) are used during the decontamination process, ensure they are equipped with a high-efficiency particulate air (HEPA) filter that is properly sealed within the NAM so that all air passes through the filter. WARNING: DO NOT BEGIN FULL-SCALE DECONTAMINATION WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED.(See WASTE MANAGEMENT section below).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 30,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 6,
+      "humanPageNumber": 7,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Hemorrhagic Fever (HF) VirusesQRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2021Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2012Page 7of 88.1. Decontamination/Cleanup Planning:A site-",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000S\u0000U\u0000L\u0000R\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000D\u0000F\u0000W\u0000L\u0000Y\u0000L\u0000W\u0000L\u0000H\u0000V\u0000\u0011\u0000\u0003\u00007\u0000K\u0000H\u0000\u0003plan should consider:\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Nature of contamination,including physical properties, and how it entered the contaminated area of facilityor area;\u0000xExtent of contamination, including the amount and possible pathways that have or could have spread the virus \u0000±it is ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "advisable to isolate the contaminated area; and\u0000xObjectivesof decontamination, including decontamination of critical items for re-use and the treatment, removal, or packaging of other items for disposal.",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "WARNING: DECONTAMINATION SOLUTIONS SHOULD NOT BE DEPLOYED USING A HIGH-PRESSURE SPRAYER.8.2. Decontamination Methods:Non-Porous Surfaces: In general,prior to the application of decontaminant, clean up as much gross contamination (e.g., blood ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "and body fluids)as possible with soapy water. For visible contamination, cover the area with absorbent material and apply a suitable decontaminant (see 8.3.Decontaminantsbelow) onto the material to saturate the area, and allow an ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "appropriate contact time prior to removing contamination. Once visible contamination is removed, apply decontaminant to thearea again and maintain an appropriate contact time. When using EPA-registered disinfectants or sporicides ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "(discussed below), follow the label directions related to application, contact times, etc. For decontamination solutions, start at the perimeter andwet towards the center of the contaminated area.Porous Surfaces:",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "In general, for porous materials that are non-essential (e.g., carpet, upholstered furniture, mattresses, bedding) and grossly contaminated with body fluids, it is highly recommended to remove and treat these items as waste. ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "For porous materials that cannot be disposed of, remove as much gross contamination as possible with soapy water. Apply a suitable decontaminant (see 8.3.Decontaminantsbelow) onto the material to saturate the area and allow an ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "appropriate contact time prior to removing contamination. Once visible contamination is removed, apply decontaminant to the area again and maintain an appropriate contact time. When using EPA-registered disinfectants or sporicides (discussed below",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "), follow the label directions related to application, contact times, etc. Note, however, that many EPA-registered disinfectants and sporicides are for use only on hard, non-porous surfaces, and that their use on porous surfaces may require a Federal Insec",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "ticide, Fungicide, and Rodenticide Act (FIFRA) exemption (discussed below). Such an exemption would specify decontaminant application amounts, contact times, etc.8.3. Decontaminants:For a list of EPA-",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "\u0000U\u0000H\u0000J\u0000L\u0000V\u0000W\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000L\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000D\u0000Q\u0000W\u0000V\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000P\u0000H\u0000H\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000F\u0000U\u0000L\u0000W\u0000H\u0000U\u0000L\u0000D\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000X\u0000V\u0000H\u0000\u0003\u0000D\u0000J\u0000D\u0000L\u0000Q\u0000V\u0000W\u0000\u0003\u0000(\u0000E\u0000R\u0000O\u0000D\u0000\u0003\u0000Y\u0000L\u0000U\u0000X\u0000V\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000K\u0000D\u0000U\u0000G\u0000\u000f\u0000\u0003\u0000Q\u0000R\u0000Q-porous surfaces (List L), refer to https://www.epa.gov/pesticide-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "registration/list-l-disinfectants-use-against-ebola-virus. This list is based on hospital disinfectants with an EPA label claim against non-enveloped viruses. These disinfectants are expected to be effective against all HF viruses",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": ", not just Ebola virus. Namely, HF viruses are enveloped, and are expected to be less resistant to chemical inactivation than a non-enveloped virus. Note it is necessary to follow the specific use instructions on the label for each listed disinfectant for ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "the disinfectant to be effective for the application specified on the label. Uses for applications not specified on the label may result in different disinfection efficacy.Section 18 of FIFRA authorizes EPA to allow certain types of exemptions for unregi",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "stered uses of pesticides to address emergency conditions. It is conceivable that such an exemption may be needed to allow certain decontaminants to be used against HF viruses. Contact the EPA/HQ-EOC at 202-564-3850 for information on FIFRA Section 18 exem",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "ptions.In addition to the disinfectants registered by EPA for non-enveloped viruses, HF viruses are expected to be inactivated by decontaminants that have been shown to be effective against bacterial spores, such as spores from Bacillus anthracisor Clos",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "tridium difficile if applied as recommended by the manufacturer. This is because HF viruses are enveloped and are expected to be much less resistant to chemical inactivation than bacterial spores. The use of these sporicidal decontaminants may require a FI",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "FRA Section 18 exemption. Some examples of decontaminants or chemistries that have been demonstrated against bacterial spores are:\u0000xpH-amended bleach solution (i.e., 1 part household bleach, 1 part vinegar,and 8 parts water).\u0000xPeracetic acid.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Hydrogen peroxide vapor.\u0000xAny other decontaminant that is approved or registered for B. anthracisspores, or has been tested and found to be effective against B. anthracisspores.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Any antimicrobial product registered with EPA as a sterilizer, i.e., for inactivation of bacterial spores: https://www.epa.gov/pesticide-registration/list-antimicrobial-products-registered-epa-sterilizers.",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "\u00009\u0000H\u0000U\u0000L\u0000¿\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000Dtion: Site-and situation-specific. Please contacttheEPA/HQ-EOC at 202-564-3850 for further assistance.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2021Update: 2012Page 7of 88.1. Decontamination/Cleanup Planning:A site- \u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000S\u0000U\u0000L\u0000R\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000D\u0000F\u0000W\u0000L\u0000Y\u0000L\u0000W\u0000L\u0000H\u0000V\u0000\u0011\u0000\u0003\u00007\u0000K\u0000H\u0000\u0003plan should consider:\u0000x Nature of contamination,including physical properties, and how it entered the contaminated area of facilityor area;\u0000xExtent of contamination, including the amount and possible pathways that have or could have spread the virus \u0000±it is advisable to isolate the contaminated area; and\u0000xObjectivesof decontamination, including decontamination of critical items for re-use and the treatment, removal, or packaging of other items for disposal. WARNING: DECONTAMINATION SOLUTIONS SHOULD NOT BE DEPLOYED USING A HIGH-PRESSURE SPRAYER.8.2. Decontamination Methods:Non-Porous Surfaces: In general,prior to the application of decontaminant, clean up as much gross contamination (e.g., blood and body fluids)as possible with soapy water. For visible contamination, cover the area with absorbent material and apply a suitable decontaminant (see 8.3.Decontaminantsbelow) onto the material to saturate the area, and allow an appropriate contact time prior to removing contamination. Once visible contamination is removed, apply decontaminant to thearea again and maintain an appropriate contact time. When using EPA-registered disinfectants or sporicides (discussed below), follow the label directions related to application, contact times, etc. For decontamination solutions, start at the perimeter andwet towards the center of the contaminated area.Porous Surfaces: In general, for porous materials that are non-essential (e.g., carpet, upholstered furniture, mattresses, bedding) and grossly contaminated with body fluids, it is highly recommended to remove and treat these items as waste. For porous materials that cannot be disposed of, remove as much gross contamination as possible with soapy water. Apply a suitable decontaminant (see 8.3.Decontaminantsbelow) onto the material to saturate the area and allow an appropriate contact time prior to removing contamination. Once visible contamination is removed, apply decontaminant to the area again and maintain an appropriate contact time. When using EPA-registered disinfectants or sporicides (discussed below ), follow the label directions related to application, contact times, etc. Note, however, that many EPA-registered disinfectants and sporicides are for use only on hard, non-porous surfaces, and that their use on porous surfaces may require a Federal Insec ticide, Fungicide, and Rodenticide Act (FIFRA) exemption (discussed below). Such an exemption would specify decontaminant application amounts, contact times, etc.8.3. Decontaminants:For a list of EPA- \u0000U\u0000H\u0000J\u0000L\u0000V\u0000W\u0000H\u0000U\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000L\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000D\u0000Q\u0000W\u0000V\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000P\u0000H\u0000H\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000F\u0000U\u0000L\u0000W\u0000H\u0000U\u0000L\u0000D\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000X\u0000V\u0000H\u0000\u0003\u0000D\u0000J\u0000D\u0000L\u0000Q\u0000V\u0000W\u0000\u0003\u0000(\u0000E\u0000R\u0000O\u0000D\u0000\u0003\u0000Y\u0000L\u0000U\u0000X\u0000V\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000K\u0000D\u0000U\u0000G\u0000\u000f\u0000\u0003\u0000Q\u0000R\u0000Q-porous surfaces (List L), refer to https://www.epa.gov/pesticide- registration/list-l-disinfectants-use-against-ebola-virus. This list is based on hospital disinfectants with an EPA label claim against non-enveloped viruses. These disinfectants are expected to be effective against all HF viruses , not just Ebola virus. Namely, HF viruses are enveloped, and are expected to be less resistant to chemical inactivation than a non-enveloped virus. Note it is necessary to follow the specific use instructions on the label for each listed disinfectant for the disinfectant to be effective for the application specified on the label. Uses for applications not specified on the label may result in different disinfection efficacy.Section 18 of FIFRA authorizes EPA to allow certain types of exemptions for unregi stered uses of pesticides to address emergency conditions. It is conceivable that such an exemption may be needed to allow certain decontaminants to be used against HF viruses. Contact the EPA/HQ-EOC at 202-564-3850 for information on FIFRA Section 18 exem ptions.In addition to the disinfectants registered by EPA for non-enveloped viruses, HF viruses are expected to be inactivated by decontaminants that have been shown to be effective against bacterial spores, such as spores from Bacillus anthracisor Clos tridium difficile if applied as recommended by the manufacturer. This is because HF viruses are enveloped and are expected to be much less resistant to chemical inactivation than bacterial spores. The use of these sporicidal decontaminants may require a FI FRA Section 18 exemption. Some examples of decontaminants or chemistries that have been demonstrated against bacterial spores are:\u0000xpH-amended bleach solution (i.e., 1 part household bleach, 1 part vinegar,and 8 parts water).\u0000xPeracetic acid.\u0000x Hydrogen peroxide vapor.\u0000xAny other decontaminant that is approved or registered for B. anthracisspores, or has been tested and found to be effective against B. anthracisspores.\u0000x Any antimicrobial product registered with EPA as a sterilizer, i.e., for inactivation of bacterial spores: https://www.epa.gov/pesticide-registration/list-antimicrobial-products-registered-epa-sterilizers. \u00009\u0000H\u0000U\u0000L\u0000¿\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000Dtion: Site-and situation-specific. Please contacttheEPA/HQ-EOC at 202-564-3850 for further assistance.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 29,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 7,
+      "humanPageNumber": 8,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Hemorrhagic Fever (HF) VirusesQRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "September",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2021Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2012Page 8of 89. Waste Managementfor Environmental Contamination from Biological Incident9.1. Transportation:Federal Hazardous Materials Regulations (HMR) for transporting hazardous materials, including Division 6.2 Infectious ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Substances, and procedures for exemptions are specified in www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. There is no federal regulatory framework that addresses management of waste ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "from biological contamination incidents. Waste management decision making is done at the state level. Detailed state regulations can be found at www.envcap.org/. Current resources on packaging, labeling,and shipping are available at ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "www.phmsa.dot.gov/hazmat. All of the examples of more hazardous HF viruses listed above under the AGENT CHARACTERISTICS section are classified as DOT/HMR Category A infectious substances (also classified as UN2814, Infectious substances, affecting humans).",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "The specific requirements for authorized packaging and materials for transporting a Category A infectious substanceare listed in 49 CFR §173.196. In addition, each packaging must meet specific test standards in accordance with 49 CFR §178.609. See the gu",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "idance in \"Managing Solid Waste Contaminated with a Category A Infectious Substance (August 2019), which can be found at: https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/transporting-infectious-substances/6821/cat-waste-planning-guidance-final-",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "2019-08.pdf.9.2. Waste Management:WARNING: DEVELOP A COMPREHENSIVE WASTE MANAGEMENT PLAN PRIOR TO ANY DECONTAMINATION/CLEANUP WORK.Waste generated from assessment and cleanup activities should be incinerated, autoclaved, or chemically disinfected (see ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "ENVIRONMENTAL DECONTAMINATION/CLEANUP section above) to be sure the viral agent(s) were inactivated. Complex aqueous matrices, such as contaminated wastewater or decontamination effluents, may have significant oxidant ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "demand, requiring additional chemical disinfectant. Porous materials present challenges to waste treatment processes. Waste disposal for agent-contaminated wastes generated from the decontamination activities will be problematic. Disposal ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "of aqueous waste, even if chemically treated, via discharge to sanitary sewer may require consultation with the respective authorities. On-site treatment (e.g., autoclaving) prior to transport for off-site disposal may ease the requirements for ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "special transportation permits. Landfills willing to take these wastes may be limited due to state requirements. It may be prohibitively expensive or impractical to dispose of infectious wastes through incineration due to a limited number of ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "medical/infectious waste incinerators nationally. Assuming that agent-contaminated wastewater is accepted by local wastewater facilities, even if pre-treated, it may be difficult to dispose of resulting sludge.",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Although testing may be desired to satisfy waste acceptance criteria specified by state regulators and/or a treatment/disposal facility, there are very limited options for measuring HF viruses in common waste matrices, and other ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "approaches (e.g., proof of compliance with minimum operating conditions of on-site treatment equipment) could be used to specify waste acceptance criteria. All waste disposal options, and waste acceptance criteria,should be investigated as ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "early into the response process as possible.Transportation of the agent-contaminated wastes from the site to the landfill or incinerator may be problematic as well. First, agreements must be reached between the waste sender and ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "acceptor BEFORE transport, followed by timely public notification of the transport and disposal phases. Transportation of hazardous waste may cross several states and localities,which may have requirement that exceed Federal regulations.EPA has developed",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "an online tool to help communities and facilities develop pre-incident waste management plans. This tool can be found athttps://wasteplan.epa.gov/.EPA has developed I-WASTE, a web-based tool that contains links",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "to waste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility. Access to this decision support tool requires p",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "re-registration (www2.ergweb.com/bdrtool/login.asp).Also see the guidance in\u0000³Managing Solid Waste Contaminated with a Category A Infectious Substance\u0000´(August 2019):https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/transporting-infectious-",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "substances/6821/cat-waste-planning-guidance-final-2019-08.pdf.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2021Update: 2012Page 8of 89. Waste Managementfor Environmental Contamination from Biological Incident9.1. Transportation:Federal Hazardous Materials Regulations (HMR) for transporting hazardous materials, including Division 6.2 Infectious Substances, and procedures for exemptions are specified in www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. There is no federal regulatory framework that addresses management of waste from biological contamination incidents. Waste management decision making is done at the state level. Detailed state regulations can be found at www.envcap.org/. Current resources on packaging, labeling,and shipping are available at www.phmsa.dot.gov/hazmat. All of the examples of more hazardous HF viruses listed above under the AGENT CHARACTERISTICS section are classified as DOT/HMR Category A infectious substances (also classified as UN2814, Infectious substances, affecting humans). The specific requirements for authorized packaging and materials for transporting a Category A infectious substanceare listed in 49 CFR §173.196. In addition, each packaging must meet specific test standards in accordance with 49 CFR §178.609. See the gu idance in \"Managing Solid Waste Contaminated with a Category A Infectious Substance (August 2019), which can be found at: https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/transporting-infectious-substances/6821/cat-waste-planning-guidance-final- 2019-08.pdf.9.2. Waste Management:WARNING: DEVELOP A COMPREHENSIVE WASTE MANAGEMENT PLAN PRIOR TO ANY DECONTAMINATION/CLEANUP WORK.Waste generated from assessment and cleanup activities should be incinerated, autoclaved, or chemically disinfected (see ENVIRONMENTAL DECONTAMINATION/CLEANUP section above) to be sure the viral agent(s) were inactivated. Complex aqueous matrices, such as contaminated wastewater or decontamination effluents, may have significant oxidant demand, requiring additional chemical disinfectant. Porous materials present challenges to waste treatment processes. Waste disposal for agent-contaminated wastes generated from the decontamination activities will be problematic. Disposal of aqueous waste, even if chemically treated, via discharge to sanitary sewer may require consultation with the respective authorities. On-site treatment (e.g., autoclaving) prior to transport for off-site disposal may ease the requirements for special transportation permits. Landfills willing to take these wastes may be limited due to state requirements. It may be prohibitively expensive or impractical to dispose of infectious wastes through incineration due to a limited number of medical/infectious waste incinerators nationally. Assuming that agent-contaminated wastewater is accepted by local wastewater facilities, even if pre-treated, it may be difficult to dispose of resulting sludge. Although testing may be desired to satisfy waste acceptance criteria specified by state regulators and/or a treatment/disposal facility, there are very limited options for measuring HF viruses in common waste matrices, and other approaches (e.g., proof of compliance with minimum operating conditions of on-site treatment equipment) could be used to specify waste acceptance criteria. All waste disposal options, and waste acceptance criteria,should be investigated as early into the response process as possible.Transportation of the agent-contaminated wastes from the site to the landfill or incinerator may be problematic as well. First, agreements must be reached between the waste sender and acceptor BEFORE transport, followed by timely public notification of the transport and disposal phases. Transportation of hazardous waste may cross several states and localities,which may have requirement that exceed Federal regulations.EPA has developed an online tool to help communities and facilities develop pre-incident waste management plans. This tool can be found athttps://wasteplan.epa.gov/.EPA has developed I-WASTE, a web-based tool that contains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility. Access to this decision support tool requires p re-registration (www2.ergweb.com/bdrtool/login.asp).Also see the guidance in\u0000³Managing Solid Waste Contaminated with a Category A Infectious Substance\u0000´(August 2019):https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/transporting-infectious- substances/6821/cat-waste-planning-guidance-final-2019-08.pdf.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 25,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

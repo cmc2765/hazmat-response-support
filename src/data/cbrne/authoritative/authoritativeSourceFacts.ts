@@ -5,6 +5,7 @@ import { CBRNE_CANONICAL_RECORD_CANDIDATES } from "./canonicalRecordCandidates.j
 import { findCanonicalCbrneIdentity } from "./canonicalIdentities.js";
 import { RADIONUCLIDE_PHYSICS_RECORDS } from "./radionuclidePhysics.js";
 import { findSourceArtifact } from "./sourceArtifacts.js";
+import resolvedPdfFacts from "./generated-resolved-pdf-facts.json";
 
 const IMPORTED_AT = "2026-09-10T00:00:00.000Z";
 
@@ -309,6 +310,8 @@ const coordinationFacts: AuthoritativeSourceFact[] = [
   },
 ];
 
+const semanticPdfFacts = (resolvedPdfFacts as unknown as { facts?: AuthoritativeSourceFact[] }).facts ?? [];
+
 function preserveSourceRepresentation(fact: AuthoritativeSourceFact): AuthoritativeSourceFact {
   const artifact = findSourceArtifact(fact.sourceArtifactId);
   const physics = fact.factId.startsWith("nndc-half-life-")
@@ -320,16 +323,16 @@ function preserveSourceRepresentation(fact: AuthoritativeSourceFact): Authoritat
   return {
     ...fact,
     sourceArtifactSha256: artifact?.sha256 ?? null,
-    valueOriginal: fact.value,
-    unitsOriginal: fact.units,
-    valueNormalized: physics?.halfLifeSeconds ?? fact.value,
-    unitsNormalized: physics?.halfLifeSeconds === null || physics?.halfLifeSeconds === undefined ? fact.units : "s",
+    valueOriginal: fact.valueOriginal ?? fact.value,
+    unitsOriginal: fact.unitsOriginal ?? fact.units,
+    valueNormalized: physics?.halfLifeSeconds ?? fact.valueNormalized ?? fact.value,
+    unitsNormalized: physics?.halfLifeSeconds === null || physics?.halfLifeSeconds === undefined ? fact.unitsNormalized ?? fact.units : "s",
     normalizationMethod: physics?.halfLifeSeconds === null || physics?.halfLifeSeconds === undefined
-      ? "SOURCE_VALUE_PRESERVED"
+      ? fact.normalizationMethod ?? "SOURCE_VALUE_PRESERVED"
       : "ENSDF half-life converted to seconds using the evaluated source unit",
     sourceLocator,
-    applicability: null,
-    context: null,
+    applicability: fact.applicability ?? null,
+    context: fact.context ?? null,
   };
 }
 
@@ -338,6 +341,7 @@ export const CBRNE_AUTHORITATIVE_SOURCE_FACTS: readonly AuthoritativeSourceFact[
   ...candidateIdentityFacts,
   ...radionuclideFacts,
   ...projectedFacts,
+  ...semanticPdfFacts,
   ...coordinationFacts,
 ].map(preserveSourceRepresentation));
 

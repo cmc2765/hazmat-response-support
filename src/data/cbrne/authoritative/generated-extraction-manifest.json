@@ -101,7 +101,7 @@
     {
       "sourceArtifactId": "nrt-qrg-chemical-sarin-gb",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "6ace5b6f0c75500c677dae1debf1b8e4ae16de7b29472e2c13f0b0b588d5b9e0",
@@ -118,23 +118,22 @@
       "factsProduced": [
         "authoritative-identity-sarin-gb"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-sarin-gb.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-tabun-ga",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "9527ed1680deda795c786c3a5b78a97bd160974f5654c8c15837c8d12a467280",
@@ -151,23 +150,22 @@
       "factsProduced": [
         "authoritative-identity-tabun-ga"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-tabun-ga.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-soman-gd",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "ab2b411956fe0a3c7f8be93ce13887b04780b466802817e68d93015ca1392c3f",
@@ -184,23 +182,22 @@
       "factsProduced": [
         "authoritative-identity-soman-gd"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-soman-gd.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-cyclosarin-gf",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "44a9f3206ea8321271cab4db0547b269eee8dad4ea0cce95b3cfe80fc4fa2278",
@@ -217,23 +214,22 @@
       "factsProduced": [
         "authoritative-identity-cyclosarin-gf"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-cyclosarin-gf.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-vx",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "1ec0b784dcfefc748f341d5054ddcd4ddcdb945a38e70bed0d626dedd9ab4b58",
@@ -250,23 +246,22 @@
       "factsProduced": [
         "authoritative-identity-vx"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-vx.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-sulfur-mustard-hd",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "dfb9b39a8b4453c73f7417e48ca3dbe074c3c3584f4c2ced3f07cde84263e7ab",
@@ -283,23 +278,22 @@
       "factsProduced": [
         "authoritative-identity-sulfur-mustard-hd"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-sulfur-mustard-hd.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-mustard-lewisite-hl",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "e95c733f6f11c5f79f2c89989265568fe51e2fdae0cb20b45da357d92e54d1dc",
@@ -316,23 +310,22 @@
       "factsProduced": [
         "authoritative-identity-mustard-lewisite-hl"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-mustard-lewisite-hl.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-lewisite-l",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "debcd02f6d2fe5dbc251396fc7c9baf0a84ea038bc4ef710df6bd6e6694d546c",
@@ -349,23 +342,22 @@
       "factsProduced": [
         "authoritative-identity-lewisite-l"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-lewisite-l.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-ammonia",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "fe7ec03214e1b73760469d775e24bf8359176eb8e7f1b745b14788c80862e221",
@@ -382,23 +374,22 @@
       "factsProduced": [
         "candidate-authoritative-identity-ammonia"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-ammonia.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-chlorine",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "6910443aab0b76fc2f93016c3e0c01c40f1c3e6288934fc009aec2f80af98cd4",
@@ -415,23 +406,22 @@
       "factsProduced": [
         "authoritative-identity-chlorine-cl"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-chlorine.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-phosgene",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "84291a5b08af06b70095796f9617e70704b8aca3c62d246cb9bb36784651f91d",
@@ -448,23 +438,22 @@
       "factsProduced": [
         "authoritative-identity-phosgene-cg"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-phosgene.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-arsine",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "32f0cd2846aa33331a01eb6cab1c2043adb1f288f45800b5179818c70f4488de",
@@ -481,23 +470,22 @@
       "factsProduced": [
         "authoritative-identity-arsine-sa"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-arsine.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-cyanide-salts",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "d841d2d58039d0a6486119b7c4c26c3d32ceaacadd401f517dab39bc018ceee9",
@@ -511,20 +499,21 @@
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-cyanide-salts.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-hydrogen-cyanide",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "e5e7ad919baa1c6d7f04dc3b9021a08d201e719474f95ac8dc18f666eda0392b",
@@ -541,23 +530,22 @@
       "factsProduced": [
         "authoritative-identity-hydrogen-cyanide-ac"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-hydrogen-cyanide.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-hydrogen-sulfide",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "7302d91e5b4e088a0af13e8e6f7f89ca90d2d791041081b604b2b7a9c267b4ae",
@@ -574,18 +562,17 @@
       "factsProduced": [
         "candidate-authoritative-identity-hydrogen-sulfide"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-hydrogen-sulfide.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-methyl-isocyanate",
@@ -610,12 +597,14 @@
       "parserLimitations": [],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": null,
+      "pageExtractionArtifactPath": null
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-organothiophosphate-pesticides",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "69fbef7ac85f03259d5c95aa8f61b28cc2c0c6a6386b84679e54a235460c4941",
@@ -629,20 +618,21 @@
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-organothiophosphate-pesticides.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-phosphine",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "be37cc07de61704c89348e3a5771079a228e5f7b0d51a6f4633c0efdf3953022",
@@ -659,23 +649,22 @@
       "factsProduced": [
         "candidate-authoritative-identity-phosphine"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-phosphine.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-fentanyl",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "29e1d2aa089c9bce408a6b6e38d482c0c238c8a8dfcbd6feba864be3912d5392",
@@ -692,23 +681,22 @@
       "factsProduced": [
         "candidate-authoritative-identity-fentanyl"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-fentanyl.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-chemical-tets",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "f34aebf97d2b7aac93db529610b60ed6691253b8e22b4eb7505501d478c00fa5",
@@ -725,23 +713,22 @@
       "factsProduced": [
         "candidate-authoritative-identity-tets"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-chemical-tets.json"
     },
     {
       "sourceArtifactId": "nrt-sulfur-mustard-aegl-summary-1",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "47d76d0ee3ec0a65303ff33e5872929ce79cc766fea88758b86a0096811302da",
@@ -755,20 +742,21 @@
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-sulfur-mustard-aegl-summary-1.json"
     },
     {
       "sourceArtifactId": "nrt-sulfur-mustard-aegl-summary-2",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "9615f0403a8bbecd2842fe852580b7f226c40091dd25c18ce8511f93e9521e04",
@@ -782,20 +770,21 @@
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "I_FORM_XFA_PDF",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-sulfur-mustard-aegl-summary-2.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-anthrax",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "EXTRACTED",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "a872c01634d3bc6ef7978d5425240896da8cf5ae7cd7e2f73a5b7af9c6b958e8",
@@ -820,23 +809,22 @@
         "nrt-anthrax-qrg-2022-anthrax-medical-and-public-health-coordination-7",
         "nrt-anthrax-qrg-2022-anthrax-unified-sampling-operations-8"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-biological-anthrax.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-plague",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "af4c782d522c8d285fef8bf997ce2b98a79a7c154fb245ec365f93707cb11990",
@@ -853,23 +841,22 @@
       "factsProduced": [
         "authoritative-identity-plague"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-biological-plague.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-brucellosis",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "e334a174b72428a38499b6ec2f59ffe17ce6fbe6cd7e597759b5bc7c876354ec",
@@ -886,23 +873,22 @@
       "factsProduced": [
         "authoritative-identity-brucellosis"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-biological-brucellosis.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-q-fever",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "7854636d09d4752095c26672b3afb51c043715b5990526c7afcf9f2fa540c8a4",
@@ -919,23 +905,22 @@
       "factsProduced": [
         "authoritative-identity-q-fever"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-biological-q-fever.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-glanders-melioidosis",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "2d810cc8382bb5efbd1e1f6107d57b6b453824ef515c915197787a91b0cb86ac",
@@ -954,23 +939,22 @@
         "candidate-authoritative-identity-glanders",
         "candidate-authoritative-identity-melioidosis"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-biological-glanders-melioidosis.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-tularemia",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "9cea2c559656068e12dff82e8cbf95a1da8ca8d9b889d50307fa256d0f07e549",
@@ -987,23 +971,22 @@
       "factsProduced": [
         "authoritative-identity-tularemia"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-biological-tularemia.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-hemorrhagic-fever-viruses",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "d4bee40196129709db4981e72f2236355c3699b4f8d78270b35e2d32f8bf929a",
@@ -1020,23 +1003,22 @@
       "factsProduced": [
         "authoritative-identity-viral-hemorrhagic-fever"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-biological-hemorrhagic-fever-viruses.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-hantavirus",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "50d5118943a9d63ebb34c241d5a54fce872907b3eda084c1d698ca052f284155",
@@ -1053,23 +1035,22 @@
       "factsProduced": [
         "candidate-authoritative-identity-hantavirus-pulmonary-syndrome"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-biological-hantavirus.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-smallpox-mpox",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "25f4c3f5f11d4502d80cf63c6c4b8c94349f6252a5dbe22b98f9404d6d9c4681",
@@ -1086,23 +1067,22 @@
       "factsProduced": [
         "authoritative-identity-smallpox"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-biological-smallpox-mpox.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-ricin-abrin",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "f7a2fedc8b50fc86a257db00a753113923de7c8a0f2dcf65e645ffd4a8169dce",
@@ -1121,23 +1101,22 @@
         "authoritative-identity-ricin",
         "authoritative-identity-abrin"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-biological-ricin-abrin.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-botulinum-toxin",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "b68fffaabea5500611129cd760eaf0eb308d26328c7ca9cba2444108db0d8c70",
@@ -1154,18 +1133,17 @@
       "factsProduced": [
         "authoritative-identity-botulinum-toxin"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-biological-botulinum-toxin.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-biotoxin-reference",
@@ -1190,12 +1168,14 @@
       "parserLimitations": [],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": null,
+      "pageExtractionArtifactPath": null
     },
     {
       "sourceArtifactId": "nrt-qrg-rad-ind",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "b11a70c3e9c1d792233dd86b093202199ca136a91dc8a3b797a7f85ec0ff8fe5",
@@ -1212,23 +1192,22 @@
       "factsProduced": [
         "authoritative-identity-improvised-nuclear-device"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-rad-ind.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-rad-rdd",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "IDENTITY_ONLY",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "64fc05a980c098307fc04e3a380233ec9a7f0f1ee8114a1304e0df3e9690c8ef",
@@ -1245,18 +1224,17 @@
       "factsProduced": [
         "authoritative-identity-radiological-dispersal-device"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/nrt-qrg-rad-rdd.json"
     },
     {
       "sourceArtifactId": "nrt-qrg-biological-tick-borne-encephalitis",
@@ -1281,7 +1259,9 @@
       "parserLimitations": [],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": null,
+      "pageExtractionArtifactPath": null
     },
     {
       "sourceArtifactId": "chemm-index",
@@ -1736,14 +1716,17 @@
       "factsProduced": [],
       "warnings": [
         "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "PDF page tree could not be mapped to page content streams."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "Embedded text is unavailable or unusable; OCR remains explicitly review-gated.",
+        "Page locator mapping failed because the page tree is unavailable or stored in an unsupported object structure."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "I_FORM_XFA_PDF",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/remm-triagetoolscombined.json"
     },
     {
       "sourceArtifactId": "remm-ars",
@@ -3744,7 +3727,7 @@
     {
       "sourceArtifactId": "fema-nuclear-planning-third-edition",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "EXTRACTED",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "d77550685227d652e13d515d717031ca81517eb150b5cb68aa79dbe2ac25aa1a",
@@ -3761,23 +3744,22 @@
       "factsProduced": [
         "fema-ind-local-state-federal-coordination"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/fema-nuclear-planning-third-edition.json"
     },
     {
       "sourceArtifactId": "fema-nuclear-first-72-hours",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "e312a9e0c64b8e4cda0c12677695744abd254cfbdc45c10b14d290a7e7c1ee1f",
@@ -3791,20 +3773,21 @@
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/fema-nuclear-first-72-hours.json"
     },
     {
       "sourceArtifactId": "fema-nuclear-communications",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "304ee9226fc8905f1a8c354d5ce4f114884c2d00e5180d8fe2885f47833c2258",
@@ -3818,47 +3801,49 @@
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "I_FORM_XFA_PDF",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/fema-nuclear-communications.json"
     },
     {
       "sourceArtifactId": "fema-nria",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "17f16460ff43ba36fca5c0a3f78d6e20942122b735706a91fa239282f64e0567",
       "expectedFileType": "PDF",
       "usableContentBytes": 3598191,
       "pagesSectionsRecordsProcessed": {
-        "pages": 164,
+        "pages": 154,
         "sections": 0,
         "records": 0
       },
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "I_FORM_XFA_PDF",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/fema-nria.json"
     },
     {
       "sourceArtifactId": "fema-chemical-incident-annex",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "9b23acdfe75d8d0abe810a37df6e9bab92abde33a58f6ec8e83902fff22da967",
@@ -3872,15 +3857,16 @@
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/fema-chemical-incident-annex.json"
     },
     {
       "sourceArtifactId": "fema-chemical-consequence-framework",
@@ -3900,46 +3886,50 @@
       "factsProduced": [],
       "warnings": [
         "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "PDF page tree could not be mapped to page content streams."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "Embedded text is unavailable or unusable; OCR remains explicitly review-gated.",
+        "Page locator mapping failed because the page tree is unavailable or stored in an unsupported object structure."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "I_FORM_XFA_PDF",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/fema-chemical-consequence-framework.json"
     },
     {
       "sourceArtifactId": "fema-chemical-kpf",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "ed1ac7e6be9547a41c46e15ff087a9b0023dc493a7a62d8f5cb130cfc46f8127",
       "expectedFileType": "PDF",
       "usableContentBytes": 14194079,
       "pagesSectionsRecordsProcessed": {
-        "pages": 334,
+        "pages": 331,
         "sections": 0,
         "records": 0
       },
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/fema-chemical-kpf.json"
     },
     {
       "sourceArtifactId": "fema-biological-incident-annex",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "64e8f2e0ffab2537a0f7cfc6063c636a9b906aa9776879ae46ce796bcb7ebc79",
@@ -3953,20 +3943,21 @@
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/fema-biological-incident-annex.json"
     },
     {
       "sourceArtifactId": "fema-biotoxin-addendum",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "1e0a5a672bc5dfa95e0e75cf33fa89f723cdcd4bab7ded722abbed146c8db8df",
@@ -3980,15 +3971,16 @@
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/fema-biotoxin-addendum.json"
     },
     {
       "sourceArtifactId": "fema-biological-kpf",
@@ -4008,14 +4000,17 @@
       "factsProduced": [],
       "warnings": [
         "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "PDF page tree could not be mapped to page content streams."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "Embedded text is unavailable or unusable; OCR remains explicitly review-gated.",
+        "Page locator mapping failed because the page tree is unavailable or stored in an unsupported object structure."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "I_FORM_XFA_PDF",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/fema-biological-kpf.json"
     },
     {
       "sourceArtifactId": "epa-pag-index",
@@ -4042,7 +4037,7 @@
     {
       "sourceArtifactId": "epa-pag-2017",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "EXTRACTED",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "83357c60f1403b6a231cf03ab8514631fb082cbe220d8c3bdcef1f2ff43d1faa",
@@ -4065,18 +4060,17 @@
         "epa-pag-response-framework-iridium-192-incident-specific-protective-actions-1",
         "epa-pag-response-framework-radiological-dispersal-device-incident-specific-protective-actions-1"
       ],
-      "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
-      ],
+      "warnings": [],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [
         "SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."
       ],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "I_FORM_XFA_PDF",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/epa-pag-2017.json"
     },
     {
       "sourceArtifactId": "epa-pag-communications-index",
@@ -4123,7 +4117,9 @@
       "parserLimitations": [],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": null,
+      "pageExtractionArtifactPath": null
     },
     {
       "sourceArtifactId": "epa-pag-2013",
@@ -4148,7 +4144,9 @@
       "parserLimitations": [],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": null,
+      "pageExtractionArtifactPath": null
     },
     {
       "sourceArtifactId": "epa-pag-1992",
@@ -4173,7 +4171,9 @@
       "parserLimitations": [],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": null,
+      "pageExtractionArtifactPath": null
     },
     {
       "sourceArtifactId": "cdc-radiation-population-index",
@@ -4200,56 +4200,58 @@
     {
       "sourceArtifactId": "cdc-population-monitoring-second-edition",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "7e524328dcdb792b85f1e33d8cdd2fa9f38fbbd0b2ba63eb13f2ea846febfead",
       "expectedFileType": "PDF",
       "usableContentBytes": 13373902,
       "pagesSectionsRecordsProcessed": {
-        "pages": 50,
+        "pages": 48,
         "sections": 0,
         "records": 0
       },
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "I_FORM_XFA_PDF",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/cdc-population-monitoring-second-edition.json"
     },
     {
       "sourceArtifactId": "cdc-radiation-public-shelters",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "4431b41edb4267bdaa060edc38d01565ba4f907117be3b736a565d86b1c7f56d",
       "expectedFileType": "PDF",
       "usableContentBytes": 8409849,
       "pagesSectionsRecordsProcessed": {
-        "pages": 72,
+        "pages": 66,
         "sections": 0,
         "records": 0
       },
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "I_FORM_XFA_PDF",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/cdc-radiation-public-shelters.json"
     },
     {
       "sourceArtifactId": "cdc-radiation-contamination-vs-exposure",
@@ -4297,14 +4299,17 @@
       "factsProduced": [],
       "warnings": [
         "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "PDF page tree could not be mapped to page content streams."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "Embedded text is unavailable or unusable; OCR remains explicitly review-gated.",
+        "Page locator mapping failed because the page tree is unavailable or stored in an unsupported object structure."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "F_SCANNED_IMAGE_PDF",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/cdc-radiation-contamination-vs-exposure-pdf.json"
     },
     {
       "sourceArtifactId": "cdc-radiation-instruments",
@@ -5264,7 +5269,7 @@
     {
       "sourceArtifactId": "opcw-handbook-2024",
       "acquisitionDisposition": "ACQUIRED",
-      "extractionDisposition": "PARSER_LIMITATION",
+      "extractionDisposition": "NO_RELEVANT_OPERATIONAL_FACTS",
       "parser": "PDF_STRUCTURE",
       "hashValidation": "VERIFIED",
       "sourceArtifactSha256": "27905a53bc8b9d219d148ee9db09bf1a09e356f1136d807049ca666caf8e78ff",
@@ -5278,15 +5283,16 @@
       "identitiesLinked": [],
       "factsProduced": [],
       "warnings": [
-        "No embedded PDF text operators were extracted.",
-        "OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."
+        "Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."
       ],
       "parserLimitations": [
-        "OCR was not attempted; image-only PDF content remains explicitly review-gated."
+        "PDF table geometry and column semantics are retained in page/block order; document-specific fact review remains required."
       ],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+      "pageExtractionArtifactPath": "src/data/cbrne/authoritative/pdf-extractions/opcw-handbook-2024.json"
     },
     {
       "sourceArtifactId": "opcw-schedule-1",
@@ -5714,7 +5720,9 @@
       "parserLimitations": [],
       "reviewRequirements": [],
       "duplicateOf": null,
-      "supersededBy": null
+      "supersededBy": null,
+      "failureCategory": null,
+      "pageExtractionArtifactPath": null
     },
     {
       "sourceArtifactId": "fbi-restricted-threat-credibility-material",

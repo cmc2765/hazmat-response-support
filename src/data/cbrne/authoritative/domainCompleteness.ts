@@ -11,6 +11,8 @@ const FIELD_TO_DOMAIN: Readonly<Record<string, CbrneCompletenessDomain>> = Objec
   SYMPTOMS: "HEALTH",
   DETECTION: "DETECTION",
   RADIOLOGICAL_SURVEY: "DETECTION",
+  SAMPLING: "SAMPLING",
+  ANALYSIS: "ANALYSIS",
   PPE: "PPE",
   DECON: "DECONTAMINATION",
   MEDICAL: "MEDICAL",
@@ -21,7 +23,9 @@ const FIELD_TO_DOMAIN: Readonly<Record<string, CbrneCompletenessDomain>> = Objec
 });
 
 function sourceStatus(facts: ReturnType<typeof authoritativeFactsForRecord>, domain: CbrneCompletenessDomain): CbrneCompletenessState {
-  const relevant = facts.filter((fact) => FIELD_TO_DOMAIN[fact.fieldGroup] === domain);
+  const relevant = domain === "SOURCE_PROVENANCE"
+    ? facts.filter((fact) => Boolean(fact.sourceArtifactId && fact.sourceArtifactSha256))
+    : facts.filter((fact) => FIELD_TO_DOMAIN[fact.fieldGroup] === domain);
   if (relevant.some((fact) => fact.reviewStatus === "CONFLICTING_SOURCES")) return "CONFLICTING_SOURCES";
   if (relevant.length) return relevant.every((fact) => fact.reviewStatus === "VERIFIED_AUTHORITATIVE") ? "SOURCE_BACKED" : "SOURCE_BACKED_PENDING_REVIEW";
   return "SOURCE_NOT_AVAILABLE";

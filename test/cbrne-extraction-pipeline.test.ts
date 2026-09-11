@@ -14,6 +14,7 @@ import { authoritativeFactMayDriveGuidedResponse } from "../src/lib/cbrne/guided
 import { normalizeCbrneUnitValue } from "../src/lib/cbrne/normalizeCbrneUnits.js";
 import { extractLocalArtifact } from "../src/lib/cbrne/sourceCorpusExtraction.js";
 import { detectAuthoritativeFactConflicts } from "../src/lib/cbrne/sourceFactReview.js";
+import semanticOutput from "../src/data/cbrne/authoritative/generated-resolved-pdf-facts.json";
 
 describe("local CBRNE extraction projection", () => {
   it("accounts for every registry artifact and reuses duplicates", () => {
@@ -39,10 +40,15 @@ describe("local CBRNE extraction projection", () => {
   });
 
   it("retains source representation, normalized representation, and artifact hash on every fact", () => {
-    expect(CBRNE_AUTHORITATIVE_SOURCE_FACTS).toHaveLength(148);
+    expect(CBRNE_AUTHORITATIVE_SOURCE_FACTS).toHaveLength(148 + semanticOutput.facts.length);
     for (const fact of CBRNE_AUTHORITATIVE_SOURCE_FACTS) {
-      expect(fact.valueOriginal).toEqual(fact.value);
-      expect(fact.unitsOriginal).toEqual(fact.units);
+      if (fact.factId.startsWith("pdf-")) {
+        expect(fact.valueOriginal).toBeTruthy();
+        expect(fact.valueNormalized).toBeTruthy();
+      } else {
+        expect(fact.valueOriginal).toEqual(fact.value);
+        expect(fact.unitsOriginal).toEqual(fact.units);
+      }
       expect(fact.sourceArtifactSha256).toMatch(/^[a-f0-9]{64}$/);
       expect(fact.normalizationMethod).toBeTruthy();
       if (findSourceArtifact(fact.sourceArtifactId)?.artifactType === "PDF") expect(fact.sourceLocator).toMatch(/^Page\s+\d+/i);

@@ -1,0 +1,2179 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-biological-botulinum-toxin",
+  "sourceArtifactSha256": "b68fffaabea5500611129cd760eaf0eb308d26328c7ca9cba2444108db0d8c70",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 11,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Botulinum neurotoxin (BoNT)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[January2024Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2011Page 1of 11NRT Quick ReferenceGuide: Botulinum neurotoxin (BoNT)(causes Botulism)QRG PURPOSE:Given that a Federal OSC/RPM leading an emergency response to an environmental release may not know the specific type of agent during the first 24-",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "48 hours of a response, this document provides information on the general properties, effects, and decontamination methods for initial response to suspectedBoNTincident. This QRG does not address protective methods for public health or healthcare workers.",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "1. Agent CharacteristicsAgent Classification:Biological; Type:Neurotoxic proteinDescription:Botulinum neurotoxin (BoNT) is a term that refers to seven distinct types of neurotoxins (A through G), produced by various strains of sporeforming ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Clostridium botulinumand related bacteria. These highly potent neurotoxins are odorless and tasteless, yet cause botulism, leading to flaccid paralysis through interference with ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "transmission of nerve impulses to muscles. BoNT serotypes can cause botulism in humans, and some affect other animal species. BoNT type A is the most thoroughly studied and is the basis of this QRG. BoNT has been weaponized as an ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "inhalable aerosol using liquid dispersion devices, but BoNT can also exist in forms ranging from crude",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "cultures to cosmetic products, to isolated powders that may be white or colorless crystals. Although BoNT is sometimes referred to as a biological weapon, it is a protein,not a living organism, and is not contagious or infectious. However, lab ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "workers have developed symptoms after handling contaminated animals.Categorical Definition:Biosafety Level:BSL-2 or BSL-3 (dependent upon form and quantity)Bioterrorism Agent:Category AHHS/CDC Select Agent:Tier 1CERCLA/NCP:Pollutant/Contaminant",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "USDA Select Agent:NoWaste/DOT:Category ACharacteristics:Molecular WeightPersistence/StabilityPerson-to-Person TransmissionExposure RoutesLethality~150,000 daltons (1 dalton = ~1 g/mol) (purified toxin mol wt, varies with toxin type)",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Dependent on release scenarios and preparation. For example, pure toxin is easily denatured by environmental factors (e.g., heat, desiccation), substantial inactivation of BoNT may take 2 days after aerosolization.Purified, crystallinetoxin can persist ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "for months at room temperature. C. botulinumspores can persist in the environment much longer.Not a communicable illnessIngestion, inhalation, dermal,and injectionFor naturally occurring cases, ~50% die without treatment.Lethality with treatment is <5%.",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Lethality may be higher from intentional attacks.2. Exposure RoutesIngestion: Ingestion of food or drink in which botulinum toxin is naturally, accidentally,or intentionally introduced can ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "cause botulism. Also, ingestion botulism often occurs due to contamination or introduction of ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": ", when foods and drinks are prepared, stored in a sealed container and not refrigerated or when packaged foods contaminated with C. botulinumare not adequately sterilized. Historic examples include canned or fermented foods(see: ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "https://www.cdc.gov/botulism/prevention.html).The bacteria produce toxin while growing in the anaerobic interior of the container. Foodborne botulism could also result from intentional contamination of the food supply.Dermal/Mucous Membranes or Wound: ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Botulinum toxin in liquid or powder form accidentally entering the body through contact with broken skin or hand transfer to eyes/mouth can cause botulism. Botulism can result from deep wound contamination.Injection:",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Dermal or injection botulism can also occur in intravenous drug users.Inhalation: Accidental or intentional aerosolization of botulinum toxin can cause botulism. It is not a likely route of ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "natural exposure but is considered a significant threat for intentional release.Please note that ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "can exist in the environment as a dormant spore; however, in low oxygen (anaerobic) environments such as in sealed food containers, canned foods, deep wounds, or the intestinal tract, the spores germinate into active bacteriathat",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "would multiply, and produce the toxin.3. Health Effects",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "\u0000%\u0000R\u0000W\u0000X\u0000O\u0000L\u0000V\u0000P\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000U\u0000D\u0000U\u0000H\u0000\u0003\u0000E\u0000X\u0000W\u0000\u0003\u0000V\u0000H\u0000U\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u0000L\u0000O\u0000O\u0000Q\u0000H\u0000V\u0000V\u0000\u0003\u0000F\u0000D\u0000X\u0000V\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000E\u0000R\u0000W\u0000X\u0000O\u0000L\u0000Q\u0000X\u0000P\u0000\u0003\u0000Q\u0000H\u0000X\u0000U\u0000R\u0000W\u0000R\u0000[\u0000L\u0000Q\u0000\u0003\u0000\u000b\u0000%\u0000R\u00001\u00007\u0000\f\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000D\u0000W\u0000W\u0000D\u0000F\u0000N\u0000V\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000E\u0000R\u0000G\u0000\\\u0000¶\u0000V\u0000\u0003\u0000Q\u0000H\u0000U\u0000Y\u0000H\u0000V\u0000\u0003\u0000F\u0000D\u0000X\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "flaccid paralysis. Paralysis can result from death of nerve endings at the neuro-muscular junction. All forms of botulism can be fatal andare medical emergencies. Botulism may mimic stroke and other paralyzing medical conditions. Symptoms ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "are similar across exposure routes and effect levels vary.Onset:\u0000xInhalation:Symptoms usually develop from 6 hours to 10 days (typically 12-36 hours) after exposure.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[January2024Update: 2011Page 1of 11NRT Quick ReferenceGuide: Botulinum neurotoxin (BoNT)(causes Botulism)QRG PURPOSE:Given that a Federal OSC/RPM leading an emergency response to an environmental release may not know the specific type of agent during the first 24- 48 hours of a response, this document provides information on the general properties, effects, and decontamination methods for initial response to suspectedBoNTincident. This QRG does not address protective methods for public health or healthcare workers. 1. Agent CharacteristicsAgent Classification:Biological; Type:Neurotoxic proteinDescription:Botulinum neurotoxin (BoNT) is a term that refers to seven distinct types of neurotoxins (A through G), produced by various strains of sporeforming Clostridium botulinumand related bacteria. These highly potent neurotoxins are odorless and tasteless, yet cause botulism, leading to flaccid paralysis through interference with transmission of nerve impulses to muscles. BoNT serotypes can cause botulism in humans, and some affect other animal species. BoNT type A is the most thoroughly studied and is the basis of this QRG. BoNT has been weaponized as an inhalable aerosol using liquid dispersion devices, but BoNT can also exist in forms ranging from crude cultures to cosmetic products, to isolated powders that may be white or colorless crystals. Although BoNT is sometimes referred to as a biological weapon, it is a protein,not a living organism, and is not contagious or infectious. However, lab workers have developed symptoms after handling contaminated animals.Categorical Definition:Biosafety Level:BSL-2 or BSL-3 (dependent upon form and quantity)Bioterrorism Agent:Category AHHS/CDC Select Agent:Tier 1CERCLA/NCP:Pollutant/Contaminant USDA Select Agent:NoWaste/DOT:Category ACharacteristics:Molecular WeightPersistence/StabilityPerson-to-Person TransmissionExposure RoutesLethality~150,000 daltons (1 dalton = ~1 g/mol) (purified toxin mol wt, varies with toxin type) Dependent on release scenarios and preparation. For example, pure toxin is easily denatured by environmental factors (e.g., heat, desiccation), substantial inactivation of BoNT may take 2 days after aerosolization.Purified, crystallinetoxin can persist for months at room temperature. C. botulinumspores can persist in the environment much longer.Not a communicable illnessIngestion, inhalation, dermal,and injectionFor naturally occurring cases, ~50% die without treatment.Lethality with treatment is <5%. Lethality may be higher from intentional attacks.2. Exposure RoutesIngestion: Ingestion of food or drink in which botulinum toxin is naturally, accidentally,or intentionally introduced can cause botulism. Also, ingestion botulism often occurs due to contamination or introduction of , when foods and drinks are prepared, stored in a sealed container and not refrigerated or when packaged foods contaminated with C. botulinumare not adequately sterilized. Historic examples include canned or fermented foods(see: https://www.cdc.gov/botulism/prevention.html).The bacteria produce toxin while growing in the anaerobic interior of the container. Foodborne botulism could also result from intentional contamination of the food supply.Dermal/Mucous Membranes or Wound: Botulinum toxin in liquid or powder form accidentally entering the body through contact with broken skin or hand transfer to eyes/mouth can cause botulism. Botulism can result from deep wound contamination.Injection: Dermal or injection botulism can also occur in intravenous drug users.Inhalation: Accidental or intentional aerosolization of botulinum toxin can cause botulism. It is not a likely route of natural exposure but is considered a significant threat for intentional release.Please note that can exist in the environment as a dormant spore; however, in low oxygen (anaerobic) environments such as in sealed food containers, canned foods, deep wounds, or the intestinal tract, the spores germinate into active bacteriathat would multiply, and produce the toxin.3. Health Effects \u0000%\u0000R\u0000W\u0000X\u0000O\u0000L\u0000V\u0000P\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000U\u0000D\u0000U\u0000H\u0000\u0003\u0000E\u0000X\u0000W\u0000\u0003\u0000V\u0000H\u0000U\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u0000L\u0000O\u0000O\u0000Q\u0000H\u0000V\u0000V\u0000\u0003\u0000F\u0000D\u0000X\u0000V\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000E\u0000R\u0000W\u0000X\u0000O\u0000L\u0000Q\u0000X\u0000P\u0000\u0003\u0000Q\u0000H\u0000X\u0000U\u0000R\u0000W\u0000R\u0000[\u0000L\u0000Q\u0000\u0003\u0000 \u0000%\u0000R\u00001\u00007\u0000 \u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000D\u0000W\u0000W\u0000D\u0000F\u0000N\u0000V\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000E\u0000R\u0000G\u0000\\\u0000¶\u0000V\u0000\u0003\u0000Q\u0000H\u0000U\u0000Y\u0000H\u0000V\u0000\u0003\u0000F\u0000D\u0000X\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003 flaccid paralysis. Paralysis can result from death of nerve endings at the neuro-muscular junction. All forms of botulism can be fatal andare medical emergencies. Botulism may mimic stroke and other paralyzing medical conditions. Symptoms are similar across exposure routes and effect levels vary.Onset:\u0000xInhalation:Symptoms usually develop from 6 hours to 10 days (typically 12-36 hours) after exposure.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 29,
+        "repeatedHeaderFooterBlockCount": 8,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Botulinum neurotoxin (BoNT)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[January2024Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2011Page 2of 11\u0000xIngestion: Symptoms generally begin 18 to 36 hours after eating a toxin contaminated food, however, the symptoms may begin in a few hours to a few days depending upon the quantity of toxin consumed.\u0000xDermal or Wound: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "Symptoms usually develop within a few hours to several days after exposure.\u0000xInjection: Symptoms usually develop within hours.Signs/Symptoms:Regardless of exposure route, symptoms usually begin as a ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "progressive, symmetric descending flaccid paralysis beginning in the muscles of the head and neck. This results in a progressive worsening of the following symptoms: difficulty swallowing, muscle weakness, double vision, drooping eyelids, blurry vision, sl",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "urred speech, difficulty breathing, or difficulty moving the eyes. Possible signs and symptoms in foodborne/ingestionbotulism might also include: vomiting, nausea, stomach pain, or diarrhea. People with botulism might not have all of these symptoms at the",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "same time. Botulism does not cause fever. Patients typically are fully alert and aware of their situation. If untreated, botulism may progress and symptoms may worsen to cause full paralysis of some muscles, including those ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "used in breathing and those in the arms, legs, and torso. Paralysis caused by the toxin usually improves slowly. Depending on the severity of poisoning, paralysis may last for weeks to months. Paralysis caused by the toxin requires regrowth of ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "affected nerves, whichmay take many months or even years in severe cases.Treatment:Antitoxin prevents progression of illness and should be administered as quickly as possible to reduce overall severity. ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Antitoxin does not reverse damage to affected nerves. Supportive care, which may include mechanical ventilation and administration of nutrition via feeding tube or I.V. may be necessary in severe cases. Regrowth of impacted nerve axons ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "and reestablishment of neuro-muscular junctions is necessary for recovery. Supportive care and rehabilitation may be necessary for months or even years, depending on extensiveness of paralysis.Note:",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Access to antitoxin is coordinated through the state health department and CDC Emergency Operations Center, 770-488-7100.4. Effect Levels and Exposure GuidelinesLethal Dose: Based on non-human primate studies, the lethal dosesforBoNT type A for a",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "70 kg (154 lb) humanare estimated as 0.09-0.15 µg (injection), 0.70-0.90 µg (inhalation), and 70 µg (ingestion).Exposure Guidelines: Not established. Acute Exposure Guideline Level (AEGL) values are not available for BoNT and ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "no occupational exposure limits (e.g., Permissible Exposure Limit PEL, Recommended Exposure Limit REL) exist for BoNT. AEGL values or appropriate occupational exposure limits may exist for selected decontaminants or fumigants. See the site-specific H",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "ealth and Safety Plan (HASP) for more details.In the absence of exposure guidelines, it is imperative to minimize exposure to as low as reasonably achievable.5. Release ScenariosCAUTION: REAEROSOLIZATION IS A CONCERN FOR ALL RELEASE SCENARIOS.",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Aerosol release of BoNT into the environment or adulteration of water, food, and beverages are considered most likely.\u0000xAir/Aerosolization:Dispersion of aerosolized BoNT is related to atmospheric conditions, the particle size of the ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "aerosol, and purity. Aerosol refers primarily to mists (droplets >10 µm). Reaerosolizationvia mists canoccur when using water for firefighting. Caution: due to reaerosolization concerns, use of pressurized wateror sprays during decontamination efforts",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "should be avoided.\u0000xSoil/Surfaces:BoNT may present a surface hazard, particularly to moist surfaces.\u0000xWater:BoNT is a possible water threat. Deactivation by chlorine can occur but is dependent on chlorine dose, contact ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "time, temperature, pH, and BoNT concentration, so deactivation must not be assumed. Reaction with monochloramine is much slower, and coagulationhas limited effectiveness.6. Personnel SafetyNOTE:",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Check with the site Health and Safety Officer regarding personal protective equipment (PPE) selection, medical surveillance requirements, and other safety measures included in the site-specific Health and Safety Plan (HASP). PPE selection (Levels A-D), fi",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "rst aid procedures, and personnel decontamination may vary depending on potential exposure route, site conditions, specific job tasks, and release scenario. Responders should always check their own internal procedures (i.e., SOPs), if applicable.The PPE l",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "evels listed below are general suggestions only. The final determination will be made by the Health and Safety Officer on site. For decontamination of workers, see the PERSONNEL DECONTAMINATION section below. This PERSONNEL SAFETY section includes medical ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "requirements, first aid procedures, and PPE selection for all hazards that may be present during aBoNT or ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "response (e.g., BoNTexposure, chemical decontaminants, heat stress). Donning and doffing of PPE must be carefully planned before entry into a contaminated area. Once in the contaminated area,",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "PPE should not be modified. Doffing of PPE, after proceeding through the personnel decontamination line, should be performed slowly and deliberately to reduce the possibility of self-exposure or cross-contamination.6.1. MedicalRequirements:",
+          "role": "BODY"
+        }
+      ],
+      "text": "[January2024Update: 2011Page 2of 11\u0000xIngestion: Symptoms generally begin 18 to 36 hours after eating a toxin contaminated food, however, the symptoms may begin in a few hours to a few days depending upon the quantity of toxin consumed.\u0000xDermal or Wound: Symptoms usually develop within a few hours to several days after exposure.\u0000xInjection: Symptoms usually develop within hours.Signs/Symptoms:Regardless of exposure route, symptoms usually begin as a progressive, symmetric descending flaccid paralysis beginning in the muscles of the head and neck. This results in a progressive worsening of the following symptoms: difficulty swallowing, muscle weakness, double vision, drooping eyelids, blurry vision, sl urred speech, difficulty breathing, or difficulty moving the eyes. Possible signs and symptoms in foodborne/ingestionbotulism might also include: vomiting, nausea, stomach pain, or diarrhea. People with botulism might not have all of these symptoms at the same time. Botulism does not cause fever. Patients typically are fully alert and aware of their situation. If untreated, botulism may progress and symptoms may worsen to cause full paralysis of some muscles, including those used in breathing and those in the arms, legs, and torso. Paralysis caused by the toxin usually improves slowly. Depending on the severity of poisoning, paralysis may last for weeks to months. Paralysis caused by the toxin requires regrowth of affected nerves, whichmay take many months or even years in severe cases.Treatment:Antitoxin prevents progression of illness and should be administered as quickly as possible to reduce overall severity. Antitoxin does not reverse damage to affected nerves. Supportive care, which may include mechanical ventilation and administration of nutrition via feeding tube or I.V. may be necessary in severe cases. Regrowth of impacted nerve axons and reestablishment of neuro-muscular junctions is necessary for recovery. Supportive care and rehabilitation may be necessary for months or even years, depending on extensiveness of paralysis.Note: Access to antitoxin is coordinated through the state health department and CDC Emergency Operations Center, 770-488-7100.4. Effect Levels and Exposure GuidelinesLethal Dose: Based on non-human primate studies, the lethal dosesforBoNT type A for a 70 kg (154 lb) humanare estimated as 0.09-0.15 µg (injection), 0.70-0.90 µg (inhalation), and 70 µg (ingestion).Exposure Guidelines: Not established. Acute Exposure Guideline Level (AEGL) values are not available for BoNT and no occupational exposure limits (e.g., Permissible Exposure Limit PEL, Recommended Exposure Limit REL) exist for BoNT. AEGL values or appropriate occupational exposure limits may exist for selected decontaminants or fumigants. See the site-specific H ealth and Safety Plan (HASP) for more details.In the absence of exposure guidelines, it is imperative to minimize exposure to as low as reasonably achievable.5. Release ScenariosCAUTION: REAEROSOLIZATION IS A CONCERN FOR ALL RELEASE SCENARIOS. Aerosol release of BoNT into the environment or adulteration of water, food, and beverages are considered most likely.\u0000xAir/Aerosolization:Dispersion of aerosolized BoNT is related to atmospheric conditions, the particle size of the aerosol, and purity. Aerosol refers primarily to mists (droplets >10 µm). Reaerosolizationvia mists canoccur when using water for firefighting. Caution: due to reaerosolization concerns, use of pressurized wateror sprays during decontamination efforts should be avoided.\u0000xSoil/Surfaces:BoNT may present a surface hazard, particularly to moist surfaces.\u0000xWater:BoNT is a possible water threat. Deactivation by chlorine can occur but is dependent on chlorine dose, contact time, temperature, pH, and BoNT concentration, so deactivation must not be assumed. Reaction with monochloramine is much slower, and coagulationhas limited effectiveness.6. Personnel SafetyNOTE: Check with the site Health and Safety Officer regarding personal protective equipment (PPE) selection, medical surveillance requirements, and other safety measures included in the site-specific Health and Safety Plan (HASP). PPE selection (Levels A-D), fi rst aid procedures, and personnel decontamination may vary depending on potential exposure route, site conditions, specific job tasks, and release scenario. Responders should always check their own internal procedures (i.e., SOPs), if applicable.The PPE l evels listed below are general suggestions only. The final determination will be made by the Health and Safety Officer on site. For decontamination of workers, see the PERSONNEL DECONTAMINATION section below. This PERSONNEL SAFETY section includes medical requirements, first aid procedures, and PPE selection for all hazards that may be present during aBoNT or response (e.g., BoNTexposure, chemical decontaminants, heat stress). Donning and doffing of PPE must be carefully planned before entry into a contaminated area. Once in the contaminated area, PPE should not be modified. Doffing of PPE, after proceeding through the personnel decontamination line, should be performed slowly and deliberately to reduce the possibility of self-exposure or cross-contamination.6.1. MedicalRequirements:",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 27,
+        "repeatedHeaderFooterBlockCount": 6,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Botulinum neurotoxin (BoNT)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[January2024Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2011Page 3of 11\u0000xPre-deployment:Must be current on annual physical and medical evaluations for respirator use.Seek prophylaxis provided per specific agency policy.A non-FDA approved vaccine against botulism exists, but it is rarely used as its ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "effectiveness has not been fully evaluated and it has demonstrated negative side effects. Note that local, state, and federal authorities may impose quarantine or isolation restrictions for individuals working in an agent-contaminated ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "environment. Before responding to a site, check with pertinent authorities for any additional restrictions and monitoring requirements.\u0000xDuring Incident:Conduct periodic on-site medical monitoring as necessary per site-specific HASP. Report to the site ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Health and Safety Officer all signs and symptoms of botulism as listed under HEALTH EFFECTS section above, side effects from medical countermeasures, or other general adverse health effects such as fatigue, heat stress, and ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "behavioral health, and treat according to First Aid section below. Monitoring of exposed workers may be required by the site Health and Safety Officer or public health officials.\u0000xTreatments Available:Seek medical attention per specific agency policy ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "or guidance. Treatment is the use of antitoxin therapy accompanied by supportive care. Antitoxin prevents progression of illness and should be administered as quickly as possible to reduce overall severity. Medical providers can call their state health dep",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "artment or the CDC Emergency Operations Center at 770-488-7100 to request a botulism consultation.\u0000xPost Incident:Off-site monitoring may be required bythesite Health and Safety Officer or public health officials for a period following last exposure. Post-",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "exposure prophylaxis may be made available as necessary by medical professionalsaccording to specific agency policyor guidance.6.2. First Aid:CAUTION:Workers rendering first aid must be properly trained and use appropriate PPE as indicated below to avoid ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "potential exposure.\u0000xDuring Incident:Conduct medical monitoring, use PPE as designated by the HASP, record the PPE levels used, monitor for signs/symptoms as listed under HEALTH EFFECTS section above and, if necessary, ensure medical ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "attention is provided as soon as possible for injuries/illnesses. \u0000xPost Incident:Continue to monitor for signs/symptoms and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses.6",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": ".3. Personal Protective Equipment (PPE):NOTE: PPE recommendations below are for Federal OSC/RPMs and emergency response teams conducting environmental response activities (e.g., sampling, environmental cleanup, decontamination, waste management) ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "during and following an environmental release of BoNT. This is not intended for public health or healthcare workers involved in a suspected or confirmed BoNT incident.",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u0000&\u0000R\u0000Q\u0000V\u0000H\u0000T\u0000X\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u00000\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000$\u0000G\u0000Y\u0000L\u0000V\u0000R\u0000U\u0000\\\u0000\u0003\u0000'\u0000L\u0000Y\u0000L\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000\u000b\u0000&\u00000\u0000$\u0000'\u0000\f\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u00003\u00003\u0000(\u0000\u0003\u0000J\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000)\u0000H\u0000G\u0000H\u0000U\u0000D\u0000O\u0000\u0003\u00002\u00006\u0000&\u0000\u0012\u00005\u00003\u00000\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "\u0000H\u0000P\u0000H\u0000U\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000D\u0000\u0003\u0000E\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0011\u0000\u0003\u0000)\u0000R\u0000U\u0000\u0003\u0000D\u0000G\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000G\u0000H\u0000W\u0000D\u0000L\u0000O\u0000V\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000R\u0000V\u0000W\u0000\u0003\u0000U\u0000H\u0000F\u0000H\u0000Q\u0000W\u0000\u0003\u0000Y\u0000H\u0000U\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Biological Response PersonnelDecontamination Line Standard Operating Procedure (SOP), which can be found at: response.epa.gov/BioResponse_Decontamination_Line_SOP(website registration is required).General Information: Responders should use NIOSHApproved®",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "chemical, biological, radiological, and nuclear (CBRN) respirators [self-containedbreathing apparatus (SCBA), full-facepiece powered air purifying respirator (PAPR),or full-facepiece air purifying r",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "and protective clothing that provides protection for an ongoing or uncontrolled environmental release of aerosolized BoNT. Pre-incident training and exercises on the proper use of PPE are recommended. ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "When selecting appropriate levels of PPE, information regarding potential of exposures to non-biological hazards (e.g., decontaminants) should be factored intoany selection decisions.For use of APRs or PAPRs, only those incorporating canister(s)",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "/cartridge(s)labeled CBRN are appropriate for use in suspected or known CBRN environments. Canisters/cartridge(s)for APRs/PAPRs may be adversely affected by an ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "increase in moisture and spray from certain work tasks, including during environmental cleanup and decontamination.Canisters and cartridges should be stored as specified by their manufacturer and remain sealed until fitted to the respirator",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "just prior to use. Canisters and cartridges that have had the vacuum seal broken or are otherwise damaged should be removed from possible service.NOTE:SinceBoNTposesnopermeabilitypotential,when no other hazards are present, full-facepiece APRor any tight-",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "fitting, full-facepiece PAPR incorporating at a minimum,high-efficiency (HE®), PAPR100-P®, or PAPR100-N®particulateprotection (as determined by the site Health and Safety Officer)may be appropriate.CAUTION:AEGL values are not available for BoNT",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "and no occupational exposure limits (e.g., PEL, REL) exist forBoNT(see EXPOSURE GUIDELINES section above). AEGL values or appropriate occupational exposure limits may exist for selected decontaminants or fumigants; see the site-",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "specific HASP for more details.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[January2024Update: 2011Page 3of 11\u0000xPre-deployment:Must be current on annual physical and medical evaluations for respirator use.Seek prophylaxis provided per specific agency policy.A non-FDA approved vaccine against botulism exists, but it is rarely used as its effectiveness has not been fully evaluated and it has demonstrated negative side effects. Note that local, state, and federal authorities may impose quarantine or isolation restrictions for individuals working in an agent-contaminated environment. Before responding to a site, check with pertinent authorities for any additional restrictions and monitoring requirements.\u0000xDuring Incident:Conduct periodic on-site medical monitoring as necessary per site-specific HASP. Report to the site Health and Safety Officer all signs and symptoms of botulism as listed under HEALTH EFFECTS section above, side effects from medical countermeasures, or other general adverse health effects such as fatigue, heat stress, and behavioral health, and treat according to First Aid section below. Monitoring of exposed workers may be required by the site Health and Safety Officer or public health officials.\u0000xTreatments Available:Seek medical attention per specific agency policy or guidance. Treatment is the use of antitoxin therapy accompanied by supportive care. Antitoxin prevents progression of illness and should be administered as quickly as possible to reduce overall severity. Medical providers can call their state health dep artment or the CDC Emergency Operations Center at 770-488-7100 to request a botulism consultation.\u0000xPost Incident:Off-site monitoring may be required bythesite Health and Safety Officer or public health officials for a period following last exposure. Post- exposure prophylaxis may be made available as necessary by medical professionalsaccording to specific agency policyor guidance.6.2. First Aid:CAUTION:Workers rendering first aid must be properly trained and use appropriate PPE as indicated below to avoid potential exposure.\u0000xDuring Incident:Conduct medical monitoring, use PPE as designated by the HASP, record the PPE levels used, monitor for signs/symptoms as listed under HEALTH EFFECTS section above and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses. \u0000xPost Incident:Continue to monitor for signs/symptoms and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses.6 .3. Personal Protective Equipment (PPE):NOTE: PPE recommendations below are for Federal OSC/RPMs and emergency response teams conducting environmental response activities (e.g., sampling, environmental cleanup, decontamination, waste management) during and following an environmental release of BoNT. This is not intended for public health or healthcare workers involved in a suspected or confirmed BoNT incident. \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u0000&\u0000R\u0000Q\u0000V\u0000H\u0000T\u0000X\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u00000\u0000D\u0000Q\u0000D\u0000J\u0000H\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000$\u0000G\u0000Y\u0000L\u0000V\u0000R\u0000U\u0000\\\u0000\u0003\u0000'\u0000L\u0000Y\u0000L\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000 \u0000&\u00000\u0000$\u0000'\u0000 \u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u00003\u00003\u0000(\u0000\u0003\u0000J\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000)\u0000H\u0000G\u0000H\u0000U\u0000D\u0000O\u0000\u0003\u00002\u00006\u0000&\u0000\u0012\u00005\u00003\u00000\u0000V\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003 \u0000H\u0000P\u0000H\u0000U\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000D\u0000\u0003\u0000E\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000W\u0000\u0011\u0000\u0003\u0000)\u0000R\u0000U\u0000\u0003\u0000D\u0000G\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000G\u0000H\u0000W\u0000D\u0000L\u0000O\u0000V\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000R\u0000V\u0000W\u0000\u0003\u0000U\u0000H\u0000F\u0000H\u0000Q\u0000W\u0000\u0003\u0000Y\u0000H\u0000U\u0000V\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000&\u00000\u0000$\u0000'\u0000\u0003 Biological Response PersonnelDecontamination Line Standard Operating Procedure (SOP), which can be found at: response.epa.gov/BioResponse_Decontamination_Line_SOP(website registration is required).General Information: Responders should use NIOSHApproved® chemical, biological, radiological, and nuclear (CBRN) respirators [self-containedbreathing apparatus (SCBA), full-facepiece powered air purifying respirator (PAPR),or full-facepiece air purifying r and protective clothing that provides protection for an ongoing or uncontrolled environmental release of aerosolized BoNT. Pre-incident training and exercises on the proper use of PPE are recommended. When selecting appropriate levels of PPE, information regarding potential of exposures to non-biological hazards (e.g., decontaminants) should be factored intoany selection decisions.For use of APRs or PAPRs, only those incorporating canister(s) /cartridge(s)labeled CBRN are appropriate for use in suspected or known CBRN environments. Canisters/cartridge(s)for APRs/PAPRs may be adversely affected by an increase in moisture and spray from certain work tasks, including during environmental cleanup and decontamination.Canisters and cartridges should be stored as specified by their manufacturer and remain sealed until fitted to the respirator just prior to use. Canisters and cartridges that have had the vacuum seal broken or are otherwise damaged should be removed from possible service.NOTE:SinceBoNTposesnopermeabilitypotential,when no other hazards are present, full-facepiece APRor any tight- fitting, full-facepiece PAPR incorporating at a minimum,high-efficiency (HE®), PAPR100-P®, or PAPR100-N®particulateprotection (as determined by the site Health and Safety Officer)may be appropriate.CAUTION:AEGL values are not available for BoNT and no occupational exposure limits (e.g., PEL, REL) exist forBoNT(see EXPOSURE GUIDELINES section above). AEGL values or appropriate occupational exposure limits may exist for selected decontaminants or fumigants; see the site- specific HASP for more details.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 27,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Botulinum neurotoxin (BoNT)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[January2024Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2011Page 4of 11PPE Levelsfor emergency response to a suspected biological agent incident are based on scenario risks from highest to lowest level of protection:\u0000xLEVEL A:NIOSHApproved CBRN full-facepiece SCBA operated in pressure demand mode, a totally-",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "encapsulating chemical protective (TECP) suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when anyof the following are met:a) the event is ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "uncharacterized and/or uncontrolled, b) the type(s) of agent is unknown, c) the dissemination method is unknown, d) dissemination via an aerosol-generating device is still occurring, e) other conditions may present a vapor or splash hazard,or f)",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "decontaminating workers in TECP suits (because of potential for reaerosolization).Level A provides the highest available level of respiratory, skin,and eye protection. Fully-encapsulating suit material must be compatible with the substances involved.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "LEVEL B:NIOSHApproved CBRN or non-CBRN full-facepiece SCBA operated in pressure demand mode, a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "This level is appropriate when both:a) aerosol is no longer being generated and b) other conditions may present additional hazards, such as a splash hazard. Level B provides the same level of ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "respiratory protection (SCBA) but less skin protection than Level A.Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "liquids but is not vapor tight.\u0000xLEVEL C:NIOSHApprovedCBRN or non-CBRN APRor tight-fitting PAPR,a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots.",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "This level is appropriate when the aerosol is no longer being generated and either: a) the agent and hazard level has been defined orb) a small item on site can be easily bagged. Level C provides the same level of skin protection as ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Level B, but a lower level of respiratory protection. All criteria for the use of APRs must be met, atmospheric concentrations of chemicals must not exceed IDLH values, and the atmosphere must contain at least 19.5% oxygen.\u0000xLEVEL D:",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Disposable hooded coveralls, gloves, and foot coverings can be worn when a risk assessment has determined there is no further risk of exposure toBoNTor other hazards that would necessitate the use of respiratory protection, during post-incident operations.",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Level D provides no respiratory protection and minimal skin protection. This level should not be worn in the exclusion zone and the atmosphere must contain at least 19.5% oxygen.Other Workers:PPE recommendations for non-",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "emergency response workers must be developed in the HASP for the site-specific scenario. PPE recommendations will vary by job type (e.g., cleanup, decontamination), type of exposure (ingestion, dermal, inhalation\u0000²see EXPOSURE ROUTES section",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "), and additional site hazards (e.g., chemical, physical).NOTE: DowngradingPPE levels may be considered only when the identity and concentration of the agent is known and ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "the risks of reaerosolization or dermal exposure are known to be extremely low. Decisions regarding downgrading of PPE levels are only made at the discretion of the site Health and Safety Officer after conducting a risk assessment and must be ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "accompanied by on-site monitoring.The selection of PPE must address all site hazards. Also refer to NIOSH \u0000³Recommendations for the Selection and Use of Respirators and Protective Clothing for Protection Against Biological Agents\u0000´(",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "https://www.cdc.gov/niosh/docs/2009-132/default.html)\u0000\u000f\u0000\u0003\u00001\u0000,\u00002\u00006\u0000+\u0000\u0003\u0000³\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003\u00005\u0000D\u0000G\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u00001\u0000X\u0000F\u0000O\u0000H\u0000D\u0000U\u0000\u0003\u0000\u000b\u0000&\u0000%\u00005\u00001\u0000\f\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000L\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u00003\u0000U\u0000R\u0000W\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000+\u0000D\u0000Q\u0000G\u0000E\u0000R\u0000R\u0000N\u0000´\u0000\u0003(",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "https://www.cdc.gov/niosh/docs/2018-166/default.html\u0000\f\u0000\u000f\u0000\u0003\u00001\u0000,\u00002\u00006\u0000+\u0000\u0003\u0000³\u0000*\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000(\u0000P\u0000H\u0000U\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000\u0003\u00003\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000D\u0000O\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "\u00003\u0000U\u0000R\u0000W\u0000H\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000(\u0000T\u0000X\u0000L\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000\u000b\u00003\u00003\u0000(\u0000\f\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u00007\u0000H\u0000U\u0000U\u0000R\u0000U\u0000L\u0000V\u0000P\u0000\u0003\u0000,\u0000Q\u0000F\u0000L\u0000G\u0000H\u0000Q\u0000W\u0000V\u0000´\u0000\u0003\u0000\u000bhttps://www.cdc.gov/niosh/docs/2008-132/default.html",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "), and NIOSH/OSHA/USCG/EPA \"Occupational Safety and Health Guidance Manual for Hazardous Waste Site Activities\" (https://www.cdc.gov/niosh/docs/85-115/default.html).",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "When selecting protective clothing, responders should consider biological and chemical exposure hazards from decontaminants, and data on fabric performance (i.e., material thickness, fluid resistance) and seam construction. Suits and gloves should be selec",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "ted that pass ASTM F1671(https://www.astm.org/f1671_f1671m-22.html) and ASTM F739(https://www.astm.org/f0739-20.html) for the specific chemicalspresent.7. Personnel Decontamination7.1. Personnel Decontamination Procedure:NOTE:",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Individuals involved in decontamination of personnel must use PPE as indicated in the PERSONNEL SAFETY section above to avoid the potential for exposure. Be sure to cover all abraded skin prior to donning PPE and take care to ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "avoid abrasion of the skin during all personnel decontamination operations to minimize potential for cutaneous exposure toBoNT. Level C PPE with NIOSHApproved APR or PAPR is appropriate when decontaminating personnel potentially contaminated withBoNT",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": ". If a higher level of PPE (A orB) is used, the steps below may need to be modified per thesite-specificHASP.WARNING: DO NOT BEGIN ANY WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "(see WASTE MANAGEMENT section below). All waste/trash generated from personnel decontamination procedures must be disposed of as outlined in the site-specific Waste Management Plan.7.2. Personnel Decontamination Procedures by Zone/Step:",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "Prior to entering the Exclusion Zone, all personnel are required to familiarize themselves with the site-specific personnel decontamination procedures. Negative air machine(s) should be incorporated into the personnel decon line, pulling HEPA-filtered air ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "from the cleanest areas to areas with contamination (Support Zone to Exclusion Zone). Tents, berms, and ",
+          "role": "BODY"
+        }
+      ],
+      "text": "[January2024Update: 2011Page 4of 11PPE Levelsfor emergency response to a suspected biological agent incident are based on scenario risks from highest to lowest level of protection:\u0000xLEVEL A:NIOSHApproved CBRN full-facepiece SCBA operated in pressure demand mode, a totally- encapsulating chemical protective (TECP) suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when anyof the following are met:a) the event is uncharacterized and/or uncontrolled, b) the type(s) of agent is unknown, c) the dissemination method is unknown, d) dissemination via an aerosol-generating device is still occurring, e) other conditions may present a vapor or splash hazard,or f) decontaminating workers in TECP suits (because of potential for reaerosolization).Level A provides the highest available level of respiratory, skin,and eye protection. Fully-encapsulating suit material must be compatible with the substances involved.\u0000x LEVEL B:NIOSHApproved CBRN or non-CBRN full-facepiece SCBA operated in pressure demand mode, a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when both:a) aerosol is no longer being generated and b) other conditions may present additional hazards, such as a splash hazard. Level B provides the same level of respiratory protection (SCBA) but less skin protection than Level A.Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.\u0000xLEVEL C:NIOSHApprovedCBRN or non-CBRN APRor tight-fitting PAPR,a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when the aerosol is no longer being generated and either: a) the agent and hazard level has been defined orb) a small item on site can be easily bagged. Level C provides the same level of skin protection as Level B, but a lower level of respiratory protection. All criteria for the use of APRs must be met, atmospheric concentrations of chemicals must not exceed IDLH values, and the atmosphere must contain at least 19.5% oxygen.\u0000xLEVEL D: Disposable hooded coveralls, gloves, and foot coverings can be worn when a risk assessment has determined there is no further risk of exposure toBoNTor other hazards that would necessitate the use of respiratory protection, during post-incident operations. Level D provides no respiratory protection and minimal skin protection. This level should not be worn in the exclusion zone and the atmosphere must contain at least 19.5% oxygen.Other Workers:PPE recommendations for non- emergency response workers must be developed in the HASP for the site-specific scenario. PPE recommendations will vary by job type (e.g., cleanup, decontamination), type of exposure (ingestion, dermal, inhalation\u0000²see EXPOSURE ROUTES section ), and additional site hazards (e.g., chemical, physical).NOTE: DowngradingPPE levels may be considered only when the identity and concentration of the agent is known and the risks of reaerosolization or dermal exposure are known to be extremely low. Decisions regarding downgrading of PPE levels are only made at the discretion of the site Health and Safety Officer after conducting a risk assessment and must be accompanied by on-site monitoring.The selection of PPE must address all site hazards. Also refer to NIOSH \u0000³Recommendations for the Selection and Use of Respirators and Protective Clothing for Protection Against Biological Agents\u0000´( https://www.cdc.gov/niosh/docs/2009-132/default.html)\u0000\u000f\u0000\u0003\u00001\u0000,\u00002\u00006\u0000+\u0000\u0003\u0000³\u0000&\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003\u0000%\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003\u00005\u0000D\u0000G\u0000L\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u00001\u0000X\u0000F\u0000O\u0000H\u0000D\u0000U\u0000\u0003\u0000 \u0000&\u0000%\u00005\u00001\u0000 \u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000L\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u00003\u0000U\u0000R\u0000W\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000+\u0000D\u0000Q\u0000G\u0000E\u0000R\u0000R\u0000N\u0000´\u0000\u0003( https://www.cdc.gov/niosh/docs/2018-166/default.html\u0000 \u0000\u000f\u0000\u0003\u00001\u0000,\u00002\u00006\u0000+\u0000\u0003\u0000³\u0000*\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000(\u0000P\u0000H\u0000U\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000\u0003\u00003\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000D\u0000O\u0000\u0003 \u00003\u0000U\u0000R\u0000W\u0000H\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000(\u0000T\u0000X\u0000L\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000 \u00003\u00003\u0000(\u0000 \u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000&\u0000%\u00005\u00001\u0000\u0003\u00007\u0000H\u0000U\u0000U\u0000R\u0000U\u0000L\u0000V\u0000P\u0000\u0003\u0000,\u0000Q\u0000F\u0000L\u0000G\u0000H\u0000Q\u0000W\u0000V\u0000´\u0000\u0003\u0000 https://www.cdc.gov/niosh/docs/2008-132/default.html ), and NIOSH/OSHA/USCG/EPA \"Occupational Safety and Health Guidance Manual for Hazardous Waste Site Activities\" (https://www.cdc.gov/niosh/docs/85-115/default.html). When selecting protective clothing, responders should consider biological and chemical exposure hazards from decontaminants, and data on fabric performance (i.e., material thickness, fluid resistance) and seam construction. Suits and gloves should be selec ted that pass ASTM F1671(https://www.astm.org/f1671_f1671m-22.html) and ASTM F739(https://www.astm.org/f0739-20.html) for the specific chemicalspresent.7. Personnel Decontamination7.1. Personnel Decontamination Procedure:NOTE: Individuals involved in decontamination of personnel must use PPE as indicated in the PERSONNEL SAFETY section above to avoid the potential for exposure. Be sure to cover all abraded skin prior to donning PPE and take care to avoid abrasion of the skin during all personnel decontamination operations to minimize potential for cutaneous exposure toBoNT. Level C PPE with NIOSHApproved APR or PAPR is appropriate when decontaminating personnel potentially contaminated withBoNT . If a higher level of PPE (A orB) is used, the steps below may need to be modified per thesite-specificHASP.WARNING: DO NOT BEGIN ANY WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED (see WASTE MANAGEMENT section below). All waste/trash generated from personnel decontamination procedures must be disposed of as outlined in the site-specific Waste Management Plan.7.2. Personnel Decontamination Procedures by Zone/Step: Prior to entering the Exclusion Zone, all personnel are required to familiarize themselves with the site-specific personnel decontamination procedures. Negative air machine(s) should be incorporated into the personnel decon line, pulling HEPA-filtered air from the cleanest areas to areas with contamination (Support Zone to Exclusion Zone). Tents, berms, and",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 31,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 4,
+      "humanPageNumber": 5,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Botulinum neurotoxin (BoNT)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[January2024Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2011Page 5of 11collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "should be in place to treat, replace, and dispose of contaminated materials used during the decon process in case the setup itself cannotbe properly deconned. In addition, procedures should be implemented to replace necessary spent chemicals ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "and decontamination solutions and containerize for disposal if necessary.\u0000xFor additional details on personnel decontamination procedures, please reference the most recent version of \u0000(\u00003\u0000$\u0000¶\u0000VCBRN ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "CMAD Biological Response Personnel Decontamination Line Standard Operating Procedure (SOP), which can be found at:response.epa.gov/BioResponse_Decontamination_Line_SOP.\u0000xAll waste/trash (e.g., wipes, towels, booties, gloves, inner suits, ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "cartridge filters) generated from personnel decontamination procedures must be disposed of as outlined in the site-specific Waste Management Plan.\u0000xDecon Line Attendant(DLA)will verbally direct personnel through each step.Conducted in ExclusionZone (Hot Z",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "one)1Tool and Instrument DropsPlace equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering the contamination reduction corridor. Equipment will either be reused if more than one entry is ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "planned or will be decontaminated later.Conducted in Contamination ReductionZone (Warm Zone)2Sample DropPlace samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Doff Booties and Work or Task PPEAny work or task-specific PPE is to be disposed of in designated containeror can be placed into a ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "designated bin to be cleaned for reuse. Check for breaches in PPE and identify any gross contamination. Remove any gross contamination with wipes and place into designatedcontainer. Sit on bench and remove booties and place in designatedcontainer.4",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Wet Operations \u0000±Outer Boot and Glove Wash (1stand 2ndGross Decon Wash)The purpose of this step is to remove gross contamination, such as dirt or grime from boots and gloves. If ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "gross contamination is not visible, this step may be skipped. Wash outer boots by stepping in decon basins with designated decontamination solutions and then outer gloves using designated decontamination ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "solutions in glove wash basin as specified in HASP (1:10 diluted bleach). 5Wet Operations \u0000±Full Decon of Gloves, Boots, PAPR,and Outer SuitStep from the 1st and 2nd Gross Decontamination Wash into a contained area (large tub or basin) at this ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "station in the decon line to wash boots and gloves. Keep PAPR facepiece and belt assemblyon face and body. Turn off PAPR and cover the outside of the cartridge loosely to avoid saturation with water. Wash ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Use fine mist tip on sprayer to prevent cross contamination. Start with dec",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "ontaminating boots and gloves, then work on suit from the top down, including PAPR. Decontamination personnel should conduct this step. Care should be taken to ensure all areas are wetted, including around zipper, arms, front torso, and any other area that",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "could have been contaminated. Used decontamination solution and aqueous waste should be contained, collected, and disposed of properly.6Wet Operations \u0000±Doff Outer Boots, Gloves,and Outer SuitWhile sitting on a stool, remove outer boots and ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "outer gloves. Undo the PAPR belt and hold in hand. While touching only the inside of suit, remove outer suit by carefully rolling suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "may require decontamination personnel to assist either by holding PAPR unit or assisting in suit removal.7Dry Operations \u0000±Inner Suit Wipe and RemovalConducted by DLA \u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "\u0000:\u0000K\u0000L\u0000O\u0000H\u0000\u0003\u0000W\u0000R\u0000X\u0000F\u0000K\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000O\u0000\\\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000L\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u000f\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000E\u0000\\\u0000\u0003carefully rolling it inside out while progressing slowly, using a downward motion, from the hood ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "head/shoulders area, to the hands and sleeves, all the way down to the feet. Wipe down the zipper, hood near the facepiece",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000X\u0000I\u0000I\u0000V\u0000\u0003\u0000\u000b\u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000L\u0000Q\u0000\u0003\u0000\u0019\u0000\u0003\u0000L\u0000Q\u0000F\u0000K\u0000H\u0000V\u0000\u0003\u0000D\u0000E\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000U\u0000L\u0000V\u0000W\u0000\f\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000D\u0000\u0003\u0000S\u0000D\u0000S\u0000H\u0000U\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "towel wetted with new decontamination solution. Step out of suit while holding PAPR with facepieceon andplace inner suit in designated container.8PAPR and FacepieceRemoval",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Put on a new pair of gloves over the inner gloves (provided by DLA). With new gloves on, doff PAPR facepieceand hose by looking downward and pulling the facepiecedown from the top of head and away ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "from chin. Remove cartridge filters and place into a designated container. Put facepieceand hose into designated containers for cleaning. Decontamination personnel will clean each facepieceand PAPR assembly prior to return to service. 9Inner Glove Removal,",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "and Hand and Face WashRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container. Wash hands and then face with soap and warm water after all PPE has ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "been doffed and prior to entering the personal shower.Conducted inSupportZone (Cold Zone)10Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "change into clean clothes. If a personal shower is not immediately available, at the minimum, hands and face should be washed thoroughly.11Medical MonitoringReport to the medical monitoring station for post-entry monitoring and if necessary, meet with ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "appropriate personnel for debriefing.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[January2024Update: 2011Page 5of 11collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to treat, replace, and dispose of contaminated materials used during the decon process in case the setup itself cannotbe properly deconned. In addition, procedures should be implemented to replace necessary spent chemicals and decontamination solutions and containerize for disposal if necessary.\u0000xFor additional details on personnel decontamination procedures, please reference the most recent version of \u0000(\u00003\u0000$\u0000¶\u0000VCBRN CMAD Biological Response Personnel Decontamination Line Standard Operating Procedure (SOP), which can be found at:response.epa.gov/BioResponse_Decontamination_Line_SOP.\u0000xAll waste/trash (e.g., wipes, towels, booties, gloves, inner suits, cartridge filters) generated from personnel decontamination procedures must be disposed of as outlined in the site-specific Waste Management Plan.\u0000xDecon Line Attendant(DLA)will verbally direct personnel through each step.Conducted in ExclusionZone (Hot Z one)1Tool and Instrument DropsPlace equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.Conducted in Contamination ReductionZone (Warm Zone)2Sample DropPlace samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of- custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Doff Booties and Work or Task PPEAny work or task-specific PPE is to be disposed of in designated containeror can be placed into a designated bin to be cleaned for reuse. Check for breaches in PPE and identify any gross contamination. Remove any gross contamination with wipes and place into designatedcontainer. Sit on bench and remove booties and place in designatedcontainer.4 Wet Operations \u0000±Outer Boot and Glove Wash (1stand 2ndGross Decon Wash)The purpose of this step is to remove gross contamination, such as dirt or grime from boots and gloves. If gross contamination is not visible, this step may be skipped. Wash outer boots by stepping in decon basins with designated decontamination solutions and then outer gloves using designated decontamination solutions in glove wash basin as specified in HASP (1:10 diluted bleach). 5Wet Operations \u0000±Full Decon of Gloves, Boots, PAPR,and Outer SuitStep from the 1st and 2nd Gross Decontamination Wash into a contained area (large tub or basin) at this station in the decon line to wash boots and gloves. Keep PAPR facepiece and belt assemblyon face and body. Turn off PAPR and cover the outside of the cartridge loosely to avoid saturation with water. Wash all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Use fine mist tip on sprayer to prevent cross contamination. Start with dec ontaminating boots and gloves, then work on suit from the top down, including PAPR. Decontamination personnel should conduct this step. Care should be taken to ensure all areas are wetted, including around zipper, arms, front torso, and any other area that could have been contaminated. Used decontamination solution and aqueous waste should be contained, collected, and disposed of properly.6Wet Operations \u0000±Doff Outer Boots, Gloves,and Outer SuitWhile sitting on a stool, remove outer boots and outer gloves. Undo the PAPR belt and hold in hand. While touching only the inside of suit, remove outer suit by carefully rolling suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontamination personnel to assist either by holding PAPR unit or assisting in suit removal.7Dry Operations \u0000±Inner Suit Wipe and RemovalConducted by DLA \u0000± \u0000:\u0000K\u0000L\u0000O\u0000H\u0000\u0003\u0000W\u0000R\u0000X\u0000F\u0000K\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000O\u0000\\\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000L\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u000f\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000E\u0000\\\u0000\u0003carefully rolling it inside out while progressing slowly, using a downward motion, from the hood head/shoulders area, to the hands and sleeves, all the way down to the feet. Wipe down the zipper, hood near the facepiece \u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000X\u0000I\u0000I\u0000V\u0000\u0003\u0000 \u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000L\u0000Q\u0000\u0003\u0000\u0019\u0000\u0003\u0000L\u0000Q\u0000F\u0000K\u0000H\u0000V\u0000\u0003\u0000D\u0000E\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000U\u0000L\u0000V\u0000W\u0000 \u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000D\u0000\u0003\u0000S\u0000D\u0000S\u0000H\u0000U\u0000\u0003 towel wetted with new decontamination solution. Step out of suit while holding PAPR with facepieceon andplace inner suit in designated container.8PAPR and FacepieceRemoval Put on a new pair of gloves over the inner gloves (provided by DLA). With new gloves on, doff PAPR facepieceand hose by looking downward and pulling the facepiecedown from the top of head and away from chin. Remove cartridge filters and place into a designated container. Put facepieceand hose into designated containers for cleaning. Decontamination personnel will clean each facepieceand PAPR assembly prior to return to service. 9Inner Glove Removal, and Hand and Face WashRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container. Wash hands and then face with soap and warm water after all PPE has been doffed and prior to entering the personal shower.Conducted inSupportZone (Cold Zone)10Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available, at the minimum, hands and face should be washed thoroughly.11Medical MonitoringReport to the medical monitoring station for post-entry monitoring and if necessary, meet with appropriate personnel for debriefing.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 31,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 5,
+      "humanPageNumber": 6,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Botulinum neurotoxin (BoNT)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[January2024Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2011Page 6of 11Emergency Egress Corridor:Establish an emergency egress line to use for quickly decontaminating personnel with medical emergencies while in the Exclusion Zone. Depending on the severity of the injury or illness, personnel may have ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "to be quickly gross or dry deconned only and have PPE and clothing removed. Prior to receiving treatment from emergency medical technicians (EMT) or being transported to a hospital, personnel must be decontaminated to minimize potential exposure to others",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "andcomply with allambulance/EMT requirements.Note:All work in the Exclusion Zone must come to a stop until the Emergency Egress Corridor is clearedand reset.Hand-Wash Station:A hand-wash station with soap and water should be available for personnel to",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "physicallyremove any residual agent/decontaminant following entry. However, this may not be available initially at the scene or weather conditions may prohibit its use.8. Environmental SamplingNote: ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Environmental samples refer to samples collected from environmental matrices (e.g., air, water, soil, surfaces) and do not include forensic or clinical samples collected by other agencies.8.1. ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Before Collecting Environmental Samples (bullet order may vary):1)Identify, coordinate with, and initiate information sharing with the:a)Law enforcement agency in charge to ensure site access and ensure that sample chain-of-custody is maintained between ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "agencies involved in response.b)Public health jurisdiction and public health labs that may be involved. This may include initiating contact with the EPA/HQ-EOC (202-564-3850) for availability of Environmental Response Laboratory Network (ERLN) ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "\u0000O\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000L\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00001\u0000H\u0000W\u0000Z\u0000R\u0000U\u0000N\u0000\u0003\u0000\u000b\u0000/\u00005\u00001\u0000\f\u0000\u000f\u0000\u0003\u0000P\u0000R\u0000E\u0000L\u0000O\u0000H\u0000\u0003\u0000&\u0000L\u0000Y\u0000L\u0000O\u0000\u0003\u00006\u0000X\u0000S\u0000S\u0000R\u0000U\u0000W\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000\u000b\u0000&\u00006\u00007\u0000\f\u0000\u0003\u0000O\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000L\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000R\u0000U\u0000\u0003other laboratories able to analyze the site-",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "specific types of environmental samples. Accordingly, the ERLN lead can provide information on which laboratories to send theenvironmentalsamplestoand help coordinate. Note: few labs currently have thecapability to detect BoNT, particularly for large ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "numbers of samples and in all types ofsamples collected fromenvironmental matrices.2)Create a site-specific sampling and analysis plan (SAP) thatincludes the Data Quality Objective (DQO) process as ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "part of a quality assurance project plan to be reviewed and approved by appropriate subject matter experts and/or through Incident Command System (ICS) channels. Additional resources for SAP preparationare provided below. ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Note: choice of detection/analytical equipment and sampling techniques will be highly site-and incident-specific and will be affected by the following: type of release; characteristics of BoNT or C. botulinum preparation; type of contaminatedenvironmental",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "matrix; sampling objectives; sample handing requirements; transportation regulations; analytical laboratory acceptance criteria; and waste disposal facilities\u0000¶decontaminationrequirementsfor environmental samples.a)",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Additional details on the DQO process can be found at: \u0000³Guidance on Systematic Planning Using the Data Quality ObjectivesProcess,\u0000´EPA QA/G-4(https://www.epa.gov/sites/default/files/2015-06/documents/g4-final.pdf).b)Referto\u0000H\u00006\u0000$\u00000\u0000¶\u0000V",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Sampling and Analysis Plan-Resourceswebpage (https://www.epa.gov/esam/sampling-and-analysis-plan-resources-pathogens) for guidance on\u0000(\u00003\u0000$\u0000¶\u0000VSAP Template Toolfor Addressing Environmental Contamination by Pathogens(https://www.epa.gov/esam/sampling-and-",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "analysis-plan-sap-template-tool-addressing-environmental-contamination-pathogens),which could potentially be amended for biotoxin SAP development.c)The e\u00006\u0000$\u00000\u0000¶\u0000VSample Collection Information Documents(SCID) (https://www.epa.gov/esam/sample-collection-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "information-documents-scids) contains general information on sample type, size, container, holding time, preservation, and general packaging and shipping requirements for collection of samples to be analyzed for BoNT or ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": ". Contact the EPA/HQ-EOC at 202-564-3850 or the incident environmental unit leader for information on sample types not included in the SCID. d)Refer to LABORATORY ANALYSIS section below \u0000D\u0000Q\u0000G\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Selected Analytical Methods (SAM) (",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "https://www.epa.gov/esam/selected-analytical-methods-environmental-remediation-and-recovery-sam) for general information on available analysis methods.e)Sample integrity (biological activity of BoNT or viability of",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": ") should be considered along with sample handling, packaging, and shippingrequirements (see Section 8.3).f)The sampling strategy and design chosen will be based on many factors including,but not limited to,site ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "characteristics, sampling resources, and laboratory capacity. The following tools can be used to select and develop sampling designs (number, type, and locationof environmental samples) that meet the site-specific objectives: a.Trade-",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "off Tool for Sampling (TOTS): An online tool to estimate and optimize cost, time, and resources for SAPs(https://tots.epa.gov/).b.Visual Sample Plan (VSP): Astatistical software tool for generating probabilistic sampling designs(",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "https://www.pnnl.gov/projects/visual-sample-plan).c.\u0000³Guidance for Choosing a Sampling Design for Environmental Data Collection,\u0000´EPA QA/G-5S(https://www.epa.gov/sites/production/files/2015-06/documents/g5s-final.pdf).",
+          "role": "BODY"
+        }
+      ],
+      "text": "[January2024Update: 2011Page 6of 11Emergency Egress Corridor:Establish an emergency egress line to use for quickly decontaminating personnel with medical emergencies while in the Exclusion Zone. Depending on the severity of the injury or illness, personnel may have to be quickly gross or dry deconned only and have PPE and clothing removed. Prior to receiving treatment from emergency medical technicians (EMT) or being transported to a hospital, personnel must be decontaminated to minimize potential exposure to others andcomply with allambulance/EMT requirements.Note:All work in the Exclusion Zone must come to a stop until the Emergency Egress Corridor is clearedand reset.Hand-Wash Station:A hand-wash station with soap and water should be available for personnel to physicallyremove any residual agent/decontaminant following entry. However, this may not be available initially at the scene or weather conditions may prohibit its use.8. Environmental SamplingNote: Environmental samples refer to samples collected from environmental matrices (e.g., air, water, soil, surfaces) and do not include forensic or clinical samples collected by other agencies.8.1. Before Collecting Environmental Samples (bullet order may vary):1)Identify, coordinate with, and initiate information sharing with the:a)Law enforcement agency in charge to ensure site access and ensure that sample chain-of-custody is maintained between agencies involved in response.b)Public health jurisdiction and public health labs that may be involved. This may include initiating contact with the EPA/HQ-EOC (202-564-3850) for availability of Environmental Response Laboratory Network (ERLN) \u0000O\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000L\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00001\u0000H\u0000W\u0000Z\u0000R\u0000U\u0000N\u0000\u0003\u0000 \u0000/\u00005\u00001\u0000 \u0000\u000f\u0000\u0003\u0000P\u0000R\u0000E\u0000L\u0000O\u0000H\u0000\u0003\u0000&\u0000L\u0000Y\u0000L\u0000O\u0000\u0003\u00006\u0000X\u0000S\u0000S\u0000R\u0000U\u0000W\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000 \u0000&\u00006\u00007\u0000 \u0000\u0003\u0000O\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000L\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000R\u0000U\u0000\u0003other laboratories able to analyze the site- specific types of environmental samples. Accordingly, the ERLN lead can provide information on which laboratories to send theenvironmentalsamplestoand help coordinate. Note: few labs currently have thecapability to detect BoNT, particularly for large numbers of samples and in all types ofsamples collected fromenvironmental matrices.2)Create a site-specific sampling and analysis plan (SAP) thatincludes the Data Quality Objective (DQO) process as part of a quality assurance project plan to be reviewed and approved by appropriate subject matter experts and/or through Incident Command System (ICS) channels. Additional resources for SAP preparationare provided below. Note: choice of detection/analytical equipment and sampling techniques will be highly site-and incident-specific and will be affected by the following: type of release; characteristics of BoNT or C. botulinum preparation; type of contaminatedenvironmental matrix; sampling objectives; sample handing requirements; transportation regulations; analytical laboratory acceptance criteria; and waste disposal facilities\u0000¶decontaminationrequirementsfor environmental samples.a) Additional details on the DQO process can be found at: \u0000³Guidance on Systematic Planning Using the Data Quality ObjectivesProcess,\u0000´EPA QA/G-4(https://www.epa.gov/sites/default/files/2015-06/documents/g4-final.pdf).b)Referto\u0000H\u00006\u0000$\u00000\u0000¶\u0000V Sampling and Analysis Plan-Resourceswebpage (https://www.epa.gov/esam/sampling-and-analysis-plan-resources-pathogens) for guidance on\u0000(\u00003\u0000$\u0000¶\u0000VSAP Template Toolfor Addressing Environmental Contamination by Pathogens(https://www.epa.gov/esam/sampling-and- analysis-plan-sap-template-tool-addressing-environmental-contamination-pathogens),which could potentially be amended for biotoxin SAP development.c)The e\u00006\u0000$\u00000\u0000¶\u0000VSample Collection Information Documents(SCID) (https://www.epa.gov/esam/sample-collection- information-documents-scids) contains general information on sample type, size, container, holding time, preservation, and general packaging and shipping requirements for collection of samples to be analyzed for BoNT or . Contact the EPA/HQ-EOC at 202-564-3850 or the incident environmental unit leader for information on sample types not included in the SCID. d)Refer to LABORATORY ANALYSIS section below \u0000D\u0000Q\u0000G\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Selected Analytical Methods (SAM) ( https://www.epa.gov/esam/selected-analytical-methods-environmental-remediation-and-recovery-sam) for general information on available analysis methods.e)Sample integrity (biological activity of BoNT or viability of ) should be considered along with sample handling, packaging, and shippingrequirements (see Section 8.3).f)The sampling strategy and design chosen will be based on many factors including,but not limited to,site characteristics, sampling resources, and laboratory capacity. The following tools can be used to select and develop sampling designs (number, type, and locationof environmental samples) that meet the site-specific objectives: a.Trade- off Tool for Sampling (TOTS): An online tool to estimate and optimize cost, time, and resources for SAPs(https://tots.epa.gov/).b.Visual Sample Plan (VSP): Astatistical software tool for generating probabilistic sampling designs( https://www.pnnl.gov/projects/visual-sample-plan).c.\u0000³Guidance for Choosing a Sampling Design for Environmental Data Collection,\u0000´EPA QA/G-5S(https://www.epa.gov/sites/production/files/2015-06/documents/g5s-final.pdf).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 28,
+        "repeatedHeaderFooterBlockCount": 7,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 6,
+      "humanPageNumber": 7,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Botulinum neurotoxin (BoNT)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[January2024Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2011Page 7of 118.2. Sampling Strategy and Methods:While this QRG is written for BoNT contamination, an incident could potentially involve either BoNT or ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "spores,or both,depending on the release scenario and conditions of the release (See RELEASE SCENARIOSsectionabove). \u0000xNote: Prior to collecting samples, consult with the receiving laboratories to determine accepted sample types for their BoNT and/or ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "analysis capability. \u0000xNote:Approved environmental sample types for BoNT analysis by the LRN laboratories include only soil, water, and dry swabs. No specific sample types have been identified as approved sampling typesfor BoNT analysisfor ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "the ERLN or CST laboratories.Sample Types:1)Non-Porous Surfaces, Swab Sampling: Sterile swabs are used to sample 4 in2area of non-porous, small, hard-to-reach,",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "or irregular shaped surfaces (e.g., keyboards, air register vanes). Consult the analysis laboratory to confirm the appropriate swab type and pre-moistening solution (if applicable) to be used. Note: If an LRN laboratory is to be ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "utilized, the LRN accepts dry swabs while other labs may accept swabs in pre-moistening solution.2)Water:Since BoNT can persist in water, any potable water source can be sampled. Potable waterthat is chlorinated",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "or contains an oxidant (whether applied as a disinfectant in a water system or introduced during decontamination activities) needs to be neutralized immediately upon collection with a sodium thiosulfate or other neutralizer at the concentration specified ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "by the analytical laboratory. See referenceslistedbelow. Note: If an LRN laboratory is to be utilized, LRN testing requires \u0000\u0000\u0014\u0000\u0013\u0000\u0013\u0000\u0003\u0000P\u0000/\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000Z\u0000D\u0000W\u0000H\u0000Ufrom each location to be tested. \u0000x\u0000³Sampling Guidance for Unknown Contaminants in Drinking Water,\u0000´",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "EPA-817-R-08-003, February 2017 (https://www.epa.gov/sites/default/files/2017-02/documents/sampling_guidance_for_unknown_contaminants_in_drinking_water_02152017_final.pdf).\u0000xEPA and CDC, \u0000³",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Protocol for Collection of Water Samples for Detection of Pathogens or Biothreat Agents\u0000\u000f\u0000´\u0000\u0003EPA/600/R-21/280,September 2022(https://cfpub.epa.gov/si/si_public_record_report.cfm?dirEntryId=355726&Lab=CESER&simplesearch=0&show",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "criteria=2&sortby=pubDate&timstype=&datebeginpublishedpresented=05/11/2021&searchall=water+sample+collection).3)Soil:",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "spores are commonly found in and can persist in soil and can produce the neurotoxin during growth of the bacteria. Thus, a positive analysis result will not necessarily indicate contaminated soil. Prior to collecting soil samples, determine if analysis of",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "spores and/or BoNT is required. For areas where soil deposition of the agent is suspected to have occurred (i.e., where aerosols or liquid droplets have been present), handling of surrounding vegetation and depth of soil to ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "be sampled should be determined. Note: If an LRN laboratory is to be utilized, LRN testing requires 50-100 g of soil from each location to be tested.Permits are needed to ship soil samplesacross state lines (information onthe",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "USDA soil permit process can be found at:https://www.aphis.usda.gov/aphis/ourfocus/planthealth/import-information/permits/plant-pests/sa_soil/ct_soil_permit_process#:~:text=The%20process%20for%20obtaining%20a,the%20review%20process%20is%20initiated).",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Other Sampling Methods:Innovative sampling methods or sampling types in which there is not an approved LRN, ERLN, or CST analysis method ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "available may be used if they are sufficiently advantageous for achieving objectives and a laboratory can be identified thatcan accept the samples. These methods might include,but are not limited to:non-porous surface sampling using sterile ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "gauze wipes or cellulose sponge-sticks; sampling for porous and/or irregular shaped surfaces using 37-mm filter cassettes/microvacuum techniques; and air sampling using low-volume air filtration sampling, filter cassettes, or liquid ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "impinger methods. Where applicable, the receiving laboratory should be consulted for sampling specifics such as wet vs. dry sampling and use of appropriate pre-moistening solutions. 8.3.Packaging and Shipping Requirements:",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Packaging and shipping of samples are subject to strict regulations established by USDOT, CDC, USPS, OSHA, IATA, WHO, and the Federal Select Agent Program. SeeSection 11.1 Transportationbelowfor more informationonpackaging, labeling, and shipping.",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Samples should be packaged in an air-tight container andkept at temperatures of 40-50°F (4-10°C). Do not place samples directly on the ice used for cooling the shipping container. Contact the sample-receiving laboratory to determine if they ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "have additional packaging, shipping, or labeling requirements.9. Laboratory AnalysisNote:Some analytical methods used to detect BoNT in environmental samples may not be able to distinguish between biologically active and inactive forms of this bio",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "toxin. Sample quantification including biologically inactive biotoxin may result in an overestimate of human health risk, though will likely be of important forensic interest.Attention: If ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "is involved in the contamination incident, organism-specific analytical methods, including microbiological culture, will need to be used for sample analysis.Analytical goals:",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "Analytical goals may change as the response progresses, and laboratory analysis can follow a tiered approach, or algorithm, when implementing different analytical methods, particularly when needed to address a large ",
+          "role": "BODY"
+        }
+      ],
+      "text": "[January2024Update: 2011Page 7of 118.2. Sampling Strategy and Methods:While this QRG is written for BoNT contamination, an incident could potentially involve either BoNT or spores,or both,depending on the release scenario and conditions of the release (See RELEASE SCENARIOSsectionabove). \u0000xNote: Prior to collecting samples, consult with the receiving laboratories to determine accepted sample types for their BoNT and/or analysis capability. \u0000xNote:Approved environmental sample types for BoNT analysis by the LRN laboratories include only soil, water, and dry swabs. No specific sample types have been identified as approved sampling typesfor BoNT analysisfor the ERLN or CST laboratories.Sample Types:1)Non-Porous Surfaces, Swab Sampling: Sterile swabs are used to sample 4 in2area of non-porous, small, hard-to-reach, or irregular shaped surfaces (e.g., keyboards, air register vanes). Consult the analysis laboratory to confirm the appropriate swab type and pre-moistening solution (if applicable) to be used. Note: If an LRN laboratory is to be utilized, the LRN accepts dry swabs while other labs may accept swabs in pre-moistening solution.2)Water:Since BoNT can persist in water, any potable water source can be sampled. Potable waterthat is chlorinated or contains an oxidant (whether applied as a disinfectant in a water system or introduced during decontamination activities) needs to be neutralized immediately upon collection with a sodium thiosulfate or other neutralizer at the concentration specified by the analytical laboratory. See referenceslistedbelow. Note: If an LRN laboratory is to be utilized, LRN testing requires \u0000\u0000\u0014\u0000\u0013\u0000\u0013\u0000\u0003\u0000P\u0000/\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000Z\u0000D\u0000W\u0000H\u0000Ufrom each location to be tested. \u0000x\u0000³Sampling Guidance for Unknown Contaminants in Drinking Water,\u0000´ EPA-817-R-08-003, February 2017 (https://www.epa.gov/sites/default/files/2017-02/documents/sampling_guidance_for_unknown_contaminants_in_drinking_water_02152017_final.pdf).\u0000xEPA and CDC, \u0000³ Protocol for Collection of Water Samples for Detection of Pathogens or Biothreat Agents\u0000\u000f\u0000´\u0000\u0003EPA/600/R-21/280,September 2022(https://cfpub.epa.gov/si/si_public_record_report.cfm?dirEntryId=355726&Lab=CESER&simplesearch=0&show criteria=2&sortby=pubDate&timstype=&datebeginpublishedpresented=05/11/2021&searchall=water+sample+collection).3)Soil: spores are commonly found in and can persist in soil and can produce the neurotoxin during growth of the bacteria. Thus, a positive analysis result will not necessarily indicate contaminated soil. Prior to collecting soil samples, determine if analysis of spores and/or BoNT is required. For areas where soil deposition of the agent is suspected to have occurred (i.e., where aerosols or liquid droplets have been present), handling of surrounding vegetation and depth of soil to be sampled should be determined. Note: If an LRN laboratory is to be utilized, LRN testing requires 50-100 g of soil from each location to be tested.Permits are needed to ship soil samplesacross state lines (information onthe USDA soil permit process can be found at:https://www.aphis.usda.gov/aphis/ourfocus/planthealth/import-information/permits/plant-pests/sa_soil/ct_soil_permit_process#:~:text=The%20process%20for%20obtaining%20a,the%20review%20process%20is%20initiated). Other Sampling Methods:Innovative sampling methods or sampling types in which there is not an approved LRN, ERLN, or CST analysis method available may be used if they are sufficiently advantageous for achieving objectives and a laboratory can be identified thatcan accept the samples. These methods might include,but are not limited to:non-porous surface sampling using sterile gauze wipes or cellulose sponge-sticks; sampling for porous and/or irregular shaped surfaces using 37-mm filter cassettes/microvacuum techniques; and air sampling using low-volume air filtration sampling, filter cassettes, or liquid impinger methods. Where applicable, the receiving laboratory should be consulted for sampling specifics such as wet vs. dry sampling and use of appropriate pre-moistening solutions. 8.3.Packaging and Shipping Requirements: Packaging and shipping of samples are subject to strict regulations established by USDOT, CDC, USPS, OSHA, IATA, WHO, and the Federal Select Agent Program. SeeSection 11.1 Transportationbelowfor more informationonpackaging, labeling, and shipping. Samples should be packaged in an air-tight container andkept at temperatures of 40-50°F (4-10°C). Do not place samples directly on the ice used for cooling the shipping container. Contact the sample-receiving laboratory to determine if they have additional packaging, shipping, or labeling requirements.9. Laboratory AnalysisNote:Some analytical methods used to detect BoNT in environmental samples may not be able to distinguish between biologically active and inactive forms of this bio toxin. Sample quantification including biologically inactive biotoxin may result in an overestimate of human health risk, though will likely be of important forensic interest.Attention: If is involved in the contamination incident, organism-specific analytical methods, including microbiological culture, will need to be used for sample analysis.Analytical goals: Analytical goals may change as the response progresses, and laboratory analysis can follow a tiered approach, or algorithm, when implementing different analytical methods, particularly when needed to address a large",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 33,
+        "repeatedHeaderFooterBlockCount": 10,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 7,
+      "humanPageNumber": 8,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Botulinum neurotoxin (BoNT)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[January2024Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2011Page 8of 11number of samples. For example, some methods such as immunoassays and PCR are generally more rapid but cannot determine whether the BoNTin the sample is harmful (biologically active),and might be used during the initial stages of ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "response to evaluate the extent of contamination. Such methods also might be used to identify samples that should be analyzed using any of the more extensive methods.These more extensive analytical methods may be considered for use ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "when: 1) earlier analysis indicates the presence of BoNT or ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": ", 2) a smaller subset of samples requires analysis, or 3) as required for a tiered approach to environmental decontamination/cleanup. Briefly, depending on the goals of the decontamination/cleanup phase, BoNT bioactivity or ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "viability assessment methods may be needed for sample analysis. For information on analysis methods, re\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u00006\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000\u0014\u0000\u0013\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Selected Analytical Methods (SAM) (https://www.epa.gov/esam/selected-analytical-methods-",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "environmental-remediation-and-recovery-sam).9.1.Quick On-Site Sample AnalysisAvailable technologies:The following table summarizes some available technologies by which responders may be able to ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "obtain results within a comparatively short time frame. Performance data for these tests, if available, should be carefully reviewed to ensure accurate applicability to site-specific conditions to avoid misinterpretation of results. The Civil Support ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "may not have the capabilities to prepare certain types of samples for analysis. The site-specific types of samples should be discussed before relying on their capabilities. Contact the EPA/HQ-EOC (202-564-3850) for current information.Platform \u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "AvailabilityWhere usedPotential purposesImmunoassay assay) \u0000±CSTMobile Lab (CST ALS)Suggestive of presence/absence throughimmunological features, but it can also detectinactive BoNT that will not cause health effects.Immunoassay (Hand-Held Assay \u0000±CST",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Mobile Lab (CST ALS)Suggestive of presence/absence through immunological features, but it can also detect inactive BoNT that will not cause healtheffects.Immunoassay (Lateral Flow Assay \u0000±CommercialFieldSuggestive of ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "presence/absence through immunological features, but it can also detect inactive BoNT that will not cause healtheffects.PCR \u0000±CSTMobile Lab (CST ALS)Indirectly suggestive of presence/absence of BoNT through detection of the BoNT gene intrace amounts",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "of DNA of C. botulinum that may be present in the sample. However, a positive PCR assay result does not indicate presence or absence of harmful (biologically active) BoNT.Directly suggestive of presence/absence of ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "through detection of the BoNT gene in case of abacterial contamination incident. However, such PCR assays cannot help determining whether viable (live) ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "C. botulinum ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "is present in the sample. 9.2.Laboratory AnalysisNote:Many labs will not be able to perform analysis on all environmental sample types and matrices, so it is vital to consult with the laboratory to understand their capabilities before sending samples.",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Laboratory availability:Contact the EPA/HQ-EOC (202-564-3850) for availability of Environmental Response ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "\u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u00001\u0000H\u0000W\u0000Z\u0000R\u0000U\u0000N\u0000\u0003\u0000\u000b\u0000(\u00005\u0000/\u00001\u0000\f\u0000\u0003\u0000O\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000L\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000R\u0000W\u0000K\u0000H\u0000U\u0000\u0003\u0000O\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000L\u0000H\u0000V\u0000\u0003\u0000V\u0000X\u0000F\u0000K\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00001\u0000H\u0000W\u0000Z\u0000R\u0000U\u0000N\u0000\u0003\u0000\u000b\u0000/\u00005\u00001\u0000\f\u0000\u0003\u0000D\u0000E\u0000O\u0000H\u0000\u0003to analyze the site-",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "specific types of samples for BoNT or ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": ". Additional laboratory capacity may be available through the public health department responsible for a specific site and the Integrated Consortium of Laboratory Networks (ICLN).Analytical methods: ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "\u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Selected Analytical Methods (SAM)(https://www.epa.gov/esam/selected-analytical-methods-environmental-remediation-and-recovery-sam).Consider the site-",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "specific sampling objectives and consult with the receiving laboratory to determine if presumptive and/or confirmatory methods are to be used for analysis.10. Environmental Decontamination/CleanupWARNING: DO NOT BEGIN",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "DECONTAMINATION WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED (see WASTE MANAGEMENT section below).CAUTION: Spraying decontamination solutions may re-aerosolize the biotoxin. For decontamination information, contacttheEPA/HQ-",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "EOC at 202-564-3850.10.1. Decontamination/Cleanup Planning:All BoNT serotypes are expected to behave similarly toward decontamination. The site-\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "plan should be developed and approved by all necessary organizations/SMEs via ICS channels. Responders should develop a plan that considers: 1) Nature of contamination including physical properties,and how it entered the facilityor area",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "; 2) Extent of contamination, including the amount and possible pathways that have or could have spread the toxin; 3) Decontamination of items for re-use and/or disposal.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[January2024Update: 2011Page 8of 11number of samples. For example, some methods such as immunoassays and PCR are generally more rapid but cannot determine whether the BoNTin the sample is harmful (biologically active),and might be used during the initial stages of response to evaluate the extent of contamination. Such methods also might be used to identify samples that should be analyzed using any of the more extensive methods.These more extensive analytical methods may be considered for use when: 1) earlier analysis indicates the presence of BoNT or , 2) a smaller subset of samples requires analysis, or 3) as required for a tiered approach to environmental decontamination/cleanup. Briefly, depending on the goals of the decontamination/cleanup phase, BoNT bioactivity or viability assessment methods may be needed for sample analysis. For information on analysis methods, re\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u00006\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000\u0014\u0000\u0013\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Selected Analytical Methods (SAM) (https://www.epa.gov/esam/selected-analytical-methods- environmental-remediation-and-recovery-sam).9.1.Quick On-Site Sample AnalysisAvailable technologies:The following table summarizes some available technologies by which responders may be able to obtain results within a comparatively short time frame. Performance data for these tests, if available, should be carefully reviewed to ensure accurate applicability to site-specific conditions to avoid misinterpretation of results. The Civil Support may not have the capabilities to prepare certain types of samples for analysis. The site-specific types of samples should be discussed before relying on their capabilities. Contact the EPA/HQ-EOC (202-564-3850) for current information.Platform \u0000± AvailabilityWhere usedPotential purposesImmunoassay assay) \u0000±CSTMobile Lab (CST ALS)Suggestive of presence/absence throughimmunological features, but it can also detectinactive BoNT that will not cause health effects.Immunoassay (Hand-Held Assay \u0000±CST Mobile Lab (CST ALS)Suggestive of presence/absence through immunological features, but it can also detect inactive BoNT that will not cause healtheffects.Immunoassay (Lateral Flow Assay \u0000±CommercialFieldSuggestive of presence/absence through immunological features, but it can also detect inactive BoNT that will not cause healtheffects.PCR \u0000±CSTMobile Lab (CST ALS)Indirectly suggestive of presence/absence of BoNT through detection of the BoNT gene intrace amounts of DNA of C. botulinum that may be present in the sample. However, a positive PCR assay result does not indicate presence or absence of harmful (biologically active) BoNT.Directly suggestive of presence/absence of through detection of the BoNT gene in case of abacterial contamination incident. However, such PCR assays cannot help determining whether viable (live) is present in the sample. 9.2.Laboratory AnalysisNote:Many labs will not be able to perform analysis on all environmental sample types and matrices, so it is vital to consult with the laboratory to understand their capabilities before sending samples. Laboratory availability:Contact the EPA/HQ-EOC (202-564-3850) for availability of Environmental Response \u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u00001\u0000H\u0000W\u0000Z\u0000R\u0000U\u0000N\u0000\u0003\u0000 \u0000(\u00005\u0000/\u00001\u0000 \u0000\u0003\u0000O\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000L\u0000H\u0000V\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000R\u0000W\u0000K\u0000H\u0000U\u0000\u0003\u0000O\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000L\u0000H\u0000V\u0000\u0003\u0000V\u0000X\u0000F\u0000K\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00001\u0000H\u0000W\u0000Z\u0000R\u0000U\u0000N\u0000\u0003\u0000 \u0000/\u00005\u00001\u0000 \u0000\u0003\u0000D\u0000E\u0000O\u0000H\u0000\u0003to analyze the site- specific types of samples for BoNT or . Additional laboratory capacity may be available through the public health department responsible for a specific site and the Integrated Consortium of Laboratory Networks (ICLN).Analytical methods: \u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Selected Analytical Methods (SAM)(https://www.epa.gov/esam/selected-analytical-methods-environmental-remediation-and-recovery-sam).Consider the site- specific sampling objectives and consult with the receiving laboratory to determine if presumptive and/or confirmatory methods are to be used for analysis.10. Environmental Decontamination/CleanupWARNING: DO NOT BEGIN DECONTAMINATION WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED (see WASTE MANAGEMENT section below).CAUTION: Spraying decontamination solutions may re-aerosolize the biotoxin. For decontamination information, contacttheEPA/HQ- EOC at 202-564-3850.10.1. Decontamination/Cleanup Planning:All BoNT serotypes are expected to behave similarly toward decontamination. The site-\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003 plan should be developed and approved by all necessary organizations/SMEs via ICS channels. Responders should develop a plan that considers: 1) Nature of contamination including physical properties,and how it entered the facilityor area ; 2) Extent of contamination, including the amount and possible pathways that have or could have spread the toxin; 3) Decontamination of items for re-use and/or disposal.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 32,
+        "repeatedHeaderFooterBlockCount": 10,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 8,
+      "humanPageNumber": 9,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Botulinum neurotoxin (BoNT)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[January2024Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2011Page 9of 11General Considerations: An evaluation should be undertaken that considers public and worker safety, total cost, impact on the facility, wastes generated, as well as the time the facility or item will be out of service and any socio-",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "economic, psychological, and/or security impacts that may result. It is advisable to isolate the contaminated area. Largevolumes of decontamination wastes may be generated that will need to be collected, treated, and disposedof properly.Disposal Option:",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "The urgency to restore a facility for reoccupancy as quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may be resistant to decontamination formulation",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "s or it may be cheaper to discard and replace than to decontaminate and restore. In general, for porous materials that are non-essential (e.g., carpet, upholstered furniture), it is recommended to remove and manage these items as contaminated waste.",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Monitored Natural Attenuation:Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction, contaminant ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "containment measures). The time to achieve clearance must be considered in the decontamination cleanup planning. No natural attenuation data are available for BoNT; however, there are data for crude ricin(a biotoxin)thatshould have similar resistance",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "to time, temperature,and humidity since both biotoxins are comprised of proteinaceous materials. Wood et al. 2018 found that there was minimal attenuation of crude ricin at 14 days, 20°C (68°F), and 40% relative humidity, except ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "on steel. However, attenuation may take weeks and depends on variables such as temperature, material,and purity.Temporary Barrier Option:If the contaminated area is resistant to decontamination techniques or is impractical to treat, ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "a temporary barrier option may be desirable in which physical barriers (e.g., plastic sheeting) are used to immobilize and prevent the agent contamination from contacting the environment or the public. Such options can also be a temporary ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "solution until a final decontamination and disposal strategy can be implemented.10.2. Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas into several broad categories: 1) crude ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "microbiological cultures and BoNT-\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000I\u0000R\u0000R\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000V\u0000\u000f\u0000\u0003\u0000\u0015\u0000\f\u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000V\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000\u0016\u0000\f\u0000\u0003\u0000O\u0000D\u0000U\u0000J\u0000H\u0000\u0003\u0000Y\u0000R\u0000O\u0000X\u0000P\u0000H\u0000W\u0000U\u0000L\u0000F\u0000\u0003\u0000V\u0000S\u0000D\u0000F\u0000H\u0000V\u0000\u000f\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "4) sensitive and irreplaceable items, and 5) aqueous solutions (waste) containing biotoxins. Areas in each category may be treated using one or more decontamination techniques in a tiered approach to the overall site-specific decontamination strategy. ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Specific decontamination studies for BoNT are limited; however, decontamination techniques for ricin and other protein toxins are expected to be effective for BoNT and are discussed below. Effectiveness of particular decontaminants ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "and decontamination strategies should be adjusted and verified for site-specific conditions.Crude Microbiological Cultures and BoNT-Contaminated Foodor Products:All neurotoxin preparations can vary ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "\u0000J\u0000U\u0000H\u0000D\u0000W\u0000O\u0000\\\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000L\u0000U\u0000\u0003\u0000%\u0000R\u00001\u00007\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000H\u0000Q\u0000W\u0000\u0003\u0000G\u0000H\u0000S\u0000H\u0000Q\u0000G\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000L\u0000U\u0000\u0003\u0000G\u0000H\u0000J\u0000U\u0000H\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000S\u0000X\u0000U\u0000L\u0000I\u0000L\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000\u0003\u0000U\u0000D\u0000Q\u0000J\u0000L\u0000Q\u0000J\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000³\u0000F\u0000U\u0000X\u0000G\u0000H\u0000´\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000³\u0000U\u0000H\u0000I\u0000L\u0000Q\u0000H\u0000G\u0000\u0011\u0000´\u0000\u0003\u0000+\u0000R\u0000Z\u0000H\u0000Y\u0000H\u0000U\u0000\u000f\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "should be considered to pose a health hazard unless such hazard is ruled out, including the presence of additional aerosol hazards. Contaminated material should be transferred carefully into containers, with care being taken that material is not ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "dispersed into the air.Surfacesor Hotspots:A strategy for visible material is:\u0000xCover any contaminated areasgentlywith towel(s) or wipes (overlapping each other if necessary) and applying decontamination solution (see options describedbelow under\u0000³s",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "trategy for surfaces\u0000´) starting at the perimeter and wetting towards the center of the contaminated area.\u0000xEnsure sufficient contact time (e.g., at least 30",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "\u0000P\u0000L\u0000Q\u0000X\u0000W\u0000H\u0000V\u0000\f\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000H\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000H\u0000D\u0000F\u0000K\u0000\u0003\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000N\u0000H\u0000S\u0000W\u0000\u0003\u0000³\u0000V\u0000R\u0000S\u0000S\u0000L\u0000Q\u0000J\u0000´\u0000\u0003\u0000Z\u0000H\u0000W\u0000\u0003during this time.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Remove the towel(s) then wipe up the residual dampness/drops of decontamination solution until the surface is dry.\u0000xReapply decontamination solution to the bare surface and wipe up again with more towel(s) then let surface air dry.",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "A strategy for surfaces is:\u0000xLiquid bleachsolutions(typical concentration 5-8%) at 1:10 dilution ratio, at a variety of pH levels, have been used in several ricin responses. However, these bleach-",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "based decontaminants may be corrosive and leave stains and residue on surfaces. They are likely to be effective based on the oxidation of the BoNT proteins by bleach. While there are limited ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "scientific laboratory studies that show efficacies on selected surfaces, field conditions are expected to impact the effectiveness of the decontaminant (e.g., organic substances that compete with the protein toxinforhypochlorite in ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "bleach, perhaps leading to pre-cleaning (see Cautionsbelow). The product will be most efficient a) at higher temperatures (i.e., > 21°C; 70°F),b) when plain household bleach is used to make the diluted mixture (1:10 ratio), c) ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "when presence of other surface contaminants is minimal, and d) when surfaces remain wet with the bleach solution for at least 30 minutes. Bleach solutions can be deployed as a low-pressure spray (<30 psi) to minimize aerosolization of ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "BoNT. Note: Any bleach does degrade with time\u0000±check the expiration date. For hard surfaces including floors (with attention to base boards and molding), walls, and horizontal surfaces of furniture and equipment, a minimum 30-minute contact time ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "is recommended. Smaller items should be removed and treated with decontamination solution. Soft, porous surfaces can be treated with decontamination solutions and then removed (e.g., carpeting cut up and double bagged) as waste.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "Peracetic acid (3000 ppm) with a minimum contact time of 30 minutes is another decontaminant option for neutralization of ricin on surfaces (Tolleson 2012), and is expected to be effective for BoNT, but there are no data to compare the two bio",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "toxins to see if they behave similarly.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[January2024Update: 2011Page 9of 11General Considerations: An evaluation should be undertaken that considers public and worker safety, total cost, impact on the facility, wastes generated, as well as the time the facility or item will be out of service and any socio- economic, psychological, and/or security impacts that may result. It is advisable to isolate the contaminated area. Largevolumes of decontamination wastes may be generated that will need to be collected, treated, and disposedof properly.Disposal Option: The urgency to restore a facility for reoccupancy as quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may be resistant to decontamination formulation s or it may be cheaper to discard and replace than to decontaminate and restore. In general, for porous materials that are non-essential (e.g., carpet, upholstered furniture), it is recommended to remove and manage these items as contaminated waste. Monitored Natural Attenuation:Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction, contaminant containment measures). The time to achieve clearance must be considered in the decontamination cleanup planning. No natural attenuation data are available for BoNT; however, there are data for crude ricin(a biotoxin)thatshould have similar resistance to time, temperature,and humidity since both biotoxins are comprised of proteinaceous materials. Wood et al. 2018 found that there was minimal attenuation of crude ricin at 14 days, 20°C (68°F), and 40% relative humidity, except on steel. However, attenuation may take weeks and depends on variables such as temperature, material,and purity.Temporary Barrier Option:If the contaminated area is resistant to decontamination techniques or is impractical to treat, a temporary barrier option may be desirable in which physical barriers (e.g., plastic sheeting) are used to immobilize and prevent the agent contamination from contacting the environment or the public. Such options can also be a temporary solution until a final decontamination and disposal strategy can be implemented.10.2. Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas into several broad categories: 1) crude microbiological cultures and BoNT-\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000I\u0000R\u0000R\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000S\u0000U\u0000R\u0000G\u0000X\u0000F\u0000W\u0000V\u0000\u000f\u0000\u0003\u0000\u0015\u0000 \u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000V\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000\u0016\u0000 \u0000\u0003\u0000O\u0000D\u0000U\u0000J\u0000H\u0000\u0003\u0000Y\u0000R\u0000O\u0000X\u0000P\u0000H\u0000W\u0000U\u0000L\u0000F\u0000\u0003\u0000V\u0000S\u0000D\u0000F\u0000H\u0000V\u0000\u000f\u0000\u0003 4) sensitive and irreplaceable items, and 5) aqueous solutions (waste) containing biotoxins. Areas in each category may be treated using one or more decontamination techniques in a tiered approach to the overall site-specific decontamination strategy. Specific decontamination studies for BoNT are limited; however, decontamination techniques for ricin and other protein toxins are expected to be effective for BoNT and are discussed below. Effectiveness of particular decontaminants and decontamination strategies should be adjusted and verified for site-specific conditions.Crude Microbiological Cultures and BoNT-Contaminated Foodor Products:All neurotoxin preparations can vary \u0000J\u0000U\u0000H\u0000D\u0000W\u0000O\u0000\\\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000L\u0000U\u0000\u0003\u0000%\u0000R\u00001\u00007\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000H\u0000Q\u0000W\u0000\u0003\u0000G\u0000H\u0000S\u0000H\u0000Q\u0000G\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000L\u0000U\u0000\u0003\u0000G\u0000H\u0000J\u0000U\u0000H\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000S\u0000X\u0000U\u0000L\u0000I\u0000L\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000\u0003\u0000U\u0000D\u0000Q\u0000J\u0000L\u0000Q\u0000J\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000³\u0000F\u0000U\u0000X\u0000G\u0000H\u0000´\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000³\u0000U\u0000H\u0000I\u0000L\u0000Q\u0000H\u0000G\u0000\u0011\u0000´\u0000\u0003\u0000+\u0000R\u0000Z\u0000H\u0000Y\u0000H\u0000U\u0000\u000f\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003 should be considered to pose a health hazard unless such hazard is ruled out, including the presence of additional aerosol hazards. Contaminated material should be transferred carefully into containers, with care being taken that material is not dispersed into the air.Surfacesor Hotspots:A strategy for visible material is:\u0000xCover any contaminated areasgentlywith towel(s) or wipes (overlapping each other if necessary) and applying decontamination solution (see options describedbelow under\u0000³s trategy for surfaces\u0000´) starting at the perimeter and wetting towards the center of the contaminated area.\u0000xEnsure sufficient contact time (e.g., at least 30 \u0000P\u0000L\u0000Q\u0000X\u0000W\u0000H\u0000V\u0000 \u0000\u0003\u0000L\u0000V\u0000\u0003\u0000S\u0000U\u0000R\u0000Y\u0000L\u0000G\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000H\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000H\u0000D\u0000F\u0000K\u0000\u0003\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000N\u0000H\u0000S\u0000W\u0000\u0003\u0000³\u0000V\u0000R\u0000S\u0000S\u0000L\u0000Q\u0000J\u0000´\u0000\u0003\u0000Z\u0000H\u0000W\u0000\u0003during this time.\u0000x Remove the towel(s) then wipe up the residual dampness/drops of decontamination solution until the surface is dry.\u0000xReapply decontamination solution to the bare surface and wipe up again with more towel(s) then let surface air dry. A strategy for surfaces is:\u0000xLiquid bleachsolutions(typical concentration 5-8%) at 1:10 dilution ratio, at a variety of pH levels, have been used in several ricin responses. However, these bleach- based decontaminants may be corrosive and leave stains and residue on surfaces. They are likely to be effective based on the oxidation of the BoNT proteins by bleach. While there are limited scientific laboratory studies that show efficacies on selected surfaces, field conditions are expected to impact the effectiveness of the decontaminant (e.g., organic substances that compete with the protein toxinforhypochlorite in bleach, perhaps leading to pre-cleaning (see Cautionsbelow). The product will be most efficient a) at higher temperatures (i.e., > 21°C; 70°F),b) when plain household bleach is used to make the diluted mixture (1:10 ratio), c) when presence of other surface contaminants is minimal, and d) when surfaces remain wet with the bleach solution for at least 30 minutes. Bleach solutions can be deployed as a low-pressure spray (<30 psi) to minimize aerosolization of BoNT. Note: Any bleach does degrade with time\u0000±check the expiration date. For hard surfaces including floors (with attention to base boards and molding), walls, and horizontal surfaces of furniture and equipment, a minimum 30-minute contact time is recommended. Smaller items should be removed and treated with decontamination solution. Soft, porous surfaces can be treated with decontamination solutions and then removed (e.g., carpeting cut up and double bagged) as waste.\u0000x Peracetic acid (3000 ppm) with a minimum contact time of 30 minutes is another decontaminant option for neutralization of ricin on surfaces (Tolleson 2012), and is expected to be effective for BoNT, but there are no data to compare the two bio toxins to see if they behave similarly.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 32,
+        "repeatedHeaderFooterBlockCount": 5,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 9,
+      "humanPageNumber": 10,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Botulinum neurotoxin (BoNT)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[January2024Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2011Page 10of 11\u0000xAnother option is to carefully wipe down exposed surfaces with bleach-or peracetic acid-based wipes.It is recommended to mix and usedecontaminationsolutions on the same day.",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "All materials used in the decontamination process (e.g., fabric towels, wipes) should be labeled and properly discarded following designation by the waste management specialist.Large Volumetric Spaces: ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "This category is for spaces typically larger in size but with lower levels of biotoxin contamination. Examples include residues from prior decontamination activities and difficult-to-access areas infiltrated by aerosols.",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Operational conditions listed below may be effective but should be verified for site-specific conditions: \u0000xChlorine dioxide vapor at 500 ppm with a dwell time of at least 20 minutes, 80%relative humidity, and temperature of 25°C (77°F)",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "has been shown to effectively inactivate ricin on various building materials.\u0000xHydrogen peroxide vapor has been shown to be effective in neutralizing ricin on a number of materials, using a concentration of 400 ppm and contact time of 8-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "16 hours, or 50 ppm and a contact time of 48 hours.Acquisition and use of these chemicalproductsas fumigantsshould be done in consultation with SMEs.Sensitive and Irreplaceable Items:Certain items, usually those that",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "are sensitive or valued for a variety of reasons (e.g., mission criticality, personal or societal significance, rarity, cost) may need to be decontaminatedand not disposed of. ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Some of these items, however, will be devalued or rendered unusable if they are chemically or physically incompatible with the decontaminants.\u0000xFor",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "sensitive and irreplaceable items that are compatible with water, consider flushing with soap and water, keeping in mind that the aqueous solution of the rinsate may require further treatment.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Mechanical removal of contamination through the use of HEPA vacuuming may also be considered; however, HEPA vacuums may aerosolize contamination. Other options include techniques described above for volumetric spaces, scaled to the size of the equipment or",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "item(s). In particular, hot air may prove effective, and higher temperatures may be achievable for small items, if not destroyed by the heat.\u0000xImmersing a sensitive item such as jewelry in water and maintaining a temperature of 100°C (212°F)for 15 minutes ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "inactivates the biotoxin(Burgen, 1949).Contaminated Aqueous Solutions (Waste): Bleach should be added to the contaminated aqueous solutions to maintain a solution concentration of at least 100 mg/L (recommended dilution of 1:100) with a minimum 30-",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "minute contact time (Wannemacher, 1993). Test the solution after 30 minutes to verify the concentration of 100 mg/L has been maintained. Cautions: Decontamination solutions should be deployed as a low-pressure (<30 psi) spray whenever possible to avoid ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "potential aerosolization of BoNT. Decontaminant solutions or fumigants may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of diluted bleach or peracetic acid may result in the ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "release of hazardous vapors, while fumigants may be used at concentrations above their IDLH levels). Dirt, grime, and other materials can reduce the effectiveness of decontamination; pre-cleaning of surfaces with soap and water may be ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "needed before the application of decontamination solutions.Another option for pre-treatment cleaning may be disposable absorbent pads or cleaning wipes. The resulting pre-cleaning rinsate and/or wipes may contain BoNT and need to be ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "treated and disposed of properly.Verification of Decontamination: Verification of decontamination may include multiple lines of evidence and/or environmental sampling based on consultation with Public Health Officials. Contact EPA/HQ-EOC at 202-564-",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "3850 for further assistance.11. Waste Managementfor Environmental Contamination from Biological Incident11.1. Transportation:Federal requirements for the commercial transport of hazardous materials, including Division 6.2 Infectious Substances, ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "and procedures for exemptions are specified in How to Comply with Federal Hazardous Materials Regulations, available at: https://www.fmcsa.dot.gov/regulations/hazardous-materials/how-comply-federal-hazardous-materials-regulations. ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Contact the PHMSA Hazardous Materials Information Center at 1-800-467-4922 or infocntr@dot.govto discuss specific cases.Additional resources on packaging, labeling, and shipping are available at: https://www.phmsa.dot.gov/standards-",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "rulemaking/hazmat/hazardous-materials-regulations. Detailed state regulations can be found at www.envcap.org/.As summarized below, BoNT (the biotoxin) is classified as a Division 6.1 hazardous material, environmental (or non-culture) ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "would be a Category B material in Division 6.2, and a cultureof ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "would be a Category A material in Division 6.2.\u0000xBoNT is classified as UN3462, Toxins, extracted from living sources, solid, n.o.s. (botulinum neurotoxin), 6.1, PGI. ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "The specific requirements for authorized packaging and materials for transporting are listed in 49 CFR §173.211. \u0000xMaterials contaminated with ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "C. botulinum ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "are classified as UN3373, Biological substance, Category B, 6.2. The specific requirements for authorized packaging and materials for transporting are listed in 49 CFR §173.199.\u0000xCultures of ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "bacteria are classified as a DOT/HMR Category A infectious substance (also classified as UN2814, Infectious substances, affecting humans). The specific requirements for authorized packaging and materials ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "for transporting a Category A infectious substance are listed in49 CFR §173.196.In addition, each packaging must meet specific test standards in accordance with 49 CFR §178.609. See the guidance in \"Managing Solid Waste ",
+          "role": "BODY"
+        }
+      ],
+      "text": "[January2024Update: 2011Page 10of 11\u0000xAnother option is to carefully wipe down exposed surfaces with bleach-or peracetic acid-based wipes.It is recommended to mix and usedecontaminationsolutions on the same day. All materials used in the decontamination process (e.g., fabric towels, wipes) should be labeled and properly discarded following designation by the waste management specialist.Large Volumetric Spaces: This category is for spaces typically larger in size but with lower levels of biotoxin contamination. Examples include residues from prior decontamination activities and difficult-to-access areas infiltrated by aerosols. Operational conditions listed below may be effective but should be verified for site-specific conditions: \u0000xChlorine dioxide vapor at 500 ppm with a dwell time of at least 20 minutes, 80%relative humidity, and temperature of 25°C (77°F) has been shown to effectively inactivate ricin on various building materials.\u0000xHydrogen peroxide vapor has been shown to be effective in neutralizing ricin on a number of materials, using a concentration of 400 ppm and contact time of 8- 16 hours, or 50 ppm and a contact time of 48 hours.Acquisition and use of these chemicalproductsas fumigantsshould be done in consultation with SMEs.Sensitive and Irreplaceable Items:Certain items, usually those that are sensitive or valued for a variety of reasons (e.g., mission criticality, personal or societal significance, rarity, cost) may need to be decontaminatedand not disposed of. Some of these items, however, will be devalued or rendered unusable if they are chemically or physically incompatible with the decontaminants.\u0000xFor sensitive and irreplaceable items that are compatible with water, consider flushing with soap and water, keeping in mind that the aqueous solution of the rinsate may require further treatment.\u0000x Mechanical removal of contamination through the use of HEPA vacuuming may also be considered; however, HEPA vacuums may aerosolize contamination. Other options include techniques described above for volumetric spaces, scaled to the size of the equipment or item(s). In particular, hot air may prove effective, and higher temperatures may be achievable for small items, if not destroyed by the heat.\u0000xImmersing a sensitive item such as jewelry in water and maintaining a temperature of 100°C (212°F)for 15 minutes inactivates the biotoxin(Burgen, 1949).Contaminated Aqueous Solutions (Waste): Bleach should be added to the contaminated aqueous solutions to maintain a solution concentration of at least 100 mg/L (recommended dilution of 1:100) with a minimum 30- minute contact time (Wannemacher, 1993). Test the solution after 30 minutes to verify the concentration of 100 mg/L has been maintained. Cautions: Decontamination solutions should be deployed as a low-pressure (<30 psi) spray whenever possible to avoid potential aerosolization of BoNT. Decontaminant solutions or fumigants may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of diluted bleach or peracetic acid may result in the release of hazardous vapors, while fumigants may be used at concentrations above their IDLH levels). Dirt, grime, and other materials can reduce the effectiveness of decontamination; pre-cleaning of surfaces with soap and water may be needed before the application of decontamination solutions.Another option for pre-treatment cleaning may be disposable absorbent pads or cleaning wipes. The resulting pre-cleaning rinsate and/or wipes may contain BoNT and need to be treated and disposed of properly.Verification of Decontamination: Verification of decontamination may include multiple lines of evidence and/or environmental sampling based on consultation with Public Health Officials. Contact EPA/HQ-EOC at 202-564- 3850 for further assistance.11. Waste Managementfor Environmental Contamination from Biological Incident11.1. Transportation:Federal requirements for the commercial transport of hazardous materials, including Division 6.2 Infectious Substances, and procedures for exemptions are specified in How to Comply with Federal Hazardous Materials Regulations, available at: https://www.fmcsa.dot.gov/regulations/hazardous-materials/how-comply-federal-hazardous-materials-regulations. Contact the PHMSA Hazardous Materials Information Center at 1-800-467-4922 or infocntr@dot.govto discuss specific cases.Additional resources on packaging, labeling, and shipping are available at: https://www.phmsa.dot.gov/standards- rulemaking/hazmat/hazardous-materials-regulations. Detailed state regulations can be found at www.envcap.org/.As summarized below, BoNT (the biotoxin) is classified as a Division 6.1 hazardous material, environmental (or non-culture) would be a Category B material in Division 6.2, and a cultureof would be a Category A material in Division 6.2.\u0000xBoNT is classified as UN3462, Toxins, extracted from living sources, solid, n.o.s. (botulinum neurotoxin), 6.1, PGI. The specific requirements for authorized packaging and materials for transporting are listed in 49 CFR §173.211. \u0000xMaterials contaminated with are classified as UN3373, Biological substance, Category B, 6.2. The specific requirements for authorized packaging and materials for transporting are listed in 49 CFR §173.199.\u0000xCultures of bacteria are classified as a DOT/HMR Category A infectious substance (also classified as UN2814, Infectious substances, affecting humans). The specific requirements for authorized packaging and materials for transporting a Category A infectious substance are listed in49 CFR §173.196.In addition, each packaging must meet specific test standards in accordance with 49 CFR §178.609. See the guidance in \"Managing Solid Waste",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 34,
+        "repeatedHeaderFooterBlockCount": 9,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 10,
+      "humanPageNumber": 11,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Botulinum neurotoxin (BoNT)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[January2024Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2011Page 11of 11\u0000&\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000D\u0000\u0003\u0000&\u0000D\u0000W\u0000H\u0000J\u0000R\u0000U\u0000\\\u0000\u0003\u0000$\u0000\u0003\u0000,\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u00006\u0000X\u0000E\u0000V\u0000W\u0000D\u0000Q\u0000F\u0000H\u0000´\u0000\u0003\u0000\u000b\u0000-\u0000X\u0000Q\u0000H\u0000\u0003\u0000\u0015\u0000\u0013\u0000\u0015\u0000\u0015\u0000\f\u0000\u000f\u0000\u0003\u0000Z\u0000K\u0000L\u0000F\u0000K\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000I\u0000R\u0000X\u0000Q\u0000G\u0000\u0003\u0000D\u0000W\u0000\u001d\u0000\u0003https://www.phmsa.dot.gov/transporting-infectious-",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "substances/planning-guidance-handling-category-solid-waste.  On-site treatment (e.g., autoclaving, portable incinerators, chemical disinfection) prior to transport for off-site disposal may ease the requirements for special transportation permits.11",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": ".2. Waste Management:WARNING: DEVELOP A COMPREHENSIVE WASTE MANAGEMENT PLAN PRIOR TO ANY SITE ASSESSMENT OR CLEANUP WORK.Waste generated from site assessment and cleanup activities likely will be set aside for later treatment/decontamination ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "prior to being sent off site. Options for treatment/decontamination and disposal of these wastes include, but are not limitedto: physical (e.g., incineration, autoclaving) and chemical (e.g., aqueous chemical disinfection, fumigation) and then ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "testing to ensure that no biologically activeBoNT or viable ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "C. botulinum",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "were detected. Verification of decontamination may include multiple lines of evidence and/or environmental sampling based on consultation with site-specific responsible officials. Contact the EPA/HQ-EOC at 202-564-3850 for further assistance.",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Solid waste disposal for agent-contaminated wastes generated from decontamination activities will be problematic. On-site treatment prior to transport for off-site disposal may ease the requirements for special transportation permits.",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Landfills willing to take potentially agent-contaminated solid wastes may be limited due to state requirements, even when waste has been treated on-site and sampling/analysis suggests that no residual agent remains. Even with permission from state regulato",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "rs, individual facilities may refuse to accept these materials due to public perception or liability issues. Certain treatment/disposal methods (e.g., incineration) may be expensive or impractical to dispose of agent-contaminated wastes, due to scarcity of",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "suitable facilities. Multiple methods or facilities may need to be used, and size reduction may be required, which presents a potential for reaerosolization of contaminants.",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Although testing may be desired to satisfy waste acceptance criteria specified by state regulators and/or treatment/disposal facilities, there are very limited options for measuring biological agent levels in common waste matrices. These options ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "typically involve acquiring and/or preparing the samples in such a way as to be among the limited number of sample matrices that LRN and ERLN laboratories will accept (i.e., water, sponge sticks, 37mm vacuum filters). Other approaches ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "(e.g., proof of compliance with minimum operating conditions of on-site treatment equipment) could possibly be used to specify waste acceptance criteria. All waste management options along with their applicable waste acceptance criteria ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "should be investigated as early into the response process as possible and included in pre-incident planning documents.EPA has developed an online tool to help communities and facilities develop pre-incident waste management plans. This ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "tool can be found at http://wasteplan.epa.gov. (website registration is required).EPA has developed I-WASTE, a web-based tool (iwaste.epa.gov) that contains links to waste transportation guidance, ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "treatment and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility.Attribution Statement:",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "NIOSH Approved is a certification mark of the U.S. Department of Health and Human Services (HHS) registered in the United States and several international jurisdictions. PAPR100-N, PAPR100-P, and HE are certification marks of the U.S. Department of Health",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "and Human Services (HHS) registered in the United States.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[January2024Update: 2011Page 11of 11\u0000&\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000D\u0000\u0003\u0000&\u0000D\u0000W\u0000H\u0000J\u0000R\u0000U\u0000\\\u0000\u0003\u0000$\u0000\u0003\u0000,\u0000Q\u0000I\u0000H\u0000F\u0000W\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u00006\u0000X\u0000E\u0000V\u0000W\u0000D\u0000Q\u0000F\u0000H\u0000´\u0000\u0003\u0000 \u0000-\u0000X\u0000Q\u0000H\u0000\u0003\u0000\u0015\u0000\u0013\u0000\u0015\u0000\u0015\u0000 \u0000\u000f\u0000\u0003\u0000Z\u0000K\u0000L\u0000F\u0000K\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000I\u0000R\u0000X\u0000Q\u0000G\u0000\u0003\u0000D\u0000W\u0000\u001d\u0000\u0003https://www.phmsa.dot.gov/transporting-infectious- substances/planning-guidance-handling-category-solid-waste. On-site treatment (e.g., autoclaving, portable incinerators, chemical disinfection) prior to transport for off-site disposal may ease the requirements for special transportation permits.11 .2. Waste Management:WARNING: DEVELOP A COMPREHENSIVE WASTE MANAGEMENT PLAN PRIOR TO ANY SITE ASSESSMENT OR CLEANUP WORK.Waste generated from site assessment and cleanup activities likely will be set aside for later treatment/decontamination prior to being sent off site. Options for treatment/decontamination and disposal of these wastes include, but are not limitedto: physical (e.g., incineration, autoclaving) and chemical (e.g., aqueous chemical disinfection, fumigation) and then testing to ensure that no biologically activeBoNT or viable were detected. Verification of decontamination may include multiple lines of evidence and/or environmental sampling based on consultation with site-specific responsible officials. Contact the EPA/HQ-EOC at 202-564-3850 for further assistance. Solid waste disposal for agent-contaminated wastes generated from decontamination activities will be problematic. On-site treatment prior to transport for off-site disposal may ease the requirements for special transportation permits. Landfills willing to take potentially agent-contaminated solid wastes may be limited due to state requirements, even when waste has been treated on-site and sampling/analysis suggests that no residual agent remains. Even with permission from state regulato rs, individual facilities may refuse to accept these materials due to public perception or liability issues. Certain treatment/disposal methods (e.g., incineration) may be expensive or impractical to dispose of agent-contaminated wastes, due to scarcity of suitable facilities. Multiple methods or facilities may need to be used, and size reduction may be required, which presents a potential for reaerosolization of contaminants. Although testing may be desired to satisfy waste acceptance criteria specified by state regulators and/or treatment/disposal facilities, there are very limited options for measuring biological agent levels in common waste matrices. These options typically involve acquiring and/or preparing the samples in such a way as to be among the limited number of sample matrices that LRN and ERLN laboratories will accept (i.e., water, sponge sticks, 37mm vacuum filters). Other approaches (e.g., proof of compliance with minimum operating conditions of on-site treatment equipment) could possibly be used to specify waste acceptance criteria. All waste management options along with their applicable waste acceptance criteria should be investigated as early into the response process as possible and included in pre-incident planning documents.EPA has developed an online tool to help communities and facilities develop pre-incident waste management plans. This tool can be found at http://wasteplan.epa.gov. (website registration is required).EPA has developed I-WASTE, a web-based tool (iwaste.epa.gov) that contains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility.Attribution Statement: NIOSH Approved is a certification mark of the U.S. Department of Health and Human Services (HHS) registered in the United States and several international jurisdictions. PAPR100-N, PAPR100-P, and HE are certification marks of the U.S. Department of Health and Human Services (HHS) registered in the United States.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 22,
+        "repeatedHeaderFooterBlockCount": 6,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

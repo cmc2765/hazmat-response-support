@@ -1,0 +1,341 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-chemical-hydrogen-sulfide",
+  "sourceArtifactSha256": "7302d91e5b4e088a0af13e8e6f7f89ca90d2d791041081b604b2b7a9c267b4ae",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+  "pageCount": 2,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [],
+      "text": "",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 0,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "April 2016SamplingNote: This section on sampling contains general guidelines anddoes not replace the need for a site-specific sampling plan (See Key References Cited/Used) Sampling Concerns:Detection, sampling equipment and procedures, andanalytical te",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "chniques will be site-specific anddepend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g.,characterization, decontaminationefficacy and clearance); and",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "4) specific laboratory requirements.Because H2Sisreactive and volatile, field detection instead of laboratory analysisof samplesfor H2Sand/or sulfur-containingcompounds may suffice and sometimes be necessary to achieve many goals of sampling.",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "The U.S. Environmental Protection Agency (EPA) has set upmobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSIS section below (",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "www2.epa.gov/emergency-response/environmental-response-laboratory-network). For sampling questions, call the EPA/HQ-EOC at 202-564-3850.Sample Locations and Planning: Initially consider air monitoring to ensure worker safetyandto determine if there is anH2",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "S cloudthatcould impact other areas. Characterization sampling is initiated by targeted or judgmental sampling to identify hot spots, potential agent flow paths, andmedia or objects potentially acting as sinks. Additional biased or random ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling (e.g., grid, statistical approach) maybe required for the clearance phase or ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "if there are large uncertaintiesabout the area impacted or the amount released. Because H2Sis reactive andgenerally not persistent, air samplingfor a variety of sulfur-containing compounds along with H2Sto help to clear areas should be included in ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "the sampling plan.Note: H2Sis highly volatile and reactive, forming a variety of sulfur-containingproducts including toxic sulfur oxides. Laboratory analysis may need to include these additional products. See ANALYSIS section below to ensure sampling ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "proceduresare compatible with all analytes. Concurrent air monitoring for H2Sis recommended for all matrices.Types of Samples:Air (H2Sin gaseous form isheavier than air):On-site H2Smonitors may provide sufficiently accurate real-",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "time results. For lab analysis, samples are collected using appropriate solid phase absorbent media(e.g., NIOSH 6013)at breathing zone level (~5 ft.) to assess inhalation exposure and at ground levels (~6 in.) to assess off gassing at surfaces.Water: H2S",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "is soluble in aqueous solutions but can diffuse out of the bulk water phase or form sulfides and other sulfur-containingcompounds.Total sulfides are easy to analyze in the field by colorimetric/titrimetric methods and can be used as a marker for H2S",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "contamination.Soil: For localized hot spot areas where soil deposition may occur, surface soil samples may be analyzed for H2Sand sulfur-containingbreakdown andreaction products and should be taken from a non-",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "vegetated area to a depth of less than one inch.Concurrent air monitoring is recommended.Sub-surface soil samples (e.g., for sulfur-containingbreakdown and reaction products)",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "may not be necessary unless a large amount of liquid was poured on the ground, or if an underlying aquifer is endangered.Surface Wipes: Although H2S is very volatile,wipe samples are often desired to indicate the presence of sulfides, sulfur oxides, and ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "sulfur-containing breakdownand reactionproducts, on non-porous surfaces. Concurrent air monitoring is recommended.Bulk: Although H2S is very volatile, bulk samples of actual pieces or cores of contaminated surfacesmay be collected athot spot areas whe",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "re high levels of H2Sdeposition occurred on porous surfaces (e.g., concrete, asphalt), using appropriate tools (scabbling, coring or drills) and submitted for subsequentlaboratory extraction analysis for H2S, total sulfides, sulfur oxides, and any sulfur-",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "containingbreakdown andreaction products.Bulk samples of suspected sink materials may be recommended to rule out secondary vapor phase disposition or absorption of sulfur-containingbreakdown and reaction productsinto these materials.Other Sample Matrices:",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.Sample Packaging andShipping: The packaging andshipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHAandIATA. Contact the sample-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "receiving laboratory to determine if they have additional packaging, shipping or labeling requirements.AnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes andsoil). The ERLN will use u",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "niform, compatible sample prep andanalytical methods. (See www2.epa.gov/emergency-response/environmental-response-laboratory-network).H2S and sulfur-containing compounds such as total sulfur may be accurately determined in the field ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "using available meters and field kits. For access to the nearest ERLN laboratoryspecially trained and equipped foranalysis ofH2S,total sulfidesand other sulfur-containing breakdownand reaction products, contact the EPA/HQ-EOC at 202-564-3850.",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Decontamination/CleanupUse water spray to disperse H2Scloud. Prevent wastewater from further contaminating the environment. Avoid use of oxidizers (e.g., peroxides, chlorine)in presence of gaseous or liquid H2S.Liquid H2",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "S will quickly evaporate. As a gas, H2S will dissipate or be consumed by reactions with surfaces/materials it encounters. H2S rarely persists in the environment. Hence, most decontamination will not necessarily be for H2",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "S itself, but for decomposition products,such as metal sulfides. Separate, long-term decontaminationstrategies will need to be developed if those decomposition products are of concern in a particular situation. This decontaminationsection refers to H2",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "S itself.Decontamination/Cleanup Planning: Once site controls are in place, develop a site-specific decontamination/cleanup plan. Decontamination may require a tiered approach using a variety of techniques and products. Call the EPA/HQ-EOC at 202-564-",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "3850 for more information.General Considerations: A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers: public safety, total cost, impact on the facility, wastes gene",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "rated, as well as the time the facility or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be collected, treated and disp",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "osed of properly. Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible(see Waste Management section below). Disposal Option:The urgency to restore a facility as quickly as possible may result in t",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "he outright and timely removal and disposal of contaminated materials. Certain materials may be resistant to decontamination formulations, or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation:H2S",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "dissipatesvia natural processes. Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "time to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than other optionsbut is non-destructive to materials.Fix-in-Place Option:H2S dissipates rapidly via natural processes, as such a Fix-in-Pl",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "ace Option will not be required or feasible.Solid or liquid H2S decomposition residues or wastes may require a separate decontamination evaluation process.DecontaminationStrategy:A decontamination",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "strategy can be developed by designating contaminated areas based on presence of: 1) liquid H2S, 2) gaseous H2S, or 3) aqueous solutions of H2S.Strategy for Liquid H2S: Prevent material from entering sewers or confined spaces. Stop or reduce leak if safe",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "to do so. If not, allow liquid to vaporize. Actions that promote safe volatilization of liquid H2S may be useful since H2S in gaseous form can be allowed to dissipate; volatilization of liquid H2S is a fast process but may depend on site conditions.",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Strategy for Gaseous H2S: Aerate spaces where gaseous H2S may be present. Forced Air ventilation methods are recommended for H2S cloudcontamination or low concentration of H2S gas in large volumetric spaces or open areas. As a gas, H2S is extremely flamma",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "ble so Hot Air ventilation should be avoided. H2S gas has corrosive properties and attacks some plastics and metals. Impact on materials should be assessed for mitigation efforts. Mechanical, electrolytic, or chemical cleaning of corroded products may be n",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "eeded. H2S gas may ignite if passed through rusty iron pipes. Strategy for Aqueous Solutions of H2S: If H2S is present in solution, containliquid or transfer liquid to appropriate containers. Neutralize aqueous H2S solutions with chlorine, bleach, or sod",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "ium bicarbonate (baking soda). Sensitive Equipment andItems: For difficult-to-clean equipment thought to be contaminated with small amounts of H2S, options include aeration followed by flushing with water.CAUTION: Decontamination/neutralization products",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use.Verification of Decontamination:Site and situation specific. Please contact EPA/HQ-EOC at 202-564-3850for further assistance.Waste ManagementCAUTION:",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "Federal requirements for transporting hazardous materials andprocedures for exemptions are specified in www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp.Theseregulationsdiffer fromstate-to-state.Detailedstateregulationscanbefoundat ",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "www.envcap.org/.Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat.Waste Management:Under the Resource Conservation and Recovery Act (RCRA), solid waste can be classified as hazardous (subtitle C) or non-",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "hazardous (subtitle D).The RCRA regulations generally define a waste as hazardous if it is: (1) a listed waste (40 CFR§261.31, §261.32), (2) exhibits specific characteristics (40 CFR §261.21-261.24) or (3) is a discarded commercial chemical product, off-",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "specification species, container residue, or spill residue thereof(40 CFR §261.33). H2S is listed under RCRA, chemical code U135for discarded ",
+          "role": "BODY"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "commercial chemical products, and meets the ignitability characteristic as an ignitable compressed gas, chemical code D001. Sulfide wastecan also be reactive hazardous waste, ",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "chemical code D003, if it generates toxic gases when exposed to pH conditions between 2 and 12.5. H2S is also regulated under CERCLA with a reportable quantity threshold of 100 pounds. The States (except for Alaska an",
+          "role": "BODY"
+        },
+        {
+          "order": 46,
+          "operator": "TJ",
+          "text": "d Iowa) have the primary responsibility to implement the hazardous waste regulations and can impose more stringent requirements than the Federal program, so it is critical to open a dialogue with regulators as early as possible. Management of toxic decomp",
+          "role": "BODY"
+        },
+        {
+          "order": 47,
+          "operator": "TJ",
+          "text": "osition products, associated residual decontamination solutions, local waste acceptance criteria,and transportation and handling requirements should be considered.  The EPA has developedI-WASTE, a web-based tool thatcontains links to waste ",
+          "role": "BODY"
+        },
+        {
+          "order": 48,
+          "operator": "TJ",
+          "text": "transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidance,and guidance to minimize the potential for contaminating the treatment or disposal facility.  Access to this decision supporttool requires pre-",
+          "role": "BODY"
+        },
+        {
+          "order": 49,
+          "operator": "TJ",
+          "text": "registration (www2.ergweb.com/bdrtool/login.asp).",
+          "role": "BODY"
+        }
+      ],
+      "text": "April 2016SamplingNote: This section on sampling contains general guidelines anddoes not replace the need for a site-specific sampling plan (See Key References Cited/Used) Sampling Concerns:Detection, sampling equipment and procedures, andanalytical te chniques will be site-specific anddepend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g.,characterization, decontaminationefficacy and clearance); and 4) specific laboratory requirements.Because H2Sisreactive and volatile, field detection instead of laboratory analysisof samplesfor H2Sand/or sulfur-containingcompounds may suffice and sometimes be necessary to achieve many goals of sampling. The U.S. Environmental Protection Agency (EPA) has set upmobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see ANALYSIS section below ( www2.epa.gov/emergency-response/environmental-response-laboratory-network). For sampling questions, call the EPA/HQ-EOC at 202-564-3850.Sample Locations and Planning: Initially consider air monitoring to ensure worker safetyandto determine if there is anH2 S cloudthatcould impact other areas. Characterization sampling is initiated by targeted or judgmental sampling to identify hot spots, potential agent flow paths, andmedia or objects potentially acting as sinks. Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling (e.g., grid, statistical approach) maybe required for the clearance phase or if there are large uncertaintiesabout the area impacted or the amount released. Because H2Sis reactive andgenerally not persistent, air samplingfor a variety of sulfur-containing compounds along with H2Sto help to clear areas should be included in the sampling plan.Note: H2Sis highly volatile and reactive, forming a variety of sulfur-containingproducts including toxic sulfur oxides. Laboratory analysis may need to include these additional products. See ANALYSIS section below to ensure sampling proceduresare compatible with all analytes. Concurrent air monitoring for H2Sis recommended for all matrices.Types of Samples:Air (H2Sin gaseous form isheavier than air):On-site H2Smonitors may provide sufficiently accurate real- time results. For lab analysis, samples are collected using appropriate solid phase absorbent media(e.g., NIOSH 6013)at breathing zone level (~5 ft.) to assess inhalation exposure and at ground levels (~6 in.) to assess off gassing at surfaces.Water: H2S is soluble in aqueous solutions but can diffuse out of the bulk water phase or form sulfides and other sulfur-containingcompounds.Total sulfides are easy to analyze in the field by colorimetric/titrimetric methods and can be used as a marker for H2S contamination.Soil: For localized hot spot areas where soil deposition may occur, surface soil samples may be analyzed for H2Sand sulfur-containingbreakdown andreaction products and should be taken from a non- vegetated area to a depth of less than one inch.Concurrent air monitoring is recommended.Sub-surface soil samples (e.g., for sulfur-containingbreakdown and reaction products) may not be necessary unless a large amount of liquid was poured on the ground, or if an underlying aquifer is endangered.Surface Wipes: Although H2S is very volatile,wipe samples are often desired to indicate the presence of sulfides, sulfur oxides, and sulfur-containing breakdownand reactionproducts, on non-porous surfaces. Concurrent air monitoring is recommended.Bulk: Although H2S is very volatile, bulk samples of actual pieces or cores of contaminated surfacesmay be collected athot spot areas whe re high levels of H2Sdeposition occurred on porous surfaces (e.g., concrete, asphalt), using appropriate tools (scabbling, coring or drills) and submitted for subsequentlaboratory extraction analysis for H2S, total sulfides, sulfur oxides, and any sulfur- containingbreakdown andreaction products.Bulk samples of suspected sink materials may be recommended to rule out secondary vapor phase disposition or absorption of sulfur-containingbreakdown and reaction productsinto these materials.Other Sample Matrices: Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.Sample Packaging andShipping: The packaging andshipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHAandIATA. Contact the sample- receiving laboratory to determine if they have additional packaging, shipping or labeling requirements.AnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes andsoil). The ERLN will use u niform, compatible sample prep andanalytical methods. (See www2.epa.gov/emergency-response/environmental-response-laboratory-network).H2S and sulfur-containing compounds such as total sulfur may be accurately determined in the field using available meters and field kits. For access to the nearest ERLN laboratoryspecially trained and equipped foranalysis ofH2S,total sulfidesand other sulfur-containing breakdownand reaction products, contact the EPA/HQ-EOC at 202-564-3850. Decontamination/CleanupUse water spray to disperse H2Scloud. Prevent wastewater from further contaminating the environment. Avoid use of oxidizers (e.g., peroxides, chlorine)in presence of gaseous or liquid H2S.Liquid H2 S will quickly evaporate. As a gas, H2S will dissipate or be consumed by reactions with surfaces/materials it encounters. H2S rarely persists in the environment. Hence, most decontamination will not necessarily be for H2 S itself, but for decomposition products,such as metal sulfides. Separate, long-term decontaminationstrategies will need to be developed if those decomposition products are of concern in a particular situation. This decontaminationsection refers to H2 S itself.Decontamination/Cleanup Planning: Once site controls are in place, develop a site-specific decontamination/cleanup plan. Decontamination may require a tiered approach using a variety of techniques and products. Call the EPA/HQ-EOC at 202-564- 3850 for more information.General Considerations: A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers: public safety, total cost, impact on the facility, wastes gene rated, as well as the time the facility or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be collected, treated and disp osed of properly. Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible(see Waste Management section below). Disposal Option:The urgency to restore a facility as quickly as possible may result in t he outright and timely removal and disposal of contaminated materials. Certain materials may be resistant to decontamination formulations, or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation:H2S dissipatesvia natural processes. Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than other optionsbut is non-destructive to materials.Fix-in-Place Option:H2S dissipates rapidly via natural processes, as such a Fix-in-Pl ace Option will not be required or feasible.Solid or liquid H2S decomposition residues or wastes may require a separate decontamination evaluation process.DecontaminationStrategy:A decontamination strategy can be developed by designating contaminated areas based on presence of: 1) liquid H2S, 2) gaseous H2S, or 3) aqueous solutions of H2S.Strategy for Liquid H2S: Prevent material from entering sewers or confined spaces. Stop or reduce leak if safe to do so. If not, allow liquid to vaporize. Actions that promote safe volatilization of liquid H2S may be useful since H2S in gaseous form can be allowed to dissipate; volatilization of liquid H2S is a fast process but may depend on site conditions. Strategy for Gaseous H2S: Aerate spaces where gaseous H2S may be present. Forced Air ventilation methods are recommended for H2S cloudcontamination or low concentration of H2S gas in large volumetric spaces or open areas. As a gas, H2S is extremely flamma ble so Hot Air ventilation should be avoided. H2S gas has corrosive properties and attacks some plastics and metals. Impact on materials should be assessed for mitigation efforts. Mechanical, electrolytic, or chemical cleaning of corroded products may be n eeded. H2S gas may ignite if passed through rusty iron pipes. Strategy for Aqueous Solutions of H2S: If H2S is present in solution, containliquid or transfer liquid to appropriate containers. Neutralize aqueous H2S solutions with chlorine, bleach, or sod ium bicarbonate (baking soda). Sensitive Equipment andItems: For difficult-to-clean equipment thought to be contaminated with small amounts of H2S, options include aeration followed by flushing with water.CAUTION: Decontamination/neutralization products may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use.Verification of Decontamination:Site and situation specific. Please contact EPA/HQ-EOC at 202-564-3850for further assistance.Waste ManagementCAUTION: Federal requirements for transporting hazardous materials andprocedures for exemptions are specified in www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp.Theseregulationsdiffer fromstate-to-state.Detailedstateregulationscanbefoundat www.envcap.org/.Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat.Waste Management:Under the Resource Conservation and Recovery Act (RCRA), solid waste can be classified as hazardous (subtitle C) or non- hazardous (subtitle D).The RCRA regulations generally define a waste as hazardous if it is: (1) a listed waste (40 CFR§261.31, §261.32), (2) exhibits specific characteristics (40 CFR §261.21-261.24) or (3) is a discarded commercial chemical product, off- specification species, container residue, or spill residue thereof(40 CFR §261.33). H2S is listed under RCRA, chemical code U135for discarded commercial chemical products, and meets the ignitability characteristic as an ignitable compressed gas, chemical code D001. Sulfide wastecan also be reactive hazardous waste, chemical code D003, if it generates toxic gases when exposed to pH conditions between 2 and 12.5. H2S is also regulated under CERCLA with a reportable quantity threshold of 100 pounds. The States (except for Alaska an d Iowa) have the primary responsibility to implement the hazardous waste regulations and can impose more stringent requirements than the Federal program, so it is critical to open a dialogue with regulators as early as possible. Management of toxic decomp osition products, associated residual decontamination solutions, local waste acceptance criteria,and transportation and handling requirements should be considered. The EPA has developedI-WASTE, a web-based tool thatcontains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidance,and guidance to minimize the potential for contaminating the treatment or disposal facility. Access to this decision supporttool requires pre- registration (www2.ergweb.com/bdrtool/login.asp).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 50,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    }
+  ]
+}
