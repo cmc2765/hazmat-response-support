@@ -2729,6 +2729,236 @@ function normalizeChemicalQuery(value) {
     .replace(/^CAS\s*(?:number|no\.)?\s*[-:#]?\s*/i, '');
 }
 
+/*
+ * Hazard ID profile contract
+ *
+ * Chemical Companion and the CBRNE starter adapter intentionally have
+ * different source shapes. Keep that distinction at the API boundary: the
+ * renderers consume this defensive view model and never have to decide
+ * whether an optional field was an array, object, scalar, or null.
+ */
+function profileObject(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+}
+
+function profileArray(value) {
+  if (Array.isArray(value)) return value.flat(Infinity).filter((item) => item !== null && item !== undefined);
+  return value === null || value === undefined || value === '' ? [] : [value];
+}
+
+function profileFacts(value) {
+  return profileArray(value)
+    .filter((fact) => fact && typeof fact === 'object')
+    .map((fact) => ({
+      ...fact,
+      limitations: profileArray(fact.limitations),
+    }));
+}
+
+function uniqueProfileFacts(facts) {
+  const seen = new Set();
+  return facts.filter((fact) => {
+    const key = `${fact.id || ''}|${fact.fieldName || ''}|${fact.value ?? ''}|${fact.sourceArtifactId || ''}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function profileFactsForGroups(profile, groups) {
+  const requested = new Set(groups);
+  return profileFacts(profile?.sourceFacts).filter((fact) => requested.has(fact.fieldGroup));
+}
+
+function physicsProfileFacts(profile) {
+  const physics = profileObject(profile?.radionuclidePhysics);
+  if (!Object.keys(physics).length) return [];
+  const facts = [
+    ['Nuclide', physics.nndcName || physics.canonicalNuclideId],
+    ['Element', [physics.element, physics.elementSymbol].filter(Boolean).join(' · ')],
+    ['Atomic / neutron number', [physics.atomicNumber, physics.neutronNumber].filter((value) => value !== null && value !== undefined).join(' / ')],
+    ['Mass number', physics.massNumber],
+    ['Half-life', [physics.halfLifeOriginal, physics.halfLifeValue, physics.halfLifeUnits].filter(Boolean).join(' · ')],
+    ['Decay modes', profileArray(physics.decayModes).map((mode) => profileObject(mode).decayMode || mode).join(' · ')],
+    ['Adopted dataset', profileObject(physics.adoptedDataset).datasetName],
+    ['Physics review status', physics.reviewStatus],
+  ];
+  return facts.filter(([, value]) => value !== null && value !== undefined && value !== '')
+    .map(([fieldName, value], index) => ({
+      id: `${profile?.id || 'radionuclide'}-physics-${index}`,
+      recordId: profile?.id,
+      fieldGroup: 'TECHNICAL_OPERATIONS',
+      fieldName,
+      value,
+      sourceName: profileArray(physics.sourceArtifacts).length ? 'NNDC NuDat' : 'Manual Review',
+      sourceArtifactId: profileArray(physics.sourceArtifacts)[0],
+      verificationStatus: physics.reviewStatus || 'Requires SME Review',
+      notes: profileArray(physics.limitations).join(' · '),
+      limitations: profileArray(physics.limitations),
+    }));
+}
+
+function normalizeChemicalProfileForUi(profile, fallback = {}) {
+  const raw = profileObject(profile?.profile || profile);
+  const source = profileObject(raw);
+  const section = (name) => profileObject(source[name]);
+  const listFields = {
+    exposures: ['routes', 'symptoms', 'targetOrgans', 'acuteNotes', 'monitoringConcerns'],
+    reactivity: ['incompatibilities', 'polymerizationRisk', 'waterReactivity', 'oxidizerReducerConcerns', 'decompositionProducts'],
+    fire: ['extinguishingMedia', 'firefightingPrecautions', 'vaporBehavior', 'explosionHazards', 'runoffConcerns'],
+    decon: ['preferredMethod', 'hazmatPersonnelProcedure', 'waterReactiveCautions', 'grossDecon', 'technicalDecon', 'patientVictimDecon', 'equipmentDecon', 'runoffContainment', 'sourceBasis'],
+    medical: ['signsSymptoms', 'firstAid', 'emsConsiderations', 'antidotes', 'treatmentNotes', 'responderHazards', 'contaminatedPatientHandling'],
+    properties: ['synonyms', 'characteristics'],
+    detectors: ['items', 'pidRelevance', 'lelMeterRelevance', 'colorimetricTubes', 'electrochemicalSensors', 'limitations'],
+    isolationErg: ['protectiveActionDistance', 'dayNightValues', 'ergTable1', 'ergTable2', 'ergTable3'],
+  };
+  const normalizedSections = Object.fromEntries(Object.entries(listFields).map(([name, fields]) => {
+    const value = { ...section(name) };
+    fields.forEach((field) => { value[field] = profileArray(value[field]); });
+    return [name, value];
+  }));
+  const header = profileObject(source.header);
+  const fallbackHeader = profileObject(fallback.header);
+  const sourceCandidates = [
+    profileArray(source.sources),
+    profileArray(source.sourceLabels),
+    profileArray(source.header?.sources),
+    profileArray(fallback.summarySources),
+  ];
+  const sources = (sourceCandidates.find((candidate) => candidate.length) || []).filter(Boolean);
+  return {
+    ...source,
+    kind: 'chemical',
+    id: source.id ?? fallback.id ?? fallback.selectedChemicalId,
+    selectedChemicalId: source.selectedChemicalId ?? fallback.selectedChemicalId,
+    header: {
+      ...fallbackHeader,
+      ...header,
+      name: header.name || fallback.name || fallback.ChemicalName || 'Select a chemical',
+      cas: header.cas || fallback.cas || fallback.CasNumber || '',
+      un: header.un || fallback.un || fallback.UnnaNumber || '',
+      ergGuide: header.ergGuide || fallback.ergGuide || fallback.ErgNumber || '',
+      sources,
+    },
+    properties: normalizedSections.properties,
+    exposures: normalizedSections.exposures,
+    reactivity: normalizedSections.reactivity,
+    fire: normalizedSections.fire,
+    decon: normalizedSections.decon,
+    medical: normalizedSections.medical,
+    detectors: normalizedSections.detectors,
+    isolationErg: normalizedSections.isolationErg,
+    ppeRecommendation: profileObject(source.ppeRecommendation),
+    sourceLabels: sources,
+  };
+}
+
+function normalizeHazardProfileForUi(profile) {
+  const source = profileObject(profile);
+  const facts = profileFacts(source.sourceFacts);
+  const groups = (existing, fieldGroups) => uniqueProfileFacts([
+    ...profileFacts(existing),
+    ...profileFactsForGroups(source, fieldGroups),
+  ]);
+  const physicsFacts = physicsProfileFacts(source);
+  const radiological = source.lane === 'RADIOLOGICAL';
+  const category = String(source.category || 'UNKNOWN').replaceAll('_', ' ').replace(/\b\w/g, (character) => character.toLocaleUpperCase());
+  return {
+    ...source,
+    kind: 'hazard',
+    id: source.id || '',
+    displayName: source.displayName || 'Select a hazard',
+    category,
+    identifiers: profileObject(source.identifiers),
+    overviewFacts: groups(source.overviewFacts, ['IDENTITY']),
+    hazardFacts: groups(source.hazardFacts, ['HAZARDS', 'SYMPTOMS']),
+    detectionFacts: groups(source.detectionFacts, ['DETECTION', 'RADIOLOGICAL_SURVEY']),
+    samplingFacts: groups(source.samplingFacts, ['SAMPLING']),
+    analysisFacts: groups(source.analysisFacts, ['ANALYSIS']),
+    ppeFacts: groups(source.ppeFacts, ['PPE']),
+    isolationStandoffFacts: groups(source.isolationStandoffFacts, ['ISOLATION_STANDOFF', 'PROTECTIVE_ACTION']),
+    protectiveActionFacts: groups(source.protectiveActionFacts, ['PROTECTIVE_ACTION']),
+    deconFacts: groups(source.deconFacts, ['DECON']),
+    medicalFacts: groups(source.medicalFacts, ['MEDICAL']),
+    technicalOperationsFacts: groups(source.technicalOperationsFacts, ['TECHNICAL_OPERATIONS', 'LIMITATIONS']),
+    physicsFacts,
+    radOperationsFacts: uniqueProfileFacts([...groups([], ['RADIOLOGICAL_SURVEY', 'ISOLATION_STANDOFF', 'PROTECTIVE_ACTION', 'TECHNICAL_OPERATIONS']), ...physicsFacts]),
+    sourceFacts: facts,
+    limitations: profileArray(source.limitations),
+    dataStatusBadges: profileArray(source.dataStatusBadges),
+    actionCards: profileArray(source.actionCards).filter((card) => card && typeof card === 'object'),
+    sourceStatus: profileObject(source.sourceStatus),
+    sourceStatusDomains: profileObject(source.sourceStatusDomains),
+    summary: profileArray([
+      ...groups(source.overviewFacts, ['IDENTITY']),
+      ...groups(source.hazardFacts, ['HAZARDS']),
+    ]).slice(0, 4),
+    profileTypeLabel: radiological ? 'Radiological / Nuclear' : source.domain === 'BIOLOGICAL' ? 'Biological' : 'CBRNE / CWA',
+  };
+}
+
+function normalizeProfileForUi(profile, fallback = {}) {
+  const source = profileObject(profile?.profile || profile);
+  return source.lane === 'CBRNE_CWA' || source.lane === 'RADIOLOGICAL'
+    ? normalizeHazardProfileForUi(source)
+    : normalizeChemicalProfileForUi(profile, fallback);
+}
+
+function chemicalFrontlineValues(value, predicate = () => true, limit = 5) {
+  return [...new Set(profileArray(value)
+    .filter(hasMeaningfulChemicalProfileData)
+    .filter(predicate)
+    .map((item) => normalizeDataSourceOutput(item))
+    .filter(Boolean))].slice(0, limit);
+}
+
+function chemicalFrontlineRows(profile) {
+  const header = profileObject(profile?.header);
+  const recommendation = profileObject(profile?.ppeRecommendation);
+  const ppe = profileObject(profile?.ppeRespiratory);
+  const response = profileObject(profile?.response);
+  const isolation = profileObject(profile?.isolationErg);
+  const fire = profileObject(profile?.fire);
+  const rows = [];
+  const add = (label, value) => {
+    if (hasMeaningfulChemicalProfileData(value)) rows.push({ label, value });
+  };
+
+  add('PPE / respiratory protection', recommendation.displayLabel || recommendation.respiratoryProtection || ppe.bestMatch);
+  if (recommendation.scbaRequired && hasMeaningfulChemicalProfileData(recommendation.respiratoryProtection)) {
+    add('SCBA requirement', recommendation.respiratoryProtection);
+  }
+  add('Protection-level basis', chemicalFrontlineValues(recommendation.decisionReasons));
+
+  add('Isolation / protective action', chemicalFrontlineValues([
+    isolation.initialIsolationDistance,
+    isolation.protectiveActionDistance,
+  ], () => true, 3));
+
+  add('Fire considerations', chemicalFrontlineValues([
+    fire.flammability,
+    fire.firefightingPrecautions,
+    fire.explosionHazards,
+    fire.runoffConcerns,
+  ], () => true, 3));
+
+  const sceneCautions = chemicalFrontlineValues([
+    ...chemicalFrontlineValues(response.publicSafety, (item) => /upwind|uphill|upstream|unauthorized|ground|confined|sewer|basement|tank/i.test(item)),
+    ...chemicalFrontlineValues(response.spillOrLeak),
+    ...chemicalFrontlineValues(response.healthHazards, (item) => /toxic|corrosive|vapor|gas|frostbite|oxygen|confined/i.test(item)),
+  ]);
+  add('Entry / scene cautions', sceneCautions);
+
+  add('Identity / verification', chemicalFrontlineValues([
+    header.cas ? `CAS ${header.cas}` : '',
+    header.ergGuide ? `ERG Guide ${header.ergGuide}` : '',
+    profile.identificationSupport,
+    profile.confirmationGuidance,
+    profile.fieldIdentification,
+  ], () => true, 3));
+  return rows;
+}
+
 function hasAvailableProfileData(value) {
   if (Array.isArray(value)) return value.some(hasAvailableProfileData);
   if (value === null || value === undefined) return false;
@@ -2966,6 +3196,16 @@ function createProfileSection(title, rows, list = false) {
   return section;
 }
 
+function createChemicalProfileColumn(name, sections) {
+  const availableSections = sections.filter(Boolean);
+  if (!availableSections.length) return null;
+  const column = document.createElement('div');
+  column.className = 'chemical-profile-overview-column';
+  column.dataset.column = name;
+  column.append(...availableSections);
+  return column;
+}
+
 const ppeLevelTiles = Object.freeze([
   ['LEVEL_A_VAPOR_PROTECTIVE_SCBA', 'Vapor Protective Level A w/ SCBA', 'level-a'],
   ['LEVEL_B_SCBA', 'Level B w/ SCBA', 'level-b'],
@@ -3124,10 +3364,10 @@ function createChemicalProfileEmptyState() {
 
 function chemicalProfileSources(profile) {
   return [...new Set([
-    ...(profile?.sourceLabels || []),
-    ...(profile?.sources || []),
-    ...(profile?.header?.sources || []),
-    ...(profile?.sourceLinks || []).map((link) => link?.sourceName),
+    ...profileArray(profile?.sourceLabels),
+    ...profileArray(profile?.sources),
+    ...profileArray(profile?.header?.sources),
+    ...profileArray(profile?.sourceLinks).map((link) => link?.sourceName),
   ]
     .filter(Boolean)
     .map(chemicalProfileText.normalizeSourceLabel)
@@ -3223,6 +3463,74 @@ function createMonitoringConcernSections(values) {
   const remaining = entries.filter((_, index) => !assigned.has(index));
   sections.push(createProfileSection('Other Monitoring Concerns', remaining, true));
   return sections;
+}
+
+function createDetailedMonitoringSections(profile) {
+  const detectors = profileObject(profile?.detectors);
+  const monitoring = profileObject(profile?.monitoring);
+  const recommendation = profileObject(profile?.ppeRecommendation);
+  const displayValues = (...values) => chemicalFrontlineValues(values.flatMap((value) => profileArray(value).flatMap((item) => {
+    if (!item || typeof item !== 'object') return [item];
+    return Object.entries(item).map(([key, nested]) => `${key}: ${normalizeDataSourceOutput(nested)}`);
+  })));
+  const monitoringApproach = displayValues(
+    profile?.monitoringApproach,
+    monitoring.approach,
+    monitoring.continuousMonitoring,
+    profileArray(recommendation.verificationRequirements).filter((item) => /air monitoring|oxygen|IDLH|concentration|atmosphere/i.test(String(item))),
+  );
+  const detectorTypes = displayValues(
+    detectors.items,
+    detectors.instrumentTypes,
+    detectors.sensorTypes,
+  );
+  const analyticalMethods = displayValues(
+    detectors.analyticalMethods,
+    detectors.secondaryMethods,
+    detectors.confirmationMethods,
+    profile?.confirmationGuidance,
+    profile?.identificationSupport,
+  );
+  const limitations = displayValues(
+    detectors.limitations,
+    detectors.instrumentLimitations,
+    detectors.crossSensitivity,
+    detectors.crossSensitivities,
+    detectors.interferences,
+    monitoring.limitations,
+  );
+  const fieldReadings = displayValues(
+    profile?.fieldMonitoring,
+    profile?.currentReadings,
+    profile?.readings,
+    profile?.incidentReadings,
+    detectors.fieldReadings,
+    detectors.negativeTestRelevance,
+  );
+
+  return [
+    createProfileSection('Monitoring Methods', [
+      { label: 'Sensor / instrument types', value: detectorTypes },
+      { label: 'Colorimetric tubes', value: displayValues(detectors.colorimetricTubes) },
+      { label: 'Electrochemical sensors', value: displayValues(detectors.electrochemicalSensors) },
+      { label: 'PID / photoionization', value: displayValues(detectors.pidRelevance) },
+      { label: 'LEL / combustible-gas meters', value: displayValues(detectors.lelMeterRelevance) },
+      { label: 'Monitoring approach', value: monitoringApproach },
+    ]),
+    createProfileSection('Detection / Identification', [
+      { label: 'Direct-reading methods', value: displayValues(detectors.directReadingMethods, detectors.items) },
+      { label: 'Analytical / secondary confirmation', value: analyticalMethods },
+      { label: 'Multi-method confirmation', value: displayValues(detectors.multiMethodConfirmation, monitoring.confirmationStrategy) },
+    ]),
+    createProfileSection('Instrument Limitations / Interferences', [
+      { label: 'Limitations / cross-sensitivity', value: limitations },
+      { label: 'Useful negative findings', value: displayValues(detectors.negativeFindings, detectors.negativeTestRelevance, monitoring.negativeTestRelevance) },
+    ]),
+    createProfileSection('Field Monitoring / Readings', [
+      { label: 'Current readings / context', value: fieldReadings },
+      { label: 'Units / threshold comparison', value: displayValues(profile?.readingUnits, profile?.thresholdComparison, monitoring.readingContext) },
+    ]),
+  ].filter(Boolean);
 }
 
 function createErgGreenTable(title, headers, rows) {
@@ -3368,6 +3676,7 @@ function formatHazardClassLines(value) {
 }
 
 function renderChemicalProfile(profile) {
+  profile = normalizeChemicalProfileForUi(profile);
   const content = document.getElementById('chemical-profile-content');
   const tabs = document.getElementById('chemical-profile-tabs');
   const meta = document.getElementById('chemical-profile-meta');
@@ -3376,75 +3685,75 @@ function renderChemicalProfile(profile) {
   if (!content || !tabs || !meta || !nameEl || !summaryEl) return;
 
   const sections = [
-    { key: 'overview', title: 'Overview', render: () => [
-      createProfileSection('Chemical Summary', [
-        { label: 'Primary hazard', value: profile?.header?.hazard || 'Not available' },
-        { label: 'Physical state', value: profile?.properties?.physicalState || 'Not available' },
-        { label: 'Odor', value: profile?.properties?.odor || profile?.properties?.characteristics || 'Not available' },
-        { label: 'Color', value: profile?.properties?.color || 'Not available' },
-        { label: 'Molecular formula', value: profile?.properties?.formula || 'Not available' },
-        { label: 'Molecular weight', value: profile?.properties?.molecularWeight || 'Not available' },
-        { label: 'IDLH', value: formatIdlh(profile?.header?.idlh) || 'Not available' },
-        { label: 'Boiling point', value: profile?.properties?.boilingPoint || 'Not available' },
-        { label: 'Solubility', value: profile?.properties?.waterSolubility || 'Not available' },
-        { label: 'ERG guide', value: profile?.header?.ergGuide || 'Not available' },
-      ]),
-      createProfileSection('Frontline Considerations', [
-        { label: 'EMS considerations', value: profile?.medical?.emsConsiderations || ['Not available'] },
-        { label: 'PPE / respiratory', value: profile?.ppeRecommendation?.displayLabel || 'Not available' },
-        { label: 'Initial isolation', value: profile?.isolationErg?.initialIsolationDistance || 'Not available' },
-      ]),
-      createProfileSection('Isolation Distances (ERG)', [
-        { label: 'Initial isolation', value: profile?.isolationErg?.initialIsolationDistance || 'Not available' },
-        { label: 'Protective action', value: profile?.isolationErg?.protectiveActionDistance || ['Not available'] },
-      ]),
-      createProfileSection('AEGL Values', groupedAeglProfileEntries(profile?.exposures?.monitoringConcerns || []), true),
-      createProfileSection('EMS Considerations', profile?.medical?.emsConsiderations || ['Not available'], true),
-      createProfileSection('Fire Considerations', [
-        profile?.fire?.flammability,
-        profile?.fire?.firefightingPrecautions,
-        profile?.fire?.explosionHazards,
-        profile?.fire?.runoffConcerns,
-      ], true),
-      createProfileSection('Decon Considerations', [
-        profile?.decon?.preferredMethod,
-        profile?.decon?.hazmatPersonnelProcedure,
-        profile?.decon?.technicalDecon,
-        profile?.decon?.runoffContainment,
-      ].flat(Infinity), true),
-    ] },
-    { key: 'properties', title: 'Properties', render: () => [
-      createProfileSection('Chemical Properties', [
-        { label: 'Chemical formula', value: profile?.properties?.formula || 'Not available' },
-        { label: 'Physical state', value: profile?.properties?.physicalState || 'Not available' },
-        { label: 'Molecular weight', value: profile?.properties?.molecularWeight || 'Not available' },
-        { label: 'Boiling point', value: profile?.properties?.boilingPoint || 'Not available' },
-        { label: 'Melting / freezing point', value: profile?.properties?.meltingPoint || 'Not available' },
-        { label: 'Vapor pressure', value: profile?.properties?.vaporPressure || 'Not available' },
-        { label: 'Vapor density', value: profile?.properties?.vaporDensity || 'Not available' },
-        { label: 'Liquid density', value: profile?.properties?.liquidDensity || 'Not available' },
-        { label: 'Specific gravity', value: profile?.properties?.specificGravity || 'Not available' },
-        { label: 'Water solubility', value: profile?.properties?.waterSolubility || 'Not available' },
-        { label: 'Evaporation rate', value: profile?.properties?.evaporationRate || 'Not available' },
-      ]),
-      createProfileSection('Flammability & Energy', [
-        { label: 'Flash point', value: profile?.properties?.flashPoint || 'Not available' },
-        { label: 'Ignition temperature', value: profile?.properties?.ignitionTemperature || 'Not available' },
-        { label: 'LEL / UEL', value: profile?.properties?.lelUel || 'Not available' },
-        { label: 'Odor threshold', value: profile?.properties?.odorThreshold || 'Not available' },
-        { label: 'Ionization potential', value: profile?.properties?.ionizationPotential || 'Not available' },
-        { label: 'Decomposition point', value: profile?.properties?.decompositionPoint || 'Not available' },
-        { label: 'Heat of vaporization', value: profile?.properties?.heatOfVaporization || 'Not available' },
-      ]),
-      createProfileSection('Synonyms & Notes', [
-        { label: 'Synonyms', value: profile?.properties?.synonyms || ['Not available'] },
-        { label: 'Persistence / environment', value: profile?.properties?.environmentalPersistence || 'Not available' },
-        { label: 'Characteristics', value: profile?.properties?.characteristics || ['Not available'] },
-        { label: 'Commercial uses', value: profile?.properties?.commercialUses || 'Not available' },
-        { label: 'Commercial sources', value: profile?.properties?.commercialSources || 'Not available' },
-      ]),
-      createProfileSection('Reactivity', readableProfileBullets(profile?.properties?.mixtureReactivity), true),
-    ] },
+    { key: 'overview', title: 'Overview', render: () => {
+      const aeglValues = profileArray(profile?.exposures?.monitoringConcerns)
+        .filter((value) => /^AEGL/i.test(String(value).split(':')[0].trim()));
+      const chemicalSummary = createProfileSection('Chemical Summary', [
+        { label: 'Primary hazard', value: profile?.header?.hazard },
+        { label: 'Physical state', value: profile?.properties?.physicalState },
+        { label: 'Odor', value: profile?.properties?.odor || profile?.properties?.characteristics },
+        { label: 'Color', value: profile?.properties?.color },
+        { label: 'Molecular formula', value: profile?.properties?.formula },
+        { label: 'Molecular weight', value: profile?.properties?.molecularWeight },
+        { label: 'Boiling point', value: profile?.properties?.boilingPoint },
+        { label: 'Solubility', value: profile?.properties?.waterSolubility },
+        { label: 'ERG guide', value: profile?.header?.ergGuide },
+      ]);
+      const exposureSummary = createProfileSection('Exposure Limits', [
+        { label: 'IDLH', value: formatIdlh(profile?.exposures?.idlh) },
+        { label: 'OSHA PEL', value: formatConcentration(profile?.exposures?.oshaPel) },
+        { label: 'NIOSH REL', value: formatConcentration(profile?.exposures?.nioshRel) },
+        { label: 'ACGIH TLV', value: formatConcentration(profile?.exposures?.acgihTlv) },
+      ]);
+      return [
+        createChemicalProfileColumn('summary', [
+          chemicalSummary,
+          createProfileSection('AEGL Values', groupedAeglProfileEntries(aeglValues), true),
+          exposureSummary,
+        ]),
+        createChemicalProfileColumn('operations', [
+          createProfileSection('Frontline Considerations', chemicalFrontlineRows(profile)),
+          createProfileSection('EMS Considerations', profile?.medical?.emsConsiderations, true),
+        ]),
+      ];
+    } },
+    { key: 'properties', title: 'Properties', render: () => {
+      const chemicalProperties = createProfileSection('Chemical Properties', [
+        { label: 'Chemical formula', value: profile?.properties?.formula },
+        { label: 'Physical state', value: profile?.properties?.physicalState },
+        { label: 'Appearance', value: profile?.properties?.appearance },
+        { label: 'Color', value: profile?.properties?.color },
+        { label: 'Odor', value: profile?.properties?.odor },
+        { label: 'Molecular weight', value: profile?.properties?.molecularWeight },
+        { label: 'Boiling point', value: profile?.properties?.boilingPoint },
+        { label: 'Melting / freezing point', value: profile?.properties?.meltingPoint },
+        { label: 'Vapor pressure', value: profile?.properties?.vaporPressure },
+        { label: 'Vapor density', value: profile?.properties?.vaporDensity },
+        { label: 'Liquid density', value: profile?.properties?.liquidDensity },
+        { label: 'Specific gravity', value: profile?.properties?.specificGravity },
+        { label: 'Water solubility', value: profile?.properties?.waterSolubility },
+        { label: 'Flash point', value: profile?.properties?.flashPoint },
+        { label: 'Ignition / autoignition temperature', value: profile?.properties?.ignitionTemperature },
+        { label: 'LEL / UEL', value: profile?.properties?.lelUel },
+        { label: 'Odor threshold', value: profile?.properties?.odorThreshold },
+        { label: 'Ionization potential', value: profile?.properties?.ionizationPotential },
+        { label: 'Decomposition point', value: profile?.properties?.decompositionPoint },
+        { label: 'Heat of vaporization', value: profile?.properties?.heatOfVaporization },
+        { label: 'Evaporation rate', value: profile?.properties?.evaporationRate },
+      ]);
+      const synonyms = profileArray(profile?.properties?.synonyms).filter(hasMeaningfulChemicalProfileData);
+      if (chemicalProperties && synonyms.length) {
+        const details = document.createElement('details');
+        details.className = 'chemical-profile-secondary-details';
+        const summary = document.createElement('summary');
+        summary.textContent = 'Synonyms / aliases';
+        const list = document.createElement('span');
+        list.textContent = synonyms.map(normalizeDataSourceOutput).join(' · ');
+        details.append(summary, list);
+        chemicalProperties.append(details);
+      }
+      return [chemicalProperties, createProfileSection('Reactivity', readableProfileBullets(profile?.properties?.mixtureReactivity), true)];
+    } },
     { key: 'exposures', title: 'Exposures', render: () => [
       createProfileSection('EXPOSURE LIMITS', [
         { label: 'IDLH', value: formatIdlh(profile?.exposures?.idlh) || 'Not available' },
@@ -3458,24 +3767,18 @@ function renderChemicalProfile(profile) {
     { key: 'ppeRespiratory', title: 'PPE / Respiratory Protection', render: () => [
       createPpeRecommendationCard(profile?.ppeRecommendation),
     ] },
-    { key: 'detectors', title: 'Detectors', render: () => [
-      createProfileSection('Available Monitoring Equipment', [
-        { label: 'Air monitoring', value: 'AreaRAE · MultiRAE · ToxiRAE' },
-        { label: 'Spectrometry', value: 'Rigaku · HAZMATID Elite' },
-        { label: 'Liquid sample testing', value: 'CHEMMstrip and/or pH paper' },
-      ]),
-    ] },
+    { key: 'detectors', title: 'Detectors', render: () => createDetailedMonitoringSections(profile) },
     { key: 'reactivity', title: 'Reactivity', render: () => [
       createProfileSection('Reactivity profile', [
-        { label: 'Incompatibilities', value: (profile?.reactivity?.incompatibilities || ['Not available']).join(' · ') },
-        { label: 'Polymerization risk', value: (profile?.reactivity?.polymerizationRisk || ['Not available']).join(' · ') },
-        { label: 'Water reactivity', value: (profile?.reactivity?.waterReactivity || ['Not available']).join(' · ') },
-        { label: 'Oxidizer / reducer concerns', value: (profile?.reactivity?.oxidizerReducerConcerns || ['Not available']).join(' · ') },
+        { label: 'Incompatibilities', value: profileArray(profile?.reactivity?.incompatibilities).join(' · ') || 'Not available' },
+        { label: 'Polymerization risk', value: profileArray(profile?.reactivity?.polymerizationRisk).join(' · ') || 'Not available' },
+        { label: 'Water reactivity', value: profileArray(profile?.reactivity?.waterReactivity).join(' · ') || 'Not available' },
+        { label: 'Oxidizer / reducer concerns', value: profileArray(profile?.reactivity?.oxidizerReducerConcerns).join(' · ') || 'Not available' },
       ]),
       createProfileSection('Stability and decomposition', [
         { label: 'Overall stability', value: profile?.reactivity?.stabilityNotes || 'Not available' },
         { label: 'Mixing risk', value: profile?.reactivity?.chemicalMixtureReactivity || 'Not available' },
-        { label: 'Decomposition products', value: (profile?.reactivity?.decompositionProducts || ['Not available']).join(' · ') },
+        { label: 'Decomposition products', value: profileArray(profile?.reactivity?.decompositionProducts).join(' · ') || 'Not available' },
       ]),
     ] },
     { key: 'isolationErg', title: 'Isolation Distance', render: () => {
@@ -3488,7 +3791,7 @@ function renderChemicalProfile(profile) {
         ...(!hasGreenTable ? [
           { label: 'Protective action distance', value: isolationErg.protectiveActionDistance || 'Not available' },
           { label: 'Small spill / large spill', value: `${isolationErg.smallSpill || 'Not available'} / ${isolationErg.largeSpill || 'Not available'}` },
-          { label: 'Day / night values', value: (isolationErg.dayNightValues || ['Not available']).join(' · ') },
+          { label: 'Day / night values', value: profileArray(isolationErg.dayNightValues).join(' · ') || 'Not available' },
         ] : []),
       ];
       const distanceSection = createProfileSection('Isolation Distances', distanceRows);
@@ -3527,26 +3830,26 @@ function renderChemicalProfile(profile) {
         { label: 'Flammability', value: profile?.fire?.flammability || 'Not available' },
         { label: 'Flash point', value: profile?.fire?.flashPoint || 'Not available' },
         { label: 'LEL / UEL', value: profile?.fire?.lelUel || 'Not available' },
-        { label: 'Extinguishing media', value: (profile?.fire?.extinguishingMedia || ['Not available']).join(' · ') },
+        { label: 'Extinguishing media', value: profileArray(profile?.fire?.extinguishingMedia).join(' · ') || 'Not available' },
       ]),
       createProfileSection('Fire response', [
-        { label: 'Firefighting precautions', value: (profile?.fire?.firefightingPrecautions || ['Not available']).join(' · ') },
-        { label: 'Vapor behavior', value: (profile?.fire?.vaporBehavior || ['Not available']).join(' · ') },
-        { label: 'Explosion hazards', value: (profile?.fire?.explosionHazards || ['Not available']).join(' · ') },
-        { label: 'Runoff concerns', value: (profile?.fire?.runoffConcerns || ['Not available']).join(' · ') },
+        { label: 'Firefighting precautions', value: profileArray(profile?.fire?.firefightingPrecautions).join(' · ') || 'Not available' },
+        { label: 'Vapor behavior', value: profileArray(profile?.fire?.vaporBehavior).join(' · ') || 'Not available' },
+        { label: 'Explosion hazards', value: profileArray(profile?.fire?.explosionHazards).join(' · ') || 'Not available' },
+        { label: 'Runoff concerns', value: profileArray(profile?.fire?.runoffConcerns).join(' · ') || 'Not available' },
       ]),
     ] },
     { key: 'decon', title: 'DECON', render: () => [
       createProfileSection('Personnel / Product Decon', [
         { label: 'Preferred route / source matrix', value: profile?.decon?.preferredMethod || ['Not available'] },
         { label: 'HazMat personnel procedure', value: deconGuidanceItems(profile?.decon?.hazmatPersonnelProcedure || ['Not available']) },
-        { label: 'Water-reactive cautions', value: (profile?.decon?.waterReactiveCautions || ['Not available']).join(' · ') },
+        { label: 'Water-reactive cautions', value: profileArray(profile?.decon?.waterReactiveCautions).join(' · ') || 'Not available' },
       ]),
       createProfileSection('Technical Decon', [
         { label: 'Selected-product methods and process', value: deconGuidanceItems(profile?.decon?.technicalDecon || ['Not available']) },
         { label: 'Equipment / object decon', value: deconGuidanceItems(profile?.decon?.equipmentDecon || ['Not available']) },
         { label: 'Runoff containment', value: deconGuidanceItems(profile?.decon?.runoffContainment || ['Not available']) },
-        { label: 'Guidance basis', value: (profile?.decon?.sourceBasis || ['Not available']).join(' · ') },
+        { label: 'Guidance basis', value: profileArray(profile?.decon?.sourceBasis).join(' · ') || 'Not available' },
       ]),
       createHybridDeconLink(),
     ] },
@@ -3694,10 +3997,10 @@ function updateChemicalCard(record) {
     if (/^ERG$/i.test(normalized)) return 'Linked ERG';
     return normalized;
   };
-  const linkedSources = (record.profile?.sourceLinks || [])
+  const linkedSources = profileArray(record.profile?.sourceLinks)
     .map((link) => link?.sourceName && linkedSourceBadge(link.sourceName))
     .filter(Boolean);
-  const profile = {
+  const profile = normalizeChemicalProfileForUi({
     ...(record.profile || record),
     header: {
       ...(record.profile?.header || {}),
@@ -3713,10 +4016,10 @@ function updateChemicalCard(record) {
     },
     sourceLabels: [...new Set([
       'Chemical Companion Master',
-      ...(record.summarySources || record.profile?.sourceLabels || []).map(linkedSourceBadge),
+      ...profileArray(record.summarySources || record.profile?.sourceLabels).map(linkedSourceBadge),
       ...linkedSources,
     ])],
-  };
+  }, record);
   renderChemicalProfile(profile);
 }
 
@@ -4204,11 +4507,11 @@ const hazardLaneUi = Object.freeze({
     examples: ['Sarin', 'VX', 'Mustard', 'Ricin'],
     emblem: 'CB',
     tabs: [
-      ['Overview', ['overviewFacts', 'hazardFacts', 'detectionFacts', 'ppeFacts', 'isolationStandoffFacts', 'medicalFacts', 'deconFacts', 'technicalOperationsFacts']],
-      ['Hazards', ['hazardFacts']], ['Detection', ['detectionFacts']],
-      ['PPE / Respiratory', ['ppeFacts']], ['Isolation / Standoff', ['isolationStandoffFacts']],
-      ['Medical', ['medicalFacts']], ['Decon', ['deconFacts']],
-      ['Tech Ops', ['technicalOperationsFacts']], ['Sources', ['sourceFacts']],
+      ['Overview', ['overviewFacts', 'hazardFacts']], ['Health / Exposure', ['hazardFacts', 'medicalFacts']],
+      ['PPE / Respiratory', ['ppeFacts']], ['Detection', ['detectionFacts']],
+      ['Sampling / Analysis', ['samplingFacts', 'analysisFacts']], ['Decon', ['deconFacts']],
+      ['Medical', ['medicalFacts']], ['Protective Actions', ['isolationStandoffFacts', 'protectiveActionFacts']],
+      ['Command / Coordination', ['technicalOperationsFacts']], ['Sources', ['sourceFacts']],
     ],
   },
   RADIOLOGICAL: {
@@ -4220,11 +4523,12 @@ const hazardLaneUi = Object.freeze({
     examples: ['Cesium-137', 'Cobalt-60', 'Iridium-192', 'RDD'],
     emblem: 'RAD',
     tabs: [
-      ['Overview', ['overviewFacts', 'hazardFacts', 'detectionFacts', 'ppeFacts', 'isolationStandoffFacts', 'medicalFacts', 'deconFacts', 'technicalOperationsFacts']],
-      ['Radiation Hazards', ['hazardFacts']], ['Detection / Survey', ['detectionFacts']],
-      ['PPE / Contamination', ['ppeFacts']], ['Isolation / Standoff', ['isolationStandoffFacts']],
-      ['Medical', ['medicalFacts']], ['Decon', ['deconFacts']],
-      ['Tech Ops', ['technicalOperationsFacts']], ['Sources', ['sourceFacts']],
+      ['Overview', ['overviewFacts', 'hazardFacts']], ['Health / Exposure', ['hazardFacts', 'medicalFacts']],
+      ['Physics', ['physicsFacts']], ['Radiation Operations', ['radOperationsFacts']],
+      ['PPE / Contamination', ['ppeFacts']], ['Detection / Survey', ['detectionFacts']],
+      ['Sampling / Analysis', ['samplingFacts', 'analysisFacts']], ['Decon', ['deconFacts']],
+      ['Medical', ['medicalFacts']], ['Protective Actions', ['isolationStandoffFacts', 'protectiveActionFacts']],
+      ['Command / Coordination', ['technicalOperationsFacts']], ['Sources', ['sourceFacts']],
     ],
   },
 });
@@ -4285,15 +4589,18 @@ function setHazardProfileMode(mode) {
 
 function hazardProfileDisplayValue(fact) {
   if (fact?.value === null || fact?.value === undefined || fact?.value === '') return noCurrentDataText;
-  const value = Array.isArray(fact.value) ? fact.value.join(' · ') : String(fact.value);
+  const value = profileArray(fact.value)
+    .map((item) => item && typeof item === 'object' ? item.fieldName || item.label || JSON.stringify(item) : String(item))
+    .filter(Boolean)
+    .join(' · ');
   return fact.units ? `${value} ${fact.units}` : value;
 }
 
 function renderStarterHazardTab(profile, fieldNames) {
   const content = document.getElementById('hazard-profile-content');
   if (!content) return;
-  const requestedFields = Array.isArray(fieldNames) ? fieldNames : [fieldNames];
-  const facts = requestedFields.flatMap((fieldName) => Array.isArray(profile?.[fieldName]) ? profile[fieldName] : []);
+  const requestedFields = profileArray(fieldNames);
+  const facts = requestedFields.flatMap((fieldName) => profileFacts(profile?.[fieldName]));
   const fragment = document.createDocumentFragment();
   (facts.length ? facts : [{ fieldName: 'Data status', value: null, verificationStatus: 'No Current Data Exists' }]).forEach((fact) => {
     const card = document.createElement('section');
@@ -4327,19 +4634,19 @@ function renderStarterHazardTab(profile, fieldNames) {
       fact.sourceArtifactId ? `Artifact: ${fact.sourceArtifactId}` : 'Artifact: not linked',
       `Locator: ${fact.sourceLocator || fact.sourcePage || 'not available'}`,
       `Review: ${fact.detailedReviewStatus || fact.verificationStatus || 'Requires Review'}`,
-      ...(fact.limitations || []),
+      ...profileArray(fact.limitations),
     ].join(' · ');
     provenance.append(provenanceSummary, provenanceText);
     card.append(heading, value, status, notes, source, provenance);
     fragment.append(card);
   });
-  if (requestedFields.includes('technicalOperationsFacts') && profile.limitations?.length) {
+  if (requestedFields.includes('technicalOperationsFacts') && profileArray(profile.limitations).length) {
     const safetyCard = document.createElement('section');
     safetyCard.className = 'hazard-source-fact-card hazard-guided-safety-card';
     const heading = document.createElement('h3');
     heading.textContent = 'Guided Response Safety Gates';
     const list = document.createElement('ul');
-    profile.limitations.forEach((limitation) => {
+    profileArray(profile.limitations).forEach((limitation) => {
       const item = document.createElement('li');
       item.textContent = limitation;
       list.append(item);
@@ -4351,6 +4658,7 @@ function renderStarterHazardTab(profile, fieldNames) {
 }
 
 function renderStarterHazardProfile(profile) {
+  profile = normalizeHazardProfileForUi(profile);
   const config = hazardLaneUi[profile?.lane];
   if (!config) return;
   activeStarterHazardProfile = profile;
@@ -4372,16 +4680,18 @@ function renderStarterHazardProfile(profile) {
       return badge;
     }));
   }
-  const sourceStatus = profile.sourceStatus || {};
-  setText('hazard-profile-source-summary', sourceStatus.sourceNames?.length ? sourceStatus.sourceNames.join(' · ') : noCurrentDataText);
+  const sourceStatus = profileObject(profile.sourceStatus);
+  const sourceNames = profileArray(sourceStatus.sourceNames);
+  const sourceWarnings = profileArray(sourceStatus.warnings);
+  setText('hazard-profile-source-summary', sourceNames.length ? sourceNames.join(' · ') : noCurrentDataText);
   setText('hazard-profile-source-pack-count', String(sourceStatus.sourcePacksLoaded || 0));
   setText('hazard-profile-source-fact-count', String(sourceStatus.sourceFactCount || 0));
-  setText('hazard-profile-source-names', sourceStatus.sourceNames?.join(' · ') || 'None');
+  setText('hazard-profile-source-names', sourceNames.join(' · ') || 'None');
   setText('hazard-profile-review-count', String(sourceStatus.requiresSmeReviewCount || 0));
   setText('hazard-profile-conflict-count', String(sourceStatus.conflictingSourcesCount || 0));
   setText('hazard-profile-missing-count', String(sourceStatus.missingFieldCount || 0));
   setText('hazard-profile-last-import', sourceStatus.lastImportUpdate || 'Not imported');
-  setText('hazard-profile-import-warnings', sourceStatus.warnings?.join(' · ') || 'No warnings');
+  setText('hazard-profile-import-warnings', sourceWarnings.join(' · ') || 'No warnings');
   const dataStatus = sourceStatus.conflictingSourcesCount
     ? 'Conflicting Sources'
     : profile.verificationStatus || (sourceStatus.sourceFactCount ? 'Source Imported' : noCurrentDataText);
@@ -4415,7 +4725,7 @@ function renderStarterHazardProfile(profile) {
   }
   const overviewList = document.getElementById('hazard-profile-overview-list');
   if (overviewList) {
-    const overviewFacts = [...(profile.hazardFacts || []), ...(profile.overviewFacts || [])]
+    const overviewFacts = [...profileFacts(profile.hazardFacts), ...profileFacts(profile.overviewFacts)]
       .filter((fact) => fact?.fieldName && fact.value !== null && fact.value !== undefined && fact.value !== '')
       .slice(0, 4);
     const items = overviewFacts.map((fact) => {
@@ -4437,7 +4747,7 @@ function renderStarterHazardProfile(profile) {
   }
   const actionGrid = document.getElementById('hazard-profile-action-cards');
   if (actionGrid) {
-    actionGrid.replaceChildren(...(profile.actionCards || []).map((action) => {
+    actionGrid.replaceChildren(...profileArray(profile.actionCards).map((action) => {
       const card = document.createElement('article');
       const heading = document.createElement('h3');
       heading.textContent = action.title;
@@ -4453,11 +4763,11 @@ function renderStarterHazardProfile(profile) {
   const limitations = document.getElementById('hazard-profile-limitations');
   if (limitations) {
     limitations.replaceChildren();
-    if (profile.limitations?.length) {
+    if (profileArray(profile.limitations).length) {
       const heading = document.createElement('h3');
       heading.textContent = 'Safety Gates';
       const list = document.createElement('ul');
-      profile.limitations.forEach((limitation) => {
+      profileArray(profile.limitations).forEach((limitation) => {
         const item = document.createElement('li');
         item.textContent = limitation;
         list.append(item);
@@ -4492,7 +4802,7 @@ function renderStarterHazardProfile(profile) {
       ? 'Radiological plume/standoff requires radiological model support.'
       : 'Plume requires verified endpoint/source data.';
   }
-  renderStarterHazardTab(profile, ['overviewFacts']);
+  renderStarterHazardTab(profile, ['overviewFacts', 'hazardFacts']);
 }
 
 async function openStarterHazard(result) {

@@ -154,6 +154,25 @@ describe('normalizeChemicalProfile', () => {
     });
   });
 
+  it.each([
+    ['chlorine', 'Exact Chemical Companion master name'],
+    ['7782-50-5', 'Exact CAS number'],
+    ['1017', 'Exact Chemical Companion master UN number'],
+  ])('resolves chlorine by %s through the public search route', async (query, matchReason) => {
+    const response = await app.request(`/api/chemicals/search?q=${encodeURIComponent(query)}`);
+    expect(response.status).toBe(200);
+    const results = (await response.json()).chemicals;
+    expect(results[0]).toMatchObject({
+      ChemicalID: 22,
+      ChemicalName: 'Chlorine',
+      CasNumber: '7782-50-5',
+      UnnaNumber: '1017',
+      ErgNumber: '124',
+      matchReason,
+      guidanceEligible: true,
+    });
+  });
+
   it('keeps Chemical Companion IDs out of the NPG identifier namespace', async () => {
     const response = await app.request('/api/npg/102');
     expect(response.status).toBe(404);
