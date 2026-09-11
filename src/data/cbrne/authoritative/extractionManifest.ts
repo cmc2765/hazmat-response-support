@@ -1,5 +1,5 @@
 import manifest from "./generated-extraction-manifest.json";
-import type { SourceArtifactExtractionManifest } from "../../../lib/cbrne/authoritativeSourceTypes.js";
+import type { CbrneExtractionCheckpoint, SourceArtifactExtractionManifest } from "../../../lib/cbrne/authoritativeSourceTypes.js";
 
 type GeneratedExtractionManifest = {
   generatedFile: true;
@@ -7,10 +7,18 @@ type GeneratedExtractionManifest = {
   generatedAt: string;
   sourceArtifactCount: number;
   distinctAcquiredArtifactCount: number;
+  checkpoint?: CbrneExtractionCheckpoint;
   manifest: SourceArtifactExtractionManifest[];
 };
 
-export const CBRNE_EXTRACTION_MANIFEST = Object.freeze((manifest as GeneratedExtractionManifest).manifest);
+const generatedManifest = manifest as GeneratedExtractionManifest;
+
+export const CBRNE_EXTRACTION_MANIFEST = Object.freeze(generatedManifest.manifest);
+export const CBRNE_EXTRACTION_CHECKPOINT: CbrneExtractionCheckpoint = Object.freeze(generatedManifest.checkpoint ?? {
+  status: "COMPLETE",
+  completedArtifactCount: generatedManifest.manifest.length,
+  lastCompletedArtifactId: generatedManifest.manifest.at(-1)?.sourceArtifactId ?? null,
+});
 
 export function extractionManifestForArtifact(sourceArtifactId: string) {
   return CBRNE_EXTRACTION_MANIFEST.find((item) => item.sourceArtifactId === sourceArtifactId) ?? null;

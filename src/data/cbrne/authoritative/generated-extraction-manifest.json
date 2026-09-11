@@ -4,6 +4,11 @@
   "generatedAt": "2026-09-11T00:00:00.000Z",
   "sourceArtifactCount": 224,
   "distinctAcquiredArtifactCount": 209,
+  "checkpoint": {
+    "status": "COMPLETE",
+    "completedArtifactCount": 224,
+    "lastCompletedArtifactId": "doe-emergency-response-resources"
+  },
   "manifest": [
     {
       "sourceArtifactId": "epa-nrt-qrg-index",

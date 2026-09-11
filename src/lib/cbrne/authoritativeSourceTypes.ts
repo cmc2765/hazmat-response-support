@@ -140,6 +140,12 @@ export type SourceArtifactExtractionManifest = {
   supersededBy: string | null;
 };
 
+export type CbrneExtractionCheckpoint = {
+  status: "IN_PROGRESS" | "COMPLETE";
+  completedArtifactCount: number;
+  lastCompletedArtifactId: string | null;
+};
+
 export type CbrneCompletenessState =
   | "SOURCE_BACKED_PENDING_REVIEW"
   | "SOURCE_BACKED"

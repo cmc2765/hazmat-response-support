@@ -1,33 +1,52 @@
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { CBRNE_AUTHORITATIVE_SOURCE_FACTS } from "../../src/data/cbrne/authoritative/authoritativeSourceFacts.js";
 import { CBRNE_SOURCE_ARTIFACTS } from "../../src/data/cbrne/authoritative/sourceArtifacts.js";
 import { extractLocalArtifact } from "../../src/lib/cbrne/sourceCorpusExtraction.js";
-import type { ExtractionDisposition, SourceArtifactExtractionManifest } from "../../src/lib/cbrne/authoritativeSourceTypes.js";
+import type { AuthoritativeSourceFact, CbrneExtractionCheckpoint, ExtractionDisposition, SourceArtifact, SourceArtifactExtractionManifest } from "../../src/lib/cbrne/authoritativeSourceTypes.js";
 
 const ROOT = resolve(import.meta.dirname, "../..");
 const OUTPUT = resolve(ROOT, "src/data/cbrne/authoritative/generated-extraction-manifest.json");
 const generatedAt = "2026-09-11T00:00:00.000Z";
 
+type GeneratedExtractionManifest = {
+  generatedFile: true;
+  generatedBy: string;
+  generatedAt: string;
+  sourceArtifactCount: number;
+  distinctAcquiredArtifactCount: number;
+  checkpoint: CbrneExtractionCheckpoint;
+  manifest: SourceArtifactExtractionManifest[];
+};
+
+export type BuildExtractionManifestOptions = {
+  repositoryRoot?: string;
+  outputPath?: string;
+  artifacts?: readonly SourceArtifact[];
+  facts?: readonly AuthoritativeSourceFact[];
+  extractArtifact?: typeof extractLocalArtifact;
+};
+
 function isIndexArtifact(title: string, id: string) {
   return /index|sitemap|catalog|release|openapi/i.test(`${title} ${id}`);
 }
 
-function inspectContent(artifact: (typeof CBRNE_SOURCE_ARTIFACTS)[number]) {
-  if (!artifact.localSnapshotPath || !existsSync(resolve(ROOT, artifact.localSnapshotPath))) {
+function inspectContent(artifact: SourceArtifact, repositoryRoot: string, extractArtifact: typeof extractLocalArtifact) {
+  if (!artifact.localSnapshotPath || !existsSync(resolve(repositoryRoot, artifact.localSnapshotPath))) {
     return { hashValidation: "MISSING" as const, bytes: null, sections: 0, records: 0, pages: null, warnings: ["Local snapshot is not present."], parserLimitations: [] };
   }
-  const bytes = readFileSync(resolve(ROOT, artifact.localSnapshotPath));
+  const bytes = readFileSync(resolve(repositoryRoot, artifact.localSnapshotPath));
   const hashValidation = artifact.sha256 && createHash("sha256").update(bytes).digest("hex") === artifact.sha256
     ? "VERIFIED" as const : "FAILED" as const;
   if (hashValidation === "FAILED") return { hashValidation, bytes: bytes.length, sections: 0, records: 0, pages: null, warnings: ["Integrity failed; parser was not run."], parserLimitations: [] };
-  const structure = extractLocalArtifact(artifact, ROOT);
+  const structure = extractArtifact(artifact, repositoryRoot);
   return { hashValidation, bytes: structure.usableContentBytes, sections: structure.sections.length, records: structure.records.length, pages: structure.pages, warnings: structure.warnings, parserLimitations: structure.parserLimitations };
 }
 
 function extractionDisposition(
-  artifact: (typeof CBRNE_SOURCE_ARTIFACTS)[number],
+  artifact: SourceArtifact,
   hashValidation: SourceArtifactExtractionManifest["hashValidation"],
   parserLimitations: string[],
   facts: typeof CBRNE_AUTHORITATIVE_SOURCE_FACTS,
@@ -46,48 +65,109 @@ function extractionDisposition(
   return "EXTRACTED";
 }
 
-const manifest: SourceArtifactExtractionManifest[] = CBRNE_SOURCE_ARTIFACTS.map((artifact) => {
-  const content = inspectContent(artifact);
-  const facts = CBRNE_AUTHORITATIVE_SOURCE_FACTS.filter((fact) => fact.sourceArtifactId === artifact.sourceArtifactId);
-  const linked = [...new Set(facts.map((fact) => fact.canonicalRecordId))];
-  const disposition = extractionDisposition(artifact, content.hashValidation, content.parserLimitations, facts);
-  const warnings = [
-    ...(artifact.currentStatus === "DUPLICATE" ? ["DUPLICATE_REUSED: linked to canonical artifact; no independent fact extraction performed."] : []),
-    ...(artifact.currentStatus === "SUPERSEDED" ? ["Superseded material retained for provenance and excluded from active authority selection."] : []),
-    ...(artifact.currentStatus === "MANUAL_ACQUISITION_REQUIRED" || artifact.currentStatus === "ACCESS_BLOCKED" ? [artifact.failureReason ?? "Source acquisition gap retained."] : []),
-    ...(content.warnings ?? []),
-    ...(content.parserLimitations.some((item) => item.includes("OCR was not attempted")) ? ["OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."] : []),
-    ...(disposition === "NO_RELEVANT_OPERATIONAL_FACTS" ? ["Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."] : []),
-  ];
-  const parserLimitations = content.parserLimitations ?? [];
-  return {
-    sourceArtifactId: artifact.sourceArtifactId,
-    acquisitionDisposition: artifact.currentStatus,
-    extractionDisposition: disposition,
-    parser: artifact.currentStatus === "ACQUIRED" || artifact.currentStatus === "DUPLICATE" ? artifact.parseMethod : "NOT_RUN",
-    hashValidation: content.hashValidation,
-    sourceArtifactSha256: artifact.sha256,
-    expectedFileType: artifact.artifactType,
-    usableContentBytes: content.bytes,
-    pagesSectionsRecordsProcessed: { pages: content.pages, sections: content.sections, records: content.records },
-    identitiesLinked: linked,
-    factsProduced: facts.map((fact) => fact.factId),
-    warnings,
-    parserLimitations,
-    reviewRequirements: facts.length ? ["SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."] : [],
-    duplicateOf: artifact.duplicateOf,
-    supersededBy: artifact.supersededBy,
-  } satisfies SourceArtifactExtractionManifest;
-});
+function readPriorManifest(outputPath: string) {
+  if (!existsSync(outputPath)) return new Map<string, SourceArtifactExtractionManifest>();
+  try {
+    const parsed = JSON.parse(readFileSync(outputPath, "utf8")) as Partial<GeneratedExtractionManifest>;
+    if (parsed.generatedBy !== "scripts/cbrne/build-extraction-manifest.ts" || !Array.isArray(parsed.manifest)) return new Map<string, SourceArtifactExtractionManifest>();
+    return new Map(parsed.manifest.filter((item): item is SourceArtifactExtractionManifest => Boolean(item && typeof item.sourceArtifactId === "string")).map((item) => [item.sourceArtifactId, item]));
+  } catch {
+    return new Map<string, SourceArtifactExtractionManifest>();
+  }
+}
 
-const output = `${JSON.stringify({
-  generatedFile: true,
-  generatedBy: "scripts/cbrne/build-extraction-manifest.ts",
-  generatedAt,
-  sourceArtifactCount: CBRNE_SOURCE_ARTIFACTS.length,
-  distinctAcquiredArtifactCount: CBRNE_SOURCE_ARTIFACTS.filter((artifact) => artifact.currentStatus === "ACQUIRED").length,
-  manifest,
-}, null, 2)}\n`;
+function priorEntryIsComplete(entry: SourceArtifactExtractionManifest | undefined, artifact: SourceArtifact, actualHash: string | null, expectedFactIds: readonly string[]) {
+  if (!entry || entry.sourceArtifactId !== artifact.sourceArtifactId) return false;
+  if (entry.acquisitionDisposition !== artifact.currentStatus || entry.expectedFileType !== artifact.artifactType) return false;
+  if (artifact.currentStatus === "ACQUIRED" || artifact.currentStatus === "DUPLICATE") {
+    return entry.hashValidation === "VERIFIED"
+      && actualHash === artifact.sha256
+      && entry.sourceArtifactSha256 === artifact.sha256
+      && [...entry.factsProduced].sort().join("\n") === [...expectedFactIds].sort().join("\n");
+  }
+  return entry.hashValidation === (artifact.sha256 ? "VERIFIED" : "MISSING")
+    && entry.sourceArtifactSha256 === artifact.sha256
+    && [...entry.factsProduced].sort().join("\n") === [...expectedFactIds].sort().join("\n");
+}
 
-if (!existsSync(OUTPUT) || readFileSync(OUTPUT, "utf8") !== output) writeFileSync(OUTPUT, output);
-process.stdout.write(JSON.stringify({ output: OUTPUT, artifacts: manifest.length, bytes: statSync(OUTPUT).size }, null, 2));
+function actualSnapshotHash(artifact: SourceArtifact, repositoryRoot: string) {
+  if (!artifact.localSnapshotPath || !existsSync(resolve(repositoryRoot, artifact.localSnapshotPath))) return null;
+  return createHash("sha256").update(readFileSync(resolve(repositoryRoot, artifact.localSnapshotPath))).digest("hex");
+}
+
+function writeCheckpoint(outputPath: string, artifacts: readonly SourceArtifact[], entries: Map<string, SourceArtifactExtractionManifest>, status: "IN_PROGRESS" | "COMPLETE", lastCompletedArtifactId: string | null) {
+  const orderedManifest = artifacts.filter((artifact) => entries.has(artifact.sourceArtifactId)).map((artifact) => entries.get(artifact.sourceArtifactId)!);
+  const output: GeneratedExtractionManifest = {
+    generatedFile: true,
+    generatedBy: "scripts/cbrne/build-extraction-manifest.ts",
+    generatedAt,
+    sourceArtifactCount: artifacts.length,
+    distinctAcquiredArtifactCount: artifacts.filter((artifact) => artifact.currentStatus === "ACQUIRED").length,
+    checkpoint: { status, completedArtifactCount: orderedManifest.length, lastCompletedArtifactId },
+    manifest: orderedManifest,
+  };
+  mkdirSync(resolve(outputPath, ".."), { recursive: true });
+  const temporaryPath = `${outputPath}.tmp`;
+  const serialized = `${JSON.stringify(output, null, 2)}\n`;
+  writeFileSync(temporaryPath, serialized);
+  renameSync(temporaryPath, outputPath);
+  return { output: outputPath, artifacts: orderedManifest.length, bytes: statSync(outputPath).size, checkpoint: output.checkpoint };
+}
+
+export function buildExtractionManifest(options: BuildExtractionManifestOptions = {}) {
+  const repositoryRoot = options.repositoryRoot ?? ROOT;
+  const outputPath = options.outputPath ?? OUTPUT;
+  const artifacts = options.artifacts ?? CBRNE_SOURCE_ARTIFACTS;
+  const allFacts = options.facts ?? CBRNE_AUTHORITATIVE_SOURCE_FACTS;
+  const extractArtifact = options.extractArtifact ?? extractLocalArtifact;
+  const entries = readPriorManifest(outputPath);
+  let lastCompletedArtifactId: string | null = null;
+
+  for (const artifact of artifacts) {
+    const actualHash = actualSnapshotHash(artifact, repositoryRoot);
+    const facts = allFacts.filter((fact) => fact.sourceArtifactId === artifact.sourceArtifactId);
+    if (priorEntryIsComplete(entries.get(artifact.sourceArtifactId), artifact, actualHash, facts.map((fact) => fact.factId))) {
+      lastCompletedArtifactId = artifact.sourceArtifactId;
+      continue;
+    }
+
+    const content = inspectContent(artifact, repositoryRoot, extractArtifact);
+    const linked = [...new Set(facts.map((fact) => fact.canonicalRecordId))];
+    const disposition = extractionDisposition(artifact, content.hashValidation, content.parserLimitations, facts);
+    const warnings = [
+      ...(artifact.currentStatus === "DUPLICATE" ? ["DUPLICATE_REUSED: linked to canonical artifact; no independent fact extraction performed."] : []),
+      ...(artifact.currentStatus === "SUPERSEDED" ? ["Superseded material retained for provenance and excluded from active authority selection."] : []),
+      ...(artifact.currentStatus === "MANUAL_ACQUISITION_REQUIRED" || artifact.currentStatus === "ACCESS_BLOCKED" ? [artifact.failureReason ?? "Source acquisition gap retained."] : []),
+      ...(content.warnings ?? []),
+      ...(content.parserLimitations.some((item) => item.includes("OCR was not attempted")) ? ["OCR_REQUIRED: embedded text was unavailable; no OCR output was admitted."] : []),
+      ...(disposition === "NO_RELEVANT_OPERATIONAL_FACTS" ? ["Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."] : []),
+    ];
+    const parserLimitations = content.parserLimitations ?? [];
+    entries.set(artifact.sourceArtifactId, {
+      sourceArtifactId: artifact.sourceArtifactId,
+      acquisitionDisposition: artifact.currentStatus,
+      extractionDisposition: disposition,
+      parser: artifact.currentStatus === "ACQUIRED" || artifact.currentStatus === "DUPLICATE" ? artifact.parseMethod : "NOT_RUN",
+      hashValidation: content.hashValidation,
+      sourceArtifactSha256: artifact.sha256,
+      expectedFileType: artifact.artifactType,
+      usableContentBytes: content.bytes,
+      pagesSectionsRecordsProcessed: { pages: content.pages, sections: content.sections, records: content.records },
+      identitiesLinked: linked,
+      factsProduced: facts.map((fact) => fact.factId),
+      warnings,
+      parserLimitations,
+      reviewRequirements: facts.length ? ["SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."] : [],
+      duplicateOf: artifact.duplicateOf,
+      supersededBy: artifact.supersededBy,
+    });
+    lastCompletedArtifactId = artifact.sourceArtifactId;
+    writeCheckpoint(outputPath, artifacts, entries, "IN_PROGRESS", lastCompletedArtifactId);
+  }
+
+  return writeCheckpoint(outputPath, artifacts, entries, "COMPLETE", lastCompletedArtifactId);
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  process.stdout.write(`${JSON.stringify(buildExtractionManifest(), null, 2)}\n`);
+}

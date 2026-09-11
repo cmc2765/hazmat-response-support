@@ -1,13 +1,18 @@
-import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { buildExtractionManifest } from "../scripts/cbrne/build-extraction-manifest.js";
 import { CBRNE_AUTHORITATIVE_SOURCE_FACTS } from "../src/data/cbrne/authoritative/authoritativeSourceFacts.js";
 import { CBRNE_CANONICAL_RECORD_CANDIDATES } from "../src/data/cbrne/authoritative/canonicalRecordCandidates.js";
-import { CBRNE_COMPLETENESS_DOMAINS } from "../src/lib/cbrne/authoritativeSourceTypes.js";
+import { CBRNE_COMPLETENESS_DOMAINS, type SourceArtifact } from "../src/lib/cbrne/authoritativeSourceTypes.js";
 import { CBRNE_DOMAIN_COMPLETENESS_MATRICES } from "../src/data/cbrne/authoritative/domainCompleteness.js";
 import { CBRNE_EXTRACTION_MANIFEST } from "../src/data/cbrne/authoritative/extractionManifest.js";
 import { CBRNE_SOURCE_ARTIFACTS, findSourceArtifact } from "../src/data/cbrne/authoritative/sourceArtifacts.js";
 import { authoritativeFactMayDriveGuidedResponse } from "../src/lib/cbrne/guidedResponseReadiness.js";
 import { normalizeCbrneUnitValue } from "../src/lib/cbrne/normalizeCbrneUnits.js";
+import { extractLocalArtifact } from "../src/lib/cbrne/sourceCorpusExtraction.js";
 import { detectAuthoritativeFactConflicts } from "../src/lib/cbrne/sourceFactReview.js";
 
 describe("local CBRNE extraction projection", () => {
@@ -70,5 +75,66 @@ describe("local CBRNE extraction projection", () => {
     expect(CBRNE_CANONICAL_RECORD_CANDIDATES).toHaveLength(12);
     expect(CBRNE_CANONICAL_RECORD_CANDIDATES.find((candidate) => candidate.candidateId === "cyanide-salts")?.disposition).toBe("REQUIRES_IDENTITY_REVIEW");
     expect(CBRNE_CANONICAL_RECORD_CANDIDATES.find((candidate) => candidate.candidateId === "organothiophosphate-pesticides")?.disposition).toBe("REQUIRES_IDENTITY_REVIEW");
+  });
+
+  it("checkpoints each unit and skips a valid completed unit on resume", () => {
+    const tempRoot = mkdtempSync(resolve(tmpdir(), "hazmatiq-cbrne-manifest-"));
+    const outputPath = resolve(tempRoot, "manifest.json");
+    const artifact = CBRNE_SOURCE_ARTIFACTS.find((item) => item.sourceArtifactId === "remm-radiation-ppe")!;
+    let parses = 0;
+    const extractArtifact = (currentArtifact: SourceArtifact, repositoryRoot: string) => {
+      parses += 1;
+      return extractLocalArtifact(currentArtifact, repositoryRoot);
+    };
+
+    try {
+      const first = buildExtractionManifest({ outputPath, artifacts: [artifact], facts: [], extractArtifact });
+      expect(first.checkpoint).toMatchObject({ status: "COMPLETE", completedArtifactCount: 1, lastCompletedArtifactId: artifact.sourceArtifactId });
+      expect(parses).toBe(1);
+
+      const second = buildExtractionManifest({ outputPath, artifacts: [artifact], facts: [], extractArtifact });
+      expect(second.checkpoint).toMatchObject({ status: "COMPLETE", completedArtifactCount: 1, lastCompletedArtifactId: artifact.sourceArtifactId });
+      expect(parses).toBe(1);
+      expect(JSON.parse(readFileSync(outputPath, "utf8")).manifest).toHaveLength(1);
+    } finally {
+      rmSync(tempRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("reprocesses a completed unit when its local snapshot hash changes", () => {
+    const tempRoot = mkdtempSync(resolve(tmpdir(), "hazmatiq-cbrne-hash-"));
+    const outputPath = resolve(tempRoot, "manifest.json");
+    const localSnapshotPath = "artifact.html";
+    const initial = Buffer.from("<html><h1>Initial source</h1></html>");
+    const artifact = CBRNE_SOURCE_ARTIFACTS.find((item) => item.sourceArtifactId === "remm-radiation-ppe")!;
+    const testArtifact = {
+      ...artifact,
+      sourceArtifactId: "test-resume-artifact",
+      localSnapshotPath,
+      sha256: createHash("sha256").update(initial).digest("hex"),
+      fileSize: initial.length,
+    };
+    let parses = 0;
+    const extractArtifact = (currentArtifact: SourceArtifact, repositoryRoot: string) => {
+      parses += 1;
+      return extractLocalArtifact(currentArtifact, repositoryRoot);
+    };
+
+    try {
+      writeFileSync(resolve(tempRoot, localSnapshotPath), initial);
+      buildExtractionManifest({ outputPath, repositoryRoot: tempRoot, artifacts: [testArtifact], facts: [], extractArtifact });
+      expect(parses).toBe(1);
+
+      writeFileSync(resolve(tempRoot, localSnapshotPath), "<html><h1>Changed source</h1></html>");
+      const resumed = buildExtractionManifest({ outputPath, repositoryRoot: tempRoot, artifacts: [testArtifact], facts: [], extractArtifact });
+      expect(parses).toBe(1);
+      expect(resumed.checkpoint.status).toBe("COMPLETE");
+      expect(JSON.parse(readFileSync(outputPath, "utf8")).manifest[0]).toMatchObject({
+        extractionDisposition: "ARTIFACT_INTEGRITY_FAILED",
+        hashValidation: "FAILED",
+      });
+    } finally {
+      rmSync(tempRoot, { recursive: true, force: true });
+    }
   });
 });
