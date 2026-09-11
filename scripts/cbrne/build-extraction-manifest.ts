@@ -5,11 +5,12 @@ import { fileURLToPath } from "node:url";
 import { CBRNE_AUTHORITATIVE_SOURCE_FACTS } from "../../src/data/cbrne/authoritative/authoritativeSourceFacts.js";
 import { CBRNE_SOURCE_ARTIFACTS } from "../../src/data/cbrne/authoritative/sourceArtifacts.js";
 import { extractLocalArtifact } from "../../src/lib/cbrne/sourceCorpusExtraction.js";
-import type { AuthoritativeSourceFact, CbrneExtractionCheckpoint, ExtractionDisposition, SourceArtifact, SourceArtifactExtractionManifest } from "../../src/lib/cbrne/authoritativeSourceTypes.js";
+import type { AuthoritativeSourceFact, CbrneExtractionCheckpoint, ExtractionDisposition, PdfPageExtraction, SourceArtifact, SourceArtifactExtractionManifest } from "../../src/lib/cbrne/authoritativeSourceTypes.js";
 
 const ROOT = resolve(import.meta.dirname, "../..");
 const OUTPUT = resolve(ROOT, "src/data/cbrne/authoritative/generated-extraction-manifest.json");
 const generatedAt = "2026-09-11T00:00:00.000Z";
+const PDF_PARSER_VERSION = "5";
 
 type GeneratedExtractionManifest = {
   generatedFile: true;
@@ -35,14 +36,14 @@ function isIndexArtifact(title: string, id: string) {
 
 function inspectContent(artifact: SourceArtifact, repositoryRoot: string, extractArtifact: typeof extractLocalArtifact) {
   if (!artifact.localSnapshotPath || !existsSync(resolve(repositoryRoot, artifact.localSnapshotPath))) {
-    return { hashValidation: "MISSING" as const, bytes: null, sections: 0, records: 0, pages: null, warnings: ["Local snapshot is not present."], parserLimitations: [] };
+    return { hashValidation: "MISSING" as const, bytes: null, sections: 0, records: 0, pages: null, warnings: ["Local snapshot is not present."], parserLimitations: [], pdfPages: [], failureCategory: null };
   }
   const bytes = readFileSync(resolve(repositoryRoot, artifact.localSnapshotPath));
   const hashValidation = artifact.sha256 && createHash("sha256").update(bytes).digest("hex") === artifact.sha256
     ? "VERIFIED" as const : "FAILED" as const;
-  if (hashValidation === "FAILED") return { hashValidation, bytes: bytes.length, sections: 0, records: 0, pages: null, warnings: ["Integrity failed; parser was not run."], parserLimitations: [] };
+  if (hashValidation === "FAILED") return { hashValidation, bytes: bytes.length, sections: 0, records: 0, pages: null, warnings: ["Integrity failed; parser was not run."], parserLimitations: [], pdfPages: [], failureCategory: null };
   const structure = extractArtifact(artifact, repositoryRoot);
-  return { hashValidation, bytes: structure.usableContentBytes, sections: structure.sections.length, records: structure.records.length, pages: structure.pages, warnings: structure.warnings, parserLimitations: structure.parserLimitations };
+  return { hashValidation, bytes: structure.usableContentBytes, sections: structure.sections.length, records: structure.records.length, pages: structure.pages, warnings: structure.warnings, parserLimitations: structure.parserLimitations, pdfPages: structure.pdfPages, failureCategory: structure.failureCategory };
 }
 
 function extractionDisposition(
@@ -57,7 +58,7 @@ function extractionDisposition(
   if (artifact.currentStatus === "MANUAL_ACQUISITION_REQUIRED") return "MANUAL_EXTRACTION_REQUIRED";
   if (artifact.currentStatus === "ACCESS_BLOCKED" || artifact.currentStatus === "FAILED") return "SOURCE_NOT_PRESENT";
   if (hashValidation === "FAILED" || hashValidation === "MISSING") return "ARTIFACT_INTEGRITY_FAILED";
-  if (parserLimitations.some((item) => item.startsWith("OCR was not attempted"))) return "PARSER_LIMITATION";
+  if (parserLimitations.some((item) => /embedded text is unavailable|page locator/i.test(item))) return "PARSER_LIMITATION";
   if (artifact.artifactType === "JSON_API" || artifact.artifactType === "DATASET") return "STRUCTURED_DATA_IMPORTED";
   if (!facts.length && isIndexArtifact(artifact.title, artifact.sourceArtifactId)) return "REFERENCE_ONLY";
   if (!facts.length) return "NO_RELEVANT_OPERATIONAL_FACTS";
@@ -76,9 +77,13 @@ function readPriorManifest(outputPath: string) {
   }
 }
 
-function priorEntryIsComplete(entry: SourceArtifactExtractionManifest | undefined, artifact: SourceArtifact, actualHash: string | null, expectedFactIds: readonly string[]) {
+function priorEntryIsComplete(entry: SourceArtifactExtractionManifest | undefined, artifact: SourceArtifact, actualHash: string | null, expectedFactIds: readonly string[], repositoryRoot: string) {
   if (!entry || entry.sourceArtifactId !== artifact.sourceArtifactId) return false;
   if (entry.acquisitionDisposition !== artifact.currentStatus || entry.expectedFileType !== artifact.artifactType) return false;
+  if (artifact.artifactType === "PDF" && (!entry.pageExtractionArtifactPath
+    || entry.pageExtractionArtifactPath !== pageExtractionPath(repositoryRoot, artifact.sourceArtifactId).relativePath
+    || !existsSync(resolve(repositoryRoot, entry.pageExtractionArtifactPath))
+    || (() => { try { return JSON.parse(readFileSync(resolve(repositoryRoot, entry.pageExtractionArtifactPath!), "utf8")).parserVersion !== PDF_PARSER_VERSION; } catch { return true; } })())) return false;
   if (artifact.currentStatus === "ACQUIRED" || artifact.currentStatus === "DUPLICATE") {
     return entry.hashValidation === "VERIFIED"
       && actualHash === artifact.sha256
@@ -90,13 +95,40 @@ function priorEntryIsComplete(entry: SourceArtifactExtractionManifest | undefine
     && [...entry.factsProduced].sort().join("\n") === [...expectedFactIds].sort().join("\n");
 }
 
+function pageExtractionPath(repositoryRoot: string, sourceArtifactId: string) {
+  const relativePath = `src/data/cbrne/authoritative/pdf-extractions/${sourceArtifactId}.json`;
+  return { relativePath, absolutePath: resolve(repositoryRoot, relativePath) };
+}
+
+function writePageExtraction(repositoryRoot: string, artifact: SourceArtifact, pages: PdfPageExtraction[], failureCategory: SourceArtifactExtractionManifest["failureCategory"]) {
+  if (artifact.artifactType !== "PDF" || !artifact.localSnapshotPath || !artifact.sha256) return null;
+  const { relativePath, absolutePath } = pageExtractionPath(repositoryRoot, artifact.sourceArtifactId);
+  mkdirSync(resolve(absolutePath, ".."), { recursive: true });
+  const temporaryPath = `${absolutePath}.tmp`;
+  writeFileSync(temporaryPath, `${JSON.stringify({
+    generatedFile: true,
+    generatedBy: "scripts/cbrne/build-extraction-manifest.ts",
+    parserVersion: PDF_PARSER_VERSION,
+    sourceArtifactId: artifact.sourceArtifactId,
+    sourceArtifactSha256: artifact.sha256,
+    parser: "PDF_STRUCTURE",
+    failureCategory,
+    pageCount: pages.length,
+    pages,
+  }, null, 2)}\n`);
+  renameSync(temporaryPath, absolutePath);
+  return relativePath;
+}
+
 function actualSnapshotHash(artifact: SourceArtifact, repositoryRoot: string) {
   if (!artifact.localSnapshotPath || !existsSync(resolve(repositoryRoot, artifact.localSnapshotPath))) return null;
   return createHash("sha256").update(readFileSync(resolve(repositoryRoot, artifact.localSnapshotPath))).digest("hex");
 }
 
 function writeCheckpoint(outputPath: string, artifacts: readonly SourceArtifact[], entries: Map<string, SourceArtifactExtractionManifest>, status: "IN_PROGRESS" | "COMPLETE", lastCompletedArtifactId: string | null) {
-  const orderedManifest = artifacts.filter((artifact) => entries.has(artifact.sourceArtifactId)).map((artifact) => entries.get(artifact.sourceArtifactId)!);
+  const orderedManifest = artifacts.filter((artifact) => entries.has(artifact.sourceArtifactId)).map((artifact) => Object.fromEntries(
+    Object.entries(entries.get(artifact.sourceArtifactId)!).filter(([key]) => key !== "pdfPages"),
+  ) as SourceArtifactExtractionManifest);
   const output: GeneratedExtractionManifest = {
     generatedFile: true,
     generatedBy: "scripts/cbrne/build-extraction-manifest.ts",
@@ -126,7 +158,7 @@ export function buildExtractionManifest(options: BuildExtractionManifestOptions 
   for (const artifact of artifacts) {
     const actualHash = actualSnapshotHash(artifact, repositoryRoot);
     const facts = allFacts.filter((fact) => fact.sourceArtifactId === artifact.sourceArtifactId);
-    if (priorEntryIsComplete(entries.get(artifact.sourceArtifactId), artifact, actualHash, facts.map((fact) => fact.factId))) {
+    if (priorEntryIsComplete(entries.get(artifact.sourceArtifactId), artifact, actualHash, facts.map((fact) => fact.factId), repositoryRoot)) {
       lastCompletedArtifactId = artifact.sourceArtifactId;
       continue;
     }
@@ -143,6 +175,7 @@ export function buildExtractionManifest(options: BuildExtractionManifestOptions 
       ...(disposition === "NO_RELEVANT_OPERATIONAL_FACTS" ? ["Artifact was processed locally; no source-backed operational fact was admitted to the canonical fact layer."] : []),
     ];
     const parserLimitations = content.parserLimitations ?? [];
+    const pageExtractionArtifactPath = writePageExtraction(repositoryRoot, artifact, content.pdfPages, content.failureCategory);
     entries.set(artifact.sourceArtifactId, {
       sourceArtifactId: artifact.sourceArtifactId,
       acquisitionDisposition: artifact.currentStatus,
@@ -160,6 +193,8 @@ export function buildExtractionManifest(options: BuildExtractionManifestOptions 
       reviewRequirements: facts.length ? ["SOURCE_IMPORTED_PENDING_REVIEW facts require appropriate SME/agency review before operational use."] : [],
       duplicateOf: artifact.duplicateOf,
       supersededBy: artifact.supersededBy,
+      failureCategory: content.failureCategory,
+      pageExtractionArtifactPath,
     });
     lastCompletedArtifactId = artifact.sourceArtifactId;
     writeCheckpoint(outputPath, artifacts, entries, "IN_PROGRESS", lastCompletedArtifactId);

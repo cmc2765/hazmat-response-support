@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -136,5 +136,31 @@ describe("local CBRNE extraction projection", () => {
     } finally {
       rmSync(tempRoot, { recursive: true, force: true });
     }
+  });
+
+  it("classifies all original PDF limitations and retains page-aware parser output", () => {
+    const originallyLimited = CBRNE_EXTRACTION_MANIFEST.filter((item) => item.failureCategory);
+    const stillLimited = CBRNE_EXTRACTION_MANIFEST.filter((item) => item.extractionDisposition === "PARSER_LIMITATION");
+    expect(originallyLimited).toHaveLength(50);
+    expect(stillLimited).toHaveLength(4);
+    expect(new Set(originallyLimited.map((item) => item.failureCategory))).toEqual(new Set([
+      "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+      "F_SCANNED_IMAGE_PDF",
+      "G_MIXED_TEXT_AND_IMAGE",
+      "I_FORM_XFA_PDF",
+    ]));
+
+    const resolvedPdfEntries = originallyLimited.filter((item) => item.extractionDisposition !== "PARSER_LIMITATION");
+    expect(resolvedPdfEntries.every((item) => item.pageExtractionArtifactPath && existsSync(resolve(item.pageExtractionArtifactPath)))).toBe(true);
+    for (const item of resolvedPdfEntries) {
+      const extraction = JSON.parse(readFileSync(item.pageExtractionArtifactPath!, "utf8"));
+      expect(extraction).toMatchObject({ sourceArtifactId: item.sourceArtifactId, sourceArtifactSha256: item.sourceArtifactSha256, parser: "PDF_STRUCTURE" });
+      expect(extraction.pages.every((page: { pdfPageIndex: number; textBlocks: Array<{ order: number; role: string }> }) => page.pdfPageIndex >= 0 && page.textBlocks.every((block, index) => block.order === index))).toBe(true);
+      expect(extraction.pages.every((page: { extractionMethod: string }) => page.extractionMethod === "EMBEDDED_TEXT")).toBe(true);
+    }
+    const allExtractedText = resolvedPdfEntries.map((item) => JSON.parse(readFileSync(item.pageExtractionArtifactPath!, "utf8")).pages.map((page: { text: string }) => page.text).join(" ")).join(" ");
+    expect(allExtractedText).toMatch(/ppm|mg\/m/i);
+    expect(allExtractedText).toMatch(/mSv\/h|µSv\/h|Bq|Ci/i);
+    expect(new Set(CBRNE_AUTHORITATIVE_SOURCE_FACTS.map((fact) => fact.factId)).size).toBe(CBRNE_AUTHORITATIVE_SOURCE_FACTS.length);
   });
 });
