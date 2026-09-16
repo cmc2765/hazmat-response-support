@@ -1,5 +1,20 @@
 const buttons = document.querySelectorAll('.module-btn');
 const views = document.querySelectorAll('.view');
+const appShell = document.querySelector('.app-shell');
+const pageActivationClasses = [
+  'page-active-home',
+  'page-active-planning',
+  'page-active-incident-command',
+  'page-active-hazard-id',
+  'page-active-chemical-compare',
+  'page-active-guided-response',
+  'page-active-saved-chemicals',
+  'page-active-plume-model',
+  'page-active-live-map',
+  'page-active-equipment',
+  'page-active-reports',
+  'page-active-sources',
+];
 const tacticalAlertMessage = document.getElementById('tactical-alert-message');
 const notificationWeather = document.getElementById('notification-weather');
 const notificationWeatherSource = document.getElementById('notification-weather-source');
@@ -503,23 +518,25 @@ document.addEventListener('hazmatiq:telemetry', (event) => {
   updateNotificationCenter(event.detail || {});
 });
 
-function showView(targetId, { preserveHazardState = false, skipPlumeInitialization = false, plumeContext = null } = {}) {
-  if (targetId === 'plume' && !skipPlumeInitialization) {
-    return openPlumeModel(plumeContext || {});
+function updatePageActivationState(targetId) {
+  const targetView = document.getElementById(targetId);
+  const pageRoot = targetView?.dataset.pageRoot || targetId;
+  const activationClass = `page-active-${pageRoot}`;
+  const pageName = targetView?.dataset.pageName || targetId;
+  document.body.classList.remove(...pageActivationClasses);
+  appShell?.classList.remove(...pageActivationClasses);
+  document.body.classList.add(activationClass);
+  appShell?.classList.add(activationClass);
+  document.documentElement.dataset.activePage = pageRoot;
+  document.body.dataset.activePage = pageRoot;
+  if (appShell) {
+    appShell.dataset.activePage = pageRoot;
+    appShell.dataset.activePageName = pageName;
   }
-  if (targetId === 'lookup' && !preserveHazardState) setHazardProfileMode('empty');
-  buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
-  views.forEach((view) => {
-    const active = view.id === targetId;
-    view.classList.toggle('active', active);
-    view.hidden = !active;
-    view.setAttribute('aria-hidden', String(!active));
-  });
-  document.documentElement.dataset.activeWorkspace = targetId;
-  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  syncCommandBarContext();
-  const plumeMapWorkspace = document.querySelector('.plume-main-workspace');
-  if (plumeMapWorkspace) plumeMapWorkspace.hidden = targetId !== 'plume';
+  return { pageRoot, pageName };
+}
+
+function initializeActivePage(targetId, { skipPlumeInitialization = false } = {}) {
   if (targetId === 'incident') {
     renderIncidentCommandSnapshot();
     void refreshCommandWeather({ requestGps: true });
@@ -529,8 +546,46 @@ function showView(targetId, { preserveHazardState = false, skipPlumeInitializati
   if (targetId === 'guided-response') renderGuidedResponse();
   if (targetId === 'map') window.requestAnimationFrame(initializeLiveMap);
   if (targetId === 'plume') updatePlumeModeLabel();
-  if (targetId === 'plume' && !skipPlumeInitialization) window.requestAnimationFrame(() => void refreshPlumeWorkspace({ requestGps: true }));
+  if (targetId === 'plume' && !skipPlumeInitialization) {
+    window.requestAnimationFrame(() => void refreshPlumeWorkspace({ requestGps: true }));
+  }
 }
+
+function activatePage(targetId, { preserveHazardState = false, skipPlumeInitialization = false, plumeContext = null } = {}) {
+  const targetView = [...views].find((view) => view.id === targetId);
+  if (!targetView) return null;
+  if (targetId === 'plume' && !skipPlumeInitialization) {
+    return openPlumeModel(plumeContext || {});
+  }
+  if (targetId === 'lookup' && !preserveHazardState) setHazardProfileMode('empty');
+  buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
+  views.forEach((view) => {
+    const active = view.id === targetId;
+    view.classList.toggle('active', active);
+    view.classList.toggle('page-active', active);
+    view.hidden = !active;
+    view.setAttribute('aria-hidden', String(!active));
+    view.toggleAttribute('data-active-page', active);
+  });
+  updatePageActivationState(targetId);
+  document.documentElement.dataset.activeWorkspace = targetId;
+  window.HazMatIQ.activePageContext = plumeContext || {};
+  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  syncCommandBarContext();
+  const plumeMapWorkspace = document.querySelector('.plume-main-workspace');
+  if (plumeMapWorkspace) plumeMapWorkspace.hidden = targetId !== 'plume';
+  initializeActivePage(targetId, { skipPlumeInitialization });
+  return targetView;
+}
+
+// Compatibility name for existing shortcuts. All page changes now execute
+// through the single activation contract above.
+function showView(targetId, context = {}) {
+  return activatePage(targetId, context);
+}
+
+window.HazMatIQ.activatePage = activatePage;
+window.HazMatIQ.showView = showView;
 
 // Every HAZMATIQ logo in the Command Dashboard is a dedicated Home control.
 function returnToHazMatIqHome() {
@@ -4591,9 +4646,13 @@ function setHazardProfileMode(mode) {
   const searchHero = document.getElementById('hazard-id-search-hero');
   const searchWorkspace = document.getElementById('hazard-id-search-workspace');
   const searchState = mode === 'empty';
-  if (lookup) lookup.dataset.hazardPageState = mode === 'chemical'
-    ? 'chemical-profile'
-    : mode === 'starter' ? 'hazard-profile' : 'search';
+  if (lookup) {
+    lookup.dataset.hazardPageState = mode === 'chemical'
+      ? 'chemical-profile'
+      : mode === 'starter' ? 'hazard-profile' : 'search';
+    lookup.classList.toggle('hazard-profile-page', !searchState);
+    lookup.classList.toggle('hazard-search-page', searchState);
+  }
   if (searchHero) searchHero.hidden = !searchState;
   if (searchWorkspace) searchWorkspace.hidden = !searchState;
   if (!searchState && facilityInventory) facilityInventory.hidden = true;
@@ -9495,6 +9554,7 @@ function openPlumeModel(context = {}) {
   plumeNavigationContext = normalized;
   window.HazMatIQ ||= {};
   window.HazMatIQ.plumeNavigationContext = normalized;
+  window.HazMatIQ.activePageContext = normalized;
   // This is the only page owner for plume navigation. The skip flag prevents
   // showView from routing back through this initializer.
   showView('plume', { skipPlumeInitialization: true });
@@ -10639,7 +10699,8 @@ document.getElementById('monitor-data-source')?.addEventListener('change', (even
 });
 
 refreshSampleMonitorReadings({ vary: false });
-syncCommandBarContext();
+if (document.getElementById('overview')?.classList.contains('active')) activatePage('overview');
+else syncCommandBarContext();
 
 // Render saved incidents only after chemical state and all control handlers are initialized.
 startIncidentTimer();

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="chemical-intel.css?v=hazard-profile-panel-24" />
     <link rel="stylesheet" href="guided-response-overrides.css?v=1" />
     <link rel="stylesheet" href="hazard-profile-page.css?v=1" />
+    <link rel="stylesheet" href="page-shell.css?v=1" />
   </head>
   <body>
     <div class="app-shell">
@@ -99,7 +100,7 @@
 
       <main class="layout">
         <section class="content-area">
-          <section id="overview" class="view active">
+          <section id="overview" class="view active home-page" data-page-root="home" data-page-name="Home">
             <article class="panel-card incident-overview-card">
               <div class="incident-overview-actions">
                 <section class="overview-action-layout">
@@ -149,7 +150,7 @@
             </article>
           </section>
 
-          <section id="planning-tools" class="view">
+          <section id="planning-tools" class="view planning-page" data-page-root="planning" data-page-name="Planning">
             <header class="hazmat-page-hero variant-planning">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Pre- Incident Planning</h1><p class="hazmat-hero-subtitle">Pre-Incident Intelligence &amp; Tactical Planning.</p></div>
             </header>
@@ -233,7 +234,7 @@
             </article>
           </section>
 
-          <section id="incident" class="view incident-command-page">
+          <section id="incident" class="view incident-command-page" data-page-root="incident-command" data-page-name="Incident Command">
             <header class="hazmat-page-hero variant-incident incident-command-hero">
               <div class="hazmat-page-hero-content"><span class="sr-only">Incident Command Dashboard</span><h1 class="hazmat-hero-title incident-command-title">Incident Command</h1><p class="hazmat-hero-subtitle incident-command-subtitle">Real-Time Operational Overview.</p></div>
             </header>
@@ -527,7 +528,7 @@
             </dialog>
           </section>
 
-          <section id="lookup" class="view" data-hazard-page-state="search">
+          <section id="lookup" class="view hazard-id-page" data-page-root="hazard-id" data-page-name="Hazard ID" data-hazard-page-state="search">
             <header class="hazmat-page-hero variant-chemical hazard-id-page-hero" id="hazard-id-search-hero">
               <span class="hazard-id-hero-atmosphere" aria-hidden="true"></span>
               <div class="hazmat-page-hero-content">
@@ -654,7 +655,7 @@
             </div>
           </section>
 
-          <section id="chem-compare" class="view chemcompare-page" aria-labelledby="chemcompare-title">
+          <section id="chem-compare" class="view chemcompare-page chemical-compare-page" data-page-root="chemical-compare" data-page-name="Chemical Compare" aria-labelledby="chemcompare-title">
             <div class="chemcompare-shell">
               <header class="chemcompare-header hazmat-page-hero variant-chemical-profile">
                 <div class="hazmat-page-hero-content">
@@ -700,7 +701,7 @@
             </div>
           </section>
 
-          <section id="guided-response" class="view">
+          <section id="guided-response" class="view guided-response-page" data-page-root="guided-response" data-page-name="Guided Response">
             <header class="hazmat-page-hero variant-guided-response guided-response-heading">
               <div class="guided-response-brand">
                 <img class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png" alt="HAZMATIQ — Incident Intelligence" />
@@ -732,7 +733,7 @@
             </aside>
           </section>
 
-          <section id="my-chemicals" class="view">
+          <section id="my-chemicals" class="view saved-chemicals-page" data-page-root="saved-chemicals" data-page-name="My Chemicals">
             <header class="hazmat-page-hero variant-my-chemicals">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">My Chemicals</h1><p class="hazmat-hero-subtitle">Saved Hazards &amp; Response Intelligence.</p></div>
             </header>
@@ -741,7 +742,7 @@
             </article>
           </section>
 
-          <section id="plume" class="view">
+          <section id="plume" class="view plume-model-page" data-page-root="plume-model" data-page-name="Plume Model">
             <header class="plume-page-header hazmat-page-hero hazmat-page-hero-compact variant-plume">
               <div class="plume-page-heading">
                 <span class="plume-hero-plume" aria-hidden="true">
@@ -1063,7 +1064,7 @@
 
           </section>
 
-          <section id="map" class="view">
+          <section id="map" class="view live-map-page" data-page-root="live-map" data-page-name="Live Map">
             <header class="hazmat-page-hero hazmat-page-hero-compact variant-live-map">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Live Map</h1><p class="hazmat-hero-subtitle">Operational Mapping &amp; Field Intelligence.</p></div>
             </header>
@@ -1126,7 +1127,7 @@
             </dialog>
           </section>
 
-          <section id="monitor" class="view">
+          <section id="monitor" class="view equipment-page" data-page-root="equipment" data-page-name="Equipment">
             <header class="hazmat-page-hero variant-monitoring">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Monitoring Equipment</h1><p class="hazmat-hero-subtitle">Monitor Readiness, PPE &amp; Field Assets.</p><div class="hazmat-hero-chip-row"><span class="hazmat-hero-chip monitor-simulated-label">Training Data · Simulated</span></div></div>
             </header>
@@ -1295,7 +1296,7 @@
             </section>
           </section>
 
-          <section id="report" class="view">
+          <section id="report" class="view reports-page" data-page-root="reports" data-page-name="Reports / ICS">
             <header class="hazmat-page-hero variant-reports">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Reports &amp; Forms</h1><p class="hazmat-hero-subtitle">Generate, Print, Export &amp; Archive.</p></div>
             </header>
@@ -1381,7 +1382,7 @@
             </div>
           </section>
 
-          <section id="source" class="view">
+          <section id="source" class="view sources-page" data-page-root="sources" data-page-name="Sources">
             <header class="hazmat-page-hero variant-about">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">About HazMatIQ</h1><p class="hazmat-hero-subtitle">Incident Intelligence &amp; Source Transparency.</p></div>
             </header>

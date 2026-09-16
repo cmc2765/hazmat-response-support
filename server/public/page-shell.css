@@ -1,0 +1,32 @@
+/* Phase 1 page-shell ownership contract. Each direct child of .content-area
+   is a complete page root; page content must not escape that boundary. */
+.content-area > .view {
+  min-width: 0;
+  isolation: isolate;
+}
+
+.content-area > .view[hidden] {
+  display: none !important;
+}
+
+.content-area > .view.page-active {
+  position: relative;
+}
+
+/* Hazard ID owns both search and profile presentation. The profile class is
+   toggled by setHazardProfileMode() without creating a second root. */
+.hazard-id-page.hazard-profile-page > .chemical-profile-shell,
+.hazard-id-page.hazard-profile-page > .hazard-profile-shell {
+  contain: layout style;
+}
+
+/* Reports owns its entire presentation surface and never inherits profile
+   layout spacing from the Hazard ID root. */
+.reports-page {
+  min-width: 0;
+  background: var(--hazmat-navy, #061a2e);
+}
+
+.reports-page > .report-center {
+  margin-top: 0;
+}
