@@ -1,4 +1,12 @@
 /* Hazard ID uses exclusive, full-page search and selected-profile surfaces. */
+.content-area > .view[hidden] {
+  display: none !important;
+}
+
+#lookup.view[hidden] {
+  display: none !important;
+}
+
 #lookup[data-hazard-page-state="chemical-profile"] > #hazard-id-search-hero,
 #lookup[data-hazard-page-state="chemical-profile"] > #hazard-id-search-workspace,
 #lookup[data-hazard-page-state="chemical-profile"] > #facility-inventory,
@@ -8,8 +16,8 @@
   display: none !important;
 }
 
-#lookup.view[data-hazard-page-state="chemical-profile"],
-#lookup.view[data-hazard-page-state="hazard-profile"] {
+#lookup.view:not([hidden])[data-hazard-page-state="chemical-profile"],
+#lookup.view:not([hidden])[data-hazard-page-state="hazard-profile"] {
   display: block !important;
   width: 100% !important;
   min-height: calc(100dvh - 24px) !important;

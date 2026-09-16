@@ -164,3 +164,38 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
     padding: 0 12px 60px !important;
   }
 }
+
+/* Reports owns a compact operational shell; profile presentation stays in
+   the Hazard ID root and cannot contribute page-level spacing here. */
+.reports-page {
+  align-content: start;
+  background: transparent;
+}
+
+.reports-page > .variant-reports {
+  min-height: 128px;
+  padding: 18px 24px;
+  align-items: center;
+  background: linear-gradient(135deg, #081f35 0%, #0d3151 58%, #123c60 100%);
+}
+
+.reports-page > .variant-reports .hazmat-page-hero-content {
+  width: min(100%, 1120px);
+  margin-inline: auto;
+  padding: 0;
+  text-align: left;
+}
+
+.reports-page > .variant-reports .hazmat-hero-title {
+  font-size: clamp(2rem, 4vw, 3.45rem);
+}
+
+.reports-page > .variant-reports .hazmat-hero-subtitle {
+  margin-top: 6px;
+  font-size: clamp(.85rem, 1.35vw, 1.05rem);
+}
+
+.reports-page > .report-center {
+  width: min(100%, 1120px);
+  margin: 12px auto 0;
+}
