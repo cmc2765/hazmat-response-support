@@ -503,10 +503,19 @@ document.addEventListener('hazmatiq:telemetry', (event) => {
   updateNotificationCenter(event.detail || {});
 });
 
-function showView(targetId, { preserveHazardState = false } = {}) {
+function showView(targetId, { preserveHazardState = false, skipPlumeInitialization = false, plumeContext = null } = {}) {
+  if (targetId === 'plume' && !skipPlumeInitialization) {
+    return openPlumeModel(plumeContext || {});
+  }
   if (targetId === 'lookup' && !preserveHazardState) setHazardProfileMode('empty');
   buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
-  views.forEach((view) => view.classList.toggle('active', view.id === targetId));
+  views.forEach((view) => {
+    const active = view.id === targetId;
+    view.classList.toggle('active', active);
+    view.hidden = !active;
+    view.setAttribute('aria-hidden', String(!active));
+  });
+  document.documentElement.dataset.activeWorkspace = targetId;
   window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   syncCommandBarContext();
   const plumeMapWorkspace = document.querySelector('.plume-main-workspace');
@@ -520,7 +529,7 @@ function showView(targetId, { preserveHazardState = false } = {}) {
   if (targetId === 'guided-response') renderGuidedResponse();
   if (targetId === 'map') window.requestAnimationFrame(initializeLiveMap);
   if (targetId === 'plume') updatePlumeModeLabel();
-  if (targetId === 'plume') window.requestAnimationFrame(() => void refreshPlumeWorkspace({ requestGps: true }));
+  if (targetId === 'plume' && !skipPlumeInitialization) window.requestAnimationFrame(() => void refreshPlumeWorkspace({ requestGps: true }));
 }
 
 // Every HAZMATIQ logo in the Command Dashboard is a dedicated Home control.
@@ -748,6 +757,12 @@ document.querySelectorAll('[data-preplan-name]').forEach((button) => {
 });
 
 document.querySelectorAll('.planning-tool-section [data-view]').forEach((button) => {
+  button.addEventListener('click', () => showView(button.dataset.view));
+});
+
+// The pre-plan builder lives outside the planning-tool-section grid, but its
+// navigation controls still use the same canonical page router.
+document.querySelectorAll('.preplan-actions [data-view]').forEach((button) => {
   button.addEventListener('click', () => showView(button.dataset.view));
 });
 
@@ -2438,7 +2453,7 @@ incidentCommandDashboard?.addEventListener('click', (event) => {
       const details = document.querySelector('.incident-command-operational-details');
       if (details) details.open = true;
       details?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else if (target === 'plume') openPlumeWorkspace();
+    } else if (target === 'plume') openPlumeWorkspace({ sourcePage: 'incident', incident: getActiveIncident() });
     else if (target === 'guided-response') void openGuidedResponseWorkspace();
     else if (target) showView(target);
     return;
@@ -9351,8 +9366,150 @@ function scheduleAutomaticPlanningPlume() {
   }, 650);
 }
 
-function openPlumeWorkspace() {
-  showView('plume');
+let plumeNavigationContext = null;
+
+function activeViewId() {
+  return [...views].find((view) => view.classList.contains('active'))?.id || 'direct';
+}
+
+function normalizePlumeNavigationContext(input = {}) {
+  const sourcePage = input.sourcePage || activeViewId();
+  const activeIncident = input.incident || getActiveIncident();
+  const planningState = readPlanningState();
+  const savedPlume = planningState.plumeModelResults || {};
+  const savedChemical = planningState.selectedChemical || savedPlume.chemical || null;
+  const chemical = input.chemical || (activeIncident?.selectedChemicalId ? {
+    id: activeIncident.selectedChemicalId,
+    selectedChemicalId: activeIncident.selectedChemicalId,
+    name: activeIncident.chemicalName,
+  } : null) || activeChemical || savedChemical || null;
+  const activeIncidentChemicalMatches = !activeIncident?.selectedChemicalId
+    || String(activeChemical?.selectedChemicalId ?? activeChemical?.id ?? '') === String(activeIncident.selectedChemicalId);
+  const record = input.chemicalRecord || (activeIncidentChemicalMatches ? activeChemicalRecord : null);
+  const profileHeader = record?.profile?.header || activeIncident?.chemicalProfile?.header || {};
+  const savedLocation = savedPlume.location || savedPlume.output?.mapCenter;
+  const liveMapCenter = sourcePage === 'map' ? window.hazmatiqLiveMap?.getCenter?.() : null;
+  const suppliedLocation = input.location || (sourcePage === 'plume' && plumeManualLocation ? {
+    latitude: plumeManualLocation.lat,
+    longitude: plumeManualLocation.lon,
+    address: plumeManualLocation.address,
+  } : null) || (
+    Number.isFinite(Number(input.latitude)) && Number.isFinite(Number(input.longitude))
+      ? { latitude: Number(input.latitude), longitude: Number(input.longitude), address: input.address }
+      : null
+  ) || (liveMapCenter ? { latitude: liveMapCenter.lat, longitude: liveMapCenter.lng } : null);
+  const location = suppliedLocation || (activeIncident?.latitude !== '' && activeIncident?.longitude !== ''
+    ? { latitude: Number(activeIncident.latitude), longitude: Number(activeIncident.longitude), address: activeIncident.address }
+    : Array.isArray(savedLocation) && savedLocation.length >= 2
+      ? { latitude: Number(savedLocation[1]), longitude: Number(savedLocation[0]) }
+      : null);
+  const releaseData = input.releaseData || {
+    releaseKind: document.getElementById('plume-release-type')?.value || savedPlume.release?.releaseType,
+    quantity: document.getElementById('plume-release-quantity')?.value || savedPlume.release?.quantity,
+    durationMinutes: document.getElementById('plume-release-duration')?.value,
+    puffDurationSeconds: document.getElementById('plume-puff-duration')?.value,
+    releaseHeightFt: document.getElementById('plume-release-height')?.value,
+  };
+  const weatherData = input.weatherData || {
+    source: document.getElementById('plume-weather-source')?.value || savedPlume.weather?.source,
+    windSpeedMph: document.getElementById('plume-wind-speed')?.value || activeIncident?.windSpeed || savedPlume.weather?.windSpeed,
+    windDirectionDeg: document.getElementById('plume-wind-direction')?.value || activeIncident?.windDirection || savedPlume.weather?.windDirection,
+    temperatureF: document.getElementById('plume-temperature')?.value || savedPlume.weather?.temperature,
+    stabilityClass: document.getElementById('plume-stability-class')?.value || savedPlume.weather?.stabilityClass,
+    surfaceRoughness: document.getElementById('plume-surface-roughness')?.value,
+    observationTime: activeIncident?.weatherObservationTime || savedPlume.weather?.observationTime,
+  };
+  return {
+    chemicalId: input.chemicalId ?? chemical?.selectedChemicalId ?? chemical?.id ?? activeIncident?.selectedChemicalId ?? null,
+    chemicalName: input.chemicalName ?? chemical?.name ?? activeIncident?.chemicalName ?? savedPlume.chemical?.chemicalName ?? '',
+    cas: input.cas ?? profileHeader.cas ?? activeIncident?.casNumber ?? savedPlume.chemical?.casNumber ?? '',
+    un: input.un ?? profileHeader.un ?? activeIncident?.unNumber ?? savedPlume.chemical?.unNumber ?? '',
+    ergGuide: input.ergGuide ?? profileHeader.ergGuide ?? activeIncident?.ergGuide ?? savedPlume.chemical?.ergGuide ?? '',
+    incidentId: input.incidentId ?? activeIncident?.incidentId ?? savedPlume.incidentId ?? null,
+    incidentName: input.incidentName ?? activeIncident?.incidentName ?? savedPlume.incidentName ?? '',
+    latitude: location?.latitude ?? location?.lat ?? null,
+    longitude: location?.longitude ?? location?.lon ?? location?.lng ?? null,
+    address: location?.address || activeIncident?.address || '',
+    releaseData,
+    weatherData,
+    sourcePage,
+  };
+}
+
+function applyPlumeNavigationContext(context) {
+  const chemicalId = normalizeChemicalSelectionId(context.chemicalId);
+  const activeId = normalizeChemicalSelectionId(activeChemical?.selectedChemicalId ?? activeChemical?.id);
+  if (chemicalId !== null && chemicalId !== undefined && chemicalId !== '' && String(activeId ?? '') !== String(chemicalId)) {
+    setActiveChemical({
+      id: String(chemicalId),
+      selectedChemicalId: chemicalId,
+      name: context.chemicalName || 'Selected chemical',
+      cas: context.cas,
+      un: context.un,
+      ergGuide: context.ergGuide,
+    }, { persist: false, clearOverlay: false });
+  }
+  if (context.latitude !== null && context.longitude !== null) {
+    const coordinateText = `${Number(context.latitude).toFixed(6)}, ${Number(context.longitude).toFixed(6)}`;
+    const incidentCoordinates = document.getElementById('incident-coordinates-input');
+    if (incidentCoordinates && !incidentCoordinates.value.trim()) incidentCoordinates.value = coordinateText;
+    const plumeAddress = document.getElementById('plume-map-address-input');
+    if (plumeAddress && !plumeAddress.value.trim()) plumeAddress.value = context.address || coordinateText;
+    plumeManualLocation = {
+      lat: Number(context.latitude),
+      lon: Number(context.longitude),
+      address: context.address || undefined,
+      source: context.sourcePage === 'map' ? 'Live Map context' : 'Navigation context',
+    };
+  } else if (context.sourcePage !== 'plume') plumeManualLocation = null;
+  const setControl = (id, value) => {
+    const control = document.getElementById(id);
+    if (control && value !== undefined && value !== null && value !== '') control.value = String(value);
+  };
+  const release = context.releaseData || {};
+  const kind = ['plume', 'puff'].includes(release.releaseKind) ? release.releaseKind : '';
+  if (kind) setControl('plume-release-type', kind);
+  setControl('plume-release-quantity', release.quantity);
+  setControl('plume-release-duration', release.durationMinutes);
+  setControl('plume-puff-duration', release.puffDurationSeconds);
+  setControl('plume-release-height', release.releaseHeightFt);
+  updatePlumeReleaseQuantityLabel();
+
+  const weather = context.weatherData || {};
+  if (['auto-live', 'open-meteo', 'columbia-live', 'columbia-csv', 'manual'].includes(weather.source)) {
+    setControl('plume-weather-source', weather.source);
+  }
+  setControl('plume-wind-speed', weather.windSpeedMph ?? weather.windSpeed);
+  setControl('plume-wind-direction', weather.windDirectionDeg ?? weather.windDirection);
+  setControl('plume-temperature', weather.temperatureF ?? weather.temperature);
+  setControl('plume-stability-class', weather.stabilityClass);
+  setControl('plume-surface-roughness', weather.surfaceRoughness);
+  setControl('plume-manual-observation-time', weather.observationTime);
+  syncPlumeChemicalSelection();
+  updatePlumeInputSummaries();
+  updateOperationalPlumeReadiness();
+}
+
+function openPlumeModel(context = {}) {
+  const normalized = normalizePlumeNavigationContext(context);
+  plumeNavigationContext = normalized;
+  window.HazMatIQ ||= {};
+  window.HazMatIQ.plumeNavigationContext = normalized;
+  // This is the only page owner for plume navigation. The skip flag prevents
+  // showView from routing back through this initializer.
+  showView('plume', { skipPlumeInitialization: true });
+  applyPlumeNavigationContext(normalized);
+  window.requestAnimationFrame(() => void refreshPlumeWorkspace({ requestGps: true }));
+  return normalized;
+}
+
+function openPlumeWorkspace(context = {}) {
+  return openPlumeModel({
+    sourcePage: context.sourcePage || activeViewId(),
+    chemical: context.chemical || activeChemical,
+    chemicalRecord: context.chemicalRecord || activeChemicalRecord,
+    ...context,
+  });
 }
 
 let guidedResponseOpenRequest = 0;
@@ -9488,7 +9645,7 @@ document.querySelectorAll('[data-command-view]').forEach((button) => {
   if (incidentCommandDashboard?.contains(button)) return;
   button.addEventListener('click', () => {
     const target = button.dataset.commandView;
-    if (target === 'plume') openPlumeWorkspace();
+    if (target === 'plume') openPlumeWorkspace({ sourcePage: activeViewId() });
     else if (target === 'guided-response') void openGuidedResponseWorkspace();
     else if (target) showView(target);
   });

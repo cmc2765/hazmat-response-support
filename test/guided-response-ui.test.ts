@@ -42,20 +42,18 @@ describe("Guided Response workflow", () => {
     expect(metaItems).not.toContain("['Sources'");
   });
 
-  it("places Synonyms and Notes to the right of Flammability in an equal Properties row", () => {
+  it("consolidates Properties into Chemical Properties and Reactivity", () => {
     const properties = script.slice(
       script.indexOf("{ key: 'properties'"),
       script.indexOf("{ key: 'exposures'"),
     );
-    expect(properties.indexOf("createProfileSection('Synonyms & Notes'")).toBeGreaterThan(
-      properties.indexOf("createProfileSection('Flammability & Energy'"),
-    );
-    expect(properties.indexOf("createProfileSection('Synonyms & Notes'")).toBeLessThan(
-      properties.indexOf("createProfileSection('Reactivity'"),
-    );
-    expect(styles).toMatch(/data-active-tab="properties"[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/s);
-    expect(styles).toContain('[data-section="synonyms-notes"]');
-    expect(styles).toMatch(/data-section="synonyms-notes"[^}]*grid-column: 3;/s);
+    expect(properties).toContain("createProfileSection('Chemical Properties'");
+    expect(properties).toContain("createProfileSection('Reactivity'");
+    expect(properties).not.toContain("createProfileSection('Flammability & Energy'");
+    expect(properties).not.toContain("createProfileSection('Synonyms & Notes'");
+    expect(styles).toContain('data-active-tab="properties"]');
+    expect(styles).toContain('[data-section="chemical-properties"]');
+    expect(styles).toContain('[data-section="reactivity"]');
   });
 
   it("uses bright white, enlarged Chemical Profile titles and field labels", () => {
