@@ -16410,3 +16410,21 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   .view:not(#overview) .hazmat-page-hero .internal-command-title-row { gap: 12px; }
   .view:not(#overview) .hazmat-page-hero .hazmat-hero-subtitle { font-size: clamp(16px, 4vw, 22px) !important; }
 }
+
+/* Homepage action-card tertiary copy: center the supporting line and keep
+   the long operational phrases balanced under the card hierarchy. */
+#overview .incident-overview-actions .overview-action-description {
+  width: 100%;
+  max-width: none;
+  padding-left: 0;
+  text-align: center;
+  text-wrap: balance;
+  font-size: clamp(0.84rem, 1.02vw, 1.05rem);
+  letter-spacing: -0.012em;
+}
+
+@media (min-width: 1200px) {
+  #overview .incident-overview-actions .overview-action-description {
+    white-space: nowrap;
+  }
+}

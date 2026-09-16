@@ -536,14 +536,19 @@ function updatePageActivationState(targetId) {
   return { pageRoot, pageName };
 }
 
-function initializeActivePage(targetId, { skipPlumeInitialization = false } = {}) {
+function initializeActivePage(targetId, { skipPlumeInitialization = false, context = {} } = {}) {
   if (targetId === 'incident') {
     renderIncidentCommandSnapshot();
     void refreshCommandWeather({ requestGps: true });
   }
-  if (targetId === 'report') renderIncidentLists();
+  if (targetId === 'report') {
+    if (typeof window.HazMatIQ.initializeReportsPage === 'function') window.HazMatIQ.initializeReportsPage(context);
+    else renderIncidentLists();
+  }
   if (targetId === 'my-chemicals') renderSavedChemicals();
   if (targetId === 'guided-response') renderGuidedResponse();
+  if (targetId === 'monitor') window.HazMatIQ.initializeEquipmentPage?.(context);
+  if (targetId === 'source') window.HazMatIQ.initializeSourcesPage?.(context);
   if (targetId === 'map') window.requestAnimationFrame(initializeLiveMap);
   if (targetId === 'plume') updatePlumeModeLabel();
   if (targetId === 'plume' && !skipPlumeInitialization) {
@@ -551,11 +556,12 @@ function initializeActivePage(targetId, { skipPlumeInitialization = false } = {}
   }
 }
 
-function activatePage(targetId, { preserveHazardState = false, skipPlumeInitialization = false, plumeContext = null } = {}) {
+function activatePage(targetId, { preserveHazardState = false, skipPlumeInitialization = false, plumeContext = null, ...pageContext } = {}) {
+  const activationContext = plumeContext || pageContext;
   const targetView = [...views].find((view) => view.id === targetId);
   if (!targetView) return null;
   if (targetId === 'plume' && !skipPlumeInitialization) {
-    return openPlumeModel(plumeContext || {});
+    return openPlumeModel(activationContext);
   }
   if (targetId === 'lookup' && !preserveHazardState) setHazardProfileMode('empty');
   buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
@@ -569,12 +575,12 @@ function activatePage(targetId, { preserveHazardState = false, skipPlumeInitiali
   });
   updatePageActivationState(targetId);
   document.documentElement.dataset.activeWorkspace = targetId;
-  window.HazMatIQ.activePageContext = plumeContext || {};
+  window.HazMatIQ.activePageContext = activationContext;
   window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   syncCommandBarContext();
   const plumeMapWorkspace = document.querySelector('.plume-main-workspace');
   if (plumeMapWorkspace) plumeMapWorkspace.hidden = targetId !== 'plume';
-  initializeActivePage(targetId, { skipPlumeInitialization });
+  initializeActivePage(targetId, { skipPlumeInitialization, context: activationContext });
   return targetView;
 }
 
@@ -736,30 +742,6 @@ function addInternalCommandMenus() {
 
 addInternalCommandMenus();
 
-function showMonitorPanel(targetId) {
-  const targetPanel = document.getElementById(targetId);
-  if (!targetPanel?.classList.contains('monitor-tab-panel')) return;
-  document.querySelectorAll('#monitor-tabs [data-monitor-tab]').forEach((tab) => {
-    const active = tab.dataset.monitorTab === targetId;
-    tab.classList.toggle('active', active);
-    tab.setAttribute('aria-selected', String(active));
-    tab.tabIndex = active ? 0 : -1;
-  });
-  document.querySelectorAll('#monitor > .monitor-tab-panel').forEach((panel) => {
-    const active = panel === targetPanel;
-    panel.hidden = !active;
-    panel.classList.toggle('active', active);
-  });
-}
-
-// Register Monitoring Equipment tabs with the core page navigation so the
-// inventory remains reachable even if a later, unrelated module fails to load.
-document.getElementById('monitor-tabs')?.addEventListener('click', (event) => {
-  const tab = event.target.closest('[data-monitor-tab]');
-  if (!tab) return;
-  showMonitorPanel(tab.dataset.monitorTab);
-});
-
 // MapLibre needs an explicit resize when the responsive plume workspace changes size.
 const plumeWorkspace = document.getElementById('plume');
 if (plumeWorkspace && 'ResizeObserver' in window) {
@@ -796,12 +778,6 @@ document.querySelectorAll('[data-hero-trigger]').forEach((panel) => {
   panel.addEventListener('click', (event) => {
     if (event.target.closest('button, a, input, select, textarea')) return;
     panel.querySelector('.overview-command-primary')?.click();
-  });
-});
-
-document.querySelectorAll('[data-report-shortcut]').forEach((button) => {
-  button.addEventListener('click', () => {
-    document.querySelector(`.report-tabs [data-report-tab="${button.dataset.reportShortcut}"]`)?.click();
   });
 });
 
@@ -2165,48 +2141,30 @@ async function openIcsPdf() {
   }
 }
 
-document.getElementById('edit-ics-form-btn')?.addEventListener('click', () => setIcsFormEditing(true));
-document.getElementById('save-ics-form-btn')?.addEventListener('click', saveOpenIcsForm);
-document.getElementById('download-ics-form-btn')?.addEventListener('click', () => void openIcsPdf());
-document.getElementById('back-from-ics-form-btn')?.addEventListener('click', () => {
+function closeOpenIcsForm() {
   const incidentId = openIcsForm?.incidentId;
   const completed = openIcsForm?.completed;
   document.getElementById('ics-form-editor').hidden = true;
   openIcsForm = null;
   if (completed && incidentId) openIncidentSummary(incidentId);
   else closeIncidentSummary();
-});
+}
 
-document.querySelectorAll('[data-report-tab]').forEach((button) => {
-  button.addEventListener('click', () => {
-    const selected = button.dataset.reportTab;
-    document.querySelectorAll('[data-report-tab]').forEach((tab) => {
-      tab.classList.toggle('primary-btn', tab === button);
-      tab.classList.toggle('ghost-btn', tab !== button);
-    });
-    ['current', 'previous', 'library'].forEach((name) => {
-      const section = document.getElementById(`report-${name}-section`);
-      if (section) section.hidden = name !== selected;
-    });
-    renderIncidentLists();
-    if (selected === 'current') document.getElementById('current-incident-options')?.focus();
-  });
-});
-
-document.getElementById('open-current-incident-summary-btn')?.addEventListener('click', () => {
-  const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
-  if (activeId) openIncidentSummary(activeId);
-});
-document.getElementById('back-to-incident-reports-btn')?.addEventListener('click', closeIncidentSummary);
-document.getElementById('edit-incident-summary-btn')?.addEventListener('click', () => {
-  const incident = readIncidents().find((item) => item.incidentId === openIncidentSummaryId);
-  if (incident?.status === 'Completed') renderCompletedReportEditor(incident);
-});
-document.getElementById('cancel-incident-summary-edit-btn')?.addEventListener('click', () => {
-  if (openIncidentSummaryId) openIncidentSummary(openIncidentSummaryId);
-});
-document.getElementById('save-incident-summary-btn')?.addEventListener('click', saveCompletedReportEdits);
-document.getElementById('print-incident-summary-btn')?.addEventListener('click', () => window.print());
+window.HazMatIQ.reportsApi = {
+  closeIncidentSummary,
+  closeOpenIcsForm,
+  getActiveIncidentId: () => window.localStorage.getItem(activeIncidentIdStorageKey),
+  getIncidentById: (incidentId) => readIncidents().find((incident) => incident.incidentId === incidentId),
+  getOpenIncidentSummaryId: () => openIncidentSummaryId,
+  openIncidentIcsForm,
+  openIncidentSummary,
+  openIcsPdf,
+  renderCompletedReportEditor,
+  renderIncidentLists,
+  saveCompletedReportEdits,
+  saveOpenIcsForm,
+  setIcsFormEditing,
+};
 
 // Save brief edits directly to the active incident.
 incidentBriefFieldIds.forEach((id) => {
