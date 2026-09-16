@@ -5,7 +5,7 @@ const html = readFileSync(new URL('../server/public/index.html', import.meta.url
 const script = readFileSync(new URL('../server/public/script.js', import.meta.url), 'utf8');
 const chemCompareScript = readFileSync(new URL('../server/public/chem-compare.js', import.meta.url), 'utf8');
 const profileStyles = readFileSync(new URL('../server/public/hazard-profile-page.css', import.meta.url), 'utf8');
-const globalStyles = readFileSync(new URL('../server/public/global-ui-overrides.css', import.meta.url), 'utf8');
+const pageShellStyles = readFileSync(new URL('../server/public/page-shell.css', import.meta.url), 'utf8');
 
 function sectionMarkup(id: string) {
   const start = html.indexOf(`<section id="${id}"`);
@@ -43,13 +43,13 @@ describe('Phase 1 shared shell and page ownership contract', () => {
     expect(script).toContain('function updatePageActivationState(targetId)');
     expect(script).toContain('document.body.classList.remove(...pageActivationClasses);');
     expect(script).toContain('appShell?.classList.remove(...pageActivationClasses);');
-    expect(script).toContain('initializeActivePage(targetId, { skipPlumeInitialization });');
+    expect(script).toContain('initializeActivePage(targetId, { skipPlumeInitialization, context: activationContext });');
     expect(script).toContain('function showView(targetId, context = {})');
     expect(script).toContain('return activatePage(targetId, context);');
     expect(script).toContain('window.HazMatIQ.activatePage = activatePage;');
     expect(script).toContain("view.classList.toggle('page-active', active);");
     expect(script).toContain("view.toggleAttribute('data-active-page', active);");
-    expect(script).toContain('window.HazMatIQ.activePageContext = plumeContext || {};');
+    expect(script).toContain('window.HazMatIQ.activePageContext = activationContext;');
     expect(html.match(/class="view[^"]* active/g)).toHaveLength(1);
   });
 
@@ -58,8 +58,8 @@ describe('Phase 1 shared shell and page ownership contract', () => {
     expect(profileStyles).toContain('.content-area > .view[hidden]');
     expect(profileStyles).toContain('#lookup.view:not([hidden])[data-hazard-page-state="chemical-profile"]');
     expect(profileStyles).toContain('#lookup.view:not([hidden])[data-hazard-page-state="hazard-profile"]');
-    expect(globalStyles).toContain('.reports-page > .variant-reports');
-    expect(globalStyles).toContain('.reports-page > .report-center');
+    expect(pageShellStyles).toContain('.reports-page > .variant-reports');
+    expect(pageShellStyles).toContain('.reports-page > .report-center');
     expect(chemCompareScript).not.toContain("getElementById('lookup')?.classList.remove('active')");
     for (const pageId of ['plume', 'map', 'monitor', 'report']) {
       expect(sectionMarkup(pageId)).not.toMatch(/(?:chemical|hazard)-profile-(?:tabs|toolbar)/);

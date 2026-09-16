@@ -37,7 +37,7 @@ describe('canonical Plume Model entry points', () => {
   it('routes direct and contextual navigation through the canonical initializer', () => {
     expect(script).toContain('function openPlumeModel(context = {})');
     expect(script).toContain('function normalizePlumeNavigationContext(input = {})');
-    expect(script).toContain("return openPlumeModel(plumeContext || {});");
+    expect(script).toContain('return openPlumeModel(activationContext);');
     expect(script).toContain("showView('plume', { skipPlumeInitialization: true });");
     expect(script).toContain('window.HazMatIQ.plumeNavigationContext = normalized;');
     expect(script).not.toMatch(/showView\(['"]plume['"]\);/);
