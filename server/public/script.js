@@ -547,6 +547,7 @@ function initializeActivePage(targetId, { skipPlumeInitialization = false, conte
   }
   if (targetId === 'my-chemicals') renderSavedChemicals();
   if (targetId === 'guided-response') renderGuidedResponse();
+  if (targetId === 'lookup') window.HazMatIQ.initializeHazardProfilePage?.(context);
   if (targetId === 'monitor') window.HazMatIQ.initializeEquipmentPage?.(context);
   if (targetId === 'source') window.HazMatIQ.initializeSourcesPage?.(context);
   if (targetId === 'map') window.requestAnimationFrame(initializeLiveMap);
@@ -3927,9 +3928,6 @@ function renderChemicalProfile(profile) {
     const tabLabel = document.createElement('span');
     tabLabel.textContent = label;
     button.append(createChemicalProfileIcon(key), tabLabel);
-    button.addEventListener('click', () => {
-      renderChemicalProfile({ ...profile, activeTab: key });
-    });
     return button;
   });
   tabs.append(...tabButtons);
@@ -4563,6 +4561,7 @@ const hazardLaneUi = Object.freeze({
 
 let activeHazardSearchLane = 'CHEMICAL';
 let activeStarterHazardProfile = null;
+let latestStarterHazardRequest = 0;
 
 function renderHazardSearchMode(lane) {
   const config = hazardLaneUi[lane];
@@ -4611,6 +4610,7 @@ function setHazardProfileMode(mode) {
     lookup.classList.toggle('hazard-profile-page', !searchState);
     lookup.classList.toggle('hazard-search-page', searchState);
   }
+  if (searchState) window.HazMatIQ?.setActiveHazardState?.(null);
   if (searchHero) searchHero.hidden = !searchState;
   if (searchWorkspace) searchWorkspace.hidden = !searchState;
   if (!searchState && facilityInventory) facilityInventory.hidden = true;
@@ -4814,16 +4814,9 @@ function renderStarterHazardProfile(profile) {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = `chemical-profile-tab${index === 0 ? ' active' : ''}`;
+      button.dataset.profileFields = JSON.stringify(fieldNames);
       button.textContent = label;
       button.setAttribute('aria-selected', String(index === 0));
-      button.addEventListener('click', () => {
-        tabs.querySelectorAll('button').forEach((tab) => {
-          const active = tab === button;
-          tab.classList.toggle('active', active);
-          tab.setAttribute('aria-selected', String(active));
-        });
-        renderStarterHazardTab(profile, fieldNames);
-      });
       tabs.append(button);
     });
   }
@@ -4838,9 +4831,12 @@ function renderStarterHazardProfile(profile) {
 }
 
 async function openStarterHazard(result) {
+  const requestId = ++latestStarterHazardRequest;
   const profile = await fetchJson(`/api/hazards/${encodeURIComponent(result.lane)}/${encodeURIComponent(result.id)}/profile`);
+  if (requestId !== latestStarterHazardRequest) return;
   if (!profile || profile.error) return;
   renderStarterHazardProfile(profile);
+  window.HazMatIQ?.setActiveHazardState?.(result, { profile, status: 'ready' });
   hazardProfileResults?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -4869,7 +4865,7 @@ function renderHazardLaneResults(lane, results) {
     button.addEventListener('click', () => {
       if (chemicalSearchInput) chemicalSearchInput.value = result.displayName;
       clearChemicalSuggestions();
-      void openStarterHazard(result);
+      void (window.HazMatIQ.openHazardProfile?.(result) || openStarterHazard(result));
     });
     container.append(button);
   });
@@ -4888,7 +4884,7 @@ async function searchHazardLane(lane, query, { submit = false } = {}) {
   const response = await fetchJson(`/api/hazards/search?lane=${encodeURIComponent(lane)}&q=${encodeURIComponent(normalized)}`);
   const results = response?.results || [];
   renderHazardLaneResults(lane, results);
-  if (submit && results[0]) await openStarterHazard(results[0]);
+  if (submit && results[0]) await (window.HazMatIQ.openHazardProfile?.(results[0]) || openStarterHazard(results[0]));
 }
 
 document.querySelectorAll('[data-hazard-search-tab]').forEach((tab) => {
@@ -5417,6 +5413,7 @@ function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {
     selectedChemicalId: nextSelectedChemicalId,
     name: chemical.ChemicalName || chemical.name,
   } : null;
+  window.HazMatIQ?.setActiveHazardState?.(chemical, { status: activeChemical ? 'loading' : 'empty' });
   const incidentProductInput = document.getElementById('incident-product');
   if (incidentProductInput) incidentProductInput.value = activeChemical?.name || '';
   if (persist) {
@@ -5576,6 +5573,7 @@ async function openChemical(chemical, facilityName = '') {
     if (!record || !isCurrentProfileRequest()) return;
     try {
       activeChemicalRecord = record;
+      window.HazMatIQ?.setActiveHazardState?.(chemical, { profile: record.profile, record, status: 'ready' });
       applyChemicalContainerProfile();
       updateActiveIncidentRecord();
       renderIncidentCommandSnapshot();
@@ -5610,6 +5608,7 @@ async function openChemical(chemical, facilityName = '') {
   try {
     profileRecord = chemicalProfileRecord(chemical, profile);
     activeChemicalRecord = profileRecord;
+    window.HazMatIQ?.setActiveHazardState?.(chemical, { profile: profileRecord.profile, record: profileRecord, status: 'ready' });
     applyChemicalContainerProfile();
     updateActiveIncidentRecord();
     renderIncidentCommandSnapshot();
@@ -5626,6 +5625,7 @@ async function openChemical(chemical, facilityName = '') {
     if (!record || !isCurrentProfileRequest()) return;
     try {
       activeChemicalRecord = { ...record, ...profileRecord };
+      window.HazMatIQ?.setActiveHazardState?.(chemical, { profile: activeChemicalRecord.profile, record: activeChemicalRecord, status: 'ready' });
       applyChemicalContainerProfile();
       updateActiveIncidentRecord();
       renderIncidentCommandSnapshot();
@@ -5642,7 +5642,7 @@ async function openChemical(chemical, facilityName = '') {
 
 function companionChemicalForUi(row) {
   const selectedId = normalizeChemicalSelectionId(row?.ChemicalID);
-  return {
+  const result = {
     ...row,
     id: selectedId === null || selectedId === undefined ? `transport-${row?.sourceIdentifierId}` : String(selectedId),
     selectedChemicalId: selectedId,
@@ -5652,6 +5652,16 @@ function companionChemicalForUi(row) {
     ergGuide: row?.ErgNumber,
     hazardClass: JSON.stringify(row?.HazardClass && row.HazardClass !== 'Not available' ? [row.HazardClass] : []),
   };
+  const normalized = window.HazMatIQ?.normalizeHazardSearchResult?.(result);
+  return normalized ? {
+    ...result,
+    profileType: normalized.profileType,
+    canonicalId: normalized.canonicalId,
+    chemicalCompanionId: normalized.chemicalCompanionId,
+    cbrneCanonicalId: normalized.cbrneCanonicalId,
+    routingLane: normalized.routingLane,
+    sourceState: normalized.sourceState,
+  } : result;
 }
 
 function isUnreviewedTransportationRecord(chemical) {
@@ -5684,7 +5694,8 @@ async function openChemicalById(chemicalId, facilityName = '') {
     setChemicalSearchStatus('Chemical details are not available for this facility submission.', 'error');
     return;
   }
-  await openChemical(chemical, facilityName);
+  await (window.HazMatIQ?.openHazardProfile?.(chemical, { facilityName, sourcePage: 'saved-chemicals' })
+    || openChemical(chemical, facilityName));
 }
 
 const myChemicalsStorageKey = 'hazmatiq_my_chemicals';
@@ -5964,7 +5975,7 @@ async function searchChemicalId(value, { submit = false } = {}) {
   if (submit && chemicals.length && !isUnreviewedTransportationRecord(chemicals[0])) {
     clearChemicalSuggestions();
     if (facilityInventory) facilityInventory.hidden = true;
-    await openChemical(chemicals[0]);
+    await (window.HazMatIQ.openHazardProfile?.(chemicals[0]) || openChemical(chemicals[0]));
     return;
   }
   if (submit && facilities.length === 1) {
@@ -5986,7 +5997,7 @@ async function searchChemicalId(value, { submit = false } = {}) {
         if (isUnreviewedTransportationRecord(chemical)) {
           setChemicalSearchStatus(chemical.reviewWarning || 'This transport identifier has not been verified against a Chemical Companion master chemical record. Do not use it for IDLH, PPE, plume, decon, or medical guidance until reviewed.', 'error');
           window.HazMatIQ?.openChemCompareWithBase?.(chemical);
-        } else openChemical(chemical);
+        } else void (window.HazMatIQ.openHazardProfile?.(chemical) || openChemical(chemical));
       },
       {
         identifiers: chemicalSearchIdentifiers(chemical),
@@ -10664,3 +10675,14 @@ else syncCommandBarContext();
 startIncidentTimer();
 renderIncidentLists();
 void restoreIncidentsFromBackend();
+
+// Hazard Profile keeps domain renderers compatible while hazard-profile.js
+// owns the unified search result, active-state, and activation contracts.
+window.HazMatIQ.hazardProfileLegacy = {
+  companionChemicalForUi,
+  normalizeProfileForUi,
+  openChemical,
+  openStarterHazard,
+  renderChemicalProfile,
+  renderStarterHazardTab,
+};
