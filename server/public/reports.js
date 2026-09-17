@@ -73,6 +73,10 @@
       root.dataset.lifecycleInitialized = 'true';
     }
     root.dataset.lifecycleContext = context.sourcePage || 'navigation';
+    if (context.incidentId) root.dataset.activeIncidentId = context.incidentId;
+    const incident = context.incidentId ? reportsApi()?.getIncidentById?.(context.incidentId) : null;
+    const prefill = window.HazMatIQ.buildIcsPrefill?.(incident || undefined);
+    if (prefill?.incidentId) root.dataset.icsPrefillIncidentId = prefill.incidentId;
     reportsApi()?.renderIncidentLists?.();
   }
 

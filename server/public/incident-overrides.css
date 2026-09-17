@@ -209,3 +209,114 @@
 @media (max-width: 560px) {
   .incident-command-summary-strip { grid-template-columns: 1fr; padding: 14px; }
 }
+
+/* Phase 4 command hub: compact ICS inputs and direct operational actions. */
+.incident-command-entry {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid #315d82;
+  border-radius: 9px;
+  background: #082540;
+}
+.incident-command-entry-heading,
+.incident-command-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 11px;
+}
+.incident-command-entry-heading h3,
+.incident-command-section-heading h2 { margin: 0; color: #fff; }
+.incident-command-entry-heading > span,
+.incident-command-section-heading > span { color: #f6c343; font-size: .82rem; font-weight: 800; }
+.incident-command-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.incident-command-entry-grid label {
+  display: grid;
+  gap: 5px;
+  color: #dce7f2;
+  font-weight: 750;
+}
+.incident-command-entry-grid label:last-child { grid-column: 1 / -1; }
+.incident-command-entry-grid label > span { display: flex; justify-content: space-between; gap: 8px; }
+.incident-command-entry-grid small { color: #f6c343; font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
+.incident-command-entry-grid textarea {
+  min-height: 76px;
+  padding: 9px;
+  border: 1px solid #739bb9;
+  border-radius: 6px;
+  background: #f1f6fa;
+  color: #071f36;
+  font: inherit;
+  resize: vertical;
+}
+.incident-command-entry-grid textarea:focus-visible { outline: 3px solid #f6c343; outline-offset: 2px; }
+.incident-command-actions-panel,
+.incident-command-plume-summary { margin-top: 14px; padding: 16px; }
+.incident-command-section-heading h2 { text-transform: uppercase; }
+.incident-command-action-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 9px;
+}
+.incident-command-action-grid button {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 88px;
+  padding: 11px;
+  border: 1px solid #467da4;
+  border-radius: 7px;
+  background: #0b2944;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+}
+.incident-command-action-grid button:hover,
+.incident-command-action-grid button:focus-visible { border-color: #f6c343; background: #123f63; }
+.incident-command-action-grid button:disabled { cursor: not-allowed; opacity: .5; }
+.incident-command-action-grid strong { color: #f6c343; font-size: .83rem; }
+.incident-command-action-grid span { color: #dce7f2; font-size: .8rem; line-height: 1.35; }
+.incident-command-plume-status { padding: 5px 9px; border: 1px solid #f6c343; border-radius: 999px; color: #071f36; background: #f6c343; font-size: .78rem; letter-spacing: .05em; }
+.incident-command-plume-status[data-state="plotted"] { border-color: #7ee395; background: #227a3f; color: #fff; }
+.incident-command-plume-preview { display: grid; grid-template-columns: minmax(220px, .8fr) minmax(0, 1.2fr); gap: 16px; align-items: stretch; }
+.incident-command-plume-image-wrap { min-height: 160px; overflow: hidden; border: 1px solid #356b94; border-radius: 7px; background: #061f34; }
+.incident-command-plume-image-wrap img { display: block; width: 100%; height: 100%; min-height: 160px; object-fit: cover; }
+.incident-command-plume-empty { display: grid; min-height: 160px; padding: 16px; place-items: center; color: #b8c7d9; text-align: center; }
+.incident-command-plume-copy { display: grid; align-content: start; gap: 9px; }
+.incident-command-plume-copy > strong { color: #fff; font-size: 1.05rem; }
+.incident-command-plume-copy > p { margin: 0; color: #dce7f2; }
+.incident-command-plume-copy > button { justify-self: start; min-height: 42px; padding: 8px 13px; border: 1px solid #7ee395; border-radius: 6px; background: #227a3f; color: #fff; font-weight: 850; cursor: pointer; }
+.incident-command-plume-copy > button:hover,
+.incident-command-plume-copy > button:focus-visible { background: #2e9a55; }
+.incident-command-plume-copy dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px 12px; margin: 0; }
+.incident-command-plume-copy dl > div { display: grid; gap: 2px; }
+.incident-command-plume-copy dt { color: #8fb4d0; font-size: .72rem; text-transform: uppercase; }
+.incident-command-plume-copy dd { margin: 0; color: #fff; font-size: .85rem; overflow-wrap: anywhere; }
+.incident-command-panel-actions { display: inline-flex; align-items: center; gap: 6px; float: right; }
+.incident-command-panel-actions .incident-command-panel-action:first-child { min-height: 30px; padding: 4px 8px; border: 1px solid #7ee395; border-radius: 5px; background: #227a3f; color: #fff; font-size: .68rem; font-weight: 850; cursor: pointer; }
+.incident-command-panel-actions .incident-command-panel-action:first-child:disabled { cursor: not-allowed; opacity: .5; }
+.incident-command-chemical-summary { margin-top: 12px; padding: 11px 12px; border: 1px solid #315d82; border-radius: 6px; background: #0b2944; }
+.incident-command-chemical-summary > strong { display: block; color: #f6c343; font-size: 1rem; }
+.incident-command-chemical-summary dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 12px; margin: 9px 0 0; }
+.incident-command-chemical-summary dl > div { display: grid; gap: 2px; min-width: 0; }
+.incident-command-chemical-summary dt { color: #8fb4d0; font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.incident-command-chemical-summary dd { margin: 0; color: #fff; font-size: .82rem; overflow-wrap: anywhere; }
+@media (max-width: 900px) {
+  .incident-command-action-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .incident-command-plume-preview { grid-template-columns: 1fr; }
+  .incident-command-chemical-summary dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .incident-command-entry-grid { grid-template-columns: 1fr; }
+  .incident-command-entry-grid label:last-child { grid-column: auto; }
+  .incident-command-entry-heading,
+  .incident-command-section-heading { align-items: flex-start; flex-direction: column; }
+  .incident-command-action-grid { grid-template-columns: 1fr; }
+  .incident-command-panel-actions { float: none; display: flex; margin-top: 7px; }
+  .incident-command-chemical-summary dl { grid-template-columns: 1fr; }
+}

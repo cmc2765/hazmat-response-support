@@ -273,8 +273,9 @@
 
                 <div class="incident-command-main-grid">
                   <article class="incident-command-panel incident-command-brief-panel">
-                    <h2><span aria-hidden="true">📋</span> Incident Brief <button class="incident-command-panel-action" type="button" data-incident-command-action="export-package" aria-label="Print or export incident brief" title="Print or export incident brief"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5h-2M7 14h10v7H7z" /></svg></button></h2>
+                    <h2><span aria-hidden="true">📋</span> Incident Brief <span class="incident-command-panel-actions"><button class="incident-command-panel-action" type="button" data-incident-command-action="chemical-profile">VIEW CHEMICAL PROFILE</button><button class="incident-command-panel-action" type="button" data-incident-command-action="export-package" aria-label="Print or export incident brief" title="Print or export incident brief"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5h-2M7 14h10v7H7z" /></svg></button></span></h2>
                     <dl id="ic-brief-list" class="incident-command-brief-list"></dl>
+                    <div id="ic-chemical-summary" class="incident-command-chemical-summary" aria-live="polite"></div>
                   </article>
 
                   <article class="incident-command-panel incident-command-tactical-panel">
@@ -310,6 +311,25 @@
                     </div>
                   </article>
                 </div>
+
+                <section class="incident-command-panel incident-command-actions-panel" aria-labelledby="ic-actions-title">
+                  <div class="incident-command-section-heading"><div><p class="eyebrow">Operational shortcuts</p><h2 id="ic-actions-title">Command Actions</h2></div><span>Keep the incident context attached</span></div>
+                  <div id="ic-command-actions" class="incident-command-action-grid">
+                    <button type="button" data-command-view="guided-response"><strong>OPEN GUIDED RESPONSE</strong><span>Review source-backed tactical decisions</span></button>
+                    <button type="button" data-command-view="plume"><strong>OPEN PLUME MODEL</strong><span>Plot or inspect the current threat zone</span></button>
+                    <button type="button" data-command-view="map"><strong>OPEN LIVE MAP</strong><span>View scene geography and overlays</span></button>
+                    <button type="button" data-incident-command-action="chemical-profile"><strong>VIEW CHEMICAL PROFILE</strong><span>Return to the canonical hazard profile</span></button>
+                    <button type="button" data-incident-command-action="ics"><strong>REPORTS / ICS</strong><span>Open current incident forms</span></button>
+                  </div>
+                </section>
+
+                <section class="incident-command-panel incident-command-plume-summary" aria-labelledby="ic-plume-summary-title">
+                  <div class="incident-command-section-heading"><div><p class="eyebrow">Canonical plume state</p><h2 id="ic-plume-summary-title">Plume Summary</h2></div><strong id="ic-plume-status" class="incident-command-plume-status">NOT PLOTTED</strong></div>
+                  <div class="incident-command-plume-preview">
+                    <div class="incident-command-plume-image-wrap"><img id="ic-plume-preview-image" alt="Saved plume and threat-zone preview" hidden /><div id="ic-plume-preview-empty" class="incident-command-plume-empty">No plume snapshot is saved for this incident.</div></div>
+                    <div class="incident-command-plume-copy"><strong id="ic-plume-preview-title">Plot a plume from Incident Command</strong><p id="ic-plume-preview-summary">Use the canonical Plume Model after confirming chemical identity, release inputs, and current weather.</p><dl id="ic-plume-preview-facts"></dl><button type="button" data-command-view="plume" id="ic-plume-open-btn">PLOT PLUME</button></div>
+                  </div>
+                </section>
 
                 <section class="incident-command-panel incident-command-tools" aria-labelledby="ic-command-tools-title">
                   <h2 id="ic-command-tools-title"><span aria-hidden="true">🧰</span> Command Tools</h2>
@@ -436,6 +456,16 @@
                     <textarea id="incident-notes" rows="3" placeholder="Leak indicators, odor reports, access issues, or other scene notes"></textarea>
                   </label>
                 </div>
+                <section class="incident-command-entry" aria-labelledby="incident-command-entry-title">
+                  <div class="incident-command-entry-heading"><div><p class="eyebrow">ICS command data</p><h3 id="incident-command-entry-title">Enter once, carry through the incident record</h3></div><span>Saved with the active incident</span></div>
+                  <div class="incident-command-entry-grid">
+                    <label for="incident-objectives"><span>Objectives <small>ICS 202</small></span><textarea id="incident-objectives" rows="3" placeholder="One objective per line"></textarea></label>
+                    <label for="incident-command-structure"><span>Command structure <small>ICS 203 / 204</small></span><textarea id="incident-command-structure" rows="3" placeholder="IC, Operations, Safety, HazMat Group"></textarea></label>
+                    <label for="incident-communications"><span>Communications <small>ICS 205</small></span><textarea id="incident-communications" rows="3" placeholder="Channels, contact plan, or limitations"></textarea></label>
+                    <label for="incident-medical-plan"><span>Medical plan <small>ICS 206</small></span><textarea id="incident-medical-plan" rows="3" placeholder="EMS, hospital, rehab, or medical direction"></textarea></label>
+                    <label for="incident-staging-resources"><span>Staging / resources <small>ICS 204 / 215</small></span><textarea id="incident-staging-resources" rows="3" placeholder="Staging, assignments, apparatus, or resources"></textarea></label>
+                  </div>
+                </section>
                 <div class="button-row incident-form-actions">
                   <button class="primary-btn" id="save-incident-brief-btn" type="button">Save Incident Brief</button>
                   <button class="ghost-btn" id="clear-incident-brief-btn" type="button">Clear</button>
@@ -1415,6 +1445,7 @@
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
     <script src="script.js?v=plume-startup-17"></script>
+    <script src="incident-command.js"></script>
     <script src="hazard-profile.js"></script>
     <script src="reports.js"></script>
     <script src="chem-compare.js?v=chemcompare-4"></script>

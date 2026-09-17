@@ -269,6 +269,11 @@ function automaticIcsValue(fieldName: string, incident: Record<string, unknown>)
   if (normalized === "timefrom") return textValue(incident.startTime);
   if (normalized === "dateto") return textValue(incident.completedDate);
   if (normalized === "timeto") return textValue(incident.completedTime);
+  if (normalized === "incidentobjectives" || normalized.includes("objectives")) return textValue(incident.objectives);
+  if (normalized === "commandstructure" || normalized.includes("commandstructure")) return textValue(incident.commandStructure);
+  if (normalized === "communications" || normalized.includes("communicationsplan")) return textValue(incident.communications);
+  if (normalized === "medicalplan" || normalized.includes("medicalplan")) return textValue(incident.medicalPlan);
+  if (normalized === "stagingresources" || normalized.includes("staging") || normalized.includes("resourceassignment")) return textValue(incident.stagingResources);
   if (normalized.includes("incidentlocation")) {
     return [incident.facilityName, incident.address, incident.city, incident.state, incident.zip]
       .map(textValue)

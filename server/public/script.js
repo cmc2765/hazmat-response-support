@@ -547,6 +547,7 @@ function initializeActivePage(targetId, { skipPlumeInitialization = false, conte
   }
   if (targetId === 'my-chemicals') renderSavedChemicals();
   if (targetId === 'guided-response') renderGuidedResponse();
+  if (targetId === 'incident') window.HazMatIQ.initializeIncidentCommand?.(context);
   if (targetId === 'lookup') window.HazMatIQ.initializeHazardProfilePage?.(context);
   if (targetId === 'monitor') window.HazMatIQ.initializeEquipmentPage?.(context);
   if (targetId === 'source') window.HazMatIQ.initializeSourcesPage?.(context);
@@ -861,6 +862,11 @@ const incidentBriefFieldIds = [
   'incident-operational-mode',
   'incident-container-type',
   'incident-notes',
+  'incident-objectives',
+  'incident-command-structure',
+  'incident-communications',
+  'incident-medical-plan',
+  'incident-staging-resources',
 ];
 const incidentContainerFieldIds = [
   'plume-container-type',
@@ -1363,6 +1369,16 @@ function renderIncidentCommandDashboard() {
   if (productInput && document.activeElement !== productInput) productInput.value = model.incident.chemicalName || '';
   const modeInput = document.getElementById('incident-operational-mode');
   if (modeInput) modeInput.value = model.incident.operationalMode || 'Research & Assessment';
+  [
+    ['incident-objectives', 'objectives'],
+    ['incident-command-structure', 'commandStructure'],
+    ['incident-communications', 'communications'],
+    ['incident-medical-plan', 'medicalPlan'],
+    ['incident-staging-resources', 'stagingResources'],
+  ].forEach(([id, field]) => {
+    const input = document.getElementById(id);
+    if (input && document.activeElement !== input) input.value = model.incident[field] || '';
+  });
   setText('ic-summary-elapsed', model.elapsedTime);
   const realTime = document.getElementById('ic-real-time');
   if (realTime) {
@@ -1450,6 +1466,7 @@ function renderIncidentCommandDashboard() {
   setText('ic-detail-protective', model.protectiveActionsSummary);
   setText('ic-detail-safety', `PPE: ${model.entryTeamPpe} · Decon: ${model.deconTeamPpe} · Medical: ${model.medicalConcerns}`);
   setText('ic-detail-reports', model.completedReports.length ? `${model.completedReports.length} recent completed report${model.completedReports.length === 1 ? '' : 's'}` : 'No completed reports yet');
+  window.dispatchEvent(new CustomEvent('hazmatiq:incident-command-updated', { detail: model.incident }));
 }
 
 function renderSystemNotification() {
@@ -1606,6 +1623,11 @@ function getIncidentFormData() {
     containerReleaseLocation: document.getElementById('container-release-location')?.value || '',
     containerReleasePhase: document.getElementById('container-release-phase')?.value || '',
     notes: document.getElementById('incident-notes')?.value.trim() || '',
+    objectives: document.getElementById('incident-objectives')?.value.trim() || '',
+    commandStructure: document.getElementById('incident-command-structure')?.value.trim() || '',
+    communications: document.getElementById('incident-communications')?.value.trim() || '',
+    medicalPlan: document.getElementById('incident-medical-plan')?.value.trim() || '',
+    stagingResources: document.getElementById('incident-staging-resources')?.value.trim() || '',
     sourceStatuses: {
       chemical: chemicalProfile ? readinessStatus.imported : readinessStatus.missing,
       weather: document.getElementById('plume-weather-source')?.value === 'manual' ? readinessStatus.manual : readinessStatus.verify,
@@ -2448,7 +2470,7 @@ const incidentNoteDialog = document.getElementById('incident-note-dialog');
 function openCurrentIncidentReport() {
   const active = getActiveIncident();
   if (!active) return;
-  showView('report');
+  showView('report', { sourcePage: 'incident', incidentId: active.incidentId });
   document.querySelector('[data-report-tab="current"]')?.click();
   openIncidentSummary(active.incidentId);
 }
@@ -2469,7 +2491,11 @@ incidentCommandDashboard?.addEventListener('click', (event) => {
       details?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else if (target === 'plume') openPlumeWorkspace({ sourcePage: 'incident', incident: getActiveIncident() });
     else if (target === 'guided-response') void openGuidedResponseWorkspace();
-    else if (target) showView(target);
+    else if (target === 'map') showView('map', { sourcePage: 'incident', incident: getActiveIncident() });
+    else if (target === 'report') {
+      const active = getActiveIncident();
+      showView('report', { sourcePage: 'incident', incidentId: active?.incidentId });
+    } else if (target) showView(target);
     return;
   }
   const control = event.target.closest('[data-incident-command-action]');
@@ -2484,10 +2510,13 @@ incidentCommandDashboard?.addEventListener('click', (event) => {
     incidentNoteDialog?.showModal();
   } else if (action === 'complete') {
     document.getElementById('complete-incident-dialog')?.showModal();
+  } else if (action === 'chemical-profile') {
+    window.HazMatIQ?.incidentCommand?.openChemicalProfile?.();
   } else if (action === 'open-report' || action === 'generate-report' || action === 'export-package') {
     openCurrentIncidentReport();
   } else if (action === 'ics') {
-    showView('report');
+    const active = getActiveIncident();
+    showView('report', { sourcePage: 'incident', incidentId: active?.incidentId });
     document.querySelector('[data-report-tab="current"]')?.click();
     document.getElementById('active-ics-form-list')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -4837,6 +4866,7 @@ async function openStarterHazard(result) {
   if (!profile || profile.error) return;
   renderStarterHazardProfile(profile);
   window.HazMatIQ?.setActiveHazardState?.(result, { profile, status: 'ready' });
+  window.HazMatIQ?.incidentCommand?.propagateHazardToIncident?.(result, profile);
   hazardProfileResults?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -10685,4 +10715,13 @@ window.HazMatIQ.hazardProfileLegacy = {
   openStarterHazard,
   renderChemicalProfile,
   renderStarterHazardTab,
+};
+
+window.HazMatIQ.incidentCommandLegacy = {
+  getActiveIncident,
+  readIncidents,
+  writeIncidents,
+  renderIncidentCommandDashboard,
+  renderIncidentLists,
+  showView,
 };
