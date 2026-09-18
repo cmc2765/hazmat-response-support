@@ -164,4 +164,26 @@ describe('Hazard ID Chemical Companion profile loader', () => {
       nioshIdentityStatus: 'VERIFIED_NIOSH',
     });
   });
+
+  it('keeps the primary profile visible when optional operational propagation fails', async () => {
+    const setHazardProfileMode = vi.fn();
+    const updateChemicalCard = vi.fn();
+    const fetchJson = vi.fn().mockResolvedValue({
+      selectedChemicalId: 102,
+      header: { name: 'Sulfur dioxide', un: '1079', ergGuide: '125' },
+    });
+    const result = await runInNewContext(runtime(`
+      await openChemical(companionChemicalForUi(${JSON.stringify(sulfurDioxideSearchRow)}));
+      return ({ statuses });
+    `), context({
+      fetchJson,
+      setHazardProfileMode,
+      updateChemicalCard,
+      applyChemicalContainerProfile: () => { throw new Error('optional plume control failure'); },
+    }));
+
+    expect(updateChemicalCard).toHaveBeenCalledTimes(1);
+    expect(setHazardProfileMode).toHaveBeenCalledWith('chemical');
+    expect(result.statuses.at(-1)).toEqual({ message: '', state: '' });
+  });
 });

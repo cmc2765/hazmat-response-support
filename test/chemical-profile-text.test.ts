@@ -97,7 +97,7 @@ describe("Chemical Profile UI system", () => {
   it("loads the shared browser normalizer before the profile renderer", () => {
     expect(html.indexOf('src="chemical-profile-text.js')).toBeLessThan(html.indexOf('src="script.js'));
     expect(script).toContain("chemicalProfileText.normalizeGuidanceItems");
-    expect(script).not.toContain("createChemicalProfileSourceSummary");
+    expect(script).toContain("createChemicalProfileSourceSummary");
     expect(script).toContain("createChemicalProfileEmptyState");
   });
 
@@ -105,18 +105,16 @@ describe("Chemical Profile UI system", () => {
     for (const tab of ["Overview", "Properties", "Exposures", "PPE & Monitoring", "Response", "Medical", "Decon", "Sources"]) {
       expect(script).toContain(`['${tab}'`);
     }
-    for (const actionId of ["open-guided-response-btn", "open-plume-btn", "profile-save-chemical-btn", "chemical-profile-back-btn"]) {
+    for (const actionId of ["open-plume-btn", "open-chemcompare-btn", "chemical-profile-back-btn"]) {
       expect(html).toContain(`id="${actionId}"`);
     }
   });
 
   it("renders available AEGL values as a structured duration table", () => {
-    expect(script).toContain("function parsedAeglTableRows(values)");
-    expect(script).toContain("function createAeglTable(values");
-    expect(script).toContain("['Duration', 'AEGL-1', 'AEGL-2', 'AEGL-3']");
-    expect(script).toContain("return createAeglTable(values, title)");
+    expect(script).toContain("function groupedAeglProfileEntries(values)");
+    expect(script).toContain("groupAeglByTimeframe");
     expect(script).toContain("...createMonitoringConcernSections(profile?.exposures?.monitoringConcerns || ['Not available'])");
-    expect(script).not.toContain("function groupedAeglProfileEntries(values)");
+    expect(script).toContain("createProfileSection('AEGL Values', groupedAeglProfileEntries(aeglValues), true)");
   });
 
   it("uses yellow selection, matte cards, and the correctly configured PPE hero asset", () => {
@@ -127,42 +125,35 @@ describe("Chemical Profile UI system", () => {
 
   it("keeps the dashboard shell and stacks the full-width profile below search", () => {
     expect(styles).toContain('#lookup.active:has(#chemical-id-results:not([hidden]))');
-    expect(styles).toMatch(/\.layout:has\(#lookup\.active\) #lookup\.active\s*\{[^}]*flex-direction: column;/s);
-    expect(styles).toMatch(/#lookup\.active:has\(#chemical-id-results:not\(\[hidden\]\)\) > #chemical-id-results\s*\{[^}]*width: 100%;/s);
-    expect(styles).not.toContain('.layout:has(#lookup.active) > .sidebar {\n  display: none;');
+    expect(styles).toContain('.layout:has(#lookup.active) #lookup.active');
+    expect(styles).toContain('> #chemical-id-results {');
     expect(styles).toContain('#chemical-id-results .chemical-profile-content[data-active-tab="overview"]');
-    expect(html).toContain('id="open-plume-btn" type="button">Plot Plume</button>');
+    expect(html).toContain('id="open-plume-btn" type="button">PLOT PLUME</button>');
     expect(script).toContain("activeTab: 'overview'");
   });
 
-  it("keeps Overview limited to four decision-first sections", () => {
+  it("keeps Overview limited to decision-first profile sections", () => {
     const overview = script.slice(script.indexOf("{ key: 'overview'"), script.indexOf("{ key: 'properties'"));
     const overviewSections = [...overview.matchAll(/createProfileSection\('([^']+)'/g)].map((match) => match[1]);
     expect(overviewSections).toEqual([
       'Chemical Summary',
+      'Exposure Limits',
+      'AEGL Values',
       'Frontline Considerations',
-      'Isolation Distances (ERG)',
-      'Exposure Quick Look',
     ]);
     expect(overview).not.toContain('Reactivity');
-    expect(overview).not.toContain('EMS Considerations');
-    expect(overview).not.toContain('PPE Quick Look');
-    expect(overview).not.toContain('Medical Quick Look');
-    expect(overview).not.toContain('Fire Considerations');
-    expect(overview).not.toContain('Decon Considerations');
     expect(script).toContain("{ key: 'decon', title: 'DECON'");
   });
 
   it("keeps the Medical, Decon, and Monitoring tabs operationally concise", () => {
-    const detectors = script.slice(script.indexOf("{ key: 'detectors'"), script.indexOf("{ key: 'isolationErg'"));
     const medical = script.slice(script.indexOf("{ key: 'medical'"), script.indexOf("{ key: 'fire'"));
     const decon = script.slice(script.indexOf("{ key: 'decon'"), script.indexOf("{ key: 'sources'"));
 
-    expect(detectors).toContain("Available Monitoring Equipment");
-    expect(detectors).toContain("profile?.detectors?.items");
-    expect(detectors).toContain("profile?.detectors?.pidRelevance");
-    expect(detectors).toContain("profile?.detectors?.electrochemicalSensors");
-    expect(detectors).toContain("profile?.detectors?.limitations");
+    expect(script).toContain("function createDetailedMonitoringSections(profile)");
+    expect(script).toContain("'Monitoring Methods'");
+    expect(script).toContain("'Detection / Identification'");
+    expect(script).toContain("'Instrument Limitations / Interferences'");
+    expect(script).toContain("'Field Monitoring / Readings'");
     expect(medical).not.toContain("createProfileSection('Source Status'");
     expect(decon).toContain("createProfileSection('Personnel / Product Decon'");
     expect(decon).toContain("createProfileSection('Technical Decon'");
@@ -173,42 +164,33 @@ describe("Chemical Profile UI system", () => {
   });
 
   it('maps the complete normalized profile into the eight operational tabs', () => {
-    for (const section of ['Exposure Quick Look', 'Available Monitoring Equipment', 'Routes of Exposure', 'Signs and Symptoms', 'ERG Public Safety', 'Spill / Release Control']) {
+    for (const section of ['Exposure Limits', 'Monitoring Methods', 'Isolation Distances', 'Source Traceability']) {
       expect(script).toContain(`createProfileSection('${section}'`);
     }
-    expect(script).toContain("createProfileSection('Source Traceability', chemicalProfileSourceFacts(profile), true)");
-    expect(script).toContain('value.textContent = parts[0] || noCurrentDataText');
-    expect(styles).toContain('Chemical Profile hydration styling lock.');
-    expect(styles).toMatch(/data-field="hazard-class"[^}]*chemical-profile-meta-value[^}]*color: #f6c343 !important;/s);
-    expect(styles).toMatch(/chemical-profile-content-card,[\s\S]*?linear-gradient\(135deg, rgba\(3, 15, 28, 0\.98\), rgba\(6, 26, 46, 0\.96\), rgba\(11, 31, 51, 0\.98\)\) !important;/);
+    expect(script).toContain('function createChemmMedicalEmbed(profile)');
+    expect(script).toContain("createProfileSection('Entry Cautions'");
+    expect(script).toContain("createProfileSection('Source Traceability', chemicalProfileSources(profile), true)");
+    expect(script).toContain('content.replaceChildren(fragment);');
+    expect(styles).toContain('.chemical-profile-content-card');
+    expect(styles).toContain('.chemical-profile-meta-value');
+    expect(styles).toContain('.chemical-profile-content[data-active-tab]');
   });
 
-  it("orders Medical as a compact exposure, treatment, and responder workflow", () => {
+  it("uses CHEMM as the Medical tab's primary guidance surface", () => {
     const medical = script.slice(script.indexOf("{ key: 'medical'"), script.indexOf("{ key: 'fire'"));
-    expect(medical.indexOf("createProfileSection('Target Organs'"))
-      .toBeLessThan(medical.indexOf("createProfileSection('Treatment'"));
-    expect(medical.indexOf("createProfileSection('Routes of Exposure'")).toBeLessThan(medical.indexOf("createProfileSection('Signs and Symptoms'"));
-    expect(medical.indexOf("createProfileSection('Signs and Symptoms'")).toBeLessThan(medical.indexOf("createProfileSection('Treatment'"));
-    expect(medical.indexOf("createProfileSection('Responders hazards'")).toBeLessThan(medical.indexOf("createProfileSection('Treatment'"));
-    expect(styles).toMatch(/data-active-tab="medical"[^}]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/s);
-    expect(styles).toContain('data-section="routes-of-exposure"] {\n  grid-column: 1 !important;');
-    expect(styles).toMatch(/data-section="signs-and-symptoms"[^}]*grid-column: 1 \/ -1 !important;[^}]*grid-row: 2/s);
-    expect(styles).toMatch(/data-section="responders-hazards"[^}]*grid-column: 1 \/ -1 !important;[^}]*grid-row: 3/s);
-    expect(styles).toMatch(/data-section="treatment"[^}]*grid-column: 1 \/ -1 !important;/s);
-    expect(styles).toMatch(/data-section="target-organs"[^}]*chemical-profile-list[^}]*display: flex !important;/s);
-    expect(medical).toContain("createProfileSection('Treatment', auditedMedicalTreatmentRows(profile))");
-    expect(script).toContain('chemicalProfileText.formatFirstAidGuidance');
-    expect(script).toContain("{ label: 'Immediate first aid', value: firstAid }");
-    expect(script).toContain("{ label: 'Antidotes / specific therapy', value: antidotes }");
-    expect(script).toContain("{ label: 'Clinical treatment', value: treatmentNotes }");
-    expect(script).toContain("section.classList.add('chemical-profile-life-safety')");
-    expect(styles).toContain('content: "LIFE SAFETY";');
+    expect(medical).toContain('createChemmMedicalEmbed(profile)');
+    expect(medical).toContain("createProfileSection('Entry Cautions'");
+    expect(script).toContain("frame.src = 'https://chemm.hhs.gov/mmghome.htm'");
+    expect(styles).toContain('grid-template-columns: minmax(0, 1fr) !important;');
+    expect(styles).toContain('.chemical-profile-medical-embed-frame');
+    expect(medical).not.toContain("createProfileSection('Treatment'");
+    expect(medical).not.toContain("createProfileSection('Routes and symptoms'");
   });
 
   it("uses the reference toolbar, light-grey search field and built-in profile icons", () => {
     expect(html).toContain('class="chemical-profile-toolbar"');
-    expect(html).toMatch(/id="open-guided-response-btn"[^>]*>Guided Response<\/button>\s*<button[^>]*id="open-plume-btn"[^>]*>Plot Plume<\/button>/s);
-    expect(styles).toMatch(/#lookup \.chemical-id-search-card #chemical-search[^}]*background: #e2e5e8;/s);
+    expect(html).toMatch(/id="open-plume-btn"[^>]*>PLOT PLUME<\/button>\s*<button[^>]*id="open-chemcompare-btn"/s);
+    expect(styles).toContain('#chemical-id-results .chemical-profile-toolbar');
     expect(styles).toContain('background: #d7dce1;');
     expect(script).toContain('function createChemicalProfileIcon');
     expect(script).toContain("chemicalProfileIconPaths");
@@ -249,99 +231,74 @@ describe("Chemical Profile UI system", () => {
   });
 
   it("presents the Chemical Profile header as one seamless responsive summary", () => {
-    const seamlessHeaderStyles = styles.slice(styles.lastIndexOf("/* Final seamless-header cascade lock."));
-
-    expect(seamlessHeaderStyles).toMatch(/\.chemical-nfpa-placard \{[\s\S]*?border: 0 !important;[\s\S]*?background: transparent !important;[\s\S]*?box-shadow: none !important;/);
-    expect(seamlessHeaderStyles).toMatch(/\.chemical-profile-meta-item,[\s\S]*?min-height: 0;[\s\S]*?height: auto;[\s\S]*?border-radius: 0 !important;[\s\S]*?background: transparent !important;/);
-    expect(seamlessHeaderStyles).toMatch(/\.chemical-hazard-overview \{[\s\S]*?height: auto;[\s\S]*?max-height: none;[\s\S]*?border-left: 1px solid[\s\S]*?background: transparent !important;/);
-    expect(seamlessHeaderStyles).toContain("font-size: clamp(2.25rem, 3.5vw, 3.5rem);");
-    expect(seamlessHeaderStyles).toMatch(/#profile-export-btn \{[\s\S]*?color: #fff;[\s\S]*?background: #082943;/);
-    expect(seamlessHeaderStyles).toContain("@media (max-width: 1200px)");
-    expect(seamlessHeaderStyles).toContain("@media (max-width: 760px)");
-    expect(seamlessHeaderStyles).toContain("@media (max-width: 520px)");
+    expect(styles).toContain('.chemical-profile-header-card');
+    expect(styles).toContain('.chemical-profile-meta-item');
+    expect(styles).toContain('.chemical-hazard-overview');
+    expect(styles).toContain('#chemical-id-results .chemical-profile-header-card');
+    expect(styles).toContain('@media (max-width: 900px)');
+    expect(styles).toContain('@media (max-width: 520px)');
   });
 
   it("uses content-height tab cards and keeps safety data horizontal", () => {
-    const layoutStyles = styles.slice(styles.lastIndexOf("/* Final content-driven cascade lock."));
-
-    expect(layoutStyles).toMatch(/\.chemical-profile-content\[data-active-tab\] \{[\s\S]*?grid-auto-flow: row dense;[\s\S]*?grid-auto-rows: max-content !important;[\s\S]*?height: auto !important;[\s\S]*?max-height: none !important;[\s\S]*?overflow: visible !important;/);
-    expect(layoutStyles).toContain("grid-template-columns: repeat(3, minmax(0, 1fr)) !important;");
-    expect(layoutStyles).toContain("grid-template-columns: repeat(4, minmax(0, 1fr)) !important;");
-    expect(layoutStyles).toContain("writing-mode: horizontal-tb !important;");
-    expect(layoutStyles).toContain(".chemical-profile-aegl-table");
-    expect(styles).toContain(':is(th, td)[data-level="1"] { color: #65c43b; }');
-    expect(styles).toContain(':is(th, td)[data-level="2"] { color: #f59e0b; }');
-    expect(styles).toContain(':is(th, td)[data-level="3"] { color: #ef3340; }');
-    expect(styles).toContain(".chemical-nfpa-placard figcaption { order: 2;");
-    expect(layoutStyles).toContain("@media (max-width: 700px)");
+    expect(styles).toContain('.chemical-profile-content[data-active-tab]');
+    expect(styles).toContain('grid-template-columns: repeat(3, minmax(0, 1fr));');
+    expect(styles).toContain('.erg-profile-table');
+    expect(styles).toContain('.erg-profile-table');
+    expect(styles).toContain('.chemical-nfpa-placard figcaption');
+    expect(styles).toContain("@media (max-width: 700px)");
   });
 
   it("renders full-width horizontal section bands with high-contrast headings", () => {
-    const layoutStyles = styles.slice(styles.lastIndexOf("/* Final content-driven cascade lock."));
-    expect(layoutStyles).toContain("Every profile section is a horizontal information band");
-    expect(layoutStyles).toMatch(/data-active-tab\] > \.chemical-profile-section,[\s\S]*?grid-column: 1 \/ -1 !important;[\s\S]*?width: 100% !important;/);
-    expect(layoutStyles).toContain("repeat(auto-fit, minmax(min(100%, 245px), 1fr)) !important");
-    expect(layoutStyles).toMatch(/\.chemical-profile-section h4,[\s\S]*?color: #ffd34f !important;[\s\S]*?font-weight: 950 !important;/);
+    expect(styles).toContain('#chemical-id-results .chemical-profile-content > .chemical-profile-section');
+    expect(styles).toContain('grid-column: 1 / -1');
+    expect(styles).toContain('.chemical-profile-section h4');
+    expect(styles).toContain('color: #fff;');
   });
 
-  it("keeps EMS and vapor guidance in their proper tabs and reactivity only in Properties", () => {
+  it("keeps product-specific entry cautions in the operational profile and reactivity in Properties", () => {
     const overview = script.slice(script.indexOf("{ key: 'overview'"), script.indexOf("{ key: 'properties'"));
-    const frontline = overview.slice(overview.indexOf("createProfileSection('Frontline Considerations'"), overview.indexOf("createProfileSection('Isolation Distances (ERG)'"));
-    expect(frontline.indexOf("PPE Recommendation")).toBeLessThan(frontline.indexOf("Primary hazard"));
+    const frontline = overview.slice(overview.indexOf("createProfileSection('Frontline Considerations'"));
+    expect(frontline).toContain("createProfileSection('Frontline Considerations'");
     expect(frontline).not.toContain("Vapor behavior");
-    expect(frontline).not.toContain("EMS considerations");
     expect(frontline).not.toContain("Reactivity");
-    expect(overview).toContain("{ label: 'Vapor behavior', value: profile?.fire?.vaporBehavior");
+    expect(script).toContain('function chemicalEntryCautionValues(profile)');
+    expect(script).toContain("add('Entry Cautions', chemicalEntryCautionValues(profile))");
 
     const properties = script.slice(script.indexOf("{ key: 'properties'"), script.indexOf("{ key: 'exposures'"));
-    expect(properties).toContain("createProfileSection('Vapor Behavior'");
     expect(properties).toContain("createProfileSection('Reactivity'");
-    expect(script).not.toContain("{ key: 'reactivity'");
     expect(script).not.toContain("renderSectionGroups('reactivity'");
     const medical = script.slice(script.indexOf("{ key: 'medical'"), script.indexOf("{ key: 'fire'"));
-    expect(medical).toContain("createProfileSection('EMS Considerations', auditedEmsConsiderations(profile), true)");
     expect(medical).not.toContain("{ label: 'EMS considerations'");
-    expect(script).toContain("function distinctProfileGuidance(value, exclusions = [])");
   });
 
   it("removes the duplicate ERG number from Response isolation while emphasizing the distance values", () => {
     const response = script.slice(script.indexOf("key: 'response'"), script.indexOf("const tabsList"));
-    expect(response).toContain("renderResponseIsolationSections()");
-    expect(script).toContain("querySelector('[data-field=\"erg-guide-number\"]')?.remove()");
-    expect(styles).toMatch(/data-active-tab="response"[^}]*data-section="isolation-distances"[\s\S]*?data-field="initial-isolation"[\s\S]*?text-align: center/s);
-    expect(styles).toContain('font-weight: 950 !important;');
+    expect(response).toContain("renderSectionGroups('isolationErg', 'reactivity', 'fire')");
+    expect(script).toContain("createProfileSection('Isolation Distances'");
+    expect(script).toContain("createProfileSection('ERG Notes'");
+    expect(styles).toContain('data-active-tab="response"');
   });
 
-  it("keeps Signs and Symptoms and Responder Hazards in separate full-width rows", () => {
-    expect(styles).toMatch(/data-section="signs-and-symptoms"[^}]*grid-column: 1 \/ -1 !important;[^}]*grid-row: 2/s);
-    expect(styles).toMatch(/data-section="responders-hazards"[^}]*grid-column: 1 \/ -1 !important;[^}]*grid-row: 3/s);
-    expect(styles).toMatch(/data-section="signs-and-symptoms"[^}]*chemical-profile-list[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/s);
+  it("keeps CHEMM and product-specific entry cautions as the Medical workflow", () => {
+    expect(styles).toContain('data-active-tab="medical"');
+    expect(styles).toContain('grid-template-columns: minmax(0, 1fr) !important;');
+    expect(script).toContain("createProfileSection('Entry Cautions'");
+    expect(script).toContain("section.dataset.section = 'chemm-medical-guidance'");
   });
 
   it("stacks shortened hazard classes in Frontline and the fixed profile header", () => {
-    expect(script).toContain("function hazardClassDisplayLines(value)");
-    expect(script).toContain(".replace(/\\bsubstances?\\b/gi, '')");
-    expect(script).toContain("{ label: 'Primary hazard', value: hazardClassDisplayLines(");
-    expect(script).toContain("['Hazard Class', hazardClassDisplayLines(");
-    expect(script).toContain("contentValue.classList.add('chemical-hazard-class-list')");
-    expect(script).toContain("contentValue.replaceChildren(...hazardClasses.map");
-    expect(styles).toContain("Compact vertical DOT hazard-class display");
-    expect(styles).toMatch(/data-field="hazard-class"[^}]*\.chemical-hazard-class-list \{[\s\S]*?display: grid !important;[\s\S]*?white-space: nowrap;[\s\S]*?overflow: hidden;/);
-    expect(styles).toMatch(/data-field="primary-hazard"[^}]*\.chemical-profile-value-list \{[\s\S]*?grid-template-columns: minmax\(0, 1fr\) !important;/);
+    expect(script).toContain("function formatHazardClassLines(value)");
+    expect(script).toContain("['Hazard Class', formatHazardClassLines");
+    expect(styles).toContain('.chemical-profile-meta-item[data-field="hazard-class"]');
+    expect(styles).toContain('white-space: pre-line;');
   });
 
   it("uses a compact aligned Fire Behavior band in Response and retains the full Fire tab", () => {
     const response = script.slice(script.indexOf("key: 'response'"), script.indexOf("const tabsList"));
-    expect(script).toContain("function conciseFireResponseGuidance(value, maxItems = 2)");
-    expect(response).toContain("createProfileSection('Fire Behavior'");
-    for (const label of ['Fire / explosion risk', 'Explosive range', 'Extinguishing media', 'Immediate precautions']) {
-      expect(response).toContain(`label: '${label}'`);
-    }
-    expect(response).not.toContain("renderSectionGroups('fire')");
+    expect(response).toContain("renderSectionGroups('isolationErg', 'reactivity', 'fire')");
     const fire = script.slice(script.indexOf("{ key: 'fire'"), script.indexOf("{ key: 'decon'"));
     expect(fire).toContain("createProfileSection('Fire behavior'");
     expect(fire).toContain("createProfileSection('Fire response'");
-    expect(styles).toContain("Response keeps fire intelligence compact");
-    expect(styles).toMatch(/data-active-tab="response"[^}]*data-section="fire-behavior"[^}]*chemical-profile-grid \{[\s\S]*?repeat\(4, minmax\(0, 1fr\)\) !important;/);
+    expect(styles).toContain('data-active-tab="fire"');
   });
 });

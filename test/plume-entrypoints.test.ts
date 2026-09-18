@@ -47,6 +47,10 @@ describe('canonical Plume Model entry points', () => {
     expect(html).toContain('data-command-view="plume">Plot / Edit Plume</button>');
   });
 
+  it('opens Plume from Chemical Profile with the selected profile context', () => {
+    expect(script).toMatch(/document\.getElementById\('open-plume-btn'\)\?\.addEventListener\('click', \(\) => openPlumeWorkspace\(\{[\s\S]*sourcePage: 'hazard-id',[\s\S]*chemical: activeChemical,[\s\S]*chemicalRecord: activeChemicalRecord,/);
+  });
+
   it('does not carry Chemical Profile presentation into the Plume workspace', () => {
     const plumeHtml = html.slice(html.indexOf('<section id="plume"'), html.indexOf('<section id="map"'));
     expect(plumeHtml).toContain('class="plume-main-workspace"');

@@ -50,6 +50,35 @@ describe('Hazard ID / Profile module ownership', () => {
     });
   });
 
+  it('accepts the canonical direct Chemical Companion identity contract', async () => {
+    const calls: unknown[] = [];
+    const context = {
+      window: {
+        HazMatIQ: {
+          hazardProfileLegacy: {
+            openChemical: (chemical: unknown) => {
+              calls.push(chemical);
+              return Promise.resolve();
+            },
+          },
+        },
+      },
+      document: {
+        getElementById: () => ({ classList: { contains: () => true }, dataset: {}, addEventListener() {} }),
+      },
+    } as Record<string, unknown>;
+    runInNewContext(module, context);
+    const api = (context.window as { HazMatIQ: Record<string, (...args: unknown[]) => unknown> }).HazMatIQ;
+
+    expect(api.normalizeHazardSearchResult({ name: 'Chlorine', companionId: 22 })).toMatchObject({
+      profileType: 'chemical', canonicalId: '22', chemicalCompanionId: 22,
+    });
+    await api.openHazardProfile({ name: 'Chlorine', companionId: 22, cas: '7782-50-5', un: '1017' });
+    expect(calls).toEqual([expect.objectContaining({
+      selectedChemicalId: 22, ChemicalID: 22, ChemicalName: 'Chlorine',
+    })]);
+  });
+
   it('maintains one active profile state and clears it defensively', () => {
     const api = moduleApi();
     const state = api.setActiveHazardState({ id: 'cesium-137', lane: 'RADIOLOGICAL', displayName: 'Cesium-137' }, { status: 'loading' }) as Record<string, unknown>;

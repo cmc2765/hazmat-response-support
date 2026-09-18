@@ -56,9 +56,9 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
     expect(script).toContain("? { ...openMeteo, headerSource: 'Open-Meteo current conditions' }");
     expect(script).toContain("function convertWindSpeedToMph(value, unit = 'mph')");
     expect(script).toContain("return speed * 0.621371;");
-    expect(plumeRefresh).toContain("const mapReadyPromise = ensurePlumeMap(location)");
+    expect(plumeRefresh).toContain("const mapReadyPromise = Promise.resolve().then(() => ensurePlumeMap(location))");
     expect(plumeRefresh.indexOf("const { openMeteo, nws } = await fetchWeatherSources")).toBeLessThan(
-      plumeRefresh.indexOf("await mapReadyPromise;"),
+      plumeRefresh.indexOf("await Promise.all([mapReadyPromise, chemicalReady]);"),
     );
   });
 
@@ -68,13 +68,13 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
       html.indexOf('<article class="panel-card chemical-profile-header-card">'),
     );
 
-    expect(html).toContain('id="lookup" class="view" data-hazard-page-state="search"');
+    expect(html).toContain('id="lookup" class="view hazard-id-page" data-page-root="hazard-id"');
     expect(html).toContain('id="hazard-id-search-hero"');
     expect(html).toContain('id="hazard-id-search-workspace"');
     expect(profileToolbar).toContain('id="chemical-profile-back-btn"');
     expect(profileToolbar).toContain('id="open-chemcompare-btn"');
     expect(profileToolbar).not.toContain('id="open-guided-response-btn"');
-    expect(profileToolbar).not.toContain('id="open-plume-btn"');
+    expect(profileToolbar).toContain('id="open-plume-btn"');
     expect(profileToolbar).not.toContain('id="profile-export-btn"');
     expect(profileToolbar).not.toContain('id="profile-save-chemical-btn"');
     expect(script).toContain("lookup.dataset.hazardPageState = mode === 'chemical'");

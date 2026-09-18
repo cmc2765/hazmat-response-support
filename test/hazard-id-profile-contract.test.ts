@@ -137,7 +137,8 @@ describe("Hazard ID profile contract and routing", () => {
     expect(overview).toContain("createProfileSection('Chemical Summary'");
     expect(overview).toContain("createProfileSection('AEGL Values'");
     expect(overview).toContain("createProfileSection('Frontline Considerations'");
-    expect(overview).toContain("createProfileSection('EMS Considerations'");
+    expect(overview).not.toContain("createProfileSection('EMS Considerations'");
+    expect(script).toContain("createProfileSection('Entry Cautions'");
     expect(overview).not.toContain("createProfileSection('Monitoring / Detection'");
     expect(overview).not.toContain("createProfileSection('Decon Considerations'");
     for (const title of [
@@ -148,7 +149,7 @@ describe("Hazard ID profile contract and routing", () => {
   });
 
   it("builds frontline evidence without copying EMS treatment guidance", () => {
-    const source = ["profileObject", "profileArray", "chemicalFrontlineValues", "chemicalFrontlineRows"]
+    const source = ["profileObject", "profileArray", "chemicalFrontlineValues", "chemicalEntryCautionValues", "chemicalFrontlineRows"]
       .map(declaration).join("\n");
     const meaningful = (value: unknown): boolean => Array.isArray(value)
       ? value.some((item) => meaningful(item))
@@ -198,7 +199,7 @@ describe("Hazard ID profile contract and routing", () => {
   });
 
   it("returns no frontline card rows when the chemical has no operational evidence", () => {
-    const source = ["profileObject", "profileArray", "chemicalFrontlineValues", "chemicalFrontlineRows"]
+    const source = ["profileObject", "profileArray", "chemicalFrontlineValues", "chemicalEntryCautionValues", "chemicalFrontlineRows"]
       .map(declaration).join("\n");
     const meaningful = (value: unknown): boolean => Array.isArray(value)
       ? value.some((item) => meaningful(item))
@@ -215,7 +216,7 @@ describe("Hazard ID profile contract and routing", () => {
       expect(response.status).toBe(200);
       const profile = await response.json();
       expect(profile.header.name).toBe(name);
-      const source = ["profileObject", "profileArray", "chemicalFrontlineValues", "chemicalFrontlineRows"]
+      const source = ["profileObject", "profileArray", "chemicalFrontlineValues", "chemicalEntryCautionValues", "chemicalFrontlineRows"]
         .map(declaration).join("\n");
       const meaningful = (value: unknown): boolean => Array.isArray(value)
         ? value.some((item) => meaningful(item))

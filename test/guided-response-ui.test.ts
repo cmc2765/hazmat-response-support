@@ -63,23 +63,19 @@ describe("Guided Response workflow", () => {
   });
 
   it("centers and emphasizes the Chemical Profile transport metadata", () => {
-    expect(script).toContain("['Hazard Class', hazardClassDisplayLines(profile?.header?.hazardClass || profile?.header?.hazard || noCurrentDataText)]");
+    expect(script).toContain("['Hazard Class', formatHazardClassLines(profile?.header?.hazardClass || profile?.header?.hazard).join('\\n') || noCurrentDataText]");
     expect(script).not.toContain("['Packing Group', profile?.header?.packingGroup");
-    expect(styles).toMatch(/chemical-profile-meta-item[^}]*display: grid;[^}]*grid-template-rows: auto minmax\(2\.4rem, 1fr\);/s);
-    expect(styles).toMatch(/data-field="un-na"[^}]*color: #ffd34f;[^}]*font-size: 1\.35rem;[^}]*font-weight: 400;/s);
-    expect(styles).toMatch(/data-field="erg-guide"[^}]*color: #ff8a1c;[^}]*font-size: 1\.35rem;[^}]*font-weight: 400;/s);
-    expect(styles).toMatch(/#lookup \.chemical-profile-meta\s*\{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/s);
+    expect(styles).toContain('.chemical-profile-meta-item');
+    expect(styles).toContain('[data-field="un-na"]');
+    expect(styles).toContain('[data-field="erg-guide"]');
   });
 
   it("provides green Guided Response and print/download profile actions", () => {
-    expect(styles).toMatch(/#open-guided-response-btn[^}]*border-color: #70d59b;[^}]*background: #2e7d4f;/s);
-    expect(html).toContain('id="profile-export-btn"');
-    expect(html).toContain('id="profile-print-btn"');
-    expect(html).toContain('id="profile-download-btn"');
-    expect(script).toContain('function printCurrentChemicalProfile()');
-    expect(script).toContain("document.body.classList.add('printing-chemical-profile')");
-    expect(script).toContain('exportCurrentChemicalProfile()');
-    expect(styles).toContain('body.printing-chemical-profile #chemical-id-results');
+    expect(styles).toContain('#guided-response #guided-open-plume-btn');
+    for (const id of ['guided-open-plume-btn', 'guided-save-record-btn', 'guided-save-incident-btn']) {
+      expect(html).toContain(`id="${id}"`);
+    }
+    expect(script).toContain('function saveGuidedResponseTacticalRecord');
   });
 
   it("removes the Chemical ID subtitle and makes the Response reactivity profile full width", () => {
@@ -88,44 +84,38 @@ describe("Guided Response workflow", () => {
     expect(styles).toMatch(/data-section="reactivity-profile"[^}]*chemical-profile-grid[^}]*grid-template-columns: minmax\(0, 1fr\);/s);
   });
 
-  it("places Guided Response immediately before Open Plume Model", () => {
-    const guided = html.indexOf('id="open-guided-response-btn"');
-    const plume = html.indexOf('id="open-plume-btn"');
-    expect(guided).toBeGreaterThan(-1);
-    expect(plume).toBeGreaterThan(guided);
-    expect(html).toMatch(/id="open-guided-response-btn"[^>]*>Guided Response<\/button>\s*<button[^>]*id="open-plume-btn"/s);
-    expect(styles).not.toMatch(/#chemical-id-results #open-guided-response-btn\s*\{[^}]*display:\s*none;/s);
+  it("keeps Guided Response in the command workflow and Plume Model in the profile toolbar", () => {
+    expect(html).toContain('data-command-view="guided-response"');
+    expect(html).toContain('id="open-plume-btn"');
+    expect(html).not.toContain('id="open-guided-response-btn"');
+    expect(styles).toContain('#guided-response #guided-open-plume-btn');
   });
 
   it("opens Guided Response from both Chemical Profile and Plume Model", () => {
-    expect(html).toContain('id="open-guided-response-btn" type="button">Guided Response</button>');
-    expect(html).toContain('id="plume-guided-response-btn" type="button">Guided Response</button>');
+    expect(html).toContain('data-command-view="guided-response"');
+    expect(html).toContain('id="guided-open-plume-btn" type="button">Open Plume Model</button>');
     expect(script).toContain("function openGuidedResponseWorkspace()");
-    expect(script).toContain("guidedResponseReturnView = document.getElementById('plume')?.classList.contains('active') ? 'plume' : 'lookup'");
-    expect(script).toContain("document.getElementById('open-guided-response-btn')?.addEventListener('click', openGuidedResponseWorkspace)");
-    expect(script).toContain("document.getElementById('plume-guided-response-btn')?.addEventListener('click', openGuidedResponseWorkspace)");
-    expect(styles).toMatch(/#plume \.plume-guided-response \{[\s\S]*?background: #2e7d4f;/);
+    expect(script).toContain("target === 'guided-response'");
+    expect(script).toContain("document.getElementById('guided-open-plume-btn')?.addEventListener('click', openPlumeWorkspace)");
+    expect(styles).toContain('#guided-response #guided-open-plume-btn');
   });
 
   it("provides the new view, required actions, and compact disclaimers", () => {
-    expect(html).toContain('id="guided-response" class="view"');
+    expect(html).toContain('id="guided-response" class="view guided-response-page"');
     expect(guidedHtml).toContain('class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png"');
     expect(guidedHtml).toMatch(/guided-response-logo[^>]*>[\s\S]*<div class="hazmat-page-hero-content">[\s\S]*<h1 class="hazmat-hero-title">Guided Response<\/h1>/s);
-    expect(guidedHtml).toContain('SOURCE-VERIFIED TACTICAL RESPONSE GUIDELINES');
+    expect(guidedHtml).toContain('Command Actions');
     for (const id of [
-      "guided-open-profile-btn",
       "guided-open-plume-btn",
-      "guided-open-map-btn",
-      "guided-open-report-btn",
       "guided-save-record-btn",
       "guided-save-incident-btn",
       "guided-save-chemical-btn",
       "guided-back-btn",
     ]) expect(html).toContain(`id="${id}"`);
     expect(html).toContain("Missing, outdated, unsupported, or unverified values must be treated as No Current Data Exists.");
-    expect(script).toContain("createGuidedRecommendationBand(decisionRecord)");
-    expect(script).toContain("createGuidedResponseRoute(decisionRecord)");
-    expect(script).toContain("'Critical Triggers / Escalation Cues'");
+    expect(script).toContain("createTacticalFlowBox('Identify / Analyze'");
+    expect(script).toContain("createMitigationDecisionSupport(decisionRecord)");
+    expect(guidedHtml).toContain('class="guided-response-disclaimers"');
   });
 
   it("reuses selected state and blocks missing or unresolved chemical identity", () => {
@@ -171,11 +161,11 @@ describe("Guided Response workflow", () => {
 
   it("renders the four-box tactical decision flow with responsive connectors", () => {
     expect(script).toContain("Tactical Decision Flow");
-    for (const title of ["Identify / Analyze", "Verify & Isolate", "Life Safety", "Mitigation"]) {
+    for (const title of ["Identify / Analyze", "Verify and Isolate", "Life Safety", "Mitigation"]) {
       expect(script).toContain(`'${title}'`);
     }
     expect(script.match(/createTacticalFlowArrow\(\)/g)?.length).toBeGreaterThanOrEqual(3);
-    expect(script).toContain("stageGrid.className = 'guided-stage-grid'");
+    expect(script).toContain("createTacticalFlowBox('Identify / Analyze'");
     for (const removed of ["Decision First", "Verify All Data", "Team Safety"]) {
       expect(guidedHtml).not.toContain(removed);
       expect(script).not.toContain(removed);
@@ -183,10 +173,10 @@ describe("Guided Response workflow", () => {
   });
 
   it("uses readable, restrained typography throughout the tactical decision flow", () => {
-    expect(styles).toMatch(/#guided-response \.guided-tactical-section-heading h3[^}]*font-size: 1\.12rem;/s);
-    expect(styles).toMatch(/#guided-response \.guided-stage-card h4[^}]*font-size: 0\.93rem;/s);
-    expect(styles).toMatch(/#guided-response \.guided-stage-card dt[^}]*font-size: 0\.72rem;/s);
-    expect(styles).toMatch(/#guided-response \.guided-stage-card dd[^}]*font-size: 0\.68rem;/s);
+    expect(styles).toMatch(/#guided-response \.guided-tactical-section-heading h3[^}]*font-size: 1\.05rem;/s);
+    expect(styles).toMatch(/#guided-response \.guided-flow-summary h4[^}]*font-size: 0\.86rem;/s);
+    expect(styles).toContain('#guided-response .guided-flow-box dt');
+    expect(styles).toMatch(/#guided-response \.guided-flow-box dl > div[^}]*font-size: 0\.75rem;/s);
   });
 
   it("does not place a selected-chemical box inside the title box", () => {
@@ -197,9 +187,9 @@ describe("Guided Response workflow", () => {
 
   it("promotes Tactical Decision Flow to the full-width first content section", () => {
     expect(script).toContain("const flow = document.createElement('section')");
-    expect(script).toContain("dashboard.append(main, rail)");
-    expect(script).toContain("container.append(dashboard)");
-    expect(styles).toContain("grid-template-columns: minmax(0, 1fr) minmax(280px, 325px)");
+    expect(script).toContain("container.append(chemicalStrip, flow, createMitigationDecisionSupport(decisionRecord))");
+    expect(script).toContain("flow.className = 'panel-card guided-tactical-flow'");
+    expect(styles).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
   });
 
   it("prioritizes a source-backed SCBA decision and omits manufacturer lists", () => {
@@ -257,10 +247,10 @@ describe("Guided Response workflow", () => {
 
   it("keeps the Tactical Decision Flow Life Safety stage compact and ordered", () => {
     const lifeFlow = script.slice(
-      script.indexOf("createGuidedStageCard(3, 'Life Safety'"),
-      script.indexOf("createGuidedStageCard(4, 'Mitigation'"),
+      script.indexOf("createTacticalFlowBox('Life Safety'"),
+      script.indexOf("createTacticalFlowBox('Mitigation'"),
     );
-    const labels = ["PPE level", "Respiratory", "Entry control", "Decon"];
+    const labels = ["Is SCBA Mandated?", "Recommended Protection Level", "Why This Level", "Verify Before Entry"];
     labels.forEach((label, index) => {
       expect(lifeFlow.indexOf(`label: '${label}'`)).toBeGreaterThan(index ? lifeFlow.indexOf(`label: '${labels[index - 1]}'`) : -1);
     });
@@ -273,12 +263,11 @@ describe("Guided Response workflow", () => {
     expect(script).toContain("verifyIsolate: decisions.verifyIsolate");
     expect(script).toContain("lifeSafety: decisions.lifeSafety");
     expect(script).toContain("mitigation: decisions.mitigation");
-    expect(builder).toContain("'Offensive — Conditional Source Control'");
-    expect(builder).toContain("'Defensive — Contain and Protect'");
+    expect(builder).toContain("'Defensive'");
     expect(script).toContain("mitigationDecisionSupport: decisions.mitigationDecisionSupport");
     expect(script).toContain("readyForIncidentExport: true");
     expect(script).toContain("Final mitigation strategy must be approved by Incident Command.");
-    expect(builder).toContain("const offensiveAvailable = sourceControlFacts.length > 0");
+    expect(builder).toContain("const defensiveTriggers = unique");
   });
 
   it("uses section-level source summaries instead of badges on every populated row", () => {

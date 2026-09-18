@@ -22,6 +22,8 @@
     const canonicalId = firstValue(
       isHazard ? source.id : source.selectedChemicalId,
       isHazard ? source.cbrneCanonicalId : source.ChemicalID,
+      isHazard ? null : source.companionId,
+      isHazard ? null : source.chemicalCompanionId,
       source.id,
     );
     const identifiers = source.identifiers && typeof source.identifiers === 'object' ? source.identifiers : {};
@@ -41,7 +43,7 @@
       displayName: firstValue(source.displayName, source.name, source.ChemicalName, source.scientificName) || 'Unknown hazard',
       chemicalCompanionId: isHazard
         ? firstValue(source.chemicalCompanionId, source.masterChemicalId)
-        : firstValue(source.selectedChemicalId, source.ChemicalID, source.id),
+        : firstValue(source.selectedChemicalId, source.ChemicalID, source.companionId, source.chemicalCompanionId, source.id),
       cbrneCanonicalId: isHazard ? firstValue(source.cbrneCanonicalId, source.id) : null,
       cas: firstValue(source.CasNumber, source.cas, identifiers.cas, identifiers.casNumber),
       un: firstValue(source.UnnaNumber, source.un, identifiers.un, identifiers.unNaNumbers),
@@ -96,7 +98,14 @@
     const api = legacyApi();
     if (!api) return null;
     if (normalized.profileType === 'hazard') return api.openStarterHazard(normalized.raw);
-    return api.openChemical(normalized.raw, facilityName);
+    const legacyChemical = {
+      ...normalized.raw,
+      selectedChemicalId: normalized.chemicalCompanionId || normalized.canonicalId,
+      ChemicalID: normalized.chemicalCompanionId || normalized.canonicalId,
+      ChemicalName: normalized.raw.ChemicalName || normalized.raw.name || normalized.displayName,
+      name: normalized.raw.name || normalized.raw.ChemicalName || normalized.displayName,
+    };
+    return api.openChemical(legacyChemical, facilityName);
   }
 
   function selectProfileTab(button) {

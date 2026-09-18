@@ -14682,14 +14682,34 @@ body,
 #incident-note-dialog label { display: grid; gap: 7px; }
 #incident-note-dialog textarea { width: 100%; color: #071f36; background: #f8fafc; }
 
-/* Chronological Medical tab: exposure routes/symptoms, then treatment, at equal width. */
+/* Medical guidance is intentionally source-led; keep the CHEMM embed and
+   product-specific cautions readable without restoring the duplicated EMS dump. */
 #chemical-id-results .chemical-profile-content[data-active-tab="medical"] {
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns: minmax(0, 1fr) !important;
   align-items: stretch;
 }
-#chemical-id-results .chemical-profile-content[data-active-tab="medical"] > .chemical-profile-section[data-section="routes-and-symptoms"] { grid-column: 1; }
-#chemical-id-results .chemical-profile-content[data-active-tab="medical"] > .chemical-profile-section[data-section="treatment"] { grid-column: 2; }
-#chemical-id-results .chemical-profile-content[data-active-tab="medical"] > .chemical-profile-section[data-section="responders-hazards"] { grid-column: 1 / -1; }
+#chemical-id-results .chemical-profile-content[data-active-tab="medical"] > .chemical-profile-section { grid-column: 1 !important; }
+#chemical-id-results .chemical-profile-medical-embed {
+  min-height: 620px;
+}
+#chemical-id-results .chemical-profile-medical-embed-description,
+#chemical-id-results .chemical-profile-medical-embed-fallback {
+  margin: 0 0 10px;
+  color: #b8c7d9;
+  line-height: 1.5;
+}
+#chemical-id-results .chemical-profile-medical-embed-frame {
+  display: block;
+  width: 100%;
+  min-height: 520px;
+  border: 1px solid rgba(203, 213, 225, 0.2);
+  border-radius: 8px;
+  background: #fff;
+}
+#chemical-id-results .chemical-profile-medical-embed-fallback a {
+  color: #f6c343;
+  font-weight: 700;
+}
 
 /* Decon follows a symmetric three-part operational sequence. */
 #chemical-id-results .chemical-profile-content[data-active-tab="decon"] {
