@@ -42,6 +42,12 @@ describe("API routes", () => {
     expect(res.status).toBe(200);
   });
 
+  it("exposes optional Tactical 3D configuration from deployment environment", async () => {
+    const res = await app.request("/api/map/config");
+    expect(res.status).toBe(200);
+    expect(await res.json()).toHaveProperty("googleMapsTileApiKey");
+  });
+
   it("reports radar provider capabilities without exposing credentials", async () => {
     const res = await app.request("/api/radar/providers");
     expect(res.status).toBe(200);

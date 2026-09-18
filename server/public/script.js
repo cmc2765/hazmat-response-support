@@ -5993,14 +5993,13 @@ async function searchChemicalId(value, { submit = false } = {}) {
   const requestId = ++latestChemicalSearch;
   const chemicalQuery = normalizeChemicalQuery(rawQuery);
   console.info('[chemical-companion] search query', chemicalQuery);
-  const [chemicalData, facilityData] = await Promise.all([
-    fetchJson(`/api/chemicals/search?q=${encodeURIComponent(chemicalQuery)}`),
-    fetchJson(`/api/facilities?q=${encodeURIComponent(rawQuery)}`),
-  ]);
+  // Facility inventory is supplemental. It must not delay opening a verified
+  // Chemical Companion profile when the facility endpoint is slow or offline.
+  const facilityPromise = fetchJson(`/api/facilities?q=${encodeURIComponent(rawQuery)}`);
+  const chemicalData = await fetchJson(`/api/chemicals/search?q=${encodeURIComponent(chemicalQuery)}`);
   if (requestId !== latestChemicalSearch) return;
 
   const chemicals = (chemicalData?.chemicals || []).map(companionChemicalForUi);
-  const facilities = facilityData?.facilities || [];
 
   if (submit && chemicals.length && !isUnreviewedTransportationRecord(chemicals[0])) {
     clearChemicalSuggestions();
@@ -6008,6 +6007,10 @@ async function searchChemicalId(value, { submit = false } = {}) {
     await (window.HazMatIQ.openHazardProfile?.(chemicals[0]) || openChemical(chemicals[0]));
     return;
   }
+  const facilityData = await facilityPromise;
+  if (requestId !== latestChemicalSearch) return;
+  const facilities = facilityData?.facilities || [];
+
   if (submit && facilities.length === 1) {
     await openFacility(facilities[0].id);
     return;
@@ -6288,6 +6291,7 @@ let plumeRefreshToken = 0;
 let plumeMap = null;
 let plumeMapReady = null;
 let plumeSourceMarker = null;
+let plumeIncidentLocation = null;
 let currentThreatZoneGeoJson = null;
 let currentThreatZoneGuideGeoJson = null;
 let currentErgIsolationGeoJson = null;
@@ -6298,8 +6302,9 @@ let plumeDistanceMarkers = [];
 let plumeMeasurementPopup = null;
 let plumeManualLocation = null;
 const plumeHazardsCacheKey = 'hazmatiq_plume_hazards_cache';
-const plumeLayerState = { centerline: true, distance: false, hazards: false };
+const plumeLayerState = { zones: true, centerline: true, distance: false, hazards: false };
 const plumeLayerIds = {
+  zones: ['hazmat-threat-zones-fill', 'hazmat-threat-zones-selection', 'hazmat-threat-zones-border', 'hazmat-threat-zones-outline'],
   centerline: ['hazmat-threat-zone-centerline', 'hazmat-threat-zone-wind-arrow', 'hazmat-threat-zone-wind-label'],
   distance: ['hazmat-threat-zone-distance-line', 'hazmat-threat-zone-distance-ticks', 'hazmat-threat-zone-distance-points', 'hazmat-threat-zone-distance-labels'],
   hazards: ['hazmat-plume-hazards-points', 'hazmat-plume-hazards-labels'],
@@ -6313,18 +6318,101 @@ let plumeAutoReplotTimer = null;
 const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
 const plumeSatelliteSourceId = 'plume-satellite-basemap';
 const plumeSatelliteLayerId = 'plume-satellite-basemap-layer';
+const plumeTerrainSourceId = 'plume-terrain-dem';
+const plumeTacticalBuildingLayerId = 'plume-tactical-buildings-3d';
+const plumeMapViewStorageKey = 'hazmatiq_plume_map_view';
+const plumeTerrainTilesUrl = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
 const plumeMapViews = {
   street: { style: plumeMapStyleUrl, pitch: 0, bearing: 0 },
   satellite: { style: plumeMapStyleUrl, pitch: 0, bearing: 0 },
-  tactical: { style: plumeMapStyleUrl, pitch: 28, bearing: 0 },
-  terrain3d: { style: plumeMapStyleUrl, pitch: 60, bearing: -20, minZoom: 15 },
+  tactical: { renderer: 'cesium-google-photorealistic', label: 'Photorealistic Tactical 3D' },
+  terrain3d: { style: plumeMapStyleUrl, pitch: 60, bearing: -20, minZoom: 15, requires3d: true },
 };
-let activePlumeMapView = 'satellite';
+function readStoredPlumeMapView() {
+  try {
+    const stored = window.localStorage.getItem(plumeMapViewStorageKey);
+    return plumeMapViews[stored] ? stored : 'satellite';
+  } catch {
+    return 'satellite';
+  }
+}
+let activePlumeMapView = readStoredPlumeMapView();
 let plumeMapViewToken = 0;
 let configuredPlumeBuildingLayers = [];
 let plumeBuildingsVisible = false;
+let plumeMapFallbackInProgress = false;
+let tactical3dLoaderPromise = null;
+const tactical3dScriptUrl = 'tactical-3d.js?v=photorealistic-1';
 const threatZoneColors = { 3: '#d71920', 2: '#f28c18', 1: '#ffd323' };
 const threatZoneColorNames = { 3: 'red', 2: 'orange', 1: 'yellow' };
+
+function getTactical3dState() {
+  const incident = getActiveIncident();
+  const coordinateInput = parseGpsCoordinate(document.getElementById('incident-coordinates-input')?.value);
+  const incidentLocation = plumeIncidentLocation || coordinateInput || (
+    incident?.latitude !== '' && incident?.longitude !== '' && incident?.latitude != null && incident?.longitude != null
+      ? { lat: Number(incident.latitude), lon: Number(incident.longitude), source: 'Saved incident location' }
+      : null
+  );
+  const releasePoint = plumeSourceMarker?.getLngLat?.();
+  const operationalMarkers = [
+    ...(liveMapState?.markers || []),
+    ...(liveMapState?.monitors || []),
+  ].filter((marker) => ['icp', 'staging', 'monitors'].includes(String(marker.layer || '').toLowerCase()));
+  return {
+    threatZones: currentThreatZoneGeoJson,
+    guideGeoJson: currentThreatZoneGuideGeoJson,
+    layers: { ...plumeLayerState },
+    releasePoint: releasePoint ? { lat: releasePoint.lat, lon: releasePoint.lng } : incidentLocation,
+    incidentLocation,
+    operationalMarkers,
+  };
+}
+
+function loadTactical3dRenderer() {
+  if (window.HazMatIQ?.tactical3d) return Promise.resolve(window.HazMatIQ.tactical3d);
+  if (tactical3dLoaderPromise) return tactical3dLoaderPromise;
+  tactical3dLoaderPromise = new Promise((resolve, reject) => {
+    const existing = document.querySelector(`script[src^="${tactical3dScriptUrl.split('?')[0]}"]`);
+    if (existing) {
+      existing.addEventListener('load', () => window.HazMatIQ?.tactical3d
+        ? resolve(window.HazMatIQ.tactical3d)
+        : reject(new Error('Tactical 3D renderer did not initialize.')), { once: true });
+      existing.addEventListener('error', () => reject(new Error('Tactical 3D renderer could not be loaded.')), { once: true });
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = tactical3dScriptUrl;
+    script.async = true;
+    script.addEventListener('load', () => window.HazMatIQ?.tactical3d
+      ? resolve(window.HazMatIQ.tactical3d)
+      : reject(new Error('Tactical 3D renderer did not initialize.')), { once: true });
+    script.addEventListener('error', () => reject(new Error('Tactical 3D renderer could not be loaded.')), { once: true });
+    document.body.append(script);
+  }).catch((error) => {
+    tactical3dLoaderPromise = null;
+    throw error;
+  });
+  return tactical3dLoaderPromise;
+}
+
+function showTactical3dSurface(active) {
+  const map = document.getElementById('plume-gis-map');
+  const tactical = document.getElementById('plume-tactical-3d-map');
+  const mapAttribution = document.getElementById('plume-map-attribution');
+  const tacticalAttribution = document.getElementById('plume-tactical-attribution');
+  if (map) map.hidden = active;
+  if (tactical) tactical.hidden = !active;
+  if (mapAttribution) mapAttribution.hidden = active;
+  if (tacticalAttribution) tacticalAttribution.hidden = !active;
+  if (active) window.HazMatIQ?.tactical3d?.resize?.();
+  else plumeMap?.resize?.();
+}
+
+function syncTactical3dState() {
+  if (activePlumeMapView !== 'tactical') return;
+  void window.HazMatIQ?.tactical3d?.sync?.(getTactical3dState());
+}
 
 function updatePlumeMapViewButtons() {
   document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
@@ -6337,6 +6425,16 @@ function updatePlumeMapViewButtons() {
 function updatePlumeCompass() {
   const control = document.getElementById('plume-compass-control');
   if (!control) return;
+  if (activePlumeMapView === 'tactical') {
+    const camera = window.HazMatIQ?.tactical3d?.cameraState?.();
+    control.hidden = !camera;
+    if (!camera) return;
+    const bearing = (Number(camera.heading || 0) * 180 / Math.PI + 360) % 360;
+    const arrow = document.getElementById('plume-compass-arrow');
+    if (arrow) arrow.style.transform = `rotate(${-bearing}deg)`;
+    setText('plume-bearing-output', `${Math.round(bearing)}° · ${Math.round(Number(camera.pitch || 0) * 180 / Math.PI)}° tilt`);
+    return;
+  }
   const supported = Boolean(plumeMap?.getBearing && plumeMap?.getPitch && plumeMap?.easeTo);
   control.hidden = !supported;
   if (!supported) return;
@@ -6347,19 +6445,67 @@ function updatePlumeCompass() {
 }
 
 function rotatePlumeMap(delta) {
+  if (activePlumeMapView === 'tactical') {
+    window.HazMatIQ?.tactical3d?.rotate?.(delta);
+    updatePlumeCompass();
+    return;
+  }
   if (!plumeMap?.getBearing || !plumeMap?.easeTo) return;
   plumeMap.easeTo({ bearing: plumeMap.getBearing() + delta, duration: 350 });
 }
 
 function resetPlumeMapNorth() {
+  if (activePlumeMapView === 'tactical') {
+    window.HazMatIQ?.tactical3d?.resetNorth?.();
+    updatePlumeCompass();
+    return;
+  }
   if (!plumeMap?.easeTo) return;
   plumeMap.easeTo({ bearing: 0, pitch: 0, duration: 450 });
 }
 
 function tiltPlumeMap(delta) {
+  if (activePlumeMapView === 'tactical') {
+    window.HazMatIQ?.tactical3d?.tilt?.(delta);
+    updatePlumeCompass();
+    return;
+  }
   if (!plumeMap?.getPitch || !plumeMap?.easeTo) return;
   const pitch = Math.max(0, Math.min(70, plumeMap.getPitch() + delta));
   plumeMap.easeTo({ pitch, duration: 350 });
+}
+
+function plumeViewUses3d(viewName = activePlumeMapView) {
+  return viewName === 'terrain3d';
+}
+
+function enablePlumeTerrain() {
+  if (!plumeMap?.getStyle || !plumeMap.setTerrain) return false;
+  try {
+    if (!plumeMap.getSource(plumeTerrainSourceId)) {
+      plumeMap.addSource(plumeTerrainSourceId, {
+        type: 'raster-dem',
+        tiles: [plumeTerrainTilesUrl],
+        tileSize: 256,
+        maxzoom: 15,
+        encoding: 'terrarium',
+        attribution: 'AWS Terrain Tiles / Mapzen',
+      });
+    }
+    plumeMap.setTerrain({ source: plumeTerrainSourceId, exaggeration: 1.05 });
+    return Boolean(plumeMap.getTerrain?.());
+  } catch {
+    return false;
+  }
+}
+
+function disablePlumeTerrain() {
+  if (!plumeMap?.setTerrain) return;
+  try {
+    if (plumeMap.getTerrain?.()) plumeMap.setTerrain(null);
+  } catch {
+    // The basemap remains usable if the optional terrain source is unavailable.
+  }
 }
 
 function setPlumeMapResultVisible(hasResult) {
@@ -6368,6 +6514,11 @@ function setPlumeMapResultVisible(hasResult) {
 }
 
 function resetPlumeMapView() {
+  if (activePlumeMapView === 'tactical') {
+    window.HazMatIQ?.tactical3d?.resetNorth?.();
+    window.HazMatIQ?.tactical3d?.recenter?.('incident');
+    return;
+  }
   if (!plumeMap?.easeTo) return;
   const view = plumeMapViews[activePlumeMapView] || plumeMapViews.satellite;
   plumeMap.easeTo({
@@ -6378,19 +6529,83 @@ function resetPlumeMapView() {
   });
 }
 
+async function fitPlumeToView() {
+  if (activePlumeMapView === 'tactical') {
+    window.HazMatIQ?.tactical3d?.fit?.();
+    setText('plume-layers-status', 'Plume fitted to Tactical 3D view.');
+    return;
+  }
+  if (!plumeMap) return;
+  if (plumeMapReady) await plumeMapReady;
+  const bounds = new window.maplibregl.LngLatBounds();
+  if (currentThreatZoneGeoJson?.features?.length) {
+    forEachCoordinate(currentThreatZoneGeoJson, (coordinate) => bounds.extend(coordinate));
+  }
+  if (!bounds.isEmpty()) {
+    plumeMap.fitBounds(bounds, {
+      padding: 70,
+      maxZoom: 15,
+      pitch: plumeMap.getPitch?.() || 0,
+      bearing: plumeMap.getBearing?.() || 0,
+      duration: 450,
+    });
+    setText('plume-layers-status', 'Plume fitted to view.');
+    return;
+  }
+  const release = plumeSourceMarker?.getLngLat?.();
+  if (release) {
+    plumeMap.easeTo({ center: [release.lng, release.lat], zoom: Math.max(13, plumeMap.getZoom()), duration: 350 });
+    setText('plume-layers-status', 'Release point centered; plot a plume to fit threat zones.');
+  } else setText('plume-layers-status', 'Plot a plume before using Fit Plume.');
+}
+
+async function recenterPlumeOnIncident() {
+  if (activePlumeMapView === 'tactical') {
+    window.HazMatIQ?.tactical3d?.recenter?.('incident');
+    setText('plume-layers-status', 'Incident location centered in Tactical 3D.');
+    return;
+  }
+  if (!plumeMap) return;
+  const location = await getIncidentCoordinates({ requestGps: false });
+  if (!location) {
+    setText('plume-layers-status', 'Incident location is not available.');
+    return;
+  }
+  plumeMap.easeTo({ center: [location.lon, location.lat], zoom: Math.max(13, plumeMap.getZoom()), duration: 350 });
+  setText('plume-layers-status', `Incident location centered: ${location.lat.toFixed(5)}, ${location.lon.toFixed(5)}.`);
+}
+
+function recenterPlumeOnRelease() {
+  if (activePlumeMapView === 'tactical') {
+    window.HazMatIQ?.tactical3d?.recenter?.('release');
+    setText('plume-layers-status', 'Release point centered in Tactical 3D.');
+    return;
+  }
+  const release = plumeSourceMarker?.getLngLat?.();
+  if (!plumeMap || !release) {
+    setText('plume-layers-status', 'Release point is not available until a plume location is loaded.');
+    return;
+  }
+  plumeMap.easeTo({ center: [release.lng, release.lat], zoom: Math.max(13, plumeMap.getZoom()), duration: 350 });
+  setText('plume-layers-status', `Release point centered: ${release.lat.toFixed(5)}, ${release.lng.toFixed(5)}.`);
+}
+
 function updatePlumeTerrainStatus() {
-  if (activePlumeMapView !== 'terrain3d') {
-    const status = activePlumeMapView === 'satellite'
-      ? 'Satellite View'
-      : activePlumeMapView === 'tactical' ? 'Tactical View' : 'Street Map View';
+  if (activePlumeMapView === 'tactical') {
+    setText('plume-terrain-status', 'Photorealistic Tactical 3D');
+    setText('plume-model-terrain-status', 'Photorealistic Tactical 3D · visual context only — plume math remains flat-ground');
+    return;
+  }
+  if (!plumeViewUses3d()) {
+    const status = activePlumeMapView === 'satellite' ? 'Satellite View' : 'Street Map View';
     setText('plume-terrain-status', status);
     setText('plume-model-terrain-status', `${status} · Flat-ground planning baseline; no terrain correction is applied.`);
     return;
   }
   const terrainConfigured = Boolean(plumeMap?.getTerrain?.());
   const status = terrainConfigured
-    ? '3D Terrain View · Visual context only — plume math remains flat-ground unless validated'
-    : '3D Terrain source not configured. Using pitched satellite view only. Visual context — plume math remains flat-ground.';
+    ? '3D Terrain View · terrain/building context only — plume math remains flat-ground'
+    : '3D Terrain unavailable. Using pitched satellite view only; plume math remains flat-ground.';
   setText('plume-terrain-status', status);
   setText('plume-model-terrain-status', status);
 }
@@ -6400,7 +6615,34 @@ function detectConfiguredPlumeBuildings() {
   configuredPlumeBuildingLayers = (plumeMap?.getStyle()?.layers || [])
     .filter((layer) => layer.type === 'fill-extrusion')
     .map((layer) => layer.id);
-  configuredPlumeBuildingLayers.forEach((id) => plumeMap.setLayoutProperty(id, 'visibility', plumeBuildingsVisible ? 'visible' : 'none'));
+  if (!configuredPlumeBuildingLayers.length) {
+    const buildingFill = (plumeMap?.getStyle()?.layers || []).find((layer) => layer.type === 'fill'
+      && (String(layer.id).toLowerCase().includes('building') || String(layer['source-layer']).toLowerCase() === 'building'));
+    if (buildingFill?.source && buildingFill['source-layer'] && !plumeMap.getLayer(plumeTacticalBuildingLayerId)) {
+      try {
+        const firstSymbolLayer = plumeMap.getStyle().layers.find((layer) => layer.type === 'symbol')?.id;
+        plumeMap.addLayer({
+          id: plumeTacticalBuildingLayerId,
+          type: 'fill-extrusion',
+          source: buildingFill.source,
+          'source-layer': buildingFill['source-layer'],
+          minzoom: 14,
+          filter: buildingFill.filter,
+          layout: { visibility: 'none' },
+          paint: {
+            'fill-extrusion-color': '#8395a7',
+            'fill-extrusion-height': ['coalesce', ['get', 'render_height'], ['get', 'height'], 0],
+            'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], ['get', 'min_height'], 0],
+            'fill-extrusion-opacity': 0.66,
+          },
+        }, firstSymbolLayer);
+        configuredPlumeBuildingLayers = [plumeTacticalBuildingLayerId];
+      } catch {
+        configuredPlumeBuildingLayers = [];
+      }
+    }
+  }
+  configuredPlumeBuildingLayers.forEach((id) => plumeMap.setLayoutProperty(id, 'visibility', plumeViewUses3d() && plumeBuildingsVisible ? 'visible' : 'none'));
   if (!button) return;
   button.disabled = configuredPlumeBuildingLayers.length === 0;
   button.title = configuredPlumeBuildingLayers.length
@@ -6419,7 +6661,7 @@ function toggleConfiguredPlumeBuildings() {
     return;
   }
   plumeBuildingsVisible = !plumeBuildingsVisible;
-  configuredPlumeBuildingLayers.forEach((id) => plumeMap.setLayoutProperty(id, 'visibility', plumeBuildingsVisible ? 'visible' : 'none'));
+  configuredPlumeBuildingLayers.forEach((id) => plumeMap.setLayoutProperty(id, 'visibility', plumeViewUses3d() && plumeBuildingsVisible ? 'visible' : 'none'));
   const button = document.getElementById('plume-buildings-toggle');
   button?.classList.toggle('active', plumeBuildingsVisible);
   button?.setAttribute('aria-pressed', String(plumeBuildingsVisible));
@@ -6432,6 +6674,7 @@ function syncPlumeBasemapLayer() {
       type: 'raster',
       tiles: ['https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
       tileSize: 256,
+      maxzoom: 19,
       attribution: 'Esri, Maxar, Earthstar Geographics, and the GIS User Community',
     });
   }
@@ -6459,6 +6702,31 @@ function restorePlumeMapOverlays() {
   if (ergIsolationVisible && currentErgIsolationGeoJson?.features?.length) addErgIsolationLayer();
   if (plumeLayerState.hazards && currentPlumeHazardsGeoJson) addPlumeHazardsLayers(currentPlumeHazardsGeoJson);
   Object.entries(plumeLayerState).forEach(([layerName, visible]) => setPlumeLayerVisibility(layerName, visible));
+}
+
+function fallbackPlumeMapToSatellite(message = 'Tactical 3D is unavailable on this device. Satellite view restored.') {
+  if (plumeMapFallbackInProgress || activePlumeMapView === 'satellite') return;
+  plumeMapFallbackInProgress = true;
+  activePlumeMapView = 'satellite';
+  plumeMapViewToken += 1;
+  try {
+    window.localStorage.setItem(plumeMapViewStorageKey, activePlumeMapView);
+  } catch {
+    // In-memory state is sufficient for this session.
+  }
+  window.HazMatIQ?.tactical3d?.deactivate?.();
+  showTactical3dSurface(false);
+  disablePlumeTerrain();
+  configuredPlumeBuildingLayers.forEach((id) => plumeMap?.getLayer(id)
+    && plumeMap.setLayoutProperty(id, 'visibility', 'none'));
+  updatePlumeMapViewButtons();
+  updatePlumeTerrainStatus();
+  const center = plumeMap?.getCenter?.();
+  const zoom = plumeMap?.getZoom?.();
+  if (center && Number.isFinite(zoom)) plumeMap.easeTo({ center, zoom, pitch: 0, bearing: 0, duration: 350 });
+  setText('plume-overlay-status', message);
+  setText('plume-layers-status', message);
+  plumeMapFallbackInProgress = false;
 }
 
 function addErgIsolationLayer() {
@@ -6545,6 +6813,8 @@ function updateIncidentLocationFromMap(lng, lat, action) {
   if (hasActiveIncident()) saveIncidentBrief({ quiet: true });
   plumeSourceMarker?.setLngLat([lng, lat]);
   const location = { lat, lon: lng, source: 'Map release pin' };
+  plumeIncidentLocation = location;
+  syncTactical3dState();
   if (activePlumeCommand) {
     setText('plume-gps-summary', `${lat.toFixed(6)}, ${lng.toFixed(6)}`);
     setText('plume-location-source', location.source);
@@ -6559,8 +6829,10 @@ function updateIncidentLocationFromMap(lng, lat, action) {
 
 function ensurePlumeMap(location = null) {
   if (!window.maplibregl) throw new Error('The local GIS map library did not load.');
+  updatePlumeMapViewButtons();
   if (!plumeMap) {
-    const view = plumeMapViews[activePlumeMapView];
+    const initialViewName = activePlumeMapView === 'tactical' ? 'satellite' : activePlumeMapView;
+    const view = plumeMapViews[initialViewName] || plumeMapViews.satellite;
     plumeMap = new window.maplibregl.Map({
       container: 'plume-gis-map',
       center: location ? [location.lon, location.lat] : [-98.5, 39.5],
@@ -6592,6 +6864,9 @@ function ensurePlumeMap(location = null) {
       const timeoutId = window.setTimeout(finish, 8000);
     plumeMap.once('style.load', finish);
     plumeMap.on('style.load', () => {
+      if (plumeViewUses3d() && !enablePlumeTerrain()) {
+        fallbackPlumeMapToSatellite('Tactical 3D is not configured or supported here. Satellite view restored.');
+      }
       detectConfiguredPlumeBuildings();
       updatePlumeTerrainStatus();
     });
@@ -6623,6 +6898,10 @@ function ensurePlumeMap(location = null) {
       updateIncidentLocationFromMap(lng, lat, 'Incident pin placed from map click');
     });
     plumeMap.on('error', (event) => {
+      if (event?.sourceId === plumeTerrainSourceId || /raster-dem|terrain/i.test(event?.error?.message || '')) {
+        fallbackPlumeMapToSatellite('Tactical 3D terrain could not load. Satellite view restored.');
+        return;
+      }
       if (event?.error?.message) setText('plume-overlay-status', `Map layer error: ${event.error.message}`);
     });
   }
@@ -6630,6 +6909,7 @@ function ensurePlumeMap(location = null) {
   updatePlumeCompass();
   // A regional preview is not an incident location: do not place a release pin yet.
   if (!location) return plumeMapReady;
+  plumeIncidentLocation = { lat: location.lat, lon: location.lon, source: location.source };
   plumeMap.easeTo({ center: [location.lon, location.lat], zoom: Math.max(13, plumeMap.getZoom()), duration: 400 });
   if (!plumeSourceMarker) {
     plumeSourceMarker = new window.maplibregl.Marker({
@@ -6650,6 +6930,7 @@ function ensurePlumeMap(location = null) {
   } else {
     plumeSourceMarker.setLngLat([location.lon, location.lat]);
   }
+  syncTactical3dState();
   return plumeMapReady;
 }
 
@@ -7231,8 +7512,12 @@ async function renderThreatZones(geojson, label) {
       };
     }),
   };
+  plumeLayerState.zones = true;
+  document.querySelector('[data-plume-layer="zones"]')?.setAttribute('aria-pressed', 'true');
+  document.querySelector('[data-plume-layer="zones"]')?.classList.add('active');
   resetDemographics();
   addThreatZoneLayers();
+  setPlumeLayerVisibility('zones', true);
   if (plumeLayerState.hazards) void showPlumeHazards();
   if (plumeMap.getLayer('hazmat-threat-zones-selection')) {
     plumeMap.setFilter('hazmat-threat-zones-selection', ['==', ['get', 'zoneId'], '']);
@@ -7329,6 +7614,7 @@ function setPlumeLayerVisibility(layerName, visible) {
     if (plumeMap?.getLayer(id)) plumeMap.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
   });
   if (layerName === 'distance') syncDistanceDomMarkers();
+  if (activePlumeMapView === 'tactical') window.HazMatIQ?.tactical3d?.setLayerVisibility?.(layerName, visible);
 }
 
 function syncDistanceDomMarkers() {
@@ -7359,6 +7645,7 @@ function addThreatZoneLayers() {
       id: 'hazmat-threat-zones-fill',
       type: 'fill',
       source: 'hazmat-threat-zones',
+      layout: { visibility: plumeLayerState.zones ? 'visible' : 'none' },
       paint: {
         'fill-color': ['coalesce', ['get', 'color'], '#d71920'],
         'fill-opacity': ['coalesce', ['get', 'fillOpacity'], 0.2],
@@ -7371,6 +7658,7 @@ function addThreatZoneLayers() {
       type: 'line',
       source: 'hazmat-threat-zones',
       filter: ['==', ['get', 'zoneId'], ''],
+      layout: { visibility: plumeLayerState.zones ? 'visible' : 'none' },
       paint: {
         'line-color': ['coalesce', ['get', 'color'], '#d71920'],
         'line-width': 8,
@@ -7383,6 +7671,7 @@ function addThreatZoneLayers() {
       id: 'hazmat-threat-zones-border',
       type: 'line',
       source: 'hazmat-threat-zones',
+      layout: { visibility: plumeLayerState.zones ? 'visible' : 'none' },
       paint: {
         'line-color': '#17202a',
         'line-width': 6,
@@ -7395,6 +7684,7 @@ function addThreatZoneLayers() {
       id: 'hazmat-threat-zones-outline',
       type: 'line',
       source: 'hazmat-threat-zones',
+      layout: { visibility: plumeLayerState.zones ? 'visible' : 'none' },
       paint: {
         'line-color': ['coalesce', ['get', 'color'], '#d71920'],
         'line-width': 3,
@@ -7512,6 +7802,7 @@ function addThreatZoneLayers() {
       'text-halo-width': 2,
     },
   });
+  syncTactical3dState();
 }
 
 function getPlumeHazardsBounds() {
@@ -7624,20 +7915,65 @@ async function setPlumeMapView(viewName) {
   const view = plumeMapViews[viewName];
   if (!view) return;
   const switchToken = ++plumeMapViewToken;
+  const cameraBeforeSwitch = plumeMap ? {
+    center: plumeMap.getCenter(),
+    zoom: plumeMap.getZoom(),
+  } : null;
   const activeZones = currentThreatZoneGeoJson;
   activePlumeMapView = viewName;
+  try {
+    window.localStorage.setItem(plumeMapViewStorageKey, activePlumeMapView);
+  } catch {
+    // In-memory mode state remains available for this session.
+  }
   updatePlumeMapViewButtons();
-  updatePlumeTerrainStatus();
-  if (!plumeMap) return;
+
+  if (viewName === 'tactical') {
+    try {
+      if (!plumeMap) await ensurePlumeMap();
+      const renderer = await loadTactical3dRenderer();
+      await renderer.activate(getTactical3dState(), {
+        camera: cameraBeforeSwitch,
+        onUnavailable: (message) => fallbackPlumeMapToSatellite(message),
+      });
+      if (switchToken !== plumeMapViewToken || activePlumeMapView !== viewName) {
+        renderer.deactivate();
+        return;
+      }
+      showTactical3dSurface(true);
+      updatePlumeTerrainStatus();
+      updatePlumeCompass();
+      setText('plume-layers-status', 'Photorealistic Tactical 3D active. Plume geometry is shared from the model.');
+    } catch {
+      fallbackPlumeMapToSatellite();
+    }
+    return;
+  }
+
+  window.HazMatIQ?.tactical3d?.deactivate?.();
+  showTactical3dSurface(false);
+  if (!plumeMap) await ensurePlumeMap();
   if (plumeMapReady) await plumeMapReady;
   if (switchToken !== plumeMapViewToken || activePlumeMapView !== viewName) return;
+  if (plumeViewUses3d(viewName) && !enablePlumeTerrain()) {
+    fallbackPlumeMapToSatellite();
+    return;
+  }
+  if (!plumeViewUses3d(viewName)) disablePlumeTerrain();
+  detectConfiguredPlumeBuildings();
+  updatePlumeTerrainStatus();
   currentThreatZoneGeoJson = activeZones;
   syncPlumeBasemapLayer();
   restorePlumeMapOverlays();
 
-  const camera = { pitch: view.pitch, bearing: view.bearing, duration: 500 };
+  const camera = {
+    ...(cameraBeforeSwitch ? { center: cameraBeforeSwitch.center, zoom: cameraBeforeSwitch.zoom } : {}),
+    pitch: view.pitch,
+    bearing: view.bearing,
+    duration: 500,
+  };
   if (view.minZoom) camera.zoom = Math.max(plumeMap.getZoom(), view.minZoom);
-  if (activeZones?.features?.length) {
+  if (!cameraBeforeSwitch && activeZones?.features?.length) {
     const bounds = new window.maplibregl.LngLatBounds();
     forEachCoordinate(activeZones, (coordinate) => bounds.extend(coordinate));
     if (!bounds.isEmpty()) plumeMap.fitBounds(bounds, { padding: 70, maxZoom: 15, pitch: view.pitch, bearing: view.bearing, duration: 400 });
@@ -7658,6 +7994,7 @@ async function clearThreatZones(message = '') {
   }
   currentThreatZoneGeoJson = null;
   currentThreatZoneGuideGeoJson = null;
+  syncTactical3dState();
   setPlumeMapResultVisible(false);
   syncDistanceDomMarkers();
   activePlumeCommand = null;
@@ -9405,6 +9742,8 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   setText('backend-model-summary', 'Run plume model to view result.');
   await Promise.all([mapReadyPromise, chemicalReady]);
   if (token !== plumeRefreshToken) return;
+  if (activePlumeMapView === 'tactical') await setPlumeMapView('tactical');
+  if (token !== plumeRefreshToken) return;
   await clearThreatZones('Enter release information to calculate a Planning Plume.');
   if (token !== plumeRefreshToken) return;
   if (status) status.innerHTML = `Location and weather updated ${formatCentralZuluHtml()}.`;
@@ -9823,6 +10162,9 @@ document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
   button.addEventListener('click', () => setPlumeMapView(button.dataset.plumeMapView));
 });
 document.getElementById('plume-buildings-toggle')?.addEventListener('click', toggleConfiguredPlumeBuildings);
+document.getElementById('plume-fit-view-btn')?.addEventListener('click', () => void fitPlumeToView());
+document.getElementById('plume-recenter-incident-btn')?.addEventListener('click', () => void recenterPlumeOnIncident());
+document.getElementById('plume-recenter-release-btn')?.addEventListener('click', recenterPlumeOnRelease);
 document.getElementById('plume-reset-view-btn')?.addEventListener('click', resetPlumeMapView);
 document.querySelectorAll('[data-plume-camera]').forEach((button) => {
   button.addEventListener('click', () => {
@@ -9856,11 +10198,15 @@ document.querySelectorAll('[data-plume-layer]').forEach((button) => {
       if (layerName === 'distance') clearPlumePointMeasurement();
       button.classList.remove('active');
       button.setAttribute('aria-pressed', 'false');
-      setText('plume-layers-status', layerName === 'hazards' ? 'Hazards layer hidden.' : '');
+      setText('plume-layers-status', layerName === 'hazards' ? 'Hazards layer hidden.' : `${layerName === 'zones' ? 'Threat zones' : 'Plume'} layer hidden.`);
       return;
     }
 
     const guidesAvailable = currentThreatZoneGuideGeoJson?.features?.some((feature) => feature.properties?.guideType === 'centerline');
+    if (layerName === 'zones' && !currentThreatZoneGeoJson?.features?.length) {
+      setText('plume-layers-status', 'Threat zones unavailable until plume model is run.');
+      return;
+    }
     if (layerName === 'centerline' && !guidesAvailable) {
       setText('plume-layers-status', 'Centerline unavailable until plume model is run.');
       return;

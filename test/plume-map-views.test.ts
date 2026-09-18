@@ -408,13 +408,13 @@ describe("plume map views", () => {
     for (const action of ['rotate-left', 'rotate-right', 'tilt-up', 'tilt-down', 'reset-north']) {
       expect(plumeHtml).toContain(`data-plume-camera="${action}"`);
     }
-    expect(plumeUi).toContain('3D Terrain source not configured. Using pitched satellite view only.');
+    expect(plumeUi).toContain('Photorealistic Tactical 3D · visual context only — plume math remains flat-ground');
     expect(plumeUi).toContain('3D building height data not configured.');
     expect(plumeUi).toContain('Math.max(0, Math.min(70, plumeMap.getPitch() + delta))');
     expect(plumeUi).toContain('Wind from ${Math.round(windFromDegrees)}° · Downwind ${Math.round((windFromDegrees + 180) % 360)}°');
     expect(plumeUi).toContain("'hazmat-threat-zone-wind-label'");
-    expect(plumeUi).not.toContain('plumeMap.setTerrain(');
-    expect(plumeUi).not.toMatch(/addSource\([^)]*(?:dem|terrain|elevation)/i);
+    expect(plumeUi).toContain('plumeMap.setTerrain({ source: plumeTerrainSourceId, exaggeration: 1.05 });');
+    expect(plumeUi).toContain("type: 'raster-dem'");
   });
 
   it("renders AEGL zones by numeric LOC with tactical colors, labels, and restrained release emphasis", () => {

@@ -45,8 +45,25 @@
   background: #020f1d;
 }
 #plume.view.active .plume-map-shell {
+  position: relative;
   min-height: 620px;
   height: calc(100svh - 270px) !important;
+}
+#plume.view.active .plume-tactical-3d-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #071522;
+}
+#plume.view.active #plume-gis-map[hidden],
+#plume.view.active #plume-tactical-3d-map[hidden] {
+  display: none !important;
+}
+#plume.view.active .plume-tactical-3d-frame .cesium-viewer,
+#plume.view.active .plume-tactical-3d-frame .cesium-widget,
+#plume.view.active .plume-tactical-3d-frame .cesium-widget canvas {
+  width: 100%;
+  height: 100%;
 }
 @media (max-width: 950px) {
   #plume.view.active .plume-main-workspace { grid-template-columns: 1fr !important; }
@@ -103,3 +120,42 @@
 #plume.view.active .container-profile[open] > .container-details,
 #plume.view.active .container-profile[open] > .container-profile-footer { margin-inline: 10px; }
 #plume.view.active .plume-control-column .plume-model-section:first-of-type .plume-model-section-heading > strong { color: #b5121b !important; }
+
+/* Separate basemap modes from overlay/lifecycle controls without adding a second map UI. */
+#plume.view.active .plume-map-mode-controls,
+#plume.view.active .plume-map-layer-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+#plume.view.active .plume-map-control-label {
+  margin-right: 2px;
+  color: #526b80;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+#plume.view.active .plume-layer-button[data-plume-map-view="tactical"].active,
+#plume.view.active .plume-layer-button[data-plume-map-view="terrain3d"].active {
+  border-color: #1769aa;
+  background: #1769aa;
+  color: #fff;
+}
+#plume.view.active #plume-map-attribution {
+  margin-left: auto;
+  color: #526b80;
+  font-size: 10px;
+  font-weight: 600;
+}
+#plume.view.active #plume-tactical-attribution {
+  margin-left: auto;
+  color: #f8fafc;
+  font-size: 10px;
+  font-weight: 700;
+}
+@media (max-width: 760px) {
+  #plume.view.active .plume-map-mode-controls,
+  #plume.view.active .plume-map-layer-controls { width: 100%; }
+  #plume.view.active #plume-map-attribution { margin-left: 0; width: 100%; }
+}

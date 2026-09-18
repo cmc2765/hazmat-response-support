@@ -990,16 +990,28 @@
                     <button class="module-btn plume-map-button secondary plume-live-radar-link" type="button" data-view="map">Open Live Map</button>
                   </form>
                   <div class="plume-layer-row" role="group" aria-label="Plume basemap">
-                    <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
-                    <button class="plume-layer-button" type="button" data-plume-map-view="tactical" aria-pressed="false">Tactical</button>
-                    <button class="plume-layer-button" type="button" data-plume-map-view="street" aria-pressed="false">Street Map</button>
-                    <button class="plume-layer-button" type="button" data-plume-map-view="terrain3d" aria-pressed="false">3D Terrain</button>
-                    <button class="plume-layer-button" type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
-                    <button class="plume-layer-button" id="plume-buildings-toggle" type="button" aria-pressed="false" disabled>Buildings</button>
-                    <button class="plume-layer-button" id="plume-reset-view-btn" type="button">Reset View</button>
+                    <div class="plume-map-mode-controls" role="group" aria-label="Map mode">
+                      <span class="plume-map-control-label">MAP MODE</span>
+                      <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
+                      <button class="plume-layer-button" type="button" data-plume-map-view="tactical" aria-pressed="false">Tactical 3D</button>
+                      <button class="plume-layer-button" type="button" data-plume-map-view="street" aria-pressed="false">Street</button>
+                      <button class="plume-layer-button" type="button" data-plume-map-view="terrain3d" aria-pressed="false">3D Terrain</button>
+                    </div>
+                    <div class="plume-map-layer-controls" role="group" aria-label="Map layers and controls">
+                      <span class="plume-map-control-label">LAYERS</span>
+                      <button class="plume-layer-button active" type="button" data-plume-layer="zones" aria-pressed="true">Threat Zones</button>
+                      <button class="plume-layer-button active" type="button" data-plume-layer="centerline" aria-pressed="true">Plume</button>
+                      <button class="plume-layer-button" type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
+                      <button class="plume-layer-button" id="plume-buildings-toggle" type="button" aria-pressed="false" disabled>Buildings</button>
+                      <button class="plume-layer-button" id="plume-fit-view-btn" type="button">Fit Plume</button>
+                      <button class="plume-layer-button" id="plume-recenter-incident-btn" type="button">Recenter Incident</button>
+                      <button class="plume-layer-button" id="plume-recenter-release-btn" type="button">Recenter Release</button>
+                      <button class="plume-layer-button" id="plume-reset-view-btn" type="button">Reset View</button>
+                    </div>
                   </div>
                   <div class="plume-map-shell">
                     <div id="plume-gis-map" class="plume-map-frame" role="application" aria-label="Interactive incident plume map"></div>
+                    <div id="plume-tactical-3d-map" class="plume-map-frame plume-tactical-3d-frame" role="application" aria-label="Photorealistic Tactical 3D incident map" hidden></div>
                     <div class="plume-terrain-status" id="plume-terrain-status">Satellite View</div>
                     <div class="plume-wind-direction-status" id="plume-wind-direction-status">Missing Wind Direction</div>
                     <div class="plume-compass-control" id="plume-compass-control" aria-label="Map rotation and tilt controls">
@@ -1019,6 +1031,8 @@
                     <span id="plume-live-status" role="status" aria-live="polite"></span>
                     <span id="plume-layers-status" role="status" aria-live="polite"></span>
                     <span id="plume-input-status" role="status" aria-live="polite"></span>
+                    <span id="plume-map-attribution">© OpenFreeMap · © OpenMapTiles · Imagery © Esri</span>
+                    <span id="plume-tactical-attribution" hidden>© Google Maps Platform · Photorealistic 3D Tiles</span>
                   </footer>
                 </article>
               </div>

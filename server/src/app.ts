@@ -1038,6 +1038,15 @@ app.post("/api/plume/run", async (c) => {
   }
 });
 
+// The optional Tactical 3D renderer receives its browser key from deployment
+// configuration; no provider credential is embedded in the static UI bundle.
+app.get("/api/map/config", (c) => {
+  c.header("Cache-Control", "no-store");
+  return c.json({
+    googleMapsTileApiKey: process.env.GOOGLE_MAPS_TILE_API_KEY?.trim() ?? "",
+  });
+});
+
 // Live Map exposes one visual primary and one official fallback.
 app.get("/api/radar/providers", (c) => {
   const config = radarProviderConfiguration();
