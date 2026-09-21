@@ -580,7 +580,7 @@ function activatePage(targetId, { preserveHazardState = false, skipPlumeInitiali
   window.HazMatIQ.activePageContext = activationContext;
   window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   syncCommandBarContext();
-  const plumeMapWorkspace = document.querySelector('.plume-main-workspace');
+  const plumeMapWorkspace = document.querySelector('.plume-v2-workspace');
   if (plumeMapWorkspace) plumeMapWorkspace.hidden = targetId !== 'plume';
   initializeActivePage(targetId, { skipPlumeInitialization, context: activationContext });
   return targetView;
@@ -9113,6 +9113,7 @@ function updatePlumeEvidenceStatus(result = null) {
   if (!result) {
     setText('plume-model-mode-badge', 'Cannot Plot — Missing Required Data');
     setText('plume-confidence-badge', 'Insufficient Data');
+    updatePlumeCommandPanel(null);
     return;
   }
   setText('plume-model-mode-badge', result.modelModeLabel || result.display || 'HAZSCOPE Planning Estimate');
@@ -9130,6 +9131,7 @@ function updatePlumeEvidenceStatus(result = null) {
     ? `${result.endpoint.selectedDurationMinutes}-minute AEGL endpoint linked to CAS ${result.endpoint.casNumber}.`
     : (result.endpointStatus || 'No verified endpoint is available.'));
   setText('plume-text-summary', result.textSummary || result.endpointStatus || 'No Current Data Exists');
+  updatePlumeCommandPanel(result);
   updateOperationalPlumeReadiness(latestPlumeAvailability, result, result.textSummary || result.endpointStatus);
 }
 
@@ -9204,6 +9206,86 @@ function updateOperationalPlumeReadiness(availability = latestPlumeAvailability,
     ? missing.length ? `AEGL / LOC found. Missing: ${missing.join(', ')}.` : 'AEGL / LOC and required plume inputs are available.'
     : 'No verified AEGL / LOC endpoint is available for this plume estimate.');
   setText('plume-readiness-reason', readinessReason);
+  setText('plume-command-readiness-master', masterId && /^\d+$/.test(String(masterId)) ? 'Verified' : 'Requires Review');
+  setText('plume-command-readiness-cas', cas || 'CAS pending');
+  setText('plume-command-readiness-release', missingRelease.length ? 'Needs Input' : 'Ready');
+  setText('plume-command-readiness-release-detail', missingRelease.length ? missingRelease.join(', ') : 'Required release inputs present.');
+  setText('plume-command-weather-quality-badge', missingWeather.length ? 'Needs Input' : weatherMode === 'manual' ? 'Manual Entry' : 'Current');
+  setText('plume-command-weather-quality-detail', missingWeather.length ? missingWeather.join(', ') : weatherMode === 'manual' ? 'Verify field conditions.' : 'Source and time recorded.');
+  setText('plume-command-endpoint-badge', endpointFound ? 'Found' : 'Missing');
+  setText('plume-command-endpoint-detail', endpointFound
+    ? `${result?.endpoint?.selectedDurationMinutes || availability?.endpoint?.selectedDurationMinutes || document.getElementById('plume-endpoint-duration')?.value || 60}-minute source-backed endpoint`
+    : 'No verified AEGL / LOC endpoint.');
+  setText('plume-command-source-strength-badge', result?.sourceStrength?.status || (missingRelease.length ? 'Needs Input' : 'Planning Estimate'));
+  setText('plume-command-source-strength-detail', result?.sourceStrength
+    ? result.sourceStrength.sourceStrengthMethod
+    : 'Context is retained for validation; no thermodynamic source-term calculation is implied.');
+  setText('plume-command-validation-status', result?.validationStatus || (endpointFound && !missing.length ? 'Ready for planning' : 'Needs Input'));
+  setText('plume-command-weather-summary', result?.weather?.freshness || (missingWeather.length ? missingWeather.join(', ') : 'Planning weather status'));
+  setText('plume-command-model-mode', selectedMode);
+  const incidentAddress = getIncidentAddressValue?.() || plumeManualLocation?.address || '';
+  const liveWind = latestPlumeWeather?.windSpeedMph;
+  const liveDirection = latestPlumeWeather?.windDirectionDeg;
+  setText('plume-header-location', incidentAddress || (plumeManualLocation ? `${plumeManualLocation.lat.toFixed(4)}, ${plumeManualLocation.lon.toFixed(4)}` : 'Location pending'));
+  setText('plume-header-weather', Number.isFinite(Number(liveWind)) && Number.isFinite(Number(liveDirection))
+    ? `${liveWind} mph · ${Math.round(Number(liveDirection))}°`
+    : 'Weather pending');
+  setText('plume-header-status', result?.modelStatus || selectedMode);
+}
+
+function updatePlumeCommandPanel(result = null) {
+  if (!result) {
+    setText('plume-command-model-mode', 'Not Modeled');
+    setText('plume-zone-meaning-summary', 'Not Modeled');
+    setText('plume-result-summary', 'Awaiting valid release and weather inputs.');
+    setText('plume-command-max-distance', 'No Current Data Exists');
+    setText('plume-endpoint-summary', 'No Current Data Exists');
+    return;
+  }
+  const isErg = result.mode === 'erg-protective-action';
+  const zones = Array.isArray(result.isopleths) ? result.isopleths : [];
+  const maxDistanceM = Math.max(0, ...zones.map((zone) => Number(zone.maxDownwindM) || 0));
+  setText('plume-command-model-mode', isErg ? 'ERG Overlay' : result.modelModeLabel || result.modelMode || 'Planning Estimate');
+  setText('plume-zone-meaning-summary', isErg ? 'ERG Guide' : zones.length ? 'Modeled' : 'Not Modeled');
+  setText('plume-result-summary', result.textSummary || result.endpointStatus || (zones.length ? 'Threat zones calculated from the backend result.' : 'No displayable threat zones returned.'));
+  setText('plume-command-max-distance', zones.length ? `${(maxDistanceM / 1609.344).toFixed(2)} mi (${Math.round(maxDistanceM).toLocaleString()} m)` : isErg && result.ergOverlay ? `${result.ergOverlay.protectiveActionMi} mi protective action` : 'No Current Data Exists');
+  const endpoint = result.endpoint;
+  setText('plume-endpoint-summary', endpoint
+    ? `AEGL · ${endpoint.selectedDurationMinutes}-minute · ${endpoint.endpointSource || 'source-backed'}`
+    : isErg ? 'PHMSA ERG 2024 protective-action guide' : result.endpointStatus || 'No Current Data Exists');
+  setText('plume-model-time-summary', result.computedAt ? new Date(result.computedAt).toLocaleString() : 'No Current Data Exists');
+  setText('plume-release-summary', `${controlValue('plume-release-type', { selectedLabel: true })} · ${controlValue('plume-release-quantity')} ${controlValue('plume-release-unit', { selectedLabel: true })} · ${controlValue('plume-container-type', { selectedLabel: true })}`);
+  setText('plume-weather-input-summary', `${controlValue('plume-wind-speed')} mph from ${controlValue('plume-wind-direction')}° · ${controlValue('plume-temperature')}°F · ${controlValue('plume-surface-roughness', { selectedLabel: true })}`);
+  setText('plume-command-limitations', (result.limitations || result.modelMetadata?.limitations || result.ergOverlay?.limitations || []).join(' · ') || 'No additional limitations returned.');
+  const summary = document.getElementById('plume-command-zone-summary');
+  if (!summary) return;
+  summary.replaceChildren();
+  if (isErg && result.ergOverlay) {
+    const item = document.createElement('div');
+    item.className = 'plume-zone-summary-item erg';
+    item.textContent = `ERG protective action · isolate ${Number(result.ergOverlay.initialIsolationFt).toLocaleString()} ft · protect ${result.ergOverlay.protectiveActionMi} mi`;
+    summary.append(item);
+    return;
+  }
+  if (!zones.length) {
+    summary.textContent = 'No displayable threat zones returned.';
+    return;
+  }
+  zones.slice().sort((left, right) => Number(right.thresholdLevel) - Number(left.thresholdLevel)).forEach((zone) => {
+    const item = document.createElement('div');
+    item.className = `plume-zone-summary-item level-${zone.thresholdLevel}`;
+    const distance = Number(zone.maxDownwindM) || 0;
+    const threshold = (result.thresholdsUsed || []).find((candidate) => candidate.kind === zone.thresholdKind && Number(candidate.level) === Number(zone.thresholdLevel));
+    const title = document.createElement('strong');
+    title.textContent = `${zone.thresholdKind}-${zone.thresholdLevel}${threshold?.valuePpm ? ` · ${threshold.valuePpm} ${threshold.label || 'ppm'}` : ''}`;
+    const detail = document.createElement('span');
+    detail.textContent = `${(distance / 1609.344).toFixed(2)} mi downwind · ${Math.round(distance).toLocaleString()} m crosswind ${Math.round(Number(zone.maxCrosswindM) || 0).toLocaleString()} m${zone.rangeTruncated ? ' · computational range reached' : ''}`;
+    item.append(title, detail);
+    summary.append(item);
+  });
+  setText('plume-guidance-requirements', (result.fieldVerificationRequirements || []).join(' · ') || 'No additional field verification requirements returned.');
+  setText('plume-guidance-assumptions', (result.assumptions || []).join(' · ') || 'No additional assumptions returned.');
+  setText('plume-guidance-limitations', (result.limitations || result.modelMetadata?.limitations || result.ergOverlay?.limitations || []).join(' · ') || 'No additional limitations returned.');
 }
 
 function updatePlumeInputSummaries() {
@@ -9713,6 +9795,7 @@ async function plotPlumeFromControls(locationOverride = null) {
       setText('plume-model-time-summary', new Date(workflowRecord.createdAt).toLocaleString());
       setText('plume-model-details-time', new Date(workflowRecord.createdAt).toLocaleString());
       setText('plume-result-summary', 'ERG protective-action overlay displayed. Verify with the current ERG, field observations, monitoring, and Incident Command.');
+      updatePlumeCommandPanel(modeled.result);
       if (resultsSection) resultsSection.hidden = false;
       setPlumeMapResultVisible(true);
       updatePlumeModeLabel();
@@ -9770,6 +9853,7 @@ async function plotPlumeFromControls(locationOverride = null) {
     setText('plume-model-time-summary', new Date(workflowRecord.createdAt).toLocaleString());
     setText('plume-model-details-time', new Date(workflowRecord.createdAt).toLocaleString());
     setText('plume-result-summary', 'Planning plume plotted. Field monitoring and Incident Command verification are required.');
+    updatePlumeCommandPanel(modeled.result);
     if (resultsSection) resultsSection.hidden = false;
     setPlumeMapResultVisible(true);
     updatePlumeModeLabel();
@@ -10186,6 +10270,14 @@ document.getElementById('open-plume-btn')?.addEventListener('click', () => openP
   chemical: activeChemical,
   chemicalRecord: activeChemicalRecord,
 }));
+document.getElementById('plume-command-report-btn')?.addEventListener('click', () => {
+  if (hasActiveIncident()) {
+    saveIncidentBrief({ quiet: true });
+    openCurrentIncidentReport();
+    return;
+  }
+  showView('report', { sourcePage: 'plume' });
+});
 document.getElementById('open-guided-response-btn')?.addEventListener('click', () => void openGuidedResponseWorkspace());
 document.getElementById('guided-open-plume-btn')?.addEventListener('click', openPlumeWorkspace);
 document.getElementById('guided-back-btn')?.addEventListener('click', () => showView('lookup'));

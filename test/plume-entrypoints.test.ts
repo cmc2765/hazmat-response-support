@@ -53,10 +53,22 @@ describe('canonical Plume Model entry points', () => {
 
   it('does not carry Chemical Profile presentation into the Plume workspace', () => {
     const plumeHtml = html.slice(html.indexOf('<section id="plume"'), html.indexOf('<section id="map"'));
-    expect(plumeHtml).toContain('class="plume-main-workspace"');
+    expect(plumeHtml).toContain('class="plume-v2-workspace"');
     expect(plumeHtml).not.toContain('chemical-profile-tabs');
     expect(plumeHtml).not.toContain('chemical-profile-shell');
     expect(script).toContain('document.documentElement.dataset.activeWorkspace = targetId;');
+  });
+
+  it('keeps the Plume 2.0 workspace as one three-column DOM composition', () => {
+    const workspace = html.match(/<div class="plume-v2-workspace">([\s\S]*?)<\/div>\s*<section class="plume-results-section/s)?.[1] || '';
+    expect(workspace).toMatch(/<aside class="plume-v2-input-column"/);
+    expect(workspace).toMatch(/<main class="plume-v2-map-column"/);
+    expect(workspace).toMatch(/<aside class="plume-v2-intelligence-column"/);
+    expect(workspace.indexOf('class="plume-v2-input-column"')).toBeLessThan(workspace.indexOf('class="plume-v2-map-column"'));
+    expect(workspace.indexOf('class="plume-v2-map-column"')).toBeLessThan(workspace.indexOf('class="plume-v2-intelligence-column"'));
+    for (const id of ['plume-chemical-input', 'plume-release-type', 'plume-release-quantity', 'plume-release-duration', 'plume-weather-source', 'plume-wind-speed', 'plume-wind-direction', 'plume-temperature', 'plume-endpoint-duration', 'plume-map-address-input']) {
+      expect((html.match(new RegExp(`id="${id}"`, 'g')) || [])).toHaveLength(1);
+    }
   });
 });
 

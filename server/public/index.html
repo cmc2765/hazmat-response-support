@@ -6,7 +6,6 @@
     <title>HAZSCOPE Prototype</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
     <link rel="stylesheet" href="styles.css?v=hero-logo-static-2" />
-    <link rel="stylesheet" href="plume-overrides.css?v=9" />
     <link rel="stylesheet" href="hero-overrides.css?v=8" />
     <link rel="stylesheet" href="hazard-id-overrides.css?v=3" />
     <link rel="stylesheet" href="global-ui-overrides.css?v=14" />
@@ -16,6 +15,7 @@
     <link rel="stylesheet" href="guided-response-overrides.css?v=1" />
     <link rel="stylesheet" href="hazard-profile-page.css?v=1" />
     <link rel="stylesheet" href="page-shell.css?v=1" />
+    <link rel="stylesheet" href="plume-overrides.css?v=10" />
   </head>
   <body>
     <div class="app-shell">
@@ -774,8 +774,8 @@
           </section>
 
           <section id="plume" class="view plume-model-page" data-page-root="plume-model" data-page-name="Plume Model">
-            <header class="plume-page-header hazmat-page-hero hazmat-page-hero-compact variant-plume">
-              <div class="plume-page-heading">
+            <header class="plume-v2-header hazmat-page-hero hazmat-page-hero-compact variant-plume">
+              <div class="plume-v2-header-copy">
                 <span class="plume-hero-plume" aria-hidden="true">
                   <svg viewBox="0 0 92 56" focusable="false">
                     <defs>
@@ -794,15 +794,24 @@
                     <circle class="plume-hero-source" cx="13" cy="28" r="5"/>
                   </svg>
                 </span>
-                <div class="hazmat-page-hero-content"><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><p class="hazmat-hero-subtitle">Weather-aware threat-zone planning.</p><small id="plume-header-chemical">Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers">CAS / UN / ERG pending</small></div>
+                <div class="hazmat-page-hero-content"><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><p class="hazmat-hero-subtitle">Weather-aware threat-zone planning.</p><small>Real-time data. Actionable intelligence. Safer decisions.</small><small id="plume-header-chemical">Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers">CAS / UN / ERG pending</small></div>
+              </div>
+              <div class="plume-v2-header-context" aria-label="Current plume context">
+                <div><span>Location</span><strong id="plume-header-location">Location pending</strong></div>
+                <div><span>Weather</span><strong id="plume-header-weather">Weather pending</strong></div>
+                <div><span>Model</span><strong id="plume-header-status">Awaiting inputs</strong></div>
               </div>
             </header>
-            <div class="plume-main-workspace">
-              <div class="plume-control-column">
+            <div class="plume-v2-workspace">
+              <aside class="plume-v2-input-column" aria-label="Plume model inputs">
             <form class="plume-model-controls" id="plume-model-form">
               <div class="plume-model-input-grid">
                 <section class="plume-model-section">
-                  <header class="plume-model-section-heading"><strong>Chemical Release</strong><span class="plume-card-accent" aria-hidden="true"></span></header>
+                  <header class="plume-model-section-heading">
+                    <span class="plume-stage-number" aria-hidden="true">1</span>
+                    <div><strong>Chemical Release</strong><small>Enter the chemical and release parameters.</small></div>
+                    <span class="plume-card-accent" aria-hidden="true"></span>
+                  </header>
                   <div class="plume-model-section-grid plume-release-grid">
                     <label class="plume-model-field plume-chemical-field plume-required-field" for="plume-chemical-input">
                       <span class="plume-required-label">Chemical <b>Required</b></span>
@@ -844,21 +853,12 @@
                       <input id="plume-release-height" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Ground-level default" />
                       <small>Blank uses the existing 0 ft ground-level planning default.</small>
                     </label>
-                    <label class="plume-model-field" for="plume-endpoint-duration">
-                      <span>EPA AEGL duration</span>
-                      <select id="plume-endpoint-duration">
-                        <option value="10">10 minutes</option>
-                        <option value="30">30 minutes</option>
-                        <option value="60" selected>60 minutes</option>
-                        <option value="240">4 hours</option>
-                        <option value="480">8 hours</option>
-                      </select>
-                      <small id="plume-endpoint-status">AEGL lookup occurs after verified Chemical Companion/CAS linkage.</small>
-                    </label>
-                    <input id="plume-erg-spill-size" type="hidden" value="large" />
-                    <input id="plume-erg-period" type="hidden" value="night" />
+                    <div class="plume-contract-divider" role="note">
+                      <strong>Source validation / context</strong>
+                      <span>Operational details are retained for validation and reporting. They do not imply pressure-driven, flashing, pool, or terrain calculations.</span>
+                    </div>
                     <details class="container-profile" aria-label="Editable container planning profile">
-                      <summary>Container Details</summary>
+                      <summary>Container Details <small>Validation context · not a thermodynamic source-term model</small></summary>
                       <div class="container-bubble-grid">
                         <label class="container-bubble" for="plume-container-type"><span>Container Type</span><select id="plume-container-type"></select></label>
                         <label class="container-bubble" for="container-model-source"><span>Release Source</span><select id="container-model-source"><option>Auto-select</option><option>Direct release</option><option>Puddle</option><option>Tank</option><option>Gas pipeline</option><option>Liquid flow</option><option>Solid release</option><option>Unknown / verify</option></select></label>
@@ -897,7 +897,11 @@
                   </div>
                 </section>
                 <section class="plume-model-section plume-weather-section" id="plume-weather-data-panel" aria-labelledby="plume-weather-data-heading">
-                  <header class="plume-model-section-heading"><strong id="plume-weather-data-heading">Weather Data</strong><button class="ghost-btn plume-weather-refresh" id="use-live-plume-weather-btn" type="button">Refresh</button></header>
+                  <header class="plume-model-section-heading">
+                    <span class="plume-stage-number" aria-hidden="true">2</span>
+                    <div><strong id="plume-weather-data-heading">Weather Conditions</strong><small>Wind, temperature, stability, and roughness drive the current model.</small></div>
+                    <button class="ghost-btn plume-weather-refresh" id="use-live-plume-weather-btn" type="button">Refresh</button>
+                  </header>
                   <div class="plume-model-section-grid plume-weather-grid">
                     <label class="plume-model-field" for="plume-weather-source">
                       <span>Source</span>
@@ -946,7 +950,7 @@
                         <span>Reported location elevation (ft)</span>
                         <input id="plume-elevation" type="text" placeholder="Unavailable" readonly />
                       </label>
-                      <small class="plume-weather-default-note">Temperature uses the live value when available; otherwise 68°F is the displayed planning default.</small>
+                      <small class="plume-weather-default-note"><strong>Context only:</strong> humidity, gust, pressure, and elevation are recorded for operational review; they are not currently applied to the dispersion equation.</small>
                       <div class="plume-columbia-csv plume-columbia-values" hidden>
                         <small>Station Name: <strong id="columbia-station-name">Not available</strong></small>
                         <small>Wind Gusts: <strong id="columbia-wind-gust">Not available</strong></small>
@@ -966,8 +970,35 @@
                     </details>
                   </div>
                 </section>
+                <section class="plume-model-section plume-criteria-section" aria-labelledby="plume-criteria-heading">
+                  <header class="plume-model-section-heading">
+                    <span class="plume-stage-number" aria-hidden="true">3</span>
+                    <div><strong id="plume-criteria-heading">Modeling Criteria</strong><small>Endpoint basis and fallback guidance for the current planning run.</small></div>
+                  </header>
+                  <div class="plume-model-section-grid plume-criteria-grid">
+                    <label class="plume-model-field" for="plume-endpoint-duration">
+                      <span>AEGL / endpoint duration</span>
+                      <select id="plume-endpoint-duration">
+                        <option value="10">10 minutes</option>
+                        <option value="30">30 minutes</option>
+                        <option value="60" selected>60 minutes</option>
+                        <option value="240">4 hours</option>
+                        <option value="480">8 hours</option>
+                      </select>
+                      <small id="plume-endpoint-status">AEGL lookup occurs after verified Chemical Companion/CAS linkage.</small>
+                    </label>
+                    <details class="plume-advanced-inputs">
+                      <summary>Advanced Criteria <small>ERG fallback controls</small></summary>
+                      <div class="plume-criteria-note">These retained settings apply only when verified AEGL/LOC data is unavailable and the ERG fallback is selected.</div>
+                      <input id="plume-erg-spill-size" type="hidden" value="large" />
+                      <input id="plume-erg-period" type="hidden" value="night" />
+                    </details>
+                  </div>
+                </section>
               </div>
             </form>
+
+            <button class="plume-left-plot-button" id="plume-left-plot-btn" type="submit" form="plume-model-form">Plot Plume</button>
 
             <section class="plume-compact-card plume-endpoint-card" aria-labelledby="plume-endpoint-card-heading" hidden>
               <header><h3 id="plume-endpoint-card-heading">Endpoint / LOC</h3><strong id="plume-endpoint-badge">Missing</strong></header>
@@ -976,11 +1007,11 @@
               <span id="plume-readiness-cas" hidden>No Current Data Exists</span>
             </section>
 
-              </div>
+              </aside>
 
-              <div class="plume-map-column">
-                <article class="plume-map-card">
-                  <form class="plume-map-toolbar" id="plume-map-address-form">
+              <main class="plume-v2-map-column">
+                <article class="plume-v2-map-card">
+                  <form class="plume-v2-location-toolbar" id="plume-map-address-form">
                     <label class="plume-location-field" for="plume-map-address-input">
                       <span>Plume Location</span>
                       <input class="plume-location-input" id="plume-map-address-input" type="text" placeholder="Enter address, coordinates, or use incident location" autocomplete="street-address" />
@@ -990,7 +1021,7 @@
                     <button class="plume-map-button primary" id="plot-plume-btn" type="submit" form="plume-model-form" disabled>Plot Plume</button>
                     <button class="module-btn plume-map-button secondary plume-live-radar-link" type="button" data-view="map">Open Live Map</button>
                   </form>
-                  <div class="plume-layer-row" role="group" aria-label="Plume basemap">
+                  <div class="plume-v2-map-controls" role="group" aria-label="Plume basemap">
                     <div class="plume-map-mode-controls" role="group" aria-label="Map mode">
                       <span class="plume-map-control-label">MAP MODE</span>
                       <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
@@ -1010,7 +1041,7 @@
                       <button class="plume-layer-button" id="plume-reset-view-btn" type="button">Reset View</button>
                     </div>
                   </div>
-                  <div class="plume-map-shell">
+                  <div class="plume-map-shell plume-v2-map-shell">
                     <div id="plume-gis-map" class="plume-map-frame" role="application" aria-label="Interactive incident plume map"></div>
                     <div id="plume-tactical-3d-map" class="plume-map-frame plume-tactical-3d-frame" role="application" aria-label="Photorealistic Tactical 3D incident map" hidden></div>
                     <div class="plume-terrain-status" id="plume-terrain-status">Satellite View</div>
@@ -1037,6 +1068,57 @@
                   </footer>
                 </article>
               </div>
+
+              </main>
+
+              <aside class="plume-v2-intelligence-column" aria-label="Threat intelligence and command actions">
+                <section class="plume-intelligence-card">
+                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Threat intelligence</span><h2>Threat Zone Results</h2></div><span class="plume-status-badge" id="plume-zone-meaning-summary">Not Modeled</span></header>
+                  <p id="plume-result-summary" class="plume-intelligence-note">Awaiting valid release and weather inputs.</p>
+                  <div id="plume-command-zone-summary" class="plume-zone-summary" aria-live="polite"><span>Plot a plume to display AEGL-1, AEGL-2, and AEGL-3 distances.</span></div>
+                  <dl class="plume-command-facts">
+                    <div><dt>Maximum modeled distance</dt><dd id="plume-command-max-distance">No Current Data Exists</dd></div>
+                    <div><dt>Endpoint basis</dt><dd id="plume-endpoint-summary">No Current Data Exists</dd></div>
+                    <div><dt>Computed</dt><dd id="plume-model-time-summary">No Current Data Exists</dd></div>
+                  </dl>
+                </section>
+
+                <section class="plume-intelligence-card plume-readiness-card">
+                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Readiness and validation</span><h2>Model Status</h2></div><span class="plume-status-badge" id="plume-command-model-mode">Not Modeled</span></header>
+                  <p class="plume-intelligence-note" id="plume-readiness-reason">Awaiting a verified chemical, location, release, weather, and endpoint.</p>
+                  <div class="plume-readiness-grid">
+                    <div><span>Chemical</span><strong id="plume-command-readiness-master">Requires Review</strong><small id="plume-command-readiness-cas">CAS pending</small></div>
+                    <div><span>Release</span><strong id="plume-command-readiness-release">Needs Input</strong><small id="plume-command-readiness-release-detail">Enter release inputs.</small></div>
+                    <div><span>Weather</span><strong id="plume-command-weather-quality-badge">Needs Input</strong><small id="plume-command-weather-quality-detail">Current weather required.</small></div>
+                    <div><span>Endpoint</span><strong id="plume-command-endpoint-badge">Missing</strong><small id="plume-command-endpoint-detail">Select a verified chemical.</small></div>
+                    <div><span>Source</span><strong id="plume-command-source-strength-badge">Requires Review</strong><small id="plume-command-source-strength-detail">Source context pending.</small></div>
+                    <div><span>Validation</span><strong id="plume-command-validation-status">No Current Data Exists</strong><small id="plume-command-weather-summary">Planning estimate only.</small></div>
+                  </div>
+                </section>
+
+                <section class="plume-intelligence-card plume-guidance-card">
+                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Field verification</span><h2>Operational Guidance</h2></div></header>
+                  <details open><summary>Requirements</summary><p id="plume-guidance-requirements">Available after a model response.</p></details>
+                  <details><summary>Assumptions</summary><p id="plume-guidance-assumptions">Available after a model response.</p></details>
+                  <details><summary>Limitations</summary><p id="plume-guidance-limitations">Available after a model response.</p></details>
+                </section>
+
+                <details class="plume-intelligence-card plume-command-details">
+                  <summary>Weather / release summary</summary>
+                  <dl class="plume-command-facts">
+                    <div><dt>Release</dt><dd id="plume-release-summary">No Current Data Exists</dd></div>
+                    <div><dt>Weather</dt><dd id="plume-weather-input-summary">No Current Data Exists</dd></div>
+                    <div><dt>Assumptions / limitations</dt><dd id="plume-command-limitations">Displayed after a model response.</dd></div>
+                  </dl>
+                </details>
+
+                <section class="plume-intelligence-card plume-command-actions">
+                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Operational workflow</span><h2>Command Actions</h2></div></header>
+                  <button class="plume-command-button" type="button" data-command-view="incident">Send to Incident Command</button>
+                  <button class="plume-command-button" type="button" data-view="map">Open Live Map</button>
+                  <button class="plume-command-button" id="plume-command-report-btn" type="button">Add / Save to Report</button>
+                </section>
+              </aside>
             </div>
 
             <section class="plume-results-section" id="plume-results-section" aria-label="Plume results" hidden>

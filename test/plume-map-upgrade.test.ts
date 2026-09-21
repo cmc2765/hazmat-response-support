@@ -84,12 +84,12 @@ describe('Plume Model first-class map upgrade', () => {
   });
 
   it('keeps release and weather panels dark outside with consistent white entry controls', () => {
-    expect(html).toContain('plume-overrides.css?v=9');
-    expect(plumeStyles).toContain('#plume.view.active .plume-control-column .plume-model-section');
-    expect(plumeStyles).toContain('background: linear-gradient(180deg, #102a43 0%, #0a2036 100%) !important;');
-    expect(plumeStyles).toContain('#plume.view.active .plume-release-grid .plume-model-field input:not([type="checkbox"]):not([type="file"]),');
-    expect(plumeStyles).toContain('background: #fff !important;');
-    expect(plumeStyles).toContain('grid-template-columns: repeat(2, minmax(0, 1fr)) !important;');
+    expect(html).toContain('plume-overrides.css?v=10');
+    expect(plumeStyles).toContain('#plume.view.active .plume-v2-input-column');
+    expect(plumeStyles).toContain('background: linear-gradient(180deg, #0b2943, #061a2e);');
+    expect(plumeStyles).toContain('#plume.view.active .plume-model-field input:not([type="checkbox"]):not([type="file"]),');
+    expect(plumeStyles).toContain('background: #fff;');
+    expect(plumeStyles).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
   });
 
   it('removes the Endpoint / LOC card from the visible left control column', () => {

@@ -127,11 +127,11 @@
 .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
   position: relative !important;
   display: block !important;
-  flex: 0 0 410px !important;
+  flex: 0 0 279px !important;
   width: 100% !important;
-  height: 410px !important;
+  height: 279px !important;
   min-height: 0 !important;
-  max-height: 410px !important;
+  max-height: 279px !important;
   margin: 0 !important;
   padding: 0 !important;
   overflow: hidden !important;
@@ -147,20 +147,32 @@
   inset: 0 !important;
   display: block !important;
   width: 100% !important;
-  height: 410px !important;
+  height: 279px !important;
   min-height: 0 !important;
-  max-height: 410px !important;
+  max-height: 279px !important;
   margin: 0 !important;
   padding: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background: url("assets/HAZSCOPE-banner.png?v=1") left center / 100% 100% no-repeat !important;
+  /* Keep the compass circular while the pseudo-element below fades its edge
+     into the full-width smoke backdrop without changing header dimensions. */
+  background: url("assets/HAZSCOPE-banner.png?v=1") center center / cover no-repeat !important;
   box-shadow: none !important;
   opacity: 1 !important;
   visibility: visible !important;
   transform: none !important;
   scale: 1 !important;
   transition: none !important;
+}
+.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: min(1339px, 100%);
+  background: url("assets/HAZSCOPE-banner.png?v=1") left center / auto 160% no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 76%, rgba(0, 0, 0, .86) 87%, rgba(0, 0, 0, .32) 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 76%, rgba(0, 0, 0, .86) 87%, rgba(0, 0, 0, .32) 96%, transparent 100%);
+  pointer-events: none;
 }
 .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
   display: none !important;

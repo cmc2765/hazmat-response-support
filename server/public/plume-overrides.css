@@ -1,107 +1,242 @@
-/* Plume Model presentation rules. Calculation and map model logic remain in script.js. */
-#plume.view.active .plume-main-workspace { display: grid !important; grid-template-columns: minmax(330px, 380px) minmax(0, 1fr) !important; gap: 14px !important; }
-#plume.view.active .plume-control-column { display: flex !important; flex-direction: column; gap: 10px; min-height: calc(100svh - 270px); max-height: none !important; }
-#plume.view.active .plume-model-controls,
-#plume.view.active .plume-model-input-grid { display: contents !important; }
-#plume.view.active .plume-control-column .plume-model-section { box-sizing: border-box; width: 100%; min-width: 0; padding: 12px !important; border: 1px solid #315a7d !important; border-radius: 12px !important; background: linear-gradient(180deg, #102a43 0%, #0a2036 100%) !important; color: #f8fafc !important; }
-#plume.view.active .plume-control-column .plume-model-section:not(.plume-weather-section) { order: 1; }
-#plume.view.active .plume-weather-section { order: 2; }
-#plume.view.active .plume-control-column .plume-model-section-heading { min-height: 30px; margin: 0 0 10px !important; padding-bottom: 8px; border-bottom: 1px solid rgba(145, 190, 224, 0.32); }
-#plume.view.active .plume-control-column .plume-model-section-heading > strong { color: #f8fafc !important; }
+/*
+ * HAZSCOPE Plume Model 2.0
+ *
+ * This is the single visual owner for the plume workspace. It deliberately
+ * targets the v2 wrappers; model inputs, IDs, event handlers, and map nodes
+ * remain owned by the existing contract in index.html/script.js.
+ */
 
-/* Both input panels share one symmetrical two-column structure. */
+#plume.view.active {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#plume.view.active .plume-v2-header {
+  min-height: 138px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(390px, 42%);
+  align-items: stretch;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid #1c6894;
+  border-radius: 10px;
+  background: linear-gradient(100deg, rgba(3, 19, 35, .98), rgba(8, 37, 61, .94)), url("assets/HAZSCOPE-plume-model-target.png") center / cover no-repeat;
+  color: #f8fafc;
+}
+
+#plume.view.active .plume-v2-header-copy,
+#plume.view.active .plume-v2-header-context { min-width: 0; }
+
+#plume.view.active .plume-v2-header-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
+
+#plume.view.active .plume-v2-header-copy .plume-hero-plume { display: none; }
+#plume.view.active .plume-v2-header-copy .hazmat-hero-title,
+#plume.view.active .plume-v2-header-copy .plume-page-title {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: .95;
+  letter-spacing: .025em;
+  text-transform: uppercase;
+}
+#plume.view.active .plume-v2-header-copy .hazmat-hero-subtitle {
+  margin: 0;
+  color: #ffd323;
+  font-size: clamp(16px, 1.8vw, 24px);
+  font-style: italic;
+  font-weight: 900;
+}
+#plume.view.active .plume-v2-header-copy small { color: #d7e6f2; font-size: 12px; }
+#plume.view.active #plume-header-chemical,
+#plume.view.active #plume-header-identifiers { display: none; }
+
+#plume.view.active .plume-v2-header-context {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-self: stretch;
+  gap: 8px;
+}
+#plume.view.active .plume-v2-header-context > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px;
+  border: 1px solid #1d648f;
+  border-radius: 8px;
+  background: rgba(4, 24, 42, .88);
+}
+#plume.view.active .plume-v2-header-context span,
+#plume.view.active .plume-v2-header-context strong { overflow-wrap: anywhere; }
+#plume.view.active .plume-v2-header-context span { color: #9fb8cb; font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+#plume.view.active .plume-v2-header-context strong { margin-top: 5px; color: #fff; font-size: 15px; }
+
+#plume.view.active .plume-v2-workspace {
+  display: grid;
+  grid-template-columns: minmax(285px, 23fr) minmax(620px, 54fr) minmax(285px, 23fr);
+  gap: 10px;
+  min-height: 0;
+  align-items: stretch;
+}
+#plume.view.active .plume-v2-input-column,
+#plume.view.active .plume-v2-intelligence-column,
+#plume.view.active .plume-v2-map-column { min-width: 0; min-height: 0; }
+#plume.view.active .plume-v2-input-column,
+#plume.view.active .plume-v2-intelligence-column { overflow: auto; scrollbar-gutter: stable; }
+#plume.view.active .plume-v2-input-column { display: flex; flex-direction: column; gap: 10px; }
+#plume.view.active .plume-v2-map-column { display: flex; flex-direction: column; }
+#plume.view.active .plume-v2-intelligence-column { display: flex; flex-direction: column; gap: 10px; }
+
+#plume.view.active .plume-model-controls { display: block; }
+#plume.view.active .plume-model-input-grid { display: flex; flex-direction: column; gap: 10px; }
+#plume.view.active .plume-model-section {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #1d648f;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #0b2943, #061a2e);
+  color: #f8fafc;
+}
+#plume.view.active .plume-model-section-heading {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(145, 190, 224, .3);
+}
+#plume.view.active .plume-model-section-heading > div { min-width: 0; }
+#plume.view.active .plume-model-section-heading strong { display: block; color: #fff; font-size: 17px; letter-spacing: .02em; text-transform: uppercase; }
+#plume.view.active .plume-model-section-heading small { display: block; margin-top: 2px; color: #a9c0d2; font-size: 11px; }
+#plume.view.active .plume-stage-number { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #ffd323; color: #061a2e; font-size: 20px; font-weight: 950; }
+
 #plume.view.active .plume-release-grid,
-#plume.view.active .plume-weather-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; align-items: stretch; }
+#plume.view.active .plume-weather-grid,
+#plume.view.active .plume-criteria-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; align-items: stretch; }
 #plume.view.active .plume-release-grid > .plume-chemical-field,
+#plume.view.active .plume-release-grid > .plume-contract-divider,
 #plume.view.active .plume-release-grid > .container-profile,
 #plume.view.active .plume-release-grid > .plume-input-review,
 #plume.view.active .plume-weather-grid > label[for="plume-weather-source"],
-#plume.view.active .plume-weather-grid > .plume-weather-review { grid-column: 1 / -1 !important; }
+#plume.view.active .plume-weather-grid > .plume-weather-review { grid-column: 1 / -1; }
+#plume.view.active .plume-release-grid > label[for="plume-release-type"] { grid-column: 1; }
+#plume.view.active .plume-release-grid > #plume-release-duration-field { grid-column: 2; }
+#plume.view.active .plume-release-grid > label[for="plume-release-quantity"] { grid-column: 1; }
+#plume.view.active .plume-release-grid > #plume-puff-duration-field { grid-column: 2; }
+#plume.view.active .plume-release-grid > label[for="plume-release-height"] { grid-column: 1 / -1; }
 
-/* Explicit release rows keep the controls evenly balanced. */
-#plume.view.active .plume-release-grid > label[for="plume-release-type"] { grid-column: 1; grid-row: 2; }
-#plume.view.active .plume-release-grid > label[for="plume-release-duration"] { grid-column: 2; grid-row: 2; }
-#plume.view.active .plume-release-grid > label[for="plume-release-quantity"] { grid-column: 1 / -1 !important; grid-row: 3; }
-#plume.view.active .plume-release-grid > label[for="plume-release-height"] { grid-column: 1; grid-row: 4; }
-#plume.view.active .plume-release-grid > label[for="plume-endpoint-duration"] { grid-column: 2; grid-row: 4; }
-
-#plume.view.active .plume-release-grid > label[for="plume-release-type"],
-#plume.view.active .plume-release-grid > label[for="plume-release-duration"],
-#plume.view.active .plume-release-grid > label[for="plume-release-quantity"],
-#plume.view.active .plume-release-grid > label[for="plume-release-height"],
-#plume.view.active .plume-release-grid > label[for="plume-endpoint-duration"] { min-height: 72px; }
-
-#plume.view.active .plume-release-grid .plume-model-field,
-#plume.view.active .plume-weather-grid .plume-model-field { box-sizing: border-box; min-width: 0; min-height: 0; padding: 7px 9px !important; border: 1px solid #66849b !important; border-radius: 8px; background: #eef3f7 !important; color: #10283d !important; }
-#plume.view.active .plume-release-grid .plume-required-field,
-#plume.view.active .plume-weather-grid .plume-required-field { border: 1px solid #66849b !important; background: #eef3f7 !important; }
-#plume.view.active .plume-release-grid .plume-model-field > span,
-#plume.view.active .plume-weather-grid .plume-model-field > span,
-#plume.view.active .plume-release-grid .plume-required-label,
-#plume.view.active .plume-weather-grid .plume-required-label,
-#plume.view.active .plume-release-grid .plume-required-label > span,
-#plume.view.active .plume-weather-grid .plume-required-label > span { color: #10283d !important; line-height: 1.25; }
-#plume.view.active .plume-release-grid .plume-required-label b,
-#plume.view.active .plume-weather-grid .plume-required-label b { color: #52667a !important; font-size: 10px; font-weight: 850; letter-spacing: .04em; text-transform: uppercase; }
-#plume.view.active .plume-release-grid .plume-model-field small,
-#plume.view.active .plume-weather-grid .plume-model-field small { color: #52667a !important; }
-#plume.view.active .plume-release-grid .plume-model-field input:not([type="checkbox"]):not([type="file"]),
-#plume.view.active .plume-release-grid .plume-model-field select,
-#plume.view.active .plume-weather-grid .plume-model-field input:not([type="checkbox"]):not([type="file"]),
-#plume.view.active .plume-weather-grid .plume-model-field select { width: 100%; min-width: 0; min-height: 36px; box-sizing: border-box; border: 1px solid #9db2c4 !important; border-radius: 6px; background: #fff !important; color: #061a2e !important; }
-#plume.view.active .plume-release-grid .plume-model-field input:focus,
-#plume.view.active .plume-release-grid .plume-model-field select:focus,
-#plume.view.active .plume-weather-grid .plume-model-field input:focus,
-#plume.view.active .plume-weather-grid .plume-model-field select:focus { outline: 3px solid rgba(46, 140, 255, .25); outline-offset: 1px; }
+#plume.view.active .plume-model-field { min-width: 0; }
+#plume.view.active .plume-model-field > span { color: #d9e8f2; font-size: 10px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+#plume.view.active .plume-model-field input:not([type="checkbox"]):not([type="file"]),
+#plume.view.active .plume-model-field select { box-sizing: border-box; width: 100%; min-width: 0; min-height: 35px; margin-top: 4px; border: 1px solid #9db2c4; border-radius: 6px; background: #fff; color: #061a2e; font-size: 14px; }
+#plume.view.active .plume-model-field small { color: #9fb8cb; font-size: 10px; }
+#plume.view.active .plume-chemical-search,
 #plume.view.active .plume-linked-input,
-#plume.view.active .plume-quantity-input { min-width: 0; align-items: stretch; }
-#plume.view.active .plume-linked-input input { min-width: 0; }
-
-/* Expandable details retain the light readable treatment. */
+#plume.view.active .plume-quantity-input { min-width: 0; }
+#plume.view.active .plume-linked-input,
+#plume.view.active .plume-quantity-input { display: flex; gap: 5px; }
+#plume.view.active .plume-linked-input input,
+#plume.view.active .plume-quantity-input input { min-width: 0; flex: 1; }
+#plume.view.active .plume-quantity-input select { width: 92px; }
+#plume.view.active .plume-contract-divider { display: grid; gap: 2px; padding: 5px 2px; color: #98b4c8; font-size: 10px; }
+#plume.view.active .plume-contract-divider strong { color: #dcecf6; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
 #plume.view.active .container-profile,
-#plume.view.active .container-details { box-sizing: border-box; border: 1px solid #cbd5e1 !important; border-radius: 8px; background: #fff !important; color: #10283d !important; overflow: hidden; }
-#plume.view.active .container-profile > summary { padding: 10px 12px; color: #10283d !important; font-weight: 900; cursor: pointer; }
-#plume.view.active .container-profile[open] > summary { border-bottom: 1px solid #cbd5e1; }
-#plume.view.active .container-profile[open] > .container-bubble-grid,
-#plume.view.active .container-profile[open] > .container-details,
-#plume.view.active .container-profile[open] > .container-profile-footer { margin-inline: 10px; }
-#plume.view.active .plume-weather-grid .plume-weather-review { border: 1px solid #66849b !important; border-radius: 8px; background: #f7fafc !important; color: #10283d !important; }
+#plume.view.active .plume-input-review,
+#plume.view.active .plume-advanced-inputs { overflow: hidden; border: 1px solid #245b7e; border-radius: 7px; background: #071d32; }
+#plume.view.active .container-profile > summary,
+#plume.view.active .plume-input-review > summary,
+#plume.view.active .plume-advanced-inputs > summary { padding: 9px; color: #f8fafc; cursor: pointer; font-size: 12px; font-weight: 850; }
+#plume.view.active .container-bubble-grid { padding: 0 9px 9px; }
+#plume.view.active .plume-left-plot-button { width: 100%; min-height: 50px; border: 1px solid #ff3942; border-radius: 8px; background: linear-gradient(180deg, #fa2530, #bf0e19); color: #fff; font-size: 19px; font-weight: 950; letter-spacing: .04em; text-transform: uppercase; }
 
-/* Map presentation is isolated from form styling. */
-#plume.view.active .plume-map-column { min-width: 0; }
-#plume.view.active .plume-map-card { overflow: hidden; border: 1px solid #1d648f; border-radius: 10px; background: #020f1d; }
-#plume.view.active .plume-map-shell { position: relative; min-height: 620px; height: calc(100svh - 270px) !important; }
-#plume.view.active .plume-tactical-3d-frame { position: absolute; inset: 0; overflow: hidden; background: #071522; }
-#plume.view.active #plume-gis-map[hidden],
-#plume.view.active #plume-tactical-3d-map[hidden] { display: none !important; }
-#plume.view.active .plume-tactical-3d-frame .cesium-viewer,
-#plume.view.active .plume-tactical-3d-frame .cesium-widget,
-#plume.view.active .plume-tactical-3d-frame .cesium-widget canvas { width: 100%; height: 100%; }
+#plume.view.active .plume-v2-map-card { display: flex; min-height: 0; flex: 1; flex-direction: column; overflow: hidden; border: 1px solid #1d648f; border-radius: 10px; background: #020f1d; }
+#plume.view.active .plume-v2-location-toolbar { display: grid; grid-template-columns: minmax(200px, 1fr) repeat(4, auto); gap: 8px; align-items: end; padding: 10px; border-bottom: 1px solid #1d648f; }
+#plume.view.active .plume-location-field { min-width: 0; }
+#plume.view.active .plume-location-field > span { display: block; color: #b9d1df; font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+#plume.view.active .plume-location-input { box-sizing: border-box; width: 100%; min-height: 41px; margin-top: 4px; padding: 8px 10px; border: 1px solid #43799e; border-radius: 6px; background: #102a43; color: #fff; font-size: 15px; }
+#plume.view.active .plume-map-button,
+#plume.view.active .plume-layer-button { min-height: 41px; padding: 8px 12px; border: 1px solid #2672a5; border-radius: 6px; background: #09233b; color: #f8fafc; font-size: 12px; font-weight: 850; }
+#plume.view.active .plume-map-button.primary { border-color: #ff3942; background: #df1824; }
+#plume.view.active .plume-v2-map-controls { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 10px; padding: 9px 10px; border-bottom: 1px solid #1d648f; }
 #plume.view.active .plume-map-mode-controls,
-#plume.view.active .plume-map-layer-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-#plume.view.active .plume-map-control-label { margin-right: 2px; color: #526b80; font-size: 10px; font-weight: 900; letter-spacing: .08em; }
-#plume.view.active .plume-layer-button[data-plume-map-view="tactical"].active,
-#plume.view.active .plume-layer-button[data-plume-map-view="terrain3d"].active { border-color: #1769aa; background: #1769aa; color: #fff; }
-#plume.view.active #plume-map-attribution,
-#plume.view.active #plume-tactical-attribution { margin-left: auto; }
-#plume.view.active #plume-map-attribution { color: #526b80; font-size: 10px; font-weight: 600; }
-#plume.view.active #plume-tactical-attribution { color: #f8fafc; font-size: 10px; font-weight: 700; }
+#plume.view.active .plume-map-layer-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; min-width: 0; }
+#plume.view.active .plume-map-control-label { flex-basis: 100%; color: #a9c5d7; font-size: 10px; font-weight: 950; letter-spacing: .08em; }
+#plume.view.active .plume-layer-button { flex: 1 1 70px; min-height: 54px; padding-inline: 6px; }
+#plume.view.active .plume-layer-button.active { border-color: #ffd323; background: #ffd323; color: #061a2e; }
+#plume.view.active .plume-map-shell { position: relative; flex: 1; min-height: 600px; height: auto; }
+#plume.view.active .plume-map-frame { position: absolute; inset: 0; width: 100%; height: 100%; }
+#plume.view.active .plume-map-shell .plume-tactical-3d-frame { overflow: hidden; background: #071522; }
+#plume.view.active .plume-map-shell .cesium-viewer,
+#plume.view.active .plume-map-shell .cesium-widget,
+#plume.view.active .plume-map-shell .cesium-widget canvas { width: 100%; height: 100%; }
+#plume.view.active #plume-gis-map[hidden],
+#plume.view.active #plume-tactical-3d-map[hidden] { display: none; }
+#plume.view.active .plume-map-status-footer { min-height: 25px; padding: 5px 9px; color: #9fb8cb; font-size: 10px; }
 
-@media (max-width: 950px) {
-  #plume.view.active .plume-main-workspace { grid-template-columns: 1fr !important; }
-  #plume.view.active .plume-map-shell { height: 64svh !important; }
+#plume.view.active .plume-intelligence-card { flex: 0 0 auto; min-width: 0; padding: 10px; border: 1px solid #1d648f; border-radius: 9px; background: linear-gradient(180deg, #0b2943, #061a2e); color: #f8fafc; }
+#plume.view.active .plume-intelligence-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 8px; }
+#plume.view.active .plume-intelligence-heading h2 { margin: 2px 0 0; color: #fff; font-size: 17px; letter-spacing: .02em; text-transform: uppercase; }
+#plume.view.active .plume-eyebrow { color: #ffd323; font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+#plume.view.active .plume-intelligence-note { margin: 0 0 8px; color: #b8ccda; font-size: 11px; }
+#plume.view.active .plume-readiness-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+#plume.view.active .plume-readiness-grid > div { min-width: 0; padding: 7px; border: 1px solid #245b7e; border-radius: 6px; background: #071d32; }
+#plume.view.active .plume-readiness-grid span,
+#plume.view.active .plume-readiness-grid small { display: block; color: #9fb8cb; font-size: 10px; }
+#plume.view.active .plume-readiness-grid strong { display: block; margin: 2px 0; color: #fff; font-size: 12px; overflow-wrap: anywhere; }
+#plume.view.active .plume-zone-summary { display: grid; gap: 6px; }
+#plume.view.active .plume-zone-summary > * { min-height: 58px; padding: 8px; border: 1px solid currentColor; border-radius: 8px; }
+#plume.view.active .plume-command-facts { display: grid; gap: 4px; margin: 9px 0 0; }
+#plume.view.active .plume-command-facts > div { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid rgba(145,190,224,.18); padding-bottom: 4px; }
+#plume.view.active .plume-command-facts dt { color: #a9c0d2; font-size: 11px; }
+#plume.view.active .plume-command-facts dd { margin: 0; color: #fff; font-size: 11px; text-align: right; }
+#plume.view.active .plume-guidance-card { border-color: #1ba676; }
+#plume.view.active .plume-guidance-card summary { color: #d8fff0; cursor: pointer; font-size: 12px; font-weight: 850; }
+#plume.view.active .plume-guidance-card p { margin: 6px 0 0; color: #c7dedb; font-size: 11px; }
+#plume.view.active .plume-command-actions { margin-top: auto; }
+#plume.view.active .plume-command-button { width: 100%; min-height: 38px; margin-top: 6px; border: 1px solid #2d7da5; border-radius: 6px; background: #09233b; color: #fff; font-size: 12px; font-weight: 850; }
+#plume.view.active .plume-command-button.primary { border-color: #ff3942; background: #df1824; }
+#plume.view.active #plume-results-section { display: none !important; }
+
+@media (max-width: 1399px) {
+  #plume.view.active .plume-v2-workspace { grid-template-columns: minmax(250px, 21fr) minmax(500px, 58fr) minmax(250px, 21fr); }
+  #plume.view.active .plume-v2-location-toolbar { grid-template-columns: minmax(170px, 1fr) repeat(4, minmax(74px, auto)); }
 }
-@media (max-width: 760px) {
-  #plume.view.active .plume-map-mode-controls,
-  #plume.view.active .plume-map-layer-controls { width: 100%; }
-  #plume.view.active #plume-map-attribution { margin-left: 0; width: 100%; }
+@media (max-width: 1199px) and (min-width: 951px) {
+  #plume.view.active .plume-v2-workspace { grid-template-columns: minmax(220px, 20fr) minmax(420px, 60fr) minmax(220px, 20fr); }
+  #plume.view.active .plume-v2-header { grid-template-columns: 1fr; min-height: 174px; }
+  #plume.view.active .plume-v2-header-context { min-height: 64px; }
+  #plume.view.active .plume-v2-location-toolbar { grid-template-columns: 1fr 1fr 1fr; }
+  #plume.view.active .plume-location-field { grid-column: 1 / -1; }
+}
+@media (max-width: 950px) {
+  #plume.view.active { overflow: visible; }
+  #plume.view.active .plume-v2-workspace { grid-template-columns: 1fr; }
+  #plume.view.active .plume-v2-input-column,
+  #plume.view.active .plume-v2-intelligence-column { overflow: visible; }
+  #plume.view.active .plume-v2-map-column { min-height: 680px; }
+  #plume.view.active .plume-map-shell { min-height: 600px; }
 }
 @media (max-width: 620px) {
+  #plume.view.active .plume-v2-header { grid-template-columns: 1fr; padding: 12px; }
+  #plume.view.active .plume-v2-header-context { grid-template-columns: 1fr; }
+  #plume.view.active .plume-v2-header-context > div { min-height: 58px; }
   #plume.view.active .plume-release-grid,
-  #plume.view.active .plume-weather-grid { grid-template-columns: 1fr !important; }
-  #plume.view.active .plume-release-grid > label[for="plume-release-type"],
-  #plume.view.active .plume-release-grid > label[for="plume-release-duration"],
-  #plume.view.active .plume-release-grid > label[for="plume-release-quantity"],
-  #plume.view.active .plume-release-grid > label[for="plume-release-height"],
-  #plume.view.active .plume-release-grid > label[for="plume-endpoint-duration"] { grid-column: 1; grid-row: auto; }
+  #plume.view.active .plume-weather-grid,
+  #plume.view.active .plume-criteria-grid,
+  #plume.view.active .plume-v2-map-controls { grid-template-columns: 1fr; }
+  #plume.view.active .plume-release-grid > *,
+  #plume.view.active .plume-weather-grid > * { grid-column: 1 !important; }
+  #plume.view.active .plume-v2-location-toolbar { grid-template-columns: 1fr 1fr; }
+  #plume.view.active .plume-location-field { grid-column: 1 / -1; }
+  #plume.view.active .plume-v2-map-column { min-height: 620px; }
 }

@@ -6,10 +6,11 @@ const radarUi = readFileSync(new URL("../server/public/weather-radar.js", import
 const radarProviders = readFileSync(new URL("../server/public/weather-radar-providers.js", import.meta.url), "utf8");
 const liveMapBootstrap = readFileSync(new URL("../server/public/live-map-bootstrap.js", import.meta.url), "utf8");
 const styles = readFileSync(new URL("../server/public/styles.css", import.meta.url), "utf8");
+const plumeStyles = readFileSync(new URL("../server/public/plume-overrides.css", import.meta.url), "utf8");
 const heroStyles = readFileSync(new URL("../server/public/hero-overrides.css", import.meta.url), "utf8");
 const html = readFileSync(new URL("../server/public/index.html", import.meta.url), "utf8");
 const plumeHtml = html.slice(html.indexOf('<section id="plume"'), html.indexOf('<section id="map"'));
-const tacticalMapStyles = styles;
+const tacticalMapStyles = plumeStyles;
 const programHeaderStyles = styles;
 const finalHeroComposition = styles;
 
@@ -79,14 +80,13 @@ describe("plume map views", () => {
   });
 
   it("builds the Plume Model as a large tactical map with floating intelligence", () => {
-    expect(tacticalMapStyles).toContain("grid-template-columns: minmax(330px, 380px) minmax(0, 1fr) !important;");
-    expect(tacticalMapStyles).toContain("#plume .plume-main-workspace");
-    expect(tacticalMapStyles).toContain("#plume .plume-control-column");
-    expect(tacticalMapStyles).toContain("#plume .plume-layer-row {");
-    expect(tacticalMapStyles).toContain("#plume .plume-layer-row {");
-    expect(plumeHtml).toContain('class="plume-control-column"');
-    expect(plumeHtml).toContain('class="plume-map-column"');
-    expect(plumeHtml).toContain('class="plume-layer-row"');
+    expect(tacticalMapStyles).toContain("grid-template-columns: minmax(285px, 23fr) minmax(620px, 54fr) minmax(285px, 23fr);");
+    expect(tacticalMapStyles).toContain("#plume.view.active .plume-v2-workspace");
+    expect(tacticalMapStyles).toContain("#plume.view.active .plume-v2-input-column");
+    expect(tacticalMapStyles).toContain("#plume.view.active .plume-v2-map-controls");
+    expect(plumeHtml).toContain('class="plume-v2-input-column"');
+    expect(plumeHtml).toContain('class="plume-v2-map-column"');
+    expect(plumeHtml).toContain('class="plume-v2-map-controls"');
     expect(plumeHtml).toContain('id="plume-results-section"');
     expect(plumeHtml).toContain('id="plume-stability-class"');
     expect(plumeHtml).toContain('id="plume-surface-roughness"');
@@ -95,7 +95,7 @@ describe("plume map views", () => {
   it("keeps the chemical, weather, and map surfaces visibly framed", () => {
     expect(styles).toContain('#plume .plume-model-section');
     expect(styles).toContain('#plume .plume-weather-section');
-    expect(styles).toContain('#plume .plume-map-card');
+    expect(plumeStyles).toContain('#plume.view.active .plume-v2-map-card');
     expect(styles).toContain('border: 1px solid #406b91;');
   });
 
@@ -107,8 +107,8 @@ describe("plume map views", () => {
   it("keeps atmospheric stability and terrain selectors on one readable row", () => {
     expect(plumeHtml).toContain('id="plume-stability-class"');
     expect(plumeHtml).toContain('for="plume-surface-roughness"');
-    expect(styles).toContain('#plume .plume-control-column .plume-weather-grid');
-    expect(styles).toContain('grid-template-columns: repeat(2, minmax(0, 1fr)) !important;');
+    expect(plumeStyles).toContain('#plume.view.active .plume-weather-grid');
+    expect(plumeStyles).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
   });
 
   it("keeps Container Type and Release Source evenly wide", () => {
@@ -125,11 +125,9 @@ describe("plume map views", () => {
 
   it("marks release rate and duration as white required entry fields", () => {
     expect(plumeHtml).toContain('id="plume-release-duration" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="Required in minutes"');
-    expect(styles).toContain('#plume .plume-required-field input');
-    expect(styles).toContain('background: #fff !important;');
-    expect(styles).toContain('border: 2px solid #c1121f !important;');
-    expect(styles).toContain('.plume-required-field.is-complete input,');
-    expect(styles).toContain('border: 1px solid #7996af !important;');
+    expect(plumeStyles).toContain('#plume.view.active .plume-model-field input');
+    expect(plumeStyles).toContain('background: #fff;');
+    expect(plumeStyles).toContain('border: 1px solid #9db2c4;');
   });
 
   it("provides Leak Information as a dropdown while preserving its binding id", () => {
@@ -309,8 +307,8 @@ describe("plume map views", () => {
 
   it("keeps the operational workflow without a fake step strip or validation interaction", () => {
     expect(plumeHtml).not.toContain('class="plume-operational-flow"');
-    expect(plumeHtml.indexOf('Chemical Release')).toBeLessThan(plumeHtml.indexOf('Weather Data'));
-    expect(plumeHtml.indexOf('id="plot-plume-btn"')).toBeGreaterThan(plumeHtml.indexOf('Weather Data'));
+    expect(plumeHtml.indexOf('Chemical Release')).toBeLessThan(plumeHtml.indexOf('Weather Conditions'));
+    expect(plumeHtml.indexOf('id="plot-plume-btn"')).toBeGreaterThan(plumeHtml.indexOf('Weather Conditions'));
     expect(plumeHtml.indexOf('id="plot-plume-btn"')).toBeLessThan(plumeHtml.indexOf('id="plume-demographics"'));
     expect(plumeUi).toContain("function scheduleAutomaticPlanningPlume()");
     expect(plumeUi).toContain("Calculating Planning Plume");
@@ -332,8 +330,8 @@ describe("plume map views", () => {
     expect(plumeHtml).toContain('CAS / UN / ERG pending');
     expect(plumeHtml).not.toContain('hazmatiq-logo-command.png');
     expect(heroStyles).toContain('.variant-plume { background-image: url("assets/plume-model-hero-v2.png") !important; }');
-    expect(styles).toContain('grid-template-columns: minmax(350px, 32fr) minmax(620px, 68fr);');
-    expect(styles).toContain('height: clamp(620px, 70vh, 820px) !important;');
+    expect(plumeStyles).toContain('grid-template-columns: minmax(285px, 23fr) minmax(620px, 54fr) minmax(285px, 23fr);');
+    expect(plumeStyles).toContain('min-height: 600px;');
     expect(plumeHtml).not.toContain('<summary>Advanced Release Inputs</summary>');
     expect(plumeHtml.indexOf('id="plume-release-quantity"')).toBeLessThan(plumeHtml.indexOf('id="plume-release-height"'));
     expect(plumeHtml).toContain('Release height (ft) <b class="plume-optional-label">Optional</b>');
@@ -348,10 +346,8 @@ describe("plume map views", () => {
     ]) expect(plumeHtml).toContain(`id="${id}"`);
     expect(plumeHtml.match(/plume-required-field/g)).toHaveLength(8);
     expect(plumeHtml.match(/<b>Required<\/b>/g)).toHaveLength(8);
-    expect(styles).toContain('#plume .plume-required-field input');
-    expect(styles).toContain('border: 2px solid #c1121f !important;');
-    expect(styles).toContain('#plume .plume-required-field.is-complete input');
-    expect(styles).toContain('border: 1px solid #7996af !important;');
+    expect(plumeStyles).toContain('#plume.view.active .plume-model-field input');
+    expect(plumeStyles).toContain('border: 1px solid #9db2c4;');
     expect(plumeUi).toContain('function updateRequiredPlumeFieldStyles()');
     expect(plumeUi).toContain("classList.toggle('is-complete', isComplete)");
     expect(plumeUi).toContain("const releaseHeightFt = releaseHeightFtValue === '' ? 0 : Number(releaseHeightFtValue);");
@@ -366,9 +362,9 @@ describe("plume map views", () => {
   });
 
   it("uses readable white operational cards and keeps the map face unobstructed", () => {
-    expect(plumeHtml).toContain('id="plume-weather-data-heading">Weather Data</strong>');
+    expect(plumeHtml).toContain('id="plume-weather-data-heading">Weather Conditions</strong>');
     expect(plumeHtml).not.toContain('id="plume-map-empty-accent"');
-    expect(styles).toContain('background: #fff !important;');
+    expect(plumeStyles).toContain('background: #fff;');
     expect(styles).toContain('color: #061a2e !important;');
     expect(plumeUi).toContain('Current weather: ${latestPlumeWeather.source}.');
   });
@@ -376,11 +372,9 @@ describe("plume map views", () => {
   it("keeps Weather Data compact and removes the duplicated live-weather message from the layout", () => {
     expect(plumeHtml).not.toContain('id="plume-weather-prompt"');
     expect(plumeHtml).toContain('class="ghost-btn plume-weather-refresh" id="use-live-plume-weather-btn"');
-    expect(styles).toContain('/* Compact, data-first Weather Data card. */');
-    expect(styles).toContain('#plume .plume-control-column .plume-weather-grid');
-    expect(styles).toContain('grid-template-columns: repeat(2, minmax(0, 1fr)) !important;');
-    expect(styles).toContain('#plume .plume-weather-verification');
-    expect(styles).toContain('background: #f8fafc !important;');
+    expect(plumeStyles).toContain('#plume.view.active .plume-weather-grid');
+    expect(plumeStyles).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
+    expect(plumeStyles).toContain('.plume-weather-review');
     const detailsStart = plumeHtml.indexOf('class="plume-input-review plume-weather-review"');
     const verificationStart = plumeHtml.indexOf('class="plume-weather-verification"');
     expect(verificationStart).toBeGreaterThan(detailsStart);
@@ -475,7 +469,7 @@ describe("plume map views", () => {
     expect(plumeUi).toContain("Nearby Census totals are context only and are not selected-zone counts.");
     expect(plumeUi).toContain("window.HazMatIQ.threatZoneImpactSummary");
     expect(plumeUi).not.toContain("if (panel) panel.open = true");
-    expect(styles).toContain("#plume .plume-threat-metrics");
+    expect(html).toContain('id="plume-results-section"');
     expect(styles).toContain("grid-template-columns: repeat(5, minmax(0, 1fr));");
     expect(plumeUi).toContain("householdEstimateMethod:");
     expect(plumeUi).toContain("householdEstimateStatus:");
@@ -529,9 +523,9 @@ describe("plume map views", () => {
   });
 
   it("places the map toolbar above the enlarged map and Threat Zone after it", () => {
-    expect(html.indexOf('id="plume-model-form"')).toBeLessThan(html.indexOf('class="plume-map-column"'));
+    expect(html.indexOf('id="plume-model-form"')).toBeLessThan(html.indexOf('class="plume-v2-map-column"'));
     expect(html.indexOf('id="plume-map-address-form"')).toBeLessThan(html.indexOf('id="plume-gis-map"'));
-    expect(html.indexOf('class="plume-layer-row"')).toBeLessThan(html.indexOf('id="plume-gis-map"'));
+    expect(html.indexOf('class="plume-v2-map-controls"')).toBeLessThan(html.indexOf('id="plume-gis-map"'));
     expect(html.indexOf('id="plume-gis-map"')).toBeLessThan(html.indexOf('id="plume-demographics"'));
     expect(html.match(/id="plume-demographics"/g)?.length).toBe(1);
     expect(html).not.toContain('<h3>Plume Summary</h3>');
@@ -539,10 +533,10 @@ describe("plume map views", () => {
     expect(html).toContain('>3D Terrain</button>');
     expect(html).not.toContain('>Street 3D</button>');
     expect(html).not.toContain('id="plume-map-legend"');
-    expect(styles).toContain("#plume .plume-map-toolbar");
-    expect(styles).toContain("height: clamp(700px, 78vh, 920px) !important;");
-    expect(styles).toContain("grid-template-columns: minmax(320px, 27fr) minmax(680px, 73fr);");
-    expect(styles).toContain("#plume .plume-results-grid");
+    expect(plumeStyles).toContain("#plume.view.active .plume-v2-location-toolbar");
+    expect(plumeStyles).toContain("min-height: 600px;");
+    expect(plumeStyles).toContain("grid-template-columns: minmax(285px, 23fr) minmax(620px, 54fr) minmax(285px, 23fr);");
+    expect(html).toContain('id="plume-results-section"');
     expect(plumeUi).toContain("document.getElementById('plume-model-form')?.addEventListener('submit'");
     expect(plumeUi).toContain("document.querySelectorAll('[data-plume-map-view]')");
   });
