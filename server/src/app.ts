@@ -19,14 +19,14 @@ import { Hono } from "hono";
 import type { Context } from "hono";
 import { logger } from "hono/logger";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { eq, sql } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { PDFDocument, PDFTextField } from "pdf-lib";
 import { getDb } from "./db.js";
 import * as schema from "./schema.js";
-import { queryChemicalProfile, searchCompanionChemicals } from "./chemical-companion.js";
+import { NIOSH_IDENTITY_STATUS, queryChemicalProfile, searchCompanionChemicals } from "./chemical-companion.js";
 import { reviewedSourceLinksForMaster } from "./chemical-companion/reviewed-source-links.js";
 import { runPlume } from "../../src/lib/model/plume.js";
 import { PlumeInputs } from "../../src/lib/schema/plume.js";
@@ -269,6 +269,11 @@ function automaticIcsValue(fieldName: string, incident: Record<string, unknown>)
   if (normalized === "timefrom") return textValue(incident.startTime);
   if (normalized === "dateto") return textValue(incident.completedDate);
   if (normalized === "timeto") return textValue(incident.completedTime);
+  if (normalized === "incidentobjectives" || normalized.includes("objectives")) return textValue(incident.objectives);
+  if (normalized === "commandstructure" || normalized.includes("commandstructure")) return textValue(incident.commandStructure);
+  if (normalized === "communications" || normalized.includes("communicationsplan")) return textValue(incident.communications);
+  if (normalized === "medicalplan" || normalized.includes("medicalplan")) return textValue(incident.medicalPlan);
+  if (normalized === "stagingresources" || normalized.includes("staging") || normalized.includes("resourceassignment")) return textValue(incident.stagingResources);
   if (normalized.includes("incidentlocation")) {
     return [incident.facilityName, incident.address, incident.city, incident.state, incident.zip]
       .map(textValue)
@@ -425,9 +430,24 @@ app.get("/api/chemicals/:id/profile", async (c) => {
     ...link,
     sourceVersion: link.sourceName === "ERG" ? "2024 repository dataset" : "Reviewed local source link",
   }));
-  const sourceLinks = reviewedLinks.some((link) => link.sourceName === "ERG") ? reviewedLinks : [
+  const nioshLink = profile.niosh?.status === NIOSH_IDENTITY_STATUS.VERIFIED_NIOSH
+    && profile.niosh.sourceRecordId
+    ? {
+      sourceName: "NIOSH",
+      sourceRecordId: profile.niosh.sourceRecordId,
+      sourceIdentifierType: "CAS",
+      sourceIdentifierValue: profile.niosh.sourceCas,
+      matchBasis: "Canonical CAS number",
+      reviewStatus: "verified",
+      sourceVersion: "Bundled NIOSH Pocket Guide-derived dataset (Lucas et al., 2024)",
+    }
+    : null;
+  const sourceLinks: Array<Record<string, unknown>> = [
     ...reviewedLinks,
-    {
+    ...(nioshLink ? [nioshLink] : []),
+  ];
+  if (!sourceLinks.some((link) => link.sourceName === "ERG")) {
+    sourceLinks.push({
       sourceName: "ERG",
       sourceRecordId: profile.header.un || null,
       sourceIdentifierType: "UN/NA",
@@ -435,8 +455,8 @@ app.get("/api/chemicals/:id/profile", async (c) => {
       matchBasis: "Chemical Companion master record fields",
       reviewStatus: ergTable1 ? "source-displayed" : "needs review",
       sourceVersion: "2024 repository dataset",
-    },
-  ];
+    });
+  }
   return c.json({
     id,
     selectedChemicalId: Number(id),
@@ -483,13 +503,36 @@ app.get("/api/chemicals/:id", async (c) => {
 // ─── NPG ────────────────────────────────────────────────────────────────
 app.get("/api/npg", async (c) => {
   const db = getDb();
-  const rows = await db.select().from(schema.npgRecords).limit(500);
-  return c.json({ records: rows });
+  const rawLimit = c.req.query("limit");
+  const rawOffset = c.req.query("offset");
+  const limit = rawLimit == null ? 100 : Number(rawLimit);
+  const offset = rawOffset == null ? 0 : Number(rawOffset);
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 500) {
+    return c.json({ error: "limit must be an integer from 1 to 500" }, 400);
+  }
+  if (!Number.isSafeInteger(offset) || offset < 0) {
+    return c.json({ error: "offset must be a non-negative integer" }, 400);
+  }
+
+  const [{ total }] = await db.select({ total: sql<number>`count(*)` }).from(schema.npgRecords);
+  const records = await db.select().from(schema.npgRecords)
+    .orderBy(asc(schema.npgRecords.id))
+    .limit(limit)
+    .offset(offset);
+  return c.json({
+    records,
+    total,
+    count: records.length,
+    offset,
+    limit,
+    hasMore: offset + records.length < total,
+  });
 });
 
 app.get("/api/npg/:id", async (c) => {
-  const db = getDb();
   const id = c.req.param("id");
+  if (/^\d+$/.test(id)) return c.json({ error: "NPG source record IDs are separate from Chemical Companion IDs" }, 404);
+  const db = getDb();
   const rows = await db.select().from(schema.npgRecords).where(eq(schema.npgRecords.id, id));
   if (rows.length === 0) return c.json({ error: "not found" }, 404);
   return c.json(rows[0]);
@@ -993,6 +1036,15 @@ app.post("/api/plume/run", async (c) => {
         : "Not Independently Validated",
     }, 422);
   }
+});
+
+// The optional Tactical 3D renderer receives its browser key from deployment
+// configuration; no provider credential is embedded in the static UI bundle.
+app.get("/api/map/config", (c) => {
+  c.header("Cache-Control", "no-store");
+  return c.json({
+    googleMapsTileApiKey: process.env.GOOGLE_MAPS_TILE_API_KEY?.trim() ?? "",
+  });
 });
 
 // Live Map exposes one visual primary and one official fallback.

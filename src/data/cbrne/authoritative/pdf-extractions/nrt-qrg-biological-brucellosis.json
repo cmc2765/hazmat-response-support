@@ -1,0 +1,554 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-biological-brucellosis",
+  "sourceArtifactSha256": "e334a174b72428a38499b6ec2f59ffe17ce6fbe6cd7e597759b5bc7c876354ec",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+  "pageCount": 2,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "September, 2011NRT Quick Reference Guide: Brucella Species (Causes the disease Brucellosis) \u0000)\u0000R\u0000U\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000V\u0000H\u0000H\u0000\u0003\u0000³\u0000.\u0000H\u0000\\\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000V\u0000\u0003\u0000&\u0000L\u0000W\u0000H\u0000G\u0000\u0012\u00008\u0000V\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(NRT) Quick Reference Guides (QRGs) for Bacterial2011 Revision.\u0000´QRGsareintended for Federal On-Scene Coordinators (OSCs) and Remedial Program Managers (RPMs).Agent CharacteristicsAgent Classification: Biological Type: Bacteria (Four Species: ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "B. melitensis, B. abortus, B. suis, B. canis)Description:Brucellosis is a systemic, zoonotic (transferable between animals & humans) disease, & transferable between different animal species and is caused by ",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "one of the 4 species of bacteria listed above. Virulence in humans decreases in the species order provided.  They aresmall aerobic, non-motilebacteria.  They reside ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "in tissue & bone marrow, & are extremely difficult to eradicate, even with antibiotic therapy.  In the US, the incidence of brucellosis is less than 0.5 cases/100,000 people (mostly with B. melitensis). Brucellosis is endemic in wildlife po",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "pulations in WY & MT and in sheep, goats, cattle, bison, elk & several other animals in WY, MT, ND, SD. Brucellosis is also found sporadically in feral swine in the southeastern US (FL, AL, LA, GA, TX). Most outbreaksare seen in wild ungulates (e.g., deer",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": ", elk, moose, bison). Humans can be exposed during the birthing & slaughtering of an animal, when handling animal viscera, and eating/drinking unpasteurized milk, cheese, ice cream, etc.  Humans can also be exposed via inhalation of infectious aerosols or ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "if mucous membranesare exposed to the agent. When responding to human cases, it should be determined if it is from a natural outbreak or a bio-weapon event. If a natural event, infected herds may be culled. Note:This QRG focuses on intentional (bio-terr",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "orism) release scenarios, but since brucellosis outbreaks occur naturally the natural exposure routes are also described.Bio-Safety Level: 3 CDC Class: B HHS/USDA Select Agent: Yes, excluding B. canisIncubation Period: 5-60 days.Duration of Illness:",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Weeks to yearsPerson-to-Person Transmission: Rare; from sexual contact or via breastfeeding.Other Forms of Transmission:Treatments: Treatment is difficult but some antibiotics have been shown to be effective. Infectivity/Lethality: High/Low (i.e., 0.5\u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "6%) but depends on species of bacteria and whether endocarditis, osteomyelitis or meningoencephalitis develops.Persistence: Persistent in water and soil.Release ScenariosCAUTION: REAEROSOLIZATION IS A CONCERN FOR ALL RELEASE SCENARIOSAir: If weaponized, ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Brucella is an inhalation threat to humans & wild and domestic animals.The area of initial release might be difficult to identify because symptoms may take days to appear.Soil:Brucella is persistent in soil for up to 125 days. Decon precautions sh",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "ould be taken.Water: Brucella is a probable water threat because the bacteria are stable for 20-72 daysOther:Brucellaspp. are naturally occurring & endemic in the United States.  Natural occurring exposure includes contact with infected animals or cont",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "aminated animal products; this includes eating contaminated meat products.Health EffectsOnsetSymptoms may occur 5-60 days after exposure.Signs/Symptoms per Exposure RouteGeneral:Brucellosis is a systemic bacterial disease with acute or gradual on",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "set in the form of flu-like symptoms, with intermittent fevers, making it difficult to conclusively diagnose. Inhalation: Unless it is weaponized, transmission of Brucella via inhalation is not a common route but it can be for laboratory, slaughterhouse, ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "& large animal veterinarian occupations.Skin: Infection is possible through abraded skin. Persons who work in slaughterhouses, meat-packing plants, hunters, veterinarians, etc. are at higher risk of exposure. Ingestion: Infection is possible by eating/dr",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "inking contaminated, often unpasteurized, milk or dairy products.Effect LevelsInfectivity: Brucella has high infectivity.Infective Dose: Currently, there is no infective dose listed for Brucellaspp. but it is estimatedthat inhaling only 10-100 weapon",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "ized bacteria is sufficient to cause human disease.Lethality: Brucella has low lethality (0.5 -6%).Personnel SafetyConcernsCheck with the Health & Safety Officer regarding PPE, Medical Surveillance, & Health & Safety Plan (HASP). Level of PPE may var",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "y depending upon the incident & site specific circumstances. The PPE Levels listed are general suggestions only & are appropriate only forBrucella; they may not provide protection for some decon & other chemicals that workers may be exposed to during re",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "sponse/recovery operations. For decon of workers, use warm soapy water, taking care to avoid abrading the skin.MedicalBaseline: Annual physical & respiratory function exams. THERE IS NO FDA APPROVED VACCINE AGAINST BRUCELLOSIS.Treatments Available: Tr",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "eatment post exposure is supportive & is accompanied with Ciprofloxacin &/or Doxycycline antibiotics. Prophylactic use of antibiotics may be recommended.First AidDuring Incident: Conduct medical monitoring; use PPE as designated by the HASP; record the",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "PPE Levels used; monitor for fever & other signs/symp-toms as listed under Health Effects &, if necessary, ensure medical attention is obtained as soon as possible. Post Incident: Monitor for signs/symptoms &, if necessary, ensure medical attention is pr",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "ovided as soon as possible.PPEEmergency Response to a Suspected Biological Incident: Possible PPE Levels for emergency responders is based on scenario risks from highest level of protection to least: 1)Pressure-demand Self Contained Breathing Apparatu",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "s (SCBA) with Level A protective suit, when: a) Event is uncontrolled, b)The type(s) of airborne agent(s) is unknown, c)The dissemination method is unknown, d)Dissemination via an aerosol-generating device is still occurring, e)Dissemination via an aerosol",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "-generating device has stopped, but there is no information on the duration of dissemination, or what the exposure concentration may be. 2)Pressure-demand SCBA with Level B protective suit, when: a)The suspected biological aerosol is no longer being",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "released, b)Other conditions may present a splash hazard. 3)Full-facepiece respirator with P100 filter or PAPR with HEPA filters, when: An aerosol-generating device was not used to create high airborne concentrations. 4)Disposable hooded coveralls, glo",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "ves, & foot coverings, when: Dissemination was by a letter, package, or other material that can be bagged, contained, etc. Other Workers: PPE recommendations for workers other than emergency responders must be developed in the HASP for the specific scena",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "rio. PPE recommendations will vary by job type (e.g., cleanup, decon, etc.), type of exposure (e.g., airborne or surface/liquid/soil hazard), & any other site hazards (e.g., chemical, physical, etc.).Field DetectionFixed Aerosol Monitoring: An",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "aerosol releaseof Brucella speciesmaybe detected using air samples & PCR. Results may be delayed as much as 2 daysfrom time of release. In the absence of reliable detection, a Brucella",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "release will only be confirmed once patients present with symptoms and are diagnosed or animal die-off from brucellosis is confirmed.Consult EPA/HQ-EOC at 202-564-3850 for more information.Portable Aerosol Monitoring: ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "Portable aerosol monitoring may use dry or wet sampling methods.  Dry sampling (useful only for molecular analyses) includes gelatin, cellulose acetate & Teflon methods. Wet sampling methods include impingers (low flow) & impactors (single or six sta",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "\u0000J\u0000H\u0000\f\u0000\u0011\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003sampling methods, flow rates, & sampling times. Ensure that the appropriate pump is used for the selected sampling method.SamplingConcerns:   BEFOREOBTAINING SAMPLES: ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "Identify sample transportation requirements; Contact EPA/HQ-EOC (202-564-3850)for ERLN contract laboratories able to analyze these types of samples; Clearly identify & coordinate with the laboratory to be used since most labs cannot analyze al",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "l types of media (e.g., wipes, swabs, and HEPA vacuum samples); Coordinate with the sample disposal facility for acceptance criteria (i.e., sample decon requirements); Coordinate with investigative units (EPA-CID & FBI) to ensure sample chain-of-",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "custody is maintained between the groups. Note: Detection/analytical equipment & sampling techniques will be highly site-speci\u0000¿c & depend on: 1)the characteristics of the agent; 2) the type of contaminated surfaces (e.g., porous v. nonporous); 3)the ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "phases/purposes of sampling (initial ID v. post-decon sampling); 4)the way in which samples are handled so as not to adversely affect viability; 5) transportation regulations 6) the acceptance criteria of the analytical laboratory & 7) ",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "the sample decon requirements for the waste disposal facilities to be used. See LABORATORY ANALYSIS, below.",
+          "role": "BODY"
+        }
+      ],
+      "text": "September, 2011NRT Quick Reference Guide: Brucella Species (Causes the disease Brucellosis) \u0000)\u0000R\u0000U\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000V\u0000H\u0000H\u0000\u0003\u0000³\u0000.\u0000H\u0000\\\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000V\u0000\u0003\u0000&\u0000L\u0000W\u0000H\u0000G\u0000\u0012\u00008\u0000V\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P (NRT) Quick Reference Guides (QRGs) for Bacterial2011 Revision.\u0000´QRGsareintended for Federal On-Scene Coordinators (OSCs) and Remedial Program Managers (RPMs).Agent CharacteristicsAgent Classification: Biological Type: Bacteria (Four Species: B. melitensis, B. abortus, B. suis, B. canis)Description:Brucellosis is a systemic, zoonotic (transferable between animals & humans) disease, & transferable between different animal species and is caused by one of the 4 species of bacteria listed above. Virulence in humans decreases in the species order provided. They aresmall aerobic, non-motilebacteria. They reside in tissue & bone marrow, & are extremely difficult to eradicate, even with antibiotic therapy. In the US, the incidence of brucellosis is less than 0.5 cases/100,000 people (mostly with B. melitensis). Brucellosis is endemic in wildlife po pulations in WY & MT and in sheep, goats, cattle, bison, elk & several other animals in WY, MT, ND, SD. Brucellosis is also found sporadically in feral swine in the southeastern US (FL, AL, LA, GA, TX). Most outbreaksare seen in wild ungulates (e.g., deer , elk, moose, bison). Humans can be exposed during the birthing & slaughtering of an animal, when handling animal viscera, and eating/drinking unpasteurized milk, cheese, ice cream, etc. Humans can also be exposed via inhalation of infectious aerosols or if mucous membranesare exposed to the agent. When responding to human cases, it should be determined if it is from a natural outbreak or a bio-weapon event. If a natural event, infected herds may be culled. Note:This QRG focuses on intentional (bio-terr orism) release scenarios, but since brucellosis outbreaks occur naturally the natural exposure routes are also described.Bio-Safety Level: 3 CDC Class: B HHS/USDA Select Agent: Yes, excluding B. canisIncubation Period: 5-60 days.Duration of Illness: Weeks to yearsPerson-to-Person Transmission: Rare; from sexual contact or via breastfeeding.Other Forms of Transmission:Treatments: Treatment is difficult but some antibiotics have been shown to be effective. Infectivity/Lethality: High/Low (i.e., 0.5\u0000± 6%) but depends on species of bacteria and whether endocarditis, osteomyelitis or meningoencephalitis develops.Persistence: Persistent in water and soil.Release ScenariosCAUTION: REAEROSOLIZATION IS A CONCERN FOR ALL RELEASE SCENARIOSAir: If weaponized, Brucella is an inhalation threat to humans & wild and domestic animals.The area of initial release might be difficult to identify because symptoms may take days to appear.Soil:Brucella is persistent in soil for up to 125 days. Decon precautions sh ould be taken.Water: Brucella is a probable water threat because the bacteria are stable for 20-72 daysOther:Brucellaspp. are naturally occurring & endemic in the United States. Natural occurring exposure includes contact with infected animals or cont aminated animal products; this includes eating contaminated meat products.Health EffectsOnsetSymptoms may occur 5-60 days after exposure.Signs/Symptoms per Exposure RouteGeneral:Brucellosis is a systemic bacterial disease with acute or gradual on set in the form of flu-like symptoms, with intermittent fevers, making it difficult to conclusively diagnose. Inhalation: Unless it is weaponized, transmission of Brucella via inhalation is not a common route but it can be for laboratory, slaughterhouse, & large animal veterinarian occupations.Skin: Infection is possible through abraded skin. Persons who work in slaughterhouses, meat-packing plants, hunters, veterinarians, etc. are at higher risk of exposure. Ingestion: Infection is possible by eating/dr inking contaminated, often unpasteurized, milk or dairy products.Effect LevelsInfectivity: Brucella has high infectivity.Infective Dose: Currently, there is no infective dose listed for Brucellaspp. but it is estimatedthat inhaling only 10-100 weapon ized bacteria is sufficient to cause human disease.Lethality: Brucella has low lethality (0.5 -6%).Personnel SafetyConcernsCheck with the Health & Safety Officer regarding PPE, Medical Surveillance, & Health & Safety Plan (HASP). Level of PPE may var y depending upon the incident & site specific circumstances. The PPE Levels listed are general suggestions only & are appropriate only forBrucella; they may not provide protection for some decon & other chemicals that workers may be exposed to during re sponse/recovery operations. For decon of workers, use warm soapy water, taking care to avoid abrading the skin.MedicalBaseline: Annual physical & respiratory function exams. THERE IS NO FDA APPROVED VACCINE AGAINST BRUCELLOSIS.Treatments Available: Tr eatment post exposure is supportive & is accompanied with Ciprofloxacin &/or Doxycycline antibiotics. Prophylactic use of antibiotics may be recommended.First AidDuring Incident: Conduct medical monitoring; use PPE as designated by the HASP; record the PPE Levels used; monitor for fever & other signs/symp-toms as listed under Health Effects &, if necessary, ensure medical attention is obtained as soon as possible. Post Incident: Monitor for signs/symptoms &, if necessary, ensure medical attention is pr ovided as soon as possible.PPEEmergency Response to a Suspected Biological Incident: Possible PPE Levels for emergency responders is based on scenario risks from highest level of protection to least: 1)Pressure-demand Self Contained Breathing Apparatu s (SCBA) with Level A protective suit, when: a) Event is uncontrolled, b)The type(s) of airborne agent(s) is unknown, c)The dissemination method is unknown, d)Dissemination via an aerosol-generating device is still occurring, e)Dissemination via an aerosol -generating device has stopped, but there is no information on the duration of dissemination, or what the exposure concentration may be. 2)Pressure-demand SCBA with Level B protective suit, when: a)The suspected biological aerosol is no longer being released, b)Other conditions may present a splash hazard. 3)Full-facepiece respirator with P100 filter or PAPR with HEPA filters, when: An aerosol-generating device was not used to create high airborne concentrations. 4)Disposable hooded coveralls, glo ves, & foot coverings, when: Dissemination was by a letter, package, or other material that can be bagged, contained, etc. Other Workers: PPE recommendations for workers other than emergency responders must be developed in the HASP for the specific scena rio. PPE recommendations will vary by job type (e.g., cleanup, decon, etc.), type of exposure (e.g., airborne or surface/liquid/soil hazard), & any other site hazards (e.g., chemical, physical, etc.).Field DetectionFixed Aerosol Monitoring: An aerosol releaseof Brucella speciesmaybe detected using air samples & PCR. Results may be delayed as much as 2 daysfrom time of release. In the absence of reliable detection, a Brucella release will only be confirmed once patients present with symptoms and are diagnosed or animal die-off from brucellosis is confirmed.Consult EPA/HQ-EOC at 202-564-3850 for more information.Portable Aerosol Monitoring: Portable aerosol monitoring may use dry or wet sampling methods. Dry sampling (useful only for molecular analyses) includes gelatin, cellulose acetate & Teflon methods. Wet sampling methods include impingers (low flow) & impactors (single or six sta \u0000J\u0000H\u0000 \u0000\u0011\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003sampling methods, flow rates, & sampling times. Ensure that the appropriate pump is used for the selected sampling method.SamplingConcerns: BEFOREOBTAINING SAMPLES: Identify sample transportation requirements; Contact EPA/HQ-EOC (202-564-3850)for ERLN contract laboratories able to analyze these types of samples; Clearly identify & coordinate with the laboratory to be used since most labs cannot analyze al l types of media (e.g., wipes, swabs, and HEPA vacuum samples); Coordinate with the sample disposal facility for acceptance criteria (i.e., sample decon requirements); Coordinate with investigative units (EPA-CID & FBI) to ensure sample chain-of- custody is maintained between the groups. Note: Detection/analytical equipment & sampling techniques will be highly site-speci\u0000¿c & depend on: 1)the characteristics of the agent; 2) the type of contaminated surfaces (e.g., porous v. nonporous); 3)the phases/purposes of sampling (initial ID v. post-decon sampling); 4)the way in which samples are handled so as not to adversely affect viability; 5) transportation regulations 6) the acceptance criteria of the analytical laboratory & 7) the sample decon requirements for the waste disposal facilities to be used. See LABORATORY ANALYSIS, below.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 37,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "September, 2011CAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACUUM EQUIPMENT SHOULD BE USED. A site-speci\u0000Àc sampling plan should be reviewed & approved by appropriate Subject Matter Experts &/or through ICS channels. Sampling Location Plans: ",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "If release was limited to a small area due to opening a letter or container, start with an area thought to be free of contamination & work in concentric circles towards the initial point of contamination. ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "Be concerned about other contaminated areas due to foot traf\u0000¿c/ventilation systems (elevator buttons, mail, corners of hallways, bas",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "eboards, light switches, door knobs, etc). Based on site characteristics & laboratory capacity, the sampling plan may be judgmental, probabilistic, or a combination thereof.Consult EPA/HQ-EOC at 202-564-3850 for Environmental Response Laboratory Network",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "(a.k.a. ERLN laboratory) contact information for personnel whocan explain/describe the sampling procedure most compatible with their current analytical procedure.Types of Samples: Air, water, soil, surfaces, dairy production/livestockNote:  While Brucella ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "DNA can be detected long after the bacteria have perished & might be of forensic interest, the presence of the DNA says little about the potential human risk in the days following a release.Air: Collect air samples with a gel filter, impinger or impactor. ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "\u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000U\u0000D\u0000W\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000\t\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000(\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "appropriate pump is used for the selected sampling method.Water: Since Brucella can persist in water,  any potable water source should be sampled. Ifthe potable water is chlorinated, the chlorine needs to be neutralized ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "immediately with a sodium thiosulfate or other neutralizer at the concentration specified by the analytical laboratory prior to shipment.  As chlorine levels can vary substantially thr",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "oughout a drinking water system, it is not always appropriate to assume that a sample is chlorinated based solely on a description of the water treatment processes in use.Soil: For the localized areas where soil deposition of the agentis suspected (i.e.,",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "aerosol or liquid droplets), a surface soil sample from a depth of less than 1 inch (2.54 cm) should be obtained from a non-vegetated area.Surfaces: 1) Wipe & Swab Sampling (for non-porous surfaces):Sterile macrofoam swabs moistened with 1X phosphate-bu",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "ffered saline supplemented with 0.01% Tween-20 (PBST). If this solution is not available, use sterile de-ionized water (DI). Do NOT use dry wipes or swabs. 2) HEPA Vacuum Sampling (for both porous & non-porous surfaces): collect samples in a HEPA sock desi",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "\u0000J\u0000Q\u0000H\u0000G\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000¿\u0000W\u0000\u0003\u0000L\u0000Q\u0000W\u0000R\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000O\u0000H\u0000W\u0000\u0003\u0000Q\u0000R\u0000]\u0000]\u0000O\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000D\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000\u0003\u0000F\u0000H\u0000U\u0000W\u0000L\u0000I\u0000L\u0000H\u0000G\u0000\u0003\u0000+\u0000(\u00003\u0000$\u0000\u0003\u0000Y\u0000D\u0000F\u0000X\u0000X\u0000P\u0000\u0003\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000H\u0000U\u0000\u0011\u0000\u0003\u0000*\u0000R\u0000R\u0000G\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000V\u0000F\u0000U\u0000H\u0000H\u0000Q\u0000L\u0000Q\u0000J\u0000\u0003\u0000\t\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "determining the extent & location of contamination in large areas. Agriculture & Wildlife: Upon confirmation of an outbreak, ensure these agencies are notified immediately since brucella is a zoonotic vector borne disease; USDA at 202-720-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "5711 & National Center for Emerging and Zoonotic Infectious Diseases at 800-232-4636 (after hours call the Directors Emergency Operations Center at 770-488-7100).Samples that test for Re-aerosolization: 1) Wipe sampling of the air duct system (\u0000¿",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "lters, areas of particulate deposition) if exposure occurred indoors. 2) Air Samplers & Single Stage Impactors with settle plates for capturing airborne particulates of respirable size (1-5 microns) on a series of agar plates. Agar plates are then sent to",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "laboratory for culture analysis.  Sample Packaging & Shipping: The packaging & shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, & IATA. Contact the sample-receiving laboratory to determine if they have addition",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "al packaging, shipping or labeling requirements (e.g., DO NOT X-RAY). Samples should be packaged in an air-tight container & kept at temperatures of 40-50°F (4-10°C). Ensure samples are not placed directly on the ice used for cooling the shipping container",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": ".Laboratory AnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes & soil). The goal of laboratory analysis for environmental sampling purposes is to determine if viable Brucellais present in the sample. Note: The s",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "elected laboratory may use a tiered approach. If a tiered approach is used, the initial analysis may only determine if select/particular components of the bacteriumare present in the sample (e.g., presence or absence). It may take additional time (up to w",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "eeks depending on the laboratory) to determine if the bacteriumare viable & still able to cause adverse effects.Laboratory Information: Contact EPA/HQ-EOC (202-564-3850)for ERLN contract laboratories able to analyze these types of samples.Decontamin",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "ation/CleanupCAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACUUM EQUIPMENT SHOULD BE USED. Decon Planning:Site-",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000\t\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000V\u0000\u0003\u0000V\u0000Kould ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "develop a plan that takes into account: 1) Nature of contamination including purity, physical properties, how it enteredthe facility, etc.; 2) Extent of contamination, ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "including the amount & possible pathways that have spread the agent. It is advisable to isolate the contaminated area; & 3) Objectives of decon, including decon of critical items for re-use & the treatment, ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "removal, or packaging of other items for disposal. Note: \u0000&\u0000U\u0000L\u0000V\u0000L\u0000V\u0000\u0003\u0000H\u0000[\u0000H\u0000P\u0000S\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00002\u0000I\u0000I\u0000L\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u00003\u0000H\u0000V\u0000W\u0000L\u0000F\u0000L\u0000G\u0000H\u0000\u0003\u00003\u0000U\u0000R\u0000J\u0000U\u0000D\u0000P\u0000V\u0000\u0003\u0000P\u0000L\u0000J\u0000K\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003necessary depending on decontaminating agents used. ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "CAUTION: DECON SOLUTIONS SHOULD NOT BE DEPLOYED AS A SPRAY WHENEVER POSSIBLE.Decon Methods:Decon decisions will be site & situation specific but due to re-aerosolization concerns, under NO circumstances should a non-HEPA vacuum cleaner or a broom be used.",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000\u000b800-329-1841) can provide specific decontaminationparameters & requirements for using readily available commercial items such as household bleach. Methods used on surfaces: 1)",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Source reduction steps, including HEPA vacuuming; 2)Liquid antimicrobial products such as pH-amended bleach (mixture of 1 part household bleach (5.25% to 6.0%) to 1 part white vinegar to 8 parts water, is recommended). This product affects surfaces dif",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "ferently in terms of corrosiveness, staining, & residue. The product will be most efficient a)at higher temperatures (i.e., >70°F or 21°C) b) when plain bleach (e.g., no added fragrance) is used to make the pH-amended bleach solution, c)when pH is <7, d)",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "when presence of other surface contaminants is minimal, & e)when surfaces remain wet with amended bleach solution for 60 minutes.  Note: Store-bought bleach does degrade with time \u0000±check the expiration date.",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Alternate antimicrobial products include: chlorine dioxide, hydrogen peroxide, & peroxyacetic acid. Fumigation:Uses gas or vapor to decontaminate facilities in which there isevidence of high levels of contamination, re-",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "aerosolization, or if decontamination of limited access areas is required (e.g. HVAC systems). Fumigants:chlorine dioxide, & vaporized hydrogen ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "\u0000S\u0000H\u0000U\u0000R\u0000[\u0000L\u0000G\u0000H\u0000\u0011\u0000\u0003\u00003\u0000U\u0000L\u0000R\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000X\u0000V\u0000H\u0000\u000f\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000I\u0000X\u0000P\u0000L\u0000J\u0000D\u0000Q\u0000W\u0000¶\u0000V\u0000\u0003\u0000F\u0000R\u0000P\u0000S\u0000D\u0000W\u0000L\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000P\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "\u0000O\u0000V\u0000\u000f\u0000\u0003\u0000S\u0000H\u0000Q\u0000H\u0000W\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000F\u0000D\u0000S\u0000D\u0000F\u0000L\u0000W\u0000\\\u0000\u000f\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000D\u0000O\u0000\u0003\u0000D\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000H\u0000Q\u0000G\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000I\u0000X\u0000P\u0000L\u0000J\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000Z\u0000H\u0000O\u0000O\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000L\u0000W\u0000¶\u0000V\u0000\u0003\u0000S\u0000K\u0000\\\u0000V\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003\u0000F\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "& toxicological properties should be taken into account. Each chemical has a specified range for process variables (e.g., temperature, relative humidity, conc. & contact time) that must be followed. Other Decon:1)",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "Ethylene oxide sterilization is used to decontaminate items in an off-site sterilization chamber. 2)Irradiation uses cobalt-60 & electron beam technologies to destroy agents at off-site loca",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "tions. This procedure may destroy magnetic media. Irradiation & chemical sterilization may be useful in decontaminating items that are intended to be returned to owners. \u00009\u0000H\u0000U\u0000L\u0000À\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u001d\u0000\u0003Site and situation specific.",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "Please contact ERT (732-321-6660) and NDT (800-329-1841) for further assistance.Waste DisposalCAUTION: Hazardous waste transportation & disposal are regulated federally; however more stringent regulations may exist under state authority. These regulations ",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "differ from state-to-state. Detailed state regulations can be found at www.envcap.org.Waste Disposal Planning: Waste generated from assessment & cleanup activities should be autoclaved, chemically disinfected, or fumigated & then testedto be ",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "sure the agent(s) were inactivated. Wastedisposal for agent-contaminated wastes generated from decontamination & disposal activities will be problematic. Landfills ",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "willing to take these wastes may be limited & incineration may be prohibitively expensive or impractical. All waste disposal optionsshould be investigated as early into ",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "the response process as possible. Transportation of the agent contaminated wastes from the site to the landfill or incinerator may be problematic as well.  Agreements must be reached between the waste generator & accep",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "tor BEFORE transport.  Information regarding the agreements may be required to be available to the public.  Transportation of hazardous waste may cross several states and localities, which may exceed federal regulations.Requirements for transporting hazar",
+          "role": "BODY"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "dous materials, & procedures for exemption, are specified in http://www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. The EPA has developed a web-based Incident Waste Management Planning & Response Tool which contains guidance related to waste",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "transportation, contact information for potential treatment, disposal facilities, & state regulatory offices, packaging guidance to minimize risk to workers, & guidance to minimize the potential for contaminating the treatment or disposal facility.  Acces",
+          "role": "BODY"
+        },
+        {
+          "order": 46,
+          "operator": "TJ",
+          "text": "\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000W\u0000R\u0000R\u0000O\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000V\u0000\u0003\u0000S\u0000U\u0000H\u0000U\u0000H\u0000J\u0000L\u0000V\u0000W\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u001d\u0000\u0003http://www2.ergweb.com/bdrtool/login.asp.",
+          "role": "BODY"
+        }
+      ],
+      "text": "September, 2011CAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACUUM EQUIPMENT SHOULD BE USED. A site-speci\u0000Àc sampling plan should be reviewed & approved by appropriate Subject Matter Experts &/or through ICS channels. Sampling Location Plans: If release was limited to a small area due to opening a letter or container, start with an area thought to be free of contamination & work in concentric circles towards the initial point of contamination. Be concerned about other contaminated areas due to foot traf\u0000¿c/ventilation systems (elevator buttons, mail, corners of hallways, bas eboards, light switches, door knobs, etc). Based on site characteristics & laboratory capacity, the sampling plan may be judgmental, probabilistic, or a combination thereof.Consult EPA/HQ-EOC at 202-564-3850 for Environmental Response Laboratory Network (a.k.a. ERLN laboratory) contact information for personnel whocan explain/describe the sampling procedure most compatible with their current analytical procedure.Types of Samples: Air, water, soil, surfaces, dairy production/livestockNote: While Brucella DNA can be detected long after the bacteria have perished & might be of forensic interest, the presence of the DNA says little about the potential human risk in the days following a release.Air: Collect air samples with a gel filter, impinger or impactor. \u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000U\u0000D\u0000W\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000 \u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000(\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003 appropriate pump is used for the selected sampling method.Water: Since Brucella can persist in water, any potable water source should be sampled. Ifthe potable water is chlorinated, the chlorine needs to be neutralized immediately with a sodium thiosulfate or other neutralizer at the concentration specified by the analytical laboratory prior to shipment. As chlorine levels can vary substantially thr oughout a drinking water system, it is not always appropriate to assume that a sample is chlorinated based solely on a description of the water treatment processes in use.Soil: For the localized areas where soil deposition of the agentis suspected (i.e., aerosol or liquid droplets), a surface soil sample from a depth of less than 1 inch (2.54 cm) should be obtained from a non-vegetated area.Surfaces: 1) Wipe & Swab Sampling (for non-porous surfaces):Sterile macrofoam swabs moistened with 1X phosphate-bu ffered saline supplemented with 0.01% Tween-20 (PBST). If this solution is not available, use sterile de-ionized water (DI). Do NOT use dry wipes or swabs. 2) HEPA Vacuum Sampling (for both porous & non-porous surfaces): collect samples in a HEPA sock desi \u0000J\u0000Q\u0000H\u0000G\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000¿\u0000W\u0000\u0003\u0000L\u0000Q\u0000W\u0000R\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000O\u0000H\u0000W\u0000\u0003\u0000Q\u0000R\u0000]\u0000]\u0000O\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000D\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000\u0003\u0000F\u0000H\u0000U\u0000W\u0000L\u0000I\u0000L\u0000H\u0000G\u0000\u0003\u0000+\u0000(\u00003\u0000$\u0000\u0003\u0000Y\u0000D\u0000F\u0000X\u0000X\u0000P\u0000\u0003\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000H\u0000U\u0000\u0011\u0000\u0003\u0000*\u0000R\u0000R\u0000G\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000V\u0000F\u0000U\u0000H\u0000H\u0000Q\u0000L\u0000Q\u0000J\u0000\u0003\u0000 \u0000\u0003 determining the extent & location of contamination in large areas. Agriculture & Wildlife: Upon confirmation of an outbreak, ensure these agencies are notified immediately since brucella is a zoonotic vector borne disease; USDA at 202-720- 5711 & National Center for Emerging and Zoonotic Infectious Diseases at 800-232-4636 (after hours call the Directors Emergency Operations Center at 770-488-7100).Samples that test for Re-aerosolization: 1) Wipe sampling of the air duct system (\u0000¿ lters, areas of particulate deposition) if exposure occurred indoors. 2) Air Samplers & Single Stage Impactors with settle plates for capturing airborne particulates of respirable size (1-5 microns) on a series of agar plates. Agar plates are then sent to laboratory for culture analysis. Sample Packaging & Shipping: The packaging & shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, & IATA. Contact the sample-receiving laboratory to determine if they have addition al packaging, shipping or labeling requirements (e.g., DO NOT X-RAY). Samples should be packaged in an air-tight container & kept at temperatures of 40-50°F (4-10°C). Ensure samples are not placed directly on the ice used for cooling the shipping container .Laboratory AnalysisCAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes & soil). The goal of laboratory analysis for environmental sampling purposes is to determine if viable Brucellais present in the sample. Note: The s elected laboratory may use a tiered approach. If a tiered approach is used, the initial analysis may only determine if select/particular components of the bacteriumare present in the sample (e.g., presence or absence). It may take additional time (up to w eeks depending on the laboratory) to determine if the bacteriumare viable & still able to cause adverse effects.Laboratory Information: Contact EPA/HQ-EOC (202-564-3850)for ERLN contract laboratories able to analyze these types of samples.Decontamin ation/CleanupCAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACUUM EQUIPMENT SHOULD BE USED. Decon Planning:Site- \u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000 \u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000V\u0000\u0003\u0000V\u0000Kould develop a plan that takes into account: 1) Nature of contamination including purity, physical properties, how it enteredthe facility, etc.; 2) Extent of contamination, including the amount & possible pathways that have spread the agent. It is advisable to isolate the contaminated area; & 3) Objectives of decon, including decon of critical items for re-use & the treatment, removal, or packaging of other items for disposal. Note: \u0000&\u0000U\u0000L\u0000V\u0000L\u0000V\u0000\u0003\u0000H\u0000[\u0000H\u0000P\u0000S\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00002\u0000I\u0000I\u0000L\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u00003\u0000H\u0000V\u0000W\u0000L\u0000F\u0000L\u0000G\u0000H\u0000\u0003\u00003\u0000U\u0000R\u0000J\u0000U\u0000D\u0000P\u0000V\u0000\u0003\u0000P\u0000L\u0000J\u0000K\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003necessary depending on decontaminating agents used. CAUTION: DECON SOLUTIONS SHOULD NOT BE DEPLOYED AS A SPRAY WHENEVER POSSIBLE.Decon Methods:Decon decisions will be site & situation specific but due to re-aerosolization concerns, under NO circumstances should a non-HEPA vacuum cleaner or a broom be used. \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000 800-329-1841) can provide specific decontaminationparameters & requirements for using readily available commercial items such as household bleach. Methods used on surfaces: 1) Source reduction steps, including HEPA vacuuming; 2)Liquid antimicrobial products such as pH-amended bleach (mixture of 1 part household bleach (5.25% to 6.0%) to 1 part white vinegar to 8 parts water, is recommended). This product affects surfaces dif ferently in terms of corrosiveness, staining, & residue. The product will be most efficient a)at higher temperatures (i.e., >70°F or 21°C) b) when plain bleach (e.g., no added fragrance) is used to make the pH-amended bleach solution, c)when pH is <7, d) when presence of other surface contaminants is minimal, & e)when surfaces remain wet with amended bleach solution for 60 minutes. Note: Store-bought bleach does degrade with time \u0000±check the expiration date. Alternate antimicrobial products include: chlorine dioxide, hydrogen peroxide, & peroxyacetic acid. Fumigation:Uses gas or vapor to decontaminate facilities in which there isevidence of high levels of contamination, re- aerosolization, or if decontamination of limited access areas is required (e.g. HVAC systems). Fumigants:chlorine dioxide, & vaporized hydrogen \u0000S\u0000H\u0000U\u0000R\u0000[\u0000L\u0000G\u0000H\u0000\u0011\u0000\u0003\u00003\u0000U\u0000L\u0000R\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000X\u0000V\u0000H\u0000\u000f\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000I\u0000X\u0000P\u0000L\u0000J\u0000D\u0000Q\u0000W\u0000¶\u0000V\u0000\u0003\u0000F\u0000R\u0000P\u0000S\u0000D\u0000W\u0000L\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000P\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D \u0000O\u0000V\u0000\u000f\u0000\u0003\u0000S\u0000H\u0000Q\u0000H\u0000W\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000F\u0000D\u0000S\u0000D\u0000F\u0000L\u0000W\u0000\\\u0000\u000f\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000D\u0000O\u0000\u0003\u0000D\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000H\u0000Q\u0000G\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000I\u0000X\u0000P\u0000L\u0000J\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000Z\u0000H\u0000O\u0000O\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000L\u0000W\u0000¶\u0000V\u0000\u0003\u0000S\u0000K\u0000\\\u0000V\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003\u0000F\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003 & toxicological properties should be taken into account. Each chemical has a specified range for process variables (e.g., temperature, relative humidity, conc. & contact time) that must be followed. Other Decon:1) Ethylene oxide sterilization is used to decontaminate items in an off-site sterilization chamber. 2)Irradiation uses cobalt-60 & electron beam technologies to destroy agents at off-site loca tions. This procedure may destroy magnetic media. Irradiation & chemical sterilization may be useful in decontaminating items that are intended to be returned to owners. \u00009\u0000H\u0000U\u0000L\u0000À\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u001d\u0000\u0003Site and situation specific. Please contact ERT (732-321-6660) and NDT (800-329-1841) for further assistance.Waste DisposalCAUTION: Hazardous waste transportation & disposal are regulated federally; however more stringent regulations may exist under state authority. These regulations differ from state-to-state. Detailed state regulations can be found at www.envcap.org.Waste Disposal Planning: Waste generated from assessment & cleanup activities should be autoclaved, chemically disinfected, or fumigated & then testedto be sure the agent(s) were inactivated. Wastedisposal for agent-contaminated wastes generated from decontamination & disposal activities will be problematic. Landfills willing to take these wastes may be limited & incineration may be prohibitively expensive or impractical. All waste disposal optionsshould be investigated as early into the response process as possible. Transportation of the agent contaminated wastes from the site to the landfill or incinerator may be problematic as well. Agreements must be reached between the waste generator & accep tor BEFORE transport. Information regarding the agreements may be required to be available to the public. Transportation of hazardous waste may cross several states and localities, which may exceed federal regulations.Requirements for transporting hazar dous materials, & procedures for exemption, are specified in http://www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. The EPA has developed a web-based Incident Waste Management Planning & Response Tool which contains guidance related to waste transportation, contact information for potential treatment, disposal facilities, & state regulatory offices, packaging guidance to minimize risk to workers, & guidance to minimize the potential for contaminating the treatment or disposal facility. Acces \u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000W\u0000R\u0000R\u0000O\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000V\u0000\u0003\u0000S\u0000U\u0000H\u0000U\u0000H\u0000J\u0000L\u0000V\u0000W\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u001d\u0000\u0003http://www2.ergweb.com/bdrtool/login.asp.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 47,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

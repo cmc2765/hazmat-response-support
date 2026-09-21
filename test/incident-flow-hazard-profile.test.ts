@@ -36,9 +36,11 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
 
     expect(loader).toContain("chemical.guidanceEligible === false");
     expect(loader).toContain("const recordPromise = buildFullChemicalRecord(chemical).catch");
-    expect(loader).toContain("const profileResponse = await fetchJson(profileUrl);");
-    expect(loader.indexOf("updateChemicalCard(profileRecord);")).toBeLessThan(loader.indexOf("const record = await recordPromise;"));
-    expect(loader).toContain("if (String(selectedChemicalId) !== String(chosenChemicalId)) return;");
+    expect(loader).toContain("profileResponse = await fetchJson(profileUrl);");
+    expect(loader.indexOf("updateChemicalCard(profileRecord);")).toBeLessThan(loader.indexOf("void recordPromise.then((record) =>"));
+    expect(loader).toContain("const isCurrentProfileRequest = () => profileRequestId === latestChemicalProfileRequest");
+    expect(loader).toContain("if (!profile) {");
+    expect(loader).toContain("Database information for ${chosenChemicalName || 'this chemical'} could not be loaded.");
     expect(loader).toContain("setHazardProfileMode('chemical');");
     expect(loader).toContain("updateChemicalCard(profileRecord);");
   });
@@ -54,9 +56,9 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
     expect(script).toContain("? { ...openMeteo, headerSource: 'Open-Meteo current conditions' }");
     expect(script).toContain("function convertWindSpeedToMph(value, unit = 'mph')");
     expect(script).toContain("return speed * 0.621371;");
-    expect(plumeRefresh).toContain("const mapReadyPromise = ensurePlumeMap(location)");
+    expect(plumeRefresh).toContain("const mapReadyPromise = Promise.resolve().then(() => ensurePlumeMap(location))");
     expect(plumeRefresh.indexOf("const { openMeteo, nws } = await fetchWeatherSources")).toBeLessThan(
-      plumeRefresh.indexOf("await mapReadyPromise;"),
+      plumeRefresh.indexOf("await Promise.all([mapReadyPromise, chemicalReady]);"),
     );
   });
 
@@ -66,13 +68,13 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
       html.indexOf('<article class="panel-card chemical-profile-header-card">'),
     );
 
-    expect(html).toContain('id="lookup" class="view" data-hazard-page-state="search"');
+    expect(html).toContain('id="lookup" class="view hazard-id-page" data-page-root="hazard-id"');
     expect(html).toContain('id="hazard-id-search-hero"');
     expect(html).toContain('id="hazard-id-search-workspace"');
     expect(profileToolbar).toContain('id="chemical-profile-back-btn"');
     expect(profileToolbar).toContain('id="open-chemcompare-btn"');
-    expect(profileToolbar).not.toContain('id="open-guided-response-btn"');
-    expect(profileToolbar).not.toContain('id="open-plume-btn"');
+    expect(profileToolbar).toContain('id="open-guided-response-btn"');
+    expect(profileToolbar).toContain('id="open-plume-btn"');
     expect(profileToolbar).not.toContain('id="profile-export-btn"');
     expect(profileToolbar).not.toContain('id="profile-save-chemical-btn"');
     expect(script).toContain("lookup.dataset.hazardPageState = mode === 'chemical'");
@@ -84,7 +86,7 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
   });
 
   it("uses the transparent HAZMATIQ artwork on Guided Response", () => {
-    expect(html).toContain('class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png"');
+    expect(html).toContain('class="guided-response-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1"');
   });
 
   it("maps selected chemical profile fields into every operational consumer", () => {
@@ -95,6 +97,13 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
     expect(script).toContain("idlh: chemicalData.idlh || ''");
     expect(script).toContain("const chemicalData = selectedChemicalOperationalData({ incident, profile });");
     expect(script).toContain("const chemicalData = selectedChemicalOperationalData();");
+    expect(script).toContain("nioshSourceId: firstChemicalDataValue(niosh.sourceRecordId, incident?.nioshSourceId)");
+    expect(script).toContain("['IDLH Source', model.nioshSourceId ? `NIOSH · ${model.nioshSourceId}` : noCurrentDataText]");
+    expect(script).toContain("chemicalSources: chemicalProfile ? chemicalProfileSources(chemicalProfile) : (existingIncident?.chemicalSources || [])");
+    expect(script).toContain("const ppeSource = profile.ppeRecommendation || profile.ppeRespiratory || incident.ppeSummary;");
+    expect(script).toContain("const persistedMedicalSource = incident.medicalSummary || profile.medical;");
+    expect(script).toContain("const medicalSource = profile.medical || persistedMedicalSource;");
+    expect(script).toContain("status: operationalStatus(ppeSource?.status || ppeSource?.recommendationStatus");
   });
 
   it("uses compact expandable Guided Response decision panels", () => {

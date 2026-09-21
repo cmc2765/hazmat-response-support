@@ -1,0 +1,345 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-sulfur-mustard-aegl-summary-1",
+  "sourceArtifactSha256": "47d76d0ee3ec0a65303ff33e5872929ce79cc766fea88758b86a0096811302da",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 4,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "1U.S. Army Public Health Command Chemical Agent Health-Based Standards and Guidelines Summary Table 1:Criteria forAirborne Exposuresas of July 2011Approved for public release, distribution unlimitedPreventive Medicine Data:  AR 40-5ePHN No. 0711-02, ",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "July 2011Public Health Notice",
+          "role": "BODY"
+        }
+      ],
+      "text": "1U.S. Army Public Health Command Chemical Agent Health-Based Standards and Guidelines Summary Table 1:Criteria forAirborne Exposuresas of July 2011Approved for public release, distribution unlimitedPreventive Medicine Data: AR 40-5ePHN No. 0711-02, July 2011Public Health Notice",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 2,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "2Contact the USAPHC, Army Institute of Public Health, Environmental Medicine Program, 410-436-2714 for more information.Use of trademark names(s) does not imply endorsement by the U.S. Army but is intended only to",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "assist in the identification of a specific product.",
+          "role": "BODY"
+        }
+      ],
+      "text": "2Contact the USAPHC, Army Institute of Public Health, Environmental Medicine Program, 410-436-2714 for more information.Use of trademark names(s) does not imply endorsement by the U.S. Army but is intended only to assist in the identification of a specific product.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 2,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "1USA PHC*Chemical Agent Health-Based Standards and Guidelines Summary Table1: Criteria for AIRBORNE Exposures as of July 2011**Media: AIRStandard NamePopulationExposure ScenarioH/HD/HTGA (Tabun)GB (Sarin)GD/GFVXLewisiteNotes/StatusAirborne Exposure Limits",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(AELs)mg/m3see references and NotesIDLH Immediately Dangerous to Life and HealthDoD Workers (civilian)Acute 30 minute exposure0.70.10.10.050.003(**)This Table supersedes previous versions and represents the most current ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "information known to PHC at time noted.*GD/GF values were developed by Army/USACHPPM based on the relative potency to the CDC value of GB (ref a3)**Since notsignificant in US Stockpile, Lewisite criteria had not been reevaluatedsince 1988 -so the value ",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "0.003 mg/m3-a detection value-was used as a safe level for all exposures including long term.  Though cited in DA Pam 385-61  as \u0003Z\u0001\u0001µ\u0001\u0001\u0001}\u0001P\u0001\u0002\u0001\u0001\u001e\u0003[\u0000\u0003Lewisite IDLH\u0003twas non health based/not a  true IDLH \u0003tArmy OTSG ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "prepared a new IDLH equivalent of 0.36 mg/m3 in Aug 2009 (see note next page)  STELShort Term Exposure LimitDoD Workers (civilian)Occasional(4x day)15 minute exposure0.003[3x10E-0.0001[1x10E-0.0001[1x10E-0.00005[5x10E-0.00001[1x10E-NAWPLWorker Population ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "LimitDoD Workers (civilian) 8 hr daily/ multi yr time weighted average (TWA)0.0004[4x10E-0.00003[3x10E-0.00003[3x10E-0.00003[3x10E-0.000001[1x10E-0.003**GPLGeneral Population LimitCivilian General Population24 hr/daily lifetime time weighted average (TWA) ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "0.00002[2x10E-0.000001[1x10E-0.000001[1x10E-0.000001[1x10E-0.0000006[6x10E-0.003**Acute Exposure Guideline Levels(AEGLs)mg/m3see references , b and c for derivation, refs a and d for applicationAcute Exposure GuidelineLevelsEmergency/ Accident Scenario ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "1 time exposureHDGAGBGD/GFVXLewisiteFinal AEGL values (for HD, VX, G Agents)were published in May 2003by National Research Council (NRC) Committee on Toxicology (COT) (available at www.nap.edu) refbLewisite AEGLs are based on interim report ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "\u0001\u001a\u0001\u0002\u0001\u0001\u001e\u0001\u001a\u0000\u0003\u0000:\u0001µ\u0001o\u0001Ç\u0000\u0003\u0003î\u0003ì\u0003ì\u0003ó\u0003W\u0000\u0003\u0003^\u0000\u0004\u0001\u0010\u0001µ\u0001\u0001\u001e\u0000\u0003\u0000\u001c\u0001Æ\u0001\u0001}\u0001\u0001µ\u0001\u0001\u001e\u0000\u0003\u0000'\u0001µ\u0001]\u0001\u001a\u0001\u001e\u0001o\u0001]\u0001v\u0001\u001e\u0000\u0003Levels (AEGLs)for\u0003W\u0000\u0003\u0000>\u0001\u001e\u0001Á\u0001]\u0001\u0001]\u0001\u0001\u001e\u0000\u0003\u0000\u0012\u0001}\u0001u\u0001\u0001}\u0001µ\u0001v\u0001\u001a\u0001\u0003_\u0000\u0003ref cThese are guidelines, not regulatory standards. However, there is an Army-",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "FEMA policy letter requiring use of these AEGLs for the Chemical Stockpile Emergency Planning Program (CSEPP) ref d; associated CSEPP guidance provide suggested use (such as AEGL 2 as action level for shelter in place/ evacuation); but ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "policy includes allowance for site specific (state, local) decision making)See refs e& ffor AEGL applicationsAEGL \u0003tLevel 1Above this potential for some minor discomfort or noticeable but reversible effectsCivilian General Population10 min30 min1 hr4 hr",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "8 hr0.400.130.0670.0170.0080.00690.00400.00280.00140.00100.00690.00400.00280.00140.00100.00350.00200.00140.000700.000500.000570.000330.000170.000100.000071NRNRNRNRNRAEGL \u0003tLevel 2Above thismore obvious effects begin; potentially impacting ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "functional abilities or ability to escape; potential delayed recoveryCivilian General Population10 min30 min1 hr4 hr8 hr0.600.200.100.0250.0130.0870.0500.0350.0170.0130.0870.0500.0350.0170.0130.0440.0250.0180.00850.00650.00720.00420.00290.00150.00100.65",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "0.230.120.0350.018AEGL \u0003tLevel 3Above this level potential for serious effects potential life threateningCivilian General Population10 min30 min1 hr4 hr8 hr3.92.72.10.530.270.760.380.260.140.100.380.190.130.0700.0510.380.190.130.0700.0510.0290.0150.010",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "0.00520.00383.91.40.740.210.11Military Exposure Guideline(MEG)mg/m3MEGsmultiple severity levels and acute exposure durations -The chemical agent values for military deployment health and safety decision making include Negligible, Marginal, Critical an",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "d Catastrophic MEGs for 10 minute to eight hour timeframes.  They are cited USACHPPMTechnical Report (TR) 64-FF-07Z2-07, July 2008 (ref g) and new (2010) version of USAPHC Technical Guide (TG) 230 (ref h",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": ").  NOTE: MEGs are primarily based on hierarchy selection of published CIVILIAN criteria; for short term air MEGs the first choice in hierarchy are the AEGL values, but for HD and Nerve Agents only AEGL 1 criteria are used as MEGs (e.g. as",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "for Negligible MEGs).  Marginal, Critical and Catastrophic are based on military toxicity values (though Marginal and Critical MEGs are generallycomparable with the AEGL 2 and 3 estimates(see ref e)).",
+          "role": "BODY"
+        }
+      ],
+      "text": "1USA PHC*Chemical Agent Health-Based Standards and Guidelines Summary Table1: Criteria for AIRBORNE Exposures as of July 2011**Media: AIRStandard NamePopulationExposure ScenarioH/HD/HTGA (Tabun)GB (Sarin)GD/GFVXLewisiteNotes/StatusAirborne Exposure Limits (AELs)mg/m3see references and NotesIDLH Immediately Dangerous to Life and HealthDoD Workers (civilian)Acute 30 minute exposure0.70.10.10.050.003(**)This Table supersedes previous versions and represents the most current information known to PHC at time noted.*GD/GF values were developed by Army/USACHPPM based on the relative potency to the CDC value of GB (ref a3)**Since notsignificant in US Stockpile, Lewisite criteria had not been reevaluatedsince 1988 -so the value 0.003 mg/m3-a detection value-was used as a safe level for all exposures including long term. Though cited in DA Pam 385-61 as \u0003Z\u0001\u0001µ\u0001\u0001\u0001}\u0001P\u0001\u0002\u0001\u0001\u001e\u0003[\u0000\u0003Lewisite IDLH\u0003twas non health based/not a true IDLH \u0003tArmy OTSG prepared a new IDLH equivalent of 0.36 mg/m3 in Aug 2009 (see note next page) STELShort Term Exposure LimitDoD Workers (civilian)Occasional(4x day)15 minute exposure0.003[3x10E-0.0001[1x10E-0.0001[1x10E-0.00005[5x10E-0.00001[1x10E-NAWPLWorker Population LimitDoD Workers (civilian) 8 hr daily/ multi yr time weighted average (TWA)0.0004[4x10E-0.00003[3x10E-0.00003[3x10E-0.00003[3x10E-0.000001[1x10E-0.003**GPLGeneral Population LimitCivilian General Population24 hr/daily lifetime time weighted average (TWA) 0.00002[2x10E-0.000001[1x10E-0.000001[1x10E-0.000001[1x10E-0.0000006[6x10E-0.003**Acute Exposure Guideline Levels(AEGLs)mg/m3see references , b and c for derivation, refs a and d for applicationAcute Exposure GuidelineLevelsEmergency/ Accident Scenario 1 time exposureHDGAGBGD/GFVXLewisiteFinal AEGL values (for HD, VX, G Agents)were published in May 2003by National Research Council (NRC) Committee on Toxicology (COT) (available at www.nap.edu) refbLewisite AEGLs are based on interim report \u0001\u001a\u0001\u0002\u0001\u0001\u001e\u0001\u001a\u0000\u0003\u0000:\u0001µ\u0001o\u0001Ç\u0000\u0003\u0003î\u0003ì\u0003ì\u0003ó\u0003W\u0000\u0003\u0003^\u0000\u0004\u0001\u0010\u0001µ\u0001\u0001\u001e\u0000\u0003\u0000\u001c\u0001Æ\u0001\u0001}\u0001\u0001µ\u0001\u0001\u001e\u0000\u0003\u0000'\u0001µ\u0001]\u0001\u001a\u0001\u001e\u0001o\u0001]\u0001v\u0001\u001e\u0000\u0003Levels (AEGLs)for\u0003W\u0000\u0003\u0000>\u0001\u001e\u0001Á\u0001]\u0001\u0001]\u0001\u0001\u001e\u0000\u0003\u0000\u0012\u0001}\u0001u\u0001\u0001}\u0001µ\u0001v\u0001\u001a\u0001\u0003_\u0000\u0003ref cThese are guidelines, not regulatory standards. However, there is an Army- FEMA policy letter requiring use of these AEGLs for the Chemical Stockpile Emergency Planning Program (CSEPP) ref d; associated CSEPP guidance provide suggested use (such as AEGL 2 as action level for shelter in place/ evacuation); but policy includes allowance for site specific (state, local) decision making)See refs e& ffor AEGL applicationsAEGL \u0003tLevel 1Above this potential for some minor discomfort or noticeable but reversible effectsCivilian General Population10 min30 min1 hr4 hr 8 hr0.400.130.0670.0170.0080.00690.00400.00280.00140.00100.00690.00400.00280.00140.00100.00350.00200.00140.000700.000500.000570.000330.000170.000100.000071NRNRNRNRNRAEGL \u0003tLevel 2Above thismore obvious effects begin; potentially impacting functional abilities or ability to escape; potential delayed recoveryCivilian General Population10 min30 min1 hr4 hr8 hr0.600.200.100.0250.0130.0870.0500.0350.0170.0130.0870.0500.0350.0170.0130.0440.0250.0180.00850.00650.00720.00420.00290.00150.00100.65 0.230.120.0350.018AEGL \u0003tLevel 3Above this level potential for serious effects potential life threateningCivilian General Population10 min30 min1 hr4 hr8 hr3.92.72.10.530.270.760.380.260.140.100.380.190.130.0700.0510.380.190.130.0700.0510.0290.0150.010 0.00520.00383.91.40.740.210.11Military Exposure Guideline(MEG)mg/m3MEGsmultiple severity levels and acute exposure durations -The chemical agent values for military deployment health and safety decision making include Negligible, Marginal, Critical an d Catastrophic MEGs for 10 minute to eight hour timeframes. They are cited USACHPPMTechnical Report (TR) 64-FF-07Z2-07, July 2008 (ref g) and new (2010) version of USAPHC Technical Guide (TG) 230 (ref h ). NOTE: MEGs are primarily based on hierarchy selection of published CIVILIAN criteria; for short term air MEGs the first choice in hierarchy are the AEGL values, but for HD and Nerve Agents only AEGL 1 criteria are used as MEGs (e.g. as for Negligible MEGs). Marginal, Critical and Catastrophic are based on military toxicity values (though Marginal and Critical MEGs are generallycomparable with the AEGL 2 and 3 estimates(see ref e)).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 18,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "2NOTES and REFERENCES for Chemical Agent Air Standards Status Table: Existing Standards and Guidelines as of July 2011NOTES: *   USAPHC was formerly known as the US Army Center for Health Promotion and Preventive Medicine (USACHPPM)",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "** This Table replaces previous versions (USACHPPM March 2006, USACHPPM Aug 2009, July 2010)The air criteria listed in this Table are designed for protection from inhalation and ocular exposures as the most sensitive exposure routes; note that ",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "separate vapor exposure limits for percutaneousvapor absorptionare also officially endorsed by Army for occupational use per ref a3below). Perc vapor values in mg/m3arefor 30 minute skin exposures:  GA = 11.1; GB = 6.0; GD/GF = 1.5; VX = 0.13; H = 0.1.",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "DA Pamphlet 385 61:  ref a belowreplaced Department of the Army, Memorandum Subject: Implementation Guidance Policy for New Airborne Exposure Limits for GB, GA, GF, VX, HD, and HT; signed by Mr. Raymond J. Fatz Deputy Assistan",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "t Secretary of the Army, (Environment, Safety, and Occupational Health (OASA) (I&E),dated June 18, 2004. DA PAM 385 61 updates Army guidance and implementing procedures for conducting chemical agent safety program in accordance with AR 385-10. ** Lewisite",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "IDLH:In response to a June 2009 request from U.S.",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "\u0000\u0004\u0001\u0001u\u0001Ç\u0000\u0003\u0000\u0012\u0001Z\u0001\u001e\u0001u\u0000\u0003\u0000\u0004\u0001P\u0001\u001e\u0001v\u0001\u0000\u0003\u0000^\u0001\u0002\u0001(\u0001\u001e\u0001\u0001Ç\u0000\u0003\u0000\u0012\u0001}\u0001µ\u0001v\u0001\u0010\u0001]\u0001o\u0000\u0003\u0003~\u0000\u0018\u0000\u0004\u0000\u0012\u0000\u0004\u0000^\u0000\u0012\u0003\u0000\u0003\u0001\u0001}\u0000\u0003\u0001\u0001\u0001}\u0001À\u0001]\u0001\u001a\u0001\u001e\u0000\u0003\u0001\u0002\u0000\u0003\u0003Z\u0001\u0001\u0001µ\u0001\u001e\u0003[\u0000\u0003\u0000/\u0000\u0018\u0000>\u0000,\u0000\u0003\u0001À\u0001\u0002\u0001o\u0001µ\u0001\u001e\u0000\u0003\u0001\u0001}\u0000\u0003\u0001(\u0001\u0002\u0001\u0010\u0001]\u0001o\u0001]\u0001\u0001\u0002\u0001\u0001\u001e\u0000\u0003\u0001}\u0001v\u0001P\u0001}\u0001]\u0001v\u0001P\u0000\u0003\u0001v\u0001}\u0001v\u0000\u0003\u0001\u0001\u0001}\u0001\u0010\u0001l\u0001\u0001]\u0001o\u0001\u001e\u0000\u0003\u0001\u001a\u0001\u001e\u0001u\u0001]\u0001o\u0000\u0003\u0001}\u0001\u0001\u001e\u0001\u0001\u0002\u0001\u0001]\u0001}\u0001v\u0001\u0003lPPE ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "determination at Pine Bluff (PB), Ark, USACHPPM proposed a protective toxicological-based effective IDLH value of 0.36 mg/m3 for DACASC consideration.  TheUSACHPPM criterionwas endorsed in an OTSG memorandum, Subject New Immediately D",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "angerous to Life and Health (IDLH) Concentration Level for Lewisite, 24 August 2009. While established for the PB site operations, the value is toxicologicallyderived and considered a safe estimate for other IDLH applications.REFERENCES:a) DA PAM 385-61, ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Toxic Chemical Agent Safety Standards, 17December 2008** NOTE:   The criteria in DA PAM385-61is based on the following references:a1. Department of Health and Human Services (DHHS) Centers for Disease Control (CDC); Interim",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Recommendations for Airborne Exposure Limits for Chemical Warfare Agents H and HD (Sulfur Mustard); Federal Register, vol 69, No 85, pp 24164-24168, May 3, 2004. a2. Department of Health and Human Services (DHHS) Centers for Disease Control (CDC); Final",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Recommendations for Protecting Human Health from Potential Adverse Effects of Exposure to Agents GA, GB, and VX; Federal Register, vol 68, pp 58348-58351, October 9, 2003. ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "(x) Interim Supplemental Chemical Material Agency (CMA) Implementation for Revised AELs, DA CMA, December 2004a3.  Department of the Army Office of the Surgeon General Memorandum, Subject: ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Nerve Agent Percutaneous Exposure Criteria and Airborne Exposure Levels (AELs) for GD, GF in use of Interim DA Guidance on Implementation of the New AELs, 29 June 2004. b.  National Research Council (NRC) Volume 3, Acute Exposure Guidelines",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "for Selected Airborne Chemicals, National Academy Press, 2003, www.nap.educ.  Acute Exposure Guideline Levels (AEGLs) for Lewisite L-1 (CAS 541-25-3) Lewisite-2 (CAS 40334-69-8) and Lewisite L-3 (CAS 40334-70-1), Technical Support Document, Interim",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "1 July 2007. Available at http://www.epa.gov/oppt/aegl/pubs/lewisites_tsd_interimversion_1_07_2007.pdfd. ChemicalStockpile Emergency Preparedness Program,) Policy Paper #20 (Revised), Subject: Adoption of Acute Exposure Guideline Levels (AEGLs); ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "U.S. Army and U.S. Federal Emergency Management Agency (FEMA), February 2003Other AEGL Application Refs:  e. USAPHC Frequently Asked Question About AEGLs and Their Applications, 2011.f.\"Developing Health-based Pre-",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "planning Clearance Goals for Airport Remediation Following Chemical Terrorist Attack:  PART I: Introduction and Key Assessment Considerations(Watson AP, HallL, Raber E, Hauschild V, Dolislager F, Love A and Hanna M) ; and PART II:  ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "Decision Criteria for Mulitpathway Exposure Routes.(Watson AP, Hall L, Raber E, Hauschild V, LoveA)  Human and Ecological Risk Assessment (HERA) 17 (1):  PART 1: 1-56, and Part II: 57-121.  (Jan 2011).   g.  USACHPPM Technical Report 64-FF-07Z2-07, Health-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Based Chemical Vapor Concentration Levels for Future Systems Acquisition and Development,February 2008 with July 2008 Update (based on USACHPPM Technical Report 47-EM-5863-",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "04; Acute Toxicity Estimation and Operational Risk Management of Chemical Warfare Agent Exposures; May 2004).h.  USACHPPM Technical Guide 230; Chemical Exposure Guidelines for Deployed Military Personnel, 2010.  (This is a new version; contact 410-436-",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "2953 for information.)",
+          "role": "BODY"
+        }
+      ],
+      "text": "2NOTES and REFERENCES for Chemical Agent Air Standards Status Table: Existing Standards and Guidelines as of July 2011NOTES: * USAPHC was formerly known as the US Army Center for Health Promotion and Preventive Medicine (USACHPPM) ** This Table replaces previous versions (USACHPPM March 2006, USACHPPM Aug 2009, July 2010)The air criteria listed in this Table are designed for protection from inhalation and ocular exposures as the most sensitive exposure routes; note that separate vapor exposure limits for percutaneousvapor absorptionare also officially endorsed by Army for occupational use per ref a3below). Perc vapor values in mg/m3arefor 30 minute skin exposures: GA = 11.1; GB = 6.0; GD/GF = 1.5; VX = 0.13; H = 0.1. DA Pamphlet 385 61: ref a belowreplaced Department of the Army, Memorandum Subject: Implementation Guidance Policy for New Airborne Exposure Limits for GB, GA, GF, VX, HD, and HT; signed by Mr. Raymond J. Fatz Deputy Assistan t Secretary of the Army, (Environment, Safety, and Occupational Health (OASA) (I&E),dated June 18, 2004. DA PAM 385 61 updates Army guidance and implementing procedures for conducting chemical agent safety program in accordance with AR 385-10. ** Lewisite IDLH:In response to a June 2009 request from U.S. \u0000\u0004\u0001\u0001u\u0001Ç\u0000\u0003\u0000\u0012\u0001Z\u0001\u001e\u0001u\u0000\u0003\u0000\u0004\u0001P\u0001\u001e\u0001v\u0001\u0000\u0003\u0000^\u0001\u0002\u0001(\u0001\u001e\u0001\u0001Ç\u0000\u0003\u0000\u0012\u0001}\u0001µ\u0001v\u0001\u0010\u0001]\u0001o\u0000\u0003\u0003~\u0000\u0018\u0000\u0004\u0000\u0012\u0000\u0004\u0000^\u0000\u0012\u0003\u0000\u0003\u0001\u0001}\u0000\u0003\u0001\u0001\u0001}\u0001À\u0001]\u0001\u001a\u0001\u001e\u0000\u0003\u0001\u0002\u0000\u0003\u0003Z\u0001\u0001\u0001µ\u0001\u001e\u0003[\u0000\u0003\u0000/\u0000\u0018\u0000>\u0000,\u0000\u0003\u0001À\u0001\u0002\u0001o\u0001µ\u0001\u001e\u0000\u0003\u0001\u0001}\u0000\u0003\u0001(\u0001\u0002\u0001\u0010\u0001]\u0001o\u0001]\u0001\u0001\u0002\u0001\u0001\u001e\u0000\u0003\u0001}\u0001v\u0001P\u0001}\u0001]\u0001v\u0001P\u0000\u0003\u0001v\u0001}\u0001v\u0000\u0003\u0001\u0001\u0001}\u0001\u0010\u0001l\u0001\u0001]\u0001o\u0001\u001e\u0000\u0003\u0001\u001a\u0001\u001e\u0001u\u0001]\u0001o\u0000\u0003\u0001}\u0001\u0001\u001e\u0001\u0001\u0002\u0001\u0001]\u0001}\u0001v\u0001\u0003lPPE determination at Pine Bluff (PB), Ark, USACHPPM proposed a protective toxicological-based effective IDLH value of 0.36 mg/m3 for DACASC consideration. TheUSACHPPM criterionwas endorsed in an OTSG memorandum, Subject New Immediately D angerous to Life and Health (IDLH) Concentration Level for Lewisite, 24 August 2009. While established for the PB site operations, the value is toxicologicallyderived and considered a safe estimate for other IDLH applications.REFERENCES:a) DA PAM 385-61, Toxic Chemical Agent Safety Standards, 17December 2008** NOTE: The criteria in DA PAM385-61is based on the following references:a1. Department of Health and Human Services (DHHS) Centers for Disease Control (CDC); Interim Recommendations for Airborne Exposure Limits for Chemical Warfare Agents H and HD (Sulfur Mustard); Federal Register, vol 69, No 85, pp 24164-24168, May 3, 2004. a2. Department of Health and Human Services (DHHS) Centers for Disease Control (CDC); Final Recommendations for Protecting Human Health from Potential Adverse Effects of Exposure to Agents GA, GB, and VX; Federal Register, vol 68, pp 58348-58351, October 9, 2003. (x) Interim Supplemental Chemical Material Agency (CMA) Implementation for Revised AELs, DA CMA, December 2004a3. Department of the Army Office of the Surgeon General Memorandum, Subject: Nerve Agent Percutaneous Exposure Criteria and Airborne Exposure Levels (AELs) for GD, GF in use of Interim DA Guidance on Implementation of the New AELs, 29 June 2004. b. National Research Council (NRC) Volume 3, Acute Exposure Guidelines for Selected Airborne Chemicals, National Academy Press, 2003, www.nap.educ. Acute Exposure Guideline Levels (AEGLs) for Lewisite L-1 (CAS 541-25-3) Lewisite-2 (CAS 40334-69-8) and Lewisite L-3 (CAS 40334-70-1), Technical Support Document, Interim 1 July 2007. Available at http://www.epa.gov/oppt/aegl/pubs/lewisites_tsd_interimversion_1_07_2007.pdfd. ChemicalStockpile Emergency Preparedness Program,) Policy Paper #20 (Revised), Subject: Adoption of Acute Exposure Guideline Levels (AEGLs); U.S. Army and U.S. Federal Emergency Management Agency (FEMA), February 2003Other AEGL Application Refs: e. USAPHC Frequently Asked Question About AEGLs and Their Applications, 2011.f.\"Developing Health-based Pre- planning Clearance Goals for Airport Remediation Following Chemical Terrorist Attack: PART I: Introduction and Key Assessment Considerations(Watson AP, HallL, Raber E, Hauschild V, Dolislager F, Love A and Hanna M) ; and PART II: Decision Criteria for Mulitpathway Exposure Routes.(Watson AP, Hall L, Raber E, Hauschild V, LoveA) Human and Ecological Risk Assessment (HERA) 17 (1): PART 1: 1-56, and Part II: 57-121. (Jan 2011). g. USACHPPM Technical Report 64-FF-07Z2-07, Health- Based Chemical Vapor Concentration Levels for Future Systems Acquisition and Development,February 2008 with July 2008 Update (based on USACHPPM Technical Report 47-EM-5863- 04; Acute Toxicity Estimation and Operational Risk Management of Chemical Warfare Agent Exposures; May 2004).h. USACHPPM Technical Guide 230; Chemical Exposure Guidelines for Deployed Military Personnel, 2010. (This is a new version; contact 410-436- 2953 for information.)",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 22,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

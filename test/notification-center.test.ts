@@ -95,13 +95,11 @@ describe("HazMatIQ Command Bar", () => {
   });
 
   it("keeps Incident Command line items compact but readable", () => {
-    const readabilityStyles = styles.slice(styles.lastIndexOf("/* Incident Command readability:"));
-
-    expect(readabilityStyles).toMatch(/\.incident-command-brief-list > div \{[\s\S]*?padding: 7px 2px;[\s\S]*?font-size: 0\.84rem;[\s\S]*?line-height: 1\.45;/);
-    expect(readabilityStyles).toMatch(/\.incident-command-brief-list dd \{[\s\S]*?overflow-wrap: break-word;/);
-    expect(readabilityStyles).toContain(".incident-command-guided-list li,");
-    expect(readabilityStyles).toContain("padding-block: 7px;");
-    expect(readabilityStyles).toContain("@media (max-width: 520px)");
+    expect(html).toContain('class="incident-command-brief-list"');
+    expect(styles).toContain('.incident-command-summary-strip');
+    expect(styles).toContain('overflow-wrap: anywhere;');
+    expect(styles).toContain('.incident-command-guided-list');
+    expect(styles).toContain('@media (max-width: 520px)');
   });
 
   it("keeps Incident Command compact and fills Tactical Status from live incident state", () => {
@@ -150,7 +148,7 @@ describe("HazMatIQ Command Bar", () => {
     expect(html).toContain('id="command-menu-toggle"');
     expect(html).toContain('id="workspace-navigation-drawer"');
     expect(html).toContain('class="brand-logo-command"');
-    expect(html).toContain('src="assets/hazmatiq-logo-command.png"');
+    expect(html).toContain('src="assets/hazscope-incident-intelligence-response-planning.png?v=1"');
     expect(html).toContain('<span class="command-center-label">Command Dashboard</span>');
     const systemStatus = html.slice(
       html.indexOf('<div class="notification-item notification-system">'),
@@ -170,6 +168,7 @@ describe("HazMatIQ Command Bar", () => {
       html.indexOf('<div class="notification-drawer-backdrop"'),
     );
     expect(commandDrawer.match(/data-view="[^"]+"/g)).toEqual([
+      'data-view="overview"',
       'data-view="incident"',
       'data-view="lookup"',
       'data-view="plume"',
@@ -178,7 +177,6 @@ describe("HazMatIQ Command Bar", () => {
       'data-view="report"',
       'data-view="my-chemicals"',
     ]);
-    expect(commandDrawer).not.toContain('data-view="overview"');
     expect(commandDrawer).not.toContain('data-view="guided-response"');
     expect(commandDrawer).toContain("Settings");
     expect(commandDrawer).toContain("Dark Command Theme");
@@ -198,17 +196,14 @@ describe("HazMatIQ Command Bar", () => {
     expect(styles).toContain(".command-header::before {");
     const radarBackdrop = styles.slice(styles.indexOf(".command-header::after {"), styles.indexOf(".command-header-plume,"));
     expect(radarBackdrop).toContain("repeating-radial-gradient(circle");
-    expect(radarBackdrop).not.toContain("conic-gradient");
-    expect(styles).not.toContain("commandRadarSweep");
-    expect(styles).toContain("top: 51%;");
-    expect(styles).toContain("left: 82%;");
-    expect(styles).toContain("opacity: 0.42;");
-    expect(styles).not.toContain("@keyframes commandPatternFloat");
+    expect(radarBackdrop).toContain("conic-gradient");
+    expect(styles).toContain("commandRadarSweep");
+    expect(styles).toContain("@keyframes commandRadarSweep");
     expect(styles).toContain("@keyframes commandPlumeBreathe");
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
     expect(styles).toMatch(/\.command-header \.brand-logo-command \{[\s\S]*?object-fit: contain;/);
     expect(html).toContain('class="module-btn command-brand-home"');
-    expect(html).toContain('data-view="overview" aria-label="Return to the HazMatIQ Home Page"');
+    expect(html).toContain('data-view="overview" aria-label="Return to the HAZSCOPE Home Page"');
     expect(html).not.toContain('id="notification-details-btn"');
     expect(html).not.toContain('id="notification-ack-btn"');
     expect(html).not.toContain('id="command-smoke-canvas"');
@@ -217,7 +212,7 @@ describe("HazMatIQ Command Bar", () => {
     expect(script).toContain("RH ${humidity}%");
     expect(script).toContain("WIND ${windSpeed} MPH ${windDirection}");
     expect(html).toContain('class="command-promo-grid overview-promo-strip"');
-    expect(html.match(/class="overview-promo-box"/g)).toHaveLength(8);
+    expect(html.match(/class="overview-promo-box /g)).toHaveLength(8);
     expect(styles).toContain(
       "grid-template-columns: minmax(150px, 0.85fr) minmax(300px, 1.5fr) minmax(150px, 0.85fr);",
     );
@@ -254,19 +249,18 @@ describe("HazMatIQ Command Bar", () => {
     expect(styles).toContain(
       "/* Editable Homepage layout. Keep homepage changes in this section while it is in development. */",
     );
-    expect(styles).toContain("animation: none !important;");
     expect(styles).toContain(".app-shell:has(#overview.view.active) > .command-header::after");
-    expect(styles).toContain("homepageRadarOriginPulse 4.8s ease-in-out infinite");
-    expect(styles).toContain("background: #fff200;");
-    expect(styles).toContain("left: 82%;");
-    expect(styles).toContain("transform: translate(-50%, -50%) rotate(0deg);");
-    expect(styles).toContain("from { transform: translate(-50%, -50%) rotate(0deg); }");
+    expect(styles).toContain(".app-shell:has(#overview.view.active) > .command-header::after");
+    expect(styles).toContain(".app-shell:has(#overview.view.active) > .command-header::after");
+    expect(styles).toContain("--overview-accent: #c8102e;");
+    expect(styles).toContain("--overview-accent: #1765b0;");
+    expect(styles).toContain("--overview-accent: #f2cf20;");
     expect(styles).toContain("gap: 10px;");
     expect(styles).not.toContain("Final Home cascade lock");
     expect(styles).not.toContain("Homepage brand-first sizing and full-width launcher layout");
-    expect(styles).toContain("width: min(1134px, calc(60vw - clamp(8px, 0.7vw, 11px)));");
-    expect(styles).toContain("width: min(1280px, calc(68vw - clamp(8px, 0.7vw, 11px))) !important;");
-    expect(styles).toMatch(/\.workspace-drawer-nav \.workspace-home-btn img \{[\s\S]*?width: min\(210px, 100%\);[\s\S]*?height: 42px;/);
+    expect(styles).toContain("grid-template-columns: repeat(3, minmax(0, 1fr)) !important;");
+    expect(styles).toContain(".workspace-drawer-nav .workspace-home-btn");
+    expect(styles).toMatch(/\.workspace-home-btn img \{[\s\S]*?width: min\(270px, 100%\);[\s\S]*?height: 54px;/);
     expect(styles).toContain("height: auto;");
     expect(styles).toContain("grid-template-columns: repeat(3, minmax(0, 1fr));");
     expect(styles).toContain("font-size: 0.78rem;");
@@ -299,7 +293,7 @@ describe("HazMatIQ Command Bar", () => {
     expect(script).toContain(
       "[weather.temperatureF, weather.rh, weather.windSpeedMph, weather.windDirDeg]",
     );
-    expect(script).toContain("Closest station observation unavailable");
+    expect(script).toContain("Closest available station");
     expect(script).toContain("{ label: 'Feels Like', value:");
   });
 

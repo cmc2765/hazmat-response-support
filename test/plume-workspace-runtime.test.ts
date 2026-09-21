@@ -43,6 +43,9 @@ describe('Plume workspace initialization', () => {
       activeChemicalRecord: null,
       getActiveIncident: () => ({ selectedChemicalId: 22, chemicalName: 'Chlorine' }),
       fetchJson: vi.fn().mockResolvedValueOnce({ id: 22, name: 'Chlorine' }).mockResolvedValueOnce({ header: { name: 'Chlorine' } }),
+      fetchPrimaryChemicalProfile: vi.fn().mockResolvedValue({
+        id: '22', selectedChemicalId: 22, name: 'Chlorine', profile: { header: { name: 'Chlorine' } },
+      }),
       setActiveChemical: (chemical: { id: number }) => { context.activeChemical = { id: String(chemical.id) }; context.selectedChemicalId = chemical.id; },
       buildFullChemicalRecord: vi.fn().mockResolvedValue({ name: 'Chlorine' }),
       applyChemicalContainerProfile: vi.fn(), restoreIncidentContainerData: vi.fn(),

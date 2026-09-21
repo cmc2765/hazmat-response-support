@@ -1,0 +1,11 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "fema-chemical-consequence-framework",
+  "sourceArtifactSha256": "f1efe46bef30726aa3fbc68ab130e4a23d26e3d28f8912e6cb1090ca784bc596",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "I_FORM_XFA_PDF",
+  "pageCount": 0,
+  "pages": []
+}

@@ -65,6 +65,8 @@ export type CbrneFieldGroup =
   | "HAZARDS"
   | "SYMPTOMS"
   | "DETECTION"
+  | "SAMPLING"
+  | "ANALYSIS"
   | "PPE"
   | "ISOLATION_STANDOFF"
   | "DECON"
@@ -112,6 +114,12 @@ export type CbrneSourceFact = {
   units?: string;
   verificationStatus: CbrneVerificationStatus;
   notes?: string;
+  sourceArtifactId?: string;
+  sourceLocator?: string;
+  extractionMethod?: "STRUCTURED_API" | "DOCUMENT_REVIEW" | "WEB_PAGE_REVIEW" | "TITLE_IDENTITY";
+  detailedReviewStatus?: import("./authoritativeSourceTypes.js").AuthoritativeFactReviewStatus;
+  factKind?: import("./authoritativeSourceTypes.js").AuthoritativeFactKind;
+  limitations?: string[];
 };
 
 export type CbrneSearchResult = {
@@ -158,6 +166,8 @@ export type CbrneProfile = {
   actionCards: CbrneActionCard[];
   limitations: string[];
   dataStatusBadges: CbrneVerificationStatus[];
+  authoritativeFacts: import("./authoritativeSourceTypes.js").AuthoritativeSourceFact[];
+  radionuclidePhysics: import("../../data/cbrne/authoritative/radionuclidePhysics.js").RadionuclidePhysicsRecord | null;
   sourceStatus: {
     sourcePacksLoaded: number;
     sourceFactCount: number;
@@ -165,7 +175,12 @@ export type CbrneProfile = {
     requiresSmeReviewCount: number;
     conflictingSourcesCount: number;
     missingFieldCount: number;
+    sourceArtifactIds: string[];
+    sourceArtifactCount: number;
+    factLevelProvenanceCount: number;
     lastImportUpdate: string;
     warnings: string[];
   };
+  guidedResponseReadiness?: import("./guidedResponseReadiness.js").GuidedResponseDataReadiness;
+  guidedResponseEvidence?: import("./guidedResponseReadiness.js").GuidedResponseEvidence[];
 };

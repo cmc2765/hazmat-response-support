@@ -1,0 +1,566 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-biological-tularemia",
+  "sourceArtifactSha256": "9cea2c559656068e12dff82e8cbf95a1da8ca8d9b889d50307fa256d0f07e549",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+  "pageCount": 2,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "September, 2011NRT Quick Reference Guide: Francisella tularensis (Causes the disease Tularemia)\u0000)\u0000R\u0000U\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000V\u0000H\u0000H\u0000\u0003\u0000³\u0000.\u0000H\u0000\\\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000V\u0000\u0003\u0000&\u0000L\u0000W\u0000H\u0000G\u0000\u0012\u00008\u0000V\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(NRT) Quick Reference Guides (QRGs) for Bacterial2011 Revision.\u0000´QRGsareintended for Federal On-Scene Coordinators (OSCs) and Remedial Program Managers (RPMs).Agent CharacteristicsAgent Classification: Biological Type: Bacteria (Francisella tularensis)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "Description:F. tularensis, a pathogenic Gram-negative bacteria causes the disease tularemia (a.k.a., Pahvant Valley plague & rabbit fever).  This zoonotic disease (transmissible from animals to humans) is",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "\u0000I\u0000R\u0000X\u0000Q\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000K\u0000X\u0000P\u0000D\u0000Q\u0000V\u0000\u000f\u0000\u0003\u0000U\u0000R\u0000G\u0000H\u0000Q\u0000W\u0000V\u0000\u000f\u0000\u0003\u0000U\u0000D\u0000E\u0000E\u0000L\u0000W\u0000V\u0000\u000f\u0000\u0003\u0000V\u0000T\u0000X\u0000L\u0000U\u0000U\u0000H\u0000O\u0000V\u0000\u000f\u0000\u0003\u0000K\u0000D\u0000U\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000W\u0000L\u0000F\u0000N\u0000V\u0000\u000f\u0000\u0003\u0000E\u0000L\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000À\u0000L\u0000H\u0000V\u0000\u000f\u0000\u0003free-living amoebae, and carcasses.  It is capable of surviving for ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "weeks at low temperatures in water, moist soil, hay, straw or decaying carcasses. There are 6 clinical presentations for tularemia: 1)Pneumonic(most likely in a bio-terror event); 2)Typhoidal(likely in a bioterror event); 3)Ulceroglandular(most commo",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "n natural form); 4)Glandular;5)Oculoglandular;6) Oropharyngeal & 7) Gastrointestial.Bio-Safety Level: 3CDC Class: AHHS Select Agent: YesIncubation Period:1-10 days, up to 21, but typically 3-5 days.Duration of Illness:2 or more weeks, dependin",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "g on how quickly treatment is providedPerson-to-Person Transmission:NoTreatment: Supportive accompanied with antibiotics such as, but not limited to, streptomycin. Infectivity/Lethality:  High (1-50 organisms) via inhalation route/If untreated, 30-60% ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "will die, decreases to 2% if treated.Persistence/Stability:Can live for weeks in cold, moist soils/Minimally stable since believed inactivated 2 days after an outdoor release.  F. tularensiscan persist for two weeks in an indoor release.Release Scenarios",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Air:F. tularensis can be made for dry or wet aerosol dispersion. Re-aerosolization is a consideration with weaponized F. tularensis, though it is thought to be unlikely. F. tularensishas been weaponized fordry & wet aerosol dispersion. The area of i",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "nitial release might be difficult to identify because symptoms may take days to appear.Soil:F. tularensisexists naturally (endemic in No. America & Eurasia) & can contaminate hay, soil & can live for weeks in cold, moist conditions. Surfaces: Unknown, ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "but could be used as a transmission point.Water:Possible pathway for weaponized strain, and natural strain outbreaks have also occurred.Health EffectsOnset3-5 days after aerosolized release, may present within 1-10 days & up to 21 days post exposure.Signs/",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Symptoms General:The primary clinical forms of tularemia will vary in severity & presentation depending on virulence of the infecting organism, dose, & site of infection. Tularemiacan be fatal without treatment & is an incapacitating disease in non-",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "fatal cases.Inhalation:Inhalation of F. tularensiscan produce flu-like symptoms progressing to pneumonia, ulcers of the mouth, chest pain, breathing difficulty, bloody sputum, & respiratory failure. Skin:Cutaneous infection through abraded or",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "cracked skin resulting inulcers at the infection site& swollen lymph nodes. Cutaneous infections also resultfrom bitesfrom ticks and biting insects that havefed on infected animals or carcasses.Ingestion:Eating/Drinking contaminated food/water cancause ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "oropharyngealtularemia; typhoidaland gastrointestialpresentationsSmay also occur however alarge numbers of organisms are required (10E6 to 10E8).Effect LevelsInfectivity:The organism is highly infectious by the inhalation route. Long term i",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "mmunity usually follows recovery from tularemia.  However, re-infection has been reported. Infective Dose:Fifty percent of people that inhale 1 to 50 organisms may contract tularemia. The ingestion pathway requires orders of magnitude more organisms. Le",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "thality:Less than 7% forpneumonic and typhoidal, if appropriate antibiotic therapy is provided early.  The other forms are usually not fatal. Personnel SafetyConcernsCheck with the Health & Safety Officer regarding PPE, Medical Surveillance, & Health",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "& Safety Plan (HASP). Level of PPE may vary depending upon the incident & site specific circumstances. The PPE Levels listed are general suggestions only & are appropriate only for F. tularensis; they may not provide protection for some decon & other che",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "micals that workers may be exposed to during response/recovery operations.For decon of workers, use warm soapy water, taking care to avoid abrading the skin.MedicalBaseline: Annual physical & respiratory function exams. THERE IS NO FDA APPROVED HUMAN ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "VACCINE FOR TULAREMIA.Treatments Available: Supportive accompanied with antibiotics, such as streptomycin.First AidDuring Incident: Conduct medical monitoring; use PPE as designated by the HASP; record the PPE Levels used; monitor for fever & other si",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "gns/symp-toms as listed under Health Effects &, if necessary, ensure medical attention is obtained as soon as possible. Post Incident: Monitor for signs/symptoms.  If necessary, ensure medical attention is provided as soon as possible.PPEEmergency Res",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "ponse to a Suspected Biological Incident: Possible PPE Levels for emergency responders is based on scenario risks from highest level of protection to least: 1)Pressure-demand Self Contained Breathing Apparatus (SCBA) with Level A protective suit, when: a)",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Event is uncontrolled, b)The type(s) of airborne agent(s) is unknown, c)The dissemination method is unknown, d)Dissemination via an aerosol-generating device is still occurring, e)Dissemination via an aerosol-generating device has stopped, but there i",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "s no information on the duration of dissemination, or what the exposure concentration may be. 2)Pressure-demand SCBA with Level B protective suit, when: a)The suspected biological aerosol is no longer being released, b)Other conditions may present a sp",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "lash hazard. 3)Full-facepiece respirator with P100 filter or PAPR with HEPA filters, when: An aerosol-generating device was not used to create high airborne concentrations. 4)Disposable hooded coveralls, gloves, & foot coverings, when: Dissemination was ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "by a letter, package, or other material that can be bagged, contained, etc. Other Workers: PPE recommendations for workers other than emergency responders must be developed in the HASP for the specific scenario. PPE recommendations will vary by job type ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "(e.g., cleanup, decon, etc.), type of exposure (e.g., airborne or surface/liquid/soil hazard), & any other site hazards (e.g., chemical, physical, etc.).Field DetectionFixed Aerosol Monitoring: Anaerosol release of F. tularensismaybe detected ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "using air samples & PCR. Results may be delayed as much as 2 daysfrom time of release. In the absence of reliable detection, a F. tularensisrelease will only be confirmed once patients present with symptoms and are diagnosed or animal die-off from ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Tularemiais confirmed.Consult EPA/HQ-EOC at 202-564-3850 for more information.Portable Aerosol Monitoring: Portable aerosol monitoring may use dry or wet sampling methods.  Dry sampling (useful only for molecular analyses) includes ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "gelatin, cellulose acetate & Teflon methods.  Wet sampling methods include liquid impingers (low flow) & impactors (single or\u0000V\u0000L\u0000[\u0000\u0003\u0000V\u0000W\u0000D\u0000J\u0000H\u0000\f\u0000\u0011\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "aseptic sampling methods, flow rates, & sampling times. Ensure that the appropriate pump is used for the selected sampling method.SamplingConcerns:   BEFOREOBTAINING SAMPLES: Identify sample transportation requirements; Contact EPA/HQ-EOC (202-564-3850)",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "for ERLN contract laboratories able to analyze these types of samples; Clearly identify & coordinate with the laboratory to be used since most labs cannot analyze all types of media (e.g., wipes, ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "swabs, and HEPA vacuum samples); Coordinate with the sample disposal facility for acceptance criteria (i.e., sample decon requirements); Coordinate with investigative units (EPA-CID & FBI) to ensure sample chain-of-",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "custody is maintained between the groups. Note: Detection/analytical equipment & sampling techniques will be highly site-speci\u0000¿c & depend on: 1)the characteristics of the agent; 2) the type of contaminated surfaces (e.g., porous v. nonporous); 3)the ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "phases/purposes of sampling (initial ID v. post-decon sampling); 4)the way in which samples are handled so as not to adversely affect viability; 5) transportation regulations 6) the acceptance criteria of the analytical laboratory & 7) ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "the sample decon requirements for the waste disposal facilities to be used. See LABORATORY ANALYSIS, below.CAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACCUUM EQUIPMENT SHOULD BE USED. A site-",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "\u0000V\u0000S\u0000H\u0000F\u0000L\u0000À\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000U\u0000H\u0000Y\u0000L\u0000H\u0000Z\u0000H\u0000G\u0000\u0003\u0000\t\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0003\u00006\u0000X\u0000E\u0000M\u0000H\u0000F\u0000W\u0000\u0003\u00000\u0000D\u0000W\u0000W\u0000H\u0000U\u0000\u0003\u0000(\u0000[\u0000S\u0000H\u0000U\u0000W\u0000V\u0000\u0003\u0000\t\u0000\u0012\u0000R\u0000U\u0000\u0003\u0000W\u0000K\u0000U\u0000R\u0000X\u0000J\u0000K\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "Sampling Location Plans: If release was limited to a small area due to opening a letter or container, start with an area thought tobe free of contamination & work in concentric circles towards the initial point of contamination. ",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "\u0000%\u0000H\u0000\u0003\u0000F\u0000R\u0000Q\u0000F\u0000H\u0000U\u0000Q\u0000H\u0000G\u0000\u0003\u0000D\u0000E\u0000R\u0000X\u0000W\u0000\u0003\u0000R\u0000W\u0000K\u0000H\u0000U\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000G\u0000X\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000I\u0000R\u0000R\u0000W\u0000\u0003\u0000W\u0000U\u0000D\u0000I\u0000¿\u0000F\u0000\u0012\u0000Y\u0000H\u0000Q\u0000W\u0000L\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000V\u0000\u0003\u0000\u000b\u0000H\u0000\u0011\u0000J\u0000\u0011\u0000\u000f\u0000\u0003\u0000H\u0000O\u0000H\u0000Y\u0000D\u0000W\u0000R\u0000U\u0000\u0003buttons, mail, corners of hallways, baseboards, light swit",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "ches, door knobs, etc.) Based on site characteristics & laboratory capacity, the sampling plan may be judgmental, probabilistic, or a combination thereof.",
+          "role": "BODY"
+        }
+      ],
+      "text": "September, 2011NRT Quick Reference Guide: Francisella tularensis (Causes the disease Tularemia)\u0000)\u0000R\u0000U\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000V\u0000H\u0000H\u0000\u0003\u0000³\u0000.\u0000H\u0000\\\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000V\u0000\u0003\u0000&\u0000L\u0000W\u0000H\u0000G\u0000\u0012\u00008\u0000V\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P (NRT) Quick Reference Guides (QRGs) for Bacterial2011 Revision.\u0000´QRGsareintended for Federal On-Scene Coordinators (OSCs) and Remedial Program Managers (RPMs).Agent CharacteristicsAgent Classification: Biological Type: Bacteria (Francisella tularensis) Description:F. tularensis, a pathogenic Gram-negative bacteria causes the disease tularemia (a.k.a., Pahvant Valley plague & rabbit fever). This zoonotic disease (transmissible from animals to humans) is \u0000I\u0000R\u0000X\u0000Q\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000K\u0000X\u0000P\u0000D\u0000Q\u0000V\u0000\u000f\u0000\u0003\u0000U\u0000R\u0000G\u0000H\u0000Q\u0000W\u0000V\u0000\u000f\u0000\u0003\u0000U\u0000D\u0000E\u0000E\u0000L\u0000W\u0000V\u0000\u000f\u0000\u0003\u0000V\u0000T\u0000X\u0000L\u0000U\u0000U\u0000H\u0000O\u0000V\u0000\u000f\u0000\u0003\u0000K\u0000D\u0000U\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000W\u0000L\u0000F\u0000N\u0000V\u0000\u000f\u0000\u0003\u0000E\u0000L\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000À\u0000L\u0000H\u0000V\u0000\u000f\u0000\u0003free-living amoebae, and carcasses. It is capable of surviving for weeks at low temperatures in water, moist soil, hay, straw or decaying carcasses. There are 6 clinical presentations for tularemia: 1)Pneumonic(most likely in a bio-terror event); 2)Typhoidal(likely in a bioterror event); 3)Ulceroglandular(most commo n natural form); 4)Glandular;5)Oculoglandular;6) Oropharyngeal & 7) Gastrointestial.Bio-Safety Level: 3CDC Class: AHHS Select Agent: YesIncubation Period:1-10 days, up to 21, but typically 3-5 days.Duration of Illness:2 or more weeks, dependin g on how quickly treatment is providedPerson-to-Person Transmission:NoTreatment: Supportive accompanied with antibiotics such as, but not limited to, streptomycin. Infectivity/Lethality: High (1-50 organisms) via inhalation route/If untreated, 30-60% will die, decreases to 2% if treated.Persistence/Stability:Can live for weeks in cold, moist soils/Minimally stable since believed inactivated 2 days after an outdoor release. F. tularensiscan persist for two weeks in an indoor release.Release Scenarios Air:F. tularensis can be made for dry or wet aerosol dispersion. Re-aerosolization is a consideration with weaponized F. tularensis, though it is thought to be unlikely. F. tularensishas been weaponized fordry & wet aerosol dispersion. The area of i nitial release might be difficult to identify because symptoms may take days to appear.Soil:F. tularensisexists naturally (endemic in No. America & Eurasia) & can contaminate hay, soil & can live for weeks in cold, moist conditions. Surfaces: Unknown, but could be used as a transmission point.Water:Possible pathway for weaponized strain, and natural strain outbreaks have also occurred.Health EffectsOnset3-5 days after aerosolized release, may present within 1-10 days & up to 21 days post exposure.Signs/ Symptoms General:The primary clinical forms of tularemia will vary in severity & presentation depending on virulence of the infecting organism, dose, & site of infection. Tularemiacan be fatal without treatment & is an incapacitating disease in non- fatal cases.Inhalation:Inhalation of F. tularensiscan produce flu-like symptoms progressing to pneumonia, ulcers of the mouth, chest pain, breathing difficulty, bloody sputum, & respiratory failure. Skin:Cutaneous infection through abraded or cracked skin resulting inulcers at the infection site& swollen lymph nodes. Cutaneous infections also resultfrom bitesfrom ticks and biting insects that havefed on infected animals or carcasses.Ingestion:Eating/Drinking contaminated food/water cancause oropharyngealtularemia; typhoidaland gastrointestialpresentationsSmay also occur however alarge numbers of organisms are required (10E6 to 10E8).Effect LevelsInfectivity:The organism is highly infectious by the inhalation route. Long term i mmunity usually follows recovery from tularemia. However, re-infection has been reported. Infective Dose:Fifty percent of people that inhale 1 to 50 organisms may contract tularemia. The ingestion pathway requires orders of magnitude more organisms. Le thality:Less than 7% forpneumonic and typhoidal, if appropriate antibiotic therapy is provided early. The other forms are usually not fatal. Personnel SafetyConcernsCheck with the Health & Safety Officer regarding PPE, Medical Surveillance, & Health & Safety Plan (HASP). Level of PPE may vary depending upon the incident & site specific circumstances. The PPE Levels listed are general suggestions only & are appropriate only for F. tularensis; they may not provide protection for some decon & other che micals that workers may be exposed to during response/recovery operations.For decon of workers, use warm soapy water, taking care to avoid abrading the skin.MedicalBaseline: Annual physical & respiratory function exams. THERE IS NO FDA APPROVED HUMAN VACCINE FOR TULAREMIA.Treatments Available: Supportive accompanied with antibiotics, such as streptomycin.First AidDuring Incident: Conduct medical monitoring; use PPE as designated by the HASP; record the PPE Levels used; monitor for fever & other si gns/symp-toms as listed under Health Effects &, if necessary, ensure medical attention is obtained as soon as possible. Post Incident: Monitor for signs/symptoms. If necessary, ensure medical attention is provided as soon as possible.PPEEmergency Res ponse to a Suspected Biological Incident: Possible PPE Levels for emergency responders is based on scenario risks from highest level of protection to least: 1)Pressure-demand Self Contained Breathing Apparatus (SCBA) with Level A protective suit, when: a) Event is uncontrolled, b)The type(s) of airborne agent(s) is unknown, c)The dissemination method is unknown, d)Dissemination via an aerosol-generating device is still occurring, e)Dissemination via an aerosol-generating device has stopped, but there i s no information on the duration of dissemination, or what the exposure concentration may be. 2)Pressure-demand SCBA with Level B protective suit, when: a)The suspected biological aerosol is no longer being released, b)Other conditions may present a sp lash hazard. 3)Full-facepiece respirator with P100 filter or PAPR with HEPA filters, when: An aerosol-generating device was not used to create high airborne concentrations. 4)Disposable hooded coveralls, gloves, & foot coverings, when: Dissemination was by a letter, package, or other material that can be bagged, contained, etc. Other Workers: PPE recommendations for workers other than emergency responders must be developed in the HASP for the specific scenario. PPE recommendations will vary by job type (e.g., cleanup, decon, etc.), type of exposure (e.g., airborne or surface/liquid/soil hazard), & any other site hazards (e.g., chemical, physical, etc.).Field DetectionFixed Aerosol Monitoring: Anaerosol release of F. tularensismaybe detected using air samples & PCR. Results may be delayed as much as 2 daysfrom time of release. In the absence of reliable detection, a F. tularensisrelease will only be confirmed once patients present with symptoms and are diagnosed or animal die-off from Tularemiais confirmed.Consult EPA/HQ-EOC at 202-564-3850 for more information.Portable Aerosol Monitoring: Portable aerosol monitoring may use dry or wet sampling methods. Dry sampling (useful only for molecular analyses) includes gelatin, cellulose acetate & Teflon methods. Wet sampling methods include liquid impingers (low flow) & impactors (single or\u0000V\u0000L\u0000[\u0000\u0003\u0000V\u0000W\u0000D\u0000J\u0000H\u0000 \u0000\u0011\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003 aseptic sampling methods, flow rates, & sampling times. Ensure that the appropriate pump is used for the selected sampling method.SamplingConcerns: BEFOREOBTAINING SAMPLES: Identify sample transportation requirements; Contact EPA/HQ-EOC (202-564-3850) for ERLN contract laboratories able to analyze these types of samples; Clearly identify & coordinate with the laboratory to be used since most labs cannot analyze all types of media (e.g., wipes, swabs, and HEPA vacuum samples); Coordinate with the sample disposal facility for acceptance criteria (i.e., sample decon requirements); Coordinate with investigative units (EPA-CID & FBI) to ensure sample chain-of- custody is maintained between the groups. Note: Detection/analytical equipment & sampling techniques will be highly site-speci\u0000¿c & depend on: 1)the characteristics of the agent; 2) the type of contaminated surfaces (e.g., porous v. nonporous); 3)the phases/purposes of sampling (initial ID v. post-decon sampling); 4)the way in which samples are handled so as not to adversely affect viability; 5) transportation regulations 6) the acceptance criteria of the analytical laboratory & 7) the sample decon requirements for the waste disposal facilities to be used. See LABORATORY ANALYSIS, below.CAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACCUUM EQUIPMENT SHOULD BE USED. A site- \u0000V\u0000S\u0000H\u0000F\u0000L\u0000À\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000U\u0000H\u0000Y\u0000L\u0000H\u0000Z\u0000H\u0000G\u0000\u0003\u0000 \u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0003\u00006\u0000X\u0000E\u0000M\u0000H\u0000F\u0000W\u0000\u0003\u00000\u0000D\u0000W\u0000W\u0000H\u0000U\u0000\u0003\u0000(\u0000[\u0000S\u0000H\u0000U\u0000W\u0000V\u0000\u0003\u0000 \u0000\u0012\u0000R\u0000U\u0000\u0003\u0000W\u0000K\u0000U\u0000R\u0000X\u0000J\u0000K\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003 Sampling Location Plans: If release was limited to a small area due to opening a letter or container, start with an area thought tobe free of contamination & work in concentric circles towards the initial point of contamination. \u0000%\u0000H\u0000\u0003\u0000F\u0000R\u0000Q\u0000F\u0000H\u0000U\u0000Q\u0000H\u0000G\u0000\u0003\u0000D\u0000E\u0000R\u0000X\u0000W\u0000\u0003\u0000R\u0000W\u0000K\u0000H\u0000U\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000G\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000G\u0000X\u0000H\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000I\u0000R\u0000R\u0000W\u0000\u0003\u0000W\u0000U\u0000D\u0000I\u0000¿\u0000F\u0000\u0012\u0000Y\u0000H\u0000Q\u0000W\u0000L\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000V\u0000\u0003\u0000 \u0000H\u0000\u0011\u0000J\u0000\u0011\u0000\u000f\u0000\u0003\u0000H\u0000O\u0000H\u0000Y\u0000D\u0000W\u0000R\u0000U\u0000\u0003buttons, mail, corners of hallways, baseboards, light swit ches, door knobs, etc.) Based on site characteristics & laboratory capacity, the sampling plan may be judgmental, probabilistic, or a combination thereof.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 40,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "September, 2011Consult EPA/HQ-EOC at 202-564-3850 for Environmental Response Laboratory Network (a.k.a. ERLN laboratory) contact information for personnel whocan explain",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "/describe the sampling procedure most compatible with their current analytical procedure.Types of Samples: Air, water, soil, surfaces, agriculture & wildlifeNote:  While F. tularensis DNA can be de",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "tected long after the bacteria themselves have perished & might be of forensic interest, the presence of the DNA says little about the potential human risk in the days following a release.Air: Dry sampling (useful only for molecular analyses) includes gel",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "atin, cellulose acetate & Teflon methods.  Wet sampling methods include liquid impingers (low flow) & impactors (single or six stage).",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "\u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000U\u0000D\u0000W\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000\t\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000(\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0003\u0000S\u0000X\u0000P\u0000S\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000Xsed ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "for the selected sampling method.Water: Since F. tularensis can persist in water, any potable water source should be sampled. If the potable water is chlorinated, the chlorine needs to be neutralized immediately with a sodium thiosulfate or other neut",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "ralizer at the concentration specified by the analytical laboratory prior to shipment.  As chlorine levels can vary substantially throughout a drinking water system, it is not always appropriate to assume that a sample is chlorinated based solely on a desc",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "ription of the water treatment processes in use.Soil: For the localized areas where soil deposition of the agentis suspected (i.e., aerosol or liquid droplets), a surface soil sample from a depth of less than 1 inch (2.54 cm) should be obtained from a non-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "vegetated area.Surfaces: 1) Wipe & Swab Sampling (for non-porous surfaces):Sterile macrofoam swabs moistened with 1X phosphate-buffered saline supplemented with 0.01% Tween-20 (PBST). If this solution is not available, use sterile de-ionized water (DI)",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": ". Do NOT use dry wipes or swabs. 2) HEPA Vacuum Sampling (for both porous & non-porous surfaces",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "\u0000\f\u0000\u001d\u0000\u0003\u0000F\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000D\u0000\u0003\u0000+\u0000(\u00003\u0000$\u0000\u0003\u0000V\u0000R\u0000F\u0000N\u0000\u0003\u0000G\u0000H\u0000V\u0000L\u0000J\u0000Q\u0000H\u0000G\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000¿\u0000W\u0000\u0003\u0000L\u0000Q\u0000W\u0000R\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000O\u0000H\u0000W\u0000\u0003\u0000Q\u0000R\u0000]\u0000]\u0000O\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000D\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000\u0003\u0000F\u0000H\u0000U\u0000W\u0000L\u0000I\u0000L\u0000H\u0000G\u0000\u0003\u0000+\u0000(\u00003\u0000$\u0000\u0003\u0000Y\u0000D\u0000F\u0000X\u0000X\u0000P\u0000\u0003\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000H\u0000U\u0000\u0011\u0000\u0003\u0000*\u0000R\u0000R\u0000G\u0000\u0003\u0000I",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "or screening & determining the extent & location of contamination in large areas. Agriculture & Wildlife: Upon confirmation of an outbreak, ensure these agencies are notified immediately since tularemia is a zoonotic vector borne disease; USDA at 202-720-",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "5711 & National Center for Emerging and Zoonotic Infectious Diseases at 800-232-4636 (after hours call the Directors Emergency Operations Center at 770-488-7100).Samples that test for Re-aerosolization: 1) ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "\u0000:\u0000L\u0000S\u0000H\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000G\u0000X\u0000F\u0000W\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000\u0003\u0000\u000b\u0000¿\u0000O\u0000W\u0000H\u0000U\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000L\u0000F\u0000X\u0000O\u0000D\u0000W\u0000H\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000U\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000G\u0000R\u0000R\u0000U\u0000V\u0000\u0011\u0000\u00032) Air ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Samplers & Single Stage Impactors with settle plates for capturing airborne particulates of respirable size (1-5 microns) on a series of agar plates. Agar plates are then sent to laboratory for culture analysis.  Sample Packaging & Shipping: ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "The packaging & shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, & IATA. Contact the sample-receiving laboratory to determine if they have additional packaging, shipping or labeling requirements (e.g., DO NOT X-",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "RAY). Samples should be packaged in an air-tight container & kept at temperatures of 40-50°F (4-10°C). Ensure samples are not placed directly on the ice used for cooling the shipping container.Laboratory Analysis",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "CAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes & soil). The goal of laboratory analysis for environmental sampling purposes is to determine if viable F. tularensisis present in the sample. Note",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": ": The selected laboratory may use a tiered approach. If a tiered approach is used, the initial analysis may only determine if select/particular components of the bacteriumare present in the sample (e.g., presence or absence). It may take additional time ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "(up to weeks depending on the laboratory) to determine if the bacteriumare viable & still able to cause adverse effects.Laboratory Information: F. tularensis may be highly aerosolizible. Contact EPA/HQ-EOC at 202-564-",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "3850 for ERLN laboratories that can analyze these types of samples.  Decontamination/CleanupCAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACUUM EQUIPMENT SHOULD BE USED. Decon Planning:Site-",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000\t\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000V\u0000\u0003\u0000V\u0000Kould ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "develop a plan that takes into account: 1) Nature of contamination including purity, physical properties, how it enteredthe facility, etc.; 2) Extent of contamination, ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "including the amount & possible pathways that have spread the agent. It is advisable to isolate the contaminated area; & 3) Objectives of decon, including decon of critical items for re-use & the treatment, ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "removal, or packaging of other items for disposal. Note: \u0000&\u0000U\u0000L\u0000V\u0000L\u0000V\u0000\u0003\u0000H\u0000[\u0000H\u0000P\u0000S\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00002\u0000I\u0000I\u0000L\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u00003\u0000H\u0000V\u0000W\u0000L\u0000F\u0000L\u0000G\u0000H\u0000\u0003\u00003\u0000U\u0000R\u0000J\u0000U\u0000D\u0000P\u0000V\u0000\u0003\u0000P\u0000L\u0000J\u0000K\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003necessary depending on decontaminating agents used. ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "CAUTION: DECON SOLUTIONS SHOULD NOT BE DEPLOYED AS A SPRAY WHENEVER POSSIBLE.Decon Methods:Decon decisions will be site & situation specific but due to re-aerosolization concerns, under NO circumstances should a non-HEPA vacuum cleaner or a broom be used.",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000\u000b\u0000\u001b\u0000\u0013\u0000\u0013-329-1841) can provide specific decontaminationparameters & requirements for using readily available commercial items such as household bleach. Methods used on surfaces: 1)",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Source reduction steps, including HEPA vacuuming; 2)Liquid antimicrobial products such as pH-amended bleach (mixture of 1 part household bleach (5.25% to 6.0%) to 1 part white vinegar to 8 parts water, is recommended). This product affects surfaces dif",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "ferently in terms of corrosiveness, staining, & residue. The product will be most efficient a)at higher temperatures (i.e., >70°F or 21°C) b) when plain bleach (e.g., no added fragrance) is used to make the pH-amended bleach solution, c)when pH is <7, d)",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "when presence of other surface contaminants is minimal, & e)when surfaces remain wet with amended bleach solution for 60 minutes.  Note: Store-bought bleach does degrade with time \u0000±check the expiration date.",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "Alternate antimicrobial products include: chlorine dioxide, hydrogen peroxide, & peroxyacetic acid. Fumigation:Uses gas or vapor to decontaminate facilities in which there isevidence of high levels of contamination, re-",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "aerosolization, or if decontamination of limited access areas is required (e.g. HVAC systems). Fumigants:chlorine dioxide, & vaporized hydrogen ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "\u0000S\u0000H\u0000U\u0000R\u0000[\u0000L\u0000G\u0000H\u0000\u0011\u0000\u0003\u00003\u0000U\u0000L\u0000R\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000X\u0000V\u0000H\u0000\u000f\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000I\u0000X\u0000P\u0000L\u0000J\u0000D\u0000Q\u0000W\u0000¶\u0000V\u0000\u0003\u0000F\u0000R\u0000P\u0000S\u0000D\u0000W\u0000L\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000P\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "\u0000O\u0000V\u0000\u000f\u0000\u0003\u0000S\u0000H\u0000Q\u0000H\u0000W\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000F\u0000D\u0000S\u0000D\u0000F\u0000L\u0000W\u0000\\\u0000\u000f\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000D\u0000O\u0000\u0003\u0000D\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000H\u0000Q\u0000G\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000I\u0000X\u0000P\u0000L\u0000J\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000Z\u0000H\u0000O\u0000O\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000L\u0000W\u0000¶\u0000V\u0000\u0003\u0000S\u0000K\u0000\\\u0000V\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003\u0000F\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "& toxicological properties should be taken into account. Each chemical has a specified range for process variables (e.g., temperature, relative humidity, concentration & contact time) that must be followed. Other Decon:1)",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Ethylene oxide sterilization is used to decontaminate items in an off-site sterilization chamber. 2)Irradiation uses cobalt-60 & electron beam technologies to destroy agents at off-",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "site locations. This procedure may destroy magnetic media. Irradiation & chemical sterilization may be useful in decontaminating items that are intended to be returned to owners. \u00009\u0000H\u0000U\u0000L\u0000À\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u001d\u0000\u0003Site & situation specific.",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "Please contact ERT (732-321-6660) and NDT (800-329-1841) for further assistance.Waste DisposalCAUTION: Hazardous waste transportation & disposal are regulated federally; however, more stringent regulations may exist under state authority. These ",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "regulations differ from state-to-state. Detailed state regulations can be found at: http://www.envcap.org. Waste Disposal Planning: Waste generated from assessment & cleanup activities should be autoclaved, chemi",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "cally disinfected, or fumigated & then tested to be sure the agent(s) were inactivated. Waste disposal for agent-contaminated wastes generated from decontamination & disposal activities will be problematic. Landfills willing to take these wastes may be lim",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "ited & incineration may be prohibitively expensive or impractical. All waste disposal options should be investigated as earlyinto the response process as possible. Transportation of the agent contaminated wastes from the site to the landfill or incinerato",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "r may be problematic as well.  Agreements must be reached between the waste generator & acceptor BEFORE transport.  Information regarding the agreements maybe required to be available to the public.  Transportation of hazardous waste may cross several sta",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "tes & localities, which may exceed federal regulations. Requirements for transporting hazardous materials, & procedures for exemption, are specified at: http://www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm. The EPA has developed a web-based Inc",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "ident Waste Management Planning & Response Tool which contains guidance related to waste transportation & handling, carcass disposal, contact information for potential treatment, dis",
+          "role": "BODY"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "posal facilities, & state regulatory offices, packaging guidance to minimize risk to workers, & guidance to minimize the potential for contaminating the treatment or disposal facility.  ",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000W\u0000R\u0000R\u0000O\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000V\u0000\u0003\u0000S\u0000U\u0000H\u0000U\u0000H\u0000J\u0000L\u0000V\u0000W\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u001d\u0000\u0003http://www2.ergweb.com/bdrtool/login.asp.",
+          "role": "BODY"
+        }
+      ],
+      "text": "September, 2011Consult EPA/HQ-EOC at 202-564-3850 for Environmental Response Laboratory Network (a.k.a. ERLN laboratory) contact information for personnel whocan explain /describe the sampling procedure most compatible with their current analytical procedure.Types of Samples: Air, water, soil, surfaces, agriculture & wildlifeNote: While F. tularensis DNA can be de tected long after the bacteria themselves have perished & might be of forensic interest, the presence of the DNA says little about the potential human risk in the days following a release.Air: Dry sampling (useful only for molecular analyses) includes gel atin, cellulose acetate & Teflon methods. Wet sampling methods include liquid impingers (low flow) & impactors (single or six stage). \u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000U\u0000D\u0000W\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000 \u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000(\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0003\u0000S\u0000X\u0000P\u0000S\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000Xsed for the selected sampling method.Water: Since F. tularensis can persist in water, any potable water source should be sampled. If the potable water is chlorinated, the chlorine needs to be neutralized immediately with a sodium thiosulfate or other neut ralizer at the concentration specified by the analytical laboratory prior to shipment. As chlorine levels can vary substantially throughout a drinking water system, it is not always appropriate to assume that a sample is chlorinated based solely on a desc ription of the water treatment processes in use.Soil: For the localized areas where soil deposition of the agentis suspected (i.e., aerosol or liquid droplets), a surface soil sample from a depth of less than 1 inch (2.54 cm) should be obtained from a non- vegetated area.Surfaces: 1) Wipe & Swab Sampling (for non-porous surfaces):Sterile macrofoam swabs moistened with 1X phosphate-buffered saline supplemented with 0.01% Tween-20 (PBST). If this solution is not available, use sterile de-ionized water (DI) . Do NOT use dry wipes or swabs. 2) HEPA Vacuum Sampling (for both porous & non-porous surfaces \u0000 \u0000\u001d\u0000\u0003\u0000F\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000D\u0000\u0003\u0000+\u0000(\u00003\u0000$\u0000\u0003\u0000V\u0000R\u0000F\u0000N\u0000\u0003\u0000G\u0000H\u0000V\u0000L\u0000J\u0000Q\u0000H\u0000G\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000¿\u0000W\u0000\u0003\u0000L\u0000Q\u0000W\u0000R\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000O\u0000H\u0000W\u0000\u0003\u0000Q\u0000R\u0000]\u0000]\u0000O\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000D\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000\u0003\u0000F\u0000H\u0000U\u0000W\u0000L\u0000I\u0000L\u0000H\u0000G\u0000\u0003\u0000+\u0000(\u00003\u0000$\u0000\u0003\u0000Y\u0000D\u0000F\u0000X\u0000X\u0000P\u0000\u0003\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000H\u0000U\u0000\u0011\u0000\u0003\u0000*\u0000R\u0000R\u0000G\u0000\u0003\u0000I or screening & determining the extent & location of contamination in large areas. Agriculture & Wildlife: Upon confirmation of an outbreak, ensure these agencies are notified immediately since tularemia is a zoonotic vector borne disease; USDA at 202-720- 5711 & National Center for Emerging and Zoonotic Infectious Diseases at 800-232-4636 (after hours call the Directors Emergency Operations Center at 770-488-7100).Samples that test for Re-aerosolization: 1) \u0000:\u0000L\u0000S\u0000H\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000G\u0000X\u0000F\u0000W\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000\u0003\u0000 \u0000¿\u0000O\u0000W\u0000H\u0000U\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000L\u0000F\u0000X\u0000O\u0000D\u0000W\u0000H\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000 \u0000\u0003\u0000L\u0000I\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000U\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000G\u0000R\u0000R\u0000U\u0000V\u0000\u0011\u0000\u00032) Air Samplers & Single Stage Impactors with settle plates for capturing airborne particulates of respirable size (1-5 microns) on a series of agar plates. Agar plates are then sent to laboratory for culture analysis. Sample Packaging & Shipping: The packaging & shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, & IATA. Contact the sample-receiving laboratory to determine if they have additional packaging, shipping or labeling requirements (e.g., DO NOT X- RAY). Samples should be packaged in an air-tight container & kept at temperatures of 40-50°F (4-10°C). Ensure samples are not placed directly on the ice used for cooling the shipping container.Laboratory Analysis CAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes & soil). The goal of laboratory analysis for environmental sampling purposes is to determine if viable F. tularensisis present in the sample. Note : The selected laboratory may use a tiered approach. If a tiered approach is used, the initial analysis may only determine if select/particular components of the bacteriumare present in the sample (e.g., presence or absence). It may take additional time (up to weeks depending on the laboratory) to determine if the bacteriumare viable & still able to cause adverse effects.Laboratory Information: F. tularensis may be highly aerosolizible. Contact EPA/HQ-EOC at 202-564- 3850 for ERLN laboratories that can analyze these types of samples. Decontamination/CleanupCAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACUUM EQUIPMENT SHOULD BE USED. Decon Planning:Site- \u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000 \u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000V\u0000\u0003\u0000V\u0000Kould develop a plan that takes into account: 1) Nature of contamination including purity, physical properties, how it enteredthe facility, etc.; 2) Extent of contamination, including the amount & possible pathways that have spread the agent. It is advisable to isolate the contaminated area; & 3) Objectives of decon, including decon of critical items for re-use & the treatment, removal, or packaging of other items for disposal. Note: \u0000&\u0000U\u0000L\u0000V\u0000L\u0000V\u0000\u0003\u0000H\u0000[\u0000H\u0000P\u0000S\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00002\u0000I\u0000I\u0000L\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u00003\u0000H\u0000V\u0000W\u0000L\u0000F\u0000L\u0000G\u0000H\u0000\u0003\u00003\u0000U\u0000R\u0000J\u0000U\u0000D\u0000P\u0000V\u0000\u0003\u0000P\u0000L\u0000J\u0000K\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003necessary depending on decontaminating agents used. CAUTION: DECON SOLUTIONS SHOULD NOT BE DEPLOYED AS A SPRAY WHENEVER POSSIBLE.Decon Methods:Decon decisions will be site & situation specific but due to re-aerosolization concerns, under NO circumstances should a non-HEPA vacuum cleaner or a broom be used. \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000 \u0000\u001b\u0000\u0013\u0000\u0013-329-1841) can provide specific decontaminationparameters & requirements for using readily available commercial items such as household bleach. Methods used on surfaces: 1) Source reduction steps, including HEPA vacuuming; 2)Liquid antimicrobial products such as pH-amended bleach (mixture of 1 part household bleach (5.25% to 6.0%) to 1 part white vinegar to 8 parts water, is recommended). This product affects surfaces dif ferently in terms of corrosiveness, staining, & residue. The product will be most efficient a)at higher temperatures (i.e., >70°F or 21°C) b) when plain bleach (e.g., no added fragrance) is used to make the pH-amended bleach solution, c)when pH is <7, d) when presence of other surface contaminants is minimal, & e)when surfaces remain wet with amended bleach solution for 60 minutes. Note: Store-bought bleach does degrade with time \u0000±check the expiration date. Alternate antimicrobial products include: chlorine dioxide, hydrogen peroxide, & peroxyacetic acid. Fumigation:Uses gas or vapor to decontaminate facilities in which there isevidence of high levels of contamination, re- aerosolization, or if decontamination of limited access areas is required (e.g. HVAC systems). Fumigants:chlorine dioxide, & vaporized hydrogen \u0000S\u0000H\u0000U\u0000R\u0000[\u0000L\u0000G\u0000H\u0000\u0011\u0000\u0003\u00003\u0000U\u0000L\u0000R\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000X\u0000V\u0000H\u0000\u000f\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000I\u0000X\u0000P\u0000L\u0000J\u0000D\u0000Q\u0000W\u0000¶\u0000V\u0000\u0003\u0000F\u0000R\u0000P\u0000S\u0000D\u0000W\u0000L\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000P\u0000D\u0000W\u0000H\u0000U\u0000L\u0000D \u0000O\u0000V\u0000\u000f\u0000\u0003\u0000S\u0000H\u0000Q\u0000H\u0000W\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000F\u0000D\u0000S\u0000D\u0000F\u0000L\u0000W\u0000\\\u0000\u000f\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000D\u0000O\u0000\u0003\u0000D\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000H\u0000Q\u0000G\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000I\u0000X\u0000P\u0000L\u0000J\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000Z\u0000H\u0000O\u0000O\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000L\u0000W\u0000¶\u0000V\u0000\u0003\u0000S\u0000K\u0000\\\u0000V\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003\u0000F\u0000K\u0000H\u0000P\u0000L\u0000F\u0000D\u0000O\u0000\u000f\u0000\u0003 & toxicological properties should be taken into account. Each chemical has a specified range for process variables (e.g., temperature, relative humidity, concentration & contact time) that must be followed. Other Decon:1) Ethylene oxide sterilization is used to decontaminate items in an off-site sterilization chamber. 2)Irradiation uses cobalt-60 & electron beam technologies to destroy agents at off- site locations. This procedure may destroy magnetic media. Irradiation & chemical sterilization may be useful in decontaminating items that are intended to be returned to owners. \u00009\u0000H\u0000U\u0000L\u0000À\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u001d\u0000\u0003Site & situation specific. Please contact ERT (732-321-6660) and NDT (800-329-1841) for further assistance.Waste DisposalCAUTION: Hazardous waste transportation & disposal are regulated federally; however, more stringent regulations may exist under state authority. These regulations differ from state-to-state. Detailed state regulations can be found at: http://www.envcap.org. Waste Disposal Planning: Waste generated from assessment & cleanup activities should be autoclaved, chemi cally disinfected, or fumigated & then tested to be sure the agent(s) were inactivated. Waste disposal for agent-contaminated wastes generated from decontamination & disposal activities will be problematic. Landfills willing to take these wastes may be lim ited & incineration may be prohibitively expensive or impractical. All waste disposal options should be investigated as earlyinto the response process as possible. Transportation of the agent contaminated wastes from the site to the landfill or incinerato r may be problematic as well. Agreements must be reached between the waste generator & acceptor BEFORE transport. Information regarding the agreements maybe required to be available to the public. Transportation of hazardous waste may cross several sta tes & localities, which may exceed federal regulations. Requirements for transporting hazardous materials, & procedures for exemption, are specified at: http://www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm. The EPA has developed a web-based Inc ident Waste Management Planning & Response Tool which contains guidance related to waste transportation & handling, carcass disposal, contact information for potential treatment, dis posal facilities, & state regulatory offices, packaging guidance to minimize risk to workers, & guidance to minimize the potential for contaminating the treatment or disposal facility. \u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000W\u0000R\u0000R\u0000O\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000V\u0000\u0003\u0000S\u0000U\u0000H\u0000U\u0000H\u0000J\u0000L\u0000V\u0000W\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u001d\u0000\u0003http://www2.ergweb.com/bdrtool/login.asp.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 46,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

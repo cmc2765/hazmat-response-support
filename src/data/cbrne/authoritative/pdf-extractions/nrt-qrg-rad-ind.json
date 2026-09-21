@@ -1,0 +1,369 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-rad-ind",
+  "sourceArtifactSha256": "b11a70c3e9c1d792233dd86b093202199ca136a91dc8a3b797a7f85ec0ff8fe5",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+  "pageCount": 2,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "June 2013NRT Quick Reference Guide: Improvised Nuclear Device (IND)11For references, please see Key References Cited/Used in National Response Team (NRT) Quick Reference Guide(QRG) for RadiologicalWMD.QRGs are intended for FederalOn Scene Coordin",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "ator (FOSC) Responders. CharacteristicsAgent: RadiologicalType: Improvised Nuclear Device(GROUND DETONATION)Description: Ground detonation of a 10 kiloton (KT) improvised nuclear device (IND)(Note: Alarger or smaller bomb will have proportional effects.",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": ") in amedium to large American city will result ina:1) SEVERE DAMAGE ZONE(SDZ) -near total destruction & loss of life for up to a half mile from the detonation; 2) MODERATE DAMAGE ZONE (MDZ) -",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "heavy to moderate destruction up to 1 mile away with many deaths and serious injuries due to building collapses and fire; 3)LIGHT DAMAGE ZONE (LDZ) -injuries, mostly dueto flying glass up to 3 miles away with eye damage from nuclear flash. ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "Radiation levels will fluctuate dramatically within the first 48 hours post detonation: first increasing due to fallout then waning due to radioactive decay of fission products.  Fallout particles will be a variety of sizes and may or may not be ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "visible on surfaces.Lethal radiation exposures will occur in the immediate blast area and SDZ.  Regardless of damage and bodily injury, people up to 20 to 30 miles downwind must immediately",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "\u0000W\u0000D\u0000N\u0000H\u0000\u0003\u0000V\u0000K\u0000H\u0000O\u0000W\u0000H\u0000U\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000U\u0000L\u0000V\u0000N\u0000\u0003\u0000O\u0000H\u0000W\u0000K\u0000D\u0000O\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000\u0003\u00003\u0000H\u0000R\u0000S\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000K\u0000R\u0000\u0003\u0000D\u0000U\u0000H\u0000Q\u0000¶\u0000W\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "sheltered from fallout will likely experience radiation sickness and death if no medical intervention is received.  Most people in the LDZ (who find shelter from fallout) will survive their blast injuries without immediate medical intervention. ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Expected Situation ThisQRG addressesthe information needed to conductresponse activitiesassafelyaspossibleinthe first days following an IND.The extentofdamage,overwhelming numbersofdeadand injured,severedisruptionstoutilities,transportation and communicati",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "onsystems,high radiation levels,and masses ofspontaneousself-evacuations,willresultin extremelychaoticconditionsforseveraldayspostdetonation.The initiallocalresponsewilllikelybe fractionated and disorganized BUTwillfocuson life-saving,decontaminationand re",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "locationof the public,and providing medicalservices.In accordance with the Nuclear/Radiological Annex tothe National Response Framework (NRF), the Federalcivilian response will focusonradiological environmental",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "monitoring activities as part of the Federal Radiological Monitoring and Assessment Center (FRMAC).Communications at all levels will be difficult.  Therewill",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "likely be requests for assistance from many sectors and expectations that Federal responders will support initial life-saving efforts.In order for FederalOn-SceneCoordinators(FOSCs)to safely and effectively respond in the first days fo",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "llowing an IND, they must be fullyself-supporting,self-monitoring,and self-regulating forradiationexposure and otherhealth risks. This isso FOSCs willnotburden localrespondersor becomevictimsthemselves.FOSCsupportin thefirstdaysfollowingan IND should only",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "beprovided ifthey have appropriate respiratoryprotection,PPE,personal and environmental radiationmonitoring/measuringequipment(described \u0000L\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000³\u00005\u0000D\u0000G\u0000L\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000'\u0000H\u0000W\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000(\u0000T\u0000X\u0000L\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u00006\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000´\u0000\u0003below),and take allnecess",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "arysafetyprecautionsto avoidexcessiveradiation exposuresandotherpotentially significanthealth risks.FOSC responseactionswillbe criticalin the weeksandmonthsfollowing an IND, therefore, by avoiding excessive radiationexposuresearly on, FOSCresponders",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "will be available for long-term recovery operations.To assist responders, example results of \"7/10 Rule\" calculations are provided in the table below.  The \"7/10 Rule\" for an IND (not relevant for Radiological Disbursal Device) states thatfor ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "every 7 fold increase in time post detonation, there will be a 10 fold decrease in radiation exposure levels.Theexposures depicted in the \"7/10 Rule\" table beloware provided to show how critically important it is to shelter immediatelypost detonation and",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "that responder doses can be managed and reduced by properly timing non-critical response activitiespost detonation.Time Post DetonationExample Exposure Rates1 hr1000 R/hr7 hr100 R/hr49 hr (2 days)10 R/hr14 days (2 wk)1 R/hrLethal Dose Levels",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Total Absorbed Dose Health system affectedCommentsOutcome0 -100 radNo noticeable affectsBlood cell countchanges >25 rad100% survival100-1000 radBone marrowBone marrow impactedExtent of impact is dose dependent1000-2000 radGastrointestinal100% fatalDeath",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "within5-12 days2000-5000 radCardiovascular100% fatalDeathwithin2-5 days> 5000 radCentral nervous100% fatalDeath within hoursEmergency Worker Dose Levels DoseaEmergency Dose Guidelines5 rem (0.05 Sv)Regulatedoccupational exposurelimit10 rem (0.1 Sv)\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Dose is unavoidable\u0000xPurpose is to protect valuable property \u0000xResponder has volunteeredand has been thoroughly informed of the risks associated with the dose\u0000xRespiratory protection, PPE, and dosimetryis provided \u0000xDose monitoring equipment ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "is available to measure and project dose25 rem (0.25 Sv)b\u0000xDose is unavoidable\u0000xPurpose is for lifesaving or protection of large populations\u0000xResponder hasvolunteered andhas been thoroughly informed of the risks associated with the dose\u0000xRespiratory ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "protection,PPEand dosimetryis provided \u0000xDose monitoringequipmentis available tomeasureandproject doseaThedoses in this table are the Total Effective Dose Equivalent (TEDE)doses.  The TEDEdose is the ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "projected sum of the Effective Dose Equivalent from external radiation exposure PLUSCommitted Dose Equivalent from any internal radioactivityuptake. b \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000\u0014\u0000\u001c\u0000\u001c\u0000\u0015\u0000\u0003\u00003\u0000U\u0000R\u0000W\u0000H\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000$\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000*\u0000X\u0000L\u0000G\u0000H\u0000\u0003\u0000\u000b\u00003\u0000$\u0000*\u0000\f\u0000\u0003\u00000\u0000D\u0000Q\u0000X\u0000D\u0000O\u0000\u0011",
+          "role": "BODY"
+        }
+      ],
+      "text": "June 2013NRT Quick Reference Guide: Improvised Nuclear Device (IND)11For references, please see Key References Cited/Used in National Response Team (NRT) Quick Reference Guide(QRG) for RadiologicalWMD.QRGs are intended for FederalOn Scene Coordin ator (FOSC) Responders. CharacteristicsAgent: RadiologicalType: Improvised Nuclear Device(GROUND DETONATION)Description: Ground detonation of a 10 kiloton (KT) improvised nuclear device (IND)(Note: Alarger or smaller bomb will have proportional effects. ) in amedium to large American city will result ina:1) SEVERE DAMAGE ZONE(SDZ) -near total destruction & loss of life for up to a half mile from the detonation; 2) MODERATE DAMAGE ZONE (MDZ) - heavy to moderate destruction up to 1 mile away with many deaths and serious injuries due to building collapses and fire; 3)LIGHT DAMAGE ZONE (LDZ) -injuries, mostly dueto flying glass up to 3 miles away with eye damage from nuclear flash. Radiation levels will fluctuate dramatically within the first 48 hours post detonation: first increasing due to fallout then waning due to radioactive decay of fission products. Fallout particles will be a variety of sizes and may or may not be visible on surfaces.Lethal radiation exposures will occur in the immediate blast area and SDZ. Regardless of damage and bodily injury, people up to 20 to 30 miles downwind must immediately \u0000W\u0000D\u0000N\u0000H\u0000\u0003\u0000V\u0000K\u0000H\u0000O\u0000W\u0000H\u0000U\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000U\u0000L\u0000V\u0000N\u0000\u0003\u0000O\u0000H\u0000W\u0000K\u0000D\u0000O\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000\u0003\u00003\u0000H\u0000R\u0000S\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000K\u0000R\u0000\u0003\u0000D\u0000U\u0000H\u0000Q\u0000¶\u0000W\u0000\u0003 sheltered from fallout will likely experience radiation sickness and death if no medical intervention is received. Most people in the LDZ (who find shelter from fallout) will survive their blast injuries without immediate medical intervention. Expected Situation ThisQRG addressesthe information needed to conductresponse activitiesassafelyaspossibleinthe first days following an IND.The extentofdamage,overwhelming numbersofdeadand injured,severedisruptionstoutilities,transportation and communicati onsystems,high radiation levels,and masses ofspontaneousself-evacuations,willresultin extremelychaoticconditionsforseveraldayspostdetonation.The initiallocalresponsewilllikelybe fractionated and disorganized BUTwillfocuson life-saving,decontaminationand re locationof the public,and providing medicalservices.In accordance with the Nuclear/Radiological Annex tothe National Response Framework (NRF), the Federalcivilian response will focusonradiological environmental monitoring activities as part of the Federal Radiological Monitoring and Assessment Center (FRMAC).Communications at all levels will be difficult. Therewill likely be requests for assistance from many sectors and expectations that Federal responders will support initial life-saving efforts.In order for FederalOn-SceneCoordinators(FOSCs)to safely and effectively respond in the first days fo llowing an IND, they must be fullyself-supporting,self-monitoring,and self-regulating forradiationexposure and otherhealth risks. This isso FOSCs willnotburden localrespondersor becomevictimsthemselves.FOSCsupportin thefirstdaysfollowingan IND should only beprovided ifthey have appropriate respiratoryprotection,PPE,personal and environmental radiationmonitoring/measuringequipment(described \u0000L\u0000Q\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000³\u00005\u0000D\u0000G\u0000L\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000'\u0000H\u0000W\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000(\u0000T\u0000X\u0000L\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u00006\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000´\u0000\u0003below),and take allnecess arysafetyprecautionsto avoidexcessiveradiation exposuresandotherpotentially significanthealth risks.FOSC responseactionswillbe criticalin the weeksandmonthsfollowing an IND, therefore, by avoiding excessive radiationexposuresearly on, FOSCresponders will be available for long-term recovery operations.To assist responders, example results of \"7/10 Rule\" calculations are provided in the table below. The \"7/10 Rule\" for an IND (not relevant for Radiological Disbursal Device) states thatfor every 7 fold increase in time post detonation, there will be a 10 fold decrease in radiation exposure levels.Theexposures depicted in the \"7/10 Rule\" table beloware provided to show how critically important it is to shelter immediatelypost detonation and that responder doses can be managed and reduced by properly timing non-critical response activitiespost detonation.Time Post DetonationExample Exposure Rates1 hr1000 R/hr7 hr100 R/hr49 hr (2 days)10 R/hr14 days (2 wk)1 R/hrLethal Dose Levels Total Absorbed Dose Health system affectedCommentsOutcome0 -100 radNo noticeable affectsBlood cell countchanges >25 rad100% survival100-1000 radBone marrowBone marrow impactedExtent of impact is dose dependent1000-2000 radGastrointestinal100% fatalDeath within5-12 days2000-5000 radCardiovascular100% fatalDeathwithin2-5 days> 5000 radCentral nervous100% fatalDeath within hoursEmergency Worker Dose Levels DoseaEmergency Dose Guidelines5 rem (0.05 Sv)Regulatedoccupational exposurelimit10 rem (0.1 Sv)\u0000x Dose is unavoidable\u0000xPurpose is to protect valuable property \u0000xResponder has volunteeredand has been thoroughly informed of the risks associated with the dose\u0000xRespiratory protection, PPE, and dosimetryis provided \u0000xDose monitoring equipment is available to measure and project dose25 rem (0.25 Sv)b\u0000xDose is unavoidable\u0000xPurpose is for lifesaving or protection of large populations\u0000xResponder hasvolunteered andhas been thoroughly informed of the risks associated with the dose\u0000xRespiratory protection,PPEand dosimetryis provided \u0000xDose monitoringequipmentis available tomeasureandproject doseaThedoses in this table are the Total Effective Dose Equivalent (TEDE)doses. The TEDEdose is the projected sum of the Effective Dose Equivalent from external radiation exposure PLUSCommitted Dose Equivalent from any internal radioactivityuptake. b \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000\u0014\u0000\u001c\u0000\u001c\u0000\u0015\u0000\u0003\u00003\u0000U\u0000R\u0000W\u0000H\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000\u0003\u0000$\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000*\u0000X\u0000L\u0000G\u0000H\u0000\u0003\u0000 \u00003\u0000$\u0000*\u0000 \u0000\u0003\u00000\u0000D\u0000Q\u0000X\u0000D\u0000O\u0000\u0011",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 25,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "June 2013PPE RecommendationsCAUTION:In the first few days post detonation,dust and fallout particleswillbe highly radioactive and dangerous.  Prevent inhalation ofrespirable sized fallout particles anddeposition of fallout particles directly on the skin. ",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "Responders should always wear respiratory protection and PPE when performing decontamination of personsand handling decontamination wastes.  Radioactive wastes and materials should be removed from areas occupied by workers and the public ASAP.",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "Waste packaging can then be delayed to allow radioactive decay to reduce waste handling doses. Respiratory ProtectionCAUTION:After an INDdetonation, there will most likely be gaseous radioactive material in the air.  Thesegasseswill NOT be filtered out ",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "with either a Chemical-Biological-Radiological Nuclear (CBRN)or P100 cartridge!Air monitoring should be performedASAPto determine the appropriate level of respiratory protection. While Self Contained Breathing Apparatus(SCBAs)and supplied airdevices",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "provide protection from gaseous and particulate radioactive material,the increased time to accomplish any task whenwearing an",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "\u00006\u0000&\u0000%\u0000$\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000L\u0000Q\u0000F\u0000U\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000U\u0000D\u0000G\u0000L\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000,\u0000Q\u0000\u0003\u0000D\u0000G\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000H\u0000[\u0000W\u0000U\u0000D\u0000\u0003physical stress from wearing anSCBAmay increase the \u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003risk ofphysical injury. ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "As soon as air conditions allow, use Full-Face Air Purifying Respirators (APRs)with CBRN or P100 cartridges.NOTE:  In Immediately Dangerous to Life or Health (IDLH)environments, anSCBA must be used!When using an APRwith CBRN or P100 cartridges,",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "radioactive material will gather on the face pieces, filter cartridgesand protective clothing, increasingthedose received by workers.UsingPowered Air Purifying Respirators (PAPRs)moves the contaminated filtercartridges away from the ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000I\u0000D\u0000F\u0000H\u0000\u0011Respiratory protectionRemoves Gaseous ContaminantsRemoves Particulate ContaminantsSCBAxxCBRNxP100xPPE PPE should be appropriate to all hazards associated with the site and response. In the first few days following an IND",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "detonation, the radiation dosesto responders will primarily be from: 1) Gamma radiation2) Radiations from the decay of activated materials in the environment 3) Ingestion and inhalation of airborne radioactive particulates and gases. As time progresses,",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "the majority of concern will shift to contamination control. Good general hygiene practices (i.e., hand washing, covering wounds, no eating, drinking or smoking in contaminated areas) must be followed to prevent personnel contamination.  Care should b",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "e taken to avoid the spread of contamination onto survey/monitoring equipment. A variety of other hazards (i.e., physical, chemical,and biological) may be of greater concern to the responder based on the location and extent ofthe damage caused by the IND. ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "The PPEclothing (paper and cloth) only preventskin contaminationand exposuresfrom alpha and beta radiations\u0000±PPE do NOTprovide protection against gamma or neutron exposures.Radiation Detection EquipmentSelf-Reading Dosimeters:The Self-Reading Dosimeter",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "\u0000Z\u0000L\u0000O\u0000O\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000)\u00002\u00006\u0000&\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u00002\u00001\u0000/\u0000<\u0000\u0003\u0000L\u0000Q\u0000G\u0000L\u0000F\u0000D\u0000W\u0000R\u0000U\u0000\u0003\u0000W\u0000K\u0000H\u0000\\\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000Q\u0000H\u0000D\u0000U\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000H\u0000L\u0000U\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000¶\u0000V\u0000\u0003\u0000G\u0000R\u0000V\u0000H\u0000\u0003\u0000O\u0000L\u0000P\u0000L\u0000W\u0000\u0011\u0000\u0003\u0000\u0003\u00007\u0000K\u0000L\u0000V\u0000\u0003\u0000L\u0000Qstrument will provide live-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "time readout until Thermoluminescent Dosimeter (TLD) or Optically Stimulated Luminescent (OSL) Dosimeter reports can be provided.  It is imperative the FOSC responder keep track of their doses and provide their dose estimates toHealth and Safety Officer ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "ASAP. Recommended Minimum Radiation Detection Equipment: -High range gamma instruments that read in the Roentgen/Hr (R/Hr) or Rem/Hr range-Low range gamma instrument that reads in the microRoentgen/Hr \u0000\u000b\u0002\u001d\u00005\u0000\u0012\u0000+\u0000U\u0000\f\u0000\u0003to milliRoentgen/Hr (mR/Hr) range-",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Geiger Mueller pancake probe for personnel surveyingNOTE: A large number of instruments will be required to supply all the responders.  Local instrumentation resources are expected tobe quickly exhausted.  Additional instrumentation will",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "have to be acquired from other agencies/sources. Public MessagingFOSC responders should defer to local officials for advising the public. But, if advice is requested, the following statement is recommended:  1) If downwind, s",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "eek immediate shelter in the deepest, farthest, thickest walled roomwithin the nearest structure until an \u0000³All Clear\u0000´message is received.  2) Avoid burning or unstable structures.3) If caught in fallout, breathe through a cloth or respirator. 4) E",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "xercise caution until in a knownclean area.  Areas outside fallout zonesthat may be thought to be clean may have higher radioactive contamination levels than expected.  Radioactivecontamination is carried out of thefallout zones onthe vehicles of the ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "previously evacuated people and onthe people themselves. 5) Once arrived in a clean area, brush dust from clothes, hair,and skinandremove contaminated clothes.  Shower if possible.6) Listen for official updates.Evacuate or relocate only when directed.Short",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "-Term Waste ManagementHandling of Wastes and Contaminated Materials From Operations in First Days post IND:In the first few days, operational wastes will primarily be generated from decontamination of the public, Critical Infrastructure Key Resources (CIKR",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": ")facilityworkersandemergencyresponders.  Wastes will either be dry (e.g., PPE, clothes, personal effects, etc.) or decontamination wash water.  Responders and members of the public should be directed to bag clothes and PPE that have been removedand ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "seal the bags.  Wastesshould be handled as little as possibleand placed in weather-proof containers -if available. Wastesand contaminated materials should be staged awayfrom areas occupied by workers and the public ASAP.Waste packaging should be ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "delayed to allow for adequate radioactive decay to reduce waste handling doses.If weather-proof containers are not available and precipitation is expected, place the wastes under a roof, if possible.  This ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "\u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000L\u0000O\u0000O\u0000\u0003\u0000E\u0000H\u0000F\u0000R\u0000P\u0000H\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000G\u0000\u000f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000L\u0000W\u0000\u0003\u0000L\u0000V\u0000Q\u0000¶\u0000W\u0000\u0003\u0000D\u0000O\u0000U\u0000H\u0000D\u0000G\u0000\\\u0000\u0011\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "\u0000,\u0000I\u0000\u0003\u0000Z\u0000D\u0000V\u0000K\u0000\u0003\u0000Z\u0000D\u0000W\u0000H\u0000U\u0000\u0003\u0000F\u0000D\u0000Q\u0000¶\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000L\u0000Q\u0000H\u0000U\u0000L\u0000]\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000V\u0000X\u0000I\u0000I\u0000L\u0000F\u0000L\u0000H\u0000Q\u0000W\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000L\u0000Q\u0000H\u0000U\u0000V\u0000\u0003\u0000F\u0000D\u0000Q\u0000¶\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000R\u0000E\u0000W\u0000D\u0000L\u0000Q\u0000H\u0000G\u0000\u000f\u0000\u0003\u0000G\u0000L\u0000U\u0000H\u0000F\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000Dsh water discharge away from areas occupied by workers",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "and the public and away from any down-slope/downstream populations. ",
+          "role": "BODY"
+        }
+      ],
+      "text": "June 2013PPE RecommendationsCAUTION:In the first few days post detonation,dust and fallout particleswillbe highly radioactive and dangerous. Prevent inhalation ofrespirable sized fallout particles anddeposition of fallout particles directly on the skin. Responders should always wear respiratory protection and PPE when performing decontamination of personsand handling decontamination wastes. Radioactive wastes and materials should be removed from areas occupied by workers and the public ASAP. Waste packaging can then be delayed to allow radioactive decay to reduce waste handling doses. Respiratory ProtectionCAUTION:After an INDdetonation, there will most likely be gaseous radioactive material in the air. Thesegasseswill NOT be filtered out with either a Chemical-Biological-Radiological Nuclear (CBRN)or P100 cartridge!Air monitoring should be performedASAPto determine the appropriate level of respiratory protection. While Self Contained Breathing Apparatus(SCBAs)and supplied airdevices provide protection from gaseous and particulate radioactive material,the increased time to accomplish any task whenwearing an \u00006\u0000&\u0000%\u0000$\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000L\u0000Q\u0000F\u0000U\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000U\u0000D\u0000G\u0000L\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000,\u0000Q\u0000\u0003\u0000D\u0000G\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000H\u0000[\u0000W\u0000U\u0000D\u0000\u0003physical stress from wearing anSCBAmay increase the \u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003risk ofphysical injury. As soon as air conditions allow, use Full-Face Air Purifying Respirators (APRs)with CBRN or P100 cartridges.NOTE: In Immediately Dangerous to Life or Health (IDLH)environments, anSCBA must be used!When using an APRwith CBRN or P100 cartridges, radioactive material will gather on the face pieces, filter cartridgesand protective clothing, increasingthedose received by workers.UsingPowered Air Purifying Respirators (PAPRs)moves the contaminated filtercartridges away from the \u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000I\u0000D\u0000F\u0000H\u0000\u0011Respiratory protectionRemoves Gaseous ContaminantsRemoves Particulate ContaminantsSCBAxxCBRNxP100xPPE PPE should be appropriate to all hazards associated with the site and response. In the first few days following an IND detonation, the radiation dosesto responders will primarily be from: 1) Gamma radiation2) Radiations from the decay of activated materials in the environment 3) Ingestion and inhalation of airborne radioactive particulates and gases. As time progresses, the majority of concern will shift to contamination control. Good general hygiene practices (i.e., hand washing, covering wounds, no eating, drinking or smoking in contaminated areas) must be followed to prevent personnel contamination. Care should b e taken to avoid the spread of contamination onto survey/monitoring equipment. A variety of other hazards (i.e., physical, chemical,and biological) may be of greater concern to the responder based on the location and extent ofthe damage caused by the IND. The PPEclothing (paper and cloth) only preventskin contaminationand exposuresfrom alpha and beta radiations\u0000±PPE do NOTprovide protection against gamma or neutron exposures.Radiation Detection EquipmentSelf-Reading Dosimeters:The Self-Reading Dosimeter \u0000Z\u0000L\u0000O\u0000O\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000)\u00002\u00006\u0000&\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u00002\u00001\u0000/\u0000<\u0000\u0003\u0000L\u0000Q\u0000G\u0000L\u0000F\u0000D\u0000W\u0000R\u0000U\u0000\u0003\u0000W\u0000K\u0000H\u0000\\\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000Q\u0000H\u0000D\u0000U\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000H\u0000L\u0000U\u0000\u0003\u0000D\u0000J\u0000H\u0000Q\u0000F\u0000\\\u0000¶\u0000V\u0000\u0003\u0000G\u0000R\u0000V\u0000H\u0000\u0003\u0000O\u0000L\u0000P\u0000L\u0000W\u0000\u0011\u0000\u0003\u0000\u0003\u00007\u0000K\u0000L\u0000V\u0000\u0003\u0000L\u0000Qstrument will provide live- time readout until Thermoluminescent Dosimeter (TLD) or Optically Stimulated Luminescent (OSL) Dosimeter reports can be provided. It is imperative the FOSC responder keep track of their doses and provide their dose estimates toHealth and Safety Officer ASAP. Recommended Minimum Radiation Detection Equipment: -High range gamma instruments that read in the Roentgen/Hr (R/Hr) or Rem/Hr range-Low range gamma instrument that reads in the microRoentgen/Hr \u0000 \u0002\u001d\u00005\u0000\u0012\u0000+\u0000U\u0000 \u0000\u0003to milliRoentgen/Hr (mR/Hr) range- Geiger Mueller pancake probe for personnel surveyingNOTE: A large number of instruments will be required to supply all the responders. Local instrumentation resources are expected tobe quickly exhausted. Additional instrumentation will have to be acquired from other agencies/sources. Public MessagingFOSC responders should defer to local officials for advising the public. But, if advice is requested, the following statement is recommended: 1) If downwind, s eek immediate shelter in the deepest, farthest, thickest walled roomwithin the nearest structure until an \u0000³All Clear\u0000´message is received. 2) Avoid burning or unstable structures.3) If caught in fallout, breathe through a cloth or respirator. 4) E xercise caution until in a knownclean area. Areas outside fallout zonesthat may be thought to be clean may have higher radioactive contamination levels than expected. Radioactivecontamination is carried out of thefallout zones onthe vehicles of the previously evacuated people and onthe people themselves. 5) Once arrived in a clean area, brush dust from clothes, hair,and skinandremove contaminated clothes. Shower if possible.6) Listen for official updates.Evacuate or relocate only when directed.Short -Term Waste ManagementHandling of Wastes and Contaminated Materials From Operations in First Days post IND:In the first few days, operational wastes will primarily be generated from decontamination of the public, Critical Infrastructure Key Resources (CIKR )facilityworkersandemergencyresponders. Wastes will either be dry (e.g., PPE, clothes, personal effects, etc.) or decontamination wash water. Responders and members of the public should be directed to bag clothes and PPE that have been removedand seal the bags. Wastesshould be handled as little as possibleand placed in weather-proof containers -if available. Wastesand contaminated materials should be staged awayfrom areas occupied by workers and the public ASAP.Waste packaging should be delayed to allow for adequate radioactive decay to reduce waste handling doses.If weather-proof containers are not available and precipitation is expected, place the wastes under a roof, if possible. This \u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000L\u0000O\u0000O\u0000\u0003\u0000E\u0000H\u0000F\u0000R\u0000P\u0000H\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000G\u0000\u000f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000L\u0000W\u0000\u0003\u0000L\u0000V\u0000Q\u0000¶\u0000W\u0000\u0003\u0000D\u0000O\u0000U\u0000H\u0000D\u0000G\u0000\\\u0000\u0011\u0000\u0003 \u0000,\u0000I\u0000\u0003\u0000Z\u0000D\u0000V\u0000K\u0000\u0003\u0000Z\u0000D\u0000W\u0000H\u0000U\u0000\u0003\u0000F\u0000D\u0000Q\u0000¶\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000L\u0000Q\u0000H\u0000U\u0000L\u0000]\u0000H\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000V\u0000X\u0000I\u0000I\u0000L\u0000F\u0000L\u0000H\u0000Q\u0000W\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000L\u0000Q\u0000H\u0000U\u0000V\u0000\u0003\u0000F\u0000D\u0000Q\u0000¶\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000R\u0000E\u0000W\u0000D\u0000L\u0000Q\u0000H\u0000G\u0000\u000f\u0000\u0003\u0000G\u0000L\u0000U\u0000H\u0000F\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000Dsh water discharge away from areas occupied by workers and the public and away from any down-slope/downstream populations.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 28,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

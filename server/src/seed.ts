@@ -5,7 +5,6 @@ import { getDb } from "./db.js";
 import * as schema from "./schema.js";
 import { eq, sql } from "drizzle-orm";
 import { ALL_CHEMICALS } from "../../src/data/all-chemicals.js";
-import { ALL_NPG as NPG } from "../../src/data/all-npg.js";
 import { FACILITIES } from "../../src/data/facilities.js";
 import { THRESHOLDS } from "../../src/data/thresholds.js";
 import { ERG_TABLE_1 } from "../../src/data/erg.js";
@@ -14,6 +13,7 @@ import {
   REVIEWED_CHEMICAL_SOURCE_LINKS,
   REVIEWED_TRANSPORTATION_LINKS,
 } from "./chemical-companion/reviewed-source-links.js";
+import { npgProjectionSource, reconcileNpgProjection } from "./npg-projection.js";
 
 const db = getDb();
 
@@ -94,20 +94,8 @@ async function seed() {
   console.log(`[seed] reviewed chemical/source links: ${REVIEWED_CHEMICAL_SOURCE_LINKS.length}; transport links: ${REVIEWED_TRANSPORTATION_LINKS.length}`);
 
   // ─── NPG ──────────────────────────────────────────────────────────────
-  for (const n of NPG) {
-    await db.insert(schema.npgRecords).values({
-      id: n.id, name: n.name, synonyms: JSON.stringify(n.synonyms ?? []),
-      cas: n.cas ?? null, rtecs: n.rtecs ?? null, formula: n.formula ?? null,
-      exposureLimits: JSON.stringify(n.exposureLimits ?? {}),
-      physical: JSON.stringify(n.physical ?? {}), health: JSON.stringify(n.health ?? {}),
-      ppe: JSON.stringify(n.ppe ?? {}), reactivity: JSON.stringify(n.reactivity ?? {}),
-      sources: JSON.stringify(n.sources ?? []),
-    }).onConflictDoUpdate({
-      target: schema.npgRecords.id,
-      set: { name: n.name, updatedAt: sql`(datetime('now'))` },
-    });
-  }
-  console.log(`[seed] npg: ${NPG.length} upserted`);
+  const npgCount = reconcileNpgProjection(db);
+  console.log(`[seed] npg: ${npgCount} reconciled`);
 
   // ─── ERG Table 1 — clear + re-insert (auto-increment IDs) ─────────────
   await db.delete(schema.ergTable1);
@@ -189,7 +177,7 @@ async function seed() {
   const sources = [
     { key: "erg", edition: "2024", license: "Public Domain (PHMSA)", recordCount: ERG_TABLE_1.length },
     { key: "cameo", edition: "subset-2025-01", license: "Public Domain (NOAA)", recordCount: ALL_CHEMICALS.length },
-    { key: "nioshNpg", edition: "2024-10", license: "Public Domain (CDC/NIOSH)", recordCount: NPG.length },
+    npgProjectionSource(),
     { key: "tier2", edition: "demo-2024", license: "Public record", recordCount: FACILITIES.length },
     { key: "aeglErpgTeel", edition: "2024", license: "Public domain (EPA, AIHA, DOE)", recordCount: THRESHOLDS.length },
   ];

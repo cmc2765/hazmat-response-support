@@ -1,0 +1,1722 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-chemical-chlorine",
+  "sourceArtifactSha256": "6910443aab0b76fc2f93016c3e0c01c40f1c3e6288934fc009aec2f80af98cd4",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 10,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Chlorine Gas",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(CL)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[May2026Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "July2015Page 1of 10",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Chlorine Gas",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "(CL)GHS: Acute Toxicity, Category 1H330\u0003óFatal if inhaledGHS: Irritant (skin and eye), Category 2H319 \u0003óCauses serious eye irritationH315 \u0003óCauses skinirritationGHS:Oxidizing Gases, Category 1H270 \u0003óMay cause or intensify fire; oxidizer1. ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Agent CharacteristicsAgent CharacteristicsAgent Classification:Choking/pulmonary, lung damagingagent(CL)and Toxic Industrial Chemical; CAS: 7782-50-5Description:Chlorine (Cl2) is a greenish-yellow",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "gas at room temperature with a pungent, irritating odor. Under increased pressure or at temperatures below -30°F (-34°C), Cl2is a clear, amber-colored liquid. Cl2causes adverse health effects through corrosion and oxidation. Most people can smell Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "at concentrations well below toxic levels, but olfactory fatigueinpersons with prolonged Cl2exposure greatly decreases this safeguard. Cl2can be generated from hypochlorites (e.g., household bleach, disinfectantsfor swimming pools) at lowto neutralpHs. Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "will react rapidly with atmospheric moisture to form hydrochloric acid (HCl) and hypochlorous acid (HOCl). Cl2is a strong oxidizer and may react explosively or form explosive compounds with many common substances,",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "such as acetylene, ether, turpentine, ammonia, fuelgas, hydrogen,fluorine,many other chemicals, and finely divided metals.Toxic environmental breakdown products of Cl2can include HCl, HOCl, and numerous organochlorine compounds.Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "is stored and shipped in pressurized steel containers (e.g., tanks, cylinders, rail tank cars) as acompressed liquefied gas, which is a cryogenic gas that may result in frostbite if released.",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Pressurized containers may explode when heated. Ruptured cylinders may rocket.Persistence:Cl2\u0001\u0016\u0001\\\u0003Ù\u0000è\u0001:\u00012\u0001\\\u0001\u0016\u0000î\u0000ô\u0001X\u0000ô\u0000î\u0003Ù\u0004\nnon-persistent.\u0004\u000b\u0003ÙCl2gas: breaks down within minutes to hours through several ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "processes such as photolysis, reactions with moisture or other substances, and dissolution in water; Cl2liquid: rapidly volatizesat ambient temperatures and pressures. Persistence will depend upon the amount and purity of ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "the agent, method of release, environmental conditions, and the types of surfaces and materials impacted. Cl2will react with many materials resulting in damage that greatly shortens their usable life (e.g., reduction of metal corrosion resistance).2. ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Physicaland ChemicalPropertiesPhysicaland ChemicalPropertiesMolecular Weight:70.9g/molFormula:Cl2Vapor Density:2.48(air = 1)Flash Point:NA, not combustibleVapor Pressure:5,830mm Hg (77°F/25°C)Liquid Density:1.409 g/mL(68°F/20°C)Volatility:",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "very high, limited by mass transferAqueous Solubility:7.3g/L(68°F/20°C)Boiling Point:-30°F/-34°CNon-aqueous Solubility:Bases, chlorides, alcoholsMelting/Freezing Point:-150°F/-101°CHydrolysisrate:Slow(rapidly reacts with water/moisture)Note:P",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "hysical properties are listed at/near STP unless otherwise indicated; NA = not applicable.Conversion Factors:ppm = mg/m3x 0.344; mg/m3= ppm x 2.903. Release ScenariosRelease Scenarios",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "AIR RELEASE SCENARIOS ARE ASSUMED MOST PROBABLE; HOWEVER, OTHER RELEASE SCENARIOS AND EXPOSURE ROUTES SHOULD BE CONSIDERED.Open Areas:Cl2is a gas and is relatively easy to disperse due to its volatility, and the primary release/attack ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "scenario is an airborne release. Cl2is expected to disperse or to degrade by reaction with encountered surfaces/materials. However, an unreacted cloud of Cl2(typically greenish-yellow) can migrate several miles ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "from the site of release by the wind while maintaining dangerous concentrationsin the path of that Cl2cloud. Cl2in gaseous form is heavier than air,so itcan spread along the groundandaccumulate in lower terrainsand confined spaces (e.g., storm sewers).",
+          "role": "BODY"
+        }
+      ],
+      "text": "(CL) [May2026Update(nrt.org): July2015Page 1of 10 (CL)GHS: Acute Toxicity, Category 1H330\u0003óFatal if inhaledGHS: Irritant (skin and eye), Category 2H319 \u0003óCauses serious eye irritationH315 \u0003óCauses skinirritationGHS:Oxidizing Gases, Category 1H270 \u0003óMay cause or intensify fire; oxidizer1. Agent CharacteristicsAgent CharacteristicsAgent Classification:Choking/pulmonary, lung damagingagent(CL)and Toxic Industrial Chemical; CAS: 7782-50-5Description:Chlorine (Cl2) is a greenish-yellow gas at room temperature with a pungent, irritating odor. Under increased pressure or at temperatures below -30°F (-34°C), Cl2is a clear, amber-colored liquid. Cl2causes adverse health effects through corrosion and oxidation. Most people can smell Cl2 at concentrations well below toxic levels, but olfactory fatigueinpersons with prolonged Cl2exposure greatly decreases this safeguard. Cl2can be generated from hypochlorites (e.g., household bleach, disinfectantsfor swimming pools) at lowto neutralpHs. Cl2 will react rapidly with atmospheric moisture to form hydrochloric acid (HCl) and hypochlorous acid (HOCl). Cl2is a strong oxidizer and may react explosively or form explosive compounds with many common substances, such as acetylene, ether, turpentine, ammonia, fuelgas, hydrogen,fluorine,many other chemicals, and finely divided metals.Toxic environmental breakdown products of Cl2can include HCl, HOCl, and numerous organochlorine compounds.Cl2 is stored and shipped in pressurized steel containers (e.g., tanks, cylinders, rail tank cars) as acompressed liquefied gas, which is a cryogenic gas that may result in frostbite if released. Pressurized containers may explode when heated. Ruptured cylinders may rocket.Persistence:Cl2\u0001\u0016\u0001\\\u0003Ù\u0000è\u0001:\u00012\u0001\\\u0001\u0016\u0000î\u0000ô\u0001X\u0000ô\u0000î\u0003Ù\u0004 non-persistent.\u0004 \u0003ÙCl2gas: breaks down within minutes to hours through several processes such as photolysis, reactions with moisture or other substances, and dissolution in water; Cl2liquid: rapidly volatizesat ambient temperatures and pressures. Persistence will depend upon the amount and purity of the agent, method of release, environmental conditions, and the types of surfaces and materials impacted. Cl2will react with many materials resulting in damage that greatly shortens their usable life (e.g., reduction of metal corrosion resistance).2. Physicaland ChemicalPropertiesPhysicaland ChemicalPropertiesMolecular Weight:70.9g/molFormula:Cl2Vapor Density:2.48(air = 1)Flash Point:NA, not combustibleVapor Pressure:5,830mm Hg (77°F/25°C)Liquid Density:1.409 g/mL(68°F/20°C)Volatility: very high, limited by mass transferAqueous Solubility:7.3g/L(68°F/20°C)Boiling Point:-30°F/-34°CNon-aqueous Solubility:Bases, chlorides, alcoholsMelting/Freezing Point:-150°F/-101°CHydrolysisrate:Slow(rapidly reacts with water/moisture)Note:P hysical properties are listed at/near STP unless otherwise indicated; NA = not applicable.Conversion Factors:ppm = mg/m3x 0.344; mg/m3= ppm x 2.903. Release ScenariosRelease Scenarios AIR RELEASE SCENARIOS ARE ASSUMED MOST PROBABLE; HOWEVER, OTHER RELEASE SCENARIOS AND EXPOSURE ROUTES SHOULD BE CONSIDERED.Open Areas:Cl2is a gas and is relatively easy to disperse due to its volatility, and the primary release/attack scenario is an airborne release. Cl2is expected to disperse or to degrade by reaction with encountered surfaces/materials. However, an unreacted cloud of Cl2(typically greenish-yellow) can migrate several miles from the site of release by the wind while maintaining dangerous concentrationsin the path of that Cl2cloud. Cl2in gaseous form is heavier than air,so itcan spread along the groundandaccumulate in lower terrainsand confined spaces (e.g., storm sewers).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 23,
+        "repeatedHeaderFooterBlockCount": 6,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Chlorine Gas",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(CL)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[May2026Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "July2015Page 2of 10Water/Water Systems:Cl2released into or over natural waters or water systems can dissolverapidlyand form HCl and HOCl, which are corrosive and may exert toxic effects if present in high concentrations. If a large cloud of Cl2gas ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "is released, not all Cl2may dissolve before the Cl2cloud leaves the vicinity of the water.Indoor Facility:Due to its volatility, Cl2could potentially be dispersed inside a building or facility; HVAC systems could be impacted. Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "is heavier than air and can accumulate in lower levels, basements, floor drains, or utility corridors inside buildings.Dangerous concentrations may develop quickly in enclosedorpoorly ventilatedareasinside buildings.Metal machinery and electronics ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "inside a building or facility can be severely corroded.Soil/Vegetation:Soil is unlikelyto becontaminated orto act as a sink for Cl2deposition.If Cl2is released as a gas, it is highly unlikely to contaminateagricultural products. Cl2may",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "react with organic matter in agricultural products and oxidize them, mainly leaving nonvolatile chloride-containing compoundsor residues, which may cause visual or other damage to vegetation(e.g., necrosis).Other:Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "is not combustible, but it enhances combustion of other substances.Cl2is a powerful oxidant, so it can violently react with and/or burn combustibles.Keep combustibles (e.g., wood, paper, oil) away from Cl2releases.4. Health EffectsHealth Effects4.1. Onset:",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Onset of symptoms is dose and route dependent. After exposure, symptoms may occur within secondsafter exposure to Cl2gas (eyes and respiratory) or Cl2liquid (instant frostbite).At higherexposure levels, ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "irritation of the upper respiratory tract and accumulation of fluid in the lungs (pulmonary edema) contribute to a sensation of choking. Suffocation is the characteristic initial complaint after a personis exposed to Cl2gas.4.2. Signs/Symptoms:Initial s",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "ymptoms will vary depending on dose and exposure route. The following is a general list of possible symptoms. The severity of effects depends upon the dosage.Mild/Moderate:\u0000xInhalation",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": ": Immediate coughing spasms and a choking sensation; retching and vomiting of stomach contents that may smell like Cl2. Hoarseness or complete loss of voice. High-pitched sounds caused by narrowing of the ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "upper airway and severe chest discomfort. An early and prominent effect of exposure is narrowing of the lower airways. The patient or victim may describe the sensation of feeling smothered (suffocated). Symptoms and signs ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "of accumulation of fluid in the lungs (pulmonary edema) may appear within 2-4 hours after exposure.\u0000xEye: Immediate burning, spasmodic blinking or involuntary closing of the eyelids, redness, inflammation of eye's membranes, and tear production.\u0000xSkin",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": ": Irritation, burning pain, inflammation, and blisters.Severe:\u0000xInhalation: Sudden death can occur from critical narrowing of the upper airway(bronchospasm). Severe ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "difficulty breathing or shortness of breath may be so prominent that the patient or victim refuses to move. Another symptom includes copious secretions (up to 1 liter per hour) from the nose and mouth and airways. Pulmonary edema may occur within 30-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "60 minutes after exposure.Symptoms may continue for several days after severe exposures.\u0000xEye: Corneal burns leading to cell death and eye ulcers.\u0000xSkin: Severe chemical burns leading to cell death and skin ulcers.Exposure tocompressedliquefied Cl2can ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "result in frostbite injury and/or chemical burns.4.3. Exposure Routes:Inhalation:Inhalation is the mainroute of Cl2gas exposure. Respiratory symptoms may be immediate or delayed for several hours or days after exposure to Cl2gas.",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Respiratory deterioration may continue for several hours.Skin:Contact with Cl2in gaseous form can cause chemical burns to skin. Contact with compressed liquifiedCl2can cause frostbiteand/or chemical burns. Significant skin absorption is unlikely.Eyes:",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Contact with Cl2in gaseous form can cause chemical burns to the eyes. Contact with compressed liquified Cl2can cause frostbiteand/or chemical burns.Ingestion:Cl2is a gas at room temperature, making ingestion an unlikely exposure route.5. Effect Levels",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Effect Levels5.1. Air: Acute Exposure Guideline Levels (AEGLs)for general population one-time exposure emergency scenarios for Cl2(complete definitions are available at: https://www.epa.gov/aegl).AEGL Level in ppm, at various exposure durations10 min.",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effects0.50.50.50.50.5",
+          "role": "BODY"
+        }
+      ],
+      "text": "(CL) [May2026Update(nrt.org): July2015Page 2of 10Water/Water Systems:Cl2released into or over natural waters or water systems can dissolverapidlyand form HCl and HOCl, which are corrosive and may exert toxic effects if present in high concentrations. If a large cloud of Cl2gas is released, not all Cl2may dissolve before the Cl2cloud leaves the vicinity of the water.Indoor Facility:Due to its volatility, Cl2could potentially be dispersed inside a building or facility; HVAC systems could be impacted. Cl2 is heavier than air and can accumulate in lower levels, basements, floor drains, or utility corridors inside buildings.Dangerous concentrations may develop quickly in enclosedorpoorly ventilatedareasinside buildings.Metal machinery and electronics inside a building or facility can be severely corroded.Soil/Vegetation:Soil is unlikelyto becontaminated orto act as a sink for Cl2deposition.If Cl2is released as a gas, it is highly unlikely to contaminateagricultural products. Cl2may react with organic matter in agricultural products and oxidize them, mainly leaving nonvolatile chloride-containing compoundsor residues, which may cause visual or other damage to vegetation(e.g., necrosis).Other:Cl2 is not combustible, but it enhances combustion of other substances.Cl2is a powerful oxidant, so it can violently react with and/or burn combustibles.Keep combustibles (e.g., wood, paper, oil) away from Cl2releases.4. Health EffectsHealth Effects4.1. Onset: Onset of symptoms is dose and route dependent. After exposure, symptoms may occur within secondsafter exposure to Cl2gas (eyes and respiratory) or Cl2liquid (instant frostbite).At higherexposure levels, irritation of the upper respiratory tract and accumulation of fluid in the lungs (pulmonary edema) contribute to a sensation of choking. Suffocation is the characteristic initial complaint after a personis exposed to Cl2gas.4.2. Signs/Symptoms:Initial s ymptoms will vary depending on dose and exposure route. The following is a general list of possible symptoms. The severity of effects depends upon the dosage.Mild/Moderate:\u0000xInhalation : Immediate coughing spasms and a choking sensation; retching and vomiting of stomach contents that may smell like Cl2. Hoarseness or complete loss of voice. High-pitched sounds caused by narrowing of the upper airway and severe chest discomfort. An early and prominent effect of exposure is narrowing of the lower airways. The patient or victim may describe the sensation of feeling smothered (suffocated). Symptoms and signs of accumulation of fluid in the lungs (pulmonary edema) may appear within 2-4 hours after exposure.\u0000xEye: Immediate burning, spasmodic blinking or involuntary closing of the eyelids, redness, inflammation of eye's membranes, and tear production.\u0000xSkin : Irritation, burning pain, inflammation, and blisters.Severe:\u0000xInhalation: Sudden death can occur from critical narrowing of the upper airway(bronchospasm). Severe difficulty breathing or shortness of breath may be so prominent that the patient or victim refuses to move. Another symptom includes copious secretions (up to 1 liter per hour) from the nose and mouth and airways. Pulmonary edema may occur within 30- 60 minutes after exposure.Symptoms may continue for several days after severe exposures.\u0000xEye: Corneal burns leading to cell death and eye ulcers.\u0000xSkin: Severe chemical burns leading to cell death and skin ulcers.Exposure tocompressedliquefied Cl2can result in frostbite injury and/or chemical burns.4.3. Exposure Routes:Inhalation:Inhalation is the mainroute of Cl2gas exposure. Respiratory symptoms may be immediate or delayed for several hours or days after exposure to Cl2gas. Respiratory deterioration may continue for several hours.Skin:Contact with Cl2in gaseous form can cause chemical burns to skin. Contact with compressed liquifiedCl2can cause frostbiteand/or chemical burns. Significant skin absorption is unlikely.Eyes: Contact with Cl2in gaseous form can cause chemical burns to the eyes. Contact with compressed liquified Cl2can cause frostbiteand/or chemical burns.Ingestion:Cl2is a gas at room temperature, making ingestion an unlikely exposure route.5. Effect Levels Effect Levels5.1. Air: Acute Exposure Guideline Levels (AEGLs)for general population one-time exposure emergency scenarios for Cl2(complete definitions are available at: https://www.epa.gov/aegl).AEGL Level in ppm, at various exposure durations10 min. 30 min.1 hr.4 hr.8 hr.AEGL 1: Threshold mild effects0.50.50.50.50.5",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 25,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Chlorine Gas",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(CL)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[May2026Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "July2015Page 3of 10AEGL 2: Potentially irreversible effects or impaired ability to escape2.82.82.01.00.71AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethality502820107.15.2. Air: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "American Industrial Hygiene Association (AIHA) Emergency Response Planning Guidelines (ERPGTM)for general population short-term (1 hour) single exposures to airborne concentrations of Cl2.(complete definitions are available at: ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "https://erpg.aiha.org/Content/ERPG.cfm).AIHA ERPG Level in ppm1 hr.ERPG-1:Mild, transient effects1ERPG-2:Serious, irreversible effects3ERPG-3:Life-threatening effects20Note:ERPGsare intended to be used",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "as planning tools for assessing the adequacy of incident prevention and containment measures undertaken for chemical releases. Thesevaluesare not to be used to determine safe limits ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "for routine operations, as definitive delineators between safe and unsafe exposure conditions, or as a basis for quantitative risk assessment.Additional information can be found at: https://erpg.aiha.org/Content/About.cfm.6.Exposure Guidelines",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Exposure Guidelines6.1. Occupational:(NA = not available)NIOSH IDLH= 10 ppm (29mg/m3)OSHA PEL = 1 ppm (2.9mg/m3) NIOSH REL=0.5 ppm (1.5 mg/m3) [15-ACGIH TLV-TWA= 0.1ppm (0.3mg/m3) [8-hr TWANIOSH REL-STEL= NAACGIH TLV-STEL= 0.4ppm (1.2 mg/m3)6.2. Population",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": ":EPA Regional Screening Level (RSL):RSLs are risk-based concentrations(not exposure guidelines)considered protective for humans (including sensitive groups) over a lifetime. Exceeding an RSL could warrant further investigation, and an appropriate ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "subject matter expert should be consulted. (www.epa.gov/risk/regional-screening-levels-rsls)Soil:RSL for Residential Soil = 0.18 mg/kg; RSL for Industrial Soil =0.78 mg/kg.DrinkingWater:RSL for TapWater = 0.30 µg/L.EPA Provisional Advisory Level (PAL):",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "PALs represent chemical concentrations in air or drinking water above which varying health effects (PAL1, PAL2, PAL3) are expected. They are developed for 24-hour, 30-day, and 90-day exposure durations. PALs are interim response phase exposure guidelines ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "and are not intended to define cleanup levels.PAL values are currently unavailable and are undergoing agency review. In the event of a nationally significant or large-scale chemical release, EPA can provide PALs to appropriate end-",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "users and stakeholders as needed to assist in response decision-making.7. Personnel SafetyPersonnel SafetyNote:Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, first aid options,",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "and personnel decontamination may vary depending upon the amount and purity of agent, site conditions,and the release scenario. Additional information on personnel safety and PPE selection criteria can be found at: www.cdc.gov/niosh/ershdb. Responders",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "shouldalsocheck their own internal procedures (e.g., SOPs), if applicable.7.1. Medical:Pre-incident:Must have current medical and respiratory clearances as part of an Occupational Medical ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "Surveillance Program according to OSHA HAZWOPER and Respiratory Protection Program, as per 29 CFR 1910.During Incident:Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per Section 4. HEALTH EFFECTS",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "above and treat accordingly as per Section 7.2. First Aidbelow.Post-incident:Perform post-incident medical surveillance, as per 29 CFR 1910.7.2. First Aid:Immediately remove person from affected area and remove contaminated clothing and articles.",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Compressed liquid:Observe and treat for frostbite and chemical burns. Handle frostbitten skin and eyes with caution. ",
+          "role": "BODY"
+        }
+      ],
+      "text": "(CL) [May2026Update(nrt.org): July2015Page 3of 10AEGL 2: Potentially irreversible effects or impaired ability to escape2.82.82.01.00.71AEGL 3: Threshold for severe effects/medical needs/increasing potential for lethality502820107.15.2. Air: American Industrial Hygiene Association (AIHA) Emergency Response Planning Guidelines (ERPGTM)for general population short-term (1 hour) single exposures to airborne concentrations of Cl2.(complete definitions are available at: https://erpg.aiha.org/Content/ERPG.cfm).AIHA ERPG Level in ppm1 hr.ERPG-1:Mild, transient effects1ERPG-2:Serious, irreversible effects3ERPG-3:Life-threatening effects20Note:ERPGsare intended to be used as planning tools for assessing the adequacy of incident prevention and containment measures undertaken for chemical releases. Thesevaluesare not to be used to determine safe limits for routine operations, as definitive delineators between safe and unsafe exposure conditions, or as a basis for quantitative risk assessment.Additional information can be found at: https://erpg.aiha.org/Content/About.cfm.6.Exposure Guidelines Exposure Guidelines6.1. Occupational:(NA = not available)NIOSH IDLH= 10 ppm (29mg/m3)OSHA PEL = 1 ppm (2.9mg/m3) NIOSH REL=0.5 ppm (1.5 mg/m3) [15-ACGIH TLV-TWA= 0.1ppm (0.3mg/m3) [8-hr TWANIOSH REL-STEL= NAACGIH TLV-STEL= 0.4ppm (1.2 mg/m3)6.2. Population :EPA Regional Screening Level (RSL):RSLs are risk-based concentrations(not exposure guidelines)considered protective for humans (including sensitive groups) over a lifetime. Exceeding an RSL could warrant further investigation, and an appropriate subject matter expert should be consulted. (www.epa.gov/risk/regional-screening-levels-rsls)Soil:RSL for Residential Soil = 0.18 mg/kg; RSL for Industrial Soil =0.78 mg/kg.DrinkingWater:RSL for TapWater = 0.30 µg/L.EPA Provisional Advisory Level (PAL): PALs represent chemical concentrations in air or drinking water above which varying health effects (PAL1, PAL2, PAL3) are expected. They are developed for 24-hour, 30-day, and 90-day exposure durations. PALs are interim response phase exposure guidelines and are not intended to define cleanup levels.PAL values are currently unavailable and are undergoing agency review. In the event of a nationally significant or large-scale chemical release, EPA can provide PALs to appropriate end- users and stakeholders as needed to assist in response decision-making.7. Personnel SafetyPersonnel SafetyNote:Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, first aid options, and personnel decontamination may vary depending upon the amount and purity of agent, site conditions,and the release scenario. Additional information on personnel safety and PPE selection criteria can be found at: www.cdc.gov/niosh/ershdb. Responders shouldalsocheck their own internal procedures (e.g., SOPs), if applicable.7.1. Medical:Pre-incident:Must have current medical and respiratory clearances as part of an Occupational Medical Surveillance Program according to OSHA HAZWOPER and Respiratory Protection Program, as per 29 CFR 1910.During Incident:Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per Section 4. HEALTH EFFECTS above and treat accordingly as per Section 7.2. First Aidbelow.Post-incident:Perform post-incident medical surveillance, as per 29 CFR 1910.7.2. First Aid:Immediately remove person from affected area and remove contaminated clothing and articles. Compressed liquid:Observe and treat for frostbite and chemical burns. Handle frostbitten skin and eyes with caution.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 21,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Chlorine Gas",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(CL)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[May2026Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "July2015Page 4of 10\u0000xPlace frostbitten skin in warm water. If warm water is not available,wrap the affectedpart gently in blankets. Let the circulation reestablish itself naturally. Encourage the victim to move the affected part while it is being warmed.",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Clothing frozen to the skin should be thawed before being removed.\u0000xFlushexposedbareskin and hair immediately with potablewater for 3-5 minutes, then wash twice with mild soaporwarm, soapy water if available, at normal household pressures (~50-",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "60 psi) for three minutes, ensure thorough soaking.Rinse thoroughly with water.\u0000xDo not irrigate eyes that have sustained frostbite injury. Otherwise,rinseexposed or irritated eyes with potable",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "water or saline for 15 minutes. Eye irrigation may be carried out simultaneously with other basic care and transport. Remove contact lenses if it can be done without additional trauma to the eye. If a corrosive material is suspected or if pain or injury i",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "s evident, continue irrigation while transferring the victim to the support zone.Gas: Observe and treat for respiratory distress and maintain clear airway, effects may be delayed up to 4 hours.Administer humidified oxygen if respiratory distress develops.A",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "NTIDOTE: There is no antidote for chlorine toxicity.After administering first aid, send person for follow-up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms and treat accordingly.7.3. ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Personal Protective Equipment (PPE):WARNING: Exposure to liquid or rapidly expanding gases may cause severe chemical burns and frostbite to the eyes, lungs,and skin.GENERAL INFORMATION:NIOSHApproved®",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSHApproved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-facepieces, and chemical-",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "resistant protective clothing (such as neoprene, polytetrafluoroethylene, and butyl rubber)should be used. Level A protection should be used until monitoring results confirm identity and concentration of contaminant. Pre-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "incident training and exercises on the proper use of PPE are recommended.LEVEL A:Recommended for the initial response to aCl2incident. NIOSHApproved CBRN full-facepiece SCBA operated in pressure-demand mode with Level A suit",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "that provides protection against CBRN agents. Level A provides the greatest level of skin (totally-encapsulating chemical protective suitand chemical-resistant inner and outer gloves, along with chemical-resistant boots with steel toeand shank",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when theCl2concentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure.LEVEL B:Pressure",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "-demand SCBA(NIOSHApproved CBRN full-facepiece SCBA)with Level B protective suitthat provides protection against CBRN agents. Level B provides the highest level of respiratory protection (SCBA) ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "when a lesser level of skin protection is required. Select Level B when theCl2concentration is unknown or above the IDLH or AEGL-2,and when dermal exposure is less of a risk. Level B differs from Level A in that it typically incorporates a non-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight(hooded chemical-resistant outer suit and chemical-resistant inner and outer gloves, along with chemical-",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "resistant boots with steel toe and shank).LEVEL C:May be selected when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use of APR",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "or PAPR (i.e., < IDLH, warning properties) are met. Level C may be appropriate when decontaminating personnel or equipment. Level C still incorporates a hooded chemical-resistant outer suitthat provides protection against CBRN agents,chemical-",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "resistant inner and outer gloves, and chemical-resistant boots with steel toe and shank.Note:Cl2may have limited inhalation warning properties due toolfactoryfatiguein persons with a history of prolongedCl2exposure. Use APR/PAPR with cautionand include a ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "canister/cartridge change-out schedule.\u0000xFor air levels greater than AEGL-2:NIOSHApproved CBRN tight-fitting PAPR with a filter or a combination organic vapor, acid gas, and particulate cartridge/filter combination or a continuous flow respirator.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "For air levels greater than AEGL-1: NIOSHApproved CBRN tight-fitting APR with a canister-type gas facepieceor CBRNtight-fittingPAPR.LEVEL D:Select Level D when the contaminant is known and the concentration is below the appropriate ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "occupational exposure limitsor less than AEGL-1 for the stated duration times.PPE includes coveralls or other work clothes, boots, and gloves.Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and the ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "risks of dermal exposure are known, and must be accompanied by on-site monitoring.Following an assessment of on-site air monitoring data and site hazards by the site safety officer, NIOSH Approved non-",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "CBRN respirators may be considered for use, if appropriate. Cl2canreact rapidly with water and moisture in the air to form acidic atmospheric conditions that willpresent a contact hazard to exposed skin as well as inhalation hazards; monitoring for HCl",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "or pH may be required.",
+          "role": "BODY"
+        }
+      ],
+      "text": "(CL) [May2026Update(nrt.org): July2015Page 4of 10\u0000xPlace frostbitten skin in warm water. If warm water is not available,wrap the affectedpart gently in blankets. Let the circulation reestablish itself naturally. Encourage the victim to move the affected part while it is being warmed. Clothing frozen to the skin should be thawed before being removed.\u0000xFlushexposedbareskin and hair immediately with potablewater for 3-5 minutes, then wash twice with mild soaporwarm, soapy water if available, at normal household pressures (~50- 60 psi) for three minutes, ensure thorough soaking.Rinse thoroughly with water.\u0000xDo not irrigate eyes that have sustained frostbite injury. Otherwise,rinseexposed or irritated eyes with potable water or saline for 15 minutes. Eye irrigation may be carried out simultaneously with other basic care and transport. Remove contact lenses if it can be done without additional trauma to the eye. If a corrosive material is suspected or if pain or injury i s evident, continue irrigation while transferring the victim to the support zone.Gas: Observe and treat for respiratory distress and maintain clear airway, effects may be delayed up to 4 hours.Administer humidified oxygen if respiratory distress develops.A NTIDOTE: There is no antidote for chlorine toxicity.After administering first aid, send person for follow-up medical attention and evaluation. If cleared to resume work, continue to monitor for signs/symptoms and treat accordingly.7.3. Personal Protective Equipment (PPE):WARNING: Exposure to liquid or rapidly expanding gases may cause severe chemical burns and frostbite to the eyes, lungs,and skin.GENERAL INFORMATION:NIOSHApproved® Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSHApproved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-facepieces, and chemical- resistant protective clothing (such as neoprene, polytetrafluoroethylene, and butyl rubber)should be used. Level A protection should be used until monitoring results confirm identity and concentration of contaminant. Pre- incident training and exercises on the proper use of PPE are recommended.LEVEL A:Recommended for the initial response to aCl2incident. NIOSHApproved CBRN full-facepiece SCBA operated in pressure-demand mode with Level A suit that provides protection against CBRN agents. Level A provides the greatest level of skin (totally-encapsulating chemical protective suitand chemical-resistant inner and outer gloves, along with chemical-resistant boots with steel toeand shank ), respiratory (SCBA), and eye protection when the contaminant identity or concentration is unknown. Select Level A when theCl2concentration is unknown or above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure.LEVEL B:Pressure -demand SCBA(NIOSHApproved CBRN full-facepiece SCBA)with Level B protective suitthat provides protection against CBRN agents. Level B provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Select Level B when theCl2concentration is unknown or above the IDLH or AEGL-2,and when dermal exposure is less of a risk. Level B differs from Level A in that it typically incorporates a non- encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight(hooded chemical-resistant outer suit and chemical-resistant inner and outer gloves, along with chemical- resistant boots with steel toe and shank).LEVEL C:May be selected when the contaminant identity and concentration are known and the respiratory protection criteria factors for the use of APR or PAPR (i.e., < IDLH, warning properties) are met. Level C may be appropriate when decontaminating personnel or equipment. Level C still incorporates a hooded chemical-resistant outer suitthat provides protection against CBRN agents,chemical- resistant inner and outer gloves, and chemical-resistant boots with steel toe and shank.Note:Cl2may have limited inhalation warning properties due toolfactoryfatiguein persons with a history of prolongedCl2exposure. Use APR/PAPR with cautionand include a canister/cartridge change-out schedule.\u0000xFor air levels greater than AEGL-2:NIOSHApproved CBRN tight-fitting PAPR with a filter or a combination organic vapor, acid gas, and particulate cartridge/filter combination or a continuous flow respirator.\u0000x For air levels greater than AEGL-1: NIOSHApproved CBRN tight-fitting APR with a canister-type gas facepieceor CBRNtight-fittingPAPR.LEVEL D:Select Level D when the contaminant is known and the concentration is below the appropriate occupational exposure limitsor less than AEGL-1 for the stated duration times.PPE includes coveralls or other work clothes, boots, and gloves.Downgrading PPE levels can be considered only when the identity and concentration of the contaminant and the risks of dermal exposure are known, and must be accompanied by on-site monitoring.Following an assessment of on-site air monitoring data and site hazards by the site safety officer, NIOSH Approved non- CBRN respirators may be considered for use, if appropriate. Cl2canreact rapidly with water and moisture in the air to form acidic atmospheric conditions that willpresent a contact hazard to exposed skin as well as inhalation hazards; monitoring for HCl or pH may be required.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 29,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 4,
+      "humanPageNumber": 5,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Chlorine Gas",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(CL)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[May2026Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "July2015Page 5of 108. Personnel DecontaminationPersonnel Decontamination8.1. Personnel Decontamination Procedure:Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a contained ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "and safe manner. Procedures should be in place to treat and replace contaminated materials used during the decontamination process as well as replace necessary chemicals and decontamination solutions.",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Prior to entering the hot zone, all personnel are required to familiarize themselves with the site-specific personnel decontamination procedures.Personnel decontamination should take place in a decontamination area comprised of two decontamination ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "corridors (one for entering and one for exiting). Position corridors upwind and uphill of release area; exit should be upwind and uphill of entrance. Detergent and water solution (pH>8, but <10.5), soft brushes, and durable 6-mil ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "polyethylene bags should be provided.Personnel decontamination area workers need to wear appropriate PPE as indicated below. Be aware that absorbed agent can be released from clothing and skin as a gas.Conduct personnel decontamination per NIOSH ERSH-DB: ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "https://www.cdc.gov/niosh/ershdb/emergencyresponsecard_29750024.html\u0000xEmergencyResponders: Use soft brush to wash PPE with soap and detergent solution in a downward motion, ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "getting into all folds. Repeat washing and rinsing until thoroughly clean. Remove PPE by rolling downward from head; avoid pulling PPE over the head. Remove SCBA last, and place all PPE in polyethylene bags.\u0000xPatient/victim",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": ": Remove all clothing down to at least undergarments, and place in polyethylene bags. Thoroughly wash and rinse skin with soap and water solution, taking care not to break the skin and covering all open wounds. Cover patient/victim ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "(e.g., blanket, towels, Tyvek) and move to treatment area.8.2. Personnel Decontamination Procedures by Zone/Step:(attendants will verbally direct personnel through each step)Conducted in Hot Zone (exclusion zone)1Equipment Drop",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Place equipment taken into the hot zone on a plastic covered table or container provided prior to entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Conducted in Warm Zone (contamination reduction zone)2Sample DropPlace samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-custody of samples. It is recommended that samples are ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "decontaminated in a separate decontamination line.3Outer Boot and Glove WashThe purpose of this step is to enable physical removal of gross contamination if contamination is ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "visible. If gross contamination is not visible, this step may be skipped. Wash outer boots and then outer gloves using designated decontaminating agents (e.g., soap and water).4Glove, Boot, and Suit Wash",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "Wash all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Start with decontaminating boots and gloves, then work on suit from the top down, including SCBA/PAPR casing. Decontaminatio",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "n personnel should conduct this step. Care should be taken to ensure that all areas are decontaminated, including around zipper, arms, front torso, and any other area that could have come in contact with contamination. The solution used for decontamination",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "should be contained, collected, and disposed of properly from the decontamination line.5Outer Glove, Boot, and Suit RemovalWhile sitting on a stool, remove outer boots and outer gloves. Undo the SCBA/PAPR belt and hold in ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "hand. While touching only the inside of suit, carefully roll suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "decontamination personnel to assist either by holding SCBA/PAPR unit or assisting in suit removal.6FacepieceRemovalWith inner gloves, remove the facepiece. Remove cartridge filters and place into designated container. Put facepieceinto facepiece",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "wash. Decontamination personnel will clean each facepieceand SCBA/PAPR assembly prior to return to service.7Inner Glove RemovalRemove inner gloves by only touching outside of first glove and then only inside of second glove. ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Place gloves into designated container.Conducted in Cold Zone (support zone)8Quadrant MonitoringUsing appropriate Cl2air monitoring equipment, screen personnel for residual contamination by ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "dividing body into 4 sections: upper right and left sides of the body, and lower left and right sides. If positive, perform spot decontamination immediately and direct person to showers.",
+          "role": "BODY"
+        }
+      ],
+      "text": "(CL) [May2026Update(nrt.org): July2015Page 5of 108. Personnel DecontaminationPersonnel Decontamination8.1. Personnel Decontamination Procedure:Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to treat and replace contaminated materials used during the decontamination process as well as replace necessary chemicals and decontamination solutions. Prior to entering the hot zone, all personnel are required to familiarize themselves with the site-specific personnel decontamination procedures.Personnel decontamination should take place in a decontamination area comprised of two decontamination corridors (one for entering and one for exiting). Position corridors upwind and uphill of release area; exit should be upwind and uphill of entrance. Detergent and water solution (pH>8, but <10.5), soft brushes, and durable 6-mil polyethylene bags should be provided.Personnel decontamination area workers need to wear appropriate PPE as indicated below. Be aware that absorbed agent can be released from clothing and skin as a gas.Conduct personnel decontamination per NIOSH ERSH-DB: https://www.cdc.gov/niosh/ershdb/emergencyresponsecard_29750024.html\u0000xEmergencyResponders: Use soft brush to wash PPE with soap and detergent solution in a downward motion, getting into all folds. Repeat washing and rinsing until thoroughly clean. Remove PPE by rolling downward from head; avoid pulling PPE over the head. Remove SCBA last, and place all PPE in polyethylene bags.\u0000xPatient/victim : Remove all clothing down to at least undergarments, and place in polyethylene bags. Thoroughly wash and rinse skin with soap and water solution, taking care not to break the skin and covering all open wounds. Cover patient/victim (e.g., blanket, towels, Tyvek) and move to treatment area.8.2. Personnel Decontamination Procedures by Zone/Step:(attendants will verbally direct personnel through each step)Conducted in Hot Zone (exclusion zone)1Equipment Drop Place equipment taken into the hot zone on a plastic covered table or container provided prior to entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later. Conducted in Warm Zone (contamination reduction zone)2Sample DropPlace samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Outer Boot and Glove WashThe purpose of this step is to enable physical removal of gross contamination if contamination is visible. If gross contamination is not visible, this step may be skipped. Wash outer boots and then outer gloves using designated decontaminating agents (e.g., soap and water).4Glove, Boot, and Suit Wash Wash all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Start with decontaminating boots and gloves, then work on suit from the top down, including SCBA/PAPR casing. Decontaminatio n personnel should conduct this step. Care should be taken to ensure that all areas are decontaminated, including around zipper, arms, front torso, and any other area that could have come in contact with contamination. The solution used for decontamination should be contained, collected, and disposed of properly from the decontamination line.5Outer Glove, Boot, and Suit RemovalWhile sitting on a stool, remove outer boots and outer gloves. Undo the SCBA/PAPR belt and hold in hand. While touching only the inside of suit, carefully roll suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontamination personnel to assist either by holding SCBA/PAPR unit or assisting in suit removal.6FacepieceRemovalWith inner gloves, remove the facepiece. Remove cartridge filters and place into designated container. Put facepieceinto facepiece wash. Decontamination personnel will clean each facepieceand SCBA/PAPR assembly prior to return to service.7Inner Glove RemovalRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container.Conducted in Cold Zone (support zone)8Quadrant MonitoringUsing appropriate Cl2air monitoring equipment, screen personnel for residual contamination by dividing body into 4 sections: upper right and left sides of the body, and lower left and right sides. If positive, perform spot decontamination immediately and direct person to showers.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 26,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 5,
+      "humanPageNumber": 6,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Chlorine Gas",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(CL)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[May2026Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "July2015Page 6of 109Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available then, at the minimum, ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "hands and face should be washed thoroughly.10Medical MonitoringReport to medical monitoring station for post-entry monitoring and report to appropriate personnel for debriefing. Observe for any obvious sign of Cl2exposure.Emergency Egress Corridor:",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Establish an emergency egress line to use for quickly decontaminating personnel who have medical emergencies while in the hot zone. Personnel must be decontaminated prior to receiving treatment from emergency medical technicians or transported to a hospit",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "al.Hand-Wash Station:A hand-wash station should be available for personnel to clean up following entry. However, this may not be available initially at the scene or weather conditions may prohibit their use. If a hand-wash station ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "is not available, personnel should wash theirhands and face as soon as possible.9. Field DetectionField DetectionReal-time field screening tools (non-confirmatory, semi-quantitative): Caution should be given to equipment ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "that has not been properly evaluated. False positive and false negatives may occur in the presence of interferents common in the environment.The following is a brief representative summary of minimum detection ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "levels (MDL) and ranges for equipment procured by many EPA and HAZMAT response teams. Other screening tools may be used by these teams and other agencies and responders, some with similar capabilities and limitations. Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "\u0000Í\u0001\\\u0003Ù\u0004\n\u0001e\u0001:\u0001e\u0000Í\u0001+\u0003Ù\u0000è\u0001\u0013\u0001+\u0001:\u0001X\u0001\u0016\u00012\u0000ô\u0004\u000b\u0003Ù\u0001\\\u0001\u0013\u0001:\u0001j\u0001+\u0000î\u0003Ù\u0000æ\u0000ô\u0003Ù\u0001\\\u0001j\u0001\u000b\u0001\u000b\u0001\u0016\u0000è\u0001\u0016\u0000ô\u00012\u0001e\u0003Ù\u0001e\u0001:\u0003Ù\u00011\u0001:\u00012\u0001\u0016\u0001e\u0001:\u0001X\u0003Ù\u0001\u0016\u00012\u0003Ù\u00011\u0001:\u0001\\\u0001e\u0003Ù\u0000è\u0000Í\u0001\\\u0000ô\u0001\\;\u0001:\u0001e\u0001\u0013\u0000ô\u0001X\u0003Ù\u0001\u000b\u0001:\u0001X\u00011\u0001\\\u0003Ù\u0001:\u0001\u000b\u0003Ù\u0000è\u0001\u0013\u0001+\u0001:\u0001X\u0001\u0016\u00012\u0000ô\u0003Ù\u0001\\\u0001j\u0000è\u0001\u0013\u0003Ù\u0000Í\u0001\\\u0003Ù\u0004\n\u0001\u000b\u0001X\u0000ô\u0000ô\u0003Ù\u0001:\u0001X\u0003Ù",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "\u0001X\u0000ô\u0001\\\u0001\u0016\u0000î\u0001j\u0000Í\u0001+\u0003Ù\u0000è\u0001\u0013\u0001+\u0001:\u0001X\u0001\u0016\u00012\u0000ô\u0004\u000b\u0003Ù\u00011\u0000Í\u0001\u0003Ù\u0000æ\u0000ô\u0003Ù\u0000Í\u0001U\u0001U\u0001X\u0001:\u0001U\u0001X\u0001\u0016\u0000Í\u0001e\u0000ô\u0003Ù\u0001\u000b\u0001:\u0001X\u0003Ù\u0000î\u0001X\u0001\u0016\u00012\u0001'\u0001\u0016\u00012\u0001\f\u0003Ù\u0001\u0000Í\u0001e\u0000ô\u0001X\u0003Ù\u0001:\u0001X\u0003Ù\u0001:\u0001e\u0001\u0013\u0000ô\u0001X\u0003Ù\u0001\\\u0001U\u0000ô\u0000è\u0001\u0016\u0001\u000b\u0001\u0016\u0000è\u0003Ù\u0001X\u0000ô\u0001\\\u0001U\u0001:\u00012\u0001\\\u0000ô\u0003Ù\u00012\u0000ô\u0000ô\u0000î\u0001\\\u0003ß\u0003ÙCAUTION:Cl2reacts ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "with water and moisture in soil and air to form HCl. Monitoring for HCl, which may change the pH of these matrices, and for changes in pH as well as Cl2is therefore recommended.Values are listed as parts-per-million (ppm) and milligram-per-cubic-",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "meter (mg/m3) of air or specific concentration units per media.Mention of trade names does not convey official approval or endorsement by NRT or any NRT member agency.9.1. Minimum Screening Ranges/Levels for Air/(Vapor):1 ppm= 2.90 mg/m3Field Equipment:",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Detection ModeMDL (ppm)MDL (mg/m3)Range (ppm)Range (mg/m3)Dräger \u0003óChlorine detector tubescolorimetric0.2*0.6*0.2-500**0.6-1,450**Dräger \u0003óX-am multi-gas or Pac 8000 single-gas detectors (use XXS-Cl2sensor)electrochemical sensor0.050.150.05-200.15-58Dräge",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "r \u0003óX-act with MicroTubesautomated colorimetric0.050.150.05-50.15-15Honeywell \u0003óSPM Flexautomated colorimetric0.0050.0150.005-5.00.015-15Honeywell \u0003óSPM Flex (Mineral acid cassette / HCl)automated colorimetric0.02 as HCl0.06 as HCl0.02-20 as HCl0.06-58 as ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "HClHoneywell/RAE \u0003óMultiRAE multi-gas or ToxiRAE single-gas (Cl2sensor)electrochemical sensor0.10.30.1-500.3-145Honeywell BW Solo single-gas (Cl2sensor)electrochemical sensor0.10.30.1-500.3-145Blackline G7 (single-gas, multi-gas, EXO)electrochemical sensor",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "0.10.30.1-200.3-58*: MDL for product with lowest range; **: range across multiple productsNote: For air samples, concentration may be reported as ppm per volume or as mg/m3; however, specific meters may report data as one or the other",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "\u0003ü\u0000è\u0001\u0013\u0000ô\u0000è\u0001'\u0003Ù\u00011\u0000Í\u00012\u0001j\u0001\u000b\u0000Í\u0000è\u0001e\u0001j\u0001X\u0000ô\u0001X\u0004\r\u0001\\\u0003Ù\u0001\\\u0001U\u0000ô\u0000è\u0001\u0016\u0001\u000b\u0001\u0016\u0000è\u0000Í\u0001e\u0001\u0016\u0001:\u00012\u0001\\\u0003Ù\u0001e\u0001:\u0003Ù\u0001\u0016\u0000î\u0000ô\u00012\u0001e\u0001\u0016\u0001\u000b\u0001\u0003Ù\u0001\u0001\u0013\u0001\u0016\u0000è\u0001\u0013\u0003Ùcanbeselected).9.2. Minimum Screening Ranges/Levels for Water:Field Equipment:Detection ModeMDL (ppm, mg/L)Range (ppm, mg/L)",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "HACH DR900, Handheld Colorimeter, Free & Total Chlorine (low/high)colorimetric0.02 (low)/ 0.1 (high)0.02-2.0 (low)/ 0.1-8.0 (high)Extech EX800 3-in-1 Chlorine, pH, Temp Kit; and Extech CL 200 ExStik Chlorine Meterion-selectiveelectrode0.010.01-10",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Lamotte Insta-TEST Free and Total Chlorine Test Stripscolorimetric0.50-10HACH Free & Total Chlorine Test Stripscolorimetric0.50-10HACH IntelliCAL \u0003óISECL181 Chloride ISEion-selectiveelectrode0.10.1-35,000YSI Xylem \u0003óProDSS chlorine sensorion-selective",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "electrode0.010-1,000",
+          "role": "BODY"
+        }
+      ],
+      "text": "(CL) [May2026Update(nrt.org): July2015Page 6of 109Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available then, at the minimum, hands and face should be washed thoroughly.10Medical MonitoringReport to medical monitoring station for post-entry monitoring and report to appropriate personnel for debriefing. Observe for any obvious sign of Cl2exposure.Emergency Egress Corridor: Establish an emergency egress line to use for quickly decontaminating personnel who have medical emergencies while in the hot zone. Personnel must be decontaminated prior to receiving treatment from emergency medical technicians or transported to a hospit al.Hand-Wash Station:A hand-wash station should be available for personnel to clean up following entry. However, this may not be available initially at the scene or weather conditions may prohibit their use. If a hand-wash station is not available, personnel should wash theirhands and face as soon as possible.9. Field DetectionField DetectionReal-time field screening tools (non-confirmatory, semi-quantitative): Caution should be given to equipment that has not been properly evaluated. False positive and false negatives may occur in the presence of interferents common in the environment.The following is a brief representative summary of minimum detection levels (MDL) and ranges for equipment procured by many EPA and HAZMAT response teams. Other screening tools may be used by these teams and other agencies and responders, some with similar capabilities and limitations. Cl2 \u0000Í\u0001\\\u0003Ù\u0004 \u0001e\u0001:\u0001e\u0000Í\u0001+\u0003Ù\u0000è\u0001\u0013\u0001+\u0001:\u0001X\u0001\u0016\u00012\u0000ô\u0004 \u0003Ù\u0001\\\u0001\u0013\u0001:\u0001j\u0001+\u0000î\u0003Ù\u0000æ\u0000ô\u0003Ù\u0001\\\u0001j\u0001 \u0001 \u0001\u0016\u0000è\u0001\u0016\u0000ô\u00012\u0001e\u0003Ù\u0001e\u0001:\u0003Ù\u00011\u0001:\u00012\u0001\u0016\u0001e\u0001:\u0001X\u0003Ù\u0001\u0016\u00012\u0003Ù\u00011\u0001:\u0001\\\u0001e\u0003Ù\u0000è\u0000Í\u0001\\\u0000ô\u0001\\;\u0001:\u0001e\u0001\u0013\u0000ô\u0001X\u0003Ù\u0001 \u0001:\u0001X\u00011\u0001\\\u0003Ù\u0001:\u0001 \u0003Ù\u0000è\u0001\u0013\u0001+\u0001:\u0001X\u0001\u0016\u00012\u0000ô\u0003Ù\u0001\\\u0001j\u0000è\u0001\u0013\u0003Ù\u0000Í\u0001\\\u0003Ù\u0004 \u0001 \u0001X\u0000ô\u0000ô\u0003Ù\u0001:\u0001X\u0003Ù \u0001X\u0000ô\u0001\\\u0001\u0016\u0000î\u0001j\u0000Í\u0001+\u0003Ù\u0000è\u0001\u0013\u0001+\u0001:\u0001X\u0001\u0016\u00012\u0000ô\u0004 \u0003Ù\u00011\u0000Í\u0001\u0003Ù\u0000æ\u0000ô\u0003Ù\u0000Í\u0001U\u0001U\u0001X\u0001:\u0001U\u0001X\u0001\u0016\u0000Í\u0001e\u0000ô\u0003Ù\u0001 \u0001:\u0001X\u0003Ù\u0000î\u0001X\u0001\u0016\u00012\u0001'\u0001\u0016\u00012\u0001 \u0003Ù\u0001\u0000Í\u0001e\u0000ô\u0001X\u0003Ù\u0001:\u0001X\u0003Ù\u0001:\u0001e\u0001\u0013\u0000ô\u0001X\u0003Ù\u0001\\\u0001U\u0000ô\u0000è\u0001\u0016\u0001 \u0001\u0016\u0000è\u0003Ù\u0001X\u0000ô\u0001\\\u0001U\u0001:\u00012\u0001\\\u0000ô\u0003Ù\u00012\u0000ô\u0000ô\u0000î\u0001\\\u0003ß\u0003ÙCAUTION:Cl2reacts with water and moisture in soil and air to form HCl. Monitoring for HCl, which may change the pH of these matrices, and for changes in pH as well as Cl2is therefore recommended.Values are listed as parts-per-million (ppm) and milligram-per-cubic- meter (mg/m3) of air or specific concentration units per media.Mention of trade names does not convey official approval or endorsement by NRT or any NRT member agency.9.1. Minimum Screening Ranges/Levels for Air/(Vapor):1 ppm= 2.90 mg/m3Field Equipment: Detection ModeMDL (ppm)MDL (mg/m3)Range (ppm)Range (mg/m3)Dräger \u0003óChlorine detector tubescolorimetric0.2*0.6*0.2-500**0.6-1,450**Dräger \u0003óX-am multi-gas or Pac 8000 single-gas detectors (use XXS-Cl2sensor)electrochemical sensor0.050.150.05-200.15-58Dräge r \u0003óX-act with MicroTubesautomated colorimetric0.050.150.05-50.15-15Honeywell \u0003óSPM Flexautomated colorimetric0.0050.0150.005-5.00.015-15Honeywell \u0003óSPM Flex (Mineral acid cassette / HCl)automated colorimetric0.02 as HCl0.06 as HCl0.02-20 as HCl0.06-58 as HClHoneywell/RAE \u0003óMultiRAE multi-gas or ToxiRAE single-gas (Cl2sensor)electrochemical sensor0.10.30.1-500.3-145Honeywell BW Solo single-gas (Cl2sensor)electrochemical sensor0.10.30.1-500.3-145Blackline G7 (single-gas, multi-gas, EXO)electrochemical sensor 0.10.30.1-200.3-58*: MDL for product with lowest range; **: range across multiple productsNote: For air samples, concentration may be reported as ppm per volume or as mg/m3; however, specific meters may report data as one or the other \u0003ü\u0000è\u0001\u0013\u0000ô\u0000è\u0001'\u0003Ù\u00011\u0000Í\u00012\u0001j\u0001 \u0000Í\u0000è\u0001e\u0001j\u0001X\u0000ô\u0001X\u0004 \u0001\\\u0003Ù\u0001\\\u0001U\u0000ô\u0000è\u0001\u0016\u0001 \u0001\u0016\u0000è\u0000Í\u0001e\u0001\u0016\u0001:\u00012\u0001\\\u0003Ù\u0001e\u0001:\u0003Ù\u0001\u0016\u0000î\u0000ô\u00012\u0001e\u0001\u0016\u0001 \u0001\u0003Ù\u0001\u0001\u0013\u0001\u0016\u0000è\u0001\u0013\u0003Ùcanbeselected).9.2. Minimum Screening Ranges/Levels for Water:Field Equipment:Detection ModeMDL (ppm, mg/L)Range (ppm, mg/L) HACH DR900, Handheld Colorimeter, Free & Total Chlorine (low/high)colorimetric0.02 (low)/ 0.1 (high)0.02-2.0 (low)/ 0.1-8.0 (high)Extech EX800 3-in-1 Chlorine, pH, Temp Kit; and Extech CL 200 ExStik Chlorine Meterion-selectiveelectrode0.010.01-10 Lamotte Insta-TEST Free and Total Chlorine Test Stripscolorimetric0.50-10HACH Free & Total Chlorine Test Stripscolorimetric0.50-10HACH IntelliCAL \u0003óISECL181 Chloride ISEion-selectiveelectrode0.10.1-35,000YSI Xylem \u0003óProDSS chlorine sensorion-selective electrode0.010-1,000",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 24,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 6,
+      "humanPageNumber": 7,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Chlorine Gas",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(CL)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[May2026Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "July2015Page 7of 10Note: The MDL are similar for both free and total chlorine. For waters, ppm and mg/L concentrations are mostly similar; however, specific meters may report data as one or the other ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "\u0003ü\u0000è\u0001\u0013\u0000ô\u0000è\u0001'\u0003Ù\u00011\u0000Í\u00012\u0001j\u0001\u000b\u0000Í\u0000è\u0001e\u0001j\u0001X\u0000ô\u0001X\u0004\r\u0001\\\u0003Ù\u0001\\\u0001U\u0000ô\u0000è\u0001\u0016\u0001\u000b\u0001\u0016\u0000è\u0000Í\u0001e\u0001\u0016\u0001:\u00012\u0001\\\u0003Ù\u0001e\u0001:\u0003Ù\u0001\u0016\u0000î\u0000ô\u00012\u0001e\u0001\u0016\u0001\u000b\u0001\u0003Ù\u0001\u0001\u0013\u0001\u0016\u0000è\u0001\u0013\u0003Ù\u0000è\u0000Í\u00012\u0003Ù\u0000æ\u0000ô\u0003Ùselected).10. Environmental Samplingand AnalysisEnvironmental Samplingand Analysis",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Note: This section on sampling contains general guidelines and does not replace the need for a site-specific sampling plan.10.1. Sampling Concerns:Detection, sampling equipment and procedures, and analytical techniques will be site-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g., characterization, decontamination efficacy, and clearance); and 4) specific laboratory requirements. ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Because Cl2is reactive and volatile, field detection may be sufficient (and at times necessary) to achieve the goals of sampling, instead of relying on laboratory analysis alone. The U.S. ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see Section 10.5. Analysisbelow, (",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "https://www.epa.gov/emergency-response/environmental-response-laboratory-network). For questions on environmental sampling for Cl2,call EPA/HQ-EOC at 202-564-3850.10.2. Sample Locations and Planning:",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Initially consider air monitoring to ensure worker safety and to determine if there is a Cl2cloudthat could impact other areas. Characterization sampling is initiated by targeted or judgmental ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "\u0001\\\u0000Í\u00011\u0001U\u0001+\u0001\u0016\u00012\u0001\f\u0003Ù\u0001e\u0001:\u0003Ù\u0001\u0016\u0000î\u0000ô\u00012\u0001e\u0001\u0016\u0001\u000b\u0001\u0003Ù\u0004\n\u0001\u0013\u0001:\u0001e\u0003Ù\u0001\\\u0001U\u0001:\u0001e\u0001\\\u0003à\u0004\u000b\u0003Ù\u0001U\u0001:\u0001e\u0000ô\u00012\u0001e\u0001\u0016\u0000Í\u0001+\u0003Ù\u0000Í\u0001\f\u0000ô\u00012\u0001e\u0003Ù\u0001\u000b\u0001+\u0001:\u0001\u0003Ù\u0001U\u0000Í\u0001e\u0001\u0013\u0001\\\u0003à\u0003Ù\u0000Í\u00012\u0000î\u0003Ù\u00011\u0000ô\u0000î\u0001\u0016\u0000Í\u0003Ù\u0001:\u0001X\u0003Ù\u0001:\u0000æ\u0001$\u0000ô\u0000è\u0001e\u0001\\\u0003Ù\u0001U\u0001:\u0001e\u0000ô\u00012\u0001e\u0001\u0016\u0000Í\u0001+\u0001+\u0001\u0003Ù\u0000Í\u0000è\u0001e\u0001\u0016\u00012\u0001\f\u0003Ù\u0000Í\u0001\\\u0003Ù\u0001\\\u0001\u0016\u00012\u0001'\u0001\\\u0003ß\u0003Ù",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling (e.g., grid, statistical approach) may be ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "required for the clearance phase or if there are large uncertainties about the area impacted or the amount released.Because Cl2is generally not persistent, sampling for Cl2and HCl (air), and pH (surfaces, water, and soil) ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "\u0001e\u0001:\u0003Ù\u0001\u0013\u0000ô\u0001+\u0001U\u0003Ù\u0001e\u0001:\u0003Ù\u0004\n\u0000è\u0001+\u0000ô\u0000Í\u0001X\u0003Ù\u0000Í\u0001X\u0000ô\u0000Í\u0001\\\u0004\u000b\u0003Ù\u0001\\\u0001\u0013\u0001:\u0001j\u0001+\u0000î\u0003Ù\u0000æ\u0000ô\u0003Ù\u0001\u0016\u00012\u0000è\u0001+\u0001j\u0000î\u0000ô\u0000î\u0003Ù\u0001\u0016\u00012\u0003Ù\u0001e\u0001\u0013\u0000ô\u0003Ù\u0001\\\u0000Í\u00011\u0001U\u0001+\u0001\u0016\u00012\u0001\f\u0003Ù\u0001U\u0001+\u0000Í\u00012\u0003ßBecause Cl2is reactive, significant corrosion maybe immediately observable on metals after exposure to high ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "chlorine concentrations (~ >10,000 ppm). This can be a good post-incident indicator of areas impacted by high concentrations of the Cl2cloudand inform where additional sampling could take place.[This is only an observation, not a sampling technique.Note:Cl",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "2is highly reactive,especially to moisture,so reaction byproducts, mainly HCl and HOCl, may be detected in the field along with monitoring for changes in pH. These reaction byproducts and changes in pH can be used as ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "markers to determine the extent of contamination of the parent Cl2.Laboratory analysis will be necessary for chloramines and other organochlorine reaction byproducts. See Section 10.5. Analysisbelow to ensure sampling ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "procedures are compatible with all analytes. Some preparation techniques for both Cl2and its breakdown \u0001U\u0001X\u0001:\u0000î\u0001j\u0000è\u0001e\u0001\\\u0003Ù\u0000Í\u0001X\u0000ô\u0003Ù\u0000Í\u0001}\u0000Í\u0001\u0016\u0001+\u0000Í\u0000æ\u0001+\u0000ô\u0003Ù\u0001\u0016\u00012\u0003Ù\u0000(\u0000\u0000\u0001\u0004\r\u0001\\\u0003Ù\u0000\u0000Í\u00011\u0001U\u0001+\u0000ô\u0003Ù\u0000I\u00012\u0001\u000b\u0001:\u0001X\u00011\u0000Í\u0001e\u0001\u0016\u0001:\u00012\u0003Ù\u0000\u001c\u0001:\u0001+\u0001+\u0000ô\u0000è\u0001e\u0001\u0016\u0001:\u00012\u0003Ù\u0000\"\u0001:\u0000è\u0001j\u00011\u0000ô\u00012\u0001e\u0001\\\u0003Ù\u0003ü",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "https://www.epa.gov/esam/sample-collection-information-documents-scids). These provide general information regarding sampling procedures for different media, sampling supplies, sample size, container, holding time, preservation, packaging, and shipping, ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "supporting collection of samples.10.3. Types of Samples:Air (Cl2in gaseous form is heavier than air):On-site Cl2monitors may provide sufficiently accurate real-time results. More definite analysis for Cl2in ambient air canbe determined byusingNIOSH M",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "ethod 6011: ChlorineandBromine,or OSHA Method ID-101: Chlorine.To assess exposure at breathing level,collect air samples at ~5 feet; to assess off gassing from surfaces and at ground levels, collect air samples at ~6 inches.Water:Dissolved Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "is accurately analyzed in the field using a variety of colorimetric kits using DPD reagents (N,N-diethyl-p-phenylenediamine) or by ion-selectiveelectrode methods. Commercially availablekits for measuring chlorine in swimming poolwater",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "s can also be used to determine excess chlorine in waters. Delays in transport to lab may result in loss of Cl2and inaccurate exposure determination. More definitive analysis for Cl2in water can be determined by using EPA Method SW846, Method 9056:",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Determination of Inorganic Ions by Ion Chromatography,and EPA Method 1912:Potentiometric Determination of Chlorine in Aqueous Samples with Ion-selective Electrode.Measuring the pH of the water may be sufficient as Cl2gas dissolved in water will ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "immediately be converted to HCl and HOCland will have changed the pH. Concurrent air monitoring for Cl2is recommended.Soil:\u0000>\u0001:\u0001X\u0003Ù\u0001+\u0001:\u0000è\u0000Í\u0001+\u0001\u0016\u0001\u0000ô\u0000î\u0003Ù\u0004\n\u0001\u0013\u0001:\u0001e\u0003Ù\u0001\\\u0001U\u0001:\u0001e\u0004\u000b\u0003Ù\u0000Í\u0001X\u0000ô\u0000Í\u0001\\\u0003Ù\u0001\u0001\u0013\u0000ô\u0001X\u0000ô\u0003Ù\u0001\\\u0001:\u0001\u0016\u0001+\u0003Ù\u0000î\u0000ô\u0001U\u0001:\u0001\\\u0001\u0016\u0001e\u0001\u0016\u0001:\u00012ofCl2reaction byproducts ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "(e.g., organochlorine compounds) may occur, surface soil samples may be analyzed for remaining Cl2, pH,and organochlorine reaction byproducts and should be taken from a non-vegetated area to a depth of less than one inch.Measuring changesin ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "the pH of the soils may be sufficient. Sub-surface soil samples (e.g., for organochlorines) may not be necessary unless a large amount of liquid was poured on the ground, or if an underlying aquifer is endangered.Concurrent air monitoring for Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "is recommended.",
+          "role": "BODY"
+        }
+      ],
+      "text": "(CL) [May2026Update(nrt.org): July2015Page 7of 10Note: The MDL are similar for both free and total chlorine. For waters, ppm and mg/L concentrations are mostly similar; however, specific meters may report data as one or the other \u0003ü\u0000è\u0001\u0013\u0000ô\u0000è\u0001'\u0003Ù\u00011\u0000Í\u00012\u0001j\u0001 \u0000Í\u0000è\u0001e\u0001j\u0001X\u0000ô\u0001X\u0004 \u0001\\\u0003Ù\u0001\\\u0001U\u0000ô\u0000è\u0001\u0016\u0001 \u0001\u0016\u0000è\u0000Í\u0001e\u0001\u0016\u0001:\u00012\u0001\\\u0003Ù\u0001e\u0001:\u0003Ù\u0001\u0016\u0000î\u0000ô\u00012\u0001e\u0001\u0016\u0001 \u0001\u0003Ù\u0001\u0001\u0013\u0001\u0016\u0000è\u0001\u0013\u0003Ù\u0000è\u0000Í\u00012\u0003Ù\u0000æ\u0000ô\u0003Ùselected).10. Environmental Samplingand AnalysisEnvironmental Samplingand Analysis Note: This section on sampling contains general guidelines and does not replace the need for a site-specific sampling plan.10.1. Sampling Concerns:Detection, sampling equipment and procedures, and analytical techniques will be site- specific and depend on: 1) physical state of the agent; 2) type of surfaces contaminated (e.g., porous vs. non-porous); 3) the purpose of sampling (e.g., characterization, decontamination efficacy, and clearance); and 4) specific laboratory requirements. Because Cl2is reactive and volatile, field detection may be sufficient (and at times necessary) to achieve the goals of sampling, instead of relying on laboratory analysis alone. The U.S. Environmental Protection Agency (EPA) has set up mobile and fixed labs and analytical assets for chemical agent analysis of environmental samples under their Environmental Response Laboratory Network (ERLN), see Section 10.5. Analysisbelow, ( https://www.epa.gov/emergency-response/environmental-response-laboratory-network). For questions on environmental sampling for Cl2,call EPA/HQ-EOC at 202-564-3850.10.2. Sample Locations and Planning: Initially consider air monitoring to ensure worker safety and to determine if there is a Cl2cloudthat could impact other areas. Characterization sampling is initiated by targeted or judgmental \u0001\\\u0000Í\u00011\u0001U\u0001+\u0001\u0016\u00012\u0001 \u0003Ù\u0001e\u0001:\u0003Ù\u0001\u0016\u0000î\u0000ô\u00012\u0001e\u0001\u0016\u0001 \u0001\u0003Ù\u0004 \u0001\u0013\u0001:\u0001e\u0003Ù\u0001\\\u0001U\u0001:\u0001e\u0001\\\u0003à\u0004 \u0003Ù\u0001U\u0001:\u0001e\u0000ô\u00012\u0001e\u0001\u0016\u0000Í\u0001+\u0003Ù\u0000Í\u0001 \u0000ô\u00012\u0001e\u0003Ù\u0001 \u0001+\u0001:\u0001\u0003Ù\u0001U\u0000Í\u0001e\u0001\u0013\u0001\\\u0003à\u0003Ù\u0000Í\u00012\u0000î\u0003Ù\u00011\u0000ô\u0000î\u0001\u0016\u0000Í\u0003Ù\u0001:\u0001X\u0003Ù\u0001:\u0000æ\u0001$\u0000ô\u0000è\u0001e\u0001\\\u0003Ù\u0001U\u0001:\u0001e\u0000ô\u00012\u0001e\u0001\u0016\u0000Í\u0001+\u0001+\u0001\u0003Ù\u0000Í\u0000è\u0001e\u0001\u0016\u00012\u0001 \u0003Ù\u0000Í\u0001\\\u0003Ù\u0001\\\u0001\u0016\u00012\u0001'\u0001\\\u0003ß\u0003Ù Additional biased or random sampling can be used to determine the extent of potential contamination or to verify the efficacy of decontamination. More thorough probabilistic sampling (e.g., grid, statistical approach) may be required for the clearance phase or if there are large uncertainties about the area impacted or the amount released.Because Cl2is generally not persistent, sampling for Cl2and HCl (air), and pH (surfaces, water, and soil) \u0001e\u0001:\u0003Ù\u0001\u0013\u0000ô\u0001+\u0001U\u0003Ù\u0001e\u0001:\u0003Ù\u0004 \u0000è\u0001+\u0000ô\u0000Í\u0001X\u0003Ù\u0000Í\u0001X\u0000ô\u0000Í\u0001\\\u0004 \u0003Ù\u0001\\\u0001\u0013\u0001:\u0001j\u0001+\u0000î\u0003Ù\u0000æ\u0000ô\u0003Ù\u0001\u0016\u00012\u0000è\u0001+\u0001j\u0000î\u0000ô\u0000î\u0003Ù\u0001\u0016\u00012\u0003Ù\u0001e\u0001\u0013\u0000ô\u0003Ù\u0001\\\u0000Í\u00011\u0001U\u0001+\u0001\u0016\u00012\u0001 \u0003Ù\u0001U\u0001+\u0000Í\u00012\u0003ßBecause Cl2is reactive, significant corrosion maybe immediately observable on metals after exposure to high chlorine concentrations (~ >10,000 ppm). This can be a good post-incident indicator of areas impacted by high concentrations of the Cl2cloudand inform where additional sampling could take place.[This is only an observation, not a sampling technique.Note:Cl 2is highly reactive,especially to moisture,so reaction byproducts, mainly HCl and HOCl, may be detected in the field along with monitoring for changes in pH. These reaction byproducts and changes in pH can be used as markers to determine the extent of contamination of the parent Cl2.Laboratory analysis will be necessary for chloramines and other organochlorine reaction byproducts. See Section 10.5. Analysisbelow to ensure sampling procedures are compatible with all analytes. Some preparation techniques for both Cl2and its breakdown \u0001U\u0001X\u0001:\u0000î\u0001j\u0000è\u0001e\u0001\\\u0003Ù\u0000Í\u0001X\u0000ô\u0003Ù\u0000Í\u0001}\u0000Í\u0001\u0016\u0001+\u0000Í\u0000æ\u0001+\u0000ô\u0003Ù\u0001\u0016\u00012\u0003Ù\u0000(\u0000\u0000\u0001\u0004 \u0001\\\u0003Ù\u0000\u0000Í\u00011\u0001U\u0001+\u0000ô\u0003Ù\u0000I\u00012\u0001 \u0001:\u0001X\u00011\u0000Í\u0001e\u0001\u0016\u0001:\u00012\u0003Ù\u0000\u001c\u0001:\u0001+\u0001+\u0000ô\u0000è\u0001e\u0001\u0016\u0001:\u00012\u0003Ù\u0000\"\u0001:\u0000è\u0001j\u00011\u0000ô\u00012\u0001e\u0001\\\u0003Ù\u0003ü https://www.epa.gov/esam/sample-collection-information-documents-scids). These provide general information regarding sampling procedures for different media, sampling supplies, sample size, container, holding time, preservation, packaging, and shipping, supporting collection of samples.10.3. Types of Samples:Air (Cl2in gaseous form is heavier than air):On-site Cl2monitors may provide sufficiently accurate real-time results. More definite analysis for Cl2in ambient air canbe determined byusingNIOSH M ethod 6011: ChlorineandBromine,or OSHA Method ID-101: Chlorine.To assess exposure at breathing level,collect air samples at ~5 feet; to assess off gassing from surfaces and at ground levels, collect air samples at ~6 inches.Water:Dissolved Cl2 is accurately analyzed in the field using a variety of colorimetric kits using DPD reagents (N,N-diethyl-p-phenylenediamine) or by ion-selectiveelectrode methods. Commercially availablekits for measuring chlorine in swimming poolwater s can also be used to determine excess chlorine in waters. Delays in transport to lab may result in loss of Cl2and inaccurate exposure determination. More definitive analysis for Cl2in water can be determined by using EPA Method SW846, Method 9056: Determination of Inorganic Ions by Ion Chromatography,and EPA Method 1912:Potentiometric Determination of Chlorine in Aqueous Samples with Ion-selective Electrode.Measuring the pH of the water may be sufficient as Cl2gas dissolved in water will immediately be converted to HCl and HOCland will have changed the pH. Concurrent air monitoring for Cl2is recommended.Soil:\u0000>\u0001:\u0001X\u0003Ù\u0001+\u0001:\u0000è\u0000Í\u0001+\u0001\u0016\u0001\u0000ô\u0000î\u0003Ù\u0004 \u0001\u0013\u0001:\u0001e\u0003Ù\u0001\\\u0001U\u0001:\u0001e\u0004 \u0003Ù\u0000Í\u0001X\u0000ô\u0000Í\u0001\\\u0003Ù\u0001\u0001\u0013\u0000ô\u0001X\u0000ô\u0003Ù\u0001\\\u0001:\u0001\u0016\u0001+\u0003Ù\u0000î\u0000ô\u0001U\u0001:\u0001\\\u0001\u0016\u0001e\u0001\u0016\u0001:\u00012ofCl2reaction byproducts (e.g., organochlorine compounds) may occur, surface soil samples may be analyzed for remaining Cl2, pH,and organochlorine reaction byproducts and should be taken from a non-vegetated area to a depth of less than one inch.Measuring changesin the pH of the soils may be sufficient. Sub-surface soil samples (e.g., for organochlorines) may not be necessary unless a large amount of liquid was poured on the ground, or if an underlying aquifer is endangered.Concurrent air monitoring for Cl2 is recommended.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 31,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 7,
+      "humanPageNumber": 8,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Chlorine Gas",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(CL)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[May2026Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "July2015Page 8of 10Surface Wipes:Wipe samples are often desired to indicate Cl2breakdown products, mainly HCl and assorted chlorinated organics, on non-porous surfaces. Measuring the pH of collected wipes may be sufficient. Concurrent air monitoringfor Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "is recommended.Bulk:For hot spot areas where liquid Cl2deposition may occur on poroussurfaces (e.g., concrete, asphalt), actual pieces (chips) or cores of contaminated surface may be obtained using appropriate tools (scabbling, coring,or ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "drills) for subsequent laboratory extraction analysisfor chloramines and other organochlorines. Corrosion damage to some surfaces may be visually obvious. Bulk samples of suspected sink materials may be recommended to rule out absorption oforganochlorines",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "into these materials. Concurrent air monitoringfor Cl2is recommended.Other Sample Matrices:Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.10.4. Sample Packaging and Shipping:",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "The packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, and IATA. For more information, see Section 12.1. Transportationbelow. Contact the sample-",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "receiving laboratory to determine if they have additional packaging, shipping, or labeling requirements.10.5. Analysis:CAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil).Reactive compounds such as Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": ", HCl, HOCl, and other chlorites/chlorates may be accurately determined in the field using \u0000Í\u0001}\u0000Í\u0001\u0016\u0001+\u0000Í\u0000æ\u0001+\u0000ô\u0003Ù\u00011\u0000ô\u0001e\u0000ô\u0001X\u0001\\\u0003Ù\u0000Í\u00012\u0000î\u0003Ù\u0001\u000b\u0001\u0016\u0000ô\u0001+\u0000î\u0003Ù\u0001'\u0001\u0016\u0001e\u0001\\\u0003ß\u0003Ù\u0000(\u0000\u0000\u0001\u0004\r\u0001\\\u0003Ù\u0000(\u0000\u0000[\u0000b\u0003Ù\u0001+\u0000Í\u0000æ\u0001\\\u0003Ù\u0003ühttps://www.epa.gov/emergency-response/environmental-response-",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "laboratory-network\u0003ý\u0003Ù\u0001\u0001\u0016\u0001+\u0001+\u0003Ù\u0001j\u0001\\\u0000ô\u0003Ù\u0001\\\u0000Í\u00011\u0001U\u0001+\u0000ô\u0003Ù\u0001U\u0001X\u0000ô\u0001U\u0003Ù\u0000Í\u00012\u0000î\u0003Ù\u0000Í\u00012\u0000Í\u0001+\u0001\u0001e\u0001\u0016\u0000è\u0000Í\u0001+\u0003Ù\u00011\u0000ô\u0001e\u0001\u0013\u0001:\u0000î\u0001\\\u0003Ù\u0001\u000b\u0001X\u0001:\u00011\u0003Ù\u0000(\u0000\u0000\u0001\u0004\r\u0001\\\u0003Ù\u0000(\u00012\u0001}\u0001\u0016\u0001X\u0001:\u00012\u00011\u0000ô\u00012\u0001e\u0000Í\u0001+\u0003Ù\u0000\u0000Í\u00011\u0001U\u0001+\u0001\u0016\u00012\u0001\f\u0003Ùand Analytical Methods (ESAM) (https://www.epa.gov/esam",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "). For access to the nearest ERLN laboratory specially trained and equipped for analysis of Cl2andits organochlorine reaction byproducts, and methods provided in \u0000(\u0000\u0000\u0001\u0004\r\u0001\\\u0003Ù\u0000(\u0000\u0000\u0001\u0000a\u0003à\u0003Ù\u0000è\u0001:\u00012\u0001e\u0000Í\u0000è\u0001e\u0003Ù\u0000(\u0000\u0000\u0001\u0003ï\u0000F\u0000-EOC at 202-564-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "\u0003R\u0003W\u0003T\u0003O\u0003ß\u0003Ù\u0000\u0001\u0013\u0000ô\u0003Ù\u0000(\u0000\u0000[\u0000b\u0003Ù\u0000Í\u0001+\u0001\\\u0001:\u0003Ù\u00011\u0000Í\u0001\u0016\u00012\u0001e\u0000Í\u0001\u0016\u00012\u0001\\\u0003Ù\u0000(\u0000\u0000\u0001\u0004\r\u0001\\\u0003Ù\u0000\u001c\u0001:\u00011\u0001U\u0000ô\u00012\u0000î\u0001\u0016\u0001j\u00011\u0003Ù\u0001:\u0001\u000b\u0003ÙEnvironmental Testing Laboratories (CETL), a database of commercial, federal, state, and academic laboratories, ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "which can be queried for specific analyses and matrices. Analysis on environmental matrices for specific chemical ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "\u0000Í\u0001\f\u0000ô\u00012\u0001e\u0001\\\u0003Ù\u0000è\u0000Í\u00012\u0003Ù\u0000æ\u0000ô\u0003Ù\u0001:\u0000æ\u0001e\u0000Í\u0001\u0016\u00012\u0000ô\u0000î\u0003Ù\u0000æ\u0001\u0003Ù\u0001W\u0001j\u0000ô\u0001X\u0001\u0001\u0016\u00012\u0001\f\u0003Ù\u0001e\u0001\u0013\u0000ô\u0003Ù\u0000î\u0000Í\u0001e\u0000Í\u0000æ\u0000Í\u0001\\\u0000ô\u0003Ù\u0001:\u0001\u000b\u0003Ù\u0001+\u0000Í\u0000æ\u0001:\u0001X\u0000Í\u0001e\u0001:\u0001X\u0001\u0016\u0000ô\u0001\\\u0003Ù\u0001+\u0001\u0016\u0001\\\u0001e\u0000ô\u0000î\u0003Ù\u0001\u0016\u00012\u0003Ù\u0000(\u0000\u0000\u0001\u0004\r\u0001\\\u0003Ù\u0000\u001c\u0000(\u0000\u0000[\u0003Ù(https://cfext.epa.gov/cetl/lblogin.cfm?action=None",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "); prior registration for access to CETL website is necessary.11. Environmental Decontamination/CleanupEnvironmental Decontamination/CleanupCAUTION: Use water spray only to reduce Cl2cloud or to divert Cl2cloud drift; do not put water in direct ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "contact with liquid Cl2. Avoid allowing water runoff to contact remaining Cl2liquid. Cl2is so volatile and reactive that it will either dissipate, be consumed by reaction with surfaces/materials it encounters, and/or be readily neutralized. ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Large releases, however, may travel long distances before this happens. Hence, most of the environmental decontamination will not necessarily be for Cl2itself, but for reaction byproducts, mostly acids and organochlorine compounds. Separate, long-",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "term decontamination strategies will need to be developed if those byproducts are of concern in a particular situation. This decontamination/cleanupsection refers to Cl2itself.11.1. Decontamination/Cleanup Planning:O",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "nce site controls are in place, develop a site-specific decontamination/cleanup plan. Environmental d",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "\u0000ô\u0000è\u0001:\u00012\u0001e\u0000Í\u00011\u0001\u0016\u00012\u0000Í\u0001e\u0001\u0016\u0001:\u00012\u0003Ù\u00011\u0000Í\u0001\u0003Ù\u0001X\u0000ô\u0001W\u0001j\u0001\u0016\u0001X\u0000ô\u0003Ù\u0000Í\u0003Ù\u0004\n\u0001e\u0001\u0016\u0000ô\u0001X\u0000ô\u0000î\u0003Ù\u0000Í\u0001U\u0001U\u0001X\u0001:\u0000Í\u0000è\u0001\u0013\u0004\u000b\u0003Ù\u0001j\u0001\\\u0001\u0016\u00012\u0001\f\u0003Ù\u0000Í\u0003Ù\u0001}\u0000Í\u0001X\u0001\u0016\u0000ô\u0001e\u0001\u0003Ù\u0001:\u0001\u000b\u0003Ù\u0001e\u0000ô\u0000è\u0001\u0013\u00012\u0001\u0016\u0001W\u0001j\u0000ô\u0001\\\u0003Ù\u0000Í\u00012\u0000î\u0003Ù\u0001U\u0001X\u0001:\u0000î\u0001j\u0000è\u0001e\u0001\\\u0003ß\u0003Ù\u0000\u001c\u0000Í\u0001+\u0001+\u0003Ù\u0000(\u0000\u0000\u0001\u0003ï\u0000F\u0000-EOC at 202-564-3850 for more information.",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "General Considerations:A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers public safety, total cost, impact on the area, wastes generated, time the areaor item will beinaccessible and/or",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "out of service,as well asany socio-economic, public health, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "collected, treated, and disposed of properly. Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible (seeSection 12.WASTE MANAGEMENTbelow).Disposal Option: The urgency to restore an area or item",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "as quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may be impacted byexposure toCl2itself or fromreaction byproducts, and/",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation:Cl2degrades via natural processes. Cl2oxidizes metals, organics, or other materials it encounters resulting in chloride-",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "containing salts, oxides, and organochlorine compounds. Some of these degradation products may be persistent and/or toxic, which may require additional chemical degradation strategies. ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment m",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "easures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than otherdecontaminationoptions and may be more destructive to materials if itallowsCl2",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "to react with materials for a longer period of time.",
+          "role": "BODY"
+        }
+      ],
+      "text": "(CL) [May2026Update(nrt.org): July2015Page 8of 10Surface Wipes:Wipe samples are often desired to indicate Cl2breakdown products, mainly HCl and assorted chlorinated organics, on non-porous surfaces. Measuring the pH of collected wipes may be sufficient. Concurrent air monitoringfor Cl2 is recommended.Bulk:For hot spot areas where liquid Cl2deposition may occur on poroussurfaces (e.g., concrete, asphalt), actual pieces (chips) or cores of contaminated surface may be obtained using appropriate tools (scabbling, coring,or drills) for subsequent laboratory extraction analysisfor chloramines and other organochlorines. Corrosion damage to some surfaces may be visually obvious. Bulk samples of suspected sink materials may be recommended to rule out absorption oforganochlorines into these materials. Concurrent air monitoringfor Cl2is recommended.Other Sample Matrices:Contact EPA/HQ-EOC at 202-564-3850 for sampling instructions.10.4. Sample Packaging and Shipping: The packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, and IATA. For more information, see Section 12.1. Transportationbelow. Contact the sample- receiving laboratory to determine if they have additional packaging, shipping, or labeling requirements.10.5. Analysis:CAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes and soil).Reactive compounds such as Cl2 , HCl, HOCl, and other chlorites/chlorates may be accurately determined in the field using \u0000Í\u0001}\u0000Í\u0001\u0016\u0001+\u0000Í\u0000æ\u0001+\u0000ô\u0003Ù\u00011\u0000ô\u0001e\u0000ô\u0001X\u0001\\\u0003Ù\u0000Í\u00012\u0000î\u0003Ù\u0001 \u0001\u0016\u0000ô\u0001+\u0000î\u0003Ù\u0001'\u0001\u0016\u0001e\u0001\\\u0003ß\u0003Ù\u0000(\u0000\u0000\u0001\u0004 \u0001\\\u0003Ù\u0000(\u0000\u0000[\u0000b\u0003Ù\u0001+\u0000Í\u0000æ\u0001\\\u0003Ù\u0003ühttps://www.epa.gov/emergency-response/environmental-response- laboratory-network\u0003ý\u0003Ù\u0001\u0001\u0016\u0001+\u0001+\u0003Ù\u0001j\u0001\\\u0000ô\u0003Ù\u0001\\\u0000Í\u00011\u0001U\u0001+\u0000ô\u0003Ù\u0001U\u0001X\u0000ô\u0001U\u0003Ù\u0000Í\u00012\u0000î\u0003Ù\u0000Í\u00012\u0000Í\u0001+\u0001\u0001e\u0001\u0016\u0000è\u0000Í\u0001+\u0003Ù\u00011\u0000ô\u0001e\u0001\u0013\u0001:\u0000î\u0001\\\u0003Ù\u0001 \u0001X\u0001:\u00011\u0003Ù\u0000(\u0000\u0000\u0001\u0004 \u0001\\\u0003Ù\u0000(\u00012\u0001}\u0001\u0016\u0001X\u0001:\u00012\u00011\u0000ô\u00012\u0001e\u0000Í\u0001+\u0003Ù\u0000\u0000Í\u00011\u0001U\u0001+\u0001\u0016\u00012\u0001 \u0003Ùand Analytical Methods (ESAM) (https://www.epa.gov/esam ). For access to the nearest ERLN laboratory specially trained and equipped for analysis of Cl2andits organochlorine reaction byproducts, and methods provided in \u0000(\u0000\u0000\u0001\u0004 \u0001\\\u0003Ù\u0000(\u0000\u0000\u0001\u0000a\u0003à\u0003Ù\u0000è\u0001:\u00012\u0001e\u0000Í\u0000è\u0001e\u0003Ù\u0000(\u0000\u0000\u0001\u0003ï\u0000F\u0000-EOC at 202-564- \u0003R\u0003W\u0003T\u0003O\u0003ß\u0003Ù\u0000\u0001\u0013\u0000ô\u0003Ù\u0000(\u0000\u0000[\u0000b\u0003Ù\u0000Í\u0001+\u0001\\\u0001:\u0003Ù\u00011\u0000Í\u0001\u0016\u00012\u0001e\u0000Í\u0001\u0016\u00012\u0001\\\u0003Ù\u0000(\u0000\u0000\u0001\u0004 \u0001\\\u0003Ù\u0000\u001c\u0001:\u00011\u0001U\u0000ô\u00012\u0000î\u0001\u0016\u0001j\u00011\u0003Ù\u0001:\u0001 \u0003ÙEnvironmental Testing Laboratories (CETL), a database of commercial, federal, state, and academic laboratories, which can be queried for specific analyses and matrices. Analysis on environmental matrices for specific chemical \u0000Í\u0001 \u0000ô\u00012\u0001e\u0001\\\u0003Ù\u0000è\u0000Í\u00012\u0003Ù\u0000æ\u0000ô\u0003Ù\u0001:\u0000æ\u0001e\u0000Í\u0001\u0016\u00012\u0000ô\u0000î\u0003Ù\u0000æ\u0001\u0003Ù\u0001W\u0001j\u0000ô\u0001X\u0001\u0001\u0016\u00012\u0001 \u0003Ù\u0001e\u0001\u0013\u0000ô\u0003Ù\u0000î\u0000Í\u0001e\u0000Í\u0000æ\u0000Í\u0001\\\u0000ô\u0003Ù\u0001:\u0001 \u0003Ù\u0001+\u0000Í\u0000æ\u0001:\u0001X\u0000Í\u0001e\u0001:\u0001X\u0001\u0016\u0000ô\u0001\\\u0003Ù\u0001+\u0001\u0016\u0001\\\u0001e\u0000ô\u0000î\u0003Ù\u0001\u0016\u00012\u0003Ù\u0000(\u0000\u0000\u0001\u0004 \u0001\\\u0003Ù\u0000\u001c\u0000(\u0000\u0000[\u0003Ù(https://cfext.epa.gov/cetl/lblogin.cfm?action=None ); prior registration for access to CETL website is necessary.11. Environmental Decontamination/CleanupEnvironmental Decontamination/CleanupCAUTION: Use water spray only to reduce Cl2cloud or to divert Cl2cloud drift; do not put water in direct contact with liquid Cl2. Avoid allowing water runoff to contact remaining Cl2liquid. Cl2is so volatile and reactive that it will either dissipate, be consumed by reaction with surfaces/materials it encounters, and/or be readily neutralized. Large releases, however, may travel long distances before this happens. Hence, most of the environmental decontamination will not necessarily be for Cl2itself, but for reaction byproducts, mostly acids and organochlorine compounds. Separate, long- term decontamination strategies will need to be developed if those byproducts are of concern in a particular situation. This decontamination/cleanupsection refers to Cl2itself.11.1. Decontamination/Cleanup Planning:O nce site controls are in place, develop a site-specific decontamination/cleanup plan. Environmental d \u0000ô\u0000è\u0001:\u00012\u0001e\u0000Í\u00011\u0001\u0016\u00012\u0000Í\u0001e\u0001\u0016\u0001:\u00012\u0003Ù\u00011\u0000Í\u0001\u0003Ù\u0001X\u0000ô\u0001W\u0001j\u0001\u0016\u0001X\u0000ô\u0003Ù\u0000Í\u0003Ù\u0004 \u0001e\u0001\u0016\u0000ô\u0001X\u0000ô\u0000î\u0003Ù\u0000Í\u0001U\u0001U\u0001X\u0001:\u0000Í\u0000è\u0001\u0013\u0004 \u0003Ù\u0001j\u0001\\\u0001\u0016\u00012\u0001 \u0003Ù\u0000Í\u0003Ù\u0001}\u0000Í\u0001X\u0001\u0016\u0000ô\u0001e\u0001\u0003Ù\u0001:\u0001 \u0003Ù\u0001e\u0000ô\u0000è\u0001\u0013\u00012\u0001\u0016\u0001W\u0001j\u0000ô\u0001\\\u0003Ù\u0000Í\u00012\u0000î\u0003Ù\u0001U\u0001X\u0001:\u0000î\u0001j\u0000è\u0001e\u0001\\\u0003ß\u0003Ù\u0000\u001c\u0000Í\u0001+\u0001+\u0003Ù\u0000(\u0000\u0000\u0001\u0003ï\u0000F\u0000-EOC at 202-564-3850 for more information. General Considerations:A cost vs. benefit evaluation should be undertaken for each decontamination strategy and approach that considers public safety, total cost, impact on the area, wastes generated, time the areaor item will beinaccessible and/or out of service,as well asany socio-economic, public health, and/or security impacts that may result. Large volumes of decontamination wastes may be generated that will need to be collected, treated, and disposed of properly. Waste handling and disposal must be addressed as early in the decontamination and cleanup process as possible (seeSection 12.WASTE MANAGEMENTbelow).Disposal Option: The urgency to restore an area or item as quickly as possible may result in the outright and timely removal and disposal of contaminated materials. Certain materials may be impacted byexposure toCl2itself or fromreaction byproducts, and/ or may be cheaper to discard and replace than to decontaminate and restore.Monitored Natural Attenuation:Cl2degrades via natural processes. Cl2oxidizes metals, organics, or other materials it encounters resulting in chloride- containing salts, oxides, and organochlorine compounds. Some of these degradation products may be persistent and/or toxic, which may require additional chemical degradation strategies. Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural attenuation may require institutional controls (e.g., access restriction and contaminant containment m easures). The time to achieve clearance must be considered in the overall cost/benefit evaluation. This option is more passive than otherdecontaminationoptions and may be more destructive to materials if itallowsCl2 to react with materials for a longer period of time.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 32,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 8,
+      "humanPageNumber": 9,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Chlorine Gas",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(CL)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[May2026Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "July2015Page 9of 10Fix-in-Place Option:The contaminated area may be resistant to decontamination products or may be unable or impractical to be treated. Physical barriers can be used toisolate theareauntilCl2gas has dispersedand to prevent it",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "from coming into contact with the environment or the public. This can be a temporary or permanent solution.11.2. Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas based on presence of: 1) liquid chlorine",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": ", 2) gaseouschlorine, or 3) aqueous solutions of chlorine.Areas in each category may be treated using one or more unique decontamination processes in a tiered approach to the overall site-specific decontamination strategy.Caution:\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Decontamination products may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use.\u0000xCl2is a strong oxidizer and may react violently with organics.Strategy for Liquid Chlorine:Presence of liquid Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "in the environment is unlikely. Cl2is easier to remove when in gaseous form; actions that promote safe volatilization may be useful. Volatilization may be a slow process depending on environmental conditions.Strategy for Gaseous Chlorine: ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Aerate spaces where gaseous Cl2may be present. Cl2has corrosive properties and attacks metalsand other materials, including electronics, plastic, rubber, and coatings. Impact on materials ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "should be assessed for mitigation efforts. Mechanical, electrolytic, or chemical cleaning of corroded products may be needed. Forced or Hot Air ventilation methods are recommended for Cl2cloud contamination or low concentration of Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "in large volumetric spaces, including HVAC systems. Capture technologies (e.g., activated carbon-containing air filters), if present and/or available, can facilitate the removalof Cl2gas from an enclosed area.Strategy for Aqueous Solutions of Chlorine: ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "If Cl2is present in solution, contain liquid or transfer liquid to appropriate containersand dispose according to Section 12. WASTE MANAGEMENTbelow. Adjusting the pH of ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "acidic solutions to greater than 8.5 with caustic soda, soda ash, or lime solutions will help prevent volatilization of remaining Cl2in solution, but some Cl2gasmay still be evolved even at pH values much greater than 8.5. Neutralizing Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "in solution with thiosulfate, sulfite, ascorbic acid (vitamin C), or other reducing agents converts the Cl2to nonvolatile chloride-containing compounds. Avoid any additional release of unreduced solution to ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "water systems, drains, or sewers (e.g., through inappropriate disposal).Sensitive Equipment and Items:For difficult-to-clean equipment thought to be contaminated with small amounts of Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": ", additional options for consideration include dissipation via monitored natural attenuation or flushing with water(to remove reaction byproducts).Verification of Decontamination: Site and situation specific. Please contact EPA/HQ-EOC at 202-564-3850 for ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "further assistance.12. Waste ManagementWaste Management12.1.Transportation:Federal requirements for the commercial transport of hazardous materials and procedures for exemptions are specified inHow to Comply with Federal Hazardous Materials Regulations",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "(HMR), available at:https://www.fmcsa.dot.gov/regulations/hazardous-materials/how-comply-federal-hazardous-materials-regulations.Chlorine (UN1017) is classified as a Division 2.3 poisonous gas in Hazard Zone B, with subsidiary hazards of Class ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "5.1 (oxidizer) and Class 8 (corrosive). Chlorineis commonly transported as a compressed liquefied gas. Transport of chlorine (UN1017) is forbidden on passenger and cargo aircraft and passenger rail.",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Classification and transportation of waste will depend on its physical form and chemical composition. Waste may meet the definition of one or more hazard classes or be unregulated for transport under the HMR. Waste compo",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "sed of a mixture of chemicals may be classified in accordance with 49 CFR §172.101(c)(10). If the classification of a hazardous waste is uncertain, it may be assigned a tentative classification in accordance with 49 CFR §172.101(c)(11).",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Contact the PHMSA Hazardous Materials Information Center at 1-800-467-4922 or infocntr@dot.govto discuss specific cases.Additional resources on packaging, labeling, and shipping are available at:https://www.phmsa.dot.gov/standards-",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "rulemaking/hazmat/hazardous-materials-regulations.",
+          "role": "BODY"
+        }
+      ],
+      "text": "(CL) [May2026Update(nrt.org): July2015Page 9of 10Fix-in-Place Option:The contaminated area may be resistant to decontamination products or may be unable or impractical to be treated. Physical barriers can be used toisolate theareauntilCl2gas has dispersedand to prevent it from coming into contact with the environment or the public. This can be a temporary or permanent solution.11.2. Decontamination Strategy:A decontamination strategy can be developed by designating contaminated areas based on presence of: 1) liquid chlorine , 2) gaseouschlorine, or 3) aqueous solutions of chlorine.Areas in each category may be treated using one or more unique decontamination processes in a tiered approach to the overall site-specific decontamination strategy.Caution:\u0000x Decontamination products may have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use.\u0000xCl2is a strong oxidizer and may react violently with organics.Strategy for Liquid Chlorine:Presence of liquid Cl2 in the environment is unlikely. Cl2is easier to remove when in gaseous form; actions that promote safe volatilization may be useful. Volatilization may be a slow process depending on environmental conditions.Strategy for Gaseous Chlorine: Aerate spaces where gaseous Cl2may be present. Cl2has corrosive properties and attacks metalsand other materials, including electronics, plastic, rubber, and coatings. Impact on materials should be assessed for mitigation efforts. Mechanical, electrolytic, or chemical cleaning of corroded products may be needed. Forced or Hot Air ventilation methods are recommended for Cl2cloud contamination or low concentration of Cl2 in large volumetric spaces, including HVAC systems. Capture technologies (e.g., activated carbon-containing air filters), if present and/or available, can facilitate the removalof Cl2gas from an enclosed area.Strategy for Aqueous Solutions of Chlorine: If Cl2is present in solution, contain liquid or transfer liquid to appropriate containersand dispose according to Section 12. WASTE MANAGEMENTbelow. Adjusting the pH of acidic solutions to greater than 8.5 with caustic soda, soda ash, or lime solutions will help prevent volatilization of remaining Cl2in solution, but some Cl2gasmay still be evolved even at pH values much greater than 8.5. Neutralizing Cl2 in solution with thiosulfate, sulfite, ascorbic acid (vitamin C), or other reducing agents converts the Cl2to nonvolatile chloride-containing compounds. Avoid any additional release of unreduced solution to water systems, drains, or sewers (e.g., through inappropriate disposal).Sensitive Equipment and Items:For difficult-to-clean equipment thought to be contaminated with small amounts of Cl2 , additional options for consideration include dissipation via monitored natural attenuation or flushing with water(to remove reaction byproducts).Verification of Decontamination: Site and situation specific. Please contact EPA/HQ-EOC at 202-564-3850 for further assistance.12. Waste ManagementWaste Management12.1.Transportation:Federal requirements for the commercial transport of hazardous materials and procedures for exemptions are specified inHow to Comply with Federal Hazardous Materials Regulations (HMR), available at:https://www.fmcsa.dot.gov/regulations/hazardous-materials/how-comply-federal-hazardous-materials-regulations.Chlorine (UN1017) is classified as a Division 2.3 poisonous gas in Hazard Zone B, with subsidiary hazards of Class 5.1 (oxidizer) and Class 8 (corrosive). Chlorineis commonly transported as a compressed liquefied gas. Transport of chlorine (UN1017) is forbidden on passenger and cargo aircraft and passenger rail. Classification and transportation of waste will depend on its physical form and chemical composition. Waste may meet the definition of one or more hazard classes or be unregulated for transport under the HMR. Waste compo sed of a mixture of chemicals may be classified in accordance with 49 CFR §172.101(c)(10). If the classification of a hazardous waste is uncertain, it may be assigned a tentative classification in accordance with 49 CFR §172.101(c)(11). Contact the PHMSA Hazardous Materials Information Center at 1-800-467-4922 or infocntr@dot.govto discuss specific cases.Additional resources on packaging, labeling, and shipping are available at:https://www.phmsa.dot.gov/standards- rulemaking/hazmat/hazardous-materials-regulations.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 25,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 9,
+      "humanPageNumber": 10,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Chlorine Gas",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "(CL)",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "[May2026Update(nrt.org): ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "July2015Page 10of 1012.2. Waste Management:Under the Resource Conservation and Recovery Act (RCRA), waste is classified as hazardous waste (subtitle C) or solid waste (subtitle D). ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "It is the responsibility of the waste generator to make a hazardous waste determination (40 CFR §262.11). The RCRA regulations generally define a waste to be hazardous if it is: (1) a listed waste (40 CFR §261.31-",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "§261.32); (2) exhibits specific characteristics (40 CFR §261.21-§261.24); or (3) is a discarded commercial chemical product, off specification species, containerresidue, or spill residue listed in 40 CFR §261.33.Chlorine-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "contaminated wastes, including wastes containing reaction byproducts, may exhibit one or more hazardous waste characteristics, such as corrosivity (D002) or reactivity (D003). Listed or characteristic waste may be land disposed ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "only if the waste meets the applicable treatment standards (40 CFR §268.40).Intact pressurized steel containers (e.g., tanks, cylinders) that may have been compromised or contaminated, but contain Cl2",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "as a compressed liquefied gas, could require disposal as well.The states (except for Alaska and Iowa) have the primary responsibility to implement theRCRAhazardous waste ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "regulations and can impose more stringent requirements or requirements broader in scope than the federal program. It is critical to open a dialogue with state regulators as early as possibleto determine any state-specific ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "requirements with regard to chlorine-contaminated wastes. Once identified, potential waste management facilities should also be contacted to determine their waste acceptance criteria.",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Management of toxic decomposition products, associated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered.High pH aqueous ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "decontamination solution waste may be considered corrosive hazardous waste, chemical code D002, if it has a pH greater than or equal to 12.5 (40 CFR §261.22).EPA also recommends the creation of pre-",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "incident waste management plans as a preparedness measure for chemical agent releases, and has created an All-Hazards Waste Management Planning Toolto help state, local, ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "territorial, and tribal waste management officials coordinate and prepare these plans. Access to the All-Hazards Waste Management Planning Tool requires pre-registration (https://wasteplan.epa.gov/).Attribution Statement:",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "NIOSH Approved is a registered certification trademark of the U.S. Department of Health and Human Services (HHS) in the United States and several other countries.",
+          "role": "BODY"
+        }
+      ],
+      "text": "(CL) [May2026Update(nrt.org): July2015Page 10of 1012.2. Waste Management:Under the Resource Conservation and Recovery Act (RCRA), waste is classified as hazardous waste (subtitle C) or solid waste (subtitle D). It is the responsibility of the waste generator to make a hazardous waste determination (40 CFR §262.11). The RCRA regulations generally define a waste to be hazardous if it is: (1) a listed waste (40 CFR §261.31- §261.32); (2) exhibits specific characteristics (40 CFR §261.21-§261.24); or (3) is a discarded commercial chemical product, off specification species, containerresidue, or spill residue listed in 40 CFR §261.33.Chlorine- contaminated wastes, including wastes containing reaction byproducts, may exhibit one or more hazardous waste characteristics, such as corrosivity (D002) or reactivity (D003). Listed or characteristic waste may be land disposed only if the waste meets the applicable treatment standards (40 CFR §268.40).Intact pressurized steel containers (e.g., tanks, cylinders) that may have been compromised or contaminated, but contain Cl2 as a compressed liquefied gas, could require disposal as well.The states (except for Alaska and Iowa) have the primary responsibility to implement theRCRAhazardous waste regulations and can impose more stringent requirements or requirements broader in scope than the federal program. It is critical to open a dialogue with state regulators as early as possibleto determine any state-specific requirements with regard to chlorine-contaminated wastes. Once identified, potential waste management facilities should also be contacted to determine their waste acceptance criteria. Management of toxic decomposition products, associated residual decontamination solutions, local waste acceptance criteria, and transportation and handling requirements should be considered.High pH aqueous decontamination solution waste may be considered corrosive hazardous waste, chemical code D002, if it has a pH greater than or equal to 12.5 (40 CFR §261.22).EPA also recommends the creation of pre- incident waste management plans as a preparedness measure for chemical agent releases, and has created an All-Hazards Waste Management Planning Toolto help state, local, territorial, and tribal waste management officials coordinate and prepare these plans. Access to the All-Hazards Waste Management Planning Tool requires pre-registration (https://wasteplan.epa.gov/).Attribution Statement: NIOSH Approved is a registered certification trademark of the U.S. Department of Health and Human Services (HHS) in the United States and several other countries.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 18,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [],
+        "warnings": []
+      }
+    }
+  ]
+}

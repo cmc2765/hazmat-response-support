@@ -47,6 +47,23 @@ export function normalizeCasIdentifier(value: unknown): string | null {
   return /^\d{5,10}$/.test(compact) ? compact : null;
 }
 
+export const NIOSH_IDENTITY_STATUS = {
+  VERIFIED_NIOSH: 'VERIFIED_NIOSH',
+  NIOSH_NOT_AVAILABLE: 'NIOSH_NOT_AVAILABLE',
+  SOURCE_DATA_INCOMPLETE: 'SOURCE_DATA_INCOMPLETE',
+  IDENTITY_MATCH_FAILED: 'IDENTITY_MATCH_FAILED',
+} as const;
+
+export type NioshIdentityStatus = typeof NIOSH_IDENTITY_STATUS[keyof typeof NIOSH_IDENTITY_STATUS];
+
+type NioshIdentity = {
+  status: NioshIdentityStatus;
+  sourceRecordId: string | null;
+  masterCas: string | null;
+  sourceCas: string | null;
+  matchBasis: 'CAS' | null;
+};
+
 function asList(value: unknown): string[] {
   const meaningful = (item: string) => Boolean(item) && !/^(?:n\/?a|null|undefined)$/i.test(item);
   if (Array.isArray(value)) return value.filter(Boolean).map(String).map((item) => item.trim()).filter(meaningful);
@@ -221,9 +238,64 @@ function findCompanionChemicalRow(db: Database.Database, chemicalId: string | nu
   return db.prepare('SELECT * FROM chemicals WHERE ChemicalID = ?').get(numericId) as Record<string, unknown> | undefined;
 }
 
+function resolveNioshIdentity(chemical: Record<string, unknown>, npg: Record<string, unknown>, hasNpgRecord: boolean): NioshIdentity {
+  const masterCasRaw = chemical.CasNumber ?? chemical.cas;
+  const sourceCasRaw = npg.cas;
+  const masterCas = normalizeCasIdentifier(masterCasRaw);
+  const sourceCas = normalizeCasIdentifier(sourceCasRaw);
+  const sourceRecordId = String(npg.id ?? '').trim();
+
+  if (!masterCas) {
+    return {
+      status: NIOSH_IDENTITY_STATUS.SOURCE_DATA_INCOMPLETE,
+      sourceRecordId: null,
+      masterCas: null,
+      sourceCas: sourceCas || null,
+      matchBasis: null,
+    };
+  }
+  if (!hasNpgRecord) {
+    return {
+      status: NIOSH_IDENTITY_STATUS.NIOSH_NOT_AVAILABLE,
+      sourceRecordId: null,
+      masterCas: String(masterCasRaw ?? '').trim() || null,
+      sourceCas: null,
+      matchBasis: null,
+    };
+  }
+  if (!sourceCas || !sourceRecordId) {
+    return {
+      status: NIOSH_IDENTITY_STATUS.SOURCE_DATA_INCOMPLETE,
+      sourceRecordId: sourceRecordId || null,
+      masterCas: String(masterCasRaw ?? '').trim() || null,
+      sourceCas: sourceCas || null,
+      matchBasis: null,
+    };
+  }
+  if (masterCas !== sourceCas) {
+    return {
+      status: NIOSH_IDENTITY_STATUS.IDENTITY_MATCH_FAILED,
+      sourceRecordId,
+      masterCas: String(masterCasRaw ?? '').trim() || null,
+      sourceCas: String(sourceCasRaw ?? '').trim() || null,
+      matchBasis: null,
+    };
+  }
+  return {
+    status: NIOSH_IDENTITY_STATUS.VERIFIED_NIOSH,
+    sourceRecordId,
+    masterCas: String(masterCasRaw ?? '').trim() || null,
+    sourceCas: String(sourceCasRaw ?? '').trim() || null,
+    matchBasis: 'CAS',
+  };
+}
+
 export function normalizeChemicalProfile(chemical: Record<string, unknown>, related: Record<string, unknown> = {}) {
   const relatedData = related as Record<string, unknown>;
-  const npg = asObject(relatedData.npg);
+  const npgCandidate = asObject(relatedData.npg);
+  const hasNpgRecord = Boolean(relatedData.npg && Object.keys(npgCandidate).length);
+  const nioshIdentity = resolveNioshIdentity(chemical, npgCandidate, hasNpgRecord);
+  const npg = nioshIdentity.status === NIOSH_IDENTITY_STATUS.VERIFIED_NIOSH ? npgCandidate : {};
   const npgExposureLimits = asObject(npg.exposureLimits);
   const npgPhysical = asObject(npg.physical);
   const npgHealth = asObject(npg.health);
@@ -592,6 +664,7 @@ export function normalizeChemicalProfile(chemical: Record<string, unknown>, rela
       })),
       rule: 'Direct approved source records only; missing values fail closed.',
     },
+    niosh: nioshIdentity,
     sources: header.sources,
   };
 }
@@ -679,7 +752,10 @@ export function queryChemicalProfile(chemicalId: string | number) {
     LEFT JOIN nfpaspecialconcerns s ON s.NfpaSpecialConcernID = n.NfpaSpecialConcernID
     WHERE n.ChemicalID = ?
   `).get(id);
-  const npg = ALL_NPG.find((record) => record.cas === String(chemicalRow.CasNumber ?? '').trim());
+  const masterCas = normalizeCasIdentifier(chemicalRow.CasNumber);
+  const npg = masterCas
+    ? ALL_NPG.find((record) => normalizeCasIdentifier(record.cas) === masterCas)
+    : undefined;
   const guideNumber = String(chemicalRow.ErgNumber ?? '').trim();
   const ergGuides = (ergGuideData as { guides: Record<string, {
     emergencyResponse?: { firstAid?: string[]; fire?: string[]; spillOrLeak?: string[] };

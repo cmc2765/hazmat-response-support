@@ -3,18 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HazMatIQ Prototype</title>
+    <title>HAZSCOPE Prototype</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
-    <link rel="stylesheet" href="styles.css?v=home-topo-2" />
-    <link rel="stylesheet" href="plume-overrides.css?v=3" />
-    <link rel="stylesheet" href="hero-overrides.css?v=6" />
+    <link rel="stylesheet" href="styles.css?v=hero-logo-static-2" />
+    <link rel="stylesheet" href="plume-overrides.css?v=9" />
+    <link rel="stylesheet" href="hero-overrides.css?v=8" />
     <link rel="stylesheet" href="hazard-id-overrides.css?v=3" />
     <link rel="stylesheet" href="global-ui-overrides.css?v=14" />
-    <link rel="stylesheet" href="incident-overrides.css?v=2" />
+    <link rel="stylesheet" href="incident-overrides.css?v=3" />
     <link rel="stylesheet" href="preplan-overrides.css?v=1" />
-    <link rel="stylesheet" href="chemical-intel.css?v=hazard-profile-panel-24" />
+    <link rel="stylesheet" href="chemical-intel.css?v=hazard-profile-panel-26" />
     <link rel="stylesheet" href="guided-response-overrides.css?v=1" />
     <link rel="stylesheet" href="hazard-profile-page.css?v=1" />
+    <link rel="stylesheet" href="page-shell.css?v=1" />
   </head>
   <body>
     <div class="app-shell">
@@ -23,15 +24,15 @@
         <span class="command-header-contours" aria-hidden="true"></span>
         <div class="hazmat-command-identity">
           <div class="brand">
-            <button class="module-btn command-brand-home" id="command-brand-home" type="button" aria-label="Return to the HazMatIQ Home Page" title="Return to HazMatIQ Home">
-              <img class="brand-logo-command" src="assets/hazmatiq-logo-command.png" alt="HazMatIQ — Incident Intelligence" />
+            <button class="module-btn command-brand-home" id="command-brand-home" type="button" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home">
+              <img class="brand-logo-command" src="assets/HAZSCOPE-banner.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
             </button>
           </div>
         </div>
 
         <div class="command-header-footer">
           <section class="notification-center hazmat-command-context" id="notification-center" role="status" aria-live="polite" aria-atomic="false" data-severity="normal">
-            <strong class="notification-center-title sr-only">HazMatIQ Command Status</strong>
+            <strong class="notification-center-title sr-only">HAZSCOPE Command Status</strong>
             <div class="notification-feed">
               <div class="notification-item notification-system">
                 <div class="command-center-launch">
@@ -62,7 +63,7 @@
           <button class="workspace-drawer-close" id="workspace-drawer-close" type="button" aria-label="Close workspace navigation">Close</button>
         </header>
         <nav class="workspace-drawer-nav" aria-label="Workspace navigation">
-          <button class="workspace-drawer-home" type="button" data-view="overview" aria-label="Return to the HazMatIQ Home Page" title="Return to HazMatIQ Home"><img src="assets/hazmatiq-logo-command.png" alt="HazMatIQ" /></button>
+          <button class="workspace-drawer-home" type="button" data-view="overview" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home"><img src="assets/HAZSCOPE-banner.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" /></button>
           <button class="module-btn" data-view="incident">INCIDENT COMMAND</button>
           <button class="module-btn" data-view="lookup">HAZARD ID</button>
           <button class="module-btn" data-view="plume">PLUME MODELING</button>
@@ -99,7 +100,7 @@
 
       <main class="layout">
         <section class="content-area">
-          <section id="overview" class="view active">
+          <section id="overview" class="view active home-page" data-page-root="home" data-page-name="Home">
             <article class="panel-card incident-overview-card">
               <div class="incident-overview-actions">
                 <section class="overview-action-layout">
@@ -136,7 +137,7 @@
                 </section>
               </div>
 
-              <section class="command-promo-grid overview-promo-strip" aria-label="HazMatIQ capability highlights">
+              <section class="command-promo-grid overview-promo-strip" aria-label="HAZSCOPE capability highlights">
                 <article class="overview-promo-box promo-chemical"><span aria-hidden="true">⚗</span><div><strong>Chemical ID</strong><small>Source-backed hazard profiles</small></div></article>
                 <article class="overview-promo-box promo-cbrn"><span aria-hidden="true">☣</span><div><strong>Warfare Agents</strong><small>CBRN identification support</small></div></article>
                 <article class="overview-promo-box promo-rad"><span aria-hidden="true">☢</span><div><strong>Radiological ID</strong><small>Isotope response intelligence</small></div></article>
@@ -149,7 +150,7 @@
             </article>
           </section>
 
-          <section id="planning-tools" class="view">
+          <section id="planning-tools" class="view planning-page" data-page-root="planning" data-page-name="Planning">
             <header class="hazmat-page-hero variant-planning">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Pre- Incident Planning</h1><p class="hazmat-hero-subtitle">Pre-Incident Intelligence &amp; Tactical Planning.</p></div>
             </header>
@@ -233,7 +234,7 @@
             </article>
           </section>
 
-          <section id="incident" class="view incident-command-page">
+          <section id="incident" class="view incident-command-page" data-page-root="incident-command" data-page-name="Incident Command">
             <header class="hazmat-page-hero variant-incident incident-command-hero">
               <div class="hazmat-page-hero-content"><span class="sr-only">Incident Command Dashboard</span><h1 class="hazmat-hero-title incident-command-title">Incident Command</h1><p class="hazmat-hero-subtitle incident-command-subtitle">Real-Time Operational Overview.</p></div>
             </header>
@@ -272,8 +273,9 @@
 
                 <div class="incident-command-main-grid">
                   <article class="incident-command-panel incident-command-brief-panel">
-                    <h2><span aria-hidden="true">📋</span> Incident Brief <button class="incident-command-panel-action" type="button" data-incident-command-action="export-package" aria-label="Print or export incident brief" title="Print or export incident brief"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5h-2M7 14h10v7H7z" /></svg></button></h2>
+                    <h2><span aria-hidden="true">📋</span><span class="incident-command-panel-title">Incident Brief</span><span class="incident-command-panel-actions"><button class="incident-command-panel-action" type="button" data-incident-command-action="chemical-profile">VIEW CHEMICAL PROFILE</button><button class="incident-command-panel-action" type="button" data-incident-command-action="export-package" aria-label="Print or export incident brief" title="Print or export incident brief"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5h-2M7 14h10v7H7z" /></svg></button></span></h2>
                     <dl id="ic-brief-list" class="incident-command-brief-list"></dl>
+                    <div id="ic-chemical-summary" class="incident-command-chemical-summary" aria-live="polite"></div>
                   </article>
 
                   <article class="incident-command-panel incident-command-tactical-panel">
@@ -309,6 +311,25 @@
                     </div>
                   </article>
                 </div>
+
+                <section class="incident-command-panel incident-command-actions-panel" aria-labelledby="ic-actions-title">
+                  <div class="incident-command-section-heading"><div><p class="eyebrow">Operational shortcuts</p><h2 id="ic-actions-title">Command Actions</h2></div><span>Keep the incident context attached</span></div>
+                  <div id="ic-command-actions" class="incident-command-action-grid">
+                    <button type="button" data-command-view="guided-response"><strong>OPEN GUIDED RESPONSE</strong><span>Review source-backed tactical decisions</span></button>
+                    <button type="button" data-command-view="plume"><strong>OPEN PLUME MODEL</strong><span>Plot or inspect the current threat zone</span></button>
+                    <button type="button" data-command-view="map"><strong>OPEN LIVE MAP</strong><span>View scene geography and overlays</span></button>
+                    <button type="button" data-incident-command-action="chemical-profile"><strong>VIEW CHEMICAL PROFILE</strong><span>Return to the canonical hazard profile</span></button>
+                    <button type="button" data-incident-command-action="ics"><strong>REPORTS / ICS</strong><span>Open current incident forms</span></button>
+                  </div>
+                </section>
+
+                <section class="incident-command-panel incident-command-plume-summary" aria-labelledby="ic-plume-summary-title">
+                  <div class="incident-command-section-heading"><div><p class="eyebrow">Canonical plume state</p><h2 id="ic-plume-summary-title">Plume Summary</h2></div><strong id="ic-plume-status" class="incident-command-plume-status">NOT PLOTTED</strong></div>
+                  <div class="incident-command-plume-preview">
+                    <div class="incident-command-plume-image-wrap"><img id="ic-plume-preview-image" alt="Saved plume and threat-zone preview" hidden /><div id="ic-plume-preview-empty" class="incident-command-plume-empty">No plume snapshot is saved for this incident.</div></div>
+                    <div class="incident-command-plume-copy"><strong id="ic-plume-preview-title">Plot a plume from Incident Command</strong><p id="ic-plume-preview-summary">Use the canonical Plume Model after confirming chemical identity, release inputs, and current weather.</p><dl id="ic-plume-preview-facts"></dl><button type="button" data-command-view="plume" id="ic-plume-open-btn">PLOT PLUME</button></div>
+                  </div>
+                </section>
 
                 <section class="incident-command-panel incident-command-tools" aria-labelledby="ic-command-tools-title">
                   <h2 id="ic-command-tools-title"><span aria-hidden="true">🧰</span> Command Tools</h2>
@@ -435,6 +456,16 @@
                     <textarea id="incident-notes" rows="3" placeholder="Leak indicators, odor reports, access issues, or other scene notes"></textarea>
                   </label>
                 </div>
+                <section class="incident-command-entry" aria-labelledby="incident-command-entry-title">
+                  <div class="incident-command-entry-heading"><div><p class="eyebrow">ICS command data</p><h3 id="incident-command-entry-title">Enter once, carry through the incident record</h3></div><span>Saved with the active incident</span></div>
+                  <div class="incident-command-entry-grid">
+                    <label for="incident-objectives"><span>Objectives <small>ICS 202</small></span><textarea id="incident-objectives" rows="3" placeholder="One objective per line"></textarea></label>
+                    <label for="incident-command-structure"><span>Command structure <small>ICS 203 / 204</small></span><textarea id="incident-command-structure" rows="3" placeholder="IC, Operations, Safety, HazMat Group"></textarea></label>
+                    <label for="incident-communications"><span>Communications <small>ICS 205</small></span><textarea id="incident-communications" rows="3" placeholder="Channels, contact plan, or limitations"></textarea></label>
+                    <label for="incident-medical-plan"><span>Medical plan <small>ICS 206</small></span><textarea id="incident-medical-plan" rows="3" placeholder="EMS, hospital, rehab, or medical direction"></textarea></label>
+                    <label for="incident-staging-resources"><span>Staging / resources <small>ICS 204 / 215</small></span><textarea id="incident-staging-resources" rows="3" placeholder="Staging, assignments, apparatus, or resources"></textarea></label>
+                  </div>
+                </section>
                 <div class="button-row incident-form-actions">
                   <button class="primary-btn" id="save-incident-brief-btn" type="button">Save Incident Brief</button>
                   <button class="ghost-btn" id="clear-incident-brief-btn" type="button">Clear</button>
@@ -527,11 +558,11 @@
             </dialog>
           </section>
 
-          <section id="lookup" class="view" data-hazard-page-state="search">
+          <section id="lookup" class="view hazard-id-page" data-page-root="hazard-id" data-page-name="Hazard ID" data-hazard-page-state="search">
             <header class="hazmat-page-hero variant-chemical hazard-id-page-hero" id="hazard-id-search-hero">
               <span class="hazard-id-hero-atmosphere" aria-hidden="true"></span>
               <div class="hazmat-page-hero-content">
-                <img class="hazard-id-hero-logo" src="assets/hazmatiq-logo-command.png" alt="HazMatIQ — Incident Intelligence" />
+                <img class="hazard-id-hero-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
                 <h1 class="hazmat-hero-title">HAZARD ID</h1>
                 <p class="hazmat-hero-subtitle">Search, Identify, Verify, Respond.</p>
               </div>
@@ -583,6 +614,7 @@
                   <strong>Chemical Profile</strong>
                   <div class="chemical-profile-toolbar-actions">
                     <button class="chemical-action-button chemical-profile-plume" id="open-plume-btn" type="button">PLOT PLUME</button>
+                    <button class="chemical-action-button chemical-profile-guided" id="open-guided-response-btn" type="button">GUIDED RESPONSE</button>
                     <button class="chemical-action-button chem-compare" id="open-chemcompare-btn" type="button">CHEM COMPARE</button>
                   </div>
                 </header>
@@ -654,7 +686,7 @@
             </div>
           </section>
 
-          <section id="chem-compare" class="view chemcompare-page" aria-labelledby="chemcompare-title">
+          <section id="chem-compare" class="view chemcompare-page chemical-compare-page" data-page-root="chemical-compare" data-page-name="Chemical Compare" aria-labelledby="chemcompare-title">
             <div class="chemcompare-shell">
               <header class="chemcompare-header hazmat-page-hero variant-chemical-profile">
                 <div class="hazmat-page-hero-content">
@@ -700,10 +732,10 @@
             </div>
           </section>
 
-          <section id="guided-response" class="view">
+          <section id="guided-response" class="view guided-response-page" data-page-root="guided-response" data-page-name="Guided Response">
             <header class="hazmat-page-hero variant-guided-response guided-response-heading">
               <div class="guided-response-brand">
-                <img class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png" alt="HAZMATIQ — Incident Intelligence" />
+                <img class="guided-response-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
                 <div class="hazmat-page-hero-content">
                   <h1 class="hazmat-hero-title">Guided Response</h1>
                   <p class="hazmat-hero-subtitle">Tactical Decision Support.</p>
@@ -732,7 +764,7 @@
             </aside>
           </section>
 
-          <section id="my-chemicals" class="view">
+          <section id="my-chemicals" class="view saved-chemicals-page" data-page-root="saved-chemicals" data-page-name="My Chemicals">
             <header class="hazmat-page-hero variant-my-chemicals">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">My Chemicals</h1><p class="hazmat-hero-subtitle">Saved Hazards &amp; Response Intelligence.</p></div>
             </header>
@@ -741,7 +773,7 @@
             </article>
           </section>
 
-          <section id="plume" class="view">
+          <section id="plume" class="view plume-model-page" data-page-root="plume-model" data-page-name="Plume Model">
             <header class="plume-page-header hazmat-page-hero hazmat-page-hero-compact variant-plume">
               <div class="plume-page-heading">
                 <span class="plume-hero-plume" aria-hidden="true">
@@ -937,7 +969,7 @@
               </div>
             </form>
 
-            <section class="plume-compact-card plume-endpoint-card" aria-labelledby="plume-endpoint-card-heading">
+            <section class="plume-compact-card plume-endpoint-card" aria-labelledby="plume-endpoint-card-heading" hidden>
               <header><h3 id="plume-endpoint-card-heading">Endpoint / LOC</h3><strong id="plume-endpoint-badge">Missing</strong></header>
               <p id="plume-endpoint-detail">Select a verified chemical.</p>
               <p id="plume-endpoint-levels">AEGL values appear after source-backed endpoint selection.</p>
@@ -959,16 +991,28 @@
                     <button class="module-btn plume-map-button secondary plume-live-radar-link" type="button" data-view="map">Open Live Map</button>
                   </form>
                   <div class="plume-layer-row" role="group" aria-label="Plume basemap">
-                    <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
-                    <button class="plume-layer-button" type="button" data-plume-map-view="tactical" aria-pressed="false">Tactical</button>
-                    <button class="plume-layer-button" type="button" data-plume-map-view="street" aria-pressed="false">Street Map</button>
-                    <button class="plume-layer-button" type="button" data-plume-map-view="terrain3d" aria-pressed="false">3D Terrain</button>
-                    <button class="plume-layer-button" type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
-                    <button class="plume-layer-button" id="plume-buildings-toggle" type="button" aria-pressed="false" disabled>Buildings</button>
-                    <button class="plume-layer-button" id="plume-reset-view-btn" type="button">Reset View</button>
+                    <div class="plume-map-mode-controls" role="group" aria-label="Map mode">
+                      <span class="plume-map-control-label">MAP MODE</span>
+                      <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
+                      <button class="plume-layer-button" type="button" data-plume-map-view="tactical" aria-pressed="false">Tactical 3D</button>
+                      <button class="plume-layer-button" type="button" data-plume-map-view="street" aria-pressed="false">Street</button>
+                      <button class="plume-layer-button" type="button" data-plume-map-view="terrain3d" aria-pressed="false">3D Terrain</button>
+                    </div>
+                    <div class="plume-map-layer-controls" role="group" aria-label="Map layers and controls">
+                      <span class="plume-map-control-label">LAYERS</span>
+                      <button class="plume-layer-button active" type="button" data-plume-layer="zones" aria-pressed="true">Threat Zones</button>
+                      <button class="plume-layer-button active" type="button" data-plume-layer="centerline" aria-pressed="true">Plume</button>
+                      <button class="plume-layer-button" type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
+                      <button class="plume-layer-button" id="plume-buildings-toggle" type="button" aria-pressed="false" disabled>Buildings</button>
+                      <button class="plume-layer-button" id="plume-fit-view-btn" type="button">Fit Plume</button>
+                      <button class="plume-layer-button" id="plume-recenter-incident-btn" type="button">Recenter Incident</button>
+                      <button class="plume-layer-button" id="plume-recenter-release-btn" type="button">Recenter Release</button>
+                      <button class="plume-layer-button" id="plume-reset-view-btn" type="button">Reset View</button>
+                    </div>
                   </div>
                   <div class="plume-map-shell">
                     <div id="plume-gis-map" class="plume-map-frame" role="application" aria-label="Interactive incident plume map"></div>
+                    <div id="plume-tactical-3d-map" class="plume-map-frame plume-tactical-3d-frame" role="application" aria-label="Photorealistic Tactical 3D incident map" hidden></div>
                     <div class="plume-terrain-status" id="plume-terrain-status">Satellite View</div>
                     <div class="plume-wind-direction-status" id="plume-wind-direction-status">Missing Wind Direction</div>
                     <div class="plume-compass-control" id="plume-compass-control" aria-label="Map rotation and tilt controls">
@@ -988,6 +1032,8 @@
                     <span id="plume-live-status" role="status" aria-live="polite"></span>
                     <span id="plume-layers-status" role="status" aria-live="polite"></span>
                     <span id="plume-input-status" role="status" aria-live="polite"></span>
+                    <span id="plume-map-attribution">© OpenFreeMap · © OpenMapTiles · Imagery © Esri</span>
+                    <span id="plume-tactical-attribution" hidden>© Google Maps Platform · Photorealistic 3D Tiles</span>
                   </footer>
                 </article>
               </div>
@@ -1035,7 +1081,7 @@
                   <div><dt>Terrain Status</dt><dd id="plume-model-terrain-status">Flat-ground planning baseline; no terrain correction is applied.</dd></div>
                 </dl>
                 <div class="plume-planning-notices">
-                  <p>HazMatIQ is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.</p>
+                  <p>HAZSCOPE is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.</p>
                   <p>Plume results are planning estimates only and are not a substitute for field monitoring, official modeling, or Incident Command decision-making.</p>
                   <p>Missing, outdated, or unverified data should be treated as No Current Data Exists until confirmed by an approved source.</p>
                   <p>Weather data source and observation time must be verified. Stale or manually entered weather can significantly affect plume output.</p>
@@ -1063,7 +1109,7 @@
 
           </section>
 
-          <section id="map" class="view">
+          <section id="map" class="view live-map-page" data-page-root="live-map" data-page-name="Live Map">
             <header class="hazmat-page-hero hazmat-page-hero-compact variant-live-map">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Live Map</h1><p class="hazmat-hero-subtitle">Operational Mapping &amp; Field Intelligence.</p></div>
             </header>
@@ -1071,6 +1117,7 @@
               <div><strong id="live-map-incident-name">Planning Map</strong><span id="live-map-mode">Planning Mode</span></div>
               <div>
                 <button class="accent-btn" id="live-map-add-marker" type="button">Add Marker</button>
+                <button class="accent-btn" type="button" data-command-view="plume">Plot / Edit Plume</button>
                 <button class="ghost-btn" id="live-map-save" type="button">Save Map</button>
                 <button class="ghost-btn" id="live-map-clear" type="button">Clear Draft Map</button>
               </div>
@@ -1125,12 +1172,12 @@
             </dialog>
           </section>
 
-          <section id="monitor" class="view">
+          <section id="monitor" class="view equipment-page" data-page-root="equipment" data-page-name="Equipment">
             <header class="hazmat-page-hero variant-monitoring">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Monitoring Equipment</h1><p class="hazmat-hero-subtitle">Monitor Readiness, PPE &amp; Field Assets.</p><div class="hazmat-hero-chip-row"><span class="hazmat-hero-chip monitor-simulated-label">Training Data · Simulated</span></div></div>
             </header>
 
-            <p class="monitor-purpose">HazMatIQ uses FirstDue as the future system of record for apparatus, equipment, inspections, calibration, and weekly checks. HazMatIQ tracks which monitors are assigned to this incident, displays readings, and records timestamped monitoring activity for reports.</p>
+            <p class="monitor-purpose">HAZSCOPE uses FirstDue as the future system of record for apparatus, equipment, inspections, calibration, and weekly checks. HAZSCOPE tracks which monitors are assigned to this incident, displays readings, and records timestamped monitoring activity for reports.</p>
 
             <section class="monitor-status-bar" aria-label="Monitoring data status">
               <label>Data Source
@@ -1206,11 +1253,11 @@
 
             <section id="monitor-inventory" class="monitor-tab-panel" role="tabpanel" aria-labelledby="monitor-inventory-tab" hidden>
               <div class="monitor-section-heading">
-                <div><h3>Monitor Inventory / FirstDue Source</h3><p>Reference records used when assigning monitors in HazMatIQ; this is not the official inspection or calibration system.</p></div>
-                <div class="monitor-actions"><button class="monitor-add-btn" id="monitor-add-device" type="button">Add Manual Monitor</button><button type="button" id="monitor-firstdue-import">Import FirstDue Export</button><button type="button" id="monitor-inventory-export">Export HazMatIQ Monitor Inventory</button></div>
+                <div><h3>Monitor Inventory / FirstDue Source</h3><p>Reference records used when assigning monitors in HAZSCOPE; this is not the official inspection or calibration system.</p></div>
+                <div class="monitor-actions"><button class="monitor-add-btn" id="monitor-add-device" type="button">Add Manual Monitor</button><button type="button" id="monitor-firstdue-import">Import FirstDue Export</button><button type="button" id="monitor-inventory-export">Export HAZSCOPE Monitor Inventory</button></div>
               </div>
-              <article class="monitor-source-card"><div><h4>FirstDue Equipment Source</h4><p>FirstDue remains the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HazMatIQ can use manual monitor entries now and may later import approved FirstDue equipment records.</p></div><span class="monitor-state offline">Status: Not Connected</span></article>
-              <p class="monitor-reference-note">Calibration, inspection, and weekly-check records should continue to be maintained in FirstDue according to agency policy. HazMatIQ displays these fields only as reference data when manually entered or imported through approved access.</p>
+              <article class="monitor-source-card"><div><h4>FirstDue Equipment Source</h4><p>FirstDue remains the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HAZSCOPE can use manual monitor entries now and may later import approved FirstDue equipment records.</p></div><span class="monitor-state offline">Status: Not Connected</span></article>
+              <p class="monitor-reference-note">Calibration, inspection, and weekly-check records should continue to be maintained in FirstDue according to agency policy. HAZSCOPE displays these fields only as reference data when manually entered or imported through approved access.</p>
               <p class="monitor-form-status" id="monitor-firstdue-status" role="status"></p>
               <section class="monitor-saved-inventory" id="monitor-saved-inventory" hidden>
                 <div class="monitor-inventory-label"><h4>Saved Monitor Inventory</h4><span>Stored on this device</span></div>
@@ -1287,14 +1334,14 @@
                 <span class="monitor-state caution">Pending SDK/API</span>
                 <p class="safety-suite-message">Official Honeywell Safety Suite SDK/API connection not configured. Add approved Honeywell web-service credentials or SDK access to enable live AreaRAE readings.</p>
                 <ul class="safety-suite-checklist">
-                  <li>Confirm AreaRAE monitors appear in Safety Suite</li><li>Obtain official Honeywell SDK/API documentation</li><li>Obtain approved credentials</li><li>Build secure backend adapter</li><li>Stream live readings into HazMatIQ</li><li>Save significant readings to Monitor Activity Log</li><li>Push monitor readings/locations to Live Map</li>
+                  <li>Confirm AreaRAE monitors appear in Safety Suite</li><li>Obtain official Honeywell SDK/API documentation</li><li>Obtain approved credentials</li><li>Build secure backend adapter</li><li>Stream live readings into HAZSCOPE</li><li>Save significant readings to Monitor Activity Log</li><li>Push monitor readings/locations to Live Map</li>
                 </ul>
                 <p class="monitor-placeholder-note">No live connection is attempted by this Phase 2 page.</p>
-              </article><article class="safety-suite-card"><div><p class="eyebrow">Integration status</p><h3>FirstDue Equipment / Apparatus Source</h3></div><span class="monitor-state offline">Pending approved access</span><p class="safety-suite-message">FirstDue is the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HazMatIQ should use approved FirstDue API/export access only. No scraping or login automation.</p><ul class="safety-suite-checklist"><li>Confirm approved export format</li><li>Map FirstDue equipment fields to HazMatIQ monitor records</li><li>Import approved CSV/JSON export</li><li>Keep readiness data reference-only</li><li>Keep official inspection/calibration records in FirstDue</li></ul><p class="monitor-placeholder-note">No FirstDue connection is attempted by this page.</p></article></div>
+              </article><article class="safety-suite-card"><div><p class="eyebrow">Integration status</p><h3>FirstDue Equipment / Apparatus Source</h3></div><span class="monitor-state offline">Pending approved access</span><p class="safety-suite-message">FirstDue is the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HAZSCOPE should use approved FirstDue API/export access only. No scraping or login automation.</p><ul class="safety-suite-checklist"><li>Confirm approved export format</li><li>Map FirstDue equipment fields to HAZSCOPE monitor records</li><li>Import approved CSV/JSON export</li><li>Keep readiness data reference-only</li><li>Keep official inspection/calibration records in FirstDue</li></ul><p class="monitor-placeholder-note">No FirstDue connection is attempted by this page.</p></article></div>
             </section>
           </section>
 
-          <section id="report" class="view">
+          <section id="report" class="view reports-page" data-page-root="reports" data-page-name="Reports / ICS">
             <header class="hazmat-page-hero variant-reports">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Reports &amp; Forms</h1><p class="hazmat-hero-subtitle">Generate, Print, Export &amp; Archive.</p></div>
             </header>
@@ -1380,9 +1427,9 @@
             </div>
           </section>
 
-          <section id="source" class="view">
+          <section id="source" class="view sources-page" data-page-root="sources" data-page-name="Sources">
             <header class="hazmat-page-hero variant-about">
-              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">About HazMatIQ</h1><p class="hazmat-hero-subtitle">Incident Intelligence &amp; Source Transparency.</p></div>
+              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">About HAZSCOPE</h1><p class="hazmat-hero-subtitle">Incident Intelligence &amp; Source Transparency.</p></div>
             </header>
             <div class="panel-card">
               <div class="chemical-card-header">
@@ -1393,7 +1440,7 @@
                 <li><span>CAMEO Chemicals</span><strong>Bundled chemical and reactivity records</strong></li>
                 <li><span>NIOSH Pocket Guide</span><strong>Bundled exposure and physical-property records</strong></li>
                 <li><span>ERG 2024</span><strong>Guide and Table 1 response data</strong></li>
-                <li><span>HazMatIQ plume model</span><strong>Backend threshold isopleths rendered as GIS polygons</strong></li>
+                <li><span>HAZSCOPE plume model</span><strong>Backend threshold isopleths rendered as GIS polygons</strong></li>
                 <li><span>Planning Plume</span><strong>Source-backed AEGL endpoints with ERG fallback</strong></li>
               </ul>
             </div>
@@ -1412,9 +1459,14 @@
     <script src="weather-radar-providers.js"></script>
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
-    <script src="script.js?v=plume-startup-17"></script>
+    <script src="script.js?v=chemical-profile-hotfix-3"></script>
+    <script src="incident-command.js"></script>
+    <script src="hazard-profile.js"></script>
+    <script src="reports.js"></script>
     <script src="chem-compare.js?v=chemcompare-4"></script>
     <script src="monitor-inventory.js"></script>
+    <script src="equipment.js"></script>
+    <script src="sources.js"></script>
     <script src="live-map-bootstrap.js"></script>
   </body>
 </html>

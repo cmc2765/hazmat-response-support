@@ -393,9 +393,8 @@
     renderSummary(baseSummary, baseComparison, NO_DATA);
     renderSummary(secondSummary, null, 'Search by chemical name, verified CAS, or UN/NA identifier.');
     renderResults();
-    // ChemCompare is a dedicated workspace. Explicitly clear the profile view
-    // so the two surfaces can never stack on top of one another.
-    document.getElementById('lookup')?.classList.remove('active');
+    // ChemCompare is a dedicated workspace; the shared page activator owns
+    // deactivation of the prior Hazard ID root.
     showView('chem-compare');
     searchInput?.focus({ preventScroll: true });
   }

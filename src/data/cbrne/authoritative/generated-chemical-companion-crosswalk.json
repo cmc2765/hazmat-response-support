@@ -1,0 +1,729 @@
+[
+  {
+    "canonicalRecordId": "abrin",
+    "identityNamespace": "BIOLOGICAL_TOXIN",
+    "companionTable": "biotoxins",
+    "companionIds": [
+      5
+    ],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Typed toxin-name identity crosswalk established.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "americium-241",
+    "identityNamespace": "RADIONUCLIDE",
+    "companionTable": "radioisotopes",
+    "companionIds": [
+      425
+    ],
+    "matchBasis": "ELEMENT_MASS_METASTABLE",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Exact element and ground-state mass-number identity crosswalk established.",
+      "Chemical Companion radiation level and emission values are quarantined; NNDC ENSDF remains the physics authority."
+    ]
+  },
+  {
+    "canonicalRecordId": "ammonia",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      10,
+      1143
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "anthrax",
+    "identityNamespace": "BIOLOGICAL",
+    "companionTable": "biotoxins",
+    "companionIds": [],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No typed biological identity match exists in the biotoxins table.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "arsine-sa",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      12
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "botulinum-toxin",
+    "identityNamespace": "BIOLOGICAL_TOXIN",
+    "companionTable": "biotoxins",
+    "companionIds": [
+      1
+    ],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Typed toxin-name identity crosswalk established.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "brucellosis",
+    "identityNamespace": "BIOLOGICAL",
+    "companionTable": "biotoxins",
+    "companionIds": [],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No typed biological identity match exists in the biotoxins table.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "cesium-137",
+    "identityNamespace": "RADIONUCLIDE",
+    "companionTable": "radioisotopes",
+    "companionIds": [
+      239
+    ],
+    "matchBasis": "ELEMENT_MASS_METASTABLE",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Exact element and ground-state mass-number identity crosswalk established.",
+      "Chemical Companion radiation level and emission values are quarantined; NNDC ENSDF remains the physics authority."
+    ]
+  },
+  {
+    "canonicalRecordId": "chlorine-cl",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      22
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "chloropicrin-ps",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      31
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "cobalt-60",
+    "identityNamespace": "RADIONUCLIDE",
+    "companionTable": "radioisotopes",
+    "companionIds": [
+      46
+    ],
+    "matchBasis": "ELEMENT_MASS_METASTABLE",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Exact element and ground-state mass-number identity crosswalk established.",
+      "Chemical Companion radiation level and emission values are quarantined; NNDC ENSDF remains the physics authority."
+    ]
+  },
+  {
+    "canonicalRecordId": "cyanogen-chloride-ck",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      34
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "cyclosarin-gf",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      53
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "fentanyl",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      1320
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "fourth-generation-agents",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [],
+    "matchBasis": "NONE",
+    "identityStatus": "IDENTITY_AMBIGUOUS",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No authoritative identity match was established.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "glanders",
+    "identityNamespace": "BIOLOGICAL",
+    "companionTable": "biotoxins",
+    "companionIds": [],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No typed biological identity match exists in the biotoxins table.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "hantavirus-pulmonary-syndrome",
+    "identityNamespace": "BIOLOGICAL",
+    "companionTable": "biotoxins",
+    "companionIds": [],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No typed biological identity match exists in the biotoxins table.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "hydrogen-cyanide-ac",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      57
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "hydrogen-sulfide",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      60
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "improvised-nuclear-device",
+    "identityNamespace": "RAD_NUCLEAR_SCENARIO",
+    "companionTable": null,
+    "companionIds": [],
+    "matchBasis": "NONE",
+    "identityStatus": "NOT_APPLICABLE",
+    "operationalDataStatus": "NOT_APPLICABLE",
+    "notes": [
+      "Operational scenarios are not chemical, biotoxin, or radionuclide identities."
+    ]
+  },
+  {
+    "canonicalRecordId": "iodine-131",
+    "identityNamespace": "RADIONUCLIDE",
+    "companionTable": "radioisotopes",
+    "companionIds": [
+      214
+    ],
+    "matchBasis": "ELEMENT_MASS_METASTABLE",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Exact element and ground-state mass-number identity crosswalk established.",
+      "Chemical Companion radiation level and emission values are quarantined; NNDC ENSDF remains the physics authority."
+    ]
+  },
+  {
+    "canonicalRecordId": "iridium-192",
+    "identityNamespace": "RADIONUCLIDE",
+    "companionTable": "radioisotopes",
+    "companionIds": [
+      319
+    ],
+    "matchBasis": "ELEMENT_MASS_METASTABLE",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Exact element and ground-state mass-number identity crosswalk established.",
+      "Chemical Companion radiation level and emission values are quarantined; NNDC ENSDF remains the physics authority."
+    ]
+  },
+  {
+    "canonicalRecordId": "lewisite-l",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      63
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "melioidosis",
+    "identityNamespace": "BIOLOGICAL",
+    "companionTable": "biotoxins",
+    "companionIds": [],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No typed biological identity match exists in the biotoxins table.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "mustard-lewisite-hl",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [],
+    "matchBasis": "NONE",
+    "identityStatus": "IDENTITY_AMBIGUOUS",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No authoritative identity match was established.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "nitrogen-mustard-hn1",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      77
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "nitrogen-mustard-hn2",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      78
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "nitrogen-mustard-hn3",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      79
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "phosgene-cg",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      88
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "phosgene-oxime-cx",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      89
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "phosphine",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      90
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "plague",
+    "identityNamespace": "BIOLOGICAL",
+    "companionTable": "biotoxins",
+    "companionIds": [],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No typed biological identity match exists in the biotoxins table.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "plutonium-239",
+    "identityNamespace": "RADIONUCLIDE",
+    "companionTable": "radioisotopes",
+    "companionIds": [
+      418
+    ],
+    "matchBasis": "ELEMENT_MASS_METASTABLE",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Exact element and ground-state mass-number identity crosswalk established.",
+      "Chemical Companion radiation level and emission values are quarantined; NNDC ENSDF remains the physics authority."
+    ]
+  },
+  {
+    "canonicalRecordId": "q-fever",
+    "identityNamespace": "BIOLOGICAL",
+    "companionTable": "biotoxins",
+    "companionIds": [],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No typed biological identity match exists in the biotoxins table.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "radiological-dispersal-device",
+    "identityNamespace": "RAD_NUCLEAR_SCENARIO",
+    "companionTable": null,
+    "companionIds": [],
+    "matchBasis": "NONE",
+    "identityStatus": "NOT_APPLICABLE",
+    "operationalDataStatus": "NOT_APPLICABLE",
+    "notes": [
+      "Operational scenarios are not chemical, biotoxin, or radionuclide identities."
+    ]
+  },
+  {
+    "canonicalRecordId": "radium-226",
+    "identityNamespace": "RADIONUCLIDE",
+    "companionTable": "radioisotopes",
+    "companionIds": [
+      378
+    ],
+    "matchBasis": "ELEMENT_MASS_METASTABLE",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Exact element and ground-state mass-number identity crosswalk established.",
+      "Chemical Companion radiation level and emission values are quarantined; NNDC ENSDF remains the physics authority."
+    ]
+  },
+  {
+    "canonicalRecordId": "ricin",
+    "identityNamespace": "BIOLOGICAL_TOXIN",
+    "companionTable": "biotoxins",
+    "companionIds": [
+      4
+    ],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Typed toxin-name identity crosswalk established.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "sarin-gb",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      96
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "smallpox",
+    "identityNamespace": "BIOLOGICAL",
+    "companionTable": "biotoxins",
+    "companionIds": [],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No typed biological identity match exists in the biotoxins table.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "soman-gd",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      100
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "strontium-90",
+    "identityNamespace": "RADIONUCLIDE",
+    "companionTable": "radioisotopes",
+    "companionIds": [],
+    "matchBasis": "ELEMENT_MASS_METASTABLE",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No unique exact ground-state nuclide identity match was established.",
+      "Chemical Companion radiation level and emission values are quarantined; NNDC ENSDF remains the physics authority."
+    ]
+  },
+  {
+    "canonicalRecordId": "sulfur-mustard-hd",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      43,
+      61
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "tabun-ga",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      107
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "tets",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [],
+    "matchBasis": "CAS",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No authoritative identity match was established.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  },
+  {
+    "canonicalRecordId": "tularemia",
+    "identityNamespace": "BIOLOGICAL",
+    "companionTable": "biotoxins",
+    "companionIds": [],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No typed biological identity match exists in the biotoxins table.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "type-a-package",
+    "identityNamespace": "RAD_NUCLEAR_SCENARIO",
+    "companionTable": null,
+    "companionIds": [],
+    "matchBasis": "NONE",
+    "identityStatus": "NOT_APPLICABLE",
+    "operationalDataStatus": "NOT_APPLICABLE",
+    "notes": [
+      "Operational scenarios are not chemical, biotoxin, or radionuclide identities."
+    ]
+  },
+  {
+    "canonicalRecordId": "type-b-package",
+    "identityNamespace": "RAD_NUCLEAR_SCENARIO",
+    "companionTable": null,
+    "companionIds": [],
+    "matchBasis": "NONE",
+    "identityStatus": "NOT_APPLICABLE",
+    "operationalDataStatus": "NOT_APPLICABLE",
+    "notes": [
+      "Operational scenarios are not chemical, biotoxin, or radionuclide identities."
+    ]
+  },
+  {
+    "canonicalRecordId": "uranium-235",
+    "identityNamespace": "RADIONUCLIDE",
+    "companionTable": "radioisotopes",
+    "companionIds": [
+      401
+    ],
+    "matchBasis": "ELEMENT_MASS_METASTABLE",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Exact element and ground-state mass-number identity crosswalk established.",
+      "Chemical Companion radiation level and emission values are quarantined; NNDC ENSDF remains the physics authority."
+    ]
+  },
+  {
+    "canonicalRecordId": "uranium-238",
+    "identityNamespace": "RADIONUCLIDE",
+    "companionTable": "radioisotopes",
+    "companionIds": [
+      404
+    ],
+    "matchBasis": "ELEMENT_MASS_METASTABLE",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Exact element and ground-state mass-number identity crosswalk established.",
+      "Chemical Companion radiation level and emission values are quarantined; NNDC ENSDF remains the physics authority."
+    ]
+  },
+  {
+    "canonicalRecordId": "viral-hemorrhagic-fever",
+    "identityNamespace": "BIOLOGICAL",
+    "companionTable": "biotoxins",
+    "companionIds": [],
+    "matchBasis": "TYPED_BIOLOGICAL_NAME",
+    "identityStatus": "SOURCE_UNPROVEN",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "No typed biological identity match exists in the biotoxins table.",
+      "No molecular weight or solubility value is promoted into the authoritative fact layer."
+    ]
+  },
+  {
+    "canonicalRecordId": "vx",
+    "identityNamespace": "CWA_CHEMICAL",
+    "companionTable": "chemicals",
+    "companionIds": [
+      116
+    ],
+    "matchBasis": "CAS",
+    "identityStatus": "MATCHED_TO_AUTHORITY",
+    "operationalDataStatus": "SOURCE_UNPROVEN",
+    "notes": [
+      "Identity-only crosswalk established using authoritative CAS.",
+      "Chemical Companion operational values are quarantined from the authoritative fact layer until independently sourced and reviewed."
+    ]
+  }
+]

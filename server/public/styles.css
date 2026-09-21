@@ -402,7 +402,7 @@ h1 { font-weight: 800; }
 .map-toolbar-title {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
 }
 
 .map-toolbar-title span {
@@ -3312,6 +3312,7 @@ h1 { font-weight: 800; }
   }
 }
 
+
 /* Final plume console cascade. */
 #plume.view.active .plume-main-workspace {
   display: grid !important;
@@ -3789,85 +3790,6 @@ h1 { font-weight: 800; }
   }
 }
 
-/* Home command header refinement: enlarged identity, bottom status rail, and compact menu. */
-.app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
-  min-height: 510px;
-  padding: 18px clamp(14px, 1.5vw, 24px) 82px;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
-  width: min(76%, 1320px);
-}
-
-.app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
-.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn,
-.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:hover,
-.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:focus-visible,
-.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn.active,
-.app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-  width: min(1320px, 100%);
-  height: 371px;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .command-center-launch {
-  justify-self: start;
-  width: 52px;
-  min-width: 52px;
-  min-height: 48px;
-  margin: -5px 0 0 4px;
-  padding: 2px;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .command-center-label {
-  display: none;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .command-center-launch .command-menu-toggle {
-  width: 48px;
-  height: 44px;
-  flex-basis: 48px;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .command-header-footer {
-  top: auto;
-  right: clamp(14px, 1.5vw, 24px);
-  bottom: 14px;
-  left: clamp(14px, 1.5vw, 24px);
-  width: auto;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context.notification-center {
-  display: block;
-  width: 100%;
-  height: 54px;
-  min-height: 54px;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-feed {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(7px, 1vw, 14px);
-  width: 100%;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-feed > .notification-item:last-child {
-  display: grid;
-  padding-right: 10px;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-item,
-.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system {
-  min-height: 54px;
-  padding: 5px 10px;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-alert-count {
-  display: none;
-}
-
 .app-shell:has(#overview.view.active) > .layout {
   padding: 0 clamp(12px, 1.5vw, 24px) clamp(12px, 1.5vw, 24px);
 }
@@ -3895,72 +3817,6 @@ h1 { font-weight: 800; }
 #overview .incident-overview-actions .overview-action-btn:focus-visible {
   border: 5px solid var(--overview-accent);
   box-shadow: 0 0 0 2px rgba(var(--overview-accent-rgb), 0.42), 0 20px 42px rgba(var(--overview-accent-rgb), 0.38);
-}
-
-@media (max-width: 1120px) {
-  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
-    min-height: 440px;
-    padding-bottom: 78px;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
-    width: min(82%, 1080px);
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:hover,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:focus-visible,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn.active,
-  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-    height: 310px;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .command-header-footer {
-    position: absolute;
-    top: auto;
-    right: clamp(14px, 1.5vw, 24px);
-    bottom: 14px;
-    left: clamp(14px, 1.5vw, 24px);
-    width: auto;
-    margin: 0;
-  }
-}
-
-@media (max-width: 720px) {
-  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
-    min-height: 385px;
-    padding-bottom: 116px;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
-    width: 92%;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:hover,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:focus-visible,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn.active,
-  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-    height: 245px;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context.notification-center {
-    display: block;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-feed {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 5px;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-item,
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system {
-    min-width: 0;
-    min-height: 86px;
-    padding: 5px 6px;
-  }
 }
 
 .chemical-profile-section[data-section$="levels"] .chemical-profile-list,
@@ -13382,7 +13238,7 @@ body,
   width: clamp(520px, 42vw, 820px);
   max-width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   transform: none;
 }
@@ -13577,7 +13433,7 @@ body,
     width: 100%;
     max-width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     transform: none;
   }
@@ -14682,14 +14538,46 @@ body,
 #incident-note-dialog label { display: grid; gap: 7px; }
 #incident-note-dialog textarea { width: 100%; color: #071f36; background: #f8fafc; }
 
-/* Chronological Medical tab: exposure routes/symptoms, then treatment, at equal width. */
+/* Medical guidance is intentionally source-led; keep the CHEMM embed and
+   product-specific cautions readable without restoring the duplicated EMS dump. */
 #chemical-id-results .chemical-profile-content[data-active-tab="medical"] {
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns: minmax(0, 1fr) !important;
   align-items: stretch;
 }
-#chemical-id-results .chemical-profile-content[data-active-tab="medical"] > .chemical-profile-section[data-section="routes-and-symptoms"] { grid-column: 1; }
-#chemical-id-results .chemical-profile-content[data-active-tab="medical"] > .chemical-profile-section[data-section="treatment"] { grid-column: 2; }
-#chemical-id-results .chemical-profile-content[data-active-tab="medical"] > .chemical-profile-section[data-section="responders-hazards"] { grid-column: 1 / -1; }
+#chemical-id-results .chemical-profile-content[data-active-tab="medical"] > .chemical-profile-section { grid-column: 1 !important; }
+#chemical-id-results .chemical-profile-medical-embed {
+  min-height: 620px;
+}
+#chemical-id-results .chemical-profile-medical-embed-description,
+#chemical-id-results .chemical-profile-medical-embed-fallback {
+  margin: 0 0 10px;
+  color: #b8c7d9;
+  line-height: 1.5;
+}
+#chemical-id-results .chemical-profile-medical-embed-frame {
+  display: block;
+  width: 100%;
+  min-height: 520px;
+  border: 1px solid rgba(203, 213, 225, 0.2);
+  border-radius: 8px;
+  background: #fff;
+}
+#chemical-id-results .chemical-profile-medical-embed-fallback {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid rgba(246, 195, 67, 0.55);
+  border-radius: 8px;
+  color: #e9f3fb;
+  background: rgba(246, 195, 67, 0.1);
+}
+#chemical-id-results .chemical-profile-medical-embed-fallback strong {
+  color: #f6c343;
+}
+#chemical-id-results .chemical-profile-medical-embed-fallback a {
+  color: #f6c343;
+  font-weight: 700;
+}
 
 /* Decon follows a symmetric three-part operational sequence. */
 #chemical-id-results .chemical-profile-content[data-active-tab="decon"] {
@@ -14749,18 +14637,20 @@ body,
   background: rgba(177, 18, 38, 0.24) !important;
 }
 
-/* Every action whose purpose is opening or plotting the Plume Model uses the green action schema. */
+/* Every action whose purpose is opening or plotting the Plume Model uses red. */
 button[data-view="plume"],
 button[data-command-view="plume"],
 #open-plume-btn,
 #guided-open-plume-btn,
 #hazard-profile-plume-btn,
 #plot-plume-btn,
-.incident-command-tool-plume {
-  border-color: #238a4b !important;
+.incident-command-tool-plume,
+.incident-command-plume-copy > button,
+.chemical-profile-plume {
+  border-color: #8f0d12 !important;
   color: #fff !important;
-  background: linear-gradient(180deg, #2c9b55, #176b39) !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 6px 14px rgba(13, 92, 46, .22) !important;
+  background: linear-gradient(135deg, #ed252c, #b70e16) !important;
+  box-shadow: 0 5px 12px rgba(183, 14, 22, .25) !important;
 }
 button[data-view="plume"]:hover,
 button[data-command-view="plume"]:hover,
@@ -14768,13 +14658,47 @@ button[data-command-view="plume"]:hover,
 #guided-open-plume-btn:hover,
 #hazard-profile-plume-btn:hover,
 #plot-plume-btn:hover,
-.incident-command-tool-plume:hover { border-color: #5ed487 !important; background: linear-gradient(180deg, #35ac62, #1c7a42) !important; }
+.incident-command-tool-plume:hover,
+.incident-command-plume-copy > button:hover,
+.chemical-profile-plume:hover { border-color: #ff7277 !important; background: linear-gradient(135deg, #f33b42, #c8151e) !important; }
 button[data-view="plume"]:disabled,
 button[data-command-view="plume"]:disabled,
 #open-plume-btn:disabled,
 #guided-open-plume-btn:disabled,
 #hazard-profile-plume-btn:disabled,
-#plot-plume-btn:disabled { color: rgba(255,255,255,.7) !important; background: #416c51 !important; opacity: .68; }
+#plot-plume-btn:disabled,
+.incident-command-tool-plume:disabled,
+.incident-command-plume-copy > button:disabled,
+.chemical-profile-plume:disabled { color: rgba(255,255,255,.7) !important; background: #714144 !important; opacity: .68; }
+
+/* Every Guided Response action uses the green action schema. */
+button[data-view="guided-response"],
+button[data-command-view="guided-response"],
+#open-guided-response-btn,
+.incident-guided-primary,
+.chemical-profile-guided {
+  border-color: #238a4b !important;
+  color: #fff !important;
+  background: linear-gradient(180deg, #2c9b55, #176b39) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 6px 14px rgba(13, 92, 46, .22) !important;
+}
+button[data-view="guided-response"]:hover,
+button[data-command-view="guided-response"]:hover,
+#open-guided-response-btn:hover,
+.incident-guided-primary:hover,
+.chemical-profile-guided:hover {
+  border-color: #5ed487 !important;
+  background: linear-gradient(180deg, #35ac62, #1c7a42) !important;
+}
+button[data-view="guided-response"]:disabled,
+button[data-command-view="guided-response"]:disabled,
+#open-guided-response-btn:disabled,
+.incident-guided-primary:disabled,
+.chemical-profile-guided:disabled {
+  color: rgba(255,255,255,.7) !important;
+  background: #416c51 !important;
+  opacity: .68;
+}
 
 @media (max-width: 1180px) {
   .incident-command-summary-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -15289,31 +15213,18 @@ body:has(#overview.view.active),
   width: 100%;
   min-height: 0;
   margin: 0;
-  padding: 4px clamp(8px, 0.7vw, 11px) 11px;
+  padding: 4px clamp(8px, 0.7vw, 11px) 4px;
   overflow: hidden;
   border: 0;
   border-radius: 0;
-  background: transparent;
+  background: #020d17;
   box-shadow: none;
 }
 
-.app-shell:has(#overview.view.active) > .command-header::before {
-  opacity: 0.42;
-}
-
-/* Static terrain linework keeps the dark home header dominant. */
+/* The supplied VECTIQ banner provides the complete header scene. */
+.app-shell:has(#overview.view.active) > .command-header::before,
 .app-shell:has(#overview.view.active) > .command-header::after {
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: auto;
-  border-radius: 0;
-  opacity: 0.42;
-  background: url("assets/home-tactical-topo.svg?v=2") right center / cover no-repeat;
-  mask-image: linear-gradient(90deg, transparent 8%, rgba(0, 0, 0, 0.25) 36%, #000 72%);
-  translate: none;
-  transform: none;
-  animation: none;
+  display: none;
 }
 
 .app-shell:has(#overview.view.active) > .command-header::before {
@@ -15333,7 +15244,7 @@ body:has(#overview.view.active),
   gap: 0;
   width: 100%;
   height: auto;
-  padding-bottom: 12px;
+  padding-bottom: 0;
 }
 
 .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
@@ -15342,30 +15253,46 @@ body:has(#overview.view.active),
 .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:focus-visible,
 .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn.active {
   display: block;
-  /* Sixty percent of the previous 1,890px / full-viewport logo treatment. */
-  width: min(1134px, calc(60vw - clamp(8px, 0.7vw, 11px)));
+  width: 100%;
   max-width: none;
-  /* Crop the transparent PNG canvas to roughly half its uncropped display height. */
-  aspect-ratio: 5.6 / 1;
-  height: auto;
+  height: clamp(210px, 20vw, 335px);
+  aspect-ratio: auto;
   min-height: 0;
   margin: 0;
   padding: 0;
   border: 0;
-  background: transparent;
+  background:
+    radial-gradient(ellipse 42% 78% at 38% 52%, rgba(74, 103, 122, 0.16), transparent 68%),
+    radial-gradient(ellipse 34% 70% at 72% 44%, rgba(57, 88, 108, 0.14), transparent 72%),
+    radial-gradient(ellipse 28% 60% at 96% 56%, rgba(30, 61, 82, 0.2), transparent 76%),
+    #020d17;
   box-shadow: none;
   overflow: hidden;
+  animation: none !important;
+  scale: 1 !important;
+  transition: none !important;
+  transform: none !important;
 }
 
 .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
   display: block;
   width: 100%;
   max-width: none;
-  height: auto;
+  height: 100%;
   margin: 0;
   object-fit: contain;
-  object-position: left top;
-  transform: translateY(-20%);
+  object-position: left center;
+  transform: none;
+  pointer-events: none;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  filter: none;
+  mix-blend-mode: lighten;
+  scale: 1;
+  transition: none;
+  -webkit-mask-image: radial-gradient(ellipse 85% 100% at center, #000 68%, rgba(0, 0, 0, 0.96) 76%, rgba(0, 0, 0, 0.6) 88%, transparent 100%);
+  mask-image: radial-gradient(ellipse 85% 100% at center, #000 68%, rgba(0, 0, 0, 0.96) 76%, rgba(0, 0, 0, 0.6) 88%, transparent 100%);
 }
 
 .app-shell:has(#overview.view.active) > .command-header .command-center-label {
@@ -16409,4 +16336,130 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   .view:not(#overview) .hazmat-page-hero .plume-page-title { font-size: clamp(36px, 11vw, 58px) !important; }
   .view:not(#overview) .hazmat-page-hero .internal-command-title-row { gap: 12px; }
   .view:not(#overview) .hazmat-page-hero .hazmat-hero-subtitle { font-size: clamp(16px, 4vw, 22px) !important; }
+}
+
+/* Homepage action-card tertiary copy: center the supporting line and keep
+   the long operational phrases balanced under the card hierarchy. */
+#overview .incident-overview-actions .overview-action-description {
+  width: 100%;
+  max-width: none;
+  padding-left: 0;
+  text-align: center;
+  text-wrap: balance;
+  font-size: clamp(0.84rem, 1.02vw, 1.05rem);
+  letter-spacing: -0.012em;
+}
+
+@media (min-width: 1200px) {
+  #overview .incident-overview-actions .overview-action-description {
+    white-space: nowrap;
+  }
+}
+
+
+/* Plume input panels: clear dark outer cards with light, readable entry fields. */
+#plume.view.active .plume-control-column .plume-model-section {
+  box-sizing: border-box;
+  border: 1px solid #315a7d !important;
+  border-radius: 12px !important;
+  background: linear-gradient(180deg, #102a43 0%, #0a2036 100%) !important;
+  color: #f8fafc !important;
+}
+
+#plume.view.active .plume-control-column .plume-model-section-heading {
+  margin-bottom: 10px !important;
+  border-bottom-color: rgba(145, 190, 224, 0.32) !important;
+}
+
+#plume.view.active .plume-release-grid,
+#plume.view.active .plume-weather-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  align-items: stretch;
+}
+
+#plume.view.active .plume-release-grid > .plume-chemical-field,
+#plume.view.active .plume-release-grid > .container-profile,
+#plume.view.active .plume-release-grid > .plume-input-review,
+#plume.view.active .plume-weather-grid > label[for="plume-weather-source"],
+#plume.view.active .plume-weather-grid > .plume-weather-review {
+  grid-column: 1 / -1 !important;
+}
+
+#plume.view.active .plume-release-grid .plume-model-field,
+#plume.view.active .plume-weather-grid .plume-model-field {
+  min-width: 0;
+  min-height: 72px;
+  box-sizing: border-box;
+  padding: 8px 9px !important;
+  border: 1px solid #66849b !important;
+  border-radius: 8px;
+  background: #eef3f7 !important;
+  color: #10283d !important;
+}
+
+/* Required status remains visible through its label, without red field chrome. */
+#plume.view.active .plume-release-grid .plume-required-field,
+#plume.view.active .plume-weather-grid .plume-required-field {
+  border-color: #66849b !important;
+  background: #eef3f7 !important;
+}
+
+#plume.view.active .plume-release-grid .plume-model-field > span,
+#plume.view.active .plume-weather-grid .plume-model-field > span,
+#plume.view.active .plume-required-label,
+#plume.view.active .plume-required-label > span {
+  color: #10283d !important;
+}
+
+#plume.view.active .plume-required-label b {
+  color: #52667a !important;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+#plume.view.active .plume-release-grid .plume-model-field input:not([type="checkbox"]):not([type="file"]),
+#plume.view.active .plume-release-grid .plume-model-field select,
+#plume.view.active .plume-weather-grid .plume-model-field input:not([type="checkbox"]):not([type="file"]),
+#plume.view.active .plume-weather-grid .plume-model-field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  box-sizing: border-box;
+  border: 1px solid #9db2c4 !important;
+  border-radius: 6px;
+  background: #fff !important;
+  color: #061a2e !important;
+}
+
+#plume.view.active .plume-release-grid .plume-required-field input,
+#plume.view.active .plume-release-grid .plume-required-field select,
+#plume.view.active .plume-weather-grid .plume-required-field input,
+#plume.view.active .plume-weather-grid .plume-required-field select {
+  border: 1px solid #9db2c4 !important;
+}
+
+#plume.view.active .plume-release-grid .plume-model-field input:focus,
+#plume.view.active .plume-release-grid .plume-model-field select:focus,
+#plume.view.active .plume-weather-grid .plume-model-field input:focus,
+#plume.view.active .plume-weather-grid .plume-model-field select:focus {
+  outline: 3px solid rgba(46, 140, 255, .25);
+  outline-offset: 1px;
+}
+
+#plume.view.active .plume-weather-grid .plume-weather-review {
+  border: 1px solid #66849b !important;
+  border-radius: 8px;
+  background: #f7fafc !important;
+  color: #10283d !important;
+}
+
+@media (max-width: 620px) {
+  #plume.view.active .plume-release-grid,
+  #plume.view.active .plume-weather-grid {
+    grid-template-columns: 1fr !important;
+  }
 }

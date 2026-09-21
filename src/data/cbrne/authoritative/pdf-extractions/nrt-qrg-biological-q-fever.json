@@ -1,0 +1,536 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-biological-q-fever",
+  "sourceArtifactSha256": "7854636d09d4752095c26672b3afb51c043715b5990526c7afcf9f2fa540c8a4",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+  "pageCount": 2,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "September, 2011NRT Quick Reference Guide: Coxiella burnetii  (Causes the disease Q fever)\u0000)\u0000R\u0000U\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000V\u0000H\u0000H\u0000\u0003\u0000³\u0000.\u0000H\u0000\\\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000V\u0000\u0003\u0000&\u0000L\u0000W\u0000H\u0000G\u0000\u0012\u00008\u0000V\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "\u0000\u000b\u00001\u00005\u00007\u0000\f\u0000\u0003\u00004\u0000X\u0000L\u0000F\u0000N\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000*\u0000X\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u0000\u000b\u00004\u00005\u0000*\u0000V\u0000\f\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000%\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000D\u0000O\u0000\u0003\u0000\u0015\u0000\u0013\u0000\u0014\u0000\u0014\u0000\u0003\u00005\u0000H\u0000Y\u0000L\u0000V\u0000L\u0000R\u0000Q\u0000\u0011\u0000´\u0000\u0003QRGs are intended for Federal On-Scene Coordinators (OSCs) and Remedial Program Managers (RPMs).Agent Characteristics",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "Agent Classification: Biological Type: Bacteria(Coxiellaburnetii)Description:C. burnetii is an obligate intracellular Gram negative microorganism found in humans, cattle, sheep, goats, cats, and rabbits.  C. burnetii is resistant to ",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "heat, drying, and many common disinfectants.  C. burnetii does not usually cause illness in livestock; however, the microorganisms are found in body fluids, milk, urine, and feces of infected animals.  Q fever is a zoonotic disease",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "(transferable between animals and humans)caused by C. burnetii.  Infection of humans occurs through inhalation of the organisms from the air, and very few organisms are needed to cause disease.  Approximately 50% of infected people show signs of illness.",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "Biosafety Level: 3HHS Select Agent:  YesCDC Class:  BIncubation Period: 9-28 daysPerson-to-Person Transmission:  Yes, via contact with body fluids or thru unprotected sexual contact.Other Forms of Transmission: Tick bite Treatment",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": ":  Supportive with antibiotics like doxycycline. Infectivity/Lethality:  High/LowPersistence/Stability:Persistent in soil for months. Stable because resistant toheat,drying,and many common disinfectants, which enables the bacteria to ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "survive for long periods of time in the environment.Release ScenariosCAUTION: REAEROSOLIZATION IS A CONCERN FOR ALL RELEASE SCENARIOS.Air: C. burnetii",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "poses an aerosol threat in its natural and specially engineered forms.  Transmitted commonly by airborne dissemination of small cell variants (spore-like particles) in dust from contaminated surfaces; microorganisms may be carried >0.5 mile downwind.Soil: ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Persists in soil for months due to its resistance to heat and desiccation.Surfaces: Persists on surfaces for months due to its resistance to desiccation and common disinfectants.Water: C. burnetiican pose a water threat. Food:  ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Unpasteurized milk and dairy products.Other:  To avoid animal to man transmission, milk should be pasteurized; dust control in agricultural related industries is essentialand animal placentas, feces, and urine should be incinerated.HealthEffectsOnset",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Symptoms may occur 9-28 days and the illness may last for weeks.Signs/Symptoms per Exposure RouteGeneral: Acute Q fever is characterized by sudden onset of fever, headache, malaise and interstitial pneumonitis.   Pneumonia occurs ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "frequently.  Approximately 50% of infected people show signs of illness.  Only 1-2% of people with acute Q fever die and most patients will recover without any treatment.  A few people may develop chronic Q fever, an uncommon but serious disease, 1-20 year",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "s after the initial infection.  Therefore, early treatment and diagnosis is important.  Uncommon complication include chronic hepatitis, endocarditis (inner heart layer inflammation), aseptic meningitis (inflammation of brain membranes), encephalitis (infl",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "ammation of the brain), and osteomyelitis (infection of the bone).Inhalation: Primary route of exposure via dust from contaminated surfaces/premises.Skin: Direct contact with infected animals and after-birth tissue, wool, straw, manure fertilizer and clo",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "thing of exposed personnel.Ingestion: Ingestion of unpasteurized milk and dairy products has been responsible for some cases.Effect LevelsInfectivity:C. burnetiiis considered to be highly infectious.Infective dose:",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "As little as one organism can cause Q fever in a susceptible individual. Lethality: Lethality <2% for treated individuals.Personnel SafetyConcernsDecisions regarding PPE, sampling, and decon",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "should not be made without verifying if the Q fever outbreak was naturally occurring or from an engineered source.Check with the Health & Safety Officer regarding PPE, Medical Surveillance, & Health & Safety Plan (HASP). Level of PPE may vary depend",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "ing upon the incident & site specific circumstances. The PPE Levels listed are general suggestions only & may not provide protection for some decon & other chemicals that workers may be exposed to during response/recovery operations. For decon of workers, ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "use warm soapy water, taking care to avoid abrading the skin.MedicalBaseline: Annual physical & respiratory function exams. THERE IS NO U.S. FOOD & DRUG ADMINISTRATION APPROVED HUMAN Q FEVER VACCINE.Treatments Available: Supportive accompanied with a",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "ntibiotics, such as doxycycline.First AidDuring Incident: Conduct medical monitoring; use PPE as designated by the HASP; record the PPE Levels used; monitor for fever & other signs/symp-toms as listed under Health Effects &",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": ", if necessary, ensure medical attention is obtained as soon as possible. Post Incident: Monitor for signs/symptoms.  If necessary, ensure medical attention is provided ASAP.PPEEmergency Response to a Suspected Biological Incident: Possible PPE Levels",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "for emergency responders is based on scenario risks from highest level of protection to least: 1)Pressure-demand Self Contained Breathing Apparatus (SCBA) with Level A protective suit, when: a) Event is uncontrolled, b)",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "The type(s) of airborne agent(s) is unknown, c)The dissemination method is unknown, d)Dissemination via an aerosol-generating device is still occurring, e)Dissemination via an aerosol-generating device has stopped, but there is no information on the d",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "uration of dissemination, or what the exposure concentration may be. 2)Pressure-demand SCBA with Level B protective suit, when: a)The suspected biological aerosol is no longer being released, b)Other conditions may present a splash hazard. 3)Full-facep",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "iece respirator with P100 filter or PAPR with HEPA filters, when: An aerosol-generating device was not used to create high airborne concentrations. 4)Disposable hooded coveralls, gloves, & foot coverings, when: Dissemination was by a letter, package, or o",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "ther material that can be bagged, contained, etc. Other Workers: PPE recommendations for workers other than emergency responders must be developed in the HASP for the specific scenario. PPE recommendations will vary by job type (e.g., cleanup, decon, etc",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": ".), type of exposure (e.g., airborne or surface/liquid/soil hazard), & any other site hazards (e.g., chemical, physical, etc.).Field DetectionFixed Aerosol Monitoring:  Arelease of C. burnetii canonly be confirmed once patients present with symptoms &",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "are diagnosed.Consult EPA/HQ-EOC at 202-564-3850 for more information.Portable Aerosol Monitoring: ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "\u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000U\u0000D\u0000W\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000\t\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000(\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0003\u0000S\u0000X\u0000P\u0000S\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000X\u0000V\u0000H\u0000G\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "for the selected sampling method.Traditional wet sampling methods (e.g., impingers & impactors) might not work well because C. burnettiis an obligate intracellular microorganism which requires embryonated chicken eggs or cell lines for growth.  Sampling",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Concerns:   BEFOREOBTAINING SAMPLES: Identify sample transportation requirements;Contact EPA/HQ-EOC (202-564-3850)for ERLN contract laboratories ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "able to analyze these types of samples; Clearly identify & coordinate with the laboratory to be used since most labs cannot analyze all types of media (e.g., wipes, swabs, and HEPA vacuum sa",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "mples); Coordinate with the sample disposal facility for acceptance criteria (i.e., sample decon requirements); Coordinate with investigative units (EPA-CID & FBI) to ensure sample chain-of-custody is maintained between the groups. Note: Detection/analyt",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "ical equipment & sampling techniques will be highly site-speci\u0000¿c & depend on: 1)the characteristics of the agent; 2) the type of contaminated surfaces (e.g., porous v. nonporous); 3)the phases/purposes of sampling (initial ID v. post-decon sampling); 4)",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "the way in which samples are handled so as not to adversely affect viability; 5) transportation regulations 6) the acceptance criteria of the analytical laboratory & 7) the sample decon requirements for the waste disposal facilities to be used. See LABORA",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "TORY ANALYSIS, below.CAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACUUM EQUIPMENT SHOULD BE USED. A site-",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "\u0000V\u0000S\u0000H\u0000F\u0000L\u0000À\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000U\u0000H\u0000Y\u0000L\u0000H\u0000Z\u0000H\u0000G\u0000\u0003\u0000\t\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0003\u00006\u0000X\u0000E\u0000M\u0000H\u0000F\u0000W\u0000\u0003\u00000\u0000D\u0000W\u0000W\u0000H\u0000U\u0000\u0003\u0000(\u0000[\u0000S\u0000H\u0000U\u0000W\u0000V\u0000\u0003\u0000\t\u0000\u0012\u0000R\u0000U\u0000\u0003\u0000W\u0000K\u0000U\u0000R\u0000X\u0000J\u0000K\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "Sampling Location Plans: If C. burnetiiwas engineered and the release was limited to a small area due to opening a letter or container, start with an area thought to ",
+          "role": "BODY"
+        }
+      ],
+      "text": "September, 2011NRT Quick Reference Guide: Coxiella burnetii (Causes the disease Q fever)\u0000)\u0000R\u0000U\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000V\u0000H\u0000H\u0000\u0003\u0000³\u0000.\u0000H\u0000\\\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000V\u0000\u0003\u0000&\u0000L\u0000W\u0000H\u0000G\u0000\u0012\u00008\u0000V\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003 \u0000 \u00001\u00005\u00007\u0000 \u0000\u0003\u00004\u0000X\u0000L\u0000F\u0000N\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u0003\u0000*\u0000X\u0000L\u0000G\u0000H\u0000V\u0000\u0003\u0000 \u00004\u00005\u0000*\u0000V\u0000 \u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000%\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000D\u0000O\u0000\u0003\u0000\u0015\u0000\u0013\u0000\u0014\u0000\u0014\u0000\u0003\u00005\u0000H\u0000Y\u0000L\u0000V\u0000L\u0000R\u0000Q\u0000\u0011\u0000´\u0000\u0003QRGs are intended for Federal On-Scene Coordinators (OSCs) and Remedial Program Managers (RPMs).Agent Characteristics Agent Classification: Biological Type: Bacteria(Coxiellaburnetii)Description:C. burnetii is an obligate intracellular Gram negative microorganism found in humans, cattle, sheep, goats, cats, and rabbits. C. burnetii is resistant to heat, drying, and many common disinfectants. C. burnetii does not usually cause illness in livestock; however, the microorganisms are found in body fluids, milk, urine, and feces of infected animals. Q fever is a zoonotic disease (transferable between animals and humans)caused by C. burnetii. Infection of humans occurs through inhalation of the organisms from the air, and very few organisms are needed to cause disease. Approximately 50% of infected people show signs of illness. Biosafety Level: 3HHS Select Agent: YesCDC Class: BIncubation Period: 9-28 daysPerson-to-Person Transmission: Yes, via contact with body fluids or thru unprotected sexual contact.Other Forms of Transmission: Tick bite Treatment : Supportive with antibiotics like doxycycline. Infectivity/Lethality: High/LowPersistence/Stability:Persistent in soil for months. Stable because resistant toheat,drying,and many common disinfectants, which enables the bacteria to survive for long periods of time in the environment.Release ScenariosCAUTION: REAEROSOLIZATION IS A CONCERN FOR ALL RELEASE SCENARIOS.Air: C. burnetii poses an aerosol threat in its natural and specially engineered forms. Transmitted commonly by airborne dissemination of small cell variants (spore-like particles) in dust from contaminated surfaces; microorganisms may be carried >0.5 mile downwind.Soil: Persists in soil for months due to its resistance to heat and desiccation.Surfaces: Persists on surfaces for months due to its resistance to desiccation and common disinfectants.Water: C. burnetiican pose a water threat. Food: Unpasteurized milk and dairy products.Other: To avoid animal to man transmission, milk should be pasteurized; dust control in agricultural related industries is essentialand animal placentas, feces, and urine should be incinerated.HealthEffectsOnset Symptoms may occur 9-28 days and the illness may last for weeks.Signs/Symptoms per Exposure RouteGeneral: Acute Q fever is characterized by sudden onset of fever, headache, malaise and interstitial pneumonitis. Pneumonia occurs frequently. Approximately 50% of infected people show signs of illness. Only 1-2% of people with acute Q fever die and most patients will recover without any treatment. A few people may develop chronic Q fever, an uncommon but serious disease, 1-20 year s after the initial infection. Therefore, early treatment and diagnosis is important. Uncommon complication include chronic hepatitis, endocarditis (inner heart layer inflammation), aseptic meningitis (inflammation of brain membranes), encephalitis (infl ammation of the brain), and osteomyelitis (infection of the bone).Inhalation: Primary route of exposure via dust from contaminated surfaces/premises.Skin: Direct contact with infected animals and after-birth tissue, wool, straw, manure fertilizer and clo thing of exposed personnel.Ingestion: Ingestion of unpasteurized milk and dairy products has been responsible for some cases.Effect LevelsInfectivity:C. burnetiiis considered to be highly infectious.Infective dose: As little as one organism can cause Q fever in a susceptible individual. Lethality: Lethality <2% for treated individuals.Personnel SafetyConcernsDecisions regarding PPE, sampling, and decon should not be made without verifying if the Q fever outbreak was naturally occurring or from an engineered source.Check with the Health & Safety Officer regarding PPE, Medical Surveillance, & Health & Safety Plan (HASP). Level of PPE may vary depend ing upon the incident & site specific circumstances. The PPE Levels listed are general suggestions only & may not provide protection for some decon & other chemicals that workers may be exposed to during response/recovery operations. For decon of workers, use warm soapy water, taking care to avoid abrading the skin.MedicalBaseline: Annual physical & respiratory function exams. THERE IS NO U.S. FOOD & DRUG ADMINISTRATION APPROVED HUMAN Q FEVER VACCINE.Treatments Available: Supportive accompanied with a ntibiotics, such as doxycycline.First AidDuring Incident: Conduct medical monitoring; use PPE as designated by the HASP; record the PPE Levels used; monitor for fever & other signs/symp-toms as listed under Health Effects & , if necessary, ensure medical attention is obtained as soon as possible. Post Incident: Monitor for signs/symptoms. If necessary, ensure medical attention is provided ASAP.PPEEmergency Response to a Suspected Biological Incident: Possible PPE Levels for emergency responders is based on scenario risks from highest level of protection to least: 1)Pressure-demand Self Contained Breathing Apparatus (SCBA) with Level A protective suit, when: a) Event is uncontrolled, b) The type(s) of airborne agent(s) is unknown, c)The dissemination method is unknown, d)Dissemination via an aerosol-generating device is still occurring, e)Dissemination via an aerosol-generating device has stopped, but there is no information on the d uration of dissemination, or what the exposure concentration may be. 2)Pressure-demand SCBA with Level B protective suit, when: a)The suspected biological aerosol is no longer being released, b)Other conditions may present a splash hazard. 3)Full-facep iece respirator with P100 filter or PAPR with HEPA filters, when: An aerosol-generating device was not used to create high airborne concentrations. 4)Disposable hooded coveralls, gloves, & foot coverings, when: Dissemination was by a letter, package, or o ther material that can be bagged, contained, etc. Other Workers: PPE recommendations for workers other than emergency responders must be developed in the HASP for the specific scenario. PPE recommendations will vary by job type (e.g., cleanup, decon, etc .), type of exposure (e.g., airborne or surface/liquid/soil hazard), & any other site hazards (e.g., chemical, physical, etc.).Field DetectionFixed Aerosol Monitoring: Arelease of C. burnetii canonly be confirmed once patients present with symptoms & are diagnosed.Consult EPA/HQ-EOC at 202-564-3850 for more information.Portable Aerosol Monitoring: \u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000U\u0000D\u0000W\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000 \u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000V\u0000\u0011\u0000\u0003\u0000(\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000K\u0000D\u0000W\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0003\u0000S\u0000X\u0000P\u0000S\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000X\u0000V\u0000H\u0000G\u0000\u0003 for the selected sampling method.Traditional wet sampling methods (e.g., impingers & impactors) might not work well because C. burnettiis an obligate intracellular microorganism which requires embryonated chicken eggs or cell lines for growth. Sampling Concerns: BEFOREOBTAINING SAMPLES: Identify sample transportation requirements;Contact EPA/HQ-EOC (202-564-3850)for ERLN contract laboratories able to analyze these types of samples; Clearly identify & coordinate with the laboratory to be used since most labs cannot analyze all types of media (e.g., wipes, swabs, and HEPA vacuum sa mples); Coordinate with the sample disposal facility for acceptance criteria (i.e., sample decon requirements); Coordinate with investigative units (EPA-CID & FBI) to ensure sample chain-of-custody is maintained between the groups. Note: Detection/analyt ical equipment & sampling techniques will be highly site-speci\u0000¿c & depend on: 1)the characteristics of the agent; 2) the type of contaminated surfaces (e.g., porous v. nonporous); 3)the phases/purposes of sampling (initial ID v. post-decon sampling); 4) the way in which samples are handled so as not to adversely affect viability; 5) transportation regulations 6) the acceptance criteria of the analytical laboratory & 7) the sample decon requirements for the waste disposal facilities to be used. See LABORA TORY ANALYSIS, below.CAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACUUM EQUIPMENT SHOULD BE USED. A site- \u0000V\u0000S\u0000H\u0000F\u0000L\u0000À\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000U\u0000H\u0000Y\u0000L\u0000H\u0000Z\u0000H\u0000G\u0000\u0003\u0000 \u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0003\u00006\u0000X\u0000E\u0000M\u0000H\u0000F\u0000W\u0000\u0003\u00000\u0000D\u0000W\u0000W\u0000H\u0000U\u0000\u0003\u0000(\u0000[\u0000S\u0000H\u0000U\u0000W\u0000V\u0000\u0003\u0000 \u0000\u0012\u0000R\u0000U\u0000\u0003\u0000W\u0000K\u0000U\u0000R\u0000X\u0000J\u0000K\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003 Sampling Location Plans: If C. burnetiiwas engineered and the release was limited to a small area due to opening a letter or container, start with an area thought to",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 39,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "September, 2011be free of contamination & work in concentric circles towards the initial point of contamination. Be concerned about other contaminated areas due to foot ",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "\u0000W\u0000U\u0000D\u0000I\u0000¿\u0000F\u0000\u0012\u0000Y\u0000H\u0000Q\u0000W\u0000L\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000V\u0000\u0003\u0000\u000b\u0000H\u0000O\u0000H\u0000Y\u0000D\u0000W\u0000R\u0000U\u0000\u0003\u0000E\u0000X\u0000W\u0000W\u0000R\u0000Q\u0000V\u0000\u000f\u0000\u0003\u0000P\u0000D\u0000L\u0000O\u0000\u000f\u0000\u0003\u0000F\u0000R\u0000U\u0000Q\u0000H\u0000U\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000K\u0000D\u0000O\u0000O\u0000Z\u0000D\u0000\\\u0000V\u0000\u000f\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000E\u0000R\u0000D\u0000U\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000O\u0000L\u0000J\u0000K\u0000W\u0000\u0003\u0000V\u0000Z\u0000L\u0000W\u0000F\u0000K\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000G\u0000R\u0000R\u0000U\u0000\u0003\u0000N\u0000Q\u0000R\u0000E\u0000V\u0000\u000f\u0000\u0003\u0000H\u0000W\u0000F\u0000\f\u0000\u0011\u0000\u0003\u0000%\u0000D\u0000V\u0000H\u0000G\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "on site characteristics & laboratory capacity, the sampling plan may be judgmental, probabilistic, or a combination thereof.Consult EPA/HQ-EOC at 202-564-",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "3850 for Environmental Response Laboratory Network (a.k.a. ERLN laboratory) contact information for personnel who can explain/describe the sampling procedure most compatible with their current analytical procedure.Types of Samples: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "Air, water, soil, surfaces, dairy production/livestockNote:  While C. burnetii DNA can be detected long after the bacteria themselves have perished &might be of forensic interest, the presence of the DNA says little ",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "about the potential human risk in the days following a release.Air: Dry sampling (useful only for molecular analyses) includes gelatin, cellulose acetate & Teflon methods. Refer to the ma",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u000f\u0000\u0003flow rates, & sampling times. Ensure that the appropriate pump is used for the selected sampling method.Traditional wet sampling methods (e.g., impingers & ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "impactors) might not work well because C. burnettiis an obligate intracellular microorganism which requires embryonated chicken eggs or cell lines for growth.  Water: Since C. burnetii c",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "an persist in water, any potable water sources should be sampled. If the potable water is chlorinated, the chlorine needs to be neutralized ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "immediately with a sodium thiosulfate or other neutralizer at the concentration specified by the analytical laboratory prior to shipment.  As chlorine levels can vary substantially throughout a drinking water system, it is not always appropriat",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "e to assume that a sample is chlorinated based solely on a description of the water treatment processes in use.Soil:  Asurface soil sample from a depth of less than 1 inch (2.54 cm) should be obtained from a non-vegetated area.Surfaces: 1) Wipe & Swab S",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "ampling (for non-porous surfaces):Sterile macrofoam swabs moistened with 1X phosphate-buffered saline supplemented with 0.01% Tween-20 (PBST). If this solution is not available, use sterile de-ionized water (DI). Do NOT use dry wipes or swabs. 2) HEPA ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Vacuum Sampling (for both porous & non-porous surfaces",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "\u0000\f\u0000\u001d\u0000\u0003\u0000F\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000D\u0000\u0003\u0000+\u0000(\u00003\u0000$\u0000\u0003\u0000V\u0000R\u0000F\u0000N\u0000\u0003\u0000G\u0000H\u0000V\u0000L\u0000J\u0000Q\u0000H\u0000G\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000¿\u0000W\u0000\u0003\u0000L\u0000Q\u0000W\u0000R\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000O\u0000H\u0000W\u0000\u0003\u0000Q\u0000R\u0000]\u0000]\u0000O\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000D\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000\u0003\u0000F\u0000H\u0000U\u0000W\u0000L\u0000I\u0000L\u0000H\u0000G\u0000\u0003\u0000+\u0000(\u00003\u0000$\u0000\u0003\u0000Y\u0000D\u0000F\u0000X\u0000X\u0000P\u0000\u0003\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000H\u0000U\u0000\u0011\u0000\u0003\u0000*\u0000R\u0000R\u0000G\u0000\u0003\u0000I",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "or screening & determining the extent & location of contamination in large areas. Agriculture & Wildlife: Upon confirmation of an outbreak, ensure these agencies are notified immediately since Q feveris a zoonotic vector borne disease; USDA at 202-720-",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "5711 &National Center for Emerging and Zoonotic Infectious Diseases at 800-232-4636 (after hours call the Directors Emergency Operations Center at 770-488-7100).Samples that test for Re-aerosolization: Obtain w",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "\u0000L\u0000S\u0000H\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000G\u0000X\u0000F\u0000W\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000\u0003\u0000\u000b\u0000¿\u0000O\u0000W\u0000H\u0000U\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000L\u0000F\u0000X\u0000O\u0000D\u0000W\u0000H\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000U\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000G\u0000R\u0000R\u0000U\u0000V\u0000\u0011\u0000\u0003Sample Packaging & Shipping: ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "The packaging & shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, & IATA. Contact the sample-receiving laboratory to determine if they have additional packaging, shipping or labeling requirements (e.g., DO NOT X-",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "RAY). Samples should be packaged in an air-tight container & kept at temperatures of 40-50°F (4-10°C). Ensure samples are not placed directly on the ice used for cooling the shipping container.Laboratory AnalysisCAUTION: Many l",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "abs may not be able to perform analysis on all matrices (e.g., wipes & soil). The goal of laboratory analysis for environmental sampling purposes is to determine if viable C. burnetiiis present in the sample. Note: The selected laboratory may use a tiered",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "approach. If a tiered approach is used, the initial analysis may only determine if select/particular components of the bacteriumare present in the sample (e.g., presence or absence). It may take additional time ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "(up to weeks depending on the laboratory) to determine if the bacteriumare viable & still able to cause adverse effects.Laboratory Information:Contact EPA/HQ-EOC (202-564-3850)for ERLN contract laboratories able to analyze these types of samples.",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Decontamination/CleanupCAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACUUM EQUIPMENT SHOULD BE USED. Decon Planning:Site-\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000\u0012",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "cleanup plan should be developed & approved by all necessary organizations/SMEs via ICS channels. Responders should develop a plan that takes into account: 1) Nature of contamination including purity, physical properties, how it entered the facility, etc.;",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "2) Extent of contamination, including the amount & possible pathways that have spread the agent. It is advisable to isolate the contaminated area; & 3) Objectives of decon, including decon of critical items for re-use & the treatment, removal, or packagin",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "g of other items for disposal. Note: \u0000&\u0000U\u0000L\u0000V\u0000L\u0000V\u0000\u0003\u0000H\u0000[\u0000H\u0000P\u0000S\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00002\u0000I\u0000I\u0000L\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u00003\u0000H\u0000V\u0000W\u0000L\u0000F\u0000L\u0000G\u0000H\u0000\u0003\u00003\u0000U\u0000R\u0000J\u0000U\u0000D\u0000P\u0000V\u0000\u0003\u0000P\u0000L\u0000J\u0000K\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003necessary depending on decontaminating agents used. ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "CAUTION: DECON SOLUTIONS SHOULD NOT BE DEPLOYED AS A SPRAY WHENEVER POSSIBLE.Decon Methods:Decondecisions will be site & situation specific but due to re-aerosolization concerns, under NO circumstances should a non-HEPA vacuum cleaner or a broom be used.",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000\u000b\u0000\u001b\u0000\u0013\u0000\u0013-329-1841) can provide specific decontamination parameters & requirements for using readily available commercial items such as household bleach. Methods used on surfaces: 1)",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Source reduction steps, including HEPA vacuuming; 2)Liquid disinfectants such as 70% ethanol, 5% chloroform, and 5% Enviro-Chem are able to inactivate C.  burnetiiafter a 30 minute exposure.  (Note:  Traditional liquid disinfectants such as 0.5 % hypochl",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "orite, 2% Roccal, 5% Lysol, and 5% formalin are unable to inactivate 10E8 C. burnetiiafter a 24 hour exposure at 25°C.) Fumigation:Uses gas or vapor to decontaminate facilities in which there is evidence of high levels of contamination, re-",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "aerosolization, or if decontamination of limited access areas is required (e.g. HVAC systems). Fumigants:Unfortunately, chlorine dioxide & vaporized hydrogen peroxide efficacy presently is untested. Other Decon:1)",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Chemical sterilization with ethylene oxide and formaldehyde gas can be used to decontaminate items in an off-site sterilization chamber. 2)Irradiation with cobalt-60 &electron beam technologies can be used to destroy C. burnetiiat off-",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "site locations. This procedure may destroy magnetic media. Chemical sterilization and irradiation may be useful in decontaminating items that are intended to be returned to owners.\u00009\u0000H\u0000U\u0000L\u0000Àcation of Decon: ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "Site and situation specific. Please contact ERT (732-321-6660) and NDT (800-329-1841) for further assistance.Waste DisposalCAUTION:Hazardous waste transportation &",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "disposal are regulated federally; however more stringent regulations may exist under state authority. These regulations differ from state-to-state. Detailed state regulations can be found at www.envcap.org.Waste Disposal Planning:",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Waste generated from assessment & cleanup activities should be autoclaved, chemically disinfected, or fumigated & then testedto be sure the agent(s) were inactivated. Waste disposal for agent-contaminated wastes generated from the decontamination & dispo",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "sal activities will be problematic. Landfills willing to take these wastes may be limited & incineration may be prohibitively expensive or impractical. All wastedisposal options should be investigated as early into the response process as possible. Transp",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "ortation of the agent contaminated wastes from the site to the landfill or incinerator may be problematic as well.  First, agreements must be reached between the waste sender & acceptor BEFORE transport, followed by timely public notification of the transp",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "ort & disposal phases.  Transportation of hazardous waste may cross several states and localities, which may exceed federal regulations. Requirements for transporting hazardous materials, & procedure for exemption, are specified in http://www.fmcsa.dot.gov",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "/safety-security/hazmat/complyhmregs.htm#hmp. The U.S. EPA has developed a web-based Incident Waste Management Planning & Response Tool which contains guidance related to waste transportation, contact information for potential treatment,disposal facilities",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": ",& state regulatory offices, packaging guidance to minimize risk to workers, & guidance to minimize the potential for contaminating the ",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "\u0000W\u0000U\u0000H\u0000D\u0000W\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000I\u0000D\u0000F\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0011\u0000\u0003\u0000\u0003\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000W\u0000R\u0000R\u0000O\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000V\u0000\u0003\u0000S\u0000U\u0000H-registration (http://www2.ergweb.com/bdrtool/login.asp).",
+          "role": "BODY"
+        }
+      ],
+      "text": "September, 2011be free of contamination & work in concentric circles towards the initial point of contamination. Be concerned about other contaminated areas due to foot \u0000W\u0000U\u0000D\u0000I\u0000¿\u0000F\u0000\u0012\u0000Y\u0000H\u0000Q\u0000W\u0000L\u0000O\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000V\u0000\u0003\u0000 \u0000H\u0000O\u0000H\u0000Y\u0000D\u0000W\u0000R\u0000U\u0000\u0003\u0000E\u0000X\u0000W\u0000W\u0000R\u0000Q\u0000V\u0000\u000f\u0000\u0003\u0000P\u0000D\u0000L\u0000O\u0000\u000f\u0000\u0003\u0000F\u0000R\u0000U\u0000Q\u0000H\u0000U\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000K\u0000D\u0000O\u0000O\u0000Z\u0000D\u0000\\\u0000V\u0000\u000f\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000E\u0000R\u0000D\u0000U\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000O\u0000L\u0000J\u0000K\u0000W\u0000\u0003\u0000V\u0000Z\u0000L\u0000W\u0000F\u0000K\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000G\u0000R\u0000R\u0000U\u0000\u0003\u0000N\u0000Q\u0000R\u0000E\u0000V\u0000\u000f\u0000\u0003\u0000H\u0000W\u0000F\u0000 \u0000\u0011\u0000\u0003\u0000%\u0000D\u0000V\u0000H\u0000G\u0000\u0003 on site characteristics & laboratory capacity, the sampling plan may be judgmental, probabilistic, or a combination thereof.Consult EPA/HQ-EOC at 202-564- 3850 for Environmental Response Laboratory Network (a.k.a. ERLN laboratory) contact information for personnel who can explain/describe the sampling procedure most compatible with their current analytical procedure.Types of Samples: Air, water, soil, surfaces, dairy production/livestockNote: While C. burnetii DNA can be detected long after the bacteria themselves have perished &might be of forensic interest, the presence of the DNA says little about the potential human risk in the days following a release.Air: Dry sampling (useful only for molecular analyses) includes gelatin, cellulose acetate & Teflon methods. Refer to the ma \u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u000f\u0000\u0003flow rates, & sampling times. Ensure that the appropriate pump is used for the selected sampling method.Traditional wet sampling methods (e.g., impingers & impactors) might not work well because C. burnettiis an obligate intracellular microorganism which requires embryonated chicken eggs or cell lines for growth. Water: Since C. burnetii c an persist in water, any potable water sources should be sampled. If the potable water is chlorinated, the chlorine needs to be neutralized immediately with a sodium thiosulfate or other neutralizer at the concentration specified by the analytical laboratory prior to shipment. As chlorine levels can vary substantially throughout a drinking water system, it is not always appropriat e to assume that a sample is chlorinated based solely on a description of the water treatment processes in use.Soil: Asurface soil sample from a depth of less than 1 inch (2.54 cm) should be obtained from a non-vegetated area.Surfaces: 1) Wipe & Swab S ampling (for non-porous surfaces):Sterile macrofoam swabs moistened with 1X phosphate-buffered saline supplemented with 0.01% Tween-20 (PBST). If this solution is not available, use sterile de-ionized water (DI). Do NOT use dry wipes or swabs. 2) HEPA Vacuum Sampling (for both porous & non-porous surfaces \u0000 \u0000\u001d\u0000\u0003\u0000F\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000D\u0000\u0003\u0000+\u0000(\u00003\u0000$\u0000\u0003\u0000V\u0000R\u0000F\u0000N\u0000\u0003\u0000G\u0000H\u0000V\u0000L\u0000J\u0000Q\u0000H\u0000G\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000¿\u0000W\u0000\u0003\u0000L\u0000Q\u0000W\u0000R\u0000\u0003\u0000D\u0000Q\u0000\u0003\u0000L\u0000Q\u0000O\u0000H\u0000W\u0000\u0003\u0000Q\u0000R\u0000]\u0000]\u0000O\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000D\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000\u0003\u0000F\u0000H\u0000U\u0000W\u0000L\u0000I\u0000L\u0000H\u0000G\u0000\u0003\u0000+\u0000(\u00003\u0000$\u0000\u0003\u0000Y\u0000D\u0000F\u0000X\u0000X\u0000P\u0000\u0003\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000H\u0000U\u0000\u0011\u0000\u0003\u0000*\u0000R\u0000R\u0000G\u0000\u0003\u0000I or screening & determining the extent & location of contamination in large areas. Agriculture & Wildlife: Upon confirmation of an outbreak, ensure these agencies are notified immediately since Q feveris a zoonotic vector borne disease; USDA at 202-720- 5711 &National Center for Emerging and Zoonotic Infectious Diseases at 800-232-4636 (after hours call the Directors Emergency Operations Center at 770-488-7100).Samples that test for Re-aerosolization: Obtain w \u0000L\u0000S\u0000H\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000G\u0000X\u0000F\u0000W\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000\u0003\u0000 \u0000¿\u0000O\u0000W\u0000H\u0000U\u0000V\u0000\u000f\u0000\u0003\u0000D\u0000U\u0000H\u0000D\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000L\u0000F\u0000X\u0000O\u0000D\u0000W\u0000H\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000 \u0000\u0003\u0000L\u0000I\u0000\u0003\u0000H\u0000[\u0000S\u0000R\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000U\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000G\u0000R\u0000R\u0000U\u0000V\u0000\u0011\u0000\u0003Sample Packaging & Shipping: The packaging & shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, & IATA. Contact the sample-receiving laboratory to determine if they have additional packaging, shipping or labeling requirements (e.g., DO NOT X- RAY). Samples should be packaged in an air-tight container & kept at temperatures of 40-50°F (4-10°C). Ensure samples are not placed directly on the ice used for cooling the shipping container.Laboratory AnalysisCAUTION: Many l abs may not be able to perform analysis on all matrices (e.g., wipes & soil). The goal of laboratory analysis for environmental sampling purposes is to determine if viable C. burnetiiis present in the sample. Note: The selected laboratory may use a tiered approach. If a tiered approach is used, the initial analysis may only determine if select/particular components of the bacteriumare present in the sample (e.g., presence or absence). It may take additional time (up to weeks depending on the laboratory) to determine if the bacteriumare viable & still able to cause adverse effects.Laboratory Information:Contact EPA/HQ-EOC (202-564-3850)for ERLN contract laboratories able to analyze these types of samples. Decontamination/CleanupCAUTION: ONLY MANUFACTURER CERTIFIED HEPA VACUUM EQUIPMENT SHOULD BE USED. Decon Planning:Site-\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000\u0012 cleanup plan should be developed & approved by all necessary organizations/SMEs via ICS channels. Responders should develop a plan that takes into account: 1) Nature of contamination including purity, physical properties, how it entered the facility, etc.; 2) Extent of contamination, including the amount & possible pathways that have spread the agent. It is advisable to isolate the contaminated area; & 3) Objectives of decon, including decon of critical items for re-use & the treatment, removal, or packagin g of other items for disposal. Note: \u0000&\u0000U\u0000L\u0000V\u0000L\u0000V\u0000\u0003\u0000H\u0000[\u0000H\u0000P\u0000S\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00002\u0000I\u0000I\u0000L\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u00003\u0000H\u0000V\u0000W\u0000L\u0000F\u0000L\u0000G\u0000H\u0000\u0003\u00003\u0000U\u0000R\u0000J\u0000U\u0000D\u0000P\u0000V\u0000\u0003\u0000P\u0000L\u0000J\u0000K\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003necessary depending on decontaminating agents used. CAUTION: DECON SOLUTIONS SHOULD NOT BE DEPLOYED AS A SPRAY WHENEVER POSSIBLE.Decon Methods:Decondecisions will be site & situation specific but due to re-aerosolization concerns, under NO circumstances should a non-HEPA vacuum cleaner or a broom be used. \u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u0003\u0000 \u0000\u001b\u0000\u0013\u0000\u0013-329-1841) can provide specific decontamination parameters & requirements for using readily available commercial items such as household bleach. Methods used on surfaces: 1) Source reduction steps, including HEPA vacuuming; 2)Liquid disinfectants such as 70% ethanol, 5% chloroform, and 5% Enviro-Chem are able to inactivate C. burnetiiafter a 30 minute exposure. (Note: Traditional liquid disinfectants such as 0.5 % hypochl orite, 2% Roccal, 5% Lysol, and 5% formalin are unable to inactivate 10E8 C. burnetiiafter a 24 hour exposure at 25°C.) Fumigation:Uses gas or vapor to decontaminate facilities in which there is evidence of high levels of contamination, re- aerosolization, or if decontamination of limited access areas is required (e.g. HVAC systems). Fumigants:Unfortunately, chlorine dioxide & vaporized hydrogen peroxide efficacy presently is untested. Other Decon:1) Chemical sterilization with ethylene oxide and formaldehyde gas can be used to decontaminate items in an off-site sterilization chamber. 2)Irradiation with cobalt-60 &electron beam technologies can be used to destroy C. burnetiiat off- site locations. This procedure may destroy magnetic media. Chemical sterilization and irradiation may be useful in decontaminating items that are intended to be returned to owners.\u00009\u0000H\u0000U\u0000L\u0000Àcation of Decon: Site and situation specific. Please contact ERT (732-321-6660) and NDT (800-329-1841) for further assistance.Waste DisposalCAUTION:Hazardous waste transportation & disposal are regulated federally; however more stringent regulations may exist under state authority. These regulations differ from state-to-state. Detailed state regulations can be found at www.envcap.org.Waste Disposal Planning: Waste generated from assessment & cleanup activities should be autoclaved, chemically disinfected, or fumigated & then testedto be sure the agent(s) were inactivated. Waste disposal for agent-contaminated wastes generated from the decontamination & dispo sal activities will be problematic. Landfills willing to take these wastes may be limited & incineration may be prohibitively expensive or impractical. All wastedisposal options should be investigated as early into the response process as possible. Transp ortation of the agent contaminated wastes from the site to the landfill or incinerator may be problematic as well. First, agreements must be reached between the waste sender & acceptor BEFORE transport, followed by timely public notification of the transp ort & disposal phases. Transportation of hazardous waste may cross several states and localities, which may exceed federal regulations. Requirements for transporting hazardous materials, & procedure for exemption, are specified in http://www.fmcsa.dot.gov /safety-security/hazmat/complyhmregs.htm#hmp. The U.S. EPA has developed a web-based Incident Waste Management Planning & Response Tool which contains guidance related to waste transportation, contact information for potential treatment,disposal facilities ,& state regulatory offices, packaging guidance to minimize risk to workers, & guidance to minimize the potential for contaminating the \u0000W\u0000U\u0000H\u0000D\u0000W\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000I\u0000D\u0000F\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0011\u0000\u0003\u0000\u0003\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000W\u0000R\u0000R\u0000O\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000V\u0000\u0003\u0000S\u0000U\u0000H-registration (http://www2.ergweb.com/bdrtool/login.asp).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 42,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

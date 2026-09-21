@@ -1,0 +1,2561 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-biological-anthrax",
+  "sourceArtifactSha256": "a872c01634d3bc6ef7978d5425240896da8cf5ae7cd7e2f73a5b7af9c6b958e8",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 11,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Bacillus anthracis(causes Anthrax)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "February",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2022Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2021Page 1of 11NRT Quick ReferenceGuide: ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Bacillus anthracis(causes Anthrax)",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "QRG PURPOSE:Given that a Federal OSC/RPM leading an emergency response to an environmental release may not know the specific type of agent during the first 24-48 hours of aresponse, this document provides ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "information on the general properties, effects, and decontamination methods for initial response to suspected B. anthracis incident. This QRG does not address protective methods for public health or healthcare workers.1. Agent Characteristics",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Agent Classification:Biological; Type:Bacteria (",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Bacillus anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "), multiple strainsDescription:",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "Bacillus anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "is a rod-shaped (1.0-1.2 micrometers wide by 3-5 micrometers long), Gram-positive, sporulating bacterium that causes the disease anthrax. ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "spores, which are the infectious form of the agent, are present in U.S. soils and sporadically cause anthrax outbreaks in wild and domestic animals (primarily hoofed ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "herbivores) and, in rare instances, human cases can occur. The predominant forms of anthrax are inhalation, gastrointestinal, and cutaneous. Inhalation anthrax is the most lethal form of anthrax, while cutaneous anthrax is the most ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "common form and is considered the least hazardous to humans who receive proper medical treatment. These presentations can occur in humans following intentional release scenarios or natural sources of exposure (contact ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "with/consumption of infected animals/tissues or contaminated soil/water). ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "spore preparations can be modified to increase infectivity and lethality with characteristics including, but not limited to, optimized particle size and low electrostatic charge. ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "spores are very resistant to environmental factors including physical and chemical inactivation and can persist in the environment for an extensive period of time (years to decades), especially if protected from exposure to sunlight.Re-aerosolization of ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "spores is an important consideration for continued human exposure and dispersal of spores.Categorical Definition:Biosafety Level:BSL-3 (spores)Bioterrorism Agent:Category AHHS/CDC Select Agent:Tier 1CERCLA/NCP:Pollutant/ContaminantUSDA Select Agent:Tier 1",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Waste/DOT:Category ACharacteristics:Persistence/StabilityInfectivityLethalityPerson-to-Person TransmissionSources of TransmissionSpores are highly persistent/stable in soil and water, and on surfaces (years to decades)Moderately/Highly ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "infectious via inhalation of spores;Low/Moderately infectious via dermal exposureInhalation anthrax is lethal if not quickly diagnosed and treated(see HEALTH EFFECTS section)Not a communicableillnessSee EXPOSURE ROUTES section2. Exposure Routes",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Anthrax may occur when ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "spores enter the body, typically through the skin, lungs, or gastrointestinal system. ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "\u0000:\u0000K\u0000H\u0000Q\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000V\u0000\u000f\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000S\u0000R\u0000U\u0000H\u0000V\u0000\u0003\u0000J\u0000H\u0000U\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000P\u0000X\u0000O\u0000W\u0000L\u0000S\u0000O\u0000\\\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000³\u0000Y\u0000H\u0000J\u0000H\u0000W\u0000D\u0000W\u0000L\u0000Y\u0000H\u0000´\u0000\u0003\u0000E\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000D\u0000\u0011\u0000\u0003\u00007\u0000K\u0000H\u0000V\u0000H\u0000\u0003\u0000P\u0000X\u0000O\u0000W\u0000L\u0000S\u0000O\u0000\\\u0000L\u0000Q\u0000J\u0000\u0003\u0000E\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000D\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000V\u0000S\u0000U\u0000H\u0000D\u0000G\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "throughout the body, produce toxins (poisons), and cause severe illness.Inhalation:Breathing in ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "spores may cause inhalation anthrax. Inhalation anthrax starts primarily in the lymph nodes in the chest before spreading throughout the rest of the body, usually leading to severe breathing problems and shock.Ingestion:",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "Ingesting products that are contaminated with ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "spores may cause gastrointestinal anthrax. Once ingested, ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "spores can infect the upper gastrointestinal tract (throat and esophagus) and lower gastrointestinal tract (stomach and intestines).Dermal:Dermal exposure to ",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "spores may cause cutaneous anthrax when the spores enter through irritated skin or wounds (e.g., cuts, scrapes, micro-abrasions), such as when handling infected animals or contaminated animal products like meat, wool, skin/hides (including leather), or ha",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "ir. Cutaneous anthrax lesions are most common on the head, neck, forearms, and hands.Injection:Injection anthrax has been identified in people who inject anthrax-contaminated heroin (with infection at needle injection site, deep under skin, or in muscle)",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "in northern Europe; as of 2020, it has not been reported in U.S.3. Health EffectsThe clinical form of anthrax depends on how ",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "spores enter the body. Time-to-symptom onset, rate of illness progression, and illness severity are dependent upon variables such as exposure route, co-morbidities, and the number of spores that germinate and multiply to produce toxins in the body. Note:",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "If used for intentional releases by terrorists or other criminals, ",
+          "role": "BODY"
+        },
+        {
+          "order": 46,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 47,
+          "operator": "TJ",
+          "text": "spores would likely be grown, concentrated, dried, and milled into a powder of fine particles and disseminated into the air. People who are exposed can inhale those particles into their lungs. Particle size and other ",
+          "role": "BODY"
+        },
+        {
+          "order": 48,
+          "operator": "TJ",
+          "text": "\u0000F\u0000K\u0000D\u0000U\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000V\u0000W\u0000L\u0000F\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000S\u0000R\u0000U\u0000H\u0000V\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000D\u0000I\u0000I\u0000H\u0000F\u0000W\u0000\u0003\u0000K\u0000R\u0000Z\u0000\u0003\u0000W\u0000K\u0000H\u0000\\\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000H\u0000G\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000L\u0000Q\u0000\u0003\u0000D\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000¶\u0000V\u0000\u0003\u0000X\u0000S\u0000S\u0000H\u0000U\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000O\u0000R\u0000Z\u0000H\u0000U\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000L\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 49,
+          "operator": "TJ",
+          "text": "their potential for causing severe disease. ",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2022Update: 2021Page 1of 11NRT Quick ReferenceGuide: QRG PURPOSE:Given that a Federal OSC/RPM leading an emergency response to an environmental release may not know the specific type of agent during the first 24-48 hours of aresponse, this document provides information on the general properties, effects, and decontamination methods for initial response to suspected B. anthracis incident. This QRG does not address protective methods for public health or healthcare workers.1. Agent Characteristics Agent Classification:Biological; Type:Bacteria ( ), multiple strainsDescription: is a rod-shaped (1.0-1.2 micrometers wide by 3-5 micrometers long), Gram-positive, sporulating bacterium that causes the disease anthrax. spores, which are the infectious form of the agent, are present in U.S. soils and sporadically cause anthrax outbreaks in wild and domestic animals (primarily hoofed herbivores) and, in rare instances, human cases can occur. The predominant forms of anthrax are inhalation, gastrointestinal, and cutaneous. Inhalation anthrax is the most lethal form of anthrax, while cutaneous anthrax is the most common form and is considered the least hazardous to humans who receive proper medical treatment. These presentations can occur in humans following intentional release scenarios or natural sources of exposure (contact with/consumption of infected animals/tissues or contaminated soil/water). spore preparations can be modified to increase infectivity and lethality with characteristics including, but not limited to, optimized particle size and low electrostatic charge. spores are very resistant to environmental factors including physical and chemical inactivation and can persist in the environment for an extensive period of time (years to decades), especially if protected from exposure to sunlight.Re-aerosolization of spores is an important consideration for continued human exposure and dispersal of spores.Categorical Definition:Biosafety Level:BSL-3 (spores)Bioterrorism Agent:Category AHHS/CDC Select Agent:Tier 1CERCLA/NCP:Pollutant/ContaminantUSDA Select Agent:Tier 1 Waste/DOT:Category ACharacteristics:Persistence/StabilityInfectivityLethalityPerson-to-Person TransmissionSources of TransmissionSpores are highly persistent/stable in soil and water, and on surfaces (years to decades)Moderately/Highly infectious via inhalation of spores;Low/Moderately infectious via dermal exposureInhalation anthrax is lethal if not quickly diagnosed and treated(see HEALTH EFFECTS section)Not a communicableillnessSee EXPOSURE ROUTES section2. Exposure Routes Anthrax may occur when spores enter the body, typically through the skin, lungs, or gastrointestinal system. \u0000:\u0000K\u0000H\u0000Q\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000R\u0000F\u0000F\u0000X\u0000U\u0000V\u0000\u000f\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000S\u0000R\u0000U\u0000H\u0000V\u0000\u0003\u0000J\u0000H\u0000U\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000P\u0000X\u0000O\u0000W\u0000L\u0000S\u0000O\u0000\\\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000³\u0000Y\u0000H\u0000J\u0000H\u0000W\u0000D\u0000W\u0000L\u0000Y\u0000H\u0000´\u0000\u0003\u0000E\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000D\u0000\u0011\u0000\u0003\u00007\u0000K\u0000H\u0000V\u0000H\u0000\u0003\u0000P\u0000X\u0000O\u0000W\u0000L\u0000S\u0000O\u0000\\\u0000L\u0000Q\u0000J\u0000\u0003\u0000E\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000D\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000V\u0000S\u0000U\u0000H\u0000D\u0000G\u0000\u0003 throughout the body, produce toxins (poisons), and cause severe illness.Inhalation:Breathing in spores may cause inhalation anthrax. Inhalation anthrax starts primarily in the lymph nodes in the chest before spreading throughout the rest of the body, usually leading to severe breathing problems and shock.Ingestion: Ingesting products that are contaminated with spores may cause gastrointestinal anthrax. Once ingested, spores can infect the upper gastrointestinal tract (throat and esophagus) and lower gastrointestinal tract (stomach and intestines).Dermal:Dermal exposure to spores may cause cutaneous anthrax when the spores enter through irritated skin or wounds (e.g., cuts, scrapes, micro-abrasions), such as when handling infected animals or contaminated animal products like meat, wool, skin/hides (including leather), or ha ir. Cutaneous anthrax lesions are most common on the head, neck, forearms, and hands.Injection:Injection anthrax has been identified in people who inject anthrax-contaminated heroin (with infection at needle injection site, deep under skin, or in muscle) in northern Europe; as of 2020, it has not been reported in U.S.3. Health EffectsThe clinical form of anthrax depends on how spores enter the body. Time-to-symptom onset, rate of illness progression, and illness severity are dependent upon variables such as exposure route, co-morbidities, and the number of spores that germinate and multiply to produce toxins in the body. Note: If used for intentional releases by terrorists or other criminals, spores would likely be grown, concentrated, dried, and milled into a powder of fine particles and disseminated into the air. People who are exposed can inhale those particles into their lungs. Particle size and other \u0000F\u0000K\u0000D\u0000U\u0000D\u0000F\u0000W\u0000H\u0000U\u0000L\u0000V\u0000W\u0000L\u0000F\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000S\u0000R\u0000U\u0000H\u0000V\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000D\u0000I\u0000I\u0000H\u0000F\u0000W\u0000\u0003\u0000K\u0000R\u0000Z\u0000\u0003\u0000W\u0000K\u0000H\u0000\\\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000G\u0000H\u0000S\u0000R\u0000V\u0000L\u0000W\u0000H\u0000G\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000L\u0000Q\u0000\u0003\u0000D\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000¶\u0000V\u0000\u0003\u0000X\u0000S\u0000S\u0000H\u0000U\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000O\u0000R\u0000Z\u0000H\u0000U\u0000\u0003\u0000U\u0000H\u0000V\u0000S\u0000L\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000V\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003 their potential for causing severe disease.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 50,
+        "repeatedHeaderFooterBlockCount": 22,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Bacillus anthracis(causes Anthrax)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "February",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2022Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2021Page 2of 11Onset:\u0000xInhalation anthrax:Symptoms usually develop from 1-7 days after exposure, but it can take up to 60 days after an inhalation exposure due to late germination of inhaled spores. \u0000xGastrointestinal anthrax (ingestion):",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Gastrointestinal effects usually develop from 1-7 days after exposure.\u0000xCutaneous anthrax (dermal):Symptoms of infection from skin contact or injection usually develop from 1-7 days after exposure.Signs/Symptoms:",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "The following are common adverse health effects associated with anthrax, which vary depending on the route of exposure. Initiation of treatment prior to onset of symptoms increases the chance of survival.\u0000xInhalation anthrax:Flu-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "like symptoms, including fever and chills, headache, cough, chest discomfort, dyspnea (shortness of breath), stridor (noisy breathing), respiratory distress, and confusion or dizziness. Other symptoms may ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "include nausea, vomiting, or stomach pain; drenching sweats; and extreme fatigue. \u0000xGastrointestinal anthrax:Fever and chills, swelling of neck or neck glands, sore throat, painful swallowing, ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "hoarseness, nausea, vomiting (especially bloody vomiting), abdominal pain, and diarrhea or bloody diarrhea. Other symptoms may include headache, flushing (red face), red eyes, fainting, and swelling of the abdomen. \u0000xCutaneous anthrax:Raised itchy sma",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "ll blister(s) or bump(s) to vesicle (small abnormal elevation of outer layer of skin enclosing a watery liquid) that progresses to a painless skin sore or ulcer (0.5 to >1 inch; 1 to 3 cm) with a black area in the center (eschar). Most often the skin sore(",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "s) will occur on the face, neck, arms, or hands. Swelling can occur around the skin sore. In some cases, swollen lymph nodes and flu-like symptoms may be present.4. Effect Levels and Exposure GuidelinesExposure RouteInfectivityInfectious DoseLethality*",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "InhalationHighly infectious if aerosolized and inhaledExact number unknown, but median infective dose is thought to be 2,500 to 55,000 spores\u0000x\u0000:\u0000L\u0000W\u0000K\u0000R\u0000X\u0000W\u0000\u0003\u0000W\u0000U\u0000H\u0000D\u0000W\u0000P\u0000H\u0000Q\u0000W\u0000\u000f\u0000\u0003\u0000\u0000\u001c\u0000\u001b\u0000\b\u0000\u0003\u0000P\u0000R\u0000U\u0000W\u0000D\u0000O\u0000L\u0000W\u0000\\\u0000\u0011\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "With aggressive treatment, about 55% survive.\u0000xInitiation of treatment prior to onset of symptoms increases the chance of survival.IngestionModerately/Highly infectiousUnknown\u0000xWithout treatment, >50%mortality.\u0000xWith treatment, >60%survive.Dermal",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "Moderately/Highly infectiousUnknown\u0000xWithout treatment, approximately 25% mortality.\u0000xWith treatment, >98% survive.* Dose (number of spores), strain of ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": ", and inhaled particle size also affect mortality rate.Exposure Guidelines:Not established.In the absence of exposure guidelines, it is imperative to minimize exposure to as low as reasonably achievable.5. Release ScenariosCAUTION: RE-",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "AEROSOLIZATION IS A CONCERN FOR ALL RELEASE SCENARIOS.During an intentional or accidental release, ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "spores are likely to be disseminated as a wet (e.g., sprayer or nebulizer) or a dry (e.g., powder release from letter or package) aerosol, either indoors and/or outdoors. ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "spores could also be used to contaminate food or water sources. Spores of ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "are highly persistent in the environment (see AGENT CHARACTERISTICS section), can easily be redistributed by people, meteorological events, fomites, and activities; and could remain a hazard for months or longer after a release. ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "spores may also originate from natural sources (see AGENT CHARACTERISTICS section).\u0000xAir/Aerosolization:Easily aerosolizable ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "spores can quickly lead to contamination spreading throughout a structure and outside surrounding areas. Spores of ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "released outdoors have the potential to migrate from the immediate release area (e.g., infiltrate indoor environments or redistribute outdoors to expand the contaminated area), hence the extent of contamination may be unknown. Re-",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "aerosolization potential willdepend upon the properties of the released spores (e.g., size, charge, purity) and ambient conditions. These physical properties will likely be unknown at the time of a response and, therefore, re-",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "aerosolization should be assumed to be a hazard. Tactics to minimize re-aerosolization of spores should be implemented to reduce exposure risk and contaminant spread (e.g., limit movement ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "and activities within the suspected area, implement proper personnel decontamination procedures).\u0000xSoil:",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "spores are resistant to adverse environmental conditions and may remain viable in soil for decades. Re-aerosolization may occur when contaminated soil is disturbed.\u0000xSurfaces:",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "spores are resistant to adverse environmental conditions and may remain viable on surfaces for months to years. Re-aerosolization can occur easily with physical activity during response actions (e.g., walking or ",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "driving across the surface) and/or during remediation activities (e.g., pressurized liquids and/or HEPA vacuum for cleaning).\u0000xWater:",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "spores are stable in water and are tolerant to disinfectant levels used for water distribution and wastewater effluent. Spores can be spread by aerosolizing spore-contaminated water (e.g., fire-fighting activities) and ma",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "y pose a threat to water systems (e.g., distribution networks, wastewater collection systems and treatment plants, agricultural water).",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2022Update: 2021Page 2of 11Onset:\u0000xInhalation anthrax:Symptoms usually develop from 1-7 days after exposure, but it can take up to 60 days after an inhalation exposure due to late germination of inhaled spores. \u0000xGastrointestinal anthrax (ingestion): Gastrointestinal effects usually develop from 1-7 days after exposure.\u0000xCutaneous anthrax (dermal):Symptoms of infection from skin contact or injection usually develop from 1-7 days after exposure.Signs/Symptoms: The following are common adverse health effects associated with anthrax, which vary depending on the route of exposure. Initiation of treatment prior to onset of symptoms increases the chance of survival.\u0000xInhalation anthrax:Flu- like symptoms, including fever and chills, headache, cough, chest discomfort, dyspnea (shortness of breath), stridor (noisy breathing), respiratory distress, and confusion or dizziness. Other symptoms may include nausea, vomiting, or stomach pain; drenching sweats; and extreme fatigue. \u0000xGastrointestinal anthrax:Fever and chills, swelling of neck or neck glands, sore throat, painful swallowing, hoarseness, nausea, vomiting (especially bloody vomiting), abdominal pain, and diarrhea or bloody diarrhea. Other symptoms may include headache, flushing (red face), red eyes, fainting, and swelling of the abdomen. \u0000xCutaneous anthrax:Raised itchy sma ll blister(s) or bump(s) to vesicle (small abnormal elevation of outer layer of skin enclosing a watery liquid) that progresses to a painless skin sore or ulcer (0.5 to >1 inch; 1 to 3 cm) with a black area in the center (eschar). Most often the skin sore( s) will occur on the face, neck, arms, or hands. Swelling can occur around the skin sore. In some cases, swollen lymph nodes and flu-like symptoms may be present.4. Effect Levels and Exposure GuidelinesExposure RouteInfectivityInfectious DoseLethality* InhalationHighly infectious if aerosolized and inhaledExact number unknown, but median infective dose is thought to be 2,500 to 55,000 spores\u0000x\u0000:\u0000L\u0000W\u0000K\u0000R\u0000X\u0000W\u0000\u0003\u0000W\u0000U\u0000H\u0000D\u0000W\u0000P\u0000H\u0000Q\u0000W\u0000\u000f\u0000\u0003\u0000\u0000\u001c\u0000\u001b\u0000\b\u0000\u0003\u0000P\u0000R\u0000U\u0000W\u0000D\u0000O\u0000L\u0000W\u0000\\\u0000\u0011\u0000x With aggressive treatment, about 55% survive.\u0000xInitiation of treatment prior to onset of symptoms increases the chance of survival.IngestionModerately/Highly infectiousUnknown\u0000xWithout treatment, >50%mortality.\u0000xWith treatment, >60%survive.Dermal Moderately/Highly infectiousUnknown\u0000xWithout treatment, approximately 25% mortality.\u0000xWith treatment, >98% survive.* Dose (number of spores), strain of , and inhaled particle size also affect mortality rate.Exposure Guidelines:Not established.In the absence of exposure guidelines, it is imperative to minimize exposure to as low as reasonably achievable.5. Release ScenariosCAUTION: RE- AEROSOLIZATION IS A CONCERN FOR ALL RELEASE SCENARIOS.During an intentional or accidental release, spores are likely to be disseminated as a wet (e.g., sprayer or nebulizer) or a dry (e.g., powder release from letter or package) aerosol, either indoors and/or outdoors. spores could also be used to contaminate food or water sources. Spores of are highly persistent in the environment (see AGENT CHARACTERISTICS section), can easily be redistributed by people, meteorological events, fomites, and activities; and could remain a hazard for months or longer after a release. spores may also originate from natural sources (see AGENT CHARACTERISTICS section).\u0000xAir/Aerosolization:Easily aerosolizable spores can quickly lead to contamination spreading throughout a structure and outside surrounding areas. Spores of released outdoors have the potential to migrate from the immediate release area (e.g., infiltrate indoor environments or redistribute outdoors to expand the contaminated area), hence the extent of contamination may be unknown. Re- aerosolization potential willdepend upon the properties of the released spores (e.g., size, charge, purity) and ambient conditions. These physical properties will likely be unknown at the time of a response and, therefore, re- aerosolization should be assumed to be a hazard. Tactics to minimize re-aerosolization of spores should be implemented to reduce exposure risk and contaminant spread (e.g., limit movement and activities within the suspected area, implement proper personnel decontamination procedures).\u0000xSoil: spores are resistant to adverse environmental conditions and may remain viable in soil for decades. Re-aerosolization may occur when contaminated soil is disturbed.\u0000xSurfaces: spores are resistant to adverse environmental conditions and may remain viable on surfaces for months to years. Re-aerosolization can occur easily with physical activity during response actions (e.g., walking or driving across the surface) and/or during remediation activities (e.g., pressurized liquids and/or HEPA vacuum for cleaning).\u0000xWater: spores are stable in water and are tolerant to disinfectant levels used for water distribution and wastewater effluent. Spores can be spread by aerosolizing spore-contaminated water (e.g., fire-fighting activities) and ma y pose a threat to water systems (e.g., distribution networks, wastewater collection systems and treatment plants, agricultural water).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 42,
+        "repeatedHeaderFooterBlockCount": 17,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Bacillus anthracis(causes Anthrax)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "February",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2022Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2021Page 3of 11\u0000xAgriculture and Wildlife:Natural outbreaks occur within the U.S. in domestic or wild animals through the ingestion of spores while grazing on contaminated land or eating contaminated feed. Large-scale outdoor scenarios may result in ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "contaminated food crops that will require disposal/destruction, and may impact pets, livestock, and wild animals susceptible to anthrax. Scavenging animals may distribute ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "spores from infected carcasses thereby spreading environmental contamination. Animal die-offs may help identify the affected zone.6. Personnel SafetyNOTE:",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Check with the site Health and Safety Officer regarding personal protective equipment (PPE) selection, medical surveillance requirements, and other safety measures included in the site-specific Health and Safety Plan (HASP). PPE selection (Levels A-D), fi",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "rst aid procedures, and personnel decontamination may vary depending on potential exposure route, site conditions, specific job tasks, and release scenario. Responders should always check their own internal procedures (i.e., SOPs), if applicable.The PPE L",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "evels listed below are general suggestions only and specific for ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "spores. The final determination will be made by the Health and Safety Officer on site. For decontamination of workers, see the PERSONNEL DECONTAMINATION section below. This PERSONNEL SAFETY section includes medical requirements, first aid ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "procedures, and PPE selection for all hazards that may be present during a ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "response (e.g., anthrax exposure, chemical decontaminants, heat stress). Additional information on personnel safety and PPE selection criteria based on exposure risks can be found at https://www.dhs.gov/publication/protecting-responders-health-after-wide-",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "area-aerosol-anthrax-attack.6.1. MedicalRequirements:\u0000xPre-deployment:Must be current on annual physical and medical evaluations for respirator use.Seek prophylaxis provided per specific agency policy.\u0000xDuring Incident:Conduct periodic on-site ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "medical monitoring as necessary per site-specific HASP. Report all signs and symptoms of anthrax, side effects from medical countermeasures, or other general adverse health effects such as fatigue, heat stress, and behavioral health, and treat according to",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "First Aid section below. Monitoring of exposed workers may be required by the site Health and Safety Officer or public health officials.\u0000xTreatments Available:Seek medical attention per specific agency policy. Treatment is supportive care and accompanied ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "with use of combination antibiotic and antitoxin therapy. Effectiveness of antibiotics and antitoxins is optimal if instituted soon after onset of symptoms of inhalational anthrax.\u0000xPost Incident:Off-",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "site monitoring may be required by site Health and Safety Officers or public health officials for a period following last exposure. Post-exposure prophylaxis may be made available as necessary by medical team according to specific agency policy.6.2.",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "First Aid:CAUTION:Workers rendering first aid must be properly trained and use appropriate PPE as indicated below to avoid potential exposure.\u0000xDuring Incident:Conduct medical monitoring, use PPE as designated by the HASP, record the PPE levels used, and, ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses. \u0000xPost Incident:Continue to monitor for signs/symptoms and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses.6.3. ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "Personal Protective Equipment (PPE):General Information: Responders should use NIOSH-approved chemical, biological, radiological, and nuclear (CBRN) ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "respirators and protective clothing that provides protection against CBRN agents [Self Contained Breathing Apparatus (SCBA), Full-facepiece Powered Air Purifying Respirator (PAPR) or Full--",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "incident training and exercises on the proper use of PPE are recommended. When selecting appropriate levels of PPE, information regarding potential of exposures to non-biological hazards (e.g.,decontaminants) should be factored intoany selection decisions.",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "For use of APRs or PAPRs, only those incorporating canister(s)/cartridge(s)labeled CBRN are appropriate for use in suspected or known CBRN environments. Canisters/cartridge(s)for APRs/PAPRs may be adversely affected by an ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "increase in moisture and spray from certain work tasks, including during environmental cleanup and decontamination.Canisters and cartridges should be stored as specified by their manufacturer, and remain sealed until fitted to the respirator ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "just prior to use. Canisters and cartridges that have had the vacuum seal broken or are otherwise damaged should be removed from possible service.NOTE:Since",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "sporespose noskinpermeabilitypotential,when no other hazards are present, non-CBRN APR tight-fitting PAPRor any tight-fitting, full facepiece PAPR incorporating at a minimum,high-efficiency (HE) particulateprotection (as determined by the site Health and S",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "afety Officer)may be appropriate.CAUTION:AEGL values are not available for ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "spores and no occupational exposure limits (e.g., PEL, REL) exist for ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "spores (see EXPOSURE GUIDELINES section above). AEGL values or appropriate occupational exposure limits may exist for any selected decontaminants or fumigants; see thesite-specific HASPdeveloped for a specific incident.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2022Update: 2021Page 3of 11\u0000xAgriculture and Wildlife:Natural outbreaks occur within the U.S. in domestic or wild animals through the ingestion of spores while grazing on contaminated land or eating contaminated feed. Large-scale outdoor scenarios may result in contaminated food crops that will require disposal/destruction, and may impact pets, livestock, and wild animals susceptible to anthrax. Scavenging animals may distribute spores from infected carcasses thereby spreading environmental contamination. Animal die-offs may help identify the affected zone.6. Personnel SafetyNOTE: Check with the site Health and Safety Officer regarding personal protective equipment (PPE) selection, medical surveillance requirements, and other safety measures included in the site-specific Health and Safety Plan (HASP). PPE selection (Levels A-D), fi rst aid procedures, and personnel decontamination may vary depending on potential exposure route, site conditions, specific job tasks, and release scenario. Responders should always check their own internal procedures (i.e., SOPs), if applicable.The PPE L evels listed below are general suggestions only and specific for spores. The final determination will be made by the Health and Safety Officer on site. For decontamination of workers, see the PERSONNEL DECONTAMINATION section below. This PERSONNEL SAFETY section includes medical requirements, first aid procedures, and PPE selection for all hazards that may be present during a response (e.g., anthrax exposure, chemical decontaminants, heat stress). Additional information on personnel safety and PPE selection criteria based on exposure risks can be found at https://www.dhs.gov/publication/protecting-responders-health-after-wide- area-aerosol-anthrax-attack.6.1. MedicalRequirements:\u0000xPre-deployment:Must be current on annual physical and medical evaluations for respirator use.Seek prophylaxis provided per specific agency policy.\u0000xDuring Incident:Conduct periodic on-site medical monitoring as necessary per site-specific HASP. Report all signs and symptoms of anthrax, side effects from medical countermeasures, or other general adverse health effects such as fatigue, heat stress, and behavioral health, and treat according to First Aid section below. Monitoring of exposed workers may be required by the site Health and Safety Officer or public health officials.\u0000xTreatments Available:Seek medical attention per specific agency policy. Treatment is supportive care and accompanied with use of combination antibiotic and antitoxin therapy. Effectiveness of antibiotics and antitoxins is optimal if instituted soon after onset of symptoms of inhalational anthrax.\u0000xPost Incident:Off- site monitoring may be required by site Health and Safety Officers or public health officials for a period following last exposure. Post-exposure prophylaxis may be made available as necessary by medical team according to specific agency policy.6.2. First Aid:CAUTION:Workers rendering first aid must be properly trained and use appropriate PPE as indicated below to avoid potential exposure.\u0000xDuring Incident:Conduct medical monitoring, use PPE as designated by the HASP, record the PPE levels used, and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses. \u0000xPost Incident:Continue to monitor for signs/symptoms and, if necessary, ensure medical attention is provided as soon as possible for injuries/illnesses.6.3. Personal Protective Equipment (PPE):General Information: Responders should use NIOSH-approved chemical, biological, radiological, and nuclear (CBRN) respirators and protective clothing that provides protection against CBRN agents [Self Contained Breathing Apparatus (SCBA), Full-facepiece Powered Air Purifying Respirator (PAPR) or Full-- incident training and exercises on the proper use of PPE are recommended. When selecting appropriate levels of PPE, information regarding potential of exposures to non-biological hazards (e.g.,decontaminants) should be factored intoany selection decisions. For use of APRs or PAPRs, only those incorporating canister(s)/cartridge(s)labeled CBRN are appropriate for use in suspected or known CBRN environments. Canisters/cartridge(s)for APRs/PAPRs may be adversely affected by an increase in moisture and spray from certain work tasks, including during environmental cleanup and decontamination.Canisters and cartridges should be stored as specified by their manufacturer, and remain sealed until fitted to the respirator just prior to use. Canisters and cartridges that have had the vacuum seal broken or are otherwise damaged should be removed from possible service.NOTE:Since sporespose noskinpermeabilitypotential,when no other hazards are present, non-CBRN APR tight-fitting PAPRor any tight-fitting, full facepiece PAPR incorporating at a minimum,high-efficiency (HE) particulateprotection (as determined by the site Health and S afety Officer)may be appropriate.CAUTION:AEGL values are not available for spores and no occupational exposure limits (e.g., PEL, REL) exist for spores (see EXPOSURE GUIDELINES section above). AEGL values or appropriate occupational exposure limits may exist for any selected decontaminants or fumigants; see thesite-specific HASPdeveloped for a specific incident.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 37,
+        "repeatedHeaderFooterBlockCount": 13,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Bacillus anthracis(causes Anthrax)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "February",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2022Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2021Page 4of 11PPE Levels for emergency response to a suspected biological agent incident are based on scenario risks from highest to lowest level of protection:\u0000xLEVEL A:NIOSH-approved CBRN full-facepiece SCBA operated in pressure demand mode, a totally-",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "encapsulating chemical protective (TECP) suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when anyof the following are met:a) the event is ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "uncharacterized and/or uncontrolled, b) the type(s) of agent is unknown, c) the dissemination method is unknown, d) dissemination via an aerosol-generating device is still occurring, or e) decontaminating workers in TECP suits (because of potential for re-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "aerosolization).Per NIOSH guidance, Level A provides the greatest level of skin (TECP), respiratory (SCBA), and eye protection when the agent identity or concentration is unknown.\u0000xLEVEL B:NIOSH-approved CBRN or non-CBRN full-facepiece SC",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "BA operated in pressure demand mode, a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when both:a) aerosol is no longer bein",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "g generated and b) other conditions may present additional hazards, such as a splash hazard.Per NIOSH guidance, Level B provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Level B differs from Le",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "vel A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.\u0000xLEVEL C:NIOSH-approved CBRN or non-CBRN APR tight-fitting PAPR,a hooded ch",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "emical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots.This level is appropriate when the aerosol is no longer being generated and either:a) the agent and hazard level",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "has been defined orb) a small item on site can be easily bagged.Per NIOSH guidance, Level C can be selected when the agent identity and concentration are known and the respiratory protection criteria factors for the use of APR or PAPR (i.e., warning pro",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "perties) are met.\u0000xLEVEL D:Disposable hooded coveralls, gloves, and foot coverings can be worn when a risk assessment has determined there is no further risk of exposure to ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "spores or other hazards that would necessitate the use of respiratory protection, during post-incident operations.Other Workers:PPE recommendations for non-emergency response workers must be developed in the HASP for the site-specific scenario. PPE reco",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "mmendations will vary by job type (e.g., cleanup, decontamination), type of exposure (e.g., airborne or surface/liquid/soil hazard), and additional site hazards (e.g., chemical, physical).NOTE: Downgrading PPE levels may be considered only when the identi",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "ty and concentration of the agent is known and the risks of re-aerosolization or dermal exposure are known to be extremely low. Decisions regarding downgrading of PPE levels are only made at the discretion of the site Health and Safety Officer after conduc",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "ting a risk assessment and must be accompanied by on-site monitoring.7. Personnel Decontamination7.1. Personnel Decontamination Procedure:NOTE:Individuals involved in decontamination of personnel must use PPE as indicated in the PERSONNEL SAFETY ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "section above to avoid the potential for exposure. Be sure to cover all abraded skin prior to donning PPE and take care to avoid abrasion of the skin during all personnel decontamination operations to minimize potential for cutaneous exposure to ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "spores. Level C PPE with NIOSH-approved CBRN or non-CBRN APR or PAPR is appropriate when decontaminating personnel potentially contaminated with B. anthracisspores. If a higher level of PPE (A or B) is used, the ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "steps below may need to be modified per the HASP.WARNING: DO NOT BEGIN ANY WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED(see WASTE MANAGEMENT section below). All waste/trash generated from personnel ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "decontamination procedures must be disposed of as outlined in the site-specific Waste Management Plan.7.2. Personnel Decontamination Procedures by Zone/Step:Prior to entering the Exclusion Zone, all personnel are required ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "to familiarize themselves with the site-specific personnel decontamination procedures. Negative air machine(s) should be incorporated into the personnel decon line, pulling HEPA-filtered air from the cleanest areas to areas with contamination (Support Zone",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "to Exclusion Zone). Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to treat, replace, and dispose of contaminated materials used during the decon ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "process in case the setup itself cannot be properly deconned/disinfected. In addition, procedures should be implemented to replace necessary spent chemicals and decontamination solutions and containerize for disposal if necessary.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "For additional details on personnel decontamination procedures, please reference the most recent version of \u0000(\u00003\u0000$\u0000¶\u0000VCBRN CMAD Biological Response Personnel Decontamination Line Standard Operating Procedure (SOP), which can be found at:",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "response.epa.gov/BioResponse_Decontamination_Line_SOP.\u0000xAll waste/trash (e.g., wipes, towels, booties, gloves, inner suits, cartridge filters) generated from personnel decontamination procedures must be disposed of as outlined in the site-",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "specific Waste Management Plan.\u0000xDecon Line Attendant(DLA)will verbally direct personnel through each step.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2022Update: 2021Page 4of 11PPE Levels for emergency response to a suspected biological agent incident are based on scenario risks from highest to lowest level of protection:\u0000xLEVEL A:NIOSH-approved CBRN full-facepiece SCBA operated in pressure demand mode, a totally- encapsulating chemical protective (TECP) suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when anyof the following are met:a) the event is uncharacterized and/or uncontrolled, b) the type(s) of agent is unknown, c) the dissemination method is unknown, d) dissemination via an aerosol-generating device is still occurring, or e) decontaminating workers in TECP suits (because of potential for re- aerosolization).Per NIOSH guidance, Level A provides the greatest level of skin (TECP), respiratory (SCBA), and eye protection when the agent identity or concentration is unknown.\u0000xLEVEL B:NIOSH-approved CBRN or non-CBRN full-facepiece SC BA operated in pressure demand mode, a hooded chemical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots. This level is appropriate when both:a) aerosol is no longer bein g generated and b) other conditions may present additional hazards, such as a splash hazard.Per NIOSH guidance, Level B provides the highest level of respiratory protection (SCBA) when a lesser level of skin protection is required. Level B differs from Le vel A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.\u0000xLEVEL C:NIOSH-approved CBRN or non-CBRN APR tight-fitting PAPR,a hooded ch emical-resistant suit that provides protection against CBRN agents, chemical-resistant gloves (inner and outer), and chemical-resistant boots.This level is appropriate when the aerosol is no longer being generated and either:a) the agent and hazard level has been defined orb) a small item on site can be easily bagged.Per NIOSH guidance, Level C can be selected when the agent identity and concentration are known and the respiratory protection criteria factors for the use of APR or PAPR (i.e., warning pro perties) are met.\u0000xLEVEL D:Disposable hooded coveralls, gloves, and foot coverings can be worn when a risk assessment has determined there is no further risk of exposure to spores or other hazards that would necessitate the use of respiratory protection, during post-incident operations.Other Workers:PPE recommendations for non-emergency response workers must be developed in the HASP for the site-specific scenario. PPE reco mmendations will vary by job type (e.g., cleanup, decontamination), type of exposure (e.g., airborne or surface/liquid/soil hazard), and additional site hazards (e.g., chemical, physical).NOTE: Downgrading PPE levels may be considered only when the identi ty and concentration of the agent is known and the risks of re-aerosolization or dermal exposure are known to be extremely low. Decisions regarding downgrading of PPE levels are only made at the discretion of the site Health and Safety Officer after conduc ting a risk assessment and must be accompanied by on-site monitoring.7. Personnel Decontamination7.1. Personnel Decontamination Procedure:NOTE:Individuals involved in decontamination of personnel must use PPE as indicated in the PERSONNEL SAFETY section above to avoid the potential for exposure. Be sure to cover all abraded skin prior to donning PPE and take care to avoid abrasion of the skin during all personnel decontamination operations to minimize potential for cutaneous exposure to spores. Level C PPE with NIOSH-approved CBRN or non-CBRN APR or PAPR is appropriate when decontaminating personnel potentially contaminated with B. anthracisspores. If a higher level of PPE (A or B) is used, the steps below may need to be modified per the HASP.WARNING: DO NOT BEGIN ANY WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED(see WASTE MANAGEMENT section below). All waste/trash generated from personnel decontamination procedures must be disposed of as outlined in the site-specific Waste Management Plan.7.2. Personnel Decontamination Procedures by Zone/Step:Prior to entering the Exclusion Zone, all personnel are required to familiarize themselves with the site-specific personnel decontamination procedures. Negative air machine(s) should be incorporated into the personnel decon line, pulling HEPA-filtered air from the cleanest areas to areas with contamination (Support Zone to Exclusion Zone). Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to treat, replace, and dispose of contaminated materials used during the decon process in case the setup itself cannot be properly deconned/disinfected. In addition, procedures should be implemented to replace necessary spent chemicals and decontamination solutions and containerize for disposal if necessary.\u0000x For additional details on personnel decontamination procedures, please reference the most recent version of \u0000(\u00003\u0000$\u0000¶\u0000VCBRN CMAD Biological Response Personnel Decontamination Line Standard Operating Procedure (SOP), which can be found at: response.epa.gov/BioResponse_Decontamination_Line_SOP.\u0000xAll waste/trash (e.g., wipes, towels, booties, gloves, inner suits, cartridge filters) generated from personnel decontamination procedures must be disposed of as outlined in the site- specific Waste Management Plan.\u0000xDecon Line Attendant(DLA)will verbally direct personnel through each step.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 31,
+        "repeatedHeaderFooterBlockCount": 9,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 4,
+      "humanPageNumber": 5,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Bacillus anthracis(causes Anthrax)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "February",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2022Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2021Page 5of 11Conducted in ExclusionZone (Hot Zone)1Tool and Instrument DropsPlace equipment taken into the Hot Zone on a plastic covered table or container provided prior to ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.Conducted in Contamination ReductionZone (Warm Zone)2Sample Drop",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Place samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Doff Booties ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "and Work or Task PPEAny work or task-specific PPE is to be disposed of in designated containeror can be placed into a designated bin to be cleaned for reuse. Check for breaches in PPE and identify any gross contamination. ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Remove any gross contamination with wipes and place into designatedcontainer. Sit on bench and remove booties and place in designatedcontainer.4Wet Operations \u0000±Outer Boot and Glove Wash (1stand 2ndGross Decon Wash)",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "The purpose of this step is to remove gross contamination, such as dirt or grime from boots and gloves. If gross contamination is not visible, this step may be skipped. Wash outer boots by stepping in decon basins with designated decontamination solutions ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "and then outer gloves using designated decontamination solutions in glove wash basin as specified in HASP (1:10 diluted bleach). 5Wet Operations \u0000±Full Decon of Gloves, Boots, PAPR,and Outer SuitStep from the 1st and 2nd Gross Dec",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "ontamination Wash into a contained area (large tub or basin) at this station in the decon line to wash boots and gloves. Keep PAPR and masks on face and body. Turn off PAPR and cover the outside of the cartridge loosely to avoid saturation with water. Wash",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Use fine mist tip on sprayer to prevent cross contamination. Start with decontaminating boots",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "and gloves, then work on suit from the top down, including PAPR. Decontamination personnel should conduct this step. Care should be taken to ensure all areas are wetted, including around zipper, arms, front torso, and any other area that could have been c",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "ontaminated. Used decontamination solution and aqueous waste should be contained, collected, and disposed of properly.6Wet Operations \u0000±Doff Outer Boots, Gloves,and Outer SuitWhile sitting on a stool, remove outer boots and outer gloves. Undo the PAPR",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "belt and hold in hand. While touching only the inside of suit, remove outer suit by carefully rolling suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontaminatio",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "n personnel to assist either by holding PAPR unit or assisting in suit removal.7Dry Operations \u0000±Inner Suit Wipe and RemovalConducted by DLA \u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "\u0000:\u0000K\u0000L\u0000O\u0000H\u0000\u0003\u0000W\u0000R\u0000X\u0000F\u0000K\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000O\u0000\\\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000L\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u000f\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000E\u0000\\\u0000\u0003carefully rolling it inside outwhile progressing slowly, using a downward motion, from the hood ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "head/shoulders area, to the hands and sleeves, all the way down to the feet. Wipe down the zipper, hood ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "\u0000Q\u0000H\u0000D\u0000U\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000V\u0000N\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000X\u0000I\u0000I\u0000V\u0000\u0003\u0000\u000b\u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000L\u0000Q\u0000\u0003\u0000\u0019\u0000\u0003\u0000L\u0000Q\u0000F\u0000K\u0000H\u0000V\u0000\u0003\u0000D\u0000E\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000U\u0000L\u0000V\u0000W\u0000\f\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003suit with a paper ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "towel wetted with new decontamination solution. Step out of suit while holding PAPR with mask on and place inner suit in designated container.8PAPR and Mask RemovalPut on a new pair of gloves over the inner gloves (provided by ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "DLA). With new gloves on, doff PAPR mask and hose by looking downward and pulling the mask down from the top of head and away from chin. Remove cartridge filters and place intoadesignated container. Put mask and hose into designated containers for cleani",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "ng. Decontamination personnel will clean each mask and PAPR assembly prior to return to service. 9Inner Glove Removal,and Hand and Face WashRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "into designated container. Wash hands and then face with soap and warm water after all PPE has been doffed and prior to entering the personal shower.Conducted inSupportZone (Cold Zone)10Personal ShowerPersonnel should shower using copious ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available, at the minimum, hands and face should be washed thoroughly.11Medical MonitoringReport to the medical ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "monitoring station for post-entry monitoring and if necessary, meet with appropriate personnel for debriefing.Emergency Egress Corridor:Establish an emergency egress line to use for quickly decontaminating personnel with medical emergencies while in the",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Exclusion Zone. Depending on the severity of the injury or illness, personnel may have to be quickly gross or dry deconned only and have PPE and clothing removed. Prior to receiving treatment from emergency medical technicians (EMT) or being transported t",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "o a hospital, personnel must be decontaminated to minimize potential exposure to others. The clothing of the person being transported will comply with the ambulance/EMT requirements.Note:All work in the Exclusion Zone must come to a stop until the Emerge",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "ncy Egress Corridor is clear and reset.Hand-Wash Station:A hand-wash station should be available for personnel to remove any residual decontaminant following entry. However, this may not be available initially at the scene or weather conditions may prohi",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "bit its use. If a ",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2022Update: 2021Page 5of 11Conducted in ExclusionZone (Hot Zone)1Tool and Instrument DropsPlace equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.Conducted in Contamination ReductionZone (Warm Zone)2Sample Drop Place samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Doff Booties and Work or Task PPEAny work or task-specific PPE is to be disposed of in designated containeror can be placed into a designated bin to be cleaned for reuse. Check for breaches in PPE and identify any gross contamination. Remove any gross contamination with wipes and place into designatedcontainer. Sit on bench and remove booties and place in designatedcontainer.4Wet Operations \u0000±Outer Boot and Glove Wash (1stand 2ndGross Decon Wash) The purpose of this step is to remove gross contamination, such as dirt or grime from boots and gloves. If gross contamination is not visible, this step may be skipped. Wash outer boots by stepping in decon basins with designated decontamination solutions and then outer gloves using designated decontamination solutions in glove wash basin as specified in HASP (1:10 diluted bleach). 5Wet Operations \u0000±Full Decon of Gloves, Boots, PAPR,and Outer SuitStep from the 1st and 2nd Gross Dec ontamination Wash into a contained area (large tub or basin) at this station in the decon line to wash boots and gloves. Keep PAPR and masks on face and body. Turn off PAPR and cover the outside of the cartridge loosely to avoid saturation with water. Wash all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Use fine mist tip on sprayer to prevent cross contamination. Start with decontaminating boots and gloves, then work on suit from the top down, including PAPR. Decontamination personnel should conduct this step. Care should be taken to ensure all areas are wetted, including around zipper, arms, front torso, and any other area that could have been c ontaminated. Used decontamination solution and aqueous waste should be contained, collected, and disposed of properly.6Wet Operations \u0000±Doff Outer Boots, Gloves,and Outer SuitWhile sitting on a stool, remove outer boots and outer gloves. Undo the PAPR belt and hold in hand. While touching only the inside of suit, remove outer suit by carefully rolling suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontaminatio n personnel to assist either by holding PAPR unit or assisting in suit removal.7Dry Operations \u0000±Inner Suit Wipe and RemovalConducted by DLA \u0000± \u0000:\u0000K\u0000L\u0000O\u0000H\u0000\u0003\u0000W\u0000R\u0000X\u0000F\u0000K\u0000L\u0000Q\u0000J\u0000\u0003\u0000R\u0000Q\u0000O\u0000\\\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000L\u0000Q\u0000V\u0000L\u0000G\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u000f\u0000\u0003\u0000U\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003\u0000V\u0000X\u0000L\u0000W\u0000\u0003\u0000E\u0000\\\u0000\u0003carefully rolling it inside outwhile progressing slowly, using a downward motion, from the hood head/shoulders area, to the hands and sleeves, all the way down to the feet. Wipe down the zipper, hood \u0000Q\u0000H\u0000D\u0000U\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000V\u0000N\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000F\u0000X\u0000I\u0000I\u0000V\u0000\u0003\u0000 \u0000D\u0000U\u0000H\u0000D\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000L\u0000Q\u0000\u0003\u0000\u0019\u0000\u0003\u0000L\u0000Q\u0000F\u0000K\u0000H\u0000V\u0000\u0003\u0000D\u0000E\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000U\u0000L\u0000V\u0000W\u0000 \u0000\u0003\u0000R\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Z\u0000R\u0000U\u0000N\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000L\u0000Q\u0000Q\u0000H\u0000U\u0000\u0003suit with a paper towel wetted with new decontamination solution. Step out of suit while holding PAPR with mask on and place inner suit in designated container.8PAPR and Mask RemovalPut on a new pair of gloves over the inner gloves (provided by DLA). With new gloves on, doff PAPR mask and hose by looking downward and pulling the mask down from the top of head and away from chin. Remove cartridge filters and place intoadesignated container. Put mask and hose into designated containers for cleani ng. Decontamination personnel will clean each mask and PAPR assembly prior to return to service. 9Inner Glove Removal,and Hand and Face WashRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container. Wash hands and then face with soap and warm water after all PPE has been doffed and prior to entering the personal shower.Conducted inSupportZone (Cold Zone)10Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available, at the minimum, hands and face should be washed thoroughly.11Medical MonitoringReport to the medical monitoring station for post-entry monitoring and if necessary, meet with appropriate personnel for debriefing.Emergency Egress Corridor:Establish an emergency egress line to use for quickly decontaminating personnel with medical emergencies while in the Exclusion Zone. Depending on the severity of the injury or illness, personnel may have to be quickly gross or dry deconned only and have PPE and clothing removed. Prior to receiving treatment from emergency medical technicians (EMT) or being transported t o a hospital, personnel must be decontaminated to minimize potential exposure to others. The clothing of the person being transported will comply with the ambulance/EMT requirements.Note:All work in the Exclusion Zone must come to a stop until the Emerge ncy Egress Corridor is clear and reset.Hand-Wash Station:A hand-wash station should be available for personnel to remove any residual decontaminant following entry. However, this may not be available initially at the scene or weather conditions may prohi bit its use. If a",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 31,
+        "repeatedHeaderFooterBlockCount": 7,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 5,
+      "humanPageNumber": 6,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Bacillus anthracis(causes Anthrax)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "February",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2022Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2021Page 6of 11hand-wash station is not available, personnel should wash their hands and face as soon as possible with appropriate wet wipes or hand sanitizer, prior to entering the personal shower.PPE Wash Water: PPE Wash Water refers to aqueous waste",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "from the personnel decon line, but not water from the personal shower.See AQUEOUS WASTE STERILIZATION AND DISPOSAL section below.8. Environmental SamplingNote: Environmental samples refer to samples collected from environmental matrices and do not ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "include forensic or clinical samples collected by other agencies.8.1. Before collecting samples (bullet order may vary):\u0000xIdentify and coordinate with law enforcement agency in charge to ensure site access and initiate information sharing.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Identify and coordinate with the public health jurisdiction and public health labs that may be involved and initiate information sharing. This may include initiating contact oftheEPA/HQ-EOC (202-564-3850) for Environmental Response Laboratory Network (ER",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "LN) laboratories and other laboratories such as \u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003Laboratory Response Network(LRN)able to analyze the site-specific types of samples. Laboratory capacity for analysis of environmental ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "samples may be limited. Clearly identify and discuss with the laboratory its acceptance criteria since most labs cannot analyze all types of media, nor can they dispose of some types of left-over samples.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Create a sampling plan as part of a quality assurance project plan. The sampling plan should include sample handling, packing, and transportation requirements so that ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "spores remain viable during the process. Site-specific sampling plans will be affected by: 1) type of release, whether the release was intentional vs. unintentional (accidental or naturally occurring), and the characteristics of the ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "and spore preparation; 2) type of contaminated surfaces (e.g., porous vs. non-porous, indoor vs. outdoor); and 3) sampling objectives (e.g., site characterization pre-decontamination vs. post-decontamination sampling). \u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Follow sampling procedures and packaging and shipping requirements. The eSAM (https://www.epa.gov/esam/sample-collection-information-documents-scids) provides general information regarding sampling procedures supporting collection of sampl",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "es to be analyzed for ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "spores. Procedures encompass different media, sampling supplies (e.g., swabs, sponge-sticks, filter cartridges/cassettes), sample size, container, holding time, preservation, packaging, and shipping. For additional inform",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "ation and for other sample matrices, contact the EPA/HQ-EOC at 202-564-3850. Packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, and IATA. Contact the sample-receiving laboratory to determine if they hav",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "e additional packaging, shipping, or labeling requirements. 8.2. Sampling strategy and methods:1.The Data Quality Objective process provides a framework for sampling design. Site-specific information informs the creation of a conceptual model, sampling ob",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "jectives, response boundaries, and an analytical statement that includes the results that will be obtained. (\u0000³\u0000*\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000Q\u0000\u0003\u00006\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000D\u0000W\u0000L\u0000F\u0000\u0003\u00003\u0000O\u0000D\u0000Q\u0000Q\u0000L\u0000Q\u0000J\u0000\u0003\u00008\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000'\u0000D\u0000W\u0000D\u0000\u0003\u00004\u0000X\u0000D\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u00002\u0000E\u0000M\u0000H\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000V\u0000\u0003Process,",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "\u0000´\u0000\u0003\u0000(\u00003\u0000$\u0000\u0003\u00004\u0000$\u0000\u0012\u0000*-4:https://www.epa.gov/sites/production/files/2015-06/documents/g4-final.pdf).2.Create a conceptual model of the incident to provide a situational awareness summary of the site. Maps and drawings can be illustrated with site-spe",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "cific data to capture the current understanding of the incident. Include potential fate and transport, weather conditions, tracking of contaminant, and data obtained from other responders, such as law enforcement and public health.3.",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Create and prioritize sampling objectives based on the conceptual model and what data will bring additional understanding to the incident.4.Create boundaries for the sampling objectives based on the conceptual model and restraints, such as available ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "resources and laboratory capacity.5.Use sampling design tools to develop sampling designs that meet the objectives and select the most appropriate sample design. Site-",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "specific factors will affect sampling objectives and the sample design (number, type, and location). Examples of sample design tools include:\u0000xTrade-off Tool for Sampling(TOTS):tots.epa.gov. TOTS is an onlinetool to estimate and optimize cost, time, ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "and resources for sampling plans.\u0000xVisual Sample Plan (VSP):https://www.pnnl.gov/projects/visual-sample-plan. VSP is a statistical software tool for generating probabilistic sampling designs.\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "\u0000³\u0000*\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000&\u0000K\u0000R\u0000R\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000'\u0000H\u0000V\u0000L\u0000J\u0000Q\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000(\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000'\u0000D\u0000W\u0000D\u0000\u0003\u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q,\u0000´\u0000\u0003\u0000(\u00003\u0000$\u0000\u0003\u00004\u0000$\u0000\u0012\u0000*-5S:https://www.epa.gov/sites/production/files/2015-06/documents/g5s-final.pdf.6.",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "Use validated/verified sampling methods, and consider using innovative samplingmethods if they are sufficiently advantageous for achieving objectives (seeeSAM: https://www.epa.gov/esam/sample-collection-information-documents-scids).a.Surface: Sponge-",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Stick and WipeSampling(for non-porous surfaces): sterile macrofoam sponges or sterile gauze wipes moistened with sterile 1X phosphate-buffered saline supplemented with 0.01% Tween-20 (PBST) are used to sample 100 in2(sponge) or 144 in2(wipe)area offlat non",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "-porous surfaces. If this wetting solution is not available, use sterile de-ionized water. Do NOT use dry wipes or sponges. Note: The wipe sampling and analytical method has not been validated by CDC. A wipe sampling procedure is provided in the e",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "vent that the sponge methods cannot be utilized (see\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000Vurface sampling procedures for ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "Bacillus anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "spores from ",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2022Update: 2021Page 6of 11hand-wash station is not available, personnel should wash their hands and face as soon as possible with appropriate wet wipes or hand sanitizer, prior to entering the personal shower.PPE Wash Water: PPE Wash Water refers to aqueous waste from the personnel decon line, but not water from the personal shower.See AQUEOUS WASTE STERILIZATION AND DISPOSAL section below.8. Environmental SamplingNote: Environmental samples refer to samples collected from environmental matrices and do not include forensic or clinical samples collected by other agencies.8.1. Before collecting samples (bullet order may vary):\u0000xIdentify and coordinate with law enforcement agency in charge to ensure site access and initiate information sharing.\u0000x Identify and coordinate with the public health jurisdiction and public health labs that may be involved and initiate information sharing. This may include initiating contact oftheEPA/HQ-EOC (202-564-3850) for Environmental Response Laboratory Network (ER LN) laboratories and other laboratories such as \u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003Laboratory Response Network(LRN)able to analyze the site-specific types of samples. Laboratory capacity for analysis of environmental samples may be limited. Clearly identify and discuss with the laboratory its acceptance criteria since most labs cannot analyze all types of media, nor can they dispose of some types of left-over samples.\u0000x Create a sampling plan as part of a quality assurance project plan. The sampling plan should include sample handling, packing, and transportation requirements so that spores remain viable during the process. Site-specific sampling plans will be affected by: 1) type of release, whether the release was intentional vs. unintentional (accidental or naturally occurring), and the characteristics of the and spore preparation; 2) type of contaminated surfaces (e.g., porous vs. non-porous, indoor vs. outdoor); and 3) sampling objectives (e.g., site characterization pre-decontamination vs. post-decontamination sampling). \u0000x Follow sampling procedures and packaging and shipping requirements. The eSAM (https://www.epa.gov/esam/sample-collection-information-documents-scids) provides general information regarding sampling procedures supporting collection of sampl es to be analyzed for spores. Procedures encompass different media, sampling supplies (e.g., swabs, sponge-sticks, filter cartridges/cassettes), sample size, container, holding time, preservation, packaging, and shipping. For additional inform ation and for other sample matrices, contact the EPA/HQ-EOC at 202-564-3850. Packaging and shipping of samples are subject to strict regulations established by DOT, CDC, USPS, OSHA, and IATA. Contact the sample-receiving laboratory to determine if they hav e additional packaging, shipping, or labeling requirements. 8.2. Sampling strategy and methods:1.The Data Quality Objective process provides a framework for sampling design. Site-specific information informs the creation of a conceptual model, sampling ob jectives, response boundaries, and an analytical statement that includes the results that will be obtained. (\u0000³\u0000*\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000R\u0000Q\u0000\u0003\u00006\u0000\\\u0000V\u0000W\u0000H\u0000P\u0000D\u0000W\u0000L\u0000F\u0000\u0003\u00003\u0000O\u0000D\u0000Q\u0000Q\u0000L\u0000Q\u0000J\u0000\u0003\u00008\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000'\u0000D\u0000W\u0000D\u0000\u0003\u00004\u0000X\u0000D\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u00002\u0000E\u0000M\u0000H\u0000F\u0000W\u0000L\u0000Y\u0000H\u0000V\u0000\u0003Process, \u0000´\u0000\u0003\u0000(\u00003\u0000$\u0000\u0003\u00004\u0000$\u0000\u0012\u0000*-4:https://www.epa.gov/sites/production/files/2015-06/documents/g4-final.pdf).2.Create a conceptual model of the incident to provide a situational awareness summary of the site. Maps and drawings can be illustrated with site-spe cific data to capture the current understanding of the incident. Include potential fate and transport, weather conditions, tracking of contaminant, and data obtained from other responders, such as law enforcement and public health.3. Create and prioritize sampling objectives based on the conceptual model and what data will bring additional understanding to the incident.4.Create boundaries for the sampling objectives based on the conceptual model and restraints, such as available resources and laboratory capacity.5.Use sampling design tools to develop sampling designs that meet the objectives and select the most appropriate sample design. Site- specific factors will affect sampling objectives and the sample design (number, type, and location). Examples of sample design tools include:\u0000xTrade-off Tool for Sampling(TOTS):tots.epa.gov. TOTS is an onlinetool to estimate and optimize cost, time, and resources for sampling plans.\u0000xVisual Sample Plan (VSP):https://www.pnnl.gov/projects/visual-sample-plan. VSP is a statistical software tool for generating probabilistic sampling designs.\u0000x \u0000³\u0000*\u0000X\u0000L\u0000G\u0000D\u0000Q\u0000F\u0000H\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000&\u0000K\u0000R\u0000R\u0000V\u0000L\u0000Q\u0000J\u0000\u0003\u0000D\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000'\u0000H\u0000V\u0000L\u0000J\u0000Q\u0000\u0003\u0000I\u0000R\u0000U\u0000\u0003\u0000(\u0000Q\u0000Y\u0000L\u0000U\u0000R\u0000Q\u0000P\u0000H\u0000Q\u0000W\u0000D\u0000O\u0000\u0003\u0000'\u0000D\u0000W\u0000D\u0000\u0003\u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q,\u0000´\u0000\u0003\u0000(\u00003\u0000$\u0000\u0003\u00004\u0000$\u0000\u0012\u0000*-5S:https://www.epa.gov/sites/production/files/2015-06/documents/g5s-final.pdf.6. Use validated/verified sampling methods, and consider using innovative samplingmethods if they are sufficiently advantageous for achieving objectives (seeeSAM: https://www.epa.gov/esam/sample-collection-information-documents-scids).a.Surface: Sponge- Stick and WipeSampling(for non-porous surfaces): sterile macrofoam sponges or sterile gauze wipes moistened with sterile 1X phosphate-buffered saline supplemented with 0.01% Tween-20 (PBST) are used to sample 100 in2(sponge) or 144 in2(wipe)area offlat non -porous surfaces. If this wetting solution is not available, use sterile de-ionized water. Do NOT use dry wipes or sponges. Note: The wipe sampling and analytical method has not been validated by CDC. A wipe sampling procedure is provided in the e vent that the sponge methods cannot be utilized (see\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000Vurface sampling procedures for spores from",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 36,
+        "repeatedHeaderFooterBlockCount": 11,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 6,
+      "humanPageNumber": 7,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Bacillus anthracis(causes Anthrax)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "February",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2022Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2021Page 7of 11smooth, non-porous surfaces: https://www.cdc.gov/niosh/topics/emres/surface-sampling-bacillus-anthracis.html).b.Surface: Swab Sampling (for non-porous surfaces): sterile swabs moistened with sterile 1X phosphate-",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "buffered saline with 0.01% Tween-20 (PBST) are used to sample 4 in2area of non-porous, small, hard-to-reach or irregular shaped surfaces (e.g., keyboards, air register vanes).c.Surface: Micro-Vacuum Sampling ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "(for porous and/or irregular shaped surfaces): 37mm Cassettes, pre-loaded \u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u0017\u0000\u0018\u0002\u001d\u0000P\u0000\u0003\u0000P\u0000L\u0000[\u0000H\u0000G\u0000\u0003\u0000F\u0000H\u0000O\u0000O\u0000X\u0000O\u0000R\u0000V\u0000H\u0000\u0003\u0000I\u0000L\u0000O\u0000W\u0000H\u0000U\u0000\u0003\u0000\u000b\u00000\u0000&\u0000(\u0000\f\u0000\u0003\u0000\u000b\u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u00006\u0000.\u0000&\u0000\u0003\u0000\u0015\u0000\u0015\u0000\u0018-3-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "\u0000\u0013\u0000\u0014\u0000\f\u0000\u000f\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u001b\u0002\u001d\u0000P\u0000\u0003\u0000S\u0000R\u0000U\u0000H\u0000\u0003\u0000V\u0000L\u0000]\u0000H\u0000\u0003\u00000\u0000&\u0000(\u0000\u0003\u0000\u000b\u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u0000=\u0000H\u0000I\u0000R\u0000Q\u0000\u0003\u0000\u001a\u0000\u0016\u0000\u0017\u0000\u0018\u0000&\u0000&\u0000\f\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u0016\u0002\u001d\u0000P\u0000\u0003\u00003\u00007\u0000)\u0000(\u0000\u0003\u0000I\u0000L\u0000O\u0000W\u0000H\u0000U\u0000V\u0000\u0003\u0000\u000b\u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u00006\u0000.\u0000&\u0000\u0003\u0000\u0015\u0000\u0015\u0000\u0018-1723), are",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "\u0000X\u0000V\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000F\u0000R\u0000Q\u0000M\u0000X\u0000Q\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000X\u0000P\u0000S\u0000V\u0000\u0003\u0000\u000b\u0000\u0000\u0018\u0000\u0003\u0000O\u0000S\u0000P\u0000\u0003air flow rate) or an equivalent vacuum source to collect samples from a 144 in2area (https://www.ncbi.nlm.n",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "ih.gov/pmc/articles/PMC4780263/pdf/nihms-763404.pdf).d.Air: Air samples can be collected using low-volume air filtration sampling (e.g., MCE, PTFE, gelatin filter), ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "impactors, or impinger methods. Selection of the technique required for air sampling is based primarily on site-specific sampling objectives and strategies, the analyses to be performed, conditions of the indoor environment, ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "fate and transport of the pathogen, and the physiological characteristics of the pathogen, including pathogen size. Refer to the sampling methods and manufacturer instructions for flow rates and sampling times (see eSAM: https://www.epa.gov/esam/sample-",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "collection-information-documents-scids). Ensure that the appropriate pump is used for the selected sampling method.\u0000xWater:",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "spores can persist in water, which may contain an oxidant, either applied as a disinfectant in a water system or introduced during decontamination activities. To avoid interference with analysis, the oxidant needs to be neutralized immediately upon collec",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "tion with a sodium thiosulfate or other neutralizer at the concentration specified by the sampling protocol (see \u0000³Sampling Guidance for Unknown Contaminants in Drinking Water,\u0000´EPA-817-R-08-003:https://www.epa.gov/sites/production/files/2017-",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "02/documents/sampling_guidance_for_unknown_contaminants_in_drinking_water_02152017_final.pdf). Even for a drinking water system, in which residual oxidant levels can vary substantially throughout the ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "system and may be minimal in some locations, assume that a sample contains an oxidant and neutralize according to the sampling protocol. \u0000xSoil:For areas where soil deposition of the agent is suspected to have occurred (i.e., where aerosols or liquid ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "droplets have been present), soil samples of predetermined depth can be collected. The depth of sample and handling of vegetation should be prescribed based on site-specificobjectives.7.",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Animal and Wildlife Samples: Upon confirmation of an outbreak, ensure responsible agencies are notified immediately because anthrax is a reportable zoonotic disease. Notify the state veterinarian for wildlife fatality. Federal points of contac",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "t include USDA at 202-720-5711and the CDC Emergency Operations Center at 770-488-7100.Note:FieldDetection technologies and other similar analytical techniques listed here cannot distinguish between viable and non-viable ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "spores. Culture-based methods may be necessary to adequately assess risk.8.3. Available technologies:The following table summarizes some available technologies by which responders may be ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "able to obtain results within a comparatively short time frame. In historical incidents, such availability has been from: 1) Civil Support Team (CST) mobile labs (Analytical Laboratory System(ALS)), and 2) local public health laboratories that ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u00005\u00001\u0000\u000f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\\\u0000\u0003\u0000K\u0000D\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000H\u0000T\u0000X\u0000L\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000S\u0000O\u0000D\u0000W\u0000I\u0000R\u0000U\u0000P\u0000V\u0000\u0011\u0000\u0003\u0000$\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000W\u0000U\u0000D\u0000G\u0000H-off for availability, either of them ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "may not have the capabilities to prepare certain types of samples for analysis. The site-specific types of samples should be discussed before relying on their capabilities. For technologies listed below ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "\u0000D\u0000V\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000³\u0000O\u0000D\u0000E\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000J\u0000H\u0000\u0003over time; contact the EPA/HQ-EOC (202-564-3850) for current information.Platform \u0000±AvailabilityWhere usedPotential purposesImmunoassay [Hand-\u0000±CSTField",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "Suggestive of presence/absence through immunological features\u0000±CommercialFieldSuggestive of presence/absence through immunological featuresPCR \u0000±CSTMobile Lab (CST ALS)Detection of ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "genesPCR \u0000±LabsFixed Lab (BioWatch, LRN, ERLN)Detection of ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "genes9. Laboratory AnalysisNote:Many labs will not be able to perform analysis on all environmental sample types and matrices, so it is vital to consult with the laboratory to understand their capabilities before sending samples. Laboratory availability:",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "ContacttheEPA/HQ-EOC (202-564-3850) for Environmental Response Laboratory Network (ERLN) laboratories equipped for the analysis of ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "spores in environmental samples. Additional laboratory \u0000F\u0000D\u0000S\u0000D\u0000F\u0000L\u0000W\u0000\\\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000W\u0000K\u0000U\u0000R\u0000X\u0000J\u0000K\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003Laboratory Response Network (LRN) and the Integrated Consortium of Laboratory Networks (ICLN). Analytical goals:",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "Analytical goals may change as the response progresses, and laboratory analysis can follow a tiered approach, or algorithm, when implementing different analytical methods, particularly when needed to address a large ",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2022Update: 2021Page 7of 11smooth, non-porous surfaces: https://www.cdc.gov/niosh/topics/emres/surface-sampling-bacillus-anthracis.html).b.Surface: Swab Sampling (for non-porous surfaces): sterile swabs moistened with sterile 1X phosphate- buffered saline with 0.01% Tween-20 (PBST) are used to sample 4 in2area of non-porous, small, hard-to-reach or irregular shaped surfaces (e.g., keyboards, air register vanes).c.Surface: Micro-Vacuum Sampling (for porous and/or irregular shaped surfaces): 37mm Cassettes, pre-loaded \u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u0017\u0000\u0018\u0002\u001d\u0000P\u0000\u0003\u0000P\u0000L\u0000[\u0000H\u0000G\u0000\u0003\u0000F\u0000H\u0000O\u0000O\u0000X\u0000O\u0000R\u0000V\u0000H\u0000\u0003\u0000I\u0000L\u0000O\u0000W\u0000H\u0000U\u0000\u0003\u0000 \u00000\u0000&\u0000(\u0000 \u0000\u0003\u0000 \u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u00006\u0000.\u0000&\u0000\u0003\u0000\u0015\u0000\u0015\u0000\u0018-3- \u0000\u0013\u0000\u0014\u0000 \u0000\u000f\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u001b\u0002\u001d\u0000P\u0000\u0003\u0000S\u0000R\u0000U\u0000H\u0000\u0003\u0000V\u0000L\u0000]\u0000H\u0000\u0003\u00000\u0000&\u0000(\u0000\u0003\u0000 \u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u0000=\u0000H\u0000I\u0000R\u0000Q\u0000\u0003\u0000\u001a\u0000\u0016\u0000\u0017\u0000\u0018\u0000&\u0000&\u0000 \u0000\u0003\u0000R\u0000U\u0000\u0003\u0000\u0013\u0000\u0011\u0000\u0016\u0002\u001d\u0000P\u0000\u0003\u00003\u00007\u0000)\u0000(\u0000\u0003\u0000I\u0000L\u0000O\u0000W\u0000H\u0000U\u0000V\u0000\u0003\u0000 \u0000L\u0000\u0011\u0000H\u0000\u0011\u0000\u000f\u0000\u0003\u00006\u0000.\u0000&\u0000\u0003\u0000\u0015\u0000\u0015\u0000\u0018-1723), are \u0000X\u0000V\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000F\u0000R\u0000Q\u0000M\u0000X\u0000Q\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000S\u0000H\u0000U\u0000V\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000X\u0000P\u0000S\u0000V\u0000\u0003\u0000 \u0000\u0000\u0018\u0000\u0003\u0000O\u0000S\u0000P\u0000\u0003air flow rate) or an equivalent vacuum source to collect samples from a 144 in2area (https://www.ncbi.nlm.n ih.gov/pmc/articles/PMC4780263/pdf/nihms-763404.pdf).d.Air: Air samples can be collected using low-volume air filtration sampling (e.g., MCE, PTFE, gelatin filter), impactors, or impinger methods. Selection of the technique required for air sampling is based primarily on site-specific sampling objectives and strategies, the analyses to be performed, conditions of the indoor environment, fate and transport of the pathogen, and the physiological characteristics of the pathogen, including pathogen size. Refer to the sampling methods and manufacturer instructions for flow rates and sampling times (see eSAM: https://www.epa.gov/esam/sample- collection-information-documents-scids). Ensure that the appropriate pump is used for the selected sampling method.\u0000xWater: spores can persist in water, which may contain an oxidant, either applied as a disinfectant in a water system or introduced during decontamination activities. To avoid interference with analysis, the oxidant needs to be neutralized immediately upon collec tion with a sodium thiosulfate or other neutralizer at the concentration specified by the sampling protocol (see \u0000³Sampling Guidance for Unknown Contaminants in Drinking Water,\u0000´EPA-817-R-08-003:https://www.epa.gov/sites/production/files/2017- 02/documents/sampling_guidance_for_unknown_contaminants_in_drinking_water_02152017_final.pdf). Even for a drinking water system, in which residual oxidant levels can vary substantially throughout the system and may be minimal in some locations, assume that a sample contains an oxidant and neutralize according to the sampling protocol. \u0000xSoil:For areas where soil deposition of the agent is suspected to have occurred (i.e., where aerosols or liquid droplets have been present), soil samples of predetermined depth can be collected. The depth of sample and handling of vegetation should be prescribed based on site-specificobjectives.7. Animal and Wildlife Samples: Upon confirmation of an outbreak, ensure responsible agencies are notified immediately because anthrax is a reportable zoonotic disease. Notify the state veterinarian for wildlife fatality. Federal points of contac t include USDA at 202-720-5711and the CDC Emergency Operations Center at 770-488-7100.Note:FieldDetection technologies and other similar analytical techniques listed here cannot distinguish between viable and non-viable spores. Culture-based methods may be necessary to adequately assess risk.8.3. Available technologies:The following table summarizes some available technologies by which responders may be able to obtain results within a comparatively short time frame. In historical incidents, such availability has been from: 1) Civil Support Team (CST) mobile labs (Analytical Laboratory System(ALS)), and 2) local public health laboratories that \u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u00005\u00001\u0000\u000f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\\\u0000\u0003\u0000K\u0000D\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000H\u0000T\u0000X\u0000L\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000S\u0000O\u0000D\u0000W\u0000I\u0000R\u0000U\u0000P\u0000V\u0000\u0011\u0000\u0003\u0000$\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000W\u0000U\u0000D\u0000G\u0000H-off for availability, either of them may not have the capabilities to prepare certain types of samples for analysis. The site-specific types of samples should be discussed before relying on their capabilities. For technologies listed below \u0000D\u0000V\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000³\u0000O\u0000D\u0000E\u0000V\u0000\u000f\u0000´\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000J\u0000H\u0000\u0003over time; contact the EPA/HQ-EOC (202-564-3850) for current information.Platform \u0000±AvailabilityWhere usedPotential purposesImmunoassay [Hand-\u0000±CSTField Suggestive of presence/absence through immunological features\u0000±CommercialFieldSuggestive of presence/absence through immunological featuresPCR \u0000±CSTMobile Lab (CST ALS)Detection of genesPCR \u0000±LabsFixed Lab (BioWatch, LRN, ERLN)Detection of genes9. Laboratory AnalysisNote:Many labs will not be able to perform analysis on all environmental sample types and matrices, so it is vital to consult with the laboratory to understand their capabilities before sending samples. Laboratory availability: ContacttheEPA/HQ-EOC (202-564-3850) for Environmental Response Laboratory Network (ERLN) laboratories equipped for the analysis of spores in environmental samples. Additional laboratory \u0000F\u0000D\u0000S\u0000D\u0000F\u0000L\u0000W\u0000\\\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000W\u0000K\u0000U\u0000R\u0000X\u0000J\u0000K\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003Laboratory Response Network (LRN) and the Integrated Consortium of Laboratory Networks (ICLN). Analytical goals: Analytical goals may change as the response progresses, and laboratory analysis can follow a tiered approach, or algorithm, when implementing different analytical methods, particularly when needed to address a large",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 37,
+        "repeatedHeaderFooterBlockCount": 12,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 7,
+      "humanPageNumber": 8,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Bacillus anthracis(causes Anthrax)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "February",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2022Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2021Page 8of 11number of samples. For example, some methods are generally more rapid than more definitive, and might be used during the initial stages of response to evaluate the extent of contamination. Such methods also might be used to identify samples ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "that should be analyzed using more extensive methods. These more extensive analytical methods should be considered for use when: 1) earlier analysis indicates the presence of ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "spores, 2) a smaller subset of samples requires analysis, or 3) as required for a tiered approach to environmental decontamination/cleanup. Depending on the goals of the decontamination/cleanup phase, ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "spore viability assessment methods may be needed for sample analysis. Analytical methods: \u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00006\u0000$\u00000\u0000\u0003\u0000\u000bhttps://www.epa.gov/esam/selected-analytical-methods-environmental-remediation",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "-and-recovery-sam) with a reference to EPA\u0000¶\u0000V\u0000³Protocol for Detection of Bacillus anthracisfrom Environmental Samples During the Remediation Phase of an Anthrax Incident\u0000\u000f\u0000´\u0000\u0003\u00006\u0000H\u0000F\u0000R\u0000Q\u0000G\u0000\u0003\u0000(\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\u0003(",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHSRC&dirEntryId=338673), which details multiple analytical methods for different environmental sample types and analytical goals, ranging from detecting presence/absence of DNA of ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "by real-time PCR to detecting live/viable spores by microbiological plate culture, and Rapid Viability PCR (RV-PCR) method.10. Environmental Decontamination/CleanupWARNING: DO NOT BEGINFULL-SCALEDECONTAMINATION WORK UNTIL A COMPREHENSIVE ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED (see WASTE MANAGEMENT section below).CAUTION: Spraying decontamination solutions may re-aerosolize spores. For more detailed decontamination information, contacttheEPA/HQ-EOC at 202-564-3850.CAUTION:",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Decontaminant solutions or fumigants have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of bleach results in chlorine vapors, while fumigants may be used at con",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "centrations above their IDLH levels).10.1. Decontamination/Cleanup Planning:A site-",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003Incident Command System (ICS)",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "channelsprior to decontamination activities. The plan shouldconsider: \u0000xNature of contamination,including physical properties,and how it entered the contaminated area of facility or area; \u0000xE",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "xtent of contamination, including the amount and possible pathways that have or could have spread the contamination; and \u0000xObjectives of decontamination, including decontamination of critical items for re-use and the treatment, removal, or ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "packaging of other items for disposal.General Considerations: An evaluation should be undertaken that considers public safety, total cost, impact on the ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "facility, wastes generated, as well as the time the facility or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. It is advisable to isolate the contaminated area. Large volumes of ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "decontamination wastes may be generated that will need to be collected, treated, and properly disposed of.Disposal Option:Certain materials may be resistant to decontamination techniques or it may be cheaper to discard and ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "replace than to decontaminate and restore. In general, for porous materials that are non-essential (e.g., carpet, upholstered furniture), it is recommended to remove and manage these items as contaminated waste.Environmental Persistence:",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "Bacillus anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "spores are generally stable in the environment and somenaturalattenuation can occur, but this depends on the exposure to solar light. It is not advised to rely on natural attenuation as a treatment option.Temporary Barrier Option:",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "If the contaminated area cannot be immediately remediated, a temporary barrier option may be desirable in which physical barriers (e.g., plastic sheeting) are used to immobilize and prevent the agent ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "contamination from spreading. Such options can also be a temporary solution until a final decontamination and disposal strategy can be implemented.10.2. Decontamination Strategy:Dealing with gross decontamination or source of contamination h",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "as been the first step in many historical ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "responses. A site-specific decontamination strategy can be developed by designating contaminated areas into several broad categories: 1)contaminated materials, 2) surfaces requiring remediation, 3) large volumetric spaces, and 4) sensitive and irreplacea",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "ble items. Aqueous waste is covered in the AQUEOUS WASTE STERILIZATION AND DISPOSAL section below. CAUTION:The decontamination strategies presented below for each of the four broad categories may needto be adjusted to ensure decontamination under site-sp",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "ecific conditions.Spore preparations and other factors may impact associated decontamination strategies and should be considered to pose a health hazard until proven otherwise.Contaminated Materials:For removal of visible powders or other contaminated o",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "bjects or materials, such material may be transferred carefully into containers, with care being taken to minimize re-aerosolization.Surfaces Requiring Remediation:Dirt, grime, and other coatings can reduce the effectiveness of decontamination; pre-clean",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "ing surfaces with soap and water may be needed before the application of decontamination solutions,but the resulting pre-cleaningrinsatesmay contain and spread contaminants. Decontamination solutions should be deployed as a low-pressure spray (<30 psi) ",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "whenever possible to avoid potential re-aerosolization of agent. Prior to decontaminant use,product-specific safety requirements should be incorporated into the site-specific HASP.A strategy for visible material is:",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2022Update: 2021Page 8of 11number of samples. For example, some methods are generally more rapid than more definitive, and might be used during the initial stages of response to evaluate the extent of contamination. Such methods also might be used to identify samples that should be analyzed using more extensive methods. These more extensive analytical methods should be considered for use when: 1) earlier analysis indicates the presence of spores, 2) a smaller subset of samples requires analysis, or 3) as required for a tiered approach to environmental decontamination/cleanup. Depending on the goals of the decontamination/cleanup phase, spore viability assessment methods may be needed for sample analysis. Analytical methods: \u0000/\u0000D\u0000E\u0000R\u0000U\u0000D\u0000W\u0000R\u0000U\u0000\\\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00006\u0000$\u00000\u0000\u0003\u0000 https://www.epa.gov/esam/selected-analytical-methods-environmental-remediation -and-recovery-sam) with a reference to EPA\u0000¶\u0000V\u0000³Protocol for Detection of Bacillus anthracisfrom Environmental Samples During the Remediation Phase of an Anthrax Incident\u0000\u000f\u0000´\u0000\u0003\u00006\u0000H\u0000F\u0000R\u0000Q\u0000G\u0000\u0003\u0000(\u0000G\u0000L\u0000W\u0000L\u0000R\u0000Q\u0000\u0003( https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHSRC&dirEntryId=338673), which details multiple analytical methods for different environmental sample types and analytical goals, ranging from detecting presence/absence of DNA of by real-time PCR to detecting live/viable spores by microbiological plate culture, and Rapid Viability PCR (RV-PCR) method.10. Environmental Decontamination/CleanupWARNING: DO NOT BEGINFULL-SCALEDECONTAMINATION WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED (see WASTE MANAGEMENT section below).CAUTION: Spraying decontamination solutions may re-aerosolize spores. For more detailed decontamination information, contacttheEPA/HQ-EOC at 202-564-3850.CAUTION: Decontaminant solutions or fumigants have unique safety/PPE requirements due to their own toxicity or that of breakdown products during use (e.g., use of bleach results in chlorine vapors, while fumigants may be used at con centrations above their IDLH levels).10.1. Decontamination/Cleanup Planning:A site- \u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003Incident Command System (ICS) channelsprior to decontamination activities. The plan shouldconsider: \u0000xNature of contamination,including physical properties,and how it entered the contaminated area of facility or area; \u0000xE xtent of contamination, including the amount and possible pathways that have or could have spread the contamination; and \u0000xObjectives of decontamination, including decontamination of critical items for re-use and the treatment, removal, or packaging of other items for disposal.General Considerations: An evaluation should be undertaken that considers public safety, total cost, impact on the facility, wastes generated, as well as the time the facility or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. It is advisable to isolate the contaminated area. Large volumes of decontamination wastes may be generated that will need to be collected, treated, and properly disposed of.Disposal Option:Certain materials may be resistant to decontamination techniques or it may be cheaper to discard and replace than to decontaminate and restore. In general, for porous materials that are non-essential (e.g., carpet, upholstered furniture), it is recommended to remove and manage these items as contaminated waste.Environmental Persistence: spores are generally stable in the environment and somenaturalattenuation can occur, but this depends on the exposure to solar light. It is not advised to rely on natural attenuation as a treatment option.Temporary Barrier Option: If the contaminated area cannot be immediately remediated, a temporary barrier option may be desirable in which physical barriers (e.g., plastic sheeting) are used to immobilize and prevent the agent contamination from spreading. Such options can also be a temporary solution until a final decontamination and disposal strategy can be implemented.10.2. Decontamination Strategy:Dealing with gross decontamination or source of contamination h as been the first step in many historical responses. A site-specific decontamination strategy can be developed by designating contaminated areas into several broad categories: 1)contaminated materials, 2) surfaces requiring remediation, 3) large volumetric spaces, and 4) sensitive and irreplacea ble items. Aqueous waste is covered in the AQUEOUS WASTE STERILIZATION AND DISPOSAL section below. CAUTION:The decontamination strategies presented below for each of the four broad categories may needto be adjusted to ensure decontamination under site-sp ecific conditions.Spore preparations and other factors may impact associated decontamination strategies and should be considered to pose a health hazard until proven otherwise.Contaminated Materials:For removal of visible powders or other contaminated o bjects or materials, such material may be transferred carefully into containers, with care being taken to minimize re-aerosolization.Surfaces Requiring Remediation:Dirt, grime, and other coatings can reduce the effectiveness of decontamination; pre-clean ing surfaces with soap and water may be needed before the application of decontamination solutions,but the resulting pre-cleaningrinsatesmay contain and spread contaminants. Decontamination solutions should be deployed as a low-pressure spray (<30 psi) whenever possible to avoid potential re-aerosolization of agent. Prior to decontaminant use,product-specific safety requirements should be incorporated into the site-specific HASP.A strategy for visible material is:",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 37,
+        "repeatedHeaderFooterBlockCount": 12,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 8,
+      "humanPageNumber": 9,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Bacillus anthracis(causes Anthrax)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "February",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2022Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2021Page 9of 11\u0000xCover any contaminated areasgentlywith towel(s) or wipes (overlapping each other if necessary) and applying decontamination solution (see options listed below) starting at the perimeter and wetting towards the center of the ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "contaminated area. \u0000xEnsure sufficient contact time (e.g., at least 15 (wetted) minutes, dependent on option) is provided and ensure each \u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000N\u0000H\u0000S\u0000W\u0000\u0003\u0000³\u0000V\u0000R\u0000S\u0000S\u0000L\u0000Q\u0000J\u0000´\u0000\u0003\u0000Z\u0000H\u0000W\u0000\u0003\u0000G\u0000X\u0000U\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000\u0011\u0000\u0003\u0000x",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Remove the towel(s) then wipe up the residual dampness/drops of decontamination solution until the surface is dry.\u0000xReapply decontamination solution to the bare surface and wipe up again with more towel(s) then let surface air dry. ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "All contaminated materials used in the decontamination process (e.g., fabric towels, wipes) should be labeled and properly discarded as designated by the waste management specialist. Paper towels should be avoided, unless this is the only option.",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "The most effective and readily available sporicidal liquids that could be applied to a surface via a spray or wipe include diluted bleach, pH-adjusted bleach (PAB), peroxyacetic acid (PAA), dichlor (pool shock granules that release ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "hypochlorite once dissolved), and COTS cleaning products with at least 1.8% hypochlorite. Directions for preparing PAB are provided below in Table 1.Each sporicidal liq",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "uid has a recommended operational range of parameters (e.g., temperature, concentration, number of spray applications,contact time) that must be followed. These sporicides generally are more effective at higher temperatures (>70°F), and with contact times",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "of at least 1 hour. As a general rule, the reaction rate decreases with a decrease in temperature. Acquisition and use of these products should be done in consultation with SMEs. Liquid sporicides registered with EPA as sterilants (List A) could also be c",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "onsidered for use and include chlorine dioxide and hydrogen peroxide. Efficacy of a sporicide will depend on the surface material being decontaminated (e.g., PAA is typically ineffective for concrete), and many of the above sporicides have some diminished ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "efficacy on organic and/or porous materials and may require several applications. Decontamination solutions should be used on the same day that they are mixed, except PAB, which should be used within three hours of being prepared.Table 1.Directions for ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "preparing a pH-adjusted bleach (PAB) solutionIngredients:\u00009Water (8 parts)\u00009Liquid bleach (minimum 5-6%, EPA registered hypochlorite) (1 part)\u00009White vinegar (minimum 4% acidity) (1 part)Mixing directions:\u00009Transfer known volume of clean water to ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "vessel (e.g., 55-gallon drum, tank)\u00009Add bleach to water. The amount of 5-6% hypochlorite bleach required to make a 10% bleach solution is calculated by multiplying the volume of water in the vessel by 0.125. For ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "higher, known initial bleach concentrations,the amount of bleach can be decreased proportionately. \u00009Add vinegar to water/bleach mixture, the amount is the same as the amount of bleach.\u00009Stir or agitate until completely mixed.\u00009",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "Measure pH and verify it is between 6-7. Add additional vinegar if pH adjustment is needed.Important Notes:1. Mixing bleach and acid solutions can release IDLH levels of chlorine. These activities should be addressed in the site-specific ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "HASP. If possible, the solutions should be mixed outdoors or in a well-ventilated area.2. Allow sufficient head space (i.e., 10-20%) to allow space for mixing (e.g., 50 gallons in a 55-gallon drum).",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "3. Hypochlorite bleach can degrade over time. The degradation rate of white vinegar is comparatively slow. Mix and use solutions within threehours.Large Volumetric Spaces: This category is for spaces that are typically larger in size but havelower leve",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "ls of contamination. Examples include residues from prior decontamination activities and difficult-to-access areas infiltrated by aerosols, such as HVAC systems. Operational conditions listed below may be effective,but should be verified for site-specific",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "conditions.Fumigants include chlorine dioxide, vaporized hydrogen peroxide, methyl bromide, and paraformaldehyde. When selecting, consider historical use of these chemicals as fumigants, material compatibility, penetration capacity, method of removal at ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "the end of fumigation, as well as their physical, chemical, and toxicological properties. Each chemical has a specified range for operational variables (e.g., temperature, relative humidity, concentration, contact time) that must be followed. Fumigants are",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "more effective at temperatures >70°F and >70% relative humidity. Acquisition and use of these products should be done in consultation with SMEs.Sensitive and Irreplaceable Items:Certain items, usually those which are sensitive or valued for a variety of",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "reasons (e.g., mission criticality, personal or societal significance, rarity, cost) may need to be decontaminated rather than managed as waste. Some of these items, however, will be devalued or rendered unusable if they are chemically or physically incom",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "patible with the decontaminants. Irradiation and chemical sterilization may be useful in decontaminating items that are to be returned to owners. These items will need to be bagged and tagged prior to removal from the contaminated area to be treated ex-sit",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "u. Such options may include:1)Ethylene oxide sterilization can be used to decontaminate items in an off-site sterilization chamber. 2)Gamma irradiation and electron beam technologies can be used to inactivate ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "spores at off-site locations. This procedure may destroy magnetic media.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2022Update: 2021Page 9of 11\u0000xCover any contaminated areasgentlywith towel(s) or wipes (overlapping each other if necessary) and applying decontamination solution (see options listed below) starting at the perimeter and wetting towards the center of the contaminated area. \u0000xEnsure sufficient contact time (e.g., at least 15 (wetted) minutes, dependent on option) is provided and ensure each \u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000N\u0000H\u0000S\u0000W\u0000\u0003\u0000³\u0000V\u0000R\u0000S\u0000S\u0000L\u0000Q\u0000J\u0000´\u0000\u0003\u0000Z\u0000H\u0000W\u0000\u0003\u0000G\u0000X\u0000U\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000\u0011\u0000\u0003\u0000x Remove the towel(s) then wipe up the residual dampness/drops of decontamination solution until the surface is dry.\u0000xReapply decontamination solution to the bare surface and wipe up again with more towel(s) then let surface air dry. All contaminated materials used in the decontamination process (e.g., fabric towels, wipes) should be labeled and properly discarded as designated by the waste management specialist. Paper towels should be avoided, unless this is the only option. The most effective and readily available sporicidal liquids that could be applied to a surface via a spray or wipe include diluted bleach, pH-adjusted bleach (PAB), peroxyacetic acid (PAA), dichlor (pool shock granules that release hypochlorite once dissolved), and COTS cleaning products with at least 1.8% hypochlorite. Directions for preparing PAB are provided below in Table 1.Each sporicidal liq uid has a recommended operational range of parameters (e.g., temperature, concentration, number of spray applications,contact time) that must be followed. These sporicides generally are more effective at higher temperatures (>70°F), and with contact times of at least 1 hour. As a general rule, the reaction rate decreases with a decrease in temperature. Acquisition and use of these products should be done in consultation with SMEs. Liquid sporicides registered with EPA as sterilants (List A) could also be c onsidered for use and include chlorine dioxide and hydrogen peroxide. Efficacy of a sporicide will depend on the surface material being decontaminated (e.g., PAA is typically ineffective for concrete), and many of the above sporicides have some diminished efficacy on organic and/or porous materials and may require several applications. Decontamination solutions should be used on the same day that they are mixed, except PAB, which should be used within three hours of being prepared.Table 1.Directions for preparing a pH-adjusted bleach (PAB) solutionIngredients:\u00009Water (8 parts)\u00009Liquid bleach (minimum 5-6%, EPA registered hypochlorite) (1 part)\u00009White vinegar (minimum 4% acidity) (1 part)Mixing directions:\u00009Transfer known volume of clean water to vessel (e.g., 55-gallon drum, tank)\u00009Add bleach to water. The amount of 5-6% hypochlorite bleach required to make a 10% bleach solution is calculated by multiplying the volume of water in the vessel by 0.125. For higher, known initial bleach concentrations,the amount of bleach can be decreased proportionately. \u00009Add vinegar to water/bleach mixture, the amount is the same as the amount of bleach.\u00009Stir or agitate until completely mixed.\u00009 Measure pH and verify it is between 6-7. Add additional vinegar if pH adjustment is needed.Important Notes:1. Mixing bleach and acid solutions can release IDLH levels of chlorine. These activities should be addressed in the site-specific HASP. If possible, the solutions should be mixed outdoors or in a well-ventilated area.2. Allow sufficient head space (i.e., 10-20%) to allow space for mixing (e.g., 50 gallons in a 55-gallon drum). 3. Hypochlorite bleach can degrade over time. The degradation rate of white vinegar is comparatively slow. Mix and use solutions within threehours.Large Volumetric Spaces: This category is for spaces that are typically larger in size but havelower leve ls of contamination. Examples include residues from prior decontamination activities and difficult-to-access areas infiltrated by aerosols, such as HVAC systems. Operational conditions listed below may be effective,but should be verified for site-specific conditions.Fumigants include chlorine dioxide, vaporized hydrogen peroxide, methyl bromide, and paraformaldehyde. When selecting, consider historical use of these chemicals as fumigants, material compatibility, penetration capacity, method of removal at the end of fumigation, as well as their physical, chemical, and toxicological properties. Each chemical has a specified range for operational variables (e.g., temperature, relative humidity, concentration, contact time) that must be followed. Fumigants are more effective at temperatures >70°F and >70% relative humidity. Acquisition and use of these products should be done in consultation with SMEs.Sensitive and Irreplaceable Items:Certain items, usually those which are sensitive or valued for a variety of reasons (e.g., mission criticality, personal or societal significance, rarity, cost) may need to be decontaminated rather than managed as waste. Some of these items, however, will be devalued or rendered unusable if they are chemically or physically incom patible with the decontaminants. Irradiation and chemical sterilization may be useful in decontaminating items that are to be returned to owners. These items will need to be bagged and tagged prior to removal from the contaminated area to be treated ex-sit u. Such options may include:1)Ethylene oxide sterilization can be used to decontaminate items in an off-site sterilization chamber. 2)Gamma irradiation and electron beam technologies can be used to inactivate spores at off-site locations. This procedure may destroy magnetic media.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 30,
+        "repeatedHeaderFooterBlockCount": 8,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 9,
+      "humanPageNumber": 10,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Bacillus anthracis(causes Anthrax)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "February",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2022Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2021Page 10of 113)Ultraviolet-C light produced with a mercury bulb is generally effective in inactivating ",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "spores, provided no shading occurs. Appropriate SMEs should be consulted for application of these methods.Large sensitive items may require additional protection from the decontaminant being used for treatment of the ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "contaminated area and may be treated with an optional method that is compatible with the item.Verification of Decontamination: Site-and situation-specific. The local public health department may have jurisdiction over verification. ConsulttheEPA/HQ-",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "EOC at 202-564-3850 for more information.11. Aqueous Waste (including PPE wash water and decontamination wastewater)Sterilization and Disposal CAUTION:This section provides information on sterilizing and disposing of PPE wash water and residual ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "decontamination wastewater potentially containing viable ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "spores from decontamination of PPE and environmental decontamination/cleanupoperations. This water should be sterilized prior to disposal. Disinfectant ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "concentration, exposure time, pH, and temperature are important parameters in the sterilization process. Aqueous waste should be collected in DOT-approved containers for transportation,as described below.",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "If there is a need to dispose of the aqueous waste at a wastewater utility, responders need to work with wastewater utilitiesto ensure that the utility will accept the aqueous waste. Wastewater utilities will identify requirements that will need to be met",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "for acceptance. For instance, once sterilization is complete, the wash water may require additional treatment for removing residual oxidant (e.g., chlorine) prior to being accepted by a wastewater treatment facility. Removal of residual oxidant can be ver",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "ified through readily available field kits, including test strips, perhaps specified by the wastewater utility since they may use these in their routine operations. Verification of sterilization may be required before disposal, and wastewater utilities may",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "be less familiar with verification procedures.To support such verification, EPA developed a streamlined bench-scale procedure for testing the efficacy of chlorine bleach for the inactivation of ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "spores in aqueous waste originating from cleanup of a contaminated site. Full-scale procedures exist for the treatment of such aqueous waste with chlorine bleach, and these procedures have been tested ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "and the results published. However, aqueous waste generated at a specific cleanup site is unique, potentially different from the aqueous waste tested in the published research. The streamlined bench-scale procedure helps emergency management ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "personnel test the efficacy of chlorine bleach for the inactivation of ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "spores in aqueous waste from thesite cleanup. The streamlined bench scale procedure is not official EPA guidance on what must be done, but is meant to be a ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "practical resource for responders to use in combination with other resources when faced with the challenge of dealing with aqueous waste from this type of cleanup that could contain ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "spores. R\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000³A Bench-Scale Procedure for Evaluating Chlorine Bleach Inactivation of BacillusSpores in Wash Water from a Cleanup of a Site with Biothreat Agents\u0000\u000f\u0000´\u0000\u0003EPA/600/R-18/296: ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHSRC&dirEntryId=344944.Transportation of Aqueous Wastes: PPE Wash Water and Other Decontamination Effluents",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "In some instances, the water may need to be transported from the contaminated site for treatment, storage, or disposal. The U.S. Department of Transportation (DOT) Hazardous Materials Regulations (Hazardous Materials Regulations (HMR; 49 CFR Parts 100-",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "185)) provide requirements for the packaging, labeling, permitting, and transporting of hazardous materials, including chemicaland biologicalcontaminants. For information about transportation requirements for ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "hazardous materials, contact the DOT Hazardous Materials Information Line at 800-467-4922 or contact the state transportation department. States may have additional regulations, and statetransportation agencies should be contacted ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "for information regarding state-specific requirements. It may be useful to add a DOT expert to the ICS as a technical advisor. Transportation of the water can be logistically complex and may add to the overall cost of remediation. Refer tothe\u0000³",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "Guidance Manual for the Control of Wastes Hauled to Publicly Owned Treatment Works\u0000\u000f\u0000´\u0000\u0003EPA-833-B-98-003(https://www3.epa.gov/npdes/pubs/hwfinal.pdf) forsample forms that a Publicly Owned Treatment Works (POTW)might ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "use to collect information to determine whether it can/will accept wastes transported to POTW.12. Waste Managementfor Environmental Contamination from Biological IncidentWARNING: DEVELOP A COMPREHENSIVE WASTE MANAGEMENT PLAN PRIOR TO ANY SITE ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "ASSESSMENT OR CLEANUP WORK.Waste generated from site assessment and cleanup activities likely will be set aside for later treatment/decontamination ",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "prior to being sent off site. Options for treatment/decontamination and disposal of these wastes include, but are not limitedto: physical (e.g., incineration, autoclaving) and chemical (e.g., chemical disinfection, fumigation) and then testing to ",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "ensure that no viable ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "spores were detected. Verification of decontamination may include multiple lines of evidence and/or environmental sampling based on consultation with site-specific responsible officials. ContacttheEPA/HQ-EOC at 202-564-3850 for further assistance.",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "Solid waste disposal for agent-contaminated wastes generated from decontamination activities will be problematic. On-site treatment prior to transport for off-site disposal may ease the requirements for special transportation permits.",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "Landfills willing to take potentially agent-contaminated solid wastes may be limited due to state requirements, even when waste has been treated on-site and sampling/analysis suggests that no residual agent remains. Even with permission from ",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2022Update: 2021Page 10of 113)Ultraviolet-C light produced with a mercury bulb is generally effective in inactivating spores, provided no shading occurs. Appropriate SMEs should be consulted for application of these methods.Large sensitive items may require additional protection from the decontaminant being used for treatment of the contaminated area and may be treated with an optional method that is compatible with the item.Verification of Decontamination: Site-and situation-specific. The local public health department may have jurisdiction over verification. ConsulttheEPA/HQ- EOC at 202-564-3850 for more information.11. Aqueous Waste (including PPE wash water and decontamination wastewater)Sterilization and Disposal CAUTION:This section provides information on sterilizing and disposing of PPE wash water and residual decontamination wastewater potentially containing viable spores from decontamination of PPE and environmental decontamination/cleanupoperations. This water should be sterilized prior to disposal. Disinfectant concentration, exposure time, pH, and temperature are important parameters in the sterilization process. Aqueous waste should be collected in DOT-approved containers for transportation,as described below. If there is a need to dispose of the aqueous waste at a wastewater utility, responders need to work with wastewater utilitiesto ensure that the utility will accept the aqueous waste. Wastewater utilities will identify requirements that will need to be met for acceptance. For instance, once sterilization is complete, the wash water may require additional treatment for removing residual oxidant (e.g., chlorine) prior to being accepted by a wastewater treatment facility. Removal of residual oxidant can be ver ified through readily available field kits, including test strips, perhaps specified by the wastewater utility since they may use these in their routine operations. Verification of sterilization may be required before disposal, and wastewater utilities may be less familiar with verification procedures.To support such verification, EPA developed a streamlined bench-scale procedure for testing the efficacy of chlorine bleach for the inactivation of spores in aqueous waste originating from cleanup of a contaminated site. Full-scale procedures exist for the treatment of such aqueous waste with chlorine bleach, and these procedures have been tested and the results published. However, aqueous waste generated at a specific cleanup site is unique, potentially different from the aqueous waste tested in the published research. The streamlined bench-scale procedure helps emergency management personnel test the efficacy of chlorine bleach for the inactivation of spores in aqueous waste from thesite cleanup. The streamlined bench scale procedure is not official EPA guidance on what must be done, but is meant to be a practical resource for responders to use in combination with other resources when faced with the challenge of dealing with aqueous waste from this type of cleanup that could contain spores. R\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000³A Bench-Scale Procedure for Evaluating Chlorine Bleach Inactivation of BacillusSpores in Wash Water from a Cleanup of a Site with Biothreat Agents\u0000\u000f\u0000´\u0000\u0003EPA/600/R-18/296: https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHSRC&dirEntryId=344944.Transportation of Aqueous Wastes: PPE Wash Water and Other Decontamination Effluents In some instances, the water may need to be transported from the contaminated site for treatment, storage, or disposal. The U.S. Department of Transportation (DOT) Hazardous Materials Regulations (Hazardous Materials Regulations (HMR; 49 CFR Parts 100- 185)) provide requirements for the packaging, labeling, permitting, and transporting of hazardous materials, including chemicaland biologicalcontaminants. For information about transportation requirements for hazardous materials, contact the DOT Hazardous Materials Information Line at 800-467-4922 or contact the state transportation department. States may have additional regulations, and statetransportation agencies should be contacted for information regarding state-specific requirements. It may be useful to add a DOT expert to the ICS as a technical advisor. Transportation of the water can be logistically complex and may add to the overall cost of remediation. Refer tothe\u0000³ Guidance Manual for the Control of Wastes Hauled to Publicly Owned Treatment Works\u0000\u000f\u0000´\u0000\u0003EPA-833-B-98-003(https://www3.epa.gov/npdes/pubs/hwfinal.pdf) forsample forms that a Publicly Owned Treatment Works (POTW)might use to collect information to determine whether it can/will accept wastes transported to POTW.12. Waste Managementfor Environmental Contamination from Biological IncidentWARNING: DEVELOP A COMPREHENSIVE WASTE MANAGEMENT PLAN PRIOR TO ANY SITE ASSESSMENT OR CLEANUP WORK.Waste generated from site assessment and cleanup activities likely will be set aside for later treatment/decontamination prior to being sent off site. Options for treatment/decontamination and disposal of these wastes include, but are not limitedto: physical (e.g., incineration, autoclaving) and chemical (e.g., chemical disinfection, fumigation) and then testing to ensure that no viable spores were detected. Verification of decontamination may include multiple lines of evidence and/or environmental sampling based on consultation with site-specific responsible officials. ContacttheEPA/HQ-EOC at 202-564-3850 for further assistance. Solid waste disposal for agent-contaminated wastes generated from decontamination activities will be problematic. On-site treatment prior to transport for off-site disposal may ease the requirements for special transportation permits. Landfills willing to take potentially agent-contaminated solid wastes may be limited due to state requirements, even when waste has been treated on-site and sampling/analysis suggests that no residual agent remains. Even with permission from",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 41,
+        "repeatedHeaderFooterBlockCount": 13,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 10,
+      "humanPageNumber": 11,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Bacillus anthracis(causes Anthrax)QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "[",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "February",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "2022Update: ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "replaced previous version dated September ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "2021Page 11of 11state regulators, individual facilities may refuse to accept these materials due to public perception or liability issues. Certain treatment/disposalmethods (e.g., incineration) may be expensive or impractical to dispose of agent-",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "contaminated wastes, due to scarcity of suitable facilities. Multiple methods or facilities may need to be used, and size reduction may berequired, which presents a potential for re-aerosolization of contaminants.",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "Although testing may be desired to satisfy waste acceptance criteria specified by state regulators and/or treatment/disposal facilities, there are very limited options for measuring biological agent levels in commonwaste matrices. These options ",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "typically involve acquiring and/or preparing the samples in such a way as to be among the limited number of sample matrices that LRN and ERLN laboratories will accept (i.e., water, sponge sticks, 37mm vacuum filters). Other approaches ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "(e.g., proof of compliance with minimum operating conditions of on-site treatment equipment) could possibly be used to specify waste acceptance criteria. All waste management options along with their applicable waste acceptance criteria should be",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "investigated as early into the response process as possible and included in pre-incident planning documents.Transportation of potentially contaminated wastes from the site to a treatment/disposal facility may present challenges as well. First, agreements",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "must be reached between the offeror and acceptor BEFORE transport, followed by timely public notification of the transport and disposal activities. Any waste contaminated with ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "B. anthracis",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "spores would be considered a Category A infectious substance for transportation purposes. See \u0000³Managing Solid Waste Contaminated with a Category A Infectious Substance\u0000´(August 2019): https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/transporting-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "infectious-substances/6821/cat-waste-planning-guidance-final-2019-08.pdf.For a large incident, analytical requirements may overwhelm available laboratory capacity and waste samples willbe ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "competing for a place in the laboratory queue with clinical samples, characterization samples, and post-decontamination clearance samples. Therefore, waste samples need to be included in the prioritization of the laboratory workflow.EPA has developed ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "an online tool to help communities and facilities develop pre-incident waste management plans. This tool can be found at http://wasteplan.epa.gov.EPA has developed I-WASTE (http://www2.ergweb.com/bdrtool/login.asp), a web-",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "based tool that contains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility.",
+          "role": "BODY"
+        }
+      ],
+      "text": "[ 2022Update: 2021Page 11of 11state regulators, individual facilities may refuse to accept these materials due to public perception or liability issues. Certain treatment/disposalmethods (e.g., incineration) may be expensive or impractical to dispose of agent- contaminated wastes, due to scarcity of suitable facilities. Multiple methods or facilities may need to be used, and size reduction may berequired, which presents a potential for re-aerosolization of contaminants. Although testing may be desired to satisfy waste acceptance criteria specified by state regulators and/or treatment/disposal facilities, there are very limited options for measuring biological agent levels in commonwaste matrices. These options typically involve acquiring and/or preparing the samples in such a way as to be among the limited number of sample matrices that LRN and ERLN laboratories will accept (i.e., water, sponge sticks, 37mm vacuum filters). Other approaches (e.g., proof of compliance with minimum operating conditions of on-site treatment equipment) could possibly be used to specify waste acceptance criteria. All waste management options along with their applicable waste acceptance criteria should be investigated as early into the response process as possible and included in pre-incident planning documents.Transportation of potentially contaminated wastes from the site to a treatment/disposal facility may present challenges as well. First, agreements must be reached between the offeror and acceptor BEFORE transport, followed by timely public notification of the transport and disposal activities. Any waste contaminated with spores would be considered a Category A infectious substance for transportation purposes. See \u0000³Managing Solid Waste Contaminated with a Category A Infectious Substance\u0000´(August 2019): https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/transporting- infectious-substances/6821/cat-waste-planning-guidance-final-2019-08.pdf.For a large incident, analytical requirements may overwhelm available laboratory capacity and waste samples willbe competing for a place in the laboratory queue with clinical samples, characterization samples, and post-decontamination clearance samples. Therefore, waste samples need to be included in the prioritization of the laboratory workflow.EPA has developed an online tool to help communities and facilities develop pre-incident waste management plans. This tool can be found at http://wasteplan.epa.gov.EPA has developed I-WASTE (http://www2.ergweb.com/bdrtool/login.asp), a web- based tool that contains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices, packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 18,
+        "repeatedHeaderFooterBlockCount": 8,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

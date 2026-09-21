@@ -1,0 +1,3700 @@
+<!DOCTYPE html>
+<html class="" lang="en">
+  <head>
+    <title>
+      Managing Acute Radiation Syndrome (ARS) - Radiation Emergency Medical
+      Management
+    </title>
+    <meta charset="UTF-8" />
+
+    <!-- Cache-Control -->
+    <meta
+      http-equiv="Cache-Control"
+      content="no-store, no-cache, must-revalidate, max-age=0"
+    />
+
+    <!-- Pragma (for backwards compatibility) -->
+    <meta http-equiv="Pragma" content="no-cache" />
+
+    <!-- Expires tag set to a specific date and time -->
+    <meta http-equiv="Expires" content="Mon, 1 Jan 2024 00:00:00 GMT" />
+
+    <script>
+      // Attempt to break out of frames
+      if (window.top !== window.self) {
+        window.top.location = window.self.location;
+      }
+
+      // More robust frame-busting technique
+      (function (window) {
+        if (window.top !== window.self) {
+          // Use the best candidate for the location property
+          var targetLocation =
+            window.location || window.document.location || window.document.URL;
+          // Hide content and show a warning
+          document.body.style.display = "none";
+          window.top.location = targetLocation;
+        }
+      })(window);
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-NWD949H");
+    </script>
+    <!-- End Google Tag Manager -->
+    <link rel="canonical" href="https://remm.hhs.gov/ars.htm" />
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <!--<meta name="viewport" content="width=device-width">-->
+    <script src="modernizr.js"></script>
+    <link rel="stylesheet" href="/style1.css" media="screen" />
+    <link rel="stylesheet" href="/bootstrap.min.css" />
+    <link rel="stylesheet" href="/mega.css" />
+    <link rel="stylesheet" href="/megacustom.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300italic,400italic,600italic,700italic,700,400,300,100"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!--JAVASCRIPT STYLE HERE-->
+    <link
+      rel="stylesheet"
+      href="js/superbox/jquery.superbox.css"
+      type="text/css"
+      media="all"
+    />
+    <link
+      rel="stylesheet"
+      href="js/superbox/this_superbox.css"
+      type="text/css"
+      media="all"
+    />
+
+    <!--  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
+    <link rel="stylesheet" href="css/theme/jquery-ui.css" />
+    <!--<script src="http://code.jquery.com/jquery-1.9.1.js"></script>-->
+    <!--<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
+    <script src="js/jquery/jquery.js"></script>
+    <script src="js/jquery/jquery-ui.js"></script>
+
+    <script src="ars.js"></script>
+    <script language="Javascript" src="script.js"></script>
+
+    <!--dropdown menu-->
+    <!--<link rel="stylesheet" href="examples/css/sample.css" />-->
+    <!-- <msdropdown> -->
+    <link rel="stylesheet" type="text/css" href="css/msdropdown/dd.css" />
+    <script
+      type="text/javascript"
+      src="js/msdropdown/jquery.dd.min.js"
+    ></script>
+    <!-- </msdropdown> -->
+
+    <link rel="stylesheet" type="text/css" href="css/msdropdown/skin2.css" />
+    <script>
+      $(function () {
+        $("#tabs").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
+
+        $("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
+      });
+    </script>
+    <script>
+      $(document).ready(function (e) {
+        //$("#mycomp").msDropdown({visibleRows:4});
+        $("#mycomp").msDropdown();
+        $("#arsdropdown1").msDropdown();
+        $("#arsdropdown2").msDropdown();
+        $("#arsdropdown3").msDropdown();
+        $("#arsdropdown4").msDropdown();
+        $("#arsdropdown5").msDropdown();
+        $("#arsdropdown6").msDropdown();
+        $("#arsdropdown7").msDropdown();
+        $("#arsdropdown8").msDropdown();
+        $("#arsdropdown9").msDropdown();
+        $("#arsdropdown10").msDropdown();
+        $("#arsdropdown11").msDropdown();
+        $("#arsdropdown12").msDropdown();
+        $("#arsdropdown13").msDropdown();
+        $("#arsdropdown14").msDropdown();
+        $("#arsdropdown15").msDropdown();
+        $("#arsdropdown16").msDropdown();
+        $("#arsdropdown17").msDropdown();
+        $("#arsdropdown18").msDropdown();
+        $("#arsdropdown19").msDropdown();
+        $("#arsdropdown20").msDropdown();
+        $("#arsdropdown21").msDropdown();
+        $("#arsdropdown22").msDropdown();
+        $("#arsdropdown23").msDropdown();
+        $("#arsdropdown24").msDropdown();
+        $("#arsdropdown25").msDropdown();
+        $("#arsdropdown26").msDropdown();
+        $("#arsdropdown27").msDropdown();
+        $("#arsdropdown71").msDropdown();
+      });
+    </script>
+    <script language="Javascript" type="text/Javascript">
+      function checkrc(subsyn) {
+          var maxH = 0;
+          var maxC = 0;
+          var maxG = 0;
+          var maxN = 0;
+          var x;
+          if (subsyn == 'H') {
+              for (var i = 0; i < document.mainform_H.length; i++) {
+                  x = (document.mainform_H[i].selectedIndex - 1);
+                  if (x > maxH)
+                      maxH = x;
+              }
+              document.levelform.hemedeg.value = maxH;
+              if (maxH > 0)
+                  document.getElementById('hemetx_rc').innerHTML = 'Degree: <span class="redbold">H' + maxH + '</span>';
+              else
+                  document.getElementById('hemetx_rc').innerHTML = '';
+
+              /*if (document.levelform.rcdeg.value<maxH)
+                        document.levelform.rcdeg.value=maxH; */
+              newtreatment('H');
+          }
+          else if (subsyn == 'C') {
+              for (var i = 0; i < document.mainform_C.length; i++) {
+                  x = (document.mainform_C[i].selectedIndex - 1);
+                  if (x > maxC)
+                      maxC = x;
+              }
+              document.levelform.cutedeg.value = maxC;
+              if (maxC > 0)
+                  document.getElementById('cutetx_rc').innerHTML = 'Degree: <span class="redbold">C' + maxC + '</span>';
+              else
+                  document.getElementById('cutetx_rc').innerHTML = '';
+              /*if (document.levelform.rcdeg.value<maxC)
+                 document.levelform.rcdeg.value=maxC;*/
+              newtreatment('C');
+          }
+          else if (subsyn == 'G') {
+              for (var i = 0; i < document.mainform_G.length; i++) {
+                  x = (document.mainform_G[i].selectedIndex - 1);
+                  if (x > maxG)
+                      maxG = x;
+              }
+              document.levelform.gideg.value = maxG;
+              if (maxG > 0)
+                  document.getElementById('gitx_rc').innerHTML = 'Degree: <span class="redbold">G' + maxG + '</span>';
+              else
+                  document.getElementById('gitx_rc').innerHTML = '';
+              /*if (document.levelform.rcdeg.value<maxG)
+                 document.levelform.rcdeg.value=maxG;*/
+              newtreatment('G');
+          }
+          else if (subsyn == 'N') {
+              for (var i = 0; i < document.mainform_N.length; i++) {
+                  x = (document.mainform_N[i].selectedIndex - 1);
+                  if (x > maxN)
+                      maxN = x;
+              }
+              document.levelform.neurodeg.value = maxN;
+              if (maxN > 0)
+                  document.getElementById('neurotx_rc').innerHTML = 'Degree: <span class="redbold">N' + maxN + '</span>';
+              else
+                  document.getElementById('neurotx_rc').innerHTML = '';
+              /*if (document.levelform.rcdeg.value<maxN)
+                 document.levelform.rcdeg.value=maxN;*/
+              newtreatment('N');
+          }
+
+      }
+    </script>
+    <!--  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
+    <link rel="stylesheet" href="css/theme/jquery-ui.css" />
+    <!--<script src="http://code.jquery.com/jquery-1.9.1.js"></script>-->
+    <!--<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="css/msdropdown/dd.css" />
+    <!-- <link rel="stylesheet" href="style.css" />-->
+    <script src="js/msdropdown/jquery.dd.min.js"></script>
+    <style>
+      #superbox a {
+        color: #06b;
+        text-decoration: underline;
+      }
+
+      .content_area a {
+        color: #06b;
+        text-decoration: underline;
+      }
+
+      h2 {
+        font-size: 21px;
+        font-weight: bold;
+      }
+
+      .inlinelabel {
+        display: inline !important;
+      }
+
+      .ui-tabs-vertical {
+        width: 55em;
+      }
+
+      .ui-tabs-vertical .ui-tabs-nav {
+        padding: 0.2em 0.1em 0.2em 0.2em;
+        float: left;
+        width: 12em;
+      }
+
+      .ui-tabs-vertical .ui-tabs-nav li {
+        clear: left;
+        width: 100%;
+        border-bottom-width: 1px !important;
+        border-right-width: 0 !important;
+        margin: 0 -1px 0.2em 0;
+      }
+
+      .ui-tabs-vertical .ui-tabs-nav li a {
+        display: block;
+      }
+
+      .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+        padding-bottom: 0;
+        padding-right: 0.1em;
+        border-right-width: 1px;
+        border-right-width: 1px;
+      }
+
+      .ui-tabs-vertical .ui-tabs-panel {
+        padding: 1em;
+        float: right;
+        width: 40em;
+      }
+
+      .checklist {
+        list-style: none;
+      }
+
+      .checklist,
+      .checklist li {
+        margin: 0;
+        padding: 0;
+        font-size: 11px;
+      }
+
+      .checklist label {
+        display: block;
+        height: 1%;
+        padding-left: 25px;
+        text-indent: -25px;
+      }
+
+      .clearcheck {
+        border: 0px;
+      }
+
+      .redcheck {
+        border: 2px solid #990000;
+      }
+
+      .icon {
+        vertical-align: text-bottom;
+      }
+
+      .textdose {
+        background-color: #e6f0f0 !important;
+        color: #ff0000 !important;
+        font-weight: bold;
+        width: 40px !important;
+      }
+
+      .redbold {
+        color: #ff0000;
+        font-weight: bold;
+      }
+
+      .button_btn {
+        font-size: 13px;
+        padding: 4px 4px;
+        background-color: #567e0a !important;
+        color: #fff !important;
+        text-shadow: none;
+        background-image: -webkit-linear-gradient (top, #7ab229, #567e0a) !important;
+        background-repeat: repeat-x;
+        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        display: inline-block;
+        margin-bottom: 0;
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #ccc;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+          0 1px 2px rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+          0 1px 2px rgba(0, 0, 0, 0.05);
+      }
+
+      h2 {
+        margin-top: 0px;
+      }
+    </style>
+
+    <!--Load in header and footer-->
+    <!-- Header Include -->
+    <script>
+      $(function () {
+        $("#includeheader").load("header.html");
+      });
+    </script>
+
+    <!-- Footer Include -->
+    <script>
+      $(function () {
+        $("#includefooter").load("footer.html");
+      });
+    </script>
+    <!--Load in header and footer end-->
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NWD949H"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+        title="hhsgoogletagmanager"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+<a class="skipnavigation" title="Skip the navigation on this page" href="#skipnav" tabindex="1">Skip Navigation</a>
+
+
+    <!-- Navigation -->
+    <div id="includeheader"></div>
+    <!-- End Navigation -->
+    <div id="middle" class="full_width">
+      <div class="container">
+        <!--content-->
+        <div class="content" role="main" id="skipnav">
+          <!-- post details-->
+          <article class="post-details">
+            <div class="entry clearfix">
+              <div class="content_area">
+                <a name="top"></a>
+                <!--breadcrumbs-->
+                <div class="breadcrumbs">
+                  <a href="index.html">Home</a> &gt;
+                  <strong
+                    ><a href="ars.htm"
+                      >Managing Acute Radiation Syndrome (ARS)</a
+                    ></strong
+                  >
+                </div>
+                <!-- /breadcrumbs -->
+
+                <!-- Content starts here -->
+
+                <h1 style="margin-top: 0; margin-left: 20px">
+                  Managing Acute Radiation Syndrome (ARS)
+                </h1>
+                <div id="tabs">
+                  <ul>
+                    <li>
+                      <a href="#tabs-1"
+                        >Tool Overview &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+                      >
+                    </li>
+
+                    <li>
+                      <a href="#tabs-2" style="color: #06b"
+                        >Hematopoietic (H)&nbsp;</a
+                      >
+                    </li>
+
+                    <li>
+                      <a href="#tabs-3" style="color: #06b"
+                        >Gastrointestinal (G)</a
+                      >
+                    </li>
+
+                    <li>
+                      <a href="#tabs-4" style="color: #06b"
+                        >Cutaneous (C) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+                      >
+                    </li>
+
+                    <li>
+                      <a href="#tabs-5" style="color: #06b"
+                        >Neurovascular (N) &nbsp;</a
+                      >
+                    </li>
+
+                    <li><a href="#tabs-6" id="tab6">Response Category</a></li>
+                  </ul>
+
+                  <div id="tabs-1">
+                    <h2>
+                      Overview - How to Use This Tool
+                      <div class="homelist" style="display: inline-block">
+                        <img
+                          src="img/info-icon.png"
+                          class="icon"
+                          border="0"
+                          alt="Instructions"
+                          align="middle"
+                        />
+                        <a href="#" id="nav-toggle-0"
+                          >Read this information first</a
+                        >
+                      </div>
+                    </h2>
+                    <div
+                      class="explanatory-notes clearfix"
+                      id="explanatory-notes-0"
+                      style="display: none"
+                    >
+                      <h3>Essential Information</h3>
+                      <ul class="homelist">
+                        <li>
+                          ARS clinical manifestations are highly variable based
+                          on factors such as dose, dose rate, radiation quality,
+                          how much of the total body received radiation, and
+                          many host factors.
+                        </li>
+                        <li>
+                          Patients should be re-evaluated iteratively as their
+                          ARS manifestations change with time after exposure.
+                        </li>
+                        <li>
+                          Clinician decisions about specific treatments and
+                          venue referrals should always reflect individual
+                          patient factors, and the nature/size of the radiation
+                          incident. In large mass casualty incidents,
+                          recommendations may need to be modified significantly
+                          <a
+                            href="triagetool5.htm"
+                            onClick="figures(this.href, '750','600'); return false;"
+                            target="_blank"
+                            >based on resource availability</a
+                          >.
+                        </li>
+                        <li>
+                          See
+                          <a
+                            href="Aboutthissite.htm#disclaimer"
+                            onClick="figures(this.href, '750','600'); return false;"
+                            target="_blank"
+                            >Disclaimers</a
+                          >
+                          section.
+                        </li>
+                      </ul>
+                      <hr />
+                    </div>
+
+                    <ul class="homelist">
+                      <li>
+                        Click through each ARS Subsyndrome tab on the left.
+                      </li>
+                      <li>
+                        For each clinical parameter, check "degree of severity":
+                        1 (least) to 4 (most).
+                      </li>
+                      <li>
+                        Click <b>"View Treatments to Consider"</b>, based on
+                        severity inputs. [Print result.]
+                      </li>
+                      <li>
+                        Click <b>"View Response Category (RC)"</b> to assist
+                        with venue referral based on your inputs.
+                      </li>
+                      <li>
+                        Click <b>"Start Over"</b> to clear all previous inputs.
+                      </li>
+                    </ul>
+                    <p style="margin-left: 100px">
+                      <a
+                        href="Aboutthissite.htm#disclaimer"
+                        onClick="figures(this.href, '750','600'); return false;"
+                        target="_blank"
+                        >Disclaimers</a
+                      >
+                      |
+                      <a
+                        href="https://www.hhs.gov/vulnerability-disclosure-policy/index.html"
+                        >Vulnerability Disclosure Policy</a
+                      >
+                      |
+                      <a
+                        href="ars_references.htm"
+                        onClick="figures(this.href, '750','600'); return false;"
+                        target="_blank"
+                        >References for Tool</a
+                      >
+                    </p>
+                  </div>
+
+                  <div id="tabs-2">
+                    <h2>
+                      Hematopoietic (H)
+                      <div class="homelist" style="display: inline-block">
+                        <img
+                          src="img/info-icon.png"
+                          class="icon"
+                          border="0"
+                          alt="Instructions"
+                          align="middle"
+                        />
+                        <a href="#" id="nav-toggle"
+                          >Read this information first</a
+                        >
+                      </div>
+                    </h2>
+                    <div
+                      class="explanatory-notes clearfix"
+                      id="explanatory-notes"
+                      style="display: none"
+                    >
+                      <ul class="homelist">
+                        <li>
+                          Changes in blood cell counts will reflect
+                          <a
+                            href="dictionary.htm#qualityfactor"
+                            onClick="figures(this.href, '750','300'); return false;"
+                            target="_blank"
+                            >radiation quality</a
+                          >, dose, dose rate, host factors, how much of the
+                          whole body receives radiation, and when, after
+                          radiation exposure ends, the CBC is obtained. Changes
+                          in blood count values can result from many other
+                          causes too.
+                        </li>
+                        <li>
+                          Lymphocytes, neutrophils, red cells, and platelets
+                          respond to radiation with different kinetics, so
+                          interpretation of lab values will depend on how long
+                          after radiation the lab values are measured. See
+                          <a
+                            href="imagegallery_cat3.htm#bloodeffects"
+                            onClick="figures(this.href, '750','300'); return false;"
+                            target="_blank"
+                            >time/dose relationship of blood count elements</a
+                          >,
+                          <a
+                            href="ars_wbd.htm"
+                            onClick="figures(this.href, '750','600'); return false;"
+                            target="_blank"
+                            >Biodosimetry Tool</a
+                          >
+                          for estimating dose from lymphocyte kinetics, and
+                          other details about the
+                          <a
+                            href="hemeguidelines.htm"
+                            onClick="figures(this.href, '950','600'); return false;"
+                            target="_blank"
+                            >Hematopoietic Subsyndrome</a
+                          >.
+                        </li>
+                        <li>
+                          Faster drops in absolute lymphocyte count (ALC) and
+                          absolute neutrophil count (ANC) usually reflect higher
+                          dose from exposure and more severe ARS. Granulocytosis
+                          can be an early finding after significant radiation
+                          exposure, thus complicating interpretation of early
+                          ANC values.
+                        </li>
+                        <li>
+                          If severity value for lymphocyte and neutrophil counts
+                          are widely different (e.g. H4 lymphocyte and H1
+                          neutrophil), repeat the CBC with differential. It is
+                          probable that the low lymphocyte count (at least
+                          initially) more closely reflects the dose from
+                          exposure.
+                        </li>
+                        <li>
+                          Blood loss from the GI tract and/or damage to bone
+                          marrow elements can be seen after significant
+                          radiation exposure. Seeking the correct etiology of
+                          altered blood counts will help determine therapy
+                          recommendations.
+                        </li>
+                      </ul>
+                    </div>
+
+                    <form name="mainform_H">
+                      <div style="float: left; margin-right: 11px">
+                        <label for="arsdropdown1" class="inlinelabel"
+                          ><b>Absolute lymphocyte count</b> (x 10<sup>9</sup>
+                          cells/L)</label
+                        >
+                        <br />
+                        <select
+                          id="arsdropdown1"
+                          name="L1"
+                          style="width: 300px"
+                          onChange="checkrc('H')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="(x 10<sup>9</sup> cells/L)"
+                          >
+                            Absolute lymphocyte count
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            &ge; 1.5
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            1.5 - 1
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            1 - 0.5
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            &lt; 0.5
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown2" class="inlinelabel"
+                          ><b>Absolute neutrophil count</b> (x 10<sup>9</sup>
+                          cells/L)</label
+                        >
+                        <br />
+                        <select
+                          id="arsdropdown2"
+                          name="G1"
+                          style="width: 300px"
+                          onChange="checkrc('H')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="(x 10<sup>9</sup> cells/L)"
+                          >
+                            Absolute neutrophil count
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            &ge; 2
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            2 - 1
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            1 - 0.5
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            &lt; 0.5 or initial granulocytosis
+                          </option>
+                        </select>
+                      </div>
+                      <div style="clear: both"></div>
+                      <br />
+
+                      <div style="float: left; margin-right: 15px">
+                        <label for="arsdropdown3" class="inlinelabel"
+                          ><b>Platelet count</b> (x 10<sup>9</sup>
+                          cells/L)</label
+                        >
+                        <br />
+                        <select
+                          id="arsdropdown3"
+                          name="P1"
+                          style="width: 300px"
+                          onChange="checkrc('H')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="(x 10<sup>9</sup> cells/L)"
+                          >
+                            Platelet count
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            &ge; 100
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            100 - 50
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            50 - 20
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            &lt; 20
+                          </option>
+                        </select>
+                      </div>
+                      <div
+                        style="float: left; margin-right: 10px; margin-top: 2px"
+                      >
+                        <label for="arsdropdown4" class="inlinelabel"
+                          ><b>Blood loss</b></label
+                        >
+                        <br />
+                        <select
+                          id="arsdropdown4"
+                          name="BL"
+                          style="width: 300px"
+                          onChange="checkrc('H')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;<sup>&nbsp;</sup>"
+                          >
+                            Blood loss
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0 (normal Hb)"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1 (normal Hb)"
+                          >
+                            Petechiae, easy bruising
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2 (&le;10% decrease in Hb)"
+                          >
+                            Mild blood loss
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3 (10-20% decrease in Hb)"
+                          >
+                            Gross blood loss
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4 (&gt;20% decrease in Hb)"
+                          >
+                            Spontaneous bleeding
+                          </option>
+                        </select>
+                      </div>
+                      <div style="clear: both"></div>
+                      <br />
+                    </form>
+                    <div style="clear: both"></div>
+                    <br />
+                    <a
+                      href="#hemetx"
+                      rel="superbox[content][500x500]"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 55px"
+                      >View Treatments to Consider</a
+                    >
+                    <a
+                      onclick="javascript:document.getElementById('tab6').click();"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 5px"
+                      >View Response Category (RC)</a
+                    >
+                    <a
+                      onclick="javascript:clearall();"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 5px"
+                      >Start Over</a
+                    >
+                  </div>
+
+                  <div id="tabs-3">
+                    <h2>
+                      Gastrointestinal (G)
+                      <div class="homelist" style="display: inline-block">
+                        <img
+                          src="img/info-icon.png"
+                          class="icon"
+                          border="0"
+                          alt="Instructions"
+                          align="middle"
+                        />
+                        <a href="#" id="nav-toggle-1"
+                          >Read this information first</a
+                        >
+                      </div>
+                    </h2>
+                    <div
+                      class="explanatory-notes clearfix"
+                      id="explanatory-notes-1"
+                      style="display: none"
+                    >
+                      <ul class="homelist">
+                        <li>
+                          Nausea and/or vomiting can occur soon after brain,
+                          upper GI tract, and whole body irradiation. These are
+                          non-specific symptoms, however, as many things besides
+                          radiation can induce nausea and vomiting. Remember
+                          that even severe vomiting (e.g., G 4) can be due to
+                          stress or many causes that are not related to
+                          radiation. If nausea and vomiting are due to radiation
+                          exposure, severity and time to onset of vomiting are
+                          correlated with dose. See
+                          <a
+                            href="ars_wbd.htm"
+                            onClick="figures(this.href, '750','600'); return false;"
+                            target="_blank"
+                            >Biodosimetry Tool</a
+                          >
+                          for interpreting the significance of time to vomiting.
+                        </li>
+                        <li>
+                          Altered stool consistency, diarrhea, cramps and
+                          abdominal pain, can occur after exposure of the GI
+                          tract to radiation. Severity and time of onset depend
+                          on many factors including dose.
+                        </li>
+                        <li>
+                          Radiation can cause GI mucosal damage and/or damage to
+                          the bone marrow elements. Either or both factors can
+                          contribute to GI blood loss. Seeking the correct
+                          etiology will help determine therapy recommendations.
+                        </li>
+                      </ul>
+                    </div>
+
+                    <form name="mainform_G">
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown26" class="inlinelabel"
+                          ><b>Nausea</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown26"
+                          name="naug"
+                          style="width: 280px"
+                          onChange="checkrc('G')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Nausea
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Mild
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Moderate
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Intense
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Excruciating
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown27" class="inlinelabel"
+                          ><b>Vomiting</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown27"
+                          name="vomg"
+                          style="width: 280px"
+                          onChange="checkrc('G')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Vomiting
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Once/day
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            2-5 times/day
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            6-10 times/day
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            &gt;10 times/day
+                          </option>
+                        </select>
+                      </div>
+                      <div style="clear: both"></div>
+                      <br />
+
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown5" class="inlinelabel"
+                          ><b>Diarrhea (frequency)</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown5"
+                          name="dia"
+                          style="width: 280px"
+                          onChange="checkrc('G')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="(frequency)"
+                          >
+                            Diarrhea
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            2-3 stools/d
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            4-6 stools/d
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            7-9 stools/d
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            &ge; 10 stools/d
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown6" class="inlinelabel"
+                          ><b>Stool (consistency)</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown6"
+                          name="sto"
+                          style="width: 280px"
+                          onChange="checkrc('G')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="(consistency)"
+                          >
+                            Stool
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Bulky
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Loose
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Sloppy
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Watery
+                          </option>
+                        </select>
+                      </div>
+
+                      <div style="clear: both"></div>
+                      <br />
+
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown7" class="inlinelabel"
+                          ><b>Mucosa loss</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown7"
+                          name="mucs"
+                          style="width: 280px"
+                          onChange="checkrc('G')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Mucosa loss
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Intermittent
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Intermittent (large amount)
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Persistent (in time)
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Persistent (in time &amp; amount)
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown71" class="inlinelabel"
+                          ><b>GI bleeding</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown71"
+                          name="blo"
+                          style="width: 280px"
+                          onChange="checkrc('G')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            GI bleeding
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Occult
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Intermittent
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Persistent
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Gross hemorrhage
+                          </option>
+                        </select>
+                      </div>
+                      <div style="clear: both"></div>
+                      <br />
+
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown8" class="inlinelabel"
+                          ><b>Abdominal cramps/pain</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown8"
+                          name="abd"
+                          style="width: 280px"
+                          onChange="checkrc('G')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Abdominal cramps/pain
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Minimal
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Tolerable
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Intense
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Excruciating
+                          </option>
+                        </select>
+                      </div>
+                    </form>
+                    <div style="clear: both"></div>
+                    <br />
+                    <a
+                      href="#gitx"
+                      rel="superbox[content][500x500]"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 30px"
+                      >View Treatments to Consider</a
+                    >
+                    <a
+                      onclick="javascript:document.getElementById('tab6').click();"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 5px"
+                      >View Response Category (RC)</a
+                    >
+                    <a
+                      onclick="javascript:clearall();"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 5px"
+                      >Start Over</a
+                    >
+                  </div>
+
+                  <div id="tabs-4">
+                    <h2>
+                      Cutaneous (C)
+                      <div class="homelist" style="display: inline-block">
+                        <img
+                          src="img/info-icon.png"
+                          class="icon"
+                          border="0"
+                          alt="Instructions"
+                          align="middle"
+                        />
+                        <a href="#" id="nav-toggle-2"
+                          >Read this information first</a
+                        >
+                      </div>
+                    </h2>
+                    <div
+                      class="explanatory-notes clearfix"
+                      id="explanatory-notes-2"
+                      style="display: none"
+                    >
+                      <ul class="homelist">
+                        <li>
+                          Severity and time of onset of radiation-induced skin
+                          changes are correlated with dose, how much skin area
+                          is irradiated, and other factors.
+                        </li>
+                        <li>
+                          Skin changes that occur earliest (hours to weeks)
+                          after exposure include erythema, swelling/edema,
+                          blistering, and alteration in skin sensitivity and/or
+                          itching in irradiated areas.
+                        </li>
+                        <li>
+                          Skin changes that tend to occur somewhat later (days
+                          to weeks) after exposure include skin desquamation
+                          (wet and dry), hair loss, skin ulceration/necrosis and
+                          onycholysis (nail and nail bed changes.
+                        </li>
+                        <li>
+                          See details about
+                          <a
+                            href="cutaneoussyndrome.htm"
+                            onClick="figures(this.href, '950','600'); return false;"
+                            target="_blank"
+                            >Cutaneous Subsyndrome</a
+                          >.
+                        </li>
+                      </ul>
+                    </div>
+                    <form name="mainform_C">
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown9" class="inlinelabel"
+                          ><b>Erythema</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown9"
+                          name="ery"
+                          style="width: 300px"
+                          onChange="checkrc('C')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Erythema
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Minimal &amp; transient
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Moderate (isolated patches &lt;10cm2 of body surface
+                            (BS))
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Marked (isolated patches/confluent, 10-40% BS)
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Severe (isolated patches/confluent, &gt;40% BS,
+                            erythroderma)
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown10" class="inlinelabel"
+                          ><b>Abnormal Sensation/Itching</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown10"
+                          name="sen"
+                          style="width: 300px"
+                          onChange="checkrc('C')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Abnormal Sensation/Itching
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Pruritus
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Slight &amp; intermittent pain
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Moderate &amp; persistent pain
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Severe &amp; persistent pain
+                          </option>
+                        </select>
+                      </div>
+                      <div style="clear: both"></div>
+                      <br />
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown11" class="inlinelabel"
+                          ><b>Swelling/Edema</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown11"
+                          name="ede"
+                          style="width: 300px"
+                          onChange="checkrc('C')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Swelling/Edema
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Present; asymptomatic
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Symptomatic; tension
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Secondary dysfunction
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Total dysfunction
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown12" class="inlinelabel"
+                          ><b>Blistering</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown12"
+                          name="bli"
+                          style="width: 300px"
+                          onChange="checkrc('C')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Blistering
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Rare, with sterile fluid
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Rare, with hemorrhage
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Bullae, with sterile fluid
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Bullae, with hemorrhage
+                          </option>
+                        </select>
+                      </div>
+                      <div style="clear: both"></div>
+                      <br />
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown13" class="inlinelabel"
+                          ><b>Desquamation</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown13"
+                          name="des"
+                          style="width: 300px"
+                          onChange="checkrc('C')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Desquamation
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Absent
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Patchy dry
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Patchy moist
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Confluent moist
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown14" class="inlinelabel"
+                          ><b>Ulcer/necrosis</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown14"
+                          name="ulc"
+                          style="width: 300px"
+                          onChange="checkrc('C')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Ulcer/necrosis
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Epidermal only
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Dermal
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Subcutaneous
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Muscle/bone involvement
+                          </option>
+                        </select>
+                      </div>
+                      <div style="clear: both"></div>
+
+                      <br />
+
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown15" class="inlinelabel"
+                          ><b>Hair loss</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown15"
+                          name="hai"
+                          style="width: 300px"
+                          onChange="checkrc('C')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Hair loss
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Thinning, not striking
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Patchy, visible
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Complete &amp; most likely reversible
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Complete &amp; most likely irreversible
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown16" class="inlinelabel"
+                          ><b>Onycholysis</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown16"
+                          name="ony"
+                          style="width: 300px"
+                          onChange="checkrc('C')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Onycholysis
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Absent
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Partial
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Not defined
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Complete
+                          </option>
+                        </select>
+                      </div>
+                    </form>
+                    <div style="clear: both"></div>
+                    <br />
+                    <a
+                      href="#cutetx"
+                      rel="superbox[content][500x600]"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 55px"
+                      >View Treatments to Consider</a
+                    >
+                    <a
+                      onclick="javascript:document.getElementById('tab6').click();"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 5px"
+                      >View Response Category (RC)</a
+                    >
+                    <a
+                      onclick="javascript:clearall();"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 5px"
+                      >Start Over</a
+                    >
+                  </div>
+
+                  <div id="tabs-5">
+                    <h2>
+                      Neurovascular (N)
+                      <div class="homelist" style="display: inline-block">
+                        <img
+                          src="img/info-icon.png"
+                          class="icon"
+                          border="0"
+                          alt="Instructions"
+                          align="middle"
+                        />
+                        <a href="#" id="nav-toggle-3"
+                          >Read this information first</a
+                        >
+                      </div>
+                    </h2>
+                    <div
+                      class="explanatory-notes clearfix"
+                      id="explanatory-notes-3"
+                      style="display: none"
+                    >
+                      <ul class="homelist">
+                        <li>
+                          Nausea and/or vomiting can occur soon after brain,
+                          upper GI tract, and whole body irradiation. These are
+                          non-specific symptoms, however, as many things besides
+                          radiation can induce nausea and vomiting. Remember
+                          that even severe vomiting (e.g., G 4) can be due to
+                          stress or many causes that are not related to
+                          radiation. If nausea and vomiting are due to radiation
+                          exposure, severity and time to onset of vomiting are
+                          correlated with dose. See
+                          <a
+                            href="ars_wbd.htm"
+                            onClick="figures(this.href, '750','600'); return false;"
+                            target="_blank"
+                            >Biodosimetry Tool</a
+                          >
+                          for interpreting the significance of time to vomiting.
+                          Seeking correct etiology will help determine therapy
+                          recommendations.
+                        </li>
+                        <li>
+                          Both increase and decrease in blood pressure and body
+                          temperature can occur hours after significant exposure
+                          to radiation. Changes in these vital signs can reflect
+                          many causes including CNS irradiation, clinical
+                          infection, and other causes.
+                        </li>
+                        <li>
+                          Fatigue, headache, and anorexia can occur hours to
+                          weeks after significant radiation exposure. These are
+                          non-specific findings which can result from many
+                          causes.
+                        </li>
+                        <li>
+                          Cognitive and neurological deficits can occur hours to
+                          weeks after significant exposure to CNS radiation.
+                          These are non-specific findings, however, which can
+                          result from many causes. Severity and time to onset of
+                          deficits due to radiation will reflect both dose from
+                          exposure and other clinical factors.
+                        </li>
+                      </ul>
+                    </div>
+                    <form name="mainform_N">
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown17" class="inlinelabel"
+                          ><b>Nausea</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown17"
+                          name="nau"
+                          style="width: 280px"
+                          onChange="checkrc('N')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Nausea
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Mild
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Moderate
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Intense
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Excruciating
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown18" class="inlinelabel"
+                          ><b>Vomiting</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown18"
+                          name="vom"
+                          style="width: 280px"
+                          onChange="checkrc('N')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Vomiting
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Once/day
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            2-5 times/day
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            6-10 times/day
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            &gt;10 times/day
+                          </option>
+                        </select>
+                      </div>
+                      <div style="clear: both"></div>
+                      <br />
+
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown19" class="inlinelabel"
+                          ><b>Anorexia</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown19"
+                          name="ano"
+                          style="width: 280px"
+                          onChange="checkrc('N')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Anorexia
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Able to eat
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Decreased intake
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Minimal intake
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Parenteral nutrition needed
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown20" class="inlinelabel"
+                          ><b>Fatigue</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown20"
+                          name="fat"
+                          style="width: 280px"
+                          onChange="checkrc('N')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Fatigue
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Able to work
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Work impaired
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Assistance for activities of daily living
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Cannot do activities of daily living
+                          </option>
+                        </select>
+                      </div>
+
+                      <div style="clear: both"></div>
+                      <br />
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown22" class="inlinelabel"
+                          ><b>Temperature</b> (degree C)</label
+                        ><br />
+                        <select
+                          id="arsdropdown22"
+                          name="fev"
+                          style="width: 280px"
+                          onChange="checkrc('N')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Temperature (degree C)
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            &lt;38 degree C
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            38-40 degree C
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            &gt;40 degree C (&lt;24h)
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            &gt;40 degree C (&gt;24h)
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown23" class="inlinelabel"
+                          ><b>Blood pressure</b> (mmHg)</label
+                        ><br />
+                        <select
+                          id="arsdropdown23"
+                          name="bp"
+                          style="width: 280px"
+                          onChange="checkrc('N')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Blood pressure (mmHg)
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            &gt;100/70
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            &lt;100/70
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            &lt;90/60
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            &lt;80 systolic
+                          </option>
+                        </select>
+                      </div>
+                      <div style="clear: both"></div>
+                      <br />
+
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown24" class="inlinelabel"
+                          ><b>Neurological deficits</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown24"
+                          name="neu"
+                          style="width: 280px"
+                          onChange="checkrc('N')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Neurological deficits
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Barely detected
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Easily detected
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Prominent
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Life threatening, loss of consciousness
+                          </option>
+                        </select>
+                      </div>
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown25" class="inlinelabel"
+                          ><b>Cognitive deficits</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown25"
+                          name="cog"
+                          style="width: 280px"
+                          onChange="checkrc('N')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Cognitive deficits
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Minor loss
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Moderate loss
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Major impairment
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Complete impairment
+                          </option>
+                        </select>
+                      </div>
+                      <div style="clear: both"></div>
+                      <br />
+                      <div style="float: left; margin-right: 10px">
+                        <label for="arsdropdown21" class="inlinelabel"
+                          ><b>Headache</b></label
+                        ><br />
+                        <select
+                          id="arsdropdown21"
+                          name="hea"
+                          style="width: 280px"
+                          onChange="checkrc('N')"
+                        >
+                          <option
+                            value=""
+                            data-image=""
+                            data-description="&nbsp;"
+                          >
+                            Headache
+                          </option>
+                          <option
+                            value="0"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 0"
+                          >
+                            Normal or no data
+                          </option>
+                          <option
+                            value="1"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 1"
+                          >
+                            Minimal
+                          </option>
+                          <option
+                            value="2"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 2"
+                          >
+                            Moderate
+                          </option>
+                          <option
+                            value="3"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 3"
+                          >
+                            Intense
+                          </option>
+                          <option
+                            value="4"
+                            data-image="images/msdropdown/skin2/icon-ok.gif"
+                            data-description="Degree 4"
+                          >
+                            Excruciating
+                          </option>
+                        </select>
+                      </div>
+                    </form>
+                    <div style="clear: both"></div>
+                    <br />
+                    <a
+                      href="#neurotx"
+                      rel="superbox[content][500x600]"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 30px"
+                      >View Treatments to Consider</a
+                    >
+                    <a
+                      onclick="javascript:document.getElementById('tab6').click();"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 5px"
+                      >View Response Category (RC)</a
+                    >
+                    <a
+                      onclick="javascript:clearall();"
+                      class="button_btn"
+                      style="text-decoration: none; margin-left: 5px"
+                      >Start Over</a
+                    >
+                  </div>
+                  <div id="tabs-6">
+                    <h2>Response Category</h2>
+
+                    <form name="levelform">
+                      <b
+                        >The calculated Response Category (RC): <br /><br />
+                        <b> H </b
+                        ><input
+                          readonly="readonly"
+                          name="hemedeg"
+                          type="text"
+                          size="1"
+                          title="heme degree"
+                          class="textdose"
+                        />
+                        <b> G </b
+                        ><input
+                          readonly="readeonly"
+                          name="gideg"
+                          type="text"
+                          size="1"
+                          title="gi degree"
+                          class="textdose"
+                        />
+                        <b> C </b
+                        ><input
+                          readonly="readeonly"
+                          name="cutedeg"
+                          type="text"
+                          size="1"
+                          title="cutaneous degree"
+                          class="textdose"
+                        />
+                        <b> N </b
+                        ><input
+                          readonly="readeonly"
+                          name="neurodeg"
+                          type="text"
+                          size="1"
+                          title="neurovascular degree"
+                          class="textdose"
+                        />
+                        = <b> RC </b
+                        ><input
+                          readonly="readeonly"
+                          name="rcdeg"
+                          type="text"
+                          size="1"
+                          title="rc degree"
+                          class="textdose"
+                          value="0"
+                        />
+                        (Read-only fields)
+                      </b>
+                      <br />
+                    </form>
+                    <ul class="homelist">
+                      <li>
+                        RC is auto-calculated using the highest degree of
+                        severity checked for any parameter in each of the 4
+                        subsyndromes of ARS.
+                        <ul>
+                          <li>
+                            Example: H<span class="redbold">4</span>, C2, G3, N1
+                            = RC<span class="redbold">4</span>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        In a vary large mass casualty incident with austere
+                        conditions, referral decisions may need to change. RC
+                        recommendations in this tool <b>do not</b> reflect
+                        austere conditions.
+                      </li>
+                      <li>
+                        See
+                        <a
+                          href="triagetool_intro.htm"
+                          onClick="figures(this.href, '750','800'); return false;"
+                          target="_blank"
+                          >Scarce Resources Project publications and interactive
+                          tool</a
+                        >.
+                      </li>
+                    </ul>
+
+                    <p>
+                      The actions are described in table below, where the
+                      response categories (RC1 to RC4) are correlated with:
+                    </p>
+                    <ul class="homelist">
+                      <li>
+                        Severity of damage (mild, moderate, severe or serious)
+                      </li>
+                      <li>Likelihood of autologous recovery.</li>
+                    </ul>
+                    <span class="homelist"
+                      ><b
+                        >Therapeutic strategy according to the METREPOL response
+                        categories</b
+                      ></span
+                    >
+                    <table border="1">
+                      <tr class="homelist">
+                        <th scope="col">Response Category (RC)</th>
+                        <th scope="col">Severity of damage</th>
+                        <th scope="col">Strategy</th>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="homelist">
+                          RC <span class="redbold">1</span>
+                        </th>
+                        <td>
+                          <ul class="homelist">
+                            <li>Mild damage</li>
+                            <li>Autologous recovery certain</li>
+                          </ul>
+                        </td>
+                        <td>
+                          <ul class="homelist">
+                            <li>Outpatient care or general medical wards.</li>
+                            <li>General support of recovery processes.</li>
+                            <li>Usually no specific therapy.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="homelist">
+                          RC <span class="redbold">2</span>
+                        </th>
+                        <td>
+                          <ul class="homelist">
+                            <li>Moderate damage</li>
+                            <li>Autologous recovery likely</li>
+                          </ul>
+                        </td>
+                        <td>
+                          <ul class="homelist">
+                            <li>
+                              Medical wards with hematological, neurological and
+                              dermatological consultation services.
+                            </li>
+                            <li>Supportive care.</li>
+                            <li>Substitutive therapy with blood components.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="homelist">
+                          RC <span class="redbold">3</span>
+                        </th>
+                        <td>
+                          <ul class="homelist">
+                            <li>Severe damage</li>
+                            <li>Autologous recovery possible</li>
+                          </ul>
+                        </td>
+                        <td>
+                          <ul class="homelist">
+                            <li>
+                              Hematological-oncological institution/service with
+                              reverse isolation; intensive care unit;
+                              consultations of all medical specialities.
+                            </li>
+                            <li>Supportive care.</li>
+                            <li>Substitutive therapy with blood components.</li>
+                            <li>
+                              Stimulation therapy (cytokines/growth factors).
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="homelist">
+                          RC <span class="redbold">4</span>
+                        </th>
+                        <td>
+                          <ul class="homelist">
+                            <li>Serious damage</li>
+                            <li>Autologous recovery most unlikely</li>
+                          </ul>
+                        </td>
+                        <td>
+                          <ul class="homelist">
+                            <li>
+                              Specialised hospital with experience in all areas
+                              of intensive care medicine, particularly
+                              allogeneic stem cell transplantation.
+                            </li>
+                            <li>Supportive care.</li>
+                            <li>Substitutive therapy with blood components.</li>
+                            <li>
+                              Stimulation therapy (cytokines/growth factors).
+                            </li>
+                            <li>Stem cell transplantation</li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p>
+                      "Each RC represents a level of damage, which in turn can
+                      be associated with a probability of autologous recovery.
+                      The requirements for the institution where the patients
+                      should be hospitalised are highly dependent on patients'
+                      RCs, which in turn require specific therapeutic
+                      interventions. The complexity of clinical care required
+                      for the patients increases at higher RC."
+                    </p>
+
+                    <p>
+                      Source: Adapted from
+                      <a href="tmt-handbook-20091.pdf"
+                        >Triage, Monitoring and Treatment of people exposed to
+                        ionising radiation following a malevolent act</a
+                      >, (PDF - 11 MB) Chapter J, page 266, Table J8 (TMT
+                      Handbook Partners, March 2009)
+                    </p>
+                    <p><b>See also:</b></p>
+                    <ul class="homelist">
+                      <li>
+                        <b>Original Response Category concept:</b>
+                        <ul>
+                          <li>
+                            Fliedner TM, Friesecke I, Beyrer K.
+                            <a
+                              href="https://oparu.uni-ulm.de/xmlui/bitstream/handle/123456789/1650/vts_6891_9572.pdf?sequence=2&isAllowed=y"
+                              >Medical Management of Radiation Accidents: Manual
+                              on the Acute Radiation Syndrome</a
+                            >. (METREPOL) (PDF - 970 KB) (originally published
+                            by Oxford: British Institute of Radiology; 2001)
+                            <a
+                              href="https://oparu.uni-ulm.de/xmlui/bitstream/handle/123456789/1650/vts_6891_9573.pdf?sequence=1&isAllowed=y"
+                              >Compendium to the main METREPOL document</a
+                            >
+                            (PDF - 580 KB)
+                          </li>
+                          <li>
+                            Fliedner TM, Graessle D, Meineke V, Dorr H.
+                            <a
+                              href="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=pubmed&dopt=Abstract&list_uids=17379081"
+                              >Pathophysiological principles underlying the
+                              blood cell concentration responses used to assess
+                              the severity of effect after accidental whole-body
+                              radiation exposure: an essential basis for an
+                              evidence-based clinical triage</a
+                            >. Exp Hematol. 2007 Apr;35(4 Suppl 1):8-16. [PubMed
+                            Citation]
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a
+                          href="https://ritn.net/-/media/project/nmdp/ritn/documents/triage/ritn-radiation-injury-referral-guidelines-2021-august.pdf?rev=20b313b0c26c4e79972cfc925a078d69"
+                          target="_blank"
+                          >Radiation Injury Treatment Network (RITN) Radiation
+                          Injury Referral Guidelines</a
+                        >
+                        (RITN, 2021)
+                        <ul>
+                          <li>
+                            Concise guide for identifying casualties in the
+                            aftermath of a radiation incident who may have
+                            received a clinically significant dose of radiation
+                            and who may need referral to RITN facility.
+                          </li>
+                          <li>
+                            <a
+                              href="https://www.ritn.net/WorkArea/DownloadAsset.aspx?id=2147484118"
+                              >Names and locations of all RITN centers</a
+                            >
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div id="hemetx" style="display: none">
+                  <h2>
+                    Hematopoietic Subsyndrome -
+                    <div id="hemetx_rc" style="display: inline"></div>
+                  </h2>
+                  <p>Based on your input, consider these treatments</p>
+                  <form name="hemetx">
+                    <ul class="checklist" style="margin-top: 0px">
+                      <li>
+                        <label for="H1_0">
+                          <input
+                            type="checkbox"
+                            id="H1_0"
+                            name="H1_0"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="ars_wbd.htm"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Obtain dose estimate using biodosimetry tools</a
+                          >
+                        </label>
+                      </li>
+                      <li>
+                        <label for="H1_1"
+                          ><input
+                            type="checkbox"
+                            id="H1_1"
+                            name="H1_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="followup.htm"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Reassurance</a
+                          >
+                        </label>
+                      </li>
+                      <li>
+                        <label for="H1_2"
+                          ><input
+                            type="checkbox"
+                            id="H1_2"
+                            name="H1_2"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="imagegallery_cat3.htm#bloodeffects"
+                            onClick="figures(this.href,'700','500');return false;"
+                            target="_blank"
+                            >Seek more radiation exposure information; serial
+                            CBCs/platelets; systemic evaluation</a
+                          ></label
+                        >
+                      </li>
+                      <li>
+                        <label for="H2_1">
+                          <input
+                            type="checkbox"
+                            id="H2_1"
+                            name="H2_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="bloodtransfusion.htm"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >If blood product support: irradiated &
+                            leuko-reduced</a
+                          ></label
+                        >
+                      </li>
+                      <li>
+                        <label for="H2_2">
+                          <input
+                            type="checkbox"
+                            id="H2_2"
+                            name="H2_2"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="cytokines.htm"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Consider administering myeloid cytokines/growth
+                            factors</a
+                          >
+                        </label>
+                      </li>
+                      <!--
+<li><label for="H3_1">     <input type="checkbox" id="H3_1" name="H3_1" value="0" onclick="return false"> <a href="treat_ars.htm#H3_1" onClick="javascript:setCheckboxValue('H')">HLA type recipient</a> </label></li>
+<li><label for="H3_2">     <input type="checkbox" id="H3_2" name="H3_2" value="0" onclick="return false"> <a href="treat_ars.htm#H3_2" onClick="javascript:setCheckboxValue('H')">Consider PICC line</a> </label></li>
+<li><label for="H3_3">     <input type="checkbox" id="H3_3" name="H3_3" value="0" onclick="return false"> <a href="treat_ars.htm#H3_3" onClick="javascript:setCheckboxValue('H')">Search for donors</a> </label></li>
+-->
+                      <li>
+                        <label for="H3_4">
+                          <input
+                            type="checkbox"
+                            id="H3_4"
+                            name="H3_4"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="standardprecautions.htm"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Consider implementing standard precautions</a
+                          >
+                        </label>
+                      </li>
+                      <li>
+                        <label for="H3_5">
+                          <input
+                            type="checkbox"
+                            id="H3_5"
+                            name="H3_5"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="hemeguidelines.htm#fn_references"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Consider implementing fever and neutropenia
+                            treatment guidelines</a
+                          >
+                        </label>
+                      </li>
+                      <!--<li><label for="H3_8">     <input type="checkbox" id="H3_8" name="H3_8" value="0" onclick="return false"> <a href="treat_ars.htm#H3_8" onClick="javascript:setCheckboxValue('H')">Consider antimicrobial coverage for skin flora if burns present</a></label></li>-->
+                      <li>
+                        <label for="H4_1">
+                          <input
+                            type="checkbox"
+                            id="H4_1"
+                            name="H4_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="stemcelltransplant.htm"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Consider HLA-typing, stem cell transplantation.
+                            Consult the RITN network.</a
+                          >
+                        </label>
+                      </li>
+                      <li>
+                        <label for="H4_2">
+                          <input
+                            type="checkbox"
+                            id="H4_2"
+                            name="H4_2"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="exposure_modifiers.htm#surgery"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Time surgery appropriately to minimize risk of
+                            surgery when blood counts are low.</a
+                          >
+                        </label>
+                      </li>
+                      <li>
+                        <label for="H4_3">
+                          <input
+                            type="checkbox"
+                            id="H4_3"
+                            name="H4_3"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Investigate for any sites of blood loss.</label
+                        >
+                      </li>
+                    </ul>
+                  </form>
+
+                  <div id="printline_h">
+                    <p>
+                      <a href="javascript:window.print()">Print this page</a>
+                      <a href="javascript:printall()" style="margin-left: 50px"
+                        >Print all (for all 4 subsyndromes for this patient)</a
+                      >
+                    </p>
+                  </div>
+                </div>
+
+                <div id="gitx" style="display: none">
+                  <h2>
+                    Gastrointestinal Subsyndrome -
+                    <div id="gitx_rc" style="display: inline"></div>
+                  </h2>
+                  <p>Based on your input, consider these treatments</p>
+
+                  <form name="gitx">
+                    <ul class="checklist" style="margin-top: 0px">
+                      <li>
+                        <label for="G0_0">
+                          <input
+                            type="checkbox"
+                            id="G0_0"
+                            name="G0_0"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="ars_wbd.htm"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Obtain dose estimate using biodosimetry tools</a
+                          >
+                        </label>
+                      </li>
+                      <li>
+                        <label for="G1_1">
+                          <input
+                            type="checkbox"
+                            id="G1_1"
+                            name="G1_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="remm_SourcesMedical.htm#antiemetics"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Anti-emetics: 5-HT3 receptor antagonists</a
+                          >
+                        </label>
+                      </li>
+                      <li>
+                        <label for="G0_1">
+                          <input
+                            type="checkbox"
+                            id="G0_1"
+                            name="G0_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Anti-diarrheal meds, e.g. Loperamide, appropriate to
+                          severity</label
+                        >
+                      </li>
+                      <li>
+                        <label for="G0_3">
+                          <input
+                            type="checkbox"
+                            id="G0_3"
+                            name="G0_3"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Measure intake/output, sequential body weights
+                        </label>
+                      </li>
+                      <li>
+                        <label for="G3_1">
+                          <input
+                            type="checkbox"
+                            id="G3_1"
+                            name="G3_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          IV fluid and electrolyte replacement as needed,
+                          balanced with Neurovascular issues
+                        </label>
+                      </li>
+                      <li>
+                        <label for="G3_2">
+                          <input
+                            type="checkbox"
+                            id="G3_2"
+                            name="G3_2"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Antimicrobial agents as appropriate</label
+                        >
+                      </li>
+                      <li>
+                        <label for="G3_4">
+                          <input
+                            type="checkbox"
+                            id="G3_4"
+                            name="G3_4"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Seek etiology
+                        </label>
+                      </li>
+                      <li>
+                        <label for="G3_5">
+                          <input
+                            type="checkbox"
+                            id="G3_5"
+                            name="G3_5"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Seek etiology, &plusmn; consider surgical consultation
+                        </label>
+                      </li>
+                      <li>
+                        <label for="G4_1">
+                          <input
+                            type="checkbox"
+                            id="G4_1"
+                            name="G4_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="standardprecautions.htm"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Consider implementing standard precautions</a
+                          ></label
+                        >
+                      </li>
+                      <li>
+                        <label for="G4_2">
+                          <input
+                            type="checkbox"
+                            id="G4_2"
+                            name="G4_2"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Investigate for any sites of blood loss.
+                        </label>
+                      </li>
+                      <li>
+                        <label for="G4_3">
+                          <input
+                            type="checkbox"
+                            id="G4_3"
+                            name="G4_3"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="bloodtransfusion.htm"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >If blood product support: irradiated &
+                            leuko-reduced</a
+                          ></label
+                        >
+                      </li>
+                    </ul>
+                  </form>
+                  <div id="printline_g">
+                    <p>
+                      <a href="javascript:window.print()">Print this page</a>
+                      <a href="javascript:printall()" style="margin-left: 50px"
+                        >Print all (for all 4 subsyndromes for this patient)</a
+                      >
+                    </p>
+                  </div>
+                </div>
+
+                <div id="cutetx" style="display: none">
+                  <h2>
+                    Cutaneous Subsyndrome -
+                    <div id="cutetx_rc" style="display: inline"></div>
+                  </h2>
+                  <p>Based on your input, consider these treatments</p>
+
+                  <form name="cutetx">
+                    <ul class="checklist" style="margin-top: 0px">
+                      <li>
+                        <label for="C1_0">
+                          <input
+                            type="checkbox"
+                            id="C1_0"
+                            name="C1_0"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="ars_wbd.htm"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Obtain dose estimate using biodosimetry tools</a
+                          >
+                        </label>
+                      </li>
+                      <li>
+                        <label for="C1_1"
+                          ><input
+                            type="checkbox"
+                            id="C1_1"
+                            name="C1_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Topical, mild soothing agents: aqueous
+                          lotion/powder/soap
+                        </label>
+                      </li>
+                      <li>
+                        <label for="C1_2"
+                          ><input
+                            type="checkbox"
+                            id="C1_2"
+                            name="C1_2"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Topical anti-inflammatory glucocorticoids (water-based
+                          preparations)
+                        </label>
+                      </li>
+                      <li>
+                        <label for="C1_3"
+                          ><input
+                            type="checkbox"
+                            id="C1_3"
+                            name="C1_3"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Topical/systemic anti-histamine
+                        </label>
+                      </li>
+                      <li>
+                        <label for="C1_4"
+                          ><input
+                            type="checkbox"
+                            id="C1_4"
+                            name="C1_4"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Drying agents for opened blisters
+                        </label>
+                      </li>
+                      <li>
+                        <label for="C2_1"
+                          ><input
+                            type="checkbox"
+                            id="C2_1"
+                            name="C2_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Topical antibiotics for documented infection
+                        </label>
+                      </li>
+                      <li>
+                        <label for="C2_2"
+                          ><input
+                            type="checkbox"
+                            id="C2_2"
+                            name="C2_2"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Seek more detailed history about local and systemic
+                          exposure &amp; additional lab data
+                        </label>
+                      </li>
+                      <li>
+                        <label for="C2_3"
+                          ><input
+                            type="checkbox"
+                            id="C2_3"
+                            name="C2_3"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Minimize chances of skin trauma/remove constricting
+                          objects/elevate limbs
+                        </label>
+                      </li>
+                      <li>
+                        <label for="C2_4"
+                          ><input
+                            type="checkbox"
+                            id="C2_4"
+                            name="C2_4"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Consider pain management
+                        </label>
+                      </li>
+                      <li>
+                        <label for="C3_1"
+                          ><input
+                            type="checkbox"
+                            id="C3_1"
+                            name="C3_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Aspiration of fluids from infected or weight-bearing
+                          blisters</label
+                        >
+                      </li>
+                      <li>
+                        <label for="C3_2"
+                          ><input
+                            type="checkbox"
+                            id="C3_2"
+                            name="C3_2"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Debridement as appropriate</label
+                        >
+                      </li>
+                      <li>
+                        <label for="C3_3"
+                          ><input
+                            type="checkbox"
+                            id="C3_3"
+                            name="C3_3"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Non-adherent dressing
+                        </label>
+                      </li>
+                      <li>
+                        <label for="C3_4"
+                          ><input
+                            type="checkbox"
+                            id="C3_4"
+                            name="C3_4"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Consider skin grafting
+                        </label>
+                      </li>
+                      <li>
+                        <label for="C3_5"
+                          ><input
+                            type="checkbox"
+                            id="C3_5"
+                            name="C3_5"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Consider surgical consultation</label
+                        >
+                      </li>
+                      <li>
+                        <label for="C3_6"
+                          ><input
+                            type="checkbox"
+                            id="C3_6"
+                            name="C3_6"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Systemic antibiotics for documented infection as
+                          appropriate</label
+                        >
+                      </li>
+                      <li>
+                        <label for="C3_7"
+                          ><input
+                            type="checkbox"
+                            id="C3_7"
+                            name="C3_7"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Consider Burn Service consultation if significant BSA
+                          involved</label
+                        >
+                      </li>
+                    </ul>
+                  </form>
+                  <div id="printline_c">
+                    <p>
+                      <a href="javascript:window.print()">Print this page</a>
+                      <a href="javascript:printall()" style="margin-left: 50px"
+                        >Print all (for all 4 subsyndromes for this patient)</a
+                      >
+                    </p>
+                  </div>
+                </div>
+
+                <div id="neurotx" style="display: none">
+                  <h2>
+                    Neurovascular Subsyndrome -
+                    <div id="neurotx_rc" style="display: inline"></div>
+                  </h2>
+                  <p>Based on your input, consider these treatments</p>
+
+                  <form name="neurotx">
+                    <ul class="checklist" style="margin-top: 0px">
+                      <li>
+                        <label for="N1_0">
+                          <input
+                            type="checkbox"
+                            id="N1_0"
+                            name="N1_0"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="ars_wbd.htm"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Obtain dose estimate using biodosimetry tools</a
+                          >
+                        </label>
+                      </li>
+                      <li>
+                        <label for="N1_1">
+                          <input
+                            type="checkbox"
+                            id="N1_1"
+                            name="N1_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          <a
+                            href="remm_SourcesMedical.htm#antiemetics"
+                            onClick="figures(this.href,'700','700');return false;"
+                            target="_blank"
+                            >Anti-emetics: 5-HT3 receptor antagonists</a
+                          >
+                        </label>
+                      </li>
+                      <li>
+                        <label for="N3_1">
+                          <input
+                            type="checkbox"
+                            id="N3_1"
+                            name="N3_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Fluid management: May require fluid restriction if
+                          increased intracranial pressure; balance GI
+                          issues/blood pressure status/trauma issues</label
+                        >
+                      </li>
+                      <li>
+                        <label for="N3_2">
+                          <input
+                            type="checkbox"
+                            id="N3_2"
+                            name="N3_2"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Consider glucocorticoids if shock or increased
+                          intracranial pressure
+                        </label>
+                      </li>
+                      <li>
+                        <label for="N3_3">
+                          <input
+                            type="checkbox"
+                            id="N3_3"
+                            name="N3_3"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Consider mannitol if increased intracranial pressure
+                        </label>
+                      </li>
+                      <li>
+                        <label for="N3_4">
+                          <input
+                            type="checkbox"
+                            id="N3_4"
+                            name="N3_4"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Monitor/control body temperature and blood pressure
+                          for fever and hypotension/hypertension
+                        </label>
+                      </li>
+                      <li>
+                        <label for="N3_5">
+                          <input
+                            type="checkbox"
+                            id="N3_5"
+                            name="N3_5"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Monitor neurologic status regularly
+                        </label>
+                      </li>
+                      <li>
+                        <label for="N3_6">
+                          <input
+                            type="checkbox"
+                            id="N3_6"
+                            name="N3_6"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Consider CNS imaging for neurological deficits
+                        </label>
+                      </li>
+                      <li>
+                        <label for="N4_1">
+                          <input
+                            type="checkbox"
+                            id="N4_1"
+                            name="N4_1"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Seek more detailed exposure history, additional lab
+                          data, and repeat vital signs
+                        </label>
+                      </li>
+                      <li>
+                        <label for="N4_3">
+                          <input
+                            type="checkbox"
+                            id="N4_3"
+                            name="N4_3"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Monitor intake/output, sequential body weights
+                        </label>
+                      </li>
+                      <li>
+                        <label for="N4_4">
+                          <input
+                            type="checkbox"
+                            id="N4_4"
+                            name="N4_4"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Consider pain management, as appropriate
+                        </label>
+                      </li>
+                      <li>
+                        <label for="N4_5">
+                          <input
+                            type="checkbox"
+                            id="N4_5"
+                            name="N4_5"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Consider implementing work-up for infection and GI
+                          problems
+                        </label>
+                      </li>
+                      <li>
+                        <label for="N4_6">
+                          <input
+                            type="checkbox"
+                            id="N4_6"
+                            name="N4_6"
+                            value="0"
+                            onclick="return false"
+                          />
+                          Investigate for any sites of blood loss.
+                        </label>
+                      </li>
+                    </ul>
+                  </form>
+                  <div id="printline_n">
+                    <p>
+                      <a href="javascript:window.print()">Print this page</a>
+                      <a href="javascript:printall()" style="margin-left: 50px"
+                        >Print all (for all 4 subsyndromes for this patient)</a
+                      >
+                    </p>
+                  </div>
+                </div>
+
+                <div id="instructions" style="display: none">
+                  <h3>Instructions</h3>
+                  <ul>
+                    <li>
+                      <p>
+                        Select the "<b>drop down clinical severity check box</b
+                        >" option for each parameter that best fits your
+                        patient's status. Use "zero degree" for any parameter
+                        lacking data or clinically absent.
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        Click "<b>View Treatments to Consider</b>" for each
+                        subsyndrome based on the severity information entered.
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        Click "<b>View the Response Category (RC)</b>" to assist
+                        with venue for referral. RC is auto-calculated using the
+                        highest severity grade entered for each subsydrome.
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        Re-evaluate patient at least daily as ARS clinical
+                        status changes with time.
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        <b>Important:</b> Click "<b>Clear All</b>" before
+                        entering data for a new patient. This will
+                        <b>reset/clear data</b> for all 4 subsyndromes.
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+
+                <!--<div  class="homelist" style="float:left;margin-left:10px"><a href="Aboutthissite.htm#disclaimer" onClick="figures(this.href, '750','600'); return false;" target="_blank"><b>Disclaimers</b></a> | <a href="ars_references.htm" onClick="figures(this.href, '750','600'); return false;" target="_blank"><b>References</b></a> </div> 
+<div  class="homelist" style="float:left; margin-left:550px;"><a href="javascript:clearall()">Start over</a> | <a href="javascript:printall()">Print all treatments</a>
+</div>-->
+                <div style="clear: both"></div>
+
+                <script
+                  type="text/javascript"
+                  src="js/superbox/jquery.superbox.js"
+                ></script>
+
+                <script type="text/javascript">
+                  $(function () {
+                    $.superbox.settings = {
+                      boxId: "superbox",
+                      boxClasses: "",
+                      overlayOpacity: 0.6,
+                      loadTxt: "Loading...",
+                      closeTxt: "Close",
+                    };
+
+                    $.superbox();
+                  });
+
+                  $("#nav-toggle").click(function (ev) {
+                    $("#explanatory-notes").toggle();
+                    $(this).html(
+                      $("#nav-toggle").text() == "Read this information first"
+                        ? "Hide this information"
+                        : "Read this information first"
+                    );
+                  });
+                  $("#nav-toggle-0").click(function (ev) {
+                    $("#explanatory-notes-0").toggle();
+                    $(this).html(
+                      $("#nav-toggle-0").text() == "Read this information first"
+                        ? "Hide this information"
+                        : "Read this information first"
+                    );
+                  });
+                  $("#nav-toggle-1").click(function (ev) {
+                    $("#explanatory-notes-1").toggle();
+                    $(this).html(
+                      $("#nav-toggle-1").text() == "Read this information first"
+                        ? "Hide this information"
+                        : "Read this information first"
+                    );
+                  });
+                  $("#nav-toggle-2").click(function (ev) {
+                    $("#explanatory-notes-2").toggle();
+                    $(this).html(
+                      $("#nav-toggle-2").text() == "Read this information first"
+                        ? "Hide this information"
+                        : "Read this information first"
+                    );
+                  });
+                  $("#nav-toggle-3").click(function (ev) {
+                    $("#explanatory-notes-3").toggle();
+                    $(this).html(
+                      $("#nav-toggle-3").text() == "Read this information first"
+                        ? "Hide this information"
+                        : "Read this information first"
+                    );
+                  });
+                </script>
+
+                <br /><br />
+                <!-- Content ends here -->
+                <script language="javascript">
+                  var mydate = new Date(document.lastModified).toDateString();
+                  document.write("<br><br>Last updated " + mydate + "<br><br>");
+                </script>
+              </div>
+              <!--/content_area-->
+            </div>
+          </article>
+          <!--post details-->
+        </div>
+        <!--/content-->
+      </div>
+    </div>
+    <!--/middle-->
+
+    <!-- End of body section HTML codes -->
+
+    <!--</div>-->
+
+    <!--Footer-->
+    <div id="includefooter"></div>
+    <!--Footer End-->
+
+    <!--<script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>-->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+      jQuery(document).ready(function () {
+        function is_touch_device() {
+          return !!("ontouchstart" in window);
+        }
+        /*
+    if (is_touch_device()) {
+       $('.nav > li > a').click(function(event) {
+          event.preventDefault();
+       });
+
+       $(':not(.nav > li > a)').click(function(event) {
+          $('.nav &gt; li &gt; a').css('display', 'none');
+       });
+    }
+*/
+        $(".dropdown").hover(
+          function () {
+            $(".dropdown-menu", this).fadeIn("fast");
+          },
+          function () {
+            $(".dropdown-menu", this).fadeOut("fast");
+          }
+        );
+        //$('#arsdropdown1_child').find('img:not([alt])').attr('alt', ' ');
+        $("[id^=arsdropdown]").find("img:not([alt])").attr("alt", "check");
+      });
+    </script>
+
+    <script>
+      //<![CDATA[
+      var usasearch_config = {
+        siteHandle: "radiationemergencymedicalmanageme",
+      };
+
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "//search.usa.gov/javascripts/remote.loader.js";
+      document.getElementsByTagName("head")[0].appendChild(script);
+
+      //]]>
+    </script>
+  </body>
+</html>

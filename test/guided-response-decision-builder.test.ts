@@ -51,19 +51,19 @@ describe("Guided Response tactical decision builder", () => {
     expect(record.evidenceObjects.lifeSafetyDecisionEvidence.sourceBacked).toBe(true);
   });
 
-  it("uses real chlorine master/supporting records for direct isolation and PPE decisions", () => {
+  it("keeps real chlorine mitigation defensive until conditions are verified", () => {
     const record = buildForMaster(22);
     expect(record.verifyIsolate.specificValues.initialIsolation).toBe("60 meters");
     expect(record.verifyIsolate.specificValues.protectiveAction).toContain("Small spill, night: 1.5 kilometers");
     expect(record.lifeSafety.specificValues.scbaDecision).toBe("SCBA MANDATED");
     expect(record.lifeSafety.specificValues.protectionLevel).toBe("Vapor Protective Level A w/ SCBA");
-    expect(record.mitigation.specificValues.tacticalPosture).toBe("Offensive — Conditional Source Control");
+    expect(record.mitigation.specificValues.tacticalPosture).toBe("Defensive");
     expect(record.mitigationDecisionSupport.spillReleaseControl).toMatch(/Stop leak if you can do it without risk/i);
-    expect(record.mitigationDecisionSupport.sourceControlOptions.join(" ")).toMatch(/Chlorine Institute emergency kit/i);
-    expect(record.mitigationDecisionSupport.entryPrerequisites.join(" ")).toMatch(/Kit A for cylinders, Kit B for one-ton containers, or Kit C/i);
+    expect(record.mitigationDecisionSupport.spillReleaseControl).toMatch(/Stop leak if you can do it without risk/i);
+    expect(record.mitigationDecisionSupport.requiredVerification.join(" ")).toMatch(/Field monitoring|Incident Command approval/i);
   });
 
-  it("recommends conditional offensive source control when verified conditions support technician entry", () => {
+  it("keeps conditional source control defensive when verification inputs are incomplete", () => {
     const record = builder.buildGuidedResponseDecisions({
       masterLinked: true,
       masterChemicalId: 999,
@@ -90,13 +90,13 @@ describe("Guided Response tactical decision builder", () => {
         },
       },
     });
-    expect(record.mitigation.specificValues.tacticalPosture).toBe("Offensive — Conditional Source Control");
-    expect(record.mitigation.specificValues.recommendedRoute.join(" ")).toMatch(/Conduct the defined source-control task/i);
-    expect(record.mitigation.specificValues.entryPrerequisites).toContain("Incident Command approval");
-    expect(record.mitigation.specificValues.abortCriteria).toContain("PPE breach, heat stress, low-air alarm, responder distress, or changing wind");
+    expect(record.mitigation.specificValues.tacticalPosture).toBe("Defensive");
+    expect(record.mitigation.tacticalActions.join(" ")).toMatch(/source-backed spill|Do not select a spill/i);
+    expect(record.mitigation.specificValues.requiredVerification).toContain("Incident Command approval");
+    expect(record.mitigationDecisionSupport.requiredVerification).toContain("Incident Command approval");
   });
 
-  it("allows conditional offensive source control for non-chlorine TIC/TIH releases", () => {
+  it("keeps non-chlorine TIC/TIH mitigation defensive until entry conditions are verified", () => {
     const record = builder.buildGuidedResponseDecisions({
       masterLinked: true,
       masterChemicalId: 998,
@@ -123,10 +123,10 @@ describe("Guided Response tactical decision builder", () => {
         },
       },
     });
-    expect(record.mitigation.specificValues.tacticalPosture).toBe("Offensive — Conditional Source Control");
-    expect(record.mitigation.specificValues.sourceControlOptions.join(" ")).toMatch(/product- and container-specific.*leak-control kit/i);
-    expect(record.mitigation.specificValues.entryPrerequisites.join(" ")).toMatch(/verify compatibility.*leak-control kit/i);
-    expect(record.mitigation.specificValues.abortCriteria.join(" ")).toMatch(/Withdraw immediately if container becomes unstable/i);
+    expect(record.mitigation.specificValues.tacticalPosture).toBe("Defensive");
+    expect(record.mitigation.specificValues.spillReleaseControl).toBe("No Current Data Exists");
+    expect(record.mitigationDecisionSupport.requiredVerification).toContain("Suit compatibility for the assigned task");
+    expect(record.mitigation.tacticalActions.join(" ")).toMatch(/source-backed spill|Do not select a spill/i);
   });
 
   it("fails closed when PPE data is absent and never turns IC approval into the PPE decision", () => {

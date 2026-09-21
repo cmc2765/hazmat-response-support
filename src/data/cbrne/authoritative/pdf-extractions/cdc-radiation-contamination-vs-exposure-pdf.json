@@ -1,0 +1,11 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "cdc-radiation-contamination-vs-exposure-pdf",
+  "sourceArtifactSha256": "30e25d62cf9bc8d9e023317c1b593c2a1350623a839671ed26f74b92abace826",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "F_SCANNED_IMAGE_PDF",
+  "pageCount": 0,
+  "pages": []
+}

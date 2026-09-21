@@ -85,7 +85,7 @@
     section.hidden = inventory.length === 0; body.replaceChildren();
     inventory.forEach((monitor) => {
       const row = document.createElement('tr'); row.dataset.monitorId = monitor.id;
-      const device = addCell(row, monitor.deviceName); const source = document.createElement('small'); source.className = 'monitor-source-badge'; source.textContent = monitor.sourceSystem || 'Manual HazMatIQ Entry'; device.append(document.createElement('br'), source);
+      const device = addCell(row, monitor.deviceName); const source = document.createElement('small'); source.className = 'monitor-source-badge'; source.textContent = monitor.sourceSystem || 'Manual HAZSCOPE Entry'; device.append(document.createElement('br'), source);
       addCell(row, [monitor.manufacturer, monitor.model].filter(Boolean).join(' / ')); addCell(row, monitor.serialNumber); addCell(row, monitor.sensorPackage);
       addCell(row, [monitor.assignedUnit, monitor.apparatus, monitor.compartment].filter(Boolean).join(' · ')); addCell(row, monitor.primaryUse);
       const statusCell = document.createElement('td'); const status = document.createElement('span'); status.className = `monitor-state ${statusClass(monitor.status)}`; status.textContent = monitor.status || 'Unknown'; statusCell.append(status); row.append(statusCell);
@@ -106,7 +106,7 @@
     const assignmentSelect = document.getElementById('monitor-assignment-monitor');
     if (assignmentSelect) {
       const current = assignmentSelect.value; assignmentSelect.replaceChildren(); assignmentSelect.add(new Option('Manual / Temporary Monitor', '__temporary__'));
-      inventory.forEach((monitor) => assignmentSelect.add(new Option(`${monitor.deviceName} · ${monitor.sourceSystem || 'Manual HazMatIQ Entry'}`, monitor.id)));
+      inventory.forEach((monitor) => assignmentSelect.add(new Option(`${monitor.deviceName} · ${monitor.sourceSystem || 'Manual HAZSCOPE Entry'}`, monitor.id)));
       if ([...assignmentSelect.options].some((option) => option.value === current)) assignmentSelect.value = current;
     }
     const logSelect = document.getElementById('monitor-log-monitor');
@@ -124,7 +124,7 @@
     return {
       monitorId: temporary ? '' : form.monitorId, deviceName: temporary ? form.temporaryName : saved?.deviceName || 'Unlisted Monitor',
       manufacturer: temporary ? form.temporaryModel : saved?.manufacturer || '', model: temporary ? '' : saved?.model || '', serialNumber: temporary ? form.temporarySerial : saved?.serialNumber || '',
-      sensorPackage: temporary ? form.temporarySensors : saved?.sensorPackage || '', sourceSystem: temporary ? 'Manual / Temporary' : saved?.sourceSystem || 'Manual HazMatIQ Entry',
+      sensorPackage: temporary ? form.temporarySensors : saved?.sensorPackage || '', sourceSystem: temporary ? 'Manual / Temporary' : saved?.sourceSystem || 'Manual HAZSCOPE Entry',
       sourceMode: temporary ? 'Manual / Temporary' : saved?.sourceMode || 'Manual Reference', readinessDataMode: saved?.readinessDataMode || '',
     };
   }
@@ -134,7 +134,7 @@
     persist(storageKeys.activity, activity, 'monitor-log-status'); renderActivity();
   }
   function latestReadingFor(assignmentId) { return readings.filter((reading) => reading.assignmentId === assignmentId).sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))[0]; }
-  function sourceBadge(sourceSystem) { return sourceSystem === 'FirstDue Export' ? 'FirstDue Export' : sourceSystem === 'Manual / Temporary' ? 'Manual / Temporary' : 'Manual HazMatIQ Entry'; }
+  function sourceBadge(sourceSystem) { return sourceSystem === 'FirstDue Export' ? 'FirstDue Export' : sourceSystem === 'Manual / Temporary' ? 'Manual / Temporary' : 'Manual HAZSCOPE Entry'; }
 
   function renderAssignments() {
     const list = document.getElementById('monitor-assignment-list'); const empty = document.getElementById('monitor-assignment-empty'); const live = document.getElementById('monitor-assigned-live'); const liveEmpty = document.getElementById('monitor-live-empty'); const liveCards = document.getElementById('monitor-assigned-live-cards');
@@ -203,7 +203,7 @@
 
   document.getElementById('monitor-add-device')?.addEventListener('click', () => openInventoryDialog());
   ['monitor-device-cancel', 'monitor-device-dialog-close'].forEach((id) => document.getElementById(id)?.addEventListener('click', () => closeDialog('monitor-device-dialog')));
-  document.getElementById('monitor-device-form')?.addEventListener('submit', (event) => { event.preventDefault(); const monitor = readInventoryForm(); if (!monitor.deviceName) { setText('monitor-device-form-status', 'Device Name is required.'); return; } const timestamp = nowIso(); const index = inventory.findIndex((item) => item.id === monitor.id); if (index >= 0) inventory[index] = { ...inventory[index], ...monitor, sourceLastUpdated: timestamp, updatedAt: timestamp }; else inventory.push({ ...monitor, id: makeId('monitor'), sourceSystem: 'Manual HazMatIQ Entry', sourceMode: 'Manual Reference', sourceId: '', sourceLastUpdated: timestamp, createdAt: timestamp }); if (!persist(storageKeys.inventory, inventory, 'monitor-device-form-status')) return; renderInventory(); renderAssignments(); closeDialog('monitor-device-dialog'); });
+  document.getElementById('monitor-device-form')?.addEventListener('submit', (event) => { event.preventDefault(); const monitor = readInventoryForm(); if (!monitor.deviceName) { setText('monitor-device-form-status', 'Device Name is required.'); return; } const timestamp = nowIso(); const index = inventory.findIndex((item) => item.id === monitor.id); if (index >= 0) inventory[index] = { ...inventory[index], ...monitor, sourceLastUpdated: timestamp, updatedAt: timestamp }; else inventory.push({ ...monitor, id: makeId('monitor'), sourceSystem: 'Manual HAZSCOPE Entry', sourceMode: 'Manual Reference', sourceId: '', sourceLastUpdated: timestamp, createdAt: timestamp }); if (!persist(storageKeys.inventory, inventory, 'monitor-device-form-status')) return; renderInventory(); renderAssignments(); closeDialog('monitor-device-dialog'); });
   document.getElementById('monitor-saved-inventory-rows')?.addEventListener('click', (event) => { const button = event.target.closest('[data-monitor-action]'); const row = button?.closest('[data-monitor-id]'); if (!button || !row) return; const monitor = inventory.find((item) => item.id === row.dataset.monitorId); if (!monitor) return; if (button.dataset.monitorAction === 'edit') { openInventoryDialog(monitor); return; } if (!window.confirm(`Delete ${monitor.deviceName} from the locally saved monitor inventory? Incident assignments will remain.`)) return; inventory = inventory.filter((item) => item.id !== monitor.id); if (persist(storageKeys.inventory, inventory, 'monitor-device-form-status')) { renderInventory(); renderAssignments(); } });
   document.getElementById('monitor-firstdue-import')?.addEventListener('click', openImportDialog);
   document.getElementById('monitor-inventory-export')?.addEventListener('click', () => downloadJson(`hazmatiq-monitor-inventory-${new Date().toISOString().slice(0, 10)}.json`, inventory.map((monitor) => Object.fromEntries([...importFields, 'sourceSystem', 'sourceMode', 'readinessDataMode'].map((field) => [field, monitor[field] || ''])))));

@@ -1,0 +1,476 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-biological-hantavirus",
+  "sourceArtifactSha256": "50d5118943a9d63ebb34c241d5a54fce872907b3eda084c1d698ca052f284155",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "A_EMBEDDED_TEXT_AVAILABLE_BUT_LAYOUT_COMPLEX",
+  "pageCount": 2,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "2012NRT Quick Reference Guide:Hantavirus\u0000)\u0000R\u0000U\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000V\u0000H\u0000H\u0000\u0003\u0000³\u0000.\u0000H\u0000\\\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000V\u0000\u0003\u0000&\u0000L\u0000W\u0000H\u0000G\u0000\u0012\u00008\u0000V\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P(NRT) Quick Reference Guides (QRGs) for Viral 2012Revision.",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "\u0000´QRGsareintended for Federal On-Scene Coordinators (OSCs) and Remedial Program Managers (RPMs).Agent CharacteristicsAgent Classification: Biological Type: Virus Family: Bunyaviridae Genus:",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "Hantavirus, Hantaan virus, Seoul virus, Puumala virus, Sin Nombre, the virus first isolated from the Four Corners of theSouthwestern U.S., Andes virus, and Dobrava-Belgrade virus Description: ",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "There are two primary diseases caused by the various viruses.  Hantavirus Pulmonary Syndrome (HPS) (sometimes called Hantavirus Cardiopulmonary ock) is primarily found in North and South America (Andes virus) and primarily affects the pulmonary ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "system.  Hemorrhagic Fever with Renal Syndrome (HFRS) affects the kidneys and is primarily found in Asia (Hantaan virus), Scandinavia (Puumala virus), Balkans (Dobrava-",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "Belgrade virus) and Worldwide (Seoul virus). Both HPS and HFRS, though rare, have occurred in the United States. Transmissionof the naturally occurring diseases is either by the bite of infected rodents or via aerosolization of the virus from",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "rodent urine, feces, saliva, and nesting materials.  In a bioterror event, humans may contract the disease by breathing in aerosolized virus.Bio-Safety Level: 4CDC Category: CHHS Select Agent: NoIncubation Period:1-5 weeks, with 8 weeks for some c",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "ases of viruses causing HFRS. Person-to-Person Transmission: Yes, contact with infected bodily fluids or excreta of live or dead victims (e.g. Andes,etc.)Other Forms of Transmission: Yes, contact with infected fluids or excreta of live or dead non-hum",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "an hosts.Treatments:NO VACCINE AVAILABLE; treatment is supportive.Infectivity/Lethality: HPS: High/1-50%; HFRS: Moderate/1-15%Persistence/Stability: Known to persist in bodily fluids or excreta of live or dead host for extended periods. Hantavirus per",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "sistence is affected by types of environmental matrices and intentional stabilization (i.e. weapons-grade).Primary non-human host:RodentRelease ScenariosCAUTION: REAEROSOLIZATION OF THE VIRUS IS DEPENDENT UPON THE AERODYNAMIC PROPERTIES OF THE CONTAMI",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "NATED MEDIA (BODILY FLUIDS, EXCRETA, ENVIRONMENTAL MATERIALS). ALL MEDIA SHOULD BE CONSIDERED A REAEROSOLIZATION CONCERN.Air/Aerosolization: Hantavirus, in nature, is spread via aerosolization. In a bioterror event, Hantavirus may be engineered to be even",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "more aerosolizable.  Its reaerosolization ability will depend upon the size & physical properties of the contaminated matrix in which it resides and may quickly lead to the virus spreading throughout a building & surrounding areas.  Hantavirus can be rele",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "ased indoors and outdoors. An outdoor release of Hantavirus has the potential to travel from the immediate area, increasing the scope of the response.Soil/Surfaces: Hantaviruses can survive on surface & in soil.Water: Hantaviruses may survive in water.O",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "ther: Hantaviruses are naturally occurring and endemic throughout the world.Health EffectsOnsetCAUTION: HANTAVIRUSES ARE INFECTIVE VIA ALL EXPOSURE ROUTESSymptoms of HPS typically occur 1-5 weeks after exposure. Symptoms of HFRS typically occur up to",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "8 weeks after exposure.Signs/Symptoms per Exposure RouteGeneral: Two clinical syndromes are associated with exposure to Hantavirus: hemorrhagic fever with renal syndrome (HFRS) and cardio-pulmonary syndrome (HCPS).  Initial symptoms for both syndrome",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "s are similar and include flu-like symptoms such as fever, headache, muscle aches, abdominal pain, nausea, rapid heartbeat and decrease in blood pressure and heart efficiency.  In HFRS there is an excessive production of urine and kidney failure. With HFRS",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "individuals develop difficulty in breathing, coughing, and shortness of breath which can progress to an acute cardiopulmonary phase leading to cardiovascular shock.Effect LevelsSpecific Effect Levels Are Unknown. Infectivity:The various genera of Han",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "tavirus are presumed to be highly infective if aerosolized.Infective Dose:Unknown Lethality:Hantavirus has a 1-50% mortality rate associated with HPS and a 1-15% rate for HFRS.  Please contact the Centers for Disease Control and Prevention (CDC) for m",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "ore information: (404) 639-3311.Personnel SafetyConcernsCheck with the Health & Safety Officer regarding PPE, Medical Surveillance, & Health & Safety Plan (HASP). Level of PPE may vary dependingupon the incident & site-specific circumstances. The PPE ",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "Levels listed are general suggestions only. For decon of workers, use warm soapy water, taking care to avoid abrading the skin.MedicalBaseline: Annual physical & respiratory function exams. Treatments Available: Seek medical attention. Treatment is su",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "pportive. Quarantine procedures for infected individuals should be strictly followed.First AidDuring Incident: Conduct medical monitoring; use PPE as designated by the HASP; record the PPE levels used; monitor for fever & other signs/symptoms as listed",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "under Health Effects, &, if necessary, ensure medical attention is provided as soon as possible. Post Incident: Monitor for signs/symptoms &, if necessary, ensure medical attention is provided as soon as possible.PPECAUTION: UNTIL SAMPLING CONFIRMS T",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "HE VIRAL AGENT WON'T OR CAN'T BREAKTHROUGH EITHER A P100 or HEPA FILTER, RESPONDERS SHOULD USE A SELF CONTAINED BREATHING APPARATUS (SCBA) FOR RESPIRATORY PROTECTION Emergency Response to a Suspected Viral Incident: Possible PPE Levels for emergency respo",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "nders is based on scenario risks from highest level of protection to least: 1)Pressure-demand Self Contained Breathing Apparatus (SCBA) with Level A protective suit, when: a) Event is uncontrolled, b)Viral agent is airborne or aerosolizable, c)Dissemina",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "tion method is unknown, d)Performing decon rinsing and washing of workers in Level A protective suits because of an airborne or aerosolizable viral agent. 2)Pressure-demand SCBA with Level B protective suit, when: a)The viral agent is no longer a reaero",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "solization threat but the viral agent's breakthrough ability for P100 or HEPA filters is not known, b)Response operations may cause a splash hazard. 3)Full-face piece respirator with P100 filter or PAPR with HEPA filters, when sampling confirms the viral",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "agent won't or can't breakthrough the P100 or HEPA filter: 4)Disposable hooded coveralls, gloves, & foot coverings, when there is NO threat of airborne release or re-aerosolization of the viral agent. Other Workers: PPE recommendations for workers ot",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "her than emergency responders must be developed in the HASP for the specific scenario. PPE recommendations will vary by job type (e.g., cleanup, decon, etc.), type of exposure (e.g., airborne or surface/liquid/soil hazard), & any other site hazards (e.g., ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "chemical, physical, etc.).SamplingFixed and Portable Aerosol Monitoring: No field detection methods are currently employed.CONCERNS: BEFORE OBTAINING SAMPLES: Identify sample transportation requirements; Contact EPA/HQ-EOC (202-564-3850) for ERLN co",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "ntract laboratories able to analyze these types of samples; Clearly identify & coordinate with the laboratory to be used since most labs cannot analyze all types of media (e.g., wipes, swabs, filters, etc.); Coordinate with the sample disposal facility for",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "acceptance criteria (i.e., sample decon requirements); Coordinate with investigative units (EPA-CID & FBI) to ensure sample chain-of-custody is maintained between the groups.Note: Sampling techniques, analytical equipment and detection levels will be site-",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000\t\u0000\u0003\u0000G\u0000H\u0000S\u0000H\u0000Q\u0000G\u0000\u0003\u0000R\u0000Q\u0000\u001d\u0000\u00031)characteristics of the agent; 2)type of contaminated surfaces (e.g., porous v. nonporous); 3)response phase & purpose of sampling; 4)collection and storage methods applied; 5)transportation regulations; 6)",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "laboratory sample acceptance criteria and; 7)decon requirements of sample waste disposal facility.CAUTION: HEPA EQUIPMENT IS NOT RECOMMENDED UNTIL PROVEN EFFECTIVE IN FILTERING PARTICLES AS SMALL AS VIRAL SIZESampling Location Plans: ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "If the initial point of contaminationis known, start with an area thought to be free of contamination & work in concentric circles towards the ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "initial point of contamination. Be concerned about likely contaminated areas (e.g., elevator buttons, mail, corners of hallways, baseboards, light switches, door knobs) due to foot traffic or ventilation systems. This virus can infect humans & animals.",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Note areas where non-human hostsmay have frequented, sincetheir movement may have affected the extent of contamination.Based on site characteristics & laboratory capacity, sampling plan may be judgmental, probabilistic, or a combination thereof.",
+          "role": "BODY"
+        }
+      ],
+      "text": "2012NRT Quick Reference Guide:Hantavirus\u0000)\u0000R\u0000U\u0000\u0003\u0000U\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000\u000f\u0000\u0003\u0000S\u0000O\u0000H\u0000D\u0000V\u0000H\u0000\u0003\u0000V\u0000H\u0000H\u0000\u0003\u0000³\u0000.\u0000H\u0000\\\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000H\u0000Q\u0000F\u0000H\u0000V\u0000\u0003\u0000&\u0000L\u0000W\u0000H\u0000G\u0000\u0012\u00008\u0000V\u0000H\u0000G\u0000\u0003\u0000L\u0000Q\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000V\u0000H\u0000\u0003\u00007\u0000H\u0000D\u0000P(NRT) Quick Reference Guides (QRGs) for Viral 2012Revision. \u0000´QRGsareintended for Federal On-Scene Coordinators (OSCs) and Remedial Program Managers (RPMs).Agent CharacteristicsAgent Classification: Biological Type: Virus Family: Bunyaviridae Genus: Hantavirus, Hantaan virus, Seoul virus, Puumala virus, Sin Nombre, the virus first isolated from the Four Corners of theSouthwestern U.S., Andes virus, and Dobrava-Belgrade virus Description: There are two primary diseases caused by the various viruses. Hantavirus Pulmonary Syndrome (HPS) (sometimes called Hantavirus Cardiopulmonary ock) is primarily found in North and South America (Andes virus) and primarily affects the pulmonary system. Hemorrhagic Fever with Renal Syndrome (HFRS) affects the kidneys and is primarily found in Asia (Hantaan virus), Scandinavia (Puumala virus), Balkans (Dobrava- Belgrade virus) and Worldwide (Seoul virus). Both HPS and HFRS, though rare, have occurred in the United States. Transmissionof the naturally occurring diseases is either by the bite of infected rodents or via aerosolization of the virus from rodent urine, feces, saliva, and nesting materials. In a bioterror event, humans may contract the disease by breathing in aerosolized virus.Bio-Safety Level: 4CDC Category: CHHS Select Agent: NoIncubation Period:1-5 weeks, with 8 weeks for some c ases of viruses causing HFRS. Person-to-Person Transmission: Yes, contact with infected bodily fluids or excreta of live or dead victims (e.g. Andes,etc.)Other Forms of Transmission: Yes, contact with infected fluids or excreta of live or dead non-hum an hosts.Treatments:NO VACCINE AVAILABLE; treatment is supportive.Infectivity/Lethality: HPS: High/1-50%; HFRS: Moderate/1-15%Persistence/Stability: Known to persist in bodily fluids or excreta of live or dead host for extended periods. Hantavirus per sistence is affected by types of environmental matrices and intentional stabilization (i.e. weapons-grade).Primary non-human host:RodentRelease ScenariosCAUTION: REAEROSOLIZATION OF THE VIRUS IS DEPENDENT UPON THE AERODYNAMIC PROPERTIES OF THE CONTAMI NATED MEDIA (BODILY FLUIDS, EXCRETA, ENVIRONMENTAL MATERIALS). ALL MEDIA SHOULD BE CONSIDERED A REAEROSOLIZATION CONCERN.Air/Aerosolization: Hantavirus, in nature, is spread via aerosolization. In a bioterror event, Hantavirus may be engineered to be even more aerosolizable. Its reaerosolization ability will depend upon the size & physical properties of the contaminated matrix in which it resides and may quickly lead to the virus spreading throughout a building & surrounding areas. Hantavirus can be rele ased indoors and outdoors. An outdoor release of Hantavirus has the potential to travel from the immediate area, increasing the scope of the response.Soil/Surfaces: Hantaviruses can survive on surface & in soil.Water: Hantaviruses may survive in water.O ther: Hantaviruses are naturally occurring and endemic throughout the world.Health EffectsOnsetCAUTION: HANTAVIRUSES ARE INFECTIVE VIA ALL EXPOSURE ROUTESSymptoms of HPS typically occur 1-5 weeks after exposure. Symptoms of HFRS typically occur up to 8 weeks after exposure.Signs/Symptoms per Exposure RouteGeneral: Two clinical syndromes are associated with exposure to Hantavirus: hemorrhagic fever with renal syndrome (HFRS) and cardio-pulmonary syndrome (HCPS). Initial symptoms for both syndrome s are similar and include flu-like symptoms such as fever, headache, muscle aches, abdominal pain, nausea, rapid heartbeat and decrease in blood pressure and heart efficiency. In HFRS there is an excessive production of urine and kidney failure. With HFRS individuals develop difficulty in breathing, coughing, and shortness of breath which can progress to an acute cardiopulmonary phase leading to cardiovascular shock.Effect LevelsSpecific Effect Levels Are Unknown. Infectivity:The various genera of Han tavirus are presumed to be highly infective if aerosolized.Infective Dose:Unknown Lethality:Hantavirus has a 1-50% mortality rate associated with HPS and a 1-15% rate for HFRS. Please contact the Centers for Disease Control and Prevention (CDC) for m ore information: (404) 639-3311.Personnel SafetyConcernsCheck with the Health & Safety Officer regarding PPE, Medical Surveillance, & Health & Safety Plan (HASP). Level of PPE may vary dependingupon the incident & site-specific circumstances. The PPE Levels listed are general suggestions only. For decon of workers, use warm soapy water, taking care to avoid abrading the skin.MedicalBaseline: Annual physical & respiratory function exams. Treatments Available: Seek medical attention. Treatment is su pportive. Quarantine procedures for infected individuals should be strictly followed.First AidDuring Incident: Conduct medical monitoring; use PPE as designated by the HASP; record the PPE levels used; monitor for fever & other signs/symptoms as listed under Health Effects, &, if necessary, ensure medical attention is provided as soon as possible. Post Incident: Monitor for signs/symptoms &, if necessary, ensure medical attention is provided as soon as possible.PPECAUTION: UNTIL SAMPLING CONFIRMS T HE VIRAL AGENT WON'T OR CAN'T BREAKTHROUGH EITHER A P100 or HEPA FILTER, RESPONDERS SHOULD USE A SELF CONTAINED BREATHING APPARATUS (SCBA) FOR RESPIRATORY PROTECTION Emergency Response to a Suspected Viral Incident: Possible PPE Levels for emergency respo nders is based on scenario risks from highest level of protection to least: 1)Pressure-demand Self Contained Breathing Apparatus (SCBA) with Level A protective suit, when: a) Event is uncontrolled, b)Viral agent is airborne or aerosolizable, c)Dissemina tion method is unknown, d)Performing decon rinsing and washing of workers in Level A protective suits because of an airborne or aerosolizable viral agent. 2)Pressure-demand SCBA with Level B protective suit, when: a)The viral agent is no longer a reaero solization threat but the viral agent's breakthrough ability for P100 or HEPA filters is not known, b)Response operations may cause a splash hazard. 3)Full-face piece respirator with P100 filter or PAPR with HEPA filters, when sampling confirms the viral agent won't or can't breakthrough the P100 or HEPA filter: 4)Disposable hooded coveralls, gloves, & foot coverings, when there is NO threat of airborne release or re-aerosolization of the viral agent. Other Workers: PPE recommendations for workers ot her than emergency responders must be developed in the HASP for the specific scenario. PPE recommendations will vary by job type (e.g., cleanup, decon, etc.), type of exposure (e.g., airborne or surface/liquid/soil hazard), & any other site hazards (e.g., chemical, physical, etc.).SamplingFixed and Portable Aerosol Monitoring: No field detection methods are currently employed.CONCERNS: BEFORE OBTAINING SAMPLES: Identify sample transportation requirements; Contact EPA/HQ-EOC (202-564-3850) for ERLN co ntract laboratories able to analyze these types of samples; Clearly identify & coordinate with the laboratory to be used since most labs cannot analyze all types of media (e.g., wipes, swabs, filters, etc.); Coordinate with the sample disposal facility for acceptance criteria (i.e., sample decon requirements); Coordinate with investigative units (EPA-CID & FBI) to ensure sample chain-of-custody is maintained between the groups.Note: Sampling techniques, analytical equipment and detection levels will be site- \u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000 \u0000\u0003\u0000G\u0000H\u0000S\u0000H\u0000Q\u0000G\u0000\u0003\u0000R\u0000Q\u0000\u001d\u0000\u00031)characteristics of the agent; 2)type of contaminated surfaces (e.g., porous v. nonporous); 3)response phase & purpose of sampling; 4)collection and storage methods applied; 5)transportation regulations; 6) laboratory sample acceptance criteria and; 7)decon requirements of sample waste disposal facility.CAUTION: HEPA EQUIPMENT IS NOT RECOMMENDED UNTIL PROVEN EFFECTIVE IN FILTERING PARTICLES AS SMALL AS VIRAL SIZESampling Location Plans: If the initial point of contaminationis known, start with an area thought to be free of contamination & work in concentric circles towards the initial point of contamination. Be concerned about likely contaminated areas (e.g., elevator buttons, mail, corners of hallways, baseboards, light switches, door knobs) due to foot traffic or ventilation systems. This virus can infect humans & animals. Note areas where non-human hostsmay have frequented, sincetheir movement may have affected the extent of contamination.Based on site characteristics & laboratory capacity, sampling plan may be judgmental, probabilistic, or a combination thereof.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 36,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "2012Consult EPA/HQ-EOC at 202-564-3850 for Environmental Response Laboratory Network (a.k.a. ERLN laboratory) personnel who can explain asampling procedure thatis compatible with current analytical procedure.Air: ",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "\u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000J\u0000H\u0000O\u0000\u0003\u0000I\u0000L\u0000O\u0000W\u0000H\u0000U\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000L\u0000P\u0000S\u0000L\u0000Q\u0000J\u0000H\u0000U\u0000\u0011\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000U\u0000D\u0000W\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000\t\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J",
+          "role": "BODY"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "times. Ensure that the appropriate pump is used for the selected sampling method.Water: Can persist in water; therefore, any consumable liquid should be sampled. If the consumable liquid is chlorinated, the chlorine needs to be neutralized ",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "immediately with a sodium thiosulfate or other neutralizer at the concentration specified by the analytical laboratory prior to shipment. As chlorine levels can vary ",
+          "role": "BODY"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "substantially throughout a drinking water system, it is not always appropriate to assume that a sample is chlorinated based solely on a description of the water treatment processesin use.Soil: For the localized areas where soil deposition of the agent",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "is suspected to have occurred (i.e., aerosol or liquid droplets), a surface soil sample from a depth of less than 1 inch (2.54 cm) should be obtained from non-vegetated area.Surfaces:Wipe & Swab Sampling (for non-porous surfaces):",
+          "role": "BODY"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "Limited studies suggest using a sterile macrofoam swabs moistened with 1X phosphate-buffered saline supplemented with 0.02% Tween-80 (PBST), pH 6.5).Do NOT use dry wipes or swabs. Environmental:Collect ",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "anything (e.g., dust, straw, wood, etc.) suspected of being impacted by non-human hostmovement or habitation as these items may have come in contact with their feces or fluids. A site-",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "\u0000V\u0000S\u0000H\u0000F\u0000L\u0000À\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000U\u0000H\u0000Y\u0000L\u0000H\u0000Z\u0000H\u0000G\u0000\u0003\u0000\t\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0003\u00006\u0000X\u0000E\u0000M\u0000H\u0000F\u0000W\u0000\u0003\u00000\u0000D\u0000W\u0000W\u0000H\u0000U\u0000\u0003\u0000(\u0000[\u0000S\u0000H\u0000U\u0000W\u0000V\u0000\u0003\u0000\t\u0000\u0012\u0000R\u0000U\u0000\u0003\u0000W\u0000K\u0000U\u0000R\u0000X\u0000J\u0000K\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "Sample Packaging & Shipping: Thepackaging & shipping of samples are subject to strict regulations established by DOT, CDC, USPS,OSHA, & IATA.Contact the sample-",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "receiving laboratory to determine if they have additional packaging, shipping or labeling requirements.HF samples should be placed in an air-tight container & kept at temperatures of 40-50\u0003|F (4-10\u0003|C).CAUTION: Many labs",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "may not be able to perform analysis on all matrices (e.g., wipes & soil).Laboratory Information: Contact EPA/HQ-EOC (202-564-3850)for contract laboratories able to analyze these types of samples.Decontamination/CleanupCAUTION: HEPA EQUIPMENT IS NOT ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "RECOMMENDED UNTIL PROVEN EFFECTIVE IN FILTERING PARTICLES AS SMALL AS VIRAL SIZEDecon/Cleanup Planning: Site-",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000\t\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000V\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "should develop a plan that takes into account: 1) Nature of contamination including physical properties, how it entered the facility, etc.; 2) Extent of contamination, including the amount & possible pathways that have or could have spread the virus",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": ". It is advisable to isolate the contaminated area; & 3) Objectives of decon, including decon of critical items for re-use & the treatment, removal, or packaging of other items for disposal. Note: ",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "\u0000&\u0000U\u0000L\u0000V\u0000L\u0000V\u0000\u0003\u0000H\u0000[\u0000H\u0000P\u0000S\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00002\u0000I\u0000I\u0000L\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u00003\u0000H\u0000V\u0000W\u0000L\u0000F\u0000L\u0000G\u0000H\u0000\u0003Programs might be necessary depending on decontaminating agents used. WARNING: DECON SOLUTIONS SHOULD NOT BE DEPLOYED AS A SPRAY.Decon Methods:",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Decon decisions will be site & situation specific but due to re-aerosolization concerns, under NO circumstances should ANY broom be used.\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u000f\u0000\u0003\u0000F\u0000D\u0000O\u0000O\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00001\u00005\u00007\u0000\u0003\u0000S\u0000D\u0000J\u0000H\u0000U\u0000\u0003\u0000D\u0000W\u0000\u0003\u0000\u001b\u0000\u0013\u0000\u0013-329-1841,can",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "provide specific decontamination parameters & the requirements for using readily available commercial items such as household bleach. For large areas, low-\u0000W\u0000H\u0000F\u0000K\u0000\u0003\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000P\u0000R\u0000V\u0000W\u0000\u0003\u0000O\u0000L\u0000N\u0000H\u0000O\u0000\\\u0000\u0003\u0000Z\u0000R\u0000Q\u0000¶\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000X\u0000V\u0000H\u0000G\u0000\u0003\u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "rather, widespread fumigation would be the most expedient & cost effective method selected. For small areas of contamination, discreet area decon methods would typically proceed as follows: allow aerosols to ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "settle & wear protective clothing; gently cover any contaminated areas with paper towel(s) (overlapping each other if necessary) & apply decon solutions. HF viruses can be inactivated by the following decon solutions: 1) pH-",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "amended bleach solution (i.e., 1 part household bleach, 1 part vinegar & 8 parts water); 2) a 70% aqueous solution of ethanol, & 3) a 5% aqueous solution of a phenolic germicidal det",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "ergent (e.g., industrial strength Lysol®). Apply the decon solution by starting at the perimeter & wet towards the center of the contaminated area. Ensure sufficient contact time (i.e., 60 minutes) is provided & ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "\u0000H\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000S\u0000D\u0000S\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000N\u0000H\u0000S\u0000W\u0000\u0003\u0000³\u0000V\u0000R\u0000S\u0000S\u0000L\u0000Q\u0000J\u0000´\u0000\u0003wetduring this time. Remove the paper towel(s) then wipe up the residual dampness/drops of pH-amended bleach solution until surface is dry. Reapply solution to ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "the bare surface & wipe up immediately with more paper towel(s), then let surface air-dry. All contaminated decon materials (e.g., paper towels, etc.) should be appropriately treated & discarded as bio-hazardous waste.",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "\u00009\u0000H\u0000U\u0000L\u0000À\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u001d\u0000\u0003Site and situation specific.Please contact ERT (732-321-6660) and/or NDT (800-329-1841) for further assistance.Waste DisposalCAUTION:",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "Hazardous waste transportation & disposal are regulated federally; however more stringent regulations may exist under state authority. These regulations differ from state-to-state. Detailed state regulations can be found at www.envcap.org.",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Waste Disposal Planning: Waste generated from assessment & cleanup activities should be incinerated, autoclaved, chemically disinfected, or fumigated & then tested to be sure the agent(s) were inactivated. Waste disposal for agent-",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "contaminated wastes generated from the decontamination & disposal activities will be problematic. Landfills willing to take these wastes may be limited & incineration may be prohibitively expensive or impractical. All waste disposal options should be ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "investigated as early into the response process as possible. Transportation of the agent contaminated wastes from the site tothe landfill or incinerator may be prob",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "lematic as well. First, agreements must be reached between the waste sender & acceptor BEFORE transport, followed by timely public notification of the transport & disposal phases. Transportation of hazardous waste may cross several states and localities, w",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "hich may exceed federal regulations. Requirements for transporting hazardous materials, & procedure for exemption, are specified in http://www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. The U.S. EPA has developed a web-based Incident Waste ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "Management Planning & Response Tool which contains guidance related to waste transportation, contact information for potential treatment, disposal facilities, & state regulatory offices, packaging guidance to minimize risk to workers, & guidance to minimiz",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "e the potential \u0000I\u0000R\u0000U\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000W\u0000U\u0000H\u0000D\u0000W\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000I\u0000D\u0000F\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0011\u0000\u0003\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000W\u0000R\u0000R\u0000O\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000V\u0000\u0003\u0000S\u0000U\u0000H-",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "registration (http://www2.ergweb.com/bdrtool/login.asp).",
+          "role": "BODY"
+        }
+      ],
+      "text": "2012Consult EPA/HQ-EOC at 202-564-3850 for Environmental Response Laboratory Network (a.k.a. ERLN laboratory) personnel who can explain asampling procedure thatis compatible with current analytical procedure.Air: \u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000\u0003\u0000D\u0000L\u0000U\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000H\u0000V\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000J\u0000H\u0000O\u0000\u0003\u0000I\u0000L\u0000O\u0000W\u0000H\u0000U\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000L\u0000P\u0000S\u0000L\u0000Q\u0000J\u0000H\u0000U\u0000\u0011\u0000\u0003\u00005\u0000H\u0000I\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000P\u0000D\u0000Q\u0000X\u0000I\u0000D\u0000F\u0000W\u0000X\u0000U\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000D\u0000V\u0000H\u0000S\u0000W\u0000L\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u000f\u0000\u0003\u0000I\u0000O\u0000R\u0000Z\u0000\u0003\u0000U\u0000D\u0000W\u0000H\u0000V\u0000\u000f\u0000\u0003\u0000 \u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J times. Ensure that the appropriate pump is used for the selected sampling method.Water: Can persist in water; therefore, any consumable liquid should be sampled. If the consumable liquid is chlorinated, the chlorine needs to be neutralized immediately with a sodium thiosulfate or other neutralizer at the concentration specified by the analytical laboratory prior to shipment. As chlorine levels can vary substantially throughout a drinking water system, it is not always appropriate to assume that a sample is chlorinated based solely on a description of the water treatment processesin use.Soil: For the localized areas where soil deposition of the agent is suspected to have occurred (i.e., aerosol or liquid droplets), a surface soil sample from a depth of less than 1 inch (2.54 cm) should be obtained from non-vegetated area.Surfaces:Wipe & Swab Sampling (for non-porous surfaces): Limited studies suggest using a sterile macrofoam swabs moistened with 1X phosphate-buffered saline supplemented with 0.02% Tween-80 (PBST), pH 6.5).Do NOT use dry wipes or swabs. Environmental:Collect anything (e.g., dust, straw, wood, etc.) suspected of being impacted by non-human hostmovement or habitation as these items may have come in contact with their feces or fluids. A site- \u0000V\u0000S\u0000H\u0000F\u0000L\u0000À\u0000F\u0000\u0003\u0000V\u0000D\u0000P\u0000S\u0000O\u0000L\u0000Q\u0000J\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000U\u0000H\u0000Y\u0000L\u0000H\u0000Z\u0000H\u0000G\u0000\u0003\u0000 \u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000S\u0000U\u0000L\u0000D\u0000W\u0000H\u0000\u0003\u00006\u0000X\u0000E\u0000M\u0000H\u0000F\u0000W\u0000\u0003\u00000\u0000D\u0000W\u0000W\u0000H\u0000U\u0000\u0003\u0000(\u0000[\u0000S\u0000H\u0000U\u0000W\u0000V\u0000\u0003\u0000 \u0000\u0012\u0000R\u0000U\u0000\u0003\u0000W\u0000K\u0000U\u0000R\u0000X\u0000J\u0000K\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003 Sample Packaging & Shipping: Thepackaging & shipping of samples are subject to strict regulations established by DOT, CDC, USPS,OSHA, & IATA.Contact the sample- receiving laboratory to determine if they have additional packaging, shipping or labeling requirements.HF samples should be placed in an air-tight container & kept at temperatures of 40-50\u0003|F (4-10\u0003|C).CAUTION: Many labs may not be able to perform analysis on all matrices (e.g., wipes & soil).Laboratory Information: Contact EPA/HQ-EOC (202-564-3850)for contract laboratories able to analyze these types of samples.Decontamination/CleanupCAUTION: HEPA EQUIPMENT IS NOT RECOMMENDED UNTIL PROVEN EFFECTIVE IN FILTERING PARTICLES AS SMALL AS VIRAL SIZEDecon/Cleanup Planning: Site- \u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000 \u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003\u00005\u0000H\u0000V\u0000S\u0000R\u0000Q\u0000G\u0000H\u0000U\u0000V\u0000\u0003 should develop a plan that takes into account: 1) Nature of contamination including physical properties, how it entered the facility, etc.; 2) Extent of contamination, including the amount & possible pathways that have or could have spread the virus . It is advisable to isolate the contaminated area; & 3) Objectives of decon, including decon of critical items for re-use & the treatment, removal, or packaging of other items for disposal. Note: \u0000&\u0000U\u0000L\u0000V\u0000L\u0000V\u0000\u0003\u0000H\u0000[\u0000H\u0000P\u0000S\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00002\u0000I\u0000I\u0000L\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u00003\u0000H\u0000V\u0000W\u0000L\u0000F\u0000L\u0000G\u0000H\u0000\u0003Programs might be necessary depending on decontaminating agents used. WARNING: DECON SOLUTIONS SHOULD NOT BE DEPLOYED AS A SPRAY.Decon Methods: Decon decisions will be site & situation specific but due to re-aerosolization concerns, under NO circumstances should ANY broom be used.\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00001\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000D\u0000O\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u0003\u00007\u0000H\u0000D\u0000P\u0000\u000f\u0000\u0003\u0000F\u0000D\u0000O\u0000O\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u00001\u00005\u00007\u0000\u0003\u0000S\u0000D\u0000J\u0000H\u0000U\u0000\u0003\u0000D\u0000W\u0000\u0003\u0000\u001b\u0000\u0013\u0000\u0013-329-1841,can provide specific decontamination parameters & the requirements for using readily available commercial items such as household bleach. For large areas, low-\u0000W\u0000H\u0000F\u0000K\u0000\u0003\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000P\u0000H\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000P\u0000R\u0000V\u0000W\u0000\u0003\u0000O\u0000L\u0000N\u0000H\u0000O\u0000\\\u0000\u0003\u0000Z\u0000R\u0000Q\u0000¶\u0000W\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000X\u0000V\u0000H\u0000G\u0000\u0003\u0000± rather, widespread fumigation would be the most expedient & cost effective method selected. For small areas of contamination, discreet area decon methods would typically proceed as follows: allow aerosols to settle & wear protective clothing; gently cover any contaminated areas with paper towel(s) (overlapping each other if necessary) & apply decon solutions. HF viruses can be inactivated by the following decon solutions: 1) pH- amended bleach solution (i.e., 1 part household bleach, 1 part vinegar & 8 parts water); 2) a 70% aqueous solution of ethanol, & 3) a 5% aqueous solution of a phenolic germicidal det ergent (e.g., industrial strength Lysol®). Apply the decon solution by starting at the perimeter & wet towards the center of the contaminated area. Ensure sufficient contact time (i.e., 60 minutes) is provided & \u0000H\u0000Q\u0000V\u0000X\u0000U\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000S\u0000D\u0000S\u0000H\u0000U\u0000\u0003\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000N\u0000H\u0000S\u0000W\u0000\u0003\u0000³\u0000V\u0000R\u0000S\u0000S\u0000L\u0000Q\u0000J\u0000´\u0000\u0003wetduring this time. Remove the paper towel(s) then wipe up the residual dampness/drops of pH-amended bleach solution until surface is dry. Reapply solution to the bare surface & wipe up immediately with more paper towel(s), then let surface air-dry. All contaminated decon materials (e.g., paper towels, etc.) should be appropriately treated & discarded as bio-hazardous waste. \u00009\u0000H\u0000U\u0000L\u0000À\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000'\u0000H\u0000F\u0000R\u0000Q\u0000\u001d\u0000\u0003Site and situation specific.Please contact ERT (732-321-6660) and/or NDT (800-329-1841) for further assistance.Waste DisposalCAUTION: Hazardous waste transportation & disposal are regulated federally; however more stringent regulations may exist under state authority. These regulations differ from state-to-state. Detailed state regulations can be found at www.envcap.org. Waste Disposal Planning: Waste generated from assessment & cleanup activities should be incinerated, autoclaved, chemically disinfected, or fumigated & then tested to be sure the agent(s) were inactivated. Waste disposal for agent- contaminated wastes generated from the decontamination & disposal activities will be problematic. Landfills willing to take these wastes may be limited & incineration may be prohibitively expensive or impractical. All waste disposal options should be investigated as early into the response process as possible. Transportation of the agent contaminated wastes from the site tothe landfill or incinerator may be prob lematic as well. First, agreements must be reached between the waste sender & acceptor BEFORE transport, followed by timely public notification of the transport & disposal phases. Transportation of hazardous waste may cross several states and localities, w hich may exceed federal regulations. Requirements for transporting hazardous materials, & procedure for exemption, are specified in http://www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. The U.S. EPA has developed a web-based Incident Waste Management Planning & Response Tool which contains guidance related to waste transportation, contact information for potential treatment, disposal facilities, & state regulatory offices, packaging guidance to minimize risk to workers, & guidance to minimiz e the potential \u0000I\u0000R\u0000U\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000W\u0000U\u0000H\u0000D\u0000W\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000I\u0000D\u0000F\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0011\u0000\u0003\u0000$\u0000F\u0000F\u0000H\u0000V\u0000V\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u0000Z\u0000H\u0000E\u0000\u0003\u0000E\u0000D\u0000V\u0000H\u0000G\u0000\u0003\u0000G\u0000L\u0000V\u0000S\u0000R\u0000V\u0000D\u0000O\u0000\u0003\u0000W\u0000R\u0000R\u0000O\u0000\u0003\u0000U\u0000H\u0000T\u0000X\u0000L\u0000U\u0000H\u0000V\u0000\u0003\u0000S\u0000U\u0000H- registration (http://www2.ergweb.com/bdrtool/login.asp).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 35,
+        "repeatedHeaderFooterBlockCount": 0,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

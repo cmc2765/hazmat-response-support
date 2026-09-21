@@ -1,0 +1,935 @@
+<!DOCTYPE html><html class='' lang="en"><head>
+<title>Triage Category and Myeloid Cytokine Use after a Nuclear Detonation - Radiation Emergency Medical Management</title>
+<meta charset='UTF-8'>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NWD949H');</script>
+<!-- End Google Tag Manager --><link rel="canonical" href="https://remm.hhs.gov/triagetool5.htm" />
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<!--<meta name="viewport" content="width=device-width">-->
+<script src='modernizr.js'></script>
+  <link rel="stylesheet" href="/style1.css?v=2.0" media="screen" />
+<link rel='stylesheet' href='/bootstrap.min.css'>
+<link rel='stylesheet' href='/mega.css'>
+<link rel='stylesheet' href='/megacustom.css'>
+<link href='https://fonts.googleapis.com/css?family=Roboto:300italic,400italic,600italic,700italic,700,400,300,100' rel='stylesheet' type='text/css'>
+    <script src="carouselengine/jquery.js"></script>
+<!--JAVASCRIPT STYLE HERE-->
+<script language="Javascript" src="CalendarPopup.js"></script>
+<script language="Javascript" src="doseestimator.js"></script>
+<script language="Javascript" src="script.js"></script>
+
+<script type="text/javascript">
+<!--
+function change(id, newClass) {
+   identity=document.getElementById(id);
+   if (identity)
+      identity.className=newClass;
+}
+function show(id, newClass) {
+   change(id, newClass);
+}
+
+
+ 
+    //-->
+    </script>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+var injury=0;
+var gray="0";
+var trauma=0;
+var burn=0;
+var resource=0;
+var gcsf=0;
+
+function getParam() {
+   var injuryTxt= new Array("Radiation only", "Trauma/burn only", "Combined injury");
+   var traumaTxt= new Array("Severe", "Moderate", "Minimal");
+   var burnTxt= new Array("No", "Yes");
+   var resourceTxt= new Array("Normal", "Good", "Fair", "Poor");
+   if (injury==1)
+      document.getElementById('param').innerHTML= '<b>Injury type:</b> ' + injuryTxt[injury-1] + ', ' + 'estimated dose: ' + gray + ' Gy<br />' +  '<b>Resource availability:</b> ' + resourceTxt[resource-1] + '<br />';
+   else if (injury==2)
+      document.getElementById('param').innerHTML= '<b>Injury type:</b> ' + injuryTxt[injury-1] + '<br /> ' +  '<b>Trauma category:</b> ' + traumaTxt[trauma-1] + '<br /> ' + '<b>Burn status:</b> Burn >20% BSA? ' + burnTxt[burn] + '<br /> ' + '<b>Resource availability:</b> ' + resourceTxt[resource-1] + '<br />';
+   else 
+      document.getElementById('param').innerHTML= '<b>Injury type:</b> ' + injuryTxt[injury-1] + '<br /> ' + '<b>Radiation:</b> ' + gray + ' Gy<br /> ' + '<b>Trauma category:</b> ' + traumaTxt[trauma-1] + '<br /> ' + '<b>Burn status:</b> Burn >20% BSA? ' + burnTxt[burn] + '<br /> ' + '<b>Resource availability:</b> ' + resourceTxt[resource-1] + '<br />';
+}
+
+function getParam_step(step) {
+   var message="";
+   var injuryTxt= new Array("Radiation only", "Trauma/burn only", "Combined injury");
+   var traumaTxt= new Array("Severe", "Moderate", "Minimal");
+   var burnTxt= new Array("No", "Yes");
+   var resourceTxt= new Array("Normal", "Good", "Fair", "Poor");
+   var currentStep = step;
+
+
+   if (currentStep==1) {
+      
+      document.getElementById('param_1').innerHTML='Injury type: <b>' + injuryTxt[injury-1] + '</b><br />';
+   }
+   else if (currentStep==2) {
+      if (injury==1) {
+         message="Radiation: <b>" + gray + " Gy</b><br />";
+         document.getElementById('param_2').innerHTML='Injury type: <b>' + injuryTxt[injury-1] + '</b><br />' + message ;
+      }
+      else if (injury==2) {
+         message = "Trauma: <b>" + traumaTxt[trauma-1] + "</b><br />" + "Burn &gt;20% BSA: <b>" + burnTxt[burn] + "</b><br />";  
+         document.getElementById('param_2').innerHTML='Injury type: <b>' + injuryTxt[injury-1] + '</b><br />' + message ;
+       }
+       else if (injury==3) {
+         message="Radiation: <b>" + gray + " Gy</b><br />" + "Trauma: <b>" + traumaTxt[trauma-1] + "</b><br />" + "Burn &gt;20% BSA: <b>" + burnTxt[burn] + "</b><br />";
+         document.getElementById('param_2').innerHTML='Injury type: <b>' + injuryTxt[injury-1] + '</b><br />' + message ;
+       }
+   }
+   else if (currentStep==3) {
+      if (injury==1)
+         message="Radiation: <b>" + gray + " Gy</b><br />";
+      else if (injury==2) {
+         message = "Trauma: <b>" + traumaTxt[trauma-1] + "</b><br />" + "Burn &gt;20% BSA: <b>" + burnTxt[burn] + "</b><br />";  
+       }
+       else if (injury==3) {
+         message="Radiation: <b>" + gray + " Gy</b><br />" + "Trauma: <b>" + traumaTxt[trauma-1] + "</b><br />" + "Burn &gt;20% BSA: <b>" + burnTxt[burn] + "</b><br />";
+       }
+      message+= "Resource availability: <b>";
+      message+= resourceTxt[resource-1];
+      message+= "</b><br />";
+      document.getElementById('param_3').innerHTML='Injury type: <b>' + injuryTxt[injury-1] + '</b><br />' + message ;
+   }
+}
+
+function getInjury () {
+/* reset */
+  /* show("sc2_combined", "hidden"); */
+  /* show("sc2_gy_head", "hidden"); */
+  /* show("sc2_trauma_head", "hidden"); */
+   show("sc2_gy", "hidden");
+   show("sc2_trauma", "hidden");
+   show("sc2_burn", "hidden");
+   
+   if (document.sc1_form.sc1_radio[0].checked==true)
+      injury=1;
+   else if (document.sc1_form.sc1_radio[1].checked==true)
+      injury=3;
+   else
+      injury=2;
+  
+   show("sc1", "hidden");
+   show("sc2", "visible");
+
+   if (injury==1) {
+     /* show("sc2_gy_head", "visible"); */
+      show("sc2_gy", "visible");
+   }
+   if (injury==2) {
+      /*show("sc2_trauma_head", "visible"); */
+      show("sc2_trauma", "visible");
+      show("sc2_burn", "visible");
+   }
+   if (injury==3) {
+     /* show("sc2_combined", "visible"); */
+      show("sc2_gy", "visible");
+      show("sc2_trauma", "visible");
+      show("sc2_burn", "visible");
+      
+   }
+   getParam_step(1);
+}
+
+function getSeverity() {
+   if (document.lymphform.lymphdose.value !="")
+     gray=document.lymphform.lymphdose.value;
+
+
+   if (document.lymphform.sc2_trauma_radio[0].checked==true)
+      trauma=1;
+   else if (document.lymphform.sc2_trauma_radio[1].checked==true)
+      trauma=2;
+   else if (document.lymphform.sc2_trauma_radio[2].checked==true)
+      trauma=3;
+
+   if (document.lymphform.sc2_burn_radio[0].checked==true)
+      burn=1;
+   else
+      burn=0;
+
+   show("sc2", "hidden");
+   show("sc3", "visible");
+   getParam_step(2);
+}
+function getResource() {
+   if (document.sc3_form.sc3_radio[0].checked==true)
+      resource=1;
+   else if (document.sc3_form.sc3_radio[1].checked==true)
+      resource=2;
+   else if (document.sc3_form.sc3_radio[2].checked==true)
+      resource=3;
+   else if (document.sc3_form.sc3_radio[3].checked==true)
+      resource=4;
+   
+   show("sc3", "hidden");
+   
+   show("sc4", "visible");
+   showresults();
+   getParam_step(3);
+}
+function reset_triage() {
+   var i;
+   var name;
+   for (i=0; i<8; i++){
+      name="triage"+i;
+      show(name, "hidden");
+   }
+   for (i=0; i<6; i++) {
+      name="gcsf"+i;
+      show(name, "hidden");
+   }
+   show("minimalA", "hidden");
+   show("minimalB", "hidden");
+   
+   /*document.getElementById('param').innerHTML=''; */
+}
+
+function showresults() {
+  
+   reset_triage();
+   if (injury==1) {
+      if (gray > 10 || gray == ">10") {
+         if (resource==1){
+            show("triage5", "visible");
+            show("gcsf5", "visible");
+         }
+         else{
+            show("triage4", "visible");
+            show("gcsf3", "visible");
+
+         }
+      }
+      else if ( ( gray > 6 && gray <=10) || gray==">8") {
+          if (resource < 3) {
+             show("triage3", "visible");
+             show("gcsf2", "visible");
+          }
+          else if (resource==3) {
+             show("triage2", "visible");
+             show("gcsf2", "visible");
+          }
+          else if (resource==4) {
+             show("triage4", "visible");
+             show("gcsf3", "visible");
+          }
+      }
+      else if ( gray > 2 && gray <=6 ){
+          show("triage3", "visible");
+          show("gcsf1", "visible");
+      }
+      else if (gray <=2) {
+          /*show("triage1", "visible");*/
+          show("gcsf3", "visible");
+          if (gray >= 0.5) {
+             show("triage6", "visible");
+             show("minimalB", "visible");
+          }
+          else {
+             show("triage7", "visible");
+             show("minimalA", "visible");
+          }
+      }
+   }
+   else if (injury==2) {
+      if (trauma==3) {
+         if (burn==1) {
+            if (resource <3)
+               show("triage2", "visible");
+            else
+               show("triage3", "visible");
+         }
+         else
+            show("triage1", "visible");
+      }
+      else if (trauma==2) {
+         if (resource < 3) {
+            if (burn==1)
+               show("triage3", "visible");
+            else
+               show("triage2", "visible");
+         }
+         else if (resource ==3) {
+            if (burn==1)
+               show("triage2", "visible");
+            else
+               show("triage3", "visible");
+         }
+         else {
+            if (burn==1)
+               show("triage4", "visible");
+            else
+               show("triage3", "visible");
+
+
+         }
+      }
+      else if (trauma==1) {
+         if (resource <3 ) {
+            if (burn==1)
+               show("triage4", "visible");
+            else
+               show("triage3", "visible");
+         }
+         else if (resource==3) {
+            if (burn==1)
+               show("triage4", "visible");
+            else
+               show("triage2", "visible");
+         }
+         else if (resource==4) {
+            show("triage4", "visible");
+         }
+      }
+      show("gcsf3", "visible");
+   }
+   else if (injury==3) {
+      if (gray > 10 || gray == ">10") {
+         if (resource <3 && trauma>=3) {
+            if (burn==1) {
+               show("triage4", "visible");
+               show("gcsf3", "visible");
+            }
+            else {
+               show("triage5", "visible");
+               show("gcsf5", "visible");
+            }
+         }
+         else {
+            show("triage4", "visible"); 
+            show("gcsf3", "visible");
+         }
+      }
+      else if ((gray > 6 && gray <=10) || gray==">8") {
+         if (resource <3) {
+            if (trauma==3) {
+               if (burn==1) {
+                  show("triage2", "visible");
+                  show("gcsf2", "visible");
+               }
+	       else {
+                  show("triage3", "visible");
+                  show("gcsf2", "visible");
+               }
+            }
+            else if (trauma==2){
+               if (burn==1) {
+                  show("triage4", "visible");
+                  show("gcsf3", "visible");
+               }
+               else {
+                  show("triage2", "visible");
+                  show("gcsf2", "visible");
+               }
+            }
+            else if (trauma==1) {
+               show("triage4", "visible");
+               show("gcsf3", "visible");
+            }
+         }
+	 else if (resource >=3) {
+            if (trauma==3) {
+               if (resource==3) {
+                  if (burn==1) {
+                     show("triage4", "visible");
+                     show("gcsf3", "visible");
+                  }
+                  else {
+                     show("triage2", "visible");
+                     show("gcsf2", "visible");
+                  }
+               }
+               else if (resource==4) {
+                  show("triage4", "visible");
+                  show("gcsf3", "visible");
+               }
+	    }
+            else if (trauma < 3) {
+               show("triage4", "visible");
+               show("gcsf3", "visible");
+            }
+         }
+      }
+      else if (gray >=2 && gray <=6){
+         if (resource < 3) {
+            if (trauma >=2) {
+               if (burn==1) {
+                  show("triage2", "visible");
+                  show("gcsf2", "visible");
+               }
+               else {
+                  show("triage3", "visible");
+                  show("gcsf1", "visible");
+               }
+            }
+            else if (trauma <2) {
+               if (burn==1) {
+                  show("triage4", "visible");
+                  show("gcsf3", "visible");
+               }
+               else {
+                  show("triage2", "visible");
+                  show("gcsf2", "visible");
+               }
+            }
+         }
+         else if (resource >=3) {
+            if (trauma==3) {
+               if (burn==1) {
+                  show("triage2", "visible");
+                  show("gcsf2", "visible");
+               }
+               else {
+                  show("triage3", "visible");
+                  show("gcsf1", "visible");
+               }
+            }
+            else if (trauma==2) {
+               if (burn==1) {
+                  show("triage4", "visible");
+                  show("gcsf3", "visible");
+               }
+               else {
+                  show("triage2", "visible");
+                  show("gcsf2", "visible");
+               }
+            }
+            else if (trauma==1) {
+               show("triage4", "visible");
+               show("gcsf3", "visible");
+            }
+         }
+      }
+      else { /*Cannot find triage card, temporary implementation */
+         if (trauma==3) {
+            if (burn==1) {
+               if (resource <3)
+                  show("triage2", "visible");
+               else
+                  show("triage3", "visible");
+            }
+            else
+               show("triage1", "visible");
+         }
+         else if (trauma==2) {
+            if (resource < 3) {
+               if (burn==1)
+                  show("triage3", "visible");
+               else
+                  show("triage2", "visible");
+            }
+            else if (resource==3) {
+               if (burn==1)
+                  show("triage2", "visible");
+               else
+                  show("triage3", "visible");
+            }
+            else {
+               if (burn==1)
+                  show("triage4", "visible");
+               else
+                  show("triage3", "visible");
+            }
+	 }
+         else if (trauma==1) {
+            if (resource <3 ) {
+               if (burn==1)
+                  show("triage4", "visible");
+               else
+                  show("triage3", "visible");
+            }
+            else if (resource==3) {
+               if (burn==1)
+                  show("triage4", "visible");
+               else
+                  show("triage2", "visible");
+            }
+            else if (resource==4) {
+               show("triage4", "visible");
+            }
+         }
+         show("gcsf3", "visible");
+
+      }
+     
+
+   }
+   /*getParam();  */
+}
+
+
+//-->
+</script>
+<noscript> </noscript>
+
+<!--style starts here -->
+<style>
+<!--
+.caveat {
+font-family: tahoma; font-weight: normal;  font-size: 12px; color: #4A4A4A;}
+.redtxt {
+ color: #990000;
+}
+
+.css_box {
+
+   width:720px;
+   border: 2px solid #ddd; 
+   border-right: 2px solid #999;
+   border-bottom: 2px solid #888;
+   padding:3px;
+   padding-top:7px;
+   padding-bottom: 7px;
+   font-size:1.0em;
+   margin-bottom:10px;
+   margin-top:5px;
+  /* line-height:1.5em;*/
+
+}
+.css_box h3 {
+   /*color:#990000; */
+   font-size: 1.01em;
+   margin-bottom:2px;
+}
+    .visible {
+      display:block;
+        }
+    .hidden {
+       display:none;
+        }
+.minimal {
+   width:120px; height:40px; border:1px solid #000; color:#fff; background-color:#008b00; font-weight:bold; padding-top:10px; padding-left:25px; margin-bottom:5px; margin-top:10px;
+}
+.delayed {
+   width:120px; height:40px; border:1px solid #000; color:#000; background-color:#ffff00; font-weight:bold; padding-top:10px; padding-left:25px; margin-bottom:5px; margin-top:10px;
+}
+.immediate {
+   width:120px; height:40px; border:1px solid #000; color:#fff; background-color:#ee0000; font-weight:bold; padding-top:10px; padding-left:18px; margin-bottom:5px; margin-top:10px;
+}
+.expectant {
+   width:120px; height:40px; border:1px solid #000; color:#fff; background-color:#000; font-weight:bold; padding-top:10px; padding-left:20px; margin-bottom:5px; margin-top:10px;
+}
+.immediate1 {
+   width:120px; height:20px; border:1px solid #000; color:#fff; background-color:#ee0000; font-weight:bold; padding-top:2px; padding-left:18px; margin-bottom:5px;margin-top:2px;
+}
+.expectant1 {
+   width:120px; height:20px; border:1px solid #000; color:#fff; background-color:#000; font-weight:bold; padding-top:2px; padding-left:20px; margin-bottom:0px; margin-top:10px;
+}
+
+.table_format {
+        border:2px solid;
+        border-color:#ddd #999 #888 #ddd;
+}
+.table_format td {
+        border:0px solid;
+        border-color:#ddd #999 #888 #ddd;
+        padding-bottom:10px;
+        padding-right:10px;
+        padding-left:10px;
+}
+.black {
+  color:#000000;
+  font-weight:bold;
+}
+ ol {
+list-style-type: upper-alpha;
+margin-top:0px;
+margin-bottom:0px;
+}
+h3 {
+   margin-top:2px;
+   margin-bottom:2px;
+   line-height:1.5em;
+}
+label {
+   display:inline;
+}
+//-->
+</style>
+
+
+</head><body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NWD949H"
+height="0" width="0" style="display:none;visibility:hidden" title="hhsgoogletagmanager"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<a class="skipnavigation" title="Skip the navigation on this page" href="#skipnav" tabindex="1">Skip Navigation</a>
+<header class="navbar navbar-fixed-top">
+
+<div id="banner"><div id="banner_border">
+<img src="images/logo1.png"  alt="Radiation Emergency Medical Management " class="remmlogo" usemap="#Map">
+<map name="Map">
+<area shape="rect" coords="0,0,342,15" href="https://www.hhs.gov/" alt="U.S. Department of Health and Human Services">
+<area shape="rect" coords="0,16,342,88" href="index.html" alt="REMM Home">
+</map>
+<div id="bannerright">
+<span id="toptext">Guidance on Diagnosis and Treatment for Healthcare Providers</span>
+<div>
+<span class="bannerbullets">&#8226;  Understand Radiation<br/>&#8226;  Plan Ahead<br/>&#8226;  Practice Teamwork<br/>&#8226;  Work Safely</span>
+<img src="images/trefoil2.png" class="bannertrefoil" alt="REMM Logo">
+</div>
+</div>
+    
+</div></div>
+
+</header>
+<div id="middle" class="full_width">
+    <div class="container">
+		<!--content-->
+		<div class="content " role="main">
+
+			<!-- post details-->
+			<article class="post-details">
+			<div class="entry clearfix">
+                        <div class="content_area">
+ <a id="skipnav" name="skipnav"></a>
+ <a name="top"></a>
+<!--breadcrumbs-->
+<div class="breadcrumbs"></div>
+<!-- /breadcrumbs -->
+
+<!-- Content starts here -->
+<h1 class="h1_small">Interactive Tool to Determine Triage Category and Myeloid Cytokine Use <br/> after a Nuclear Detonation </h1>
+<h2 class="h2_small"><em>&mdash; Based on the Scarce Resources Project Publications</em></h2>
+ <div class="video" style="float:right"><a href="triagetool_tutorial.htm" onClick="figures(this.href, '950','700'); return false;" target="_blank"> <img src="RemmMockup_files/smallvideoscarceresource.gif" alt="video" border="0"> </a> <br /> Video Tutorial (2:41)</div>
+<div id="sc1" class="visible">
+<!--<div class="caveat"> <div style="vertical-align:bottom;color:#990000;font-weight:bold"><img src="RemmMockup_files/exclamation_point_small.gif" alt="warning" style="vertical-align:middle"> CAVEAT: <a href="triagetool_help.htm" onClick="figures(this.href, '750','500'); return false;" target="_blank">How to use this tool</a></div></div><br /> -->
+<div style="border:1px solid #990000;font-size:1em; padding:5px; width:720px; line-height:1.3em; margin-bottom:10px; margin-top:10px;">
+<ul class="homelist">
+<li>About this interactive tool:
+   <ul>
+   <li><span style="width:100px">Video:</span>  <a href="triagetool_tutorial.htm" onClick="figures(this.href, '950','700'); return false;" target="_blank">How to use this interactive tool?</a></li>
+   <li><span style="width:100px;">Full details:</span> <a href="triagetool_help.htm" onClick="figures(this.href, '950','700'); return false;" target="_blank">When and how to use this tool</a></li>
+   <li><span style="width:100px">When to use:</span>  When resource availability is constrained</li>
+   <li><span style="width:100px;">Where to use:</span>  Wherever triage is performed </li>
+   <li><span style="width:100px;">Caveats:</span> This tool does not use standard triage categories </li>
+   <li><span style="width:100px;">Disclaimer:</span> <a href="Aboutthissite.htm#triagetooldisclaimer" onClick="figures(this.href, '950','700'); return false;" target="_blank">Scarce Resources Triage Tool Disclaimer</a></li>
+   </ul>
+</li>
+   <li><span style="width:100px;">Source of Data:</span> <a href="triagetool_intro.htm#publications" onClick="figures(this.href, '950','700'); return false;" target="_blank">Nuclear Detonation Scarce Resources Project Working Group Publications</a>
+
+   <ul>
+   <li><span style="width:100px;color:#ee0000">4 New Videos</span>: <a href="triagetool_new_video_tutorials.htm" onClick="figures(this.href, '950','700'); return false;" target="_blank">Explaining the Scarce Resources Project Triage and Medical Guidance</a></li>
+   </ul>
+</li>
+</ul>
+</div>
+
+<h3 class="redtxt h2_small">Step 1 of 4: Injury type</h3>
+<div class="css_box">
+<h3>What type of injury does this patient have?</h3>
+<form id="sc1_form"  name="sc1_form" method="post" class="form_css">
+<input type="radio" id="sc1_radio1" name="sc1_radio" value="1" checked> <label for="sc1_radio1">Radiation only<sup class="black">*</sup></label><br />
+<input type="radio" id="sc1_radio3" name="sc1_radio" value="3"> <label for="sc1_radio3">Combined injury<sup class="black">*</sup> (radiation and trauma and/or burn)</label><br />
+<input type="radio" id="sc1_radio2" name="sc1_radio" value="2"> <label for="sc1_radio2">Trauma or burn only</label><br />
+</div>
+<p><span class="black">*</span> Radiation cases include guidance on use of myeloid cytokines </p>
+<input type="button" name="Next" value="Next" onClick="javascript:getInjury();">
+</form>
+</div>
+
+<div id="sc2" class="hidden">
+<p id="param_1" style="margin-top:2px;line-height:1.3em;border:1px solid #ccc;width:720px;font-size:1em; padding:5px;"></p>
+   <!--<div id="sc2_combined" class="hidden"> -->
+   <h3 class="redtxt h2_small">Step 2 of 4: Injury severity </h3> 
+   <!--</div> -->
+<!--<div id="sc2_gy_head" class="hidden">
+<h3>What is the estimated radiation dose for this patient?</h3>
+</div> -->
+<div id="sc2_gy" class="hidden"> 
+<form id="lymphform" name="lymphform" method="post">
+<!--Enter dose: <input type="text" id="sc2_gy" name="sc2_gy" value=""> Gy<br /> -->
+
+<SCRIPT LANGUAGE="JavaScript">document.write(getCalendarStyles());</SCRIPT>
+<div class="css_box">
+<div id="testdiv1" STYLE="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;"></div>
+<h3>What is the estimated radiation dose for this patient?</h3>
+<span class="homelist">Estimate dose using the REMM Dose Estimator (Line 1 to 3)<br />
+OR <br />
+Enter dose manually (Line 4)<br />
+</span>
+<div style="margin-left:10px">
+<table border="0" width="500" cellspacing=0 cellpadding=2 >
+<tr class="homelist">
+<td colspan="2">
+<b> 1. Date/time exposure began </b>
+</td></tr>
+<tr class="homelist color1">
+<td>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x1">
+var cal2x = new CalendarPopup("testdiv1");
+</SCRIPT>
+ <nobr>
+    <label class="hidden" for="date2x">mm/dd/yyyy</label>
+    <input type="text" name="date2x" id="date2x" value="mm/dd/yyyy" size=10 aria-label="Date of exposure"> <A HREF="#" onClick="cal2x.select(document.forms[1].date2x,'anchor2x','MM/dd/yyyy'); return false;" TITLE="cal2x.select(document.forms[1].date2x,'anchor2x','MM/dd/yyyy'); return false;" NAME="anchor2x" ID="anchor2x"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+   <label class="hidden" for="hour2x">00:00</label>
+  <input type="text" name="hour2x" id="hour2x" value="00:00" size="5" aria-label="Time of exposure">
+  </nobr><br>
+<nobr>(e.g., 01/22/2008, 14:25)</nobr>
+
+</td><td><!--<img src="RemmMockup_files/LDK1_s.png" alt="Lymphocyte depletion graph">-->&nbsp;</td></tr>
+<tr class="homelist"><td>
+ <b>2. Date/time of one or more blood counts</b> </td><td><nobr><b>lymphocyte count (x 10<sup>9</sup>)</b> <a href="help_biodosimetry.htm"  onClick="figures(this.href, '750','500'); return false;" target="_blank" title="Need help with this form?"><img src="RemmMockup_files/infosmall.gif" alt="Need help with this form?" border="0"></a></nobr></td></tr>
+
+<tr class="homelist color1"><td>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x2">
+var cal2xx = new CalendarPopup("testdiv1");
+</SCRIPT>
+ <nobr>
+   <label class="hidden" for="date2xx">mm/dd/yyyy</label>
+    <input type="text" name="date2xx" id="date2xx" value="mm/dd/yyyy" size=10 aria-label="Date of the first blood sample"> <A HREF="#" onClick="cal2xx.select(document.forms[1].date2xx,'anchor2xx','MM/dd/yyyy'); return false;" TITLE="cal2xx.select(document.forms[1].date2xx,'anchor2xx','MM/dd/yyyy'); return false;" NAME="anchor2xx" ID="anchor2xx"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+   <label class="hidden" for="hour2xx">00:00</label>
+  <input type="text" name="hour2xx" id="hour2xx" value="00:00" size="5" aria-label="Time of the first blood sample">
+  </nobr>
+</td>
+<td>&nbsp; <label class="hidden" for="L1">cell count</label><input type="text" size="8" name="L1" id="L1" style="width:120px; margin-left:5px;" aria-label="Lymphocyte count of the first blood sample">
+<!--
+<input type="hidden" name="L2" value="">
+<input type="hidden" name="L3" value="">
+-->
+</td></tr>
+
+
+<tr class="homelist color1"><td>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x3">
+var cal2xxx = new CalendarPopup("testdiv1");
+</SCRIPT>
+ <nobr>
+   <label class="hidden" for="date2xxx">mm/dd/yyyy</label>
+    <input type="text" name="date2xxx" id="date2xxx" value="mm/dd/yyyy" size=10 aria-label="Date of the second blood sample"> <A HREF="#" onClick="cal2xxx.select(document.forms[1].date2xxx,'anchor2xxx','MM/dd/yyyy'); return false;" TITLE="cal2xxx.select(document.forms[1].date2xxx,'anchor2xxx','MM/dd/yyyy'); return false;" NAME="anchor2xxx" ID="anchor2xxx"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+   <label class="hidden" for="hour2xxx">00:00</label>
+  <input type="text" name="hour2xxx" id="hour2xxx" value="00:00" size="5" aria-label="Time of the second blood sample">
+  </nobr>
+</td>
+<td>&nbsp; <label class="hidden" for="L2">cell count</label><input type="text" size="8" name="L2" id="L2" style="width:120px; margin-left:5px;" aria-label="Lymphocyte count of the second blood sample"></td></tr>
+
+<tr class="homelist color1"><td>
+<SCRIPT LANGUAGE="JavaScript" ID="jscal1x4">
+var cal2xxxx = new CalendarPopup("testdiv1");
+</SCRIPT>
+ <nobr>
+   <label class="hidden" for="date2xxxx">mm/dd/yyyy</label>
+    <input type="text" name="date2xxxx" id="date2xxxx" value="mm/dd/yyyy" size=10 aria-label="Date of the third blood sample"> <A HREF="#" onClick="cal2xxxx.select(document.forms[1].date2xxxx,'anchor2xxxx','MM/dd/yyyy'); return false;" TITLE="cal2xxxx.select(document.forms[1].date2xxxx,'anchor2xxxx','MM/dd/yyyy'); return false;" NAME="anchor2xxxx" ID="anchor2xxxx"> <img border="0" src="RemmMockup_files/Appointment_16_h_g.gif" alt="Click to select a date"></a>
+  <label class="hidden" for="hour2xxxx">00:00</label>
+  <input type="text" name="hour2xxxx" id="hour2xxxx" value="00:00" size="5" aria-label="Time of the third blood sample">
+  </nobr>
+  </td>
+<td>&nbsp; <label class="hidden" for="L3">cell count</label><input type="text" size="8" name="L3" id="L3" value="" style="width:120px; margin-left:5px;" aria-label="Lymphocyte count of the third blood sample">
+
+</td></tr> 
+
+<tr class="homelist color1"><td><nobr>(e.g., 01/22/2008, 23:00)</nobr></td>
+<td>&nbsp; (e.g., 1.25)</td></tr>
+ 
+
+
+<tr class="homelist"><td colspan="2">
+ <b>3. <input type="button"  style="font-weight:bold;margin:10px;" value="Estimate dose" onClick="javascript:lymphocyte2dose(this.form);"> from exposure</b><br></td></tr>
+<tr class="homelist color1">
+<td><label for="lymphdose"><b> 4. Dose estimate</b></label></td><td><label for="CL"><a href="conf_limit_definition.htm" onClick="figures(this.href,'300','300');return false;" target="_blank">95% confidence limits</a></label><br></td></tr>
+<tr class="homelist color1">
+<td>
+ <input type="text" size=10 name="lymphdose" id="lymphdose" class="textdose" aria-label="Estimated dose will be displayed here" > <a href="gray_definition.htm" onClick="figures(this.href,'500','400');return false;" target="_blank">Gy</a></td><td><input type="text" size=10 name="CL" id="CL" class="textdose" readonly="readonly" style="width:120px; margin-left:5px;" aria-label="95% confidence limits will be displayed here"> <a href="gray_definition.htm" onClick="figures(this.href,'500','400');return false;" target="_blank">Gy</a></td></tr>
+<tr class="homelist"><td colspan="2"> 
+</td></tr>
+</table>
+</div>
+</div>
+
+
+
+
+
+</div>
+<!--<div id="sc2_trauma_head" class="hidden">
+<h3>Injury and/or burn severity</h3>
+</div>
+-->
+<div id="sc2_trauma" class="hidden">
+<div class="css_box">
+<h3>What is the severity of the trauma? 
+<div class="caveat"> <div style="vertical-align:bottom;color:#990000;font-weight:bold"><img src="RemmMockup_files/exclamation_point_small.gif" alt="warning" style="vertical-align:middle"> <a href="traumaseverity.htm"  onClick="figures(this.href, '750','500'); return false;" target="_blank">Definitions of trauma categories</a></div></div></h3>
+<input type="radio" id="sc2_radio1" name="sc2_trauma_radio" value="1"> <label for="sc2_radio1">Severe</label> <br />
+<input type="radio" id="sc2_radio2" name="sc2_trauma_radio" value="2"> <label for="sc2_radio2">Moderate</label> <br />
+<input type="radio" id="sc2_radio3" name="sc2_trauma_radio" value="3" checked> <label for="sc2_radio3">Minimal</label> <br />
+</div>
+</div>
+<div id="sc2_burn" class="hidden">
+<div class="css_box">
+<h3>Do the burns cover &gt;20% body surface area (BSA)?</h3>
+<input type="radio" id="sc2_radio4" name="sc2_burn_radio" value="1"> <label for="sc2_radio4">Yes</label> <br />
+<input type="radio" id="sc2_radio5" name="sc2_burn_radio" value="0" checked> <label for="sc2_radio5">No</label> <br />
+</div>
+</div>
+<input type="button" name="Previous" value="Previous" onClick="javascript:show('sc1', 'visible'); show('sc2', 'hidden');">
+<input type="button" name="Next" value="Next" onClick="javascript:getSeverity();">
+
+</form>
+</div>
+
+<div id="sc3" class="hidden">
+<p id="param_2" style="margin-top:2px;line-height:1.3em;border:1px solid #ccc;width:720px;font-size:1em; padding:5px;"></p>
+<h3 class="redtxt h2_small">Step 3 of 4: Resource availability</h3>
+<div class="css_box">
+<h3>What is the availability of medical resources?
+ <div class="caveat"> <div style="vertical-align:bottom;color:#990000;font-weight:bold"><img src="RemmMockup_files/exclamation_point_small.gif" alt="warning" style="vertical-align:middle"><a href="resourceavailability.htm"  onClick="figures(this.href, '950','500'); return false;" target="_blank">Definitions of resource availability and standards of care</a></div></div></h3><br />
+<form id="sc3_form" name="sc3_form" method="post">
+<input type="radio" id="sc3_radio1" name="sc3_radio" value="1" checked> <label for="sc3_radio1">Normal</label> <br />
+<input type="radio" id="sc3_radio2" name="sc3_radio" value="2"> <label for="sc3_radio2">Good</label> <br />
+<input type="radio" id="sc3_radio3" name="sc3_radio" value="3"> <label for="sc3_radio3">Fair</label> <br />
+<input type="radio" id="sc3_radio4" name="sc3_radio" value="4"> <label for="sc3_radio4">Poor</label> <br />
+
+</div>
+
+<input type="button" name="Previous" value="Previous" onClick="javascript:show('sc2', 'visible'); show('sc3', 'hidden');">
+<input type="button" name="Next" value="Next" onClick="javascript:getResource();">
+</form>
+
+</div>
+
+<div id="sc4" class="hidden">
+<p id="param_3" style="margin-top:2px;line-height:1.3em;border:1px solid #ccc;width:720px;font-size:1em; padding:5px;"></p>
+   <h3 class="redtxt h2_small">Step 4 of 4: Triage category and cytokine recommendations</h3>
+<span class="homelist">Based on Nuclear Detonation Scarce Resources Working Group publications from March, 2011</span>
+<br />
+<div class="css_box">
+    <h3><b>Triage category: </b>
+<div class="caveat"> <div style="vertical-align:bottom;color:#990000;font-weight:bold"><img src="RemmMockup_files/exclamation_point_small.gif" alt="warning" style="vertical-align:middle"> <a href="triagecategories.htm"  onClick="figures(this.href, '750','800'); return false;" target="_blank">Descriptions of triage categories</a></div></div></h3>
+<div style="margin-left:10px">
+    <div id="triage1" class="hidden">
+       <div class="minimal">Minimal</div>
+    </div>
+    <div id="triage2" class="hidden">
+       <div class="delayed">Delayed</div>
+    </div>
+    <div id="triage3" class="hidden">
+       <div class="immediate">Immediate</div>
+    </div>
+    <div id="triage4" class="hidden">
+       <div class="expectant">Expectant</div>
+    </div>
+    <div id="triage5" class="hidden">
+       <div class="expectant1">Expectant</div>
+       <div class="immediate1">Immediate</div>
+<p>The red/black split triage category for &gt;10 Gy indicates that some victims may receive aggressive treatment at discretion of physician, especially if 10 Gy is received over prolonged time period.</p>
+    </div>
+    <div id="triage6" class="hidden">
+       <div class="minimal">Minimal B</div>
+    </div>
+    <div id="triage7" class="hidden">
+       <div class="minimal">Minimal A</div>
+    </div>
+    <div id="minimalB" class="hidden">
+<span class="homelist"><b>Minimal B:</b> Consider repeating both biodosimetry and clinical assessments, especially at high end of this dose range (0.5 - 2 Gy). </span>
+    </div>
+    <div id="minimalA" class="hidden">
+<span class="homelist"><b>Minimal A:</b> Those with physical dose estimates based on location below 0.5 Gy need not report for medical evaluation. Joining a registry may be suggested after the incident. </span>
+   </div>
+ </div>
+</div>
+<div class="css_box">
+    <h3><b>Cytokine recommendation:</b>
+<div class="caveat"> <div style="vertical-align:bottom;color:#990000;font-weight:bold"><img src="RemmMockup_files/exclamation_point_small.gif" alt="warning" style="vertical-align:middle"> <a href="cytokinecategories.htm"  onClick="figures(this.href, '750','500'); return false;" target="_blank">Descriptions of myeloid cytokine categories</a></div></div></h3>
+
+    <div id="gcsf1" class="hidden">
+    <p>Category 1: <b>Cytokine indicated.</b> </p>
+    </div>
+    <div id="gcsf2" class="hidden">
+    <p>Category 2: <b>Cytokine indicated, lower priority than Category 1.</b> </p>
+    </div>
+    <div id="gcsf3" class="hidden">
+    <p>Category 3: <b>Cytokine not indicated.</b> </p>
+    </div>
+    <div id="gcsf4" class="hidden">
+    </div>
+    <div id="gcsf5" class="hidden">
+<p>
+    Expectant - Category 3: <b>Cytokine not indicated.</b> <br />
+    Immediate -  Category 2: <b>Cytokine indicated, lower priority than Category 1.</b> 
+</p>
+    </div>
+</div>
+<p>
+<input type="button" name="Previous" value="Previous" onClick="javascript:show('sc3', 'visible'); show('sc4', 'hidden');">
+<input type="button" name="Start Over" value="Start Over" onClick="javascript:window.location.reload(true);"> 
+<!--<a href="javascript:window.location.reload(true);"><b>Start over</b></a>-->
+</p>
+<!--
+<hr />
+<span class="homelist"><b>Parameters I entered to obtain this result were:</b></span>
+<p id="param" style="margin-top:2px"></p>
+ -->
+</div>
+     </td>
+</tr></table>
+
+<hr style="border-width:2px;">
+<p><b>See also:</b></p>
+<ul class="homelist">
+   <li><a href="download.htm">Download triage tool for use offline by downloading REMM</a></li>
+   <li><a href="downloadmremm.htm">Download Mobile REMM which includes this triage tool</a></li>
+   <li><a href="TriageToolscombined.pdf">Print triage tool cards</a> (PDF - 664 KB)</li>
+   <li>See REMM information about <a href="cytokines.htm">myeloid cytokines</a></li>
+</ul>
+<!-- Content ends here -->
+<script language="javascript">
+var mydate = new Date(document.lastModified).toDateString();
+document.write("<br><br>Last updated "+mydate+"<br><br>");
+</script>
+                        </div> <!--/content_area-->
+			</div>
+			</article>
+			<!--post details-->
+		</div>
+		<!--/content-->
+		</div>
+	</div>
+	<!--/middle-->
+
+    
+<!-- End of body section HTML codes -->
+
+<!--</div>-->
+
+
+
+
+
+
+
+<!--<script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>-->
+<script src='js/bootstrap.min.js'></script>
+<script>
+jQuery(document).ready(function () {
+    $('.dropdown').hover(function () {
+        $('.dropdown-menu', this).fadeIn('fast');
+    }, function () {
+        $('.dropdown-menu', this).fadeOut('fast');
+    });
+});
+</script>
+
+
+ 
+<script>
+//<![CDATA[
+      var usasearch_config = { siteHandle:"radiationemergencymedicalmanageme" };
+
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "//search.usa.gov/javascripts/remote.loader.js";
+      document.getElementsByTagName("head")[0].appendChild(script);
+
+//]]>
+</script>
+</body></html>

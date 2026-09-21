@@ -15,10 +15,14 @@ export const CWA_SAFETY_GATES = [
 ] as const;
 
 export const RADIOLOGICAL_SAFETY_GATES = [
+  "Radiation exposure and radioactive contamination are distinct states and must not be treated as interchangeable.",
+  "External radiation hazard and internal contamination hazard require separate assessment.",
+  "Radionuclide identity and half-life do not establish incident dose or a safe standoff distance.",
+  "Gamma energy does not establish an automatic shielding prescription or evacuation distance.",
   "No fixed standoff or protective-action decision may be inferred from isotope identity alone.",
   "Inverse-square calculations require a measured dose rate, measured distance, and documented point-source assumption.",
   "PPE supports contamination control and is not radiation shielding unless a source explicitly states otherwise.",
-  "Use time, distance, shielding, survey data, and radiation-authority coordination.",
+  "Tactical actions require applicable dose-rate, survey, contamination, distance, time, shielding, instrument-response, and incident-geometry context.",
 ] as const;
 
 const MISUSE_PATTERNS = [

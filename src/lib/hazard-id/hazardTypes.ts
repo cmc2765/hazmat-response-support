@@ -38,6 +38,10 @@ export type HazardSourceFact = {
   lastVerified?: string;
   verificationStatus: HazardVerificationStatus;
   notes?: string;
+  sourceArtifactId?: string;
+  sourceLocator?: string;
+  detailedReviewStatus?: import("../cbrne/authoritativeSourceTypes.js").AuthoritativeFactReviewStatus;
+  limitations?: string[];
 };
 
 export type HazardProfile = {
@@ -61,6 +65,8 @@ export type HazardProfile = {
   actionCards?: Array<{ title: string; status: string; summary: string }>;
   limitations?: string[];
   dataStatusBadges?: HazardVerificationStatus[];
+  authoritativeFacts?: import("../cbrne/authoritativeSourceTypes.js").AuthoritativeSourceFact[];
+  radionuclidePhysics?: import("../../data/cbrne/authoritative/radionuclidePhysics.js").RadionuclidePhysicsRecord | null;
   sourceStatus?: {
     sourcePacksLoaded: number;
     sourceFactCount: number;
@@ -68,6 +74,9 @@ export type HazardProfile = {
     requiresSmeReviewCount: number;
     conflictingSourcesCount: number;
     missingFieldCount: number;
+    sourceArtifactIds?: string[];
+    sourceArtifactCount?: number;
+    factLevelProvenanceCount?: number;
     lastImportUpdate: string;
     warnings: string[];
   };

@@ -1,0 +1,1675 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "nrt-qrg-biological-ricin-abrin",
+  "sourceArtifactSha256": "f7a2fedc8b50fc86a257db00a753113923de7c8a0f2dcf65e645ffd4a8169dce",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "G_MIXED_TEXT_AND_IMAGE",
+  "pageCount": 6,
+  "pages": [
+    {
+      "pdfPageIndex": 0,
+      "humanPageNumber": 1,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "May",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "2020 (replaced previous Ricin QRG",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "dated 2013)Page 1of 6",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: ",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "Biotoxins: Ricin, Abrin[May2020",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "QRG PURPOSE: Given that a Federal OSC/RPM leading an emergency response to an environmental release may not know the specific type of biotoxinduringthe first 24-",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "48 hours of a response, this document provides information on the general properties, effects, and decontamination methods shared by biotoxins produced by some plants. This QRG does not address protective methods for public health or healthcare workers.",
+          "role": "BODY"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Agent CharacteristicsAgent Classification: Biotoxin; Type:Ribosome Inactivating Protein Type 2 (RIP2).Most information aboutbiotoxins (e.g., RIP2)comes from studies on ricin. Given ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "the similarities between ricin and abrin, it is reasonable to extrapolate information between these biotoxins.RIP2 are mostly produced by plants and must be introduced into body fluids and/or tissues in order to enter cells where they",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "exert their toxic effects.They irreversibly inhibit protein synthesis butare not living organisms and are not contagious or infectious.Ricin and abrin are purified from the seeds shown below. ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "Intact seeds can be handled safely, but broken seeds can expose the handler to the biotoxin, e.g., through skin wounds. Powdered biotoxins can be ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "brownish/yellowish/whitish in color depending on purity, which can vary from ground up powders to those prepared through advanced biochemical and ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "\u0000P\u0000H\u0000F\u0000K\u0000D\u0000Q\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000S\u0000U\u0000R\u0000F\u0000H\u0000V\u0000V\u0000L\u0000Q\u0000J\u0000\u0011\u0000\u0003\u00007\u0000K\u0000H\u0000\u0003\u0000G\u0000H\u0000J\u0000U\u0000H\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000S\u0000X\u0000U\u0000L\u0000I\u0000L\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000G\u0000U\u0000D\u0000P\u0000D\u0000W\u0000L\u0000F\u0000D\u0000O\u0000O\u0000\\\u0000\u0003\u0000D\u0000I\u0000I\u0000H\u0000F\u0000W\u0000\u0003\u0000D\u0000\u0003\u0000S\u0000R\u0000Z\u0000G\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000W\u0000R\u0000[\u0000L\u0000F\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003properties, as well as physical properties related to the ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "ability of the powder to be resuspended, tracked, and/or mobilized as a result of response activities in a contaminated area.Depending on purity, the powdered biotoxin maycontain ricin/abrin-related proteins, including potentially highly allergenic protein",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "s, as well as carbohydratesand DNAfrom the associated plant.Persistence: Powdered biotoxinand solubilized biotoxinare relatively stablefor days to weeks. Environmental conditions and co-contaminants can significantly alter stability, by contributingto\u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "but not ensuring\u0000±the degradation of ricin/abrin. No matter the age ofthe ricin/abrin solid or solution, it should be assumed to be biologically active until provenotherwise.BiotoxinMolecular WeightCommon Environmental Source and other notesRicinCAS #9009-",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "86-3~66,000 g/mol(depends on isoform)Beans (seeds) of castor oil plants (Ricinus communis).This plant is a common ornamental in some locations and grows from tropical to temperate climates\u0000±",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "growing wild in 49 states, excluding Alaska. Ricin is purified from castor beans (shown to right; photo: Tom McKeon, USDA).Bean size and shape vary from 0.5 to 1.5 cm (1/5-3/5 in) and tear drop to nearly round. Similarly, ricin content varies, with c",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "astor beans containing0.1-5% ricin by mass.AbrinCAS #1393-62-0~65,000g/mol (depends on isoform)Seeds of rosary pea plants (Abrus precatorius).This plant grows in tropical regions, in the southeastern US, and is considered invasive in Florida. ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Abrin is purified from the peas(shownto rightin USDA photo), also known as jequirity beans.Seeds are generally about0.5 cm (1/5 in) lengthwise. The peas contain about 0.075% abrin by mass.Exposure Routes",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "Most information about ricin/abrin comes from reported ricin exposures. Given thatricin and abrinhave similar mechanisms of action,it is reasonable to extrapolate information between these biotoxins.",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Ricin/abrin must be introduced into body fluids and/or tissues where they exert their toxic effects.Inhalation:Respiratory exposure to wet or dry aerosols containing biotoxin may result in damage to tracheobronchial (windpipe and passagewaysinto lungs) ",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "and pulmonary(lung)tissues and results inabsorption and systemic (whole body) distributionof the biotoxin.Injection:Ricin/abrin may be introduced into the body by injection (e.g., subcutaneous, intramuscular,intravenous) as a solution of the bio",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "toxin or by a sharp object (e.g., broken glass or projectile).Ingestion:Ricin/abrin may be absorbed through the gastrointestinal tract, resulting in systemic distribution.Dermal:Ricin/abrin may be absorbed through abraded or irritated skin or open wounds",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": ", resulting in systemic distribution.Eyes:Ocular exposure to ricin/abrin may occur from airborne particles or from direct contact with contaminated surface (e.g., handto eye).Health EffectsMost i",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "nformation about ricin/abrin comes from reported ricin exposures in humans and animal models of ricin toxicity. Given thatricin and abrinhave similar mechanisms of action, it is reasonable to extrapolate information between these bio",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "toxins. Time to symptom onset, rate of illness progression, and illness severity post-exposure are dependent upon variables such as route, particle size, dose, purity, and co-morbidities. Exposure to gastrointestinal and respiratory ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "surfaces may cause local tissue damage, as well as result in systemic(whole body)absorption and distribution. Ingestion of higher doses of ricin/abrin may be required to produce toxicity because ricin/abrin are sus",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "ceptible to degradation in the gastrointestinal tract.ONSET:Inhalation: Respiratory effects may begin within 2 to 4 hours, butmay take up to 48 hours following exposure. Symptoms may increase in severity and ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "systemic toxicity may become apparent over the next 24 to 48 hours. Life threatening complications may develop within 36 to 72 hours post-inhalation of a lethal dose. See EFFECT LEVELSsection below for estimated lethal dose.Ingestion:",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Gastrointestinal effects may begin within 4 to 6 hours of exposure, but may take as long as 10 hours. Severity of gastrointestinal and systemic effects may increase over the next 36 to 72 hour",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "s; life threatening systemic toxicity may develop in 3 to 5 days post-ingestion of a lethal dose.Injection:Initial non-specific signs and symptoms may be delayed for 10 to 12 hours. The clinical course may progress to multisystem organ failure over the n",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "ext 24 to 36 hours; life threatening systemic toxicity may develop within 36 to 72 hours post-exposure to a lethal dose(see EFFECT LEVELS section below).Dermal:Localized dermal effects may be observed within 24 hours of exposure to abraded or irritated ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "skin or open wounds.Eyes:Effects may be observed within 24 hours of exposure.SIGNS/SYMPTOMS:The following are common adverse health effects associated with exposure to ricin/abrin via the specific exposure route.Inhalation:",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Illness can occur within 8 hours of exposure as fever, cough, dyspnea (shortness of breath), chest tightness, and arthralgia(joint pain), and can progress to respiratory failure and death.Ingestion:Mild poisoning may result in nausea, vomiting, diarrhe",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "a, abdominal pain, heartburn, and oropharyngeal (part of throat at back of mouth)pain within 4 to 6 hours, but possibly up to 10 hours. Moderate to severe poisoning may result in worsening gastrointestinal symptoms over the next 2 days and may lead to hyp",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "otension(low blood pressure), liver and kidney toxicity, and death.Injection:Initial symptoms may be non-specific and include generalized weakness and myalgia (muscle pain) within 6 hours of exposure. Progression of illness may occur over the next 24 to",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "36 hours that includesvomiting, fever, hypotension(low blood pressure), multi-organ failure, and death. Local tissue damage at the injection site may be evident.Dermal/Eyes:Allergic reaction and conjunctivitis(eye inflammation)with discharge are possible.",
+          "role": "BODY"
+        }
+      ],
+      "text": "May dated 2013)Page 1of 6 Biotoxins: Ricin, Abrin[May2020 QRG PURPOSE: Given that a Federal OSC/RPM leading an emergency response to an environmental release may not know the specific type of biotoxinduringthe first 24- 48 hours of a response, this document provides information on the general properties, effects, and decontamination methods shared by biotoxins produced by some plants. This QRG does not address protective methods for public health or healthcare workers. Agent CharacteristicsAgent Classification: Biotoxin; Type:Ribosome Inactivating Protein Type 2 (RIP2).Most information aboutbiotoxins (e.g., RIP2)comes from studies on ricin. Given the similarities between ricin and abrin, it is reasonable to extrapolate information between these biotoxins.RIP2 are mostly produced by plants and must be introduced into body fluids and/or tissues in order to enter cells where they exert their toxic effects.They irreversibly inhibit protein synthesis butare not living organisms and are not contagious or infectious.Ricin and abrin are purified from the seeds shown below. Intact seeds can be handled safely, but broken seeds can expose the handler to the biotoxin, e.g., through skin wounds. Powdered biotoxins can be brownish/yellowish/whitish in color depending on purity, which can vary from ground up powders to those prepared through advanced biochemical and \u0000P\u0000H\u0000F\u0000K\u0000D\u0000Q\u0000L\u0000F\u0000D\u0000O\u0000\u0003\u0000S\u0000U\u0000R\u0000F\u0000H\u0000V\u0000V\u0000L\u0000Q\u0000J\u0000\u0011\u0000\u0003\u00007\u0000K\u0000H\u0000\u0003\u0000G\u0000H\u0000J\u0000U\u0000H\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000S\u0000X\u0000U\u0000L\u0000I\u0000L\u0000F\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000F\u0000D\u0000Q\u0000\u0003\u0000G\u0000U\u0000D\u0000P\u0000D\u0000W\u0000L\u0000F\u0000D\u0000O\u0000O\u0000\\\u0000\u0003\u0000D\u0000I\u0000I\u0000H\u0000F\u0000W\u0000\u0003\u0000D\u0000\u0003\u0000S\u0000R\u0000Z\u0000G\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000W\u0000R\u0000[\u0000L\u0000F\u0000R\u0000O\u0000R\u0000J\u0000L\u0000F\u0000D\u0000O\u0000\u0003properties, as well as physical properties related to the ability of the powder to be resuspended, tracked, and/or mobilized as a result of response activities in a contaminated area.Depending on purity, the powdered biotoxin maycontain ricin/abrin-related proteins, including potentially highly allergenic protein s, as well as carbohydratesand DNAfrom the associated plant.Persistence: Powdered biotoxinand solubilized biotoxinare relatively stablefor days to weeks. Environmental conditions and co-contaminants can significantly alter stability, by contributingto\u0000± but not ensuring\u0000±the degradation of ricin/abrin. No matter the age ofthe ricin/abrin solid or solution, it should be assumed to be biologically active until provenotherwise.BiotoxinMolecular WeightCommon Environmental Source and other notesRicinCAS #9009- 86-3~66,000 g/mol(depends on isoform)Beans (seeds) of castor oil plants (Ricinus communis).This plant is a common ornamental in some locations and grows from tropical to temperate climates\u0000± growing wild in 49 states, excluding Alaska. Ricin is purified from castor beans (shown to right; photo: Tom McKeon, USDA).Bean size and shape vary from 0.5 to 1.5 cm (1/5-3/5 in) and tear drop to nearly round. Similarly, ricin content varies, with c astor beans containing0.1-5% ricin by mass.AbrinCAS #1393-62-0~65,000g/mol (depends on isoform)Seeds of rosary pea plants (Abrus precatorius).This plant grows in tropical regions, in the southeastern US, and is considered invasive in Florida. Abrin is purified from the peas(shownto rightin USDA photo), also known as jequirity beans.Seeds are generally about0.5 cm (1/5 in) lengthwise. The peas contain about 0.075% abrin by mass.Exposure Routes Most information about ricin/abrin comes from reported ricin exposures. Given thatricin and abrinhave similar mechanisms of action,it is reasonable to extrapolate information between these biotoxins. Ricin/abrin must be introduced into body fluids and/or tissues where they exert their toxic effects.Inhalation:Respiratory exposure to wet or dry aerosols containing biotoxin may result in damage to tracheobronchial (windpipe and passagewaysinto lungs) and pulmonary(lung)tissues and results inabsorption and systemic (whole body) distributionof the biotoxin.Injection:Ricin/abrin may be introduced into the body by injection (e.g., subcutaneous, intramuscular,intravenous) as a solution of the bio toxin or by a sharp object (e.g., broken glass or projectile).Ingestion:Ricin/abrin may be absorbed through the gastrointestinal tract, resulting in systemic distribution.Dermal:Ricin/abrin may be absorbed through abraded or irritated skin or open wounds , resulting in systemic distribution.Eyes:Ocular exposure to ricin/abrin may occur from airborne particles or from direct contact with contaminated surface (e.g., handto eye).Health EffectsMost i nformation about ricin/abrin comes from reported ricin exposures in humans and animal models of ricin toxicity. Given thatricin and abrinhave similar mechanisms of action, it is reasonable to extrapolate information between these bio toxins. Time to symptom onset, rate of illness progression, and illness severity post-exposure are dependent upon variables such as route, particle size, dose, purity, and co-morbidities. Exposure to gastrointestinal and respiratory surfaces may cause local tissue damage, as well as result in systemic(whole body)absorption and distribution. Ingestion of higher doses of ricin/abrin may be required to produce toxicity because ricin/abrin are sus ceptible to degradation in the gastrointestinal tract.ONSET:Inhalation: Respiratory effects may begin within 2 to 4 hours, butmay take up to 48 hours following exposure. Symptoms may increase in severity and systemic toxicity may become apparent over the next 24 to 48 hours. Life threatening complications may develop within 36 to 72 hours post-inhalation of a lethal dose. See EFFECT LEVELSsection below for estimated lethal dose.Ingestion: Gastrointestinal effects may begin within 4 to 6 hours of exposure, but may take as long as 10 hours. Severity of gastrointestinal and systemic effects may increase over the next 36 to 72 hour s; life threatening systemic toxicity may develop in 3 to 5 days post-ingestion of a lethal dose.Injection:Initial non-specific signs and symptoms may be delayed for 10 to 12 hours. The clinical course may progress to multisystem organ failure over the n ext 24 to 36 hours; life threatening systemic toxicity may develop within 36 to 72 hours post-exposure to a lethal dose(see EFFECT LEVELS section below).Dermal:Localized dermal effects may be observed within 24 hours of exposure to abraded or irritated skin or open wounds.Eyes:Effects may be observed within 24 hours of exposure.SIGNS/SYMPTOMS:The following are common adverse health effects associated with exposure to ricin/abrin via the specific exposure route.Inhalation: Illness can occur within 8 hours of exposure as fever, cough, dyspnea (shortness of breath), chest tightness, and arthralgia(joint pain), and can progress to respiratory failure and death.Ingestion:Mild poisoning may result in nausea, vomiting, diarrhe a, abdominal pain, heartburn, and oropharyngeal (part of throat at back of mouth)pain within 4 to 6 hours, but possibly up to 10 hours. Moderate to severe poisoning may result in worsening gastrointestinal symptoms over the next 2 days and may lead to hyp otension(low blood pressure), liver and kidney toxicity, and death.Injection:Initial symptoms may be non-specific and include generalized weakness and myalgia (muscle pain) within 6 hours of exposure. Progression of illness may occur over the next 24 to 36 hours that includesvomiting, fever, hypotension(low blood pressure), multi-organ failure, and death. Local tissue damage at the injection site may be evident.Dermal/Eyes:Allergic reaction and conjunctivitis(eye inflammation)with discharge are possible.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 39,
+        "repeatedHeaderFooterBlockCount": 4,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 1,
+      "humanPageNumber": 2,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "May",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "2020 (replaced previous Ricin QRG",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "dated 2013)Page 2of 6",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Biotoxins: Ricin, Abrin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "\u0000²",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "[May2020",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "EffectLevelsand Exposure GuidelinesBiotoxinExposure RouteLethalityRicinCAS #9009-86-3Ingestion (Oral)Reported cases involving human ingestion of crushed or masticated (chewed) castor beans give an estimated lethal dose of ~8 beans, or 1-",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "20 mg ricin/kg body weight. Ricin content within beans is variable so exposure estimates based on number of beans ingested may be inaccurate. Swallowing intact beans is unlikely to result in serious adverse health effects.Inhalation",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "Lethal human aerosol ricin exposures have not been described. However, an estimated LD50in monkeys exposed for 10 minutes \u0000W\u0000R\u0000\u0003\u0000D\u0000H\u0000U\u0000R\u0000V\u0000R\u0000O\u0000L\u0000]\u0000H\u0000G\u0000\u0003\u0000U\u0000L\u0000F\u0000L\u0000Q\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000L\u0000F\u0000O\u0000H\u0000\u0003\u0000V\u0000L\u0000]\u0000H\u0000V\u0000\u0003\u0000\u0000\u0015\u0000\u0003\u0000\u0000P\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000\u0015\u0000\u0014-42 µg/kg body weight.AbrinCAS #1393-62-",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "0Ingestion (Oral)A purported lethal abrin dose in human is 0.1-\u0000\u0014\u0000\u0003\u0002\u001d\u0000J\u0000\u0012\u0000N\u0000J\u0000\u0003\u0000E\u0000R\u0000G\u0000\\\u0000\u0003\u0000Z\u0000H\u0000L\u0000J\u0000K\u0000W\u0000\u000f\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000\u0014\u0000\u0003\u0000M\u0000H\u0000T\u0000X\u0000L\u0000U\u0000L\u0000W\u0000\\\u0000\u0003\u0000E\u0000H\u0000D\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000I\u0000D\u0000W\u0000D\u0000O\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000F\u0000K\u0000H\u0000Z\u0000H\u0000G\u0000\u0011Swallowing intact ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "beans is unlikely to result in serious adverse health effects.InhalationLethal human aerosol abrin exposures have not been described. However, an estimated LD50in rats exposed for 8 minutes to aerosolized abrin particle size <1 µm is 3.3 µg/kg body weight.",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "Exposure Guidelines:Notestablished for either biotoxin.Release ScenariosRelease of ricin/abrin into the environment or contamination of facilities and areas from intentional production and distribution of ricin are considered most ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "likely (i.e., improvised/clandestine production of ricin and distribution through letters/mail). Ricin and abrin are relatively stable (days to months) depending on the biotoxin preparation and the environmental conditions.Air/Aerosolization:Airborne s",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "pread can occur as aerosols(<5 µm), or droplets(>5 µm), and may increase exposure risk if occurring in a confined space. Airborne spread of ricin/abrin depends on many factors(i.e., particle size and purity)",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "as well as physical and environmental conditions (i.e., humidity, temperature profiles, wind, physical disturbances) in the contaminated area.Soil/Surfaces:",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "Following any release scenario, soils and surfaces may become contaminated and may pose both contact and inhalation hazards. Contaminated soil and surfaces may pose suchhazards especiallyif large quantities of ricin/abrin are present.Water:Ricin/abrin ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "may pose a threatto drinking water systems (e.g., fountains, cooling towers, distribution networks).Personnel SafetyNote:Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, first aid options,",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "and personnel decontamination vary in accordance with the purity of ricin/abrin, likely exposure routes, siteconditions,and the release scenario. Responders should check their own internal procedures(i.e., SOPs), if applicable.Concerns:",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Check with the Health and Safety Officer regarding PPE, medical surveillance requirements, and site-specificHealth and Safety Plan (HASP). Level of PPE may vary depending upon the incident and site-",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "specific circumstances. The PPE Levels listed below are general suggestions only. For decontamination of workers, see PERSONNEL DECONTAMINATION section below. Additional information on personnel safety and PPE selection criteria can be found at ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "www.cdc.gov/niosh/ershdb.For additionalinformation on PPE selection and personnel decontamination, see CDC emergency response cards:Ricin: Biotoxinand Abrin: Biotoxin.Medical:Pre-incident:Annual physical and respiratory function exams.During Incident:",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per HEALTH EFFECTS section above and treat according to First Aid section below. Off-site monitoringofexposed workersmay be required by Health and Safety Officers or",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "public health officials.Treatments Available:Seek medical attention. Treatment is supportive. There is no widely available vaccine or antitoxin; however, a ricin vaccine developed by USAMRIID ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "has recently been accepted by FDA as an investigational drug and human clinical trials of vaccine candidates are underway.First Aid:CAUTION:",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "If the ricin and/or abrin is in powder form or in solution, workers rendering first aid must use PPE as indicated below to avoid the potential for being exposed. If the ricin and/or abrin are in anintact pea or bean form, known exposure concerns are mini",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "mal. If the exposed individual may have ingested whole peas or beans, it is important to share this information with healthcare professionals.During Incident:Conduct medical monitoring,use PPE as designated by the HASP,record the PPE levels used,monit",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "or foranysigns/symptoms as listed under HEALTH EFFECTS section above and,ifnecessary, ensure medical attention is provided as soon as possible.There is no specific antidote.\u0000xInhalation:Remove individual(s) to fresh air. Remove contaminated clothing and",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "articles andother sources of potential continued exposure.\u0000xIngestion:Do not induce vomiting. Consider activated charcoal or gastric lavage if exposed individual has not vomited oris not vomiting.\u0000xInjection:",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "\u00005\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000V\u0000R\u0000X\u0000U\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000S\u0000R\u0000V\u0000V\u0000L\u0000E\u0000O\u0000H\u0000\u0011\u0000\u0003\u0000)\u0000O\u0000X\u0000V\u0000K\u0000\u0003\u0000Z\u0000R\u0000X\u0000Q\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000L\u0000Q\u0000M\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000V\u0000L\u0000W\u0000H\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000Q\u0000R\u0000U\u0000P\u0000D\u0000O\u0000\u0003\u0000V\u0000D\u0000O\u0000L\u0000Q\u0000H\u0000\u0003\u0000R\u0000U\u0000\u0003\u00005\u0000L\u0000Q\u0000J\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000O\u0000D\u0000F\u0000W\u0000D\u0000W\u0000H\u0000\u000f\u0000\u0003\u0000R\u0000W\u0000K\u0000H\u0000U\u0000Z\u0000L\u0000V\u0000H\u0000\u0003",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "use clean water.\u0000xDermal/Eyes:Remove contaminated clothing andarticles andother sources of potential continued exposure. Wash skin with soap and water, and/or flush ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000F\u0000R\u0000S\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u0000D\u0000P\u0000R\u0000X\u0000Q\u0000W\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000Z\u0000D\u0000W\u0000H\u0000U\u0000\u0011\u0000\u0003\u00005\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000F\u0000W\u0000V\u0000\u000f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000S\u0000U\u0000H\u0000V\u0000H\u0000Q\u0000W\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000L\u0000U\u0000U\u0000L\u0000J\u0000D\u0000W\u0000H\u0000\u0003\u0000H\u0000\\\u0000H\u0000V\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000Q\u0000R\u0000U\u0000P\u0000D\u0000O\u0000\u0003\u0000V\u0000D\u0000O\u0000L\u0000Q\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0012\u0000R\u0000U\u0000\u0003\u00005\u0000L\u0000Q\u0000J\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000O\u0000D\u0000F\u0000W\u0000D\u0000W\u0000Hor flush eyes ",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "with copious amounts of potable water for at least 15 minutes.Contact your local poison control center (1-800-222-1222) for questionsabout first aid for possible cases of ricin/abrin poisoning.Post-incident:",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "Monitor for signs/symptoms and, if necessary, ensure medical attention is provided as soon as possible.Personal Protective Equipment (PPE):GENERAL INFORMATION: NIOSH-",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSH-approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and protectiveclothing should be used. Pre-",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "incident training and exercises on the proper use of PPE are recommended.PPE Levels for emergency response to a suspected biotoxin incidentare based on scenario risks from highest level of protection to least:LEVEL A:Pressure-demand SCBA with Le",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "vel A protective suit, when: a) event is uncontrolled, b) agent is airborne or aerosolizable, c) dissemination method is unknown, or d) performing decontamination rinsing and washing of workers in Level A protective suits because of an airborne or aerosoli",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "zable agent. Per NIOSH guidance, Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), and eye protection when the agent identity or concentration is unknown.Select Level A when the concentration of any decontaminant ",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "or fumigantused for a specific incidentwill be above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure.LEVEL B:Pressure-demand SCBA with Level B protective suit, when: a) agent is no longer a re-aerosolization threat but th",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "e agent's breakthrough ability for P100 or high-efficiency particulate air (HEPA) filters is not known, or b) response operations may cause a splash hazard. Per NIOSH guidance, Level B provides the highest level of respiratory protection (SCBA) when a less",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "er level of skin protection is required. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.Select Level",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "B when the concentration of any decontaminant or fumigant used for a specific incident will be above the IDLH or AEGL-2 and dermal exposure is less of a risk.",
+          "role": "BODY"
+        }
+      ],
+      "text": "May dated 2013)Page 2of 6 \u0000² [May2020 EffectLevelsand Exposure GuidelinesBiotoxinExposure RouteLethalityRicinCAS #9009-86-3Ingestion (Oral)Reported cases involving human ingestion of crushed or masticated (chewed) castor beans give an estimated lethal dose of ~8 beans, or 1- 20 mg ricin/kg body weight. Ricin content within beans is variable so exposure estimates based on number of beans ingested may be inaccurate. Swallowing intact beans is unlikely to result in serious adverse health effects.Inhalation Lethal human aerosol ricin exposures have not been described. However, an estimated LD50in monkeys exposed for 10 minutes \u0000W\u0000R\u0000\u0003\u0000D\u0000H\u0000U\u0000R\u0000V\u0000R\u0000O\u0000L\u0000]\u0000H\u0000G\u0000\u0003\u0000U\u0000L\u0000F\u0000L\u0000Q\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000L\u0000F\u0000O\u0000H\u0000\u0003\u0000V\u0000L\u0000]\u0000H\u0000V\u0000\u0003\u0000\u0000\u0015\u0000\u0003\u0000\u0000P\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000\u0015\u0000\u0014-42 µg/kg body weight.AbrinCAS #1393-62- 0Ingestion (Oral)A purported lethal abrin dose in human is 0.1-\u0000\u0014\u0000\u0003\u0002\u001d\u0000J\u0000\u0012\u0000N\u0000J\u0000\u0003\u0000E\u0000R\u0000G\u0000\\\u0000\u0003\u0000Z\u0000H\u0000L\u0000J\u0000K\u0000W\u0000\u000f\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000\u0014\u0000\u0003\u0000M\u0000H\u0000T\u0000X\u0000L\u0000U\u0000L\u0000W\u0000\\\u0000\u0003\u0000E\u0000H\u0000D\u0000Q\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000I\u0000D\u0000W\u0000D\u0000O\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000F\u0000K\u0000H\u0000Z\u0000H\u0000G\u0000\u0011Swallowing intact beans is unlikely to result in serious adverse health effects.InhalationLethal human aerosol abrin exposures have not been described. However, an estimated LD50in rats exposed for 8 minutes to aerosolized abrin particle size <1 µm is 3.3 µg/kg body weight. Exposure Guidelines:Notestablished for either biotoxin.Release ScenariosRelease of ricin/abrin into the environment or contamination of facilities and areas from intentional production and distribution of ricin are considered most likely (i.e., improvised/clandestine production of ricin and distribution through letters/mail). Ricin and abrin are relatively stable (days to months) depending on the biotoxin preparation and the environmental conditions.Air/Aerosolization:Airborne s pread can occur as aerosols(<5 µm), or droplets(>5 µm), and may increase exposure risk if occurring in a confined space. Airborne spread of ricin/abrin depends on many factors(i.e., particle size and purity) as well as physical and environmental conditions (i.e., humidity, temperature profiles, wind, physical disturbances) in the contaminated area.Soil/Surfaces: Following any release scenario, soils and surfaces may become contaminated and may pose both contact and inhalation hazards. Contaminated soil and surfaces may pose suchhazards especiallyif large quantities of ricin/abrin are present.Water:Ricin/abrin may pose a threatto drinking water systems (e.g., fountains, cooling towers, distribution networks).Personnel SafetyNote:Personal Protective Equipment (PPE) selection (levels A-D), medical surveillance requirements, first aid options, and personnel decontamination vary in accordance with the purity of ricin/abrin, likely exposure routes, siteconditions,and the release scenario. Responders should check their own internal procedures(i.e., SOPs), if applicable.Concerns: Check with the Health and Safety Officer regarding PPE, medical surveillance requirements, and site-specificHealth and Safety Plan (HASP). Level of PPE may vary depending upon the incident and site- specific circumstances. The PPE Levels listed below are general suggestions only. For decontamination of workers, see PERSONNEL DECONTAMINATION section below. Additional information on personnel safety and PPE selection criteria can be found at www.cdc.gov/niosh/ershdb.For additionalinformation on PPE selection and personnel decontamination, see CDC emergency response cards:Ricin: Biotoxinand Abrin: Biotoxin.Medical:Pre-incident:Annual physical and respiratory function exams.During Incident: Conduct periodic on-site medical monitoring, observe for any signs and symptoms as per HEALTH EFFECTS section above and treat according to First Aid section below. Off-site monitoringofexposed workersmay be required by Health and Safety Officers or public health officials.Treatments Available:Seek medical attention. Treatment is supportive. There is no widely available vaccine or antitoxin; however, a ricin vaccine developed by USAMRIID has recently been accepted by FDA as an investigational drug and human clinical trials of vaccine candidates are underway.First Aid:CAUTION: If the ricin and/or abrin is in powder form or in solution, workers rendering first aid must use PPE as indicated below to avoid the potential for being exposed. If the ricin and/or abrin are in anintact pea or bean form, known exposure concerns are mini mal. If the exposed individual may have ingested whole peas or beans, it is important to share this information with healthcare professionals.During Incident:Conduct medical monitoring,use PPE as designated by the HASP,record the PPE levels used,monit or foranysigns/symptoms as listed under HEALTH EFFECTS section above and,ifnecessary, ensure medical attention is provided as soon as possible.There is no specific antidote.\u0000xInhalation:Remove individual(s) to fresh air. Remove contaminated clothing and articles andother sources of potential continued exposure.\u0000xIngestion:Do not induce vomiting. Consider activated charcoal or gastric lavage if exposed individual has not vomited oris not vomiting.\u0000xInjection: \u00005\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000V\u0000R\u0000X\u0000U\u0000F\u0000H\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u000f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000S\u0000R\u0000V\u0000V\u0000L\u0000E\u0000O\u0000H\u0000\u0011\u0000\u0003\u0000)\u0000O\u0000X\u0000V\u0000K\u0000\u0003\u0000Z\u0000R\u0000X\u0000Q\u0000G\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000L\u0000Q\u0000M\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000V\u0000L\u0000W\u0000H\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000Q\u0000R\u0000U\u0000P\u0000D\u0000O\u0000\u0003\u0000V\u0000D\u0000O\u0000L\u0000Q\u0000H\u0000\u0003\u0000R\u0000U\u0000\u0003\u00005\u0000L\u0000Q\u0000J\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000O\u0000D\u0000F\u0000W\u0000D\u0000W\u0000H\u0000\u000f\u0000\u0003\u0000R\u0000W\u0000K\u0000H\u0000U\u0000Z\u0000L\u0000V\u0000H\u0000\u0003 use clean water.\u0000xDermal/Eyes:Remove contaminated clothing andarticles andother sources of potential continued exposure. Wash skin with soap and water, and/or flush \u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000F\u0000R\u0000S\u0000L\u0000R\u0000X\u0000V\u0000\u0003\u0000D\u0000P\u0000R\u0000X\u0000Q\u0000W\u0000V\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000Z\u0000D\u0000W\u0000H\u0000U\u0000\u0011\u0000\u0003\u00005\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000F\u0000W\u0000V\u0000\u000f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000S\u0000U\u0000H\u0000V\u0000H\u0000Q\u0000W\u0000\u000f\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000L\u0000U\u0000U\u0000L\u0000J\u0000D\u0000W\u0000H\u0000\u0003\u0000H\u0000\\\u0000H\u0000V\u0000\u0003\u0000Z\u0000L\u0000W\u0000K\u0000\u0003\u0000Q\u0000R\u0000U\u0000P\u0000D\u0000O\u0000\u0003\u0000V\u0000D\u0000O\u0000L\u0000Q\u0000H\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0012\u0000R\u0000U\u0000\u0003\u00005\u0000L\u0000Q\u0000J\u0000H\u0000U\u0000¶\u0000V\u0000\u0003\u0000O\u0000D\u0000F\u0000W\u0000D\u0000W\u0000Hor flush eyes with copious amounts of potable water for at least 15 minutes.Contact your local poison control center (1-800-222-1222) for questionsabout first aid for possible cases of ricin/abrin poisoning.Post-incident: Monitor for signs/symptoms and, if necessary, ensure medical attention is provided as soon as possible.Personal Protective Equipment (PPE):GENERAL INFORMATION: NIOSH- certified Chemical, Biological, Radiological, Nuclear (CBRN) Self Contained Breathing Apparatus (SCBA), NIOSH-approved Air Purifying Respirators (APR) or Powered Air Purifying Respirators (PAPR), full-face masks, and protectiveclothing should be used. Pre- incident training and exercises on the proper use of PPE are recommended.PPE Levels for emergency response to a suspected biotoxin incidentare based on scenario risks from highest level of protection to least:LEVEL A:Pressure-demand SCBA with Le vel A protective suit, when: a) event is uncontrolled, b) agent is airborne or aerosolizable, c) dissemination method is unknown, or d) performing decontamination rinsing and washing of workers in Level A protective suits because of an airborne or aerosoli zable agent. Per NIOSH guidance, Level A provides the greatest level of skin (fully encapsulating suit), respiratory (SCBA), and eye protection when the agent identity or concentration is unknown.Select Level A when the concentration of any decontaminant or fumigantused for a specific incidentwill be above the IDLH or AEGL-2, and when there is a potential of ocular or dermal exposure.LEVEL B:Pressure-demand SCBA with Level B protective suit, when: a) agent is no longer a re-aerosolization threat but th e agent's breakthrough ability for P100 or high-efficiency particulate air (HEPA) filters is not known, or b) response operations may cause a splash hazard. Per NIOSH guidance, Level B provides the highest level of respiratory protection (SCBA) when a less er level of skin protection is required. Level B differs from Level A in that it typically incorporates a non-encapsulating, splash-protective, chemical-resistant outer suit that provides protection against most liquids but is not vapor tight.Select Level B when the concentration of any decontaminant or fumigant used for a specific incident will be above the IDLH or AEGL-2 and dermal exposure is less of a risk.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 43,
+        "repeatedHeaderFooterBlockCount": 6,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 2,
+      "humanPageNumber": 3,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "May",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "2020 (replaced previous Ricin QRG",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "dated 2013)Page 3of 6",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Biotoxins: Ricin, Abrin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "\u0000²",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "[May2020",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Personnel Safety(continued)LEVEL C:Full-face APR respirator with P100 filter or PAPR with HEPA filters, when an aerosol-generating device was not used to create high airborne ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "concentration. Per NIOSH guidance, Level C may be selected when the agent identity and concentration are known and the respiratoryprotection criteria factors for the use of APR or PAPR (i.e., < IDLH, warning properties) are met. For any ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "decontaminant or fumigantused for a specific incident, see the site-specific HASP for IDLHor relevant warning properties.LEVELD:Disposable ",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "hooded coveralls, gloves, and foot coverings, when dissemination of agent was by a letter, package, or other material that can be bagged or otherwise contained. Per NIOSHguidance, Level Dmay be selectedwhen the agentis known, and the concentration is b",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "elow the appropriate occupational exposure limits for the stated duration times.Caution:AEGLvalues are not available for ricin or abrin and no occupational exposure limits (e.g., PEL, REL) exist for ricin or abrin (see EXPOSURE GUIDELINES section above",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "). AEGL values or appropriate occupational exposure limits may exist forany selecteddecontaminantsor fumigants;seethesite-specific HASPdeveloped for an incident.Note:Site-specific recommendations on the level of PPE will vary by job type (e.g., entry, ",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "decontamination/cleanup), type of exposure (e.g., airborne surface/liquid/soil hazard), and any other site-specific hazards (e.g., chemical, physical),and should be found in the site-specific HASP. The site-specific HASP may consider additional in",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "formation beyond this QRG and it may be necessary todefer many PPE decisions to the site-specific HASP developed for an incident.Downgrading PPE levels can be consideredonly when the identityand concentrationof the agent is knownand the risksof re-",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "aerosolization or dermal exposureare known to be extremely low. Downgrading PPE levels must be accompanied by on-site monitoring.Personnel DecontaminationNote:",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "If the ricin and/or abrin is in powder form or in solution, the individuals involved in decontamination of personnel must usePPE as indicated in the PERSONNEL SAFETYsection above to avoid the potential for exposure. Level C PPEwith APR or PAPR is appro",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "priate when decontaminating personnel potentially contaminated by ricin and/or abrin.If a higher level of PPE (Aor B) is used, modify the steps below.Personnel DecontaminationProcedure:If possible, a decontamination",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "tent or structures should be utilized and placed under negative pressure with HEPA filtration. Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to t",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "reat and replace contaminated materials used during the decontaminationprocess as well as replace necessary chemicals and decontamination solutions.Prior to entering the hot zone, all personnel are required to familiarize themselves with the site-specific ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "personnel decontaminationprocedures.Step/ ZonePersonnel DecontaminationProcedures(attendants will verbally direct personnelthrough each step)Conducted in Hot Zone (exclusion zone)1Equipment Drop",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "Place equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later.",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "Conducted in Warm Zone (contamination reduction zone)2Sample DropPlace samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-custody of samples. It is ",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "recommended that samples are decontaminated in a separate decontamination line.3Outer Boot and Glove WashThe purpose of this step is to enable physical removal of gross contamination if contamination is visible. If gross contamination is not visible, t",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "his step may be skipped. Wash outer boots and then outer gloves using designated decontaminating agents as specified in HASP (e.g.,soap and water, trisodium phosphate substitute, or amended bleach).4Glove, Boot, and Suit WashTurn PAPR off and cover ca",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "rtridges to ensure that filters are not saturated. Wash all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Start with decontaminating boots and gloves, then work on suit from the t",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "op down, including PAPR casing. Decontaminationpersonnel should conduct this step. Care should be taken to ensure that all areas are decontaminated, including around zipper, arms, front torso, and any other area that could have come in contact with contam",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "ination. The solution used for decontamination should be contained, collected, and disposed of properly from the decontamination line.5Outer Glove, Boot, and Suit RemovalWhile sitting on a stool, remove outer boots and outer gloves. Undo the PAPR ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "belt and hold in hand. While touching only the inside of suit, remove outer suits by carefully rolling suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontaminatio",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "npersonnel to assist either by holding PAPR unit or assisting in suit removal.6Mask RemovalWith inner gloves, remove the mask. Remove cartridge filters and place into designated container. Put mask into mask wash. Decontamination personnel will ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "clean each mask and PAPR assembly prior to return to service.7Inner Glove RemovalRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container.Conducted in Cold Zone (support zone)8",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available then, at the minimum, hands and face should be washed thoroughly.9",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "Medical MonitoringReport to medical monitoring station for post-entry monitoring and report to appropriate personnel for debriefing.Emergency Egress Corridor:Establish an emergency egress line to use forquickly decontaminating",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "personnel who have medical emergencies while in the hot zone. Personnel must be decontaminated prior to receiving treatment from emergency medical technicians or transported to a hospital.Hand-Wash Station:A hand-wash station sho",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "uld be available for personnel to clean up following entry. However, this may not be available initially at the scene or weather conditions may prohibit their use. If a hand-wash station is not available, personnel should wash their hands and face as soon ",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "as possible.Caution:Avoidwaterless hand cleaners, which contain solvents (alcohols) that could increase risk of dermal exposure to ricin/abrin.Environmental SamplingCAUTION: The plants that produce ricin/abrin are used for ornamental ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "purposes, and there are many commercial products that include castor bean products (e.g., castor bean oil, certain papers). Some of these products may be found at a response location, and due to potential high sensitivity and/or low specificity of detectio",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "n methods potentially available on-site, detection may not equate to malicious intent\u0000²e.g., meaning the detection of ricin/abrin may be due to the presence of ornamental plants, not intended for criminal purposes.CONCERNS:",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "Environmental samples refer to samples collected from a contaminated site, and do not include forensic or clinical samples collected by other agencies. With regards to environmental mission, it is an important aspect that samples may contain ricin/abrin t",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "hat is inactive (either as a result of natural attenuation or purposeful decontamination) and many analysis methods respond to inactive ricin/abrin,which are not capable of causing human health effects.None of the methods listedbelowin the FIELD DETECTION",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "sectionwill detect active ricin/abrin. Few laboratories currently have capability to determine ricin/abrin activity, and donot have capacity for large numbers of samples. Further, common substances found in the household and environment can cause fal",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "se positives, especially if they contain proteins (e.g., some flours). Therefore, goals of environmental sampling and analysis should be realistic and view most analytical results as providing an indication of where active ricin/abrin is or was, but not be",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "represented as indicating the true potential human health risk in the days following a release.",
+          "role": "BODY"
+        }
+      ],
+      "text": "May dated 2013)Page 3of 6 \u0000² [May2020 Personnel Safety(continued)LEVEL C:Full-face APR respirator with P100 filter or PAPR with HEPA filters, when an aerosol-generating device was not used to create high airborne concentration. Per NIOSH guidance, Level C may be selected when the agent identity and concentration are known and the respiratoryprotection criteria factors for the use of APR or PAPR (i.e., < IDLH, warning properties) are met. For any decontaminant or fumigantused for a specific incident, see the site-specific HASP for IDLHor relevant warning properties.LEVELD:Disposable hooded coveralls, gloves, and foot coverings, when dissemination of agent was by a letter, package, or other material that can be bagged or otherwise contained. Per NIOSHguidance, Level Dmay be selectedwhen the agentis known, and the concentration is b elow the appropriate occupational exposure limits for the stated duration times.Caution:AEGLvalues are not available for ricin or abrin and no occupational exposure limits (e.g., PEL, REL) exist for ricin or abrin (see EXPOSURE GUIDELINES section above ). AEGL values or appropriate occupational exposure limits may exist forany selecteddecontaminantsor fumigants;seethesite-specific HASPdeveloped for an incident.Note:Site-specific recommendations on the level of PPE will vary by job type (e.g., entry, decontamination/cleanup), type of exposure (e.g., airborne surface/liquid/soil hazard), and any other site-specific hazards (e.g., chemical, physical),and should be found in the site-specific HASP. The site-specific HASP may consider additional in formation beyond this QRG and it may be necessary todefer many PPE decisions to the site-specific HASP developed for an incident.Downgrading PPE levels can be consideredonly when the identityand concentrationof the agent is knownand the risksof re- aerosolization or dermal exposureare known to be extremely low. Downgrading PPE levels must be accompanied by on-site monitoring.Personnel DecontaminationNote: If the ricin and/or abrin is in powder form or in solution, the individuals involved in decontamination of personnel must usePPE as indicated in the PERSONNEL SAFETYsection above to avoid the potential for exposure. Level C PPEwith APR or PAPR is appro priate when decontaminating personnel potentially contaminated by ricin and/or abrin.If a higher level of PPE (Aor B) is used, modify the steps below.Personnel DecontaminationProcedure:If possible, a decontamination tent or structures should be utilized and placed under negative pressure with HEPA filtration. Tents, berms, and collection vessels should be able to maintain copious amounts of wastewater in a contained and safe manner. Procedures should be in place to t reat and replace contaminated materials used during the decontaminationprocess as well as replace necessary chemicals and decontamination solutions.Prior to entering the hot zone, all personnel are required to familiarize themselves with the site-specific personnel decontaminationprocedures.Step/ ZonePersonnel DecontaminationProcedures(attendants will verbally direct personnelthrough each step)Conducted in Hot Zone (exclusion zone)1Equipment Drop Place equipment taken into the Hot Zone on a plastic covered table or container provided prior to entering the contamination reduction corridor. Equipment will either be reused if more than one entry is planned or will be decontaminated later. Conducted in Warm Zone (contamination reduction zone)2Sample DropPlace samples in a container provided for sample decontamination. Care needs to be taken to ensure that workers maintain chain-of-custody of samples. It is recommended that samples are decontaminated in a separate decontamination line.3Outer Boot and Glove WashThe purpose of this step is to enable physical removal of gross contamination if contamination is visible. If gross contamination is not visible, t his step may be skipped. Wash outer boots and then outer gloves using designated decontaminating agents as specified in HASP (e.g.,soap and water, trisodium phosphate substitute, or amended bleach).4Glove, Boot, and Suit WashTurn PAPR off and cover ca rtridges to ensure that filters are not saturated. Wash all outer surfaces in a contained area (e.g., kiddie pool) using a pressurized spray with designated decontamination solution. Start with decontaminating boots and gloves, then work on suit from the t op down, including PAPR casing. Decontaminationpersonnel should conduct this step. Care should be taken to ensure that all areas are decontaminated, including around zipper, arms, front torso, and any other area that could have come in contact with contam ination. The solution used for decontamination should be contained, collected, and disposed of properly from the decontamination line.5Outer Glove, Boot, and Suit RemovalWhile sitting on a stool, remove outer boots and outer gloves. Undo the PAPR belt and hold in hand. While touching only the inside of suit, remove outer suits by carefully rolling suit in an outward motion from shoulders down to feet. Dispose of boots, gloves, and suit in a designated container. This step may require decontaminatio npersonnel to assist either by holding PAPR unit or assisting in suit removal.6Mask RemovalWith inner gloves, remove the mask. Remove cartridge filters and place into designated container. Put mask into mask wash. Decontamination personnel will clean each mask and PAPR assembly prior to return to service.7Inner Glove RemovalRemove inner gloves by only touching outside of first glove and then only inside of second glove. Place gloves into designated container.Conducted in Cold Zone (support zone)8 Personal ShowerPersonnel should shower using copious quantities of soap and water for a minimum of 5 minutes and change into clean clothes. If a personal shower is not immediately available then, at the minimum, hands and face should be washed thoroughly.9 Medical MonitoringReport to medical monitoring station for post-entry monitoring and report to appropriate personnel for debriefing.Emergency Egress Corridor:Establish an emergency egress line to use forquickly decontaminating personnel who have medical emergencies while in the hot zone. Personnel must be decontaminated prior to receiving treatment from emergency medical technicians or transported to a hospital.Hand-Wash Station:A hand-wash station sho uld be available for personnel to clean up following entry. However, this may not be available initially at the scene or weather conditions may prohibit their use. If a hand-wash station is not available, personnel should wash their hands and face as soon as possible.Caution:Avoidwaterless hand cleaners, which contain solvents (alcohols) that could increase risk of dermal exposure to ricin/abrin.Environmental SamplingCAUTION: The plants that produce ricin/abrin are used for ornamental purposes, and there are many commercial products that include castor bean products (e.g., castor bean oil, certain papers). Some of these products may be found at a response location, and due to potential high sensitivity and/or low specificity of detectio n methods potentially available on-site, detection may not equate to malicious intent\u0000²e.g., meaning the detection of ricin/abrin may be due to the presence of ornamental plants, not intended for criminal purposes.CONCERNS: Environmental samples refer to samples collected from a contaminated site, and do not include forensic or clinical samples collected by other agencies. With regards to environmental mission, it is an important aspect that samples may contain ricin/abrin t hat is inactive (either as a result of natural attenuation or purposeful decontamination) and many analysis methods respond to inactive ricin/abrin,which are not capable of causing human health effects.None of the methods listedbelowin the FIELD DETECTION sectionwill detect active ricin/abrin. Few laboratories currently have capability to determine ricin/abrin activity, and donot have capacity for large numbers of samples. Further, common substances found in the household and environment can cause fal se positives, especially if they contain proteins (e.g., some flours). Therefore, goals of environmental sampling and analysis should be realistic and view most analytical results as providing an indication of where active ricin/abrin is or was, but not be represented as indicating the true potential human health risk in the days following a release.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 44,
+        "repeatedHeaderFooterBlockCount": 6,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 3,
+      "humanPageNumber": 4,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "May",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "2020 (replaced previous Ricin QRG",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "dated 2013)Page 4of 6",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Biotoxins: Ricin, Abrin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "\u0000²",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "[May2020",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Environmental Sampling (continued)Considerations: Sampling and accompanying analysis techniques will be highly site-specific and depend on: 1) the characteristics of the ricin/abrin preparation ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "used; 2) the type of contaminated surfaces (e.g., porous vs. nonporous); 3) the phases/purposes of sampling (e.g., site characterization pre-decontaminationvs. post-decontamination sampling).When selecting sampling locations:The site-",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "specific sampling plan should consider if release was limited to a single point (e.g., letter or container), and start with an area thought to be free of contamination and work in concentric circles towards the initial point of contamination. B",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "e concerned about other contaminated areas due to foot traffic/ventilation systems (e.g., elevator buttons, mail, corners of hallways, baseboards, light switches, doorknobs). Based on site characteristics, sampling resource availability, or ",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "laboratory capacity, the sampling plan may be judgmental, probabilistic, or a combination thereof.Before obtaining samples:1) coordinate with investigative units (EPA-CID and FBI) to ensure site access considerations and applicable sample chain-of-",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "custody is maintained between the groups,2) consider that the local public health department may have jurisdiction and local public health labs may already be involved and have contacted the CDC\u0000¶\u0000VLaboratory Response Network (LRN), and3) contact EPA/HQ-",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "EOC (202-564-3850) for Environmental Response Laboratory Network (ERLN) laboratories able to analyze the site-specific types of samples. Clearly identify and discuss with the laboratory its acceptance ",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "criteria since most labs cannot analyze all types of media nor can dispose of some types of left-over samples.Procedures, supplies, and tools for sampling, packaging, and shipping environmental media:",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "Environmental interferences are more rigorously studied for some media than for others, and such interferences may require application of an appropriate sample preparation technique. Appropriate sample preparation techniques for many anticipated types of ",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "field samples have not been developed, so application of existing preparation techniques should be performed ",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "\u0000W\u0000K\u0000R\u0000X\u0000J\u0000K\u0000W\u0000I\u0000X\u0000O\u0000O\u0000\\\u0000\u0011\u0000\u0003\u00006\u0000R\u0000P\u0000H\u0000\u0003\u0000S\u0000U\u0000H\u0000S\u0000D\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000W\u0000H\u0000F\u0000K\u0000Q\u0000L\u0000T\u0000X\u0000H\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000H\u0000\u0003\u0000,\u0000Q\u0000I\u0000R\u0000U\u0000P\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000'\u0000R\u0000F\u0000X\u0000P\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000\u000bhttps://www.epa.gov/esam/sample-collection-",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "information-documents-scids). These provide general information regarding sampling procedures for different media, sampling supplies (e.g., swabs, sponge-sticks, filter cartridges/cassettes),sample size, container, holding time, preservation, packaging,",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "and shipping,supporting collection of samples to be analyzed for the chemicals, radiochemicals,or biotoxins listed in SAM 2017. Other resources available since 2017 are listed at https://www.epa.gov/homeland-security-research",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "(search by biotoxin name), including a widely available technique for ricin preparation compatible with numerous analytical techniques. Note that the receiving lab may have its own requirements(e.g., some may accept sponge-",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "sticks but not swabs). For additional information and for other sample matrices, contact EPA/HQ-EOC at 202-564-3850.Field Detection(shorter time to results)Available technologies:",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "The following table summarizes some available technologies from which responders may be able to obtain results within a comparatively short time frame. In historical incidents, this availability has been from:1) Civil Support Team (CST) mobile labs,",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "and 2) local public health laboratories that \u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u00005\u00001\u0000\u000f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\\\u0000\u0003\u0000K\u0000D\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000H\u0000T\u0000X\u0000L\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000S\u0000O\u0000D\u0000W\u0000I\u0000R\u0000U\u0000P\u0000V\u0000\u0011\u0000\u0003\u0000$\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000W\u0000U\u0000D\u0000G\u0000H-off for availability, eitherof them ",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "may not have the capabilities to prepare certain types of samples for analysis. The site-specific types of samples should be discussed before relying on their capabilities. For ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "\u0000W\u0000H\u0000F\u0000K\u0000Q\u0000R\u0000O\u0000R\u0000J\u0000L\u0000H\u0000V\u0000\u0003\u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000³\u0000O\u0000D\u0000E\u0000V,\u0000´\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000J\u0000H\u0000\u0003\u0000R\u0000Y\u0000H\u0000U\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000\u001e\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000F\u0000W\u0000\u0003\u0000(\u00003\u0000$\u0000\u0012\u0000+\u00004-EOC (202-564-3850) for current information.Note:",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "Performance data are available for some of field tests and should be carefully reviewed to ensure accurate applicability to site-specific conditions to avoid misinterpretation of results. Many of these tests have been verified under laboratory conditi",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "ons, and applicability to field use cannot be assumed. Performance criteria are listed when provided in the original source documents; however, when implemented by a CST through a DOD functionknown as Defense Biological Product Assurance Office, performan",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "ce criteria are not publicly available (NPA). Detection limits may not be directly comparable since they are based on type of sample, and hence are constrained by the ability of the sample preparation technique to deliver a certain amount of ricin/abrin to",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "the detector.PlatformAvailabilityLODPotential purposesWhere usedImmunoassay (ELISA) CSTNPASuggestive of presence/absence through immunological features, but it/they can also detect inactive ricin that will not cause health effects. ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "Also, other substances share these immunological features, resulting in false positives.FieldCommercial(strip format, Tetracore)0.54 ng (ricin)1.5 ng (abrin)PCRCSTNPA (ricin only)Detection of ricin gene in the plant DNA, not ricin itself.",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "Mobile or fixed labLabsUses 200 mg sampleLC/MS/MS (biomarkers)Labs(0.09 mg/L) ricinine(0.06 mg/L) abrine-Suggestive of presence/absence of ricin or abrin via these co-extracted biomarkers.-Quantitation of ricinine/abrine in water by isotope dilution.",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "Mobile or fixed labImmunoassay (ECL) CSTNPA-Suggestive of presence/absence through immunological features, so subject to misidentification.-Quantitative (if calibrated).Mobile or fixed labLabs Fixed labImmunoassay(TRF)LabsNPAFixed labERLN10 pg (ricin)-",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "Suggestive of presence/absence through immunological features, so subject to misidentification.-Quantitative (if calibrated).Fixed lab only in N. CaliforniaLaboratory Analysis (longer time to results)Note:",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "Many labs will not be able to perform analysis on all environmental matrices, so it is vital to consult with the laboratory to understand their capabilities before sending samples. Laboratory capacity for analysis of environmental samples is very limited,",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "and laboratory methods are described in SAM 2017 (https://www.epa.gov/homeland-security-research/sam), which offers a variety of methods for various analytical goals, ranging from presence/absence of an ",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "immunological indicator to the ability of a sample to affect an organism (i.e., biological activity).Analytical goals:Analytical goals may change as the response progresses, and laboratory analysis can follow a tiered approach, or algorithm, when ",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "implementing different analytical methods, particularly when needed to address a large number of samples. For example, some methods are generally more rapid than more definitive, and might be used during the initial stages of responseto ev",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "aluate the extent of contamination. Such methods also might be used to identify samples that should be analyzed using the more extensive methods. These more extensive methods should be considered for use when: 1) earlier analysis indicates the presence of ",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "the biotoxin, 2) a smaller subset of samples requires analysis, or 3) as required for a tiered approach to decontamination/cleanup. Depending on the goals of the decontamination/cleanupphase, biological activity methods may be needed because biotoxins are",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "sometimes detectable but inactive; therefore, these assays may also provide information about potential impact on human safety.Laboratory availability:Some ERLN laboratories (https://www2.epa.gov/emergency-response/environmental-response-laboratory-network",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "; EPA/HQ-EOC at 202-564-3850) may be specially trained and equipped for the analysis of ricin/abrin using uniform, compatible sample prep and analytical me\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Environmental Sampling and Analytical Methods (ESAM) Programs (",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "https://www.epa.gov/esam). The ESAM does not include additional laboratory capacity and methods which may be available through the CDC\u0000¶sLRN, which might be reached through the public health department responsible for a specific site. It ",
+          "role": "BODY"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "should be noted that not all LRN laboratories have the same instrumentation and reagents on hand to provide timely support. Further, LRN methods are desi",
+          "role": "BODY"
+        },
+        {
+          "order": 45,
+          "operator": "TJ",
+          "text": "gned for clinical samples, so may not be compatible with environmental samples without suitable sample preparation, which maybe unknown.",
+          "role": "BODY"
+        }
+      ],
+      "text": "May dated 2013)Page 4of 6 \u0000² [May2020 Environmental Sampling (continued)Considerations: Sampling and accompanying analysis techniques will be highly site-specific and depend on: 1) the characteristics of the ricin/abrin preparation used; 2) the type of contaminated surfaces (e.g., porous vs. nonporous); 3) the phases/purposes of sampling (e.g., site characterization pre-decontaminationvs. post-decontamination sampling).When selecting sampling locations:The site- specific sampling plan should consider if release was limited to a single point (e.g., letter or container), and start with an area thought to be free of contamination and work in concentric circles towards the initial point of contamination. B e concerned about other contaminated areas due to foot traffic/ventilation systems (e.g., elevator buttons, mail, corners of hallways, baseboards, light switches, doorknobs). Based on site characteristics, sampling resource availability, or laboratory capacity, the sampling plan may be judgmental, probabilistic, or a combination thereof.Before obtaining samples:1) coordinate with investigative units (EPA-CID and FBI) to ensure site access considerations and applicable sample chain-of- custody is maintained between the groups,2) consider that the local public health department may have jurisdiction and local public health labs may already be involved and have contacted the CDC\u0000¶\u0000VLaboratory Response Network (LRN), and3) contact EPA/HQ- EOC (202-564-3850) for Environmental Response Laboratory Network (ERLN) laboratories able to analyze the site-specific types of samples. Clearly identify and discuss with the laboratory its acceptance criteria since most labs cannot analyze all types of media nor can dispose of some types of left-over samples.Procedures, supplies, and tools for sampling, packaging, and shipping environmental media: Environmental interferences are more rigorously studied for some media than for others, and such interferences may require application of an appropriate sample preparation technique. Appropriate sample preparation techniques for many anticipated types of field samples have not been developed, so application of existing preparation techniques should be performed \u0000W\u0000K\u0000R\u0000X\u0000J\u0000K\u0000W\u0000I\u0000X\u0000O\u0000O\u0000\\\u0000\u0011\u0000\u0003\u00006\u0000R\u0000P\u0000H\u0000\u0003\u0000S\u0000U\u0000H\u0000S\u0000D\u0000U\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000W\u0000H\u0000F\u0000K\u0000Q\u0000L\u0000T\u0000X\u0000H\u0000V\u0000\u0003\u0000D\u0000U\u0000H\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003\u00006\u0000D\u0000P\u0000S\u0000O\u0000H\u0000\u0003\u0000,\u0000Q\u0000I\u0000R\u0000U\u0000P\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000&\u0000R\u0000O\u0000O\u0000H\u0000F\u0000W\u0000L\u0000R\u0000Q\u0000\u0003\u0000'\u0000R\u0000F\u0000X\u0000P\u0000H\u0000Q\u0000W\u0000V\u0000\u0003\u0000 https://www.epa.gov/esam/sample-collection- information-documents-scids). These provide general information regarding sampling procedures for different media, sampling supplies (e.g., swabs, sponge-sticks, filter cartridges/cassettes),sample size, container, holding time, preservation, packaging, and shipping,supporting collection of samples to be analyzed for the chemicals, radiochemicals,or biotoxins listed in SAM 2017. Other resources available since 2017 are listed at https://www.epa.gov/homeland-security-research (search by biotoxin name), including a widely available technique for ricin preparation compatible with numerous analytical techniques. Note that the receiving lab may have its own requirements(e.g., some may accept sponge- sticks but not swabs). For additional information and for other sample matrices, contact EPA/HQ-EOC at 202-564-3850.Field Detection(shorter time to results)Available technologies: The following table summarizes some available technologies from which responders may be able to obtain results within a comparatively short time frame. In historical incidents, this availability has been from:1) Civil Support Team (CST) mobile labs, and 2) local public health laboratories that \u0000P\u0000D\u0000\\\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000S\u0000D\u0000U\u0000W\u0000\u0003\u0000R\u0000I\u0000\u0003\u0000&\u0000'\u0000&\u0000¶\u0000V\u0000\u0003\u0000/\u00005\u00001\u0000\u000f\u0000\u0003\u0000L\u0000I\u0000\u0003\u0000W\u0000K\u0000H\u0000\\\u0000\u0003\u0000K\u0000D\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000H\u0000T\u0000X\u0000L\u0000S\u0000P\u0000H\u0000Q\u0000W\u0000\u0003\u0000S\u0000O\u0000D\u0000W\u0000I\u0000R\u0000U\u0000P\u0000V\u0000\u0011\u0000\u0003\u0000$\u0000V\u0000\u0003\u0000D\u0000\u0003\u0000W\u0000U\u0000D\u0000G\u0000H-off for availability, eitherof them may not have the capabilities to prepare certain types of samples for analysis. The site-specific types of samples should be discussed before relying on their capabilities. For \u0000W\u0000H\u0000F\u0000K\u0000Q\u0000R\u0000O\u0000R\u0000J\u0000L\u0000H\u0000V\u0000\u0003\u0000O\u0000L\u0000V\u0000W\u0000H\u0000G\u0000\u0003\u0000D\u0000V\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000O\u0000H\u0000\u0003\u0000L\u0000Q\u0000\u0003\u0000³\u0000O\u0000D\u0000E\u0000V,\u0000´\u0000\u0003\u0000D\u0000Y\u0000D\u0000L\u0000O\u0000D\u0000E\u0000L\u0000O\u0000L\u0000W\u0000\\\u0000\u0003\u0000P\u0000D\u0000\\\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000J\u0000H\u0000\u0003\u0000R\u0000Y\u0000H\u0000U\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000\u001e\u0000\u0003\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000F\u0000W\u0000\u0003\u0000(\u00003\u0000$\u0000\u0012\u0000+\u00004-EOC (202-564-3850) for current information.Note: Performance data are available for some of field tests and should be carefully reviewed to ensure accurate applicability to site-specific conditions to avoid misinterpretation of results. Many of these tests have been verified under laboratory conditi ons, and applicability to field use cannot be assumed. Performance criteria are listed when provided in the original source documents; however, when implemented by a CST through a DOD functionknown as Defense Biological Product Assurance Office, performan ce criteria are not publicly available (NPA). Detection limits may not be directly comparable since they are based on type of sample, and hence are constrained by the ability of the sample preparation technique to deliver a certain amount of ricin/abrin to the detector.PlatformAvailabilityLODPotential purposesWhere usedImmunoassay (ELISA) CSTNPASuggestive of presence/absence through immunological features, but it/they can also detect inactive ricin that will not cause health effects. Also, other substances share these immunological features, resulting in false positives.FieldCommercial(strip format, Tetracore)0.54 ng (ricin)1.5 ng (abrin)PCRCSTNPA (ricin only)Detection of ricin gene in the plant DNA, not ricin itself. Mobile or fixed labLabsUses 200 mg sampleLC/MS/MS (biomarkers)Labs(0.09 mg/L) ricinine(0.06 mg/L) abrine-Suggestive of presence/absence of ricin or abrin via these co-extracted biomarkers.-Quantitation of ricinine/abrine in water by isotope dilution. Mobile or fixed labImmunoassay (ECL) CSTNPA-Suggestive of presence/absence through immunological features, so subject to misidentification.-Quantitative (if calibrated).Mobile or fixed labLabs Fixed labImmunoassay(TRF)LabsNPAFixed labERLN10 pg (ricin)- Suggestive of presence/absence through immunological features, so subject to misidentification.-Quantitative (if calibrated).Fixed lab only in N. CaliforniaLaboratory Analysis (longer time to results)Note: Many labs will not be able to perform analysis on all environmental matrices, so it is vital to consult with the laboratory to understand their capabilities before sending samples. Laboratory capacity for analysis of environmental samples is very limited, and laboratory methods are described in SAM 2017 (https://www.epa.gov/homeland-security-research/sam), which offers a variety of methods for various analytical goals, ranging from presence/absence of an immunological indicator to the ability of a sample to affect an organism (i.e., biological activity).Analytical goals:Analytical goals may change as the response progresses, and laboratory analysis can follow a tiered approach, or algorithm, when implementing different analytical methods, particularly when needed to address a large number of samples. For example, some methods are generally more rapid than more definitive, and might be used during the initial stages of responseto ev aluate the extent of contamination. Such methods also might be used to identify samples that should be analyzed using the more extensive methods. These more extensive methods should be considered for use when: 1) earlier analysis indicates the presence of the biotoxin, 2) a smaller subset of samples requires analysis, or 3) as required for a tiered approach to decontamination/cleanup. Depending on the goals of the decontamination/cleanupphase, biological activity methods may be needed because biotoxins are sometimes detectable but inactive; therefore, these assays may also provide information about potential impact on human safety.Laboratory availability:Some ERLN laboratories (https://www2.epa.gov/emergency-response/environmental-response-laboratory-network ; EPA/HQ-EOC at 202-564-3850) may be specially trained and equipped for the analysis of ricin/abrin using uniform, compatible sample prep and analytical me\u0000W\u0000K\u0000R\u0000G\u0000V\u0000\u0003\u0000I\u0000U\u0000R\u0000P\u0000\u0003\u0000(\u00003\u0000$\u0000¶\u0000V\u0000\u0003Environmental Sampling and Analytical Methods (ESAM) Programs ( https://www.epa.gov/esam). The ESAM does not include additional laboratory capacity and methods which may be available through the CDC\u0000¶sLRN, which might be reached through the public health department responsible for a specific site. It should be noted that not all LRN laboratories have the same instrumentation and reagents on hand to provide timely support. Further, LRN methods are desi gned for clinical samples, so may not be compatible with environmental samples without suitable sample preparation, which maybe unknown.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 46,
+        "repeatedHeaderFooterBlockCount": 6,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 4,
+      "humanPageNumber": 5,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "May",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "2020 (replaced previous Ricin QRG",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "dated 2013)Page 5of 6",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Biotoxins: Ricin, Abrin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "\u0000²",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "[May2020",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Environmental Decontamination/CleanupCAUTION: Spraying decontamination solutions may re-aerosolize biotoxins. For decontaminationinformation, contactEPA/HQ-EOC at 202-564-3850.WARNING: DO NOT BEGIN DECONTAMINATION ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED(see WASTE MANAGEMENT section below).Decontamination/Cleanup Planning:A site-",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "\u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003\u00005",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "esponders should develop a plan that considers: 1) nature of contamination including physical propertiesandhow it entered the facility, etc.; 2) extent of contamination, including the amount and possible pathways that have or could have spread the bio",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "toxin;and3) decontamination of items for re-useand/or disposal.General Considerations: Anevaluation should be undertaken that considers: public safety, total cost, impact on the facility, wastes generated, as well as the ",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "time the facility or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. It is advisable to isolate the contaminated area.",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "Large volumes of decontamination wastes may be generated that will need to be collected, treated,and properly disposedof.Disposal Option:The urgency to restore a facility as quickly as possible may result in the o",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "utright and timely removal and disposal of contaminated materials. Certain materials may be resistant to decontamination techniques or it may be cheaper to discard and replace than to decontaminate and restore.In general, for porous materials that are non-",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "essential (e.g., carpet, upholstered furniture), it is recommended to remove and dispose ofthese items as waste.Monitored Natural Attenuation:Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural atte",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "nuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered in the decontamination cleanup planning. This option is more passive than other options and is gene",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "rally non-destructive to materials. From Wood et al. 2018, there was minimal attenuation of crude ricin at 14 days, 20°C (68°F), and 40% relative humidity. However, attenuation may take weeks and depends on variables such as temperature, material,",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "and purity.Temporary Barrier Option:If the contaminated area is resistant to decontamination techniquesor is impractical to treat, a temporary barrier option may be desirable in which physical barriers (e.g.,plastic sheeting) are used to immobilize an",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "d prevent the agent contamination from contacting the environment or the public. Such options can also be a temporary solution until a final decontaminationand disposal strategy can be implemented.Decontamination Strategy:A decontamination strategycan ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "be developed by designating contaminated areas into severalbroad categories: 1)beans/seeds/mashes/powders,2\u0000\f\u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000V\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u00033) large volumetric spaces, 4) sensitive and irreplaceable items, and 5) contaminated aqueous ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "solutions(waste).Areas in each category may be treated using one or more decontamination techniques in a tiered approach to the overall site-specific decontamination strategy. Dealing with beans/seeds/mashes/powders",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "has been the first step in many historical ricin responses.Specific decontamination studies for abrinareunavailable; decontamination techniquesfor ricin are expected to be effective for abrin. Additionally, information from inactivation of other prote",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "in toxins (e.g.,botulinum toxin) may be useful when considering decontaminationoptions.It may be necessary to verify the effectivenessof a selected decontaminant for a particular biotoxinunder site-specific conditions.CAUTION:The decontamination str",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "ategies presented below for each of the five broad categories may need to be adjusted to ensure decontamination under site-specific conditions.Ricin and abrin preparations can vary greatly on their ricin/abrin content depending on their degree of purifica",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "tion, ranging from \u0000³\u0000F\u0000U\u0000X\u0000G\u0000H\u0000´\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000³\u0000U\u0000H\u0000I\u0000L\u0000Q\u0000H\u0000G\u0000´\u0000\u0003and purity can profoundly affect the decontamination strategy.However, all ricin and abrin preparationsshould be considered to pose a ",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "health hazard unless such hazard is ruled out, including the presence of additional aerosol hazards co-present such as allergenic proteins.Beans/Seeds/Mashes/Powders:For removal of ricin/abrin beans/seeds/mashes/powders orother forms containing solids,",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "such material may be transferred carefully into containers, with care being taken that dust is not dispersed into the air.Surfaces:A strategy for visible materialis to gently cover any contaminated areas with towel(s)or wipes ",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "(overlapping each other if necessary) andapplyingdecontamination solution (see three options listed below)starting at the perimeter andwettingtowards the center of the contaminated area. Ensure sufficient contact time (e.g., at least 30 minutes)",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "is provided andensure each\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000N\u0000H\u0000S\u0000W\u0000\u0003\u0000³\u0000V\u0000R\u0000S\u0000S\u0000L\u0000Q\u0000J\u0000´\u0000\u0003\u0000Z\u0000H\u0000W\u0000\u0003\u0000G\u0000X\u0000U\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000\u0011\u0000\u0003\u00005\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u000b\u0000V\u0000\f\u0000\u0003\u0000W\u0000K\u0000H\u0000Q\u0000\u0003\u0000Z\u0000L\u0000S\u0000H\u0000\u0003\u0000X\u0000S\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000U\u0000H\u0000V\u0000L\u0000G\u0000X\u0000D\u0000O\u0000\u0003dampness/drops of decontamination ",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "solution untilthesurface isdry. Reapply decontaminationsolution to the bare surface andwipe up again with more towel(s) then let surface air dry. All contaminated decontaminationmaterials (e.g., towels,wipes) used inthedecontamination process ",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "should be labeled andproperly discardedfollowing designation from the waste management specialist.1)Liquid hypochlorite bleach solutions (1:10 dilution ratio), at a variety of pH levels, have been used in several ricin responses. However, these bleach-",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "based decontaminants may be corrosive and leave stains and residue on surfaces. They are likely tobe effective based on the oxidation of the ricin/abrin ",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "proteins by hypochlorite. While there are limited scientific laboratory studies that show efficacies on selected surfaces, field conditions are expected to impact the effectiveness of the decontaminan",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "t (e.g., organic substances that compete with the ricin for hypochlorite, perhaps leading to pre-cleaning (see CAUTION statement below). The liquid hypochlorite bleach product will be most efficient: a) at higher temperatures (i.e., >21°C (> 70°F)), b) whe",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "n plain household chlorine bleach is used to make the diluted mixture (1:10 ratio), c) when presence of other surface contaminants is minimal, and d) when surfaces remain wet with the bleach solution for at least 30 minutes. Bleach solutions can be deploye",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "d as a low-pressure spray (<30 psi) to minimize aerosolization of ricin/abrin particles. Note: Any bleach does degrade with age \u0000±check the expiration date. For hard surfaces including floors (with attentionto base boards and molding), walls, and horizont",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "al surfaces of furniture and equipment, a minimum 30-minute contact time is recommended. Smaller items should be removed and treated with decontamination solution. Soft porous surfaces can be treated with decontamination solutions and then removed (e.g., c",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "arpeting cut up and double bagged) as waste.2)Peracetic acid (3000 ppm) with a minimum contact time of 30 minutes is another decontaminant option for inactivation of ricin on surfaces(Tolleson, 2012).3)",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "Another option is to carefully wipe down exposed surfaces with bleach-or peracetic acid-based wipes.It is recommended to mix and usedecontaminationsolutions on the same day.Large Volumetric Spaces: ",
+          "role": "BODY"
+        },
+        {
+          "order": 41,
+          "operator": "TJ",
+          "text": "This category is for spaces typically larger in size but with lower levels of biotoxin contamination. Examples include residues from prior decontamination activities and difficult to access areas infiltrated by aerosols. Operational conditions ",
+          "role": "BODY"
+        },
+        {
+          "order": 42,
+          "operator": "TJ",
+          "text": "listed below may be effective but should be verified for site-specific conditions:1)Chlorine dioxide vapor at 500 ppm with a dwell time of at least 20 minutes, 80% relative humidity, and temperature of 25°C (77°F) has been shown to ",
+          "role": "BODY"
+        },
+        {
+          "order": 43,
+          "operator": "TJ",
+          "text": "effectively inactivate ricin on various building materials;2)Hydrogen peroxide vapor has been shown to be effective ininactivating ricin on some materials, using a concentration of 400 ppm and contact time of 8-16 hours; or3)",
+          "role": "BODY"
+        },
+        {
+          "order": 44,
+          "operator": "TJ",
+          "text": "Hot air at 40°C (104°F) for 5 days or 50°C (122°F) for 2-3 days has been shown to be effective in inactivating pure ricin on steel. Crude ricin was attenuated on steel at 50°C (122°F) for 7 days.",
+          "role": "BODY"
+        }
+      ],
+      "text": "May dated 2013)Page 5of 6 \u0000² [May2020 Environmental Decontamination/CleanupCAUTION: Spraying decontamination solutions may re-aerosolize biotoxins. For decontaminationinformation, contactEPA/HQ-EOC at 202-564-3850.WARNING: DO NOT BEGIN DECONTAMINATION WORK UNTIL A COMPREHENSIVE WASTE MANAGEMENT PLAN HAS BEEN DEVELOPED(see WASTE MANAGEMENT section below).Decontamination/Cleanup Planning:A site- \u0000V\u0000S\u0000H\u0000F\u0000L\u0000¿\u0000F\u0000\u0003\u0000G\u0000H\u0000F\u0000R\u0000Q\u0000W\u0000D\u0000P\u0000L\u0000Q\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000\u0012\u0000F\u0000O\u0000H\u0000D\u0000Q\u0000X\u0000S\u0000\u0003\u0000S\u0000O\u0000D\u0000Q\u0000\u0003\u0000V\u0000K\u0000R\u0000X\u0000O\u0000G\u0000\u0003\u0000E\u0000H\u0000\u0003\u0000G\u0000H\u0000Y\u0000H\u0000O\u0000R\u0000S\u0000H\u0000G\u0000\u0003\u0000D\u0000Q\u0000G\u0000\u0003\u0000D\u0000S\u0000S\u0000U\u0000R\u0000Y\u0000H\u0000G\u0000\u0003\u0000E\u0000\\\u0000\u0003\u0000D\u0000O\u0000O\u0000\u0003\u0000Q\u0000H\u0000F\u0000H\u0000V\u0000V\u0000D\u0000U\u0000\\\u0000\u0003\u0000R\u0000U\u0000J\u0000D\u0000Q\u0000L\u0000]\u0000D\u0000W\u0000L\u0000R\u0000Q\u0000V\u0000\u0012\u00006\u00000\u0000(\u0000V\u0000\u0003\u0000Y\u0000L\u0000D\u0000\u0003\u0000,\u0000&\u00006\u0000\u0003\u0000F\u0000K\u0000D\u0000Q\u0000Q\u0000H\u0000O\u0000V\u0000\u0011\u0000\u0003\u00005 esponders should develop a plan that considers: 1) nature of contamination including physical propertiesandhow it entered the facility, etc.; 2) extent of contamination, including the amount and possible pathways that have or could have spread the bio toxin;and3) decontamination of items for re-useand/or disposal.General Considerations: Anevaluation should be undertaken that considers: public safety, total cost, impact on the facility, wastes generated, as well as the time the facility or item will be out of service and any socio-economic, psychological, and/or security impacts that may result. It is advisable to isolate the contaminated area. Large volumes of decontamination wastes may be generated that will need to be collected, treated,and properly disposedof.Disposal Option:The urgency to restore a facility as quickly as possible may result in the o utright and timely removal and disposal of contaminated materials. Certain materials may be resistant to decontamination techniques or it may be cheaper to discard and replace than to decontaminate and restore.In general, for porous materials that are non- essential (e.g., carpet, upholstered furniture), it is recommended to remove and dispose ofthese items as waste.Monitored Natural Attenuation:Environmental monitoring must be maintained during decontamination and recovery phases. Monitored natural atte nuation may require institutional controls (e.g., access restriction and contaminant containment measures). The time to achieve clearance must be considered in the decontamination cleanup planning. This option is more passive than other options and is gene rally non-destructive to materials. From Wood et al. 2018, there was minimal attenuation of crude ricin at 14 days, 20°C (68°F), and 40% relative humidity. However, attenuation may take weeks and depends on variables such as temperature, material, and purity.Temporary Barrier Option:If the contaminated area is resistant to decontamination techniquesor is impractical to treat, a temporary barrier option may be desirable in which physical barriers (e.g.,plastic sheeting) are used to immobilize an d prevent the agent contamination from contacting the environment or the public. Such options can also be a temporary solution until a final decontaminationand disposal strategy can be implemented.Decontamination Strategy:A decontamination strategycan be developed by designating contaminated areas into severalbroad categories: 1)beans/seeds/mashes/powders,2\u0000 \u0000\u0003\u0000V\u0000X\u0000U\u0000I\u0000D\u0000F\u0000H\u0000V\u0000\u0003\u0000R\u0000U\u0000\u0003\u0000³\u0000K\u0000R\u0000W\u0000V\u0000S\u0000R\u0000W\u0000V\u0000\u000f\u0000´\u0000\u00033) large volumetric spaces, 4) sensitive and irreplaceable items, and 5) contaminated aqueous solutions(waste).Areas in each category may be treated using one or more decontamination techniques in a tiered approach to the overall site-specific decontamination strategy. Dealing with beans/seeds/mashes/powders has been the first step in many historical ricin responses.Specific decontamination studies for abrinareunavailable; decontamination techniquesfor ricin are expected to be effective for abrin. Additionally, information from inactivation of other prote in toxins (e.g.,botulinum toxin) may be useful when considering decontaminationoptions.It may be necessary to verify the effectivenessof a selected decontaminant for a particular biotoxinunder site-specific conditions.CAUTION:The decontamination str ategies presented below for each of the five broad categories may need to be adjusted to ensure decontamination under site-specific conditions.Ricin and abrin preparations can vary greatly on their ricin/abrin content depending on their degree of purifica tion, ranging from \u0000³\u0000F\u0000U\u0000X\u0000G\u0000H\u0000´\u0000\u0003\u0000W\u0000R\u0000\u0003\u0000³\u0000U\u0000H\u0000I\u0000L\u0000Q\u0000H\u0000G\u0000´\u0000\u0003and purity can profoundly affect the decontamination strategy.However, all ricin and abrin preparationsshould be considered to pose a health hazard unless such hazard is ruled out, including the presence of additional aerosol hazards co-present such as allergenic proteins.Beans/Seeds/Mashes/Powders:For removal of ricin/abrin beans/seeds/mashes/powders orother forms containing solids, such material may be transferred carefully into containers, with care being taken that dust is not dispersed into the air.Surfaces:A strategy for visible materialis to gently cover any contaminated areas with towel(s)or wipes (overlapping each other if necessary) andapplyingdecontamination solution (see three options listed below)starting at the perimeter andwettingtowards the center of the contaminated area. Ensure sufficient contact time (e.g., at least 30 minutes) is provided andensure each\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000\u0003\u0000L\u0000V\u0000\u0003\u0000N\u0000H\u0000S\u0000W\u0000\u0003\u0000³\u0000V\u0000R\u0000S\u0000S\u0000L\u0000Q\u0000J\u0000´\u0000\u0003\u0000Z\u0000H\u0000W\u0000\u0003\u0000G\u0000X\u0000U\u0000L\u0000Q\u0000J\u0000\u0003\u0000W\u0000K\u0000L\u0000V\u0000\u0003\u0000W\u0000L\u0000P\u0000H\u0000\u0011\u0000\u0003\u00005\u0000H\u0000P\u0000R\u0000Y\u0000H\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000W\u0000R\u0000Z\u0000H\u0000O\u0000 \u0000V\u0000 \u0000\u0003\u0000W\u0000K\u0000H\u0000Q\u0000\u0003\u0000Z\u0000L\u0000S\u0000H\u0000\u0003\u0000X\u0000S\u0000\u0003\u0000W\u0000K\u0000H\u0000\u0003\u0000U\u0000H\u0000V\u0000L\u0000G\u0000X\u0000D\u0000O\u0000\u0003dampness/drops of decontamination solution untilthesurface isdry. Reapply decontaminationsolution to the bare surface andwipe up again with more towel(s) then let surface air dry. All contaminated decontaminationmaterials (e.g., towels,wipes) used inthedecontamination process should be labeled andproperly discardedfollowing designation from the waste management specialist.1)Liquid hypochlorite bleach solutions (1:10 dilution ratio), at a variety of pH levels, have been used in several ricin responses. However, these bleach- based decontaminants may be corrosive and leave stains and residue on surfaces. They are likely tobe effective based on the oxidation of the ricin/abrin proteins by hypochlorite. While there are limited scientific laboratory studies that show efficacies on selected surfaces, field conditions are expected to impact the effectiveness of the decontaminan t (e.g., organic substances that compete with the ricin for hypochlorite, perhaps leading to pre-cleaning (see CAUTION statement below). The liquid hypochlorite bleach product will be most efficient: a) at higher temperatures (i.e., >21°C (> 70°F)), b) whe n plain household chlorine bleach is used to make the diluted mixture (1:10 ratio), c) when presence of other surface contaminants is minimal, and d) when surfaces remain wet with the bleach solution for at least 30 minutes. Bleach solutions can be deploye d as a low-pressure spray (<30 psi) to minimize aerosolization of ricin/abrin particles. Note: Any bleach does degrade with age \u0000±check the expiration date. For hard surfaces including floors (with attentionto base boards and molding), walls, and horizont al surfaces of furniture and equipment, a minimum 30-minute contact time is recommended. Smaller items should be removed and treated with decontamination solution. Soft porous surfaces can be treated with decontamination solutions and then removed (e.g., c arpeting cut up and double bagged) as waste.2)Peracetic acid (3000 ppm) with a minimum contact time of 30 minutes is another decontaminant option for inactivation of ricin on surfaces(Tolleson, 2012).3) Another option is to carefully wipe down exposed surfaces with bleach-or peracetic acid-based wipes.It is recommended to mix and usedecontaminationsolutions on the same day.Large Volumetric Spaces: This category is for spaces typically larger in size but with lower levels of biotoxin contamination. Examples include residues from prior decontamination activities and difficult to access areas infiltrated by aerosols. Operational conditions listed below may be effective but should be verified for site-specific conditions:1)Chlorine dioxide vapor at 500 ppm with a dwell time of at least 20 minutes, 80% relative humidity, and temperature of 25°C (77°F) has been shown to effectively inactivate ricin on various building materials;2)Hydrogen peroxide vapor has been shown to be effective ininactivating ricin on some materials, using a concentration of 400 ppm and contact time of 8-16 hours; or3) Hot air at 40°C (104°F) for 5 days or 50°C (122°F) for 2-3 days has been shown to be effective in inactivating pure ricin on steel. Crude ricin was attenuated on steel at 50°C (122°F) for 7 days.",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 45,
+        "repeatedHeaderFooterBlockCount": 6,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units.",
+          "Technical notation appears alongside suspicious encoding; do not auto-correct safety values."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    },
+    {
+      "pdfPageIndex": 5,
+      "humanPageNumber": 6,
+      "parser": "PDF_STRUCTURE",
+      "extractionMethod": "EMBEDDED_TEXT",
+      "textBlocks": [
+        {
+          "order": 0,
+          "operator": "TJ",
+          "text": "May",
+          "role": "BODY"
+        },
+        {
+          "order": 1,
+          "operator": "TJ",
+          "text": "2020 (replaced previous Ricin QRG",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 2,
+          "operator": "TJ",
+          "text": "dated 2013)Page 6of 6",
+          "role": "BODY"
+        },
+        {
+          "order": 3,
+          "operator": "TJ",
+          "text": "NRT Quick Reference Guide: Biotoxins: Ricin, Abrin",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 4,
+          "operator": "TJ",
+          "text": "\u0000²",
+          "role": "BODY"
+        },
+        {
+          "order": 5,
+          "operator": "TJ",
+          "text": "Continued",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 6,
+          "operator": "TJ",
+          "text": "[May2020",
+          "role": "BODY"
+        },
+        {
+          "order": 7,
+          "operator": "TJ",
+          "text": "QRGs are intended for Federal OSC/RPMs",
+          "role": "REPEATED_HEADER_FOOTER"
+        },
+        {
+          "order": 8,
+          "operator": "TJ",
+          "text": "Environmental Decontamination/Cleanup(continued)Sensitive and Irreplaceable Items:Certain items, usually those which are sensitive or valued for a variety of reasons (e.g., mission criticality, personal or ",
+          "role": "BODY"
+        },
+        {
+          "order": 9,
+          "operator": "TJ",
+          "text": "societal significance, rarity, and cost) may need to be decontaminated and not disposed of. Some of these items, however, will be devalued or rendered unusable ",
+          "role": "BODY"
+        },
+        {
+          "order": 10,
+          "operator": "TJ",
+          "text": "if they are chemically or physically incompatible with the decontaminants. For sensitive and irreplaceable items that are compatible with water, consider flushing with soap and water, keeping in mind that the aqueous solution o",
+          "role": "BODY"
+        },
+        {
+          "order": 11,
+          "operator": "TJ",
+          "text": "f the rinsate may require further treatment. Mechanical removal of contamination through use of high-efficiency particulate air (HEPA) vacuuming may also be considered; however, HEPA vacuums may aerosolize contamination. Otheroptions include techniques de",
+          "role": "BODY"
+        },
+        {
+          "order": 12,
+          "operator": "TJ",
+          "text": "scribed above for volumetric spaces, scaled to the size of the equipment or item(s). In particular, hot air may prove effective, and higher temperatures may be achievable for small items, if not destroyed by the heat.",
+          "role": "BODY"
+        },
+        {
+          "order": 13,
+          "operator": "TJ",
+          "text": "While influenced by the nature of the item, the degree of ricin/abrin purification (impure or crude forms may take longer), and other site-specific conditions, data for ricin suggest ricin/abrin inactivation might occur in ~4 minutes at (100°C (212°F)/boil",
+          "role": "BODY"
+        },
+        {
+          "order": 14,
+          "operator": "TJ",
+          "text": "ing) and ~10 minutes at 80°C (176°F), with much longer times at lower temperatures, e.g., >1 hour at 60°C (140°F). These times start only oncethe item reaches the respective temperature.Contaminated Aqueous Solutions (Waste): Hypochlorite bleach should b",
+          "role": "BODY"
+        },
+        {
+          "order": 15,
+          "operator": "TJ",
+          "text": "e added to contaminated aqueous solutions to reach and maintain a concentration of 100 mg/L for a 30-minute contract time (Burroughs and Renner, 1999).CAUTION: Decontaminant solutions or fumigants may have unique safety/PPE requirements due to their own t",
+          "role": "BODY"
+        },
+        {
+          "order": 16,
+          "operator": "TJ",
+          "text": "oxicity or that of breakdown products during use (e.g., use of bleach results in chlorine vapors, while fumigants may be used at concentrations above their IDLH levels).Dirt, grime, and other coatings can reduce the effectiveness of decontamination; pre-c",
+          "role": "BODY"
+        },
+        {
+          "order": 17,
+          "operator": "TJ",
+          "text": "leaning surfaces with soap and water may be needed before the application of decontamination solutions but the resulting pre-cleaning rinsates may contain and spread contaminants. Decontamination solutions should be deployed as a low-pressurespray",
+          "role": "BODY"
+        },
+        {
+          "order": 18,
+          "operator": "TJ",
+          "text": "(<30 psi) whenever possible to avoid potential aerosolization of ricin/abrin.Verification of Decontamination: Site and situation specific. Consider that the local public health department may have jurisdiction. Contact EPA/HQ-EOC at 202-564-3850for furt",
+          "role": "BODY"
+        },
+        {
+          "order": 19,
+          "operator": "TJ",
+          "text": "her information.Waste ManagementTransportation:Federal requirements for transporting hazardous materials and procedures for exemptions are specified in www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. ",
+          "role": "BODY"
+        },
+        {
+          "order": 20,
+          "operator": "TJ",
+          "text": "Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat. Detailed state regulations can be found at www.envcap.org/.Waste Management: ",
+          "role": "BODY"
+        },
+        {
+          "order": 21,
+          "operator": "TJ",
+          "text": "WARNING: DEVELOP A COMPREHENSIVE WASTE MANAGEMENT PLAN PRIOR TO ANY SITE ASSESSMENT OR CLEANUP WORK. Waste generated from site assessment and cleanup activities should be incinerated, autoclaved, or chemically decontaminated (see ENVIRONMENTAL ",
+          "role": "BODY"
+        },
+        {
+          "order": 22,
+          "operator": "TJ",
+          "text": "DECONTAMINATION/CLEANUP section above) to ensure biotoxins are inactivated. Verification of decontamination may include multiple lines of evidence and/or environmental sampling based on consultation with public health officials. Contact EPA/HQ-EOC at 202-",
+          "role": "BODY"
+        },
+        {
+          "order": 23,
+          "operator": "TJ",
+          "text": "564-3850 for further assistance.Liquid waste or complex aqueous matrices, such as potentially contaminated wastewater or decontamination effluents, may have significant oxidant demand, requiring additional chemical inactiva",
+          "role": "BODY"
+        },
+        {
+          "order": 24,
+          "operator": "TJ",
+          "text": "tion. Disposal of aqueous waste, even if chemically treated, via discharge to sanitary sewer may require consultation with and/or authorization (e.g., permit) from respective authorities. Do not assume that biotoxin-",
+          "role": "BODY"
+        },
+        {
+          "order": 25,
+          "operator": "TJ",
+          "text": "contaminated wastewater will be accepted by local wastewater facilities; even if pre-treated, it may be difficult to dispose of resulting sludge using conventional land application techniques and resulting sludges may require ",
+          "role": "BODY"
+        },
+        {
+          "order": 26,
+          "operator": "TJ",
+          "text": "incineration or some other treatment.Solid waste disposal for biotoxin-contaminated wastes generated from decontamination activities will be problematic. On-site treatment (again, refer to ENVIRONMENTAL DECONTAMINATION/CLEANUP section above",
+          "role": "BODY"
+        },
+        {
+          "order": 27,
+          "operator": "TJ",
+          "text": "for chemical and thermal treatment technique options) prior to transport for off-site disposal may ease the requirements for special transportation permits. Other waste treatment options may include the use of autoclaves or soaking of material in ",
+          "role": "BODY"
+        },
+        {
+          "order": 28,
+          "operator": "TJ",
+          "text": "a 4% lime (calcium hydroxide) solution. From a study investigating inactivation of ricin in castor cake (Anandan et al., 2005), autoclaves were effective at 15 psi for 1 hour, and a 4% lime solution was effective with a contact time of 8 h",
+          "role": "BODY"
+        },
+        {
+          "order": 29,
+          "operator": "TJ",
+          "text": "ours. Porous materials also present challenges to waste treatment processes, as they may not be easily penetrated by heat, steam, or inactivating chemicals. Direct immersion of waste into containers of liquid decontaminants (e.g., diluted bleach)may help ",
+          "role": "BODY"
+        },
+        {
+          "order": 30,
+          "operator": "TJ",
+          "text": "to overcome material porosity issues, as long as all surfaces of the waste materials are in contact with the liquid treatment; however, many porous materials are buoyant and maintaining immersion may be challenging. Use of transportable waste treatment tec",
+          "role": "BODY"
+        },
+        {
+          "order": 31,
+          "operator": "TJ",
+          "text": "hnologies (e.g.,incinerators) may be considered for on-site treatment and waste volume minimization.Landfills willing to take potentially biotoxin-contaminated solid wastes may be limited due to state requirements, even when waste has been treated on-sit",
+          "role": "BODY"
+        },
+        {
+          "order": 32,
+          "operator": "TJ",
+          "text": "e. Even with permission from state regulators, individual facilities may refuse to accept these materials due to public perception or liability issues. It may be expensive or impractical to dispose of biotoxin-contaminated wastes through incineration due t",
+          "role": "BODY"
+        },
+        {
+          "order": 33,
+          "operator": "TJ",
+          "text": "o a limited number of hazardous waste incinerators nationally, and depending on the size of contaminated items, feeding into some incinerators may not be possible without performing size reduction on the items, which presents a potential for reaerosolizati",
+          "role": "BODY"
+        },
+        {
+          "order": 34,
+          "operator": "TJ",
+          "text": "on of contaminants.Although testing may be desired to satisfy waste acceptance criteria specified by state regulators and/or treatment/disposal facility, there are very limited options for measuring biotoxin levels in common waste matrices, and other appr",
+          "role": "BODY"
+        },
+        {
+          "order": 35,
+          "operator": "TJ",
+          "text": "oaches (e.g., proof of compliance with minimum operating conditions of on-site treatment equipment) could be used to specify waste acceptance criteria. All waste disposal options along with their applicablewaste acceptance criteria should be investigated ",
+          "role": "BODY"
+        },
+        {
+          "order": 36,
+          "operator": "TJ",
+          "text": "as early into the response process as possible.Transportation of the biotoxin-contaminated wastes from the site to a landfill or incinerator may present challenges as well. First, agreements must be reached between the waste sender and acceptor BEFORE tra",
+          "role": "BODY"
+        },
+        {
+          "order": 37,
+          "operator": "TJ",
+          "text": "nsport, followed by timely public notification of the transport and disposal phases. Transportation of hazardous waste may cross several states and localities, which may have requirements that exceed Federal regulations. States may prohibit transport of so",
+          "role": "BODY"
+        },
+        {
+          "order": 38,
+          "operator": "TJ",
+          "text": "me waste streams across their state lines, potentially impacting transportation routes.EPA has developed an online tool to help communities and facilities develop pre-incident waste management plans. This tool can be found at http://wasteplan.epa.gov.",
+          "role": "BODY"
+        },
+        {
+          "order": 39,
+          "operator": "TJ",
+          "text": "EPA has developed I-WASTE, a web-based tool that contains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices,packaging guidance, and guidance to minimize the potential ",
+          "role": "BODY"
+        },
+        {
+          "order": 40,
+          "operator": "TJ",
+          "text": "for contaminating the treatment or disposal facility. Access to this decision support tool requires pre-registration (http://www2.ergweb.com/bdrtool/login.asp).",
+          "role": "BODY"
+        }
+      ],
+      "text": "May dated 2013)Page 6of 6 \u0000² [May2020 Environmental Decontamination/Cleanup(continued)Sensitive and Irreplaceable Items:Certain items, usually those which are sensitive or valued for a variety of reasons (e.g., mission criticality, personal or societal significance, rarity, and cost) may need to be decontaminated and not disposed of. Some of these items, however, will be devalued or rendered unusable if they are chemically or physically incompatible with the decontaminants. For sensitive and irreplaceable items that are compatible with water, consider flushing with soap and water, keeping in mind that the aqueous solution o f the rinsate may require further treatment. Mechanical removal of contamination through use of high-efficiency particulate air (HEPA) vacuuming may also be considered; however, HEPA vacuums may aerosolize contamination. Otheroptions include techniques de scribed above for volumetric spaces, scaled to the size of the equipment or item(s). In particular, hot air may prove effective, and higher temperatures may be achievable for small items, if not destroyed by the heat. While influenced by the nature of the item, the degree of ricin/abrin purification (impure or crude forms may take longer), and other site-specific conditions, data for ricin suggest ricin/abrin inactivation might occur in ~4 minutes at (100°C (212°F)/boil ing) and ~10 minutes at 80°C (176°F), with much longer times at lower temperatures, e.g., >1 hour at 60°C (140°F). These times start only oncethe item reaches the respective temperature.Contaminated Aqueous Solutions (Waste): Hypochlorite bleach should b e added to contaminated aqueous solutions to reach and maintain a concentration of 100 mg/L for a 30-minute contract time (Burroughs and Renner, 1999).CAUTION: Decontaminant solutions or fumigants may have unique safety/PPE requirements due to their own t oxicity or that of breakdown products during use (e.g., use of bleach results in chlorine vapors, while fumigants may be used at concentrations above their IDLH levels).Dirt, grime, and other coatings can reduce the effectiveness of decontamination; pre-c leaning surfaces with soap and water may be needed before the application of decontamination solutions but the resulting pre-cleaning rinsates may contain and spread contaminants. Decontamination solutions should be deployed as a low-pressurespray (<30 psi) whenever possible to avoid potential aerosolization of ricin/abrin.Verification of Decontamination: Site and situation specific. Consider that the local public health department may have jurisdiction. Contact EPA/HQ-EOC at 202-564-3850for furt her information.Waste ManagementTransportation:Federal requirements for transporting hazardous materials and procedures for exemptions are specified in www.fmcsa.dot.gov/safety-security/hazmat/complyhmregs.htm#hmp. Current resources on packaging, labeling and shipping are available at www.phmsa.dot.gov/hazmat. Detailed state regulations can be found at www.envcap.org/.Waste Management: WARNING: DEVELOP A COMPREHENSIVE WASTE MANAGEMENT PLAN PRIOR TO ANY SITE ASSESSMENT OR CLEANUP WORK. Waste generated from site assessment and cleanup activities should be incinerated, autoclaved, or chemically decontaminated (see ENVIRONMENTAL DECONTAMINATION/CLEANUP section above) to ensure biotoxins are inactivated. Verification of decontamination may include multiple lines of evidence and/or environmental sampling based on consultation with public health officials. Contact EPA/HQ-EOC at 202- 564-3850 for further assistance.Liquid waste or complex aqueous matrices, such as potentially contaminated wastewater or decontamination effluents, may have significant oxidant demand, requiring additional chemical inactiva tion. Disposal of aqueous waste, even if chemically treated, via discharge to sanitary sewer may require consultation with and/or authorization (e.g., permit) from respective authorities. Do not assume that biotoxin- contaminated wastewater will be accepted by local wastewater facilities; even if pre-treated, it may be difficult to dispose of resulting sludge using conventional land application techniques and resulting sludges may require incineration or some other treatment.Solid waste disposal for biotoxin-contaminated wastes generated from decontamination activities will be problematic. On-site treatment (again, refer to ENVIRONMENTAL DECONTAMINATION/CLEANUP section above for chemical and thermal treatment technique options) prior to transport for off-site disposal may ease the requirements for special transportation permits. Other waste treatment options may include the use of autoclaves or soaking of material in a 4% lime (calcium hydroxide) solution. From a study investigating inactivation of ricin in castor cake (Anandan et al., 2005), autoclaves were effective at 15 psi for 1 hour, and a 4% lime solution was effective with a contact time of 8 h ours. Porous materials also present challenges to waste treatment processes, as they may not be easily penetrated by heat, steam, or inactivating chemicals. Direct immersion of waste into containers of liquid decontaminants (e.g., diluted bleach)may help to overcome material porosity issues, as long as all surfaces of the waste materials are in contact with the liquid treatment; however, many porous materials are buoyant and maintaining immersion may be challenging. Use of transportable waste treatment tec hnologies (e.g.,incinerators) may be considered for on-site treatment and waste volume minimization.Landfills willing to take potentially biotoxin-contaminated solid wastes may be limited due to state requirements, even when waste has been treated on-sit e. Even with permission from state regulators, individual facilities may refuse to accept these materials due to public perception or liability issues. It may be expensive or impractical to dispose of biotoxin-contaminated wastes through incineration due t o a limited number of hazardous waste incinerators nationally, and depending on the size of contaminated items, feeding into some incinerators may not be possible without performing size reduction on the items, which presents a potential for reaerosolizati on of contaminants.Although testing may be desired to satisfy waste acceptance criteria specified by state regulators and/or treatment/disposal facility, there are very limited options for measuring biotoxin levels in common waste matrices, and other appr oaches (e.g., proof of compliance with minimum operating conditions of on-site treatment equipment) could be used to specify waste acceptance criteria. All waste disposal options along with their applicablewaste acceptance criteria should be investigated as early into the response process as possible.Transportation of the biotoxin-contaminated wastes from the site to a landfill or incinerator may present challenges as well. First, agreements must be reached between the waste sender and acceptor BEFORE tra nsport, followed by timely public notification of the transport and disposal phases. Transportation of hazardous waste may cross several states and localities, which may have requirements that exceed Federal regulations. States may prohibit transport of so me waste streams across their state lines, potentially impacting transportation routes.EPA has developed an online tool to help communities and facilities develop pre-incident waste management plans. This tool can be found at http://wasteplan.epa.gov. EPA has developed I-WASTE, a web-based tool that contains links to waste transportation guidance, treatment and disposal facilities, state regulatory offices,packaging guidance, and guidance to minimize the potential for contaminating the treatment or disposal facility. Access to this decision support tool requires pre-registration (http://www2.ergweb.com/bdrtool/login.asp).",
+      "quality": {
+        "nonWhitespaceTextBlockCount": 41,
+        "repeatedHeaderFooterBlockCount": 6,
+        "suspiciousTokens": [
+          "Control character present in extracted text; review notation and units."
+        ],
+        "warnings": [
+          "Review suspicious extracted tokens before fact admission."
+        ]
+      }
+    }
+  ]
+}

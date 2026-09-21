@@ -1,0 +1,11 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "fema-biological-kpf",
+  "sourceArtifactSha256": "0275b53380460dfb8e23b69ebb0368e5fa933281f22246e71aa74406ba8efb20",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "I_FORM_XFA_PDF",
+  "pageCount": 0,
+  "pages": []
+}

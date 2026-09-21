@@ -1,0 +1,11 @@
+{
+  "generatedFile": true,
+  "generatedBy": "scripts/cbrne/build-extraction-manifest.ts",
+  "parserVersion": "5",
+  "sourceArtifactId": "remm-triagetoolscombined",
+  "sourceArtifactSha256": "620d293b9e12fc99fe090b812fbaf7f7e1c6142d96e0c414c9d4c67449f3b400",
+  "parser": "PDF_STRUCTURE",
+  "failureCategory": "I_FORM_XFA_PDF",
+  "pageCount": 0,
+  "pages": []
+}
