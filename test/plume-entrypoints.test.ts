@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 const html = readFileSync(new URL('../server/public/index.html', import.meta.url), 'utf8');
 const script = readFileSync(new URL('../server/public/script.js', import.meta.url), 'utf8');
+const plumeStyles = readFileSync(new URL('../server/public/plume-overrides.css', import.meta.url), 'utf8');
 const program = parse(script, { ecmaVersion: 'latest' });
 
 function declaration(name: string) {
@@ -66,9 +67,40 @@ describe('canonical Plume Model entry points', () => {
     expect(workspace).toMatch(/<aside class="plume-v2-intelligence-column"/);
     expect(workspace.indexOf('class="plume-v2-input-column"')).toBeLessThan(workspace.indexOf('class="plume-v2-map-column"'));
     expect(workspace.indexOf('class="plume-v2-map-column"')).toBeLessThan(workspace.indexOf('class="plume-v2-intelligence-column"'));
+    const directColumns = (workspace.match(/<(?:aside|main) class="plume-v2-[^"]+"/g) || [])
+      .map((line) => line.match(/class="([^"]+)"/)?.[1]);
+    expect(directColumns).toEqual([
+      'plume-v2-input-column',
+      'plume-v2-map-column',
+      'plume-v2-intelligence-column',
+    ]);
     for (const id of ['plume-chemical-input', 'plume-release-type', 'plume-release-quantity', 'plume-release-duration', 'plume-weather-source', 'plume-wind-speed', 'plume-wind-direction', 'plume-temperature', 'plume-endpoint-duration', 'plume-map-address-input']) {
       expect((html.match(new RegExp(`id="${id}"`, 'g')) || [])).toHaveLength(1);
     }
+  });
+
+  it('locks the target shell, protected controls, and responder workflow order', () => {
+    const plumeHtml = html.slice(html.indexOf('<section id="plume"'), html.indexOf('<section id="map"'));
+    const protectedIds = [
+      'plume', 'plume-model-form',
+      'plume-chemical-input', 'plume-release-type', 'plume-release-quantity', 'plume-release-unit', 'plume-puff-duration', 'plume-release-duration', 'plume-release-height',
+      'plume-endpoint-duration', 'plume-erg-spill-size', 'plume-erg-period',
+      'plume-weather-source', 'plume-weather-source-name', 'plume-wind-speed', 'plume-wind-direction', 'plume-temperature', 'plume-stability-class', 'plume-surface-roughness', 'plume-manual-observation-time', 'plume-elevation', 'plume-columbia-csv',
+      'columbia-humidity', 'columbia-wind-gust', 'columbia-pressure',
+      'plume-container-type', 'container-model-source', 'container-capacity', 'container-release-phase', 'container-pressure-condition', 'container-fill-level', 'container-release-location', 'container-size-preset', 'container-size', 'container-size-unit', 'container-pressure-profile', 'container-pressure', 'container-pressure-unit', 'container-pressure-source',
+      'plume-map-address-input',
+    ];
+    for (const id of protectedIds) expect((html.match(new RegExp(`\\bid="${id}"`, 'g')) || [])).toHaveLength(1);
+    expect(plumeHtml.indexOf('Chemical Release')).toBeLessThan(plumeHtml.indexOf('Weather Conditions'));
+    expect(plumeHtml.indexOf('Weather Conditions')).toBeLessThan(plumeHtml.indexOf('Modeling Criteria'));
+    expect(plumeHtml.indexOf('Modeling Criteria')).toBeLessThan(plumeHtml.indexOf('plume-left-plot-button'));
+    expect(plumeHtml).toContain('class="plume-map-action-controls"');
+    expect(plumeHtml).toContain('Operational Guidance');
+    expect(plumeHtml).not.toContain('plume-protective-action-list');
+    expect(plumeStyles).toContain('grid-template-columns: minmax(280px, 23fr) minmax(0, 54fr) minmax(280px, 23fr);');
+    expect(plumeStyles).toContain('#plume.view.active #plume-gis-map,');
+    expect(script.match(/async function plotPlumeFromControls\(/g)).toHaveLength(1);
+    expect(script).not.toContain("['Evacuate:'");
   });
 });
 

@@ -27,7 +27,7 @@ describe("plume map views", () => {
 
   it("keeps viewport locking exclusive to Home and gives Plume a matching scrollable hero row", () => {
     expect(styles).toContain('body:has(#overview.view.active)');
-    expect(styles).toContain('#plume.view.active');
+    expect(plumeStyles).toContain('#plume.view.active');
     expect(styles).toContain('overflow-y: auto');
     expect(styles).toContain('.plume-page-header');
   });
@@ -80,7 +80,7 @@ describe("plume map views", () => {
   });
 
   it("builds the Plume Model as a large tactical map with floating intelligence", () => {
-    expect(tacticalMapStyles).toContain("grid-template-columns: minmax(285px, 23fr) minmax(620px, 54fr) minmax(285px, 23fr);");
+    expect(tacticalMapStyles).toContain("grid-template-columns: minmax(280px, 23fr) minmax(0, 54fr) minmax(280px, 23fr);");
     expect(tacticalMapStyles).toContain("#plume.view.active .plume-v2-workspace");
     expect(tacticalMapStyles).toContain("#plume.view.active .plume-v2-input-column");
     expect(tacticalMapStyles).toContain("#plume.view.active .plume-v2-map-controls");
@@ -330,8 +330,8 @@ describe("plume map views", () => {
     expect(plumeHtml).toContain('CAS / UN / ERG pending');
     expect(plumeHtml).not.toContain('hazmatiq-logo-command.png');
     expect(heroStyles).toContain('.variant-plume { background-image: url("assets/plume-model-hero-v2.png") !important; }');
-    expect(plumeStyles).toContain('grid-template-columns: minmax(285px, 23fr) minmax(620px, 54fr) minmax(285px, 23fr);');
-    expect(plumeStyles).toContain('min-height: 600px;');
+    expect(plumeStyles).toContain('grid-template-columns: minmax(280px, 23fr) minmax(0, 54fr) minmax(280px, 23fr);');
+    expect(plumeStyles).toContain('min-height: 620px;');
     expect(plumeHtml).not.toContain('<summary>Advanced Release Inputs</summary>');
     expect(plumeHtml.indexOf('id="plume-release-quantity"')).toBeLessThan(plumeHtml.indexOf('id="plume-release-height"'));
     expect(plumeHtml).toContain('Release height (ft) <b class="plume-optional-label">Optional</b>');
@@ -426,12 +426,13 @@ describe("plume map views", () => {
     expect(plumeUi).toContain('setPlumeMapResultVisible(true)');
   });
 
-  it("uses a compact full-width Model Inputs workspace", () => {
-    expect(styles).toContain("#plume.view.active {\n    grid-template-columns: minmax(0, 1fr);");
-    expect(styles).toContain("#plume .plume-model-section:first-child {\n    grid-column: 1 / -1;");
-    expect(styles).toContain("max-height: 310px;");
-    expect(styles).toContain("grid-template-columns: repeat(6, minmax(0, 1fr));");
-    expect(styles).toContain("grid-template-columns: repeat(7, minmax(0, 1fr));");
+  it("keeps superseded plume layout shells out of the shared stylesheet", () => {
+    expect(styles).not.toContain('.plume-map-layout');
+    expect(styles).not.toContain('.plume-import-row');
+    expect(styles).not.toContain('.plume-safety-disclaimer');
+    expect(styles).not.toContain('.plume-operational-flow');
+    expect(plumeStyles).toContain('grid-template-columns: minmax(0, 1fr);');
+    expect(plumeStyles).toContain('grid-template-columns: minmax(280px, 23fr) minmax(0, 54fr) minmax(280px, 23fr);');
   });
 
   it("saves a structured plumeResult and preserves tactical safety boundaries", () => {
@@ -534,8 +535,8 @@ describe("plume map views", () => {
     expect(html).not.toContain('>Street 3D</button>');
     expect(html).not.toContain('id="plume-map-legend"');
     expect(plumeStyles).toContain("#plume.view.active .plume-v2-location-toolbar");
-    expect(plumeStyles).toContain("min-height: 600px;");
-    expect(plumeStyles).toContain("grid-template-columns: minmax(285px, 23fr) minmax(620px, 54fr) minmax(285px, 23fr);");
+    expect(plumeStyles).toContain("min-height: 620px;");
+    expect(plumeStyles).toContain("grid-template-columns: minmax(280px, 23fr) minmax(0, 54fr) minmax(280px, 23fr);");
     expect(html).toContain('id="plume-results-section"');
     expect(plumeUi).toContain("document.getElementById('plume-model-form')?.addEventListener('submit'");
     expect(plumeUi).toContain("document.querySelectorAll('[data-plume-map-view]')");

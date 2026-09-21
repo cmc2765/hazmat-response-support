@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="guided-response-overrides.css?v=1" />
     <link rel="stylesheet" href="hazard-profile-page.css?v=1" />
     <link rel="stylesheet" href="page-shell.css?v=1" />
-    <link rel="stylesheet" href="plume-overrides.css?v=10" />
+    <link rel="stylesheet" href="plume-overrides.css?v=11&canonical-grid=1" />
   </head>
   <body>
     <div class="app-shell">
@@ -822,6 +822,11 @@
                         </div>
                         <div id="plume-chemical-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
                       </div>
+                      <div class="plume-chemical-identifiers" aria-label="Chemical identifiers">
+                        <span id="plume-chemical-cas" hidden>CAS —</span>
+                        <span id="plume-chemical-un" hidden>UN —</span>
+                        <span id="plume-chemical-erg" hidden>ERG —</span>
+                      </div>
                     </label>
                     <label class="plume-model-field plume-required-field" for="plume-release-type">
                       <span class="plume-required-label">Release type <b>Required</b></span>
@@ -855,7 +860,7 @@
                     </label>
                     <div class="plume-contract-divider" role="note">
                       <strong>Source validation / context</strong>
-                      <span>Operational details are retained for validation and reporting. They do not imply pressure-driven, flashing, pool, or terrain calculations.</span>
+                      <span>These fields support validation and reporting; they do not necessarily drive the current dispersion calculation.</span>
                     </div>
                     <details class="container-profile" aria-label="Editable container planning profile">
                       <summary>Container Details <small>Validation context · not a thermodynamic source-term model</small></summary>
@@ -900,19 +905,21 @@
                   <header class="plume-model-section-heading">
                     <span class="plume-stage-number" aria-hidden="true">2</span>
                     <div><strong id="plume-weather-data-heading">Weather Conditions</strong><small>Wind, temperature, stability, and roughness drive the current model.</small></div>
-                    <button class="ghost-btn plume-weather-refresh" id="use-live-plume-weather-btn" type="button">Refresh</button>
                   </header>
                   <div class="plume-model-section-grid plume-weather-grid">
-                    <label class="plume-model-field" for="plume-weather-source">
-                      <span>Source</span>
-                      <select id="plume-weather-source">
-                        <option value="auto-live" selected>Best Current Live Source</option>
-                        <option value="open-meteo">Open-Meteo</option>
-                        <option value="columbia-live">Columbia Weather Station</option>
-                        <option value="columbia-csv">Columbia CSV Import</option>
-                        <option value="manual">Manual Entry</option>
-                      </select>
-                    </label>
+                    <div class="plume-weather-source-row">
+                      <label class="plume-model-field" for="plume-weather-source">
+                        <span>Source</span>
+                        <select id="plume-weather-source">
+                          <option value="auto-live" selected>Best Current Live Source</option>
+                          <option value="open-meteo">Open-Meteo</option>
+                          <option value="columbia-live">Columbia Weather Station</option>
+                          <option value="columbia-csv">Columbia CSV Import</option>
+                          <option value="manual">Manual Entry</option>
+                        </select>
+                      </label>
+                      <button class="ghost-btn plume-weather-refresh" id="use-live-plume-weather-btn" type="button">Refresh</button>
+                    </div>
                     <label class="plume-model-field plume-columbia-csv" for="plume-columbia-csv" hidden>
                       <span>Upload CSV</span>
                       <input id="plume-columbia-csv" type="file" accept=".csv,text/csv" />
@@ -982,8 +989,8 @@
                         <option value="10">10 minutes</option>
                         <option value="30">30 minutes</option>
                         <option value="60" selected>60 minutes</option>
-                        <option value="240">4 hours</option>
-                        <option value="480">8 hours</option>
+                        <option value="240">240 minutes</option>
+                        <option value="480">480 minutes</option>
                       </select>
                       <small id="plume-endpoint-status">AEGL lookup occurs after verified Chemical Companion/CAS linkage.</small>
                     </label>
@@ -1029,12 +1036,15 @@
                       <button class="plume-layer-button" type="button" data-plume-map-view="street" aria-pressed="false">Street</button>
                       <button class="plume-layer-button" type="button" data-plume-map-view="terrain3d" aria-pressed="false">3D Terrain</button>
                     </div>
-                    <div class="plume-map-layer-controls" role="group" aria-label="Map layers and controls">
+                    <div class="plume-map-layer-controls" role="group" aria-label="Map layers and overlays">
                       <span class="plume-map-control-label">LAYERS</span>
                       <button class="plume-layer-button active" type="button" data-plume-layer="zones" aria-pressed="true">Threat Zones</button>
                       <button class="plume-layer-button active" type="button" data-plume-layer="centerline" aria-pressed="true">Plume</button>
                       <button class="plume-layer-button" type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
                       <button class="plume-layer-button" id="plume-buildings-toggle" type="button" aria-pressed="false" disabled>Buildings</button>
+                    </div>
+                    <div class="plume-map-action-controls" role="group" aria-label="Map actions">
+                      <span class="plume-map-control-label">ACTIONS</span>
                       <button class="plume-layer-button" id="plume-fit-view-btn" type="button">Fit Plume</button>
                       <button class="plume-layer-button" id="plume-recenter-incident-btn" type="button">Recenter Incident</button>
                       <button class="plume-layer-button" id="plume-recenter-release-btn" type="button">Recenter Release</button>
@@ -1067,18 +1077,38 @@
                     <span id="plume-tactical-attribution" hidden>© Google Maps Platform · Photorealistic 3D Tiles</span>
                   </footer>
                 </article>
-              </div>
-
               </main>
 
               <aside class="plume-v2-intelligence-column" aria-label="Threat intelligence and command actions">
                 <section class="plume-intelligence-card">
                   <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Threat intelligence</span><h2>Threat Zone Results</h2></div><span class="plume-status-badge" id="plume-zone-meaning-summary">Not Modeled</span></header>
+                  <p id="plume-command-model-summary" class="plume-intelligence-note">Model: Awaiting verified chemical and release inputs.</p>
+                  <div id="plume-command-zone-summary" class="plume-zone-summary" aria-live="polite">
+                    <article class="plume-zone-result level-3" data-zone-level="3">
+                      <span class="plume-zone-result-icon" aria-hidden="true">☠</span>
+                      <div><strong>AEGL-3 <b id="plume-zone-distance-3">—</b></strong><small id="plume-zone-distance-km-3">Awaiting model</small><span>Life-threatening effects possible</span></div>
+                    </article>
+                    <article class="plume-zone-result level-2" data-zone-level="2">
+                      <span class="plume-zone-result-icon" aria-hidden="true">⚠</span>
+                      <div><strong>AEGL-2 <b id="plume-zone-distance-2">—</b></strong><small id="plume-zone-distance-km-2">Awaiting model</small><span>Serious, long-lasting effects possible</span></div>
+                    </article>
+                    <article class="plume-zone-result level-1" data-zone-level="1">
+                      <span class="plume-zone-result-icon" aria-hidden="true">!</span>
+                      <div><strong>AEGL-1 <b id="plume-zone-distance-1">—</b></strong><small id="plume-zone-distance-km-1">Awaiting model</small><span>Notable discomfort possible</span></div>
+                    </article>
+                  </div>
                   <p id="plume-result-summary" class="plume-intelligence-note">Awaiting valid release and weather inputs.</p>
-                  <div id="plume-command-zone-summary" class="plume-zone-summary" aria-live="polite"><span>Plot a plume to display AEGL-1, AEGL-2, and AEGL-3 distances.</span></div>
                   <dl class="plume-command-facts">
+                    <div><dt>Downwind Direction</dt><dd id="plume-command-downwind">No Current Data Exists</dd></div>
+                    <div><dt>Affected Area (AEGL-1)</dt><dd id="plume-command-affected-area">No Current Data Exists</dd></div>
                     <div><dt>Maximum modeled distance</dt><dd id="plume-command-max-distance">No Current Data Exists</dd></div>
+                    <div><dt>Release Duration</dt><dd id="plume-command-release-duration">No Current Data Exists</dd></div>
+                    <div><dt>Model Confidence</dt><dd id="plume-command-confidence">No Current Data Exists</dd></div>
                     <div><dt>Endpoint basis</dt><dd id="plume-endpoint-summary">No Current Data Exists</dd></div>
+                    <div><dt>Model Status</dt><dd id="plume-command-model-status">Not Modeled</dd></div>
+                    <div><dt>Validation Status</dt><dd id="plume-command-validation-summary">No Current Data Exists</dd></div>
+                    <div><dt>Source Status</dt><dd id="plume-command-source-status">No Current Data Exists</dd></div>
+                    <div><dt>Weather Status</dt><dd id="plume-command-weather-status">No Current Data Exists</dd></div>
                     <div><dt>Computed</dt><dd id="plume-model-time-summary">No Current Data Exists</dd></div>
                   </dl>
                 </section>
@@ -1097,8 +1127,9 @@
                 </section>
 
                 <section class="plume-intelligence-card plume-guidance-card">
-                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Field verification</span><h2>Operational Guidance</h2></div></header>
-                  <details open><summary>Requirements</summary><p id="plume-guidance-requirements">Available after a model response.</p></details>
+                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Operational guidance</span><h2>Operational Guidance</h2></div></header>
+                  <p class="plume-intelligence-note">Source-backed verification guidance for the current planning result.</p>
+                  <details open><summary>Field Verification</summary><p id="plume-guidance-requirements">Available after a model response.</p></details>
                   <details><summary>Assumptions</summary><p id="plume-guidance-assumptions">Available after a model response.</p></details>
                   <details><summary>Limitations</summary><p id="plume-guidance-limitations">Available after a model response.</p></details>
                 </section>
@@ -1114,9 +1145,9 @@
 
                 <section class="plume-intelligence-card plume-command-actions">
                   <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Operational workflow</span><h2>Command Actions</h2></div></header>
+                  <button class="plume-command-button" id="plume-command-report-btn" type="button">View / Add to Report</button>
                   <button class="plume-command-button" type="button" data-command-view="incident">Send to Incident Command</button>
                   <button class="plume-command-button" type="button" data-view="map">Open Live Map</button>
-                  <button class="plume-command-button" id="plume-command-report-btn" type="button">Add / Save to Report</button>
                 </section>
               </aside>
             </div>
@@ -1541,7 +1572,7 @@
     <script src="weather-radar-providers.js"></script>
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
-    <script src="script.js?v=chemical-profile-hotfix-3"></script>
+    <script src="script.js?v=chemical-profile-hotfix-3&canonical-grid=1"></script>
     <script src="incident-command.js"></script>
     <script src="hazard-profile.js"></script>
     <script src="reports.js"></script>
