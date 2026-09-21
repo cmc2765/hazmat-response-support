@@ -175,6 +175,8 @@ describe("HazMatIQ Command Bar", () => {
       'data-view="map"',
       'data-view="monitor"',
       'data-view="report"',
+      'data-view="source"',
+      'data-view="planning-tools"',
       'data-view="my-chemicals"',
     ]);
     expect(commandDrawer).not.toContain('data-view="guided-response"');

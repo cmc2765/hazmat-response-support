@@ -316,7 +316,13 @@
     const api = legacyApi();
     if (renderLegacy) api?.renderIncidentCommandDashboard?.();
     const state = setActiveIncidentState(api?.getActiveIncident?.());
-    if (!state) return null;
+    if (!state) {
+      renderIncidentBrief(null);
+      renderOperationalStatus(null);
+      renderPlumeSummary(null);
+      renderCommandActions(null);
+      return null;
+    }
     renderIncidentBrief(state);
     renderOperationalStatus(state);
     renderPlumeSummary(state);

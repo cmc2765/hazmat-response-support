@@ -570,6 +570,12 @@ function activatePage(targetId, { preserveHazardState = false, skipPlumeInitiali
   }
   if (targetId === 'lookup' && !preserveHazardState) setHazardProfileMode('empty');
   buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
+  document.querySelectorAll('.app-nav-item[data-view]').forEach((btn) => {
+    const active = btn.dataset.view === targetId;
+    btn.classList.toggle('active', active);
+    if (active) btn.setAttribute('aria-current', 'page');
+    else btn.removeAttribute('aria-current');
+  });
   views.forEach((view) => {
     const active = view.id === targetId;
     view.classList.toggle('active', active);
@@ -730,29 +736,6 @@ workspaceDrawer?.addEventListener('keydown', (event) => {
   }
 });
 
-function addInternalCommandMenus() {
-  document.querySelectorAll('.view:not(#overview) .hazmat-page-hero, .view:not(#overview) .plume-page-header').forEach((hero) => {
-    if (hero.querySelector('.internal-command-menu')) return;
-    const title = hero.querySelector('.hazmat-hero-title');
-    if (!title) return;
-    const menu = document.createElement('button');
-    menu.type = 'button';
-    menu.className = 'command-menu-toggle internal-command-menu';
-    menu.setAttribute('aria-label', 'Open command dashboard navigation');
-    menu.setAttribute('aria-controls', 'workspace-navigation-drawer');
-    menu.setAttribute('aria-expanded', 'false');
-    menu.innerHTML = '<span></span><span></span><span></span>';
-    menu.addEventListener('click', () => openWorkspaceDrawer(menu));
-
-    const titleRow = document.createElement('div');
-    titleRow.className = 'internal-command-title-row';
-    title.before(titleRow);
-    titleRow.append(menu, title);
-  });
-}
-
-addInternalCommandMenus();
-
 // MapLibre needs an explicit resize when the responsive plume workspace changes size.
 const plumeWorkspace = document.getElementById('plume');
 if (plumeWorkspace && 'ResizeObserver' in window) {
@@ -806,6 +789,12 @@ document.querySelectorAll('.planning-tool-section [data-view]').forEach((button)
 // navigation controls still use the same canonical page router.
 document.querySelectorAll('.preplan-actions [data-view]').forEach((button) => {
   button.addEventListener('click', () => showView(button.dataset.view));
+});
+
+document.getElementById('app-settings-nav')?.addEventListener('click', () => {
+  const settingsMenu = document.querySelector('.workspace-settings-menu');
+  if (settingsMenu instanceof HTMLDetailsElement) settingsMenu.open = true;
+  openWorkspaceDrawer(document.getElementById('app-settings-nav'));
 });
 
 document.querySelectorAll('[data-planning-status]').forEach((button) => {
@@ -1523,22 +1512,128 @@ function savePlanningState(update) {
   }
 }
 
+function removeIncidentTransientStorage() {
+  [
+    incidentBriefStorageKey,
+    selectedChemicalStorageKey,
+    plumePlanningStorageKey,
+    guidedResponseTacticalStorageKey,
+    latestPlumeOverlayStorageKey,
+  ].forEach((key) => {
+    try {
+      window.localStorage.removeItem(key);
+    } catch {
+      // The in-memory reset below still establishes the boundary when storage is unavailable.
+    }
+  });
+}
+
+function resetIncidentFormState() {
+  incidentBriefFieldIds.forEach((id) => {
+    const field = document.getElementById(id);
+    if (field) field.value = '';
+  });
+  document.getElementById('plume-model-form')?.reset();
+  document.getElementById('plume-map-address-form')?.reset();
+  const plumeAddress = document.getElementById('plume-map-address-input');
+  if (plumeAddress) plumeAddress.value = '';
+  const containerSelect = document.getElementById('plume-container-type');
+  if (containerSelect && [...containerSelect.options].some((option) => option.value === 'unknown')) containerSelect.value = 'unknown';
+  applyContainerProfile();
+  updatePlumeReleaseQuantityLabel();
+  updatePlumeWeatherSourceStatus('Best Current Live Source', '', 'Awaiting verification');
+  updatePlumeInputSummaries();
+}
+
+function clearLiveMapIncidentState() {
+  const map = liveMap || window.hazmatiqLiveMap;
+  if (map?.isStyleLoaded?.()) {
+    [livePlumeOutlineLayerId, livePlumeFillLayerId].forEach((layerId) => {
+      if (map.getLayer(layerId)) map.removeLayer(layerId);
+    });
+    if (map.getSource(livePlumeSourceId)) map.removeSource(livePlumeSourceId);
+  }
+  liveMapMarkers?.forEach((marker) => marker.remove());
+  liveMapMarkers = [];
+  liveMapState = defaultLiveMapState();
+  try {
+    window.localStorage.setItem(liveMapStorageKey, JSON.stringify(liveMapState));
+  } catch {
+    // Live Map will start from the in-memory empty state for this session.
+  }
+  updateLiveMapPanels();
+  setText('live-map-incident-name', 'Planning Map');
+  setText('live-map-mode', 'Planning Mode');
+  setText('live-plume-status', 'Create a plume on the Plume Model page first.');
+}
+
+// Establish the incident boundary without touching completed incident records.
+function clearActiveIncidentState() {
+  removeIncidentTransientStorage();
+  try {
+    window.localStorage.removeItem(activeIncidentIdStorageKey);
+  } catch {
+    // The active pointer is cleared whenever browser storage is available.
+  }
+  commandWeatherRequestToken += 1;
+  plumeRefreshToken += 1;
+  window.clearTimeout(plumeAutomaticCalculationTimer);
+  window.clearInterval(incidentTimerInterval);
+  incidentTimerInterval = null;
+
+  activeChemical = null;
+  selectedChemicalId = null;
+  activeChemicalRecord = null;
+  activePlumeCommand = null;
+  activePpeSelection = [];
+  activeWeatherCommand = null;
+  latestPlumeWeather = null;
+  plumeWeatherSources = { openMeteo: null, nws: null };
+  latestPlumeAvailability = null;
+  notificationWeatherLocation = null;
+  plumeIncidentLocation = null;
+  plumeManualLocation = null;
+  currentThreatZoneGeoJson = null;
+  currentThreatZoneGuideGeoJson = null;
+  currentErgIsolationGeoJson = null;
+  currentPlumeHazardsGeoJson = null;
+  currentPlumeHazardsSignature = '';
+  latestThreatZoneHouseholdEstimate = null;
+  threatZoneImpactSummary = null;
+  window.HazMatIQ.latestPlumeOverlay = null;
+  window.HazMatIQ.guidedResponseDecisionRecord = null;
+  window.HazMatIQ.setActiveHazardState?.(null);
+  window.HazMatIQ.activeIncidentState = null;
+  plumeSourceMarker?.remove?.();
+  plumeSourceMarker = null;
+  clearErgIsolationOverlay();
+  plumeDistanceMarkers?.forEach((marker) => marker.remove());
+  plumeDistanceMarkers = [];
+  plumeMeasurementPopup?.remove?.();
+  plumeMeasurementPopup = null;
+  const plumeHazardSource = plumeMap?.getSource?.('hazmat-plume-hazards');
+  plumeHazardSource?.setData?.({ type: 'FeatureCollection', features: [] });
+  if (plumeMap?.isStyleLoaded?.()) plumeMap.jumpTo({ center: [-86.81, 33.29], zoom: 14, pitch: 0, bearing: 0 });
+
+  resetIncidentFormState();
+  void clearThreatZones();
+  clearLiveMapIncidentState();
+  setHazardProfileMode('empty');
+  syncPlumeChemicalSelection();
+  renderIncidentCommandSnapshot();
+  if (document.getElementById('guided-response')?.classList.contains('active')) renderGuidedResponse();
+  window.HazMatIQ.refreshIncidentCommand?.();
+  window.dispatchEvent(new CustomEvent('hazmatiq:incident-reset'));
+}
+
 function createIncidentRecord() {
   const now = new Date();
-  const oldActiveId = window.localStorage.getItem(activeIncidentIdStorageKey);
-  const incidents = readIncidents().map((incident) => incident.incidentId === oldActiveId
-    ? {
-        ...incident,
-        status: 'Completed',
-        completedAt: now.toISOString(),
-        completedDate: now.toLocaleDateString(),
-        completedTime: now.toLocaleTimeString(),
-        icsForms: Object.fromEntries(icsFormCatalog.map(([id]) => [id, {
-          ...(incident.icsForms?.[id] || { fields: {} }),
-          archivedAt: now.toISOString(),
-        }])),
-      }
-    : incident);
+  const existingActive = getActiveIncident();
+  if (existingActive) {
+    setIncidentStatus('Complete the current incident before starting a new one.');
+    return existingActive;
+  }
+  const incidents = readIncidents();
   const incident = {
     incidentId: window.crypto?.randomUUID?.() || `incident-${Date.now()}-${Math.random().toString(16).slice(2)}`,
     incidentName: document.getElementById('incidentName')?.value.trim() || 'New Incident',
@@ -1556,6 +1651,7 @@ function createIncidentRecord() {
   setSystemMode('incident');
   startIncidentTimer();
   renderIncidentLists();
+  return incident;
 }
 
 function renderIncidentTimer() {
@@ -1687,6 +1783,7 @@ function completeActiveIncident() {
     completedAt: now.toISOString(),
     completedDate: now.toLocaleDateString(),
     completedTime: now.toLocaleTimeString(),
+    updatedAt: now.toISOString(),
     icsForms: Object.fromEntries(icsFormCatalog.map(([id]) => [id, {
       ...(incidents[index].icsForms?.[id] || { fields: {} }),
       archivedAt: now.toISOString(),
@@ -1694,12 +1791,14 @@ function completeActiveIncident() {
   };
   writeIncidents(incidents);
   window.localStorage.removeItem(activeIncidentIdStorageKey);
+  clearActiveIncidentState();
   setSystemMode('normal');
   renderIncidentTimer();
   renderIncidentLists();
   setIncidentStatus('Incident completed and its ICS forms moved to Completed Forms.');
   showView('report');
   document.querySelector('[data-report-tab="previous"]')?.click();
+  return incidents[index];
 }
 
 function renderIncidentCard(container, incident, activeId) {
@@ -2451,23 +2550,18 @@ function restoreIncidentBrief() {
 }
 
 function beginNewIncident({ createRecord = false } = {}) {
-  incidentWorkflowActive = true;
-  incidentBriefFieldIds.forEach((id) => {
-    const element = document.getElementById(id);
-    if (element) element.value = '';
-  });
-  try {
-    window.localStorage.removeItem(incidentBriefStorageKey);
-  } catch {
-    // A new incident can still begin if browser storage is unavailable.
+  if (createRecord && getActiveIncident()) {
+    setIncidentStatus('Complete the current incident before starting a new one.');
+    showView('incident');
+    return getActiveIncident();
   }
-  setActiveChemical(null);
-  const containerSelect = document.getElementById('plume-container-type');
-  if (containerSelect) containerSelect.value = 'unknown';
-  applyContainerProfile();
-  if (createRecord) createIncidentRecord();
+  incidentWorkflowActive = true;
+  clearActiveIncidentState();
+  let incident = null;
+  if (createRecord) incident = createIncidentRecord();
   else setSystemMode('training');
   setIncidentStatus('New incident started. Select a chemical to populate HAZMAT COMMAND data.');
+  return incident;
 }
 
 function resumeActiveIncident() {
@@ -10483,6 +10577,9 @@ document.getElementById('plume-columbia-csv')?.addEventListener('change', async 
 document.getElementById('plume-model-form')?.addEventListener('submit', async (event) => {
   event.preventDefault();
   await plotPlumeFromControls();
+});
+document.getElementById('plot-plume-btn')?.addEventListener('click', () => {
+  void plotPlumeFromControls();
 });
 document.getElementById('plume-model-form')?.addEventListener('input', () => {
   updatePlumeInputSummaries();

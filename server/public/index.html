@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="guided-response-overrides.css?v=1" />
     <link rel="stylesheet" href="hazard-profile-page.css?v=1" />
     <link rel="stylesheet" href="page-shell.css?v=1" />
-    <link rel="stylesheet" href="plume-overrides.css?v=11&canonical-grid=1" />
+    <link rel="stylesheet" href="plume-overrides.css?v=10&canonical-grid=1" />
   </head>
   <body>
     <div class="app-shell">
@@ -25,10 +25,43 @@
         <div class="hazmat-command-identity">
           <div class="brand">
             <button class="module-btn command-brand-home" id="command-brand-home" type="button" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home">
-              <img class="brand-logo-command" src="assets/HAZSCOPE-banner.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
+              <img class="brand-logo-command" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
             </button>
           </div>
         </div>
+
+        <nav class="app-primary-nav" id="app-primary-nav" aria-label="Primary navigation">
+          <button class="module-btn app-nav-item" type="button" data-view="overview" aria-label="Open Dashboard" aria-current="page">
+            <span class="app-nav-icon" aria-hidden="true">▦</span><span class="app-nav-label">Dashboard</span>
+          </button>
+          <button class="module-btn app-nav-item" type="button" data-view="lookup" aria-label="Open Hazard ID">
+            <span class="app-nav-icon" aria-hidden="true">▲</span><span class="app-nav-label">Hazard ID</span>
+          </button>
+          <button class="module-btn app-nav-item" type="button" data-view="plume" aria-label="Open Plume Model">
+            <span class="app-nav-icon" aria-hidden="true">◒</span><span class="app-nav-label">Plume Model</span>
+          </button>
+          <button class="module-btn app-nav-item" type="button" data-view="map" aria-label="Open Live Map">
+            <span class="app-nav-icon" aria-hidden="true">⌖</span><span class="app-nav-label">Live Map</span>
+          </button>
+          <button class="module-btn app-nav-item" type="button" data-view="incident" aria-label="Open Incident Command">
+            <span class="app-nav-icon" aria-hidden="true">✣</span><span class="app-nav-label">Incident Command</span>
+          </button>
+          <button class="module-btn app-nav-item" type="button" data-view="report" aria-label="Open Reports">
+            <span class="app-nav-icon" aria-hidden="true">▤</span><span class="app-nav-label">Reports</span>
+          </button>
+          <button class="module-btn app-nav-item app-nav-secondary" type="button" data-view="monitor" aria-label="Open Equipment">
+            <span class="app-nav-icon" aria-hidden="true">▣</span><span class="app-nav-label">Equipment</span>
+          </button>
+          <button class="module-btn app-nav-item app-nav-secondary" type="button" data-view="source" aria-label="Open Sources">
+            <span class="app-nav-icon" aria-hidden="true">▥</span><span class="app-nav-label">Sources</span>
+          </button>
+          <button class="module-btn app-nav-item app-nav-secondary" type="button" data-view="planning-tools" aria-label="Open Planning">
+            <span class="app-nav-icon" aria-hidden="true">▰</span><span class="app-nav-label">Planning</span>
+          </button>
+          <button class="module-btn app-nav-item app-nav-secondary app-nav-settings" id="app-settings-nav" type="button" aria-label="Open Settings">
+            <span class="app-nav-icon" aria-hidden="true">⚙</span><span class="app-nav-label">Settings</span>
+          </button>
+        </nav>
 
         <div class="command-header-footer">
           <section class="notification-center hazmat-command-context" id="notification-center" role="status" aria-live="polite" aria-atomic="false" data-severity="normal">
@@ -36,7 +69,7 @@
             <div class="notification-feed">
               <div class="notification-item notification-system">
                 <div class="command-center-launch">
-                  <button class="command-menu-toggle" id="command-menu-toggle" type="button" aria-label="Open command dashboard navigation" aria-controls="workspace-navigation-drawer" aria-expanded="false"><span></span><span></span><span></span></button>
+                  <button class="command-menu-toggle" id="command-menu-toggle" type="button" aria-label="Open additional module navigation" aria-controls="workspace-navigation-drawer" aria-expanded="false"><span></span><span></span><span></span></button>
                   <span class="command-center-label">Command Dashboard</span>
                 </div>
                 <div class="notification-system-heading"><span>System</span><time class="notification-updated" id="notification-updated" aria-label="Current 24-hour time">00:00:00</time></div>
@@ -63,13 +96,15 @@
           <button class="workspace-drawer-close" id="workspace-drawer-close" type="button" aria-label="Close workspace navigation">Close</button>
         </header>
         <nav class="workspace-drawer-nav" aria-label="Workspace navigation">
-          <button class="workspace-drawer-home" type="button" data-view="overview" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home"><img src="assets/HAZSCOPE-banner.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" /></button>
+          <button class="workspace-drawer-home" type="button" data-view="overview" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home"><img src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" /></button>
           <button class="module-btn" data-view="incident">INCIDENT COMMAND</button>
           <button class="module-btn" data-view="lookup">HAZARD ID</button>
           <button class="module-btn" data-view="plume">PLUME MODELING</button>
           <button class="module-btn" data-view="map">LIVE MAP</button>
           <button class="module-btn" data-view="monitor">EQUIPMENT</button>
           <button class="module-btn" data-view="report">MY REPORTS</button>
+          <button class="module-btn" data-view="source">SOURCES</button>
+          <button class="module-btn" data-view="planning-tools">PLANNING</button>
           <button class="module-btn" data-view="my-chemicals">MY CHEMICALS</button>
           <details class="workspace-settings-menu">
             <summary class="workspace-settings-btn">Settings <small>Theme &amp; display</small></summary>
@@ -152,7 +187,7 @@
 
           <section id="planning-tools" class="view planning-page" data-page-root="planning" data-page-name="Planning">
             <header class="hazmat-page-hero variant-planning">
-              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Pre- Incident Planning</h1><p class="hazmat-hero-subtitle">Pre-Incident Intelligence &amp; Tactical Planning.</p></div>
+              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Pre-Incident Planning</h1><p class="hazmat-hero-subtitle">Pre-Incident Intelligence &amp; Tactical Planning.</p></div>
             </header>
             <article class="panel-card planning-tools-card">
               <div class="planning-tools-heading">
@@ -550,7 +585,8 @@
               </div>
             </div>
             <dialog id="complete-incident-dialog" aria-labelledby="complete-incident-question">
-              <h3 id="complete-incident-question">Are you sure you want to complete this incident?</h3>
+              <h3 id="complete-incident-question">Complete this incident?</h3>
+              <p>The current incident will be finalized and preserved in Completed Incidents. Active incident data will be cleared so a new incident can be started.</p>
               <div class="button-row">
                 <button class="primary-btn" id="confirm-complete-incident-btn" type="button">Yes, Complete Incident</button>
                 <button class="ghost-btn" id="cancel-complete-incident-btn" type="button">Cancel</button>
@@ -562,7 +598,7 @@
             <header class="hazmat-page-hero variant-chemical hazard-id-page-hero" id="hazard-id-search-hero">
               <span class="hazard-id-hero-atmosphere" aria-hidden="true"></span>
               <div class="hazmat-page-hero-content">
-                <img class="hazard-id-hero-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
+                <img class="hazard-id-hero-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" hidden />
                 <h1 class="hazmat-hero-title">HAZARD ID</h1>
                 <p class="hazmat-hero-subtitle">Search, Identify, Verify, Respond.</p>
               </div>
@@ -735,7 +771,7 @@
           <section id="guided-response" class="view guided-response-page" data-page-root="guided-response" data-page-name="Guided Response">
             <header class="hazmat-page-hero variant-guided-response guided-response-heading">
               <div class="guided-response-brand">
-                <img class="guided-response-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
+                <img class="guided-response-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" hidden />
                 <div class="hazmat-page-hero-content">
                   <h1 class="hazmat-hero-title">Guided Response</h1>
                   <p class="hazmat-hero-subtitle">Tactical Decision Support.</p>
@@ -794,7 +830,7 @@
                     <circle class="plume-hero-source" cx="13" cy="28" r="5"/>
                   </svg>
                 </span>
-                <div class="hazmat-page-hero-content"><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><p class="hazmat-hero-subtitle">Weather-aware threat-zone planning.</p><small>Real-time data. Actionable intelligence. Safer decisions.</small><small id="plume-header-chemical">Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers">CAS / UN / ERG pending</small></div>
+                <div class="hazmat-page-hero-content"><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><p class="hazmat-hero-subtitle">Weather-aware threat-zone planning.</p><small id="plume-header-chemical" hidden>Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers" hidden>CAS / UN / ERG pending</small></div>
               </div>
               <div class="plume-v2-header-context" aria-label="Current plume context">
                 <div><span>Location</span><strong id="plume-header-location">Location pending</strong></div>
@@ -839,10 +875,13 @@
                       <span class="plume-required-label"><span id="plume-release-quantity-label">Release rate</span> <b>Required</b></span>
                       <div class="plume-quantity-input">
                         <input id="plume-release-quantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Required" required />
-                        <select id="plume-release-unit" aria-label="Release quantity unit">
-                          <option value="lb-min">lb/min</option>
-                          <option value="lb-sec">lb/sec</option>
-                        </select>
+                        <span class="plume-quantity-unit">
+                          <span class="plume-quantity-unit-label" aria-hidden="true">Unit</span>
+                          <select id="plume-release-unit" aria-label="Release quantity unit">
+                            <option value="lb-min">lb/min</option>
+                            <option value="lb-sec">lb/sec</option>
+                          </select>
+                        </span>
                       </div>
                     </label>
                     <label class="plume-model-field plume-required-field" id="plume-puff-duration-field" for="plume-puff-duration" hidden>
@@ -856,14 +895,10 @@
                     <label class="plume-model-field" for="plume-release-height">
                       <span>Release height (ft) <b class="plume-optional-label">Optional</b></span>
                       <input id="plume-release-height" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Ground-level default" />
-                      <small>Blank uses the existing 0 ft ground-level planning default.</small>
+                      <small>Height above ground level.</small>
                     </label>
-                    <div class="plume-contract-divider" role="note">
-                      <strong>Source validation / context</strong>
-                      <span>These fields support validation and reporting; they do not necessarily drive the current dispersion calculation.</span>
-                    </div>
                     <details class="container-profile" aria-label="Editable container planning profile">
-                      <summary>Container Details <small>Validation context · not a thermodynamic source-term model</small></summary>
+                      <summary>Source / Container Details <small>Advanced / Details</small></summary>
                       <div class="container-bubble-grid">
                         <label class="container-bubble" for="plume-container-type"><span>Container Type</span><select id="plume-container-type"></select></label>
                         <label class="container-bubble" for="container-model-source"><span>Release Source</span><select id="container-model-source"><option>Auto-select</option><option>Direct release</option><option>Puddle</option><option>Tank</option><option>Gas pipeline</option><option>Liquid flow</option><option>Solid release</option><option>Unknown / verify</option></select></label>
@@ -1025,7 +1060,7 @@
                     </label>
                     <button class="plume-map-button secondary" id="use-plume-incident-location-btn" type="button">Use Incident Location</button>
                     <button class="plume-map-button secondary" type="submit">Manual Entry</button>
-                    <button class="plume-map-button primary" id="plot-plume-btn" type="submit" form="plume-model-form" disabled>Plot Plume</button>
+                    <button class="plume-map-button primary" id="plot-plume-btn" type="button" disabled>Plot Plume</button>
                     <button class="module-btn plume-map-button secondary plume-live-radar-link" type="button" data-view="map">Open Live Map</button>
                   </form>
                   <div class="plume-v2-map-controls" role="group" aria-label="Plume basemap">
@@ -1542,7 +1577,7 @@
 
           <section id="source" class="view sources-page" data-page-root="sources" data-page-name="Sources">
             <header class="hazmat-page-hero variant-about">
-              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">About HAZSCOPE</h1><p class="hazmat-hero-subtitle">Incident Intelligence &amp; Source Transparency.</p></div>
+              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Sources</h1><p class="hazmat-hero-subtitle">Incident Intelligence &amp; Source Transparency.</p></div>
             </header>
             <div class="panel-card">
               <div class="chemical-card-header">

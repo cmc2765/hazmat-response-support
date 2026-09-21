@@ -95,6 +95,22 @@
     radarController?.reorder();
   }
 
+  window.addEventListener('hazmatiq:incident-reset', () => {
+    window.HazMatIQ.latestPlumeOverlay = null;
+    try { window.localStorage.removeItem(plumeStateKey); } catch { /* The active map still clears below. */ }
+    fallbackMarkers.forEach((marker) => marker.remove());
+    fallbackMarkers = [];
+    try { window.localStorage.removeItem(mapStateKey); } catch { /* The active map still clears below. */ }
+    const map = window.hazmatiqLiveMap || fallbackMap;
+    if (!map?.isStyleLoaded?.()) return;
+    ['live-plume-overlay-outline', 'live-plume-overlay-fill'].forEach((layerId) => {
+      if (map.getLayer(layerId)) map.removeLayer(layerId);
+    });
+    if (map.getSource('live-plume-overlay')) map.removeSource('live-plume-overlay');
+    const status = document.getElementById('live-plume-status');
+    if (status) status.textContent = 'Create a plume on the Plume Model page first.';
+  });
+
   function setMessage(message) {
     const loading = document.getElementById('live-map-loading');
     if (loading) loading.textContent = message;
