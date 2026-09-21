@@ -46,6 +46,6 @@ describe('Phase 2 page module ownership contract', () => {
   it('preserves the static Sources page root and catalog content', () => {
     expect(html).toContain('<section id="source" class="view sources-page"');
     expect(html).toContain('CAMEO Chemicals');
-    expect(html).toContain('HazMatIQ plume model');
+    expect(html).toContain('HAZSCOPE plume model');
   });
 });

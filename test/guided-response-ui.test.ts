@@ -78,17 +78,21 @@ describe("Guided Response workflow", () => {
     expect(script).toContain('function saveGuidedResponseTacticalRecord');
   });
 
-  it("removes the Chemical ID subtitle and makes the Response reactivity profile full width", () => {
+  it("removes the Chemical ID subtitle and places compact Reactivity beside Fire Behavior", () => {
     expect(lookupHtml).not.toContain('Powered by Chemical Companion');
-    expect(styles).toMatch(/data-active-tab="response"[^}]*data-section="reactivity-profile"[^}]*grid-column: 1 \/ -1;[^}]*width: 100%;/s);
-    expect(styles).toMatch(/data-section="reactivity-profile"[^}]*chemical-profile-grid[^}]*grid-template-columns: minmax\(0, 1fr\);/s);
+    expect(styles).toContain('data-section="fire-behavior"');
+    expect(styles).toContain('data-section="reactivity-profile"');
+    expect(styles).toContain('grid-template-columns: minmax(0, 1.15fr) minmax(270px, 0.85fr);');
+    expect(styles).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
   });
 
   it("keeps Guided Response in the command workflow and Plume Model in the profile toolbar", () => {
     expect(html).toContain('data-command-view="guided-response"');
     expect(html).toContain('id="open-plume-btn"');
-    expect(html).not.toContain('id="open-guided-response-btn"');
+    expect(html).toContain('id="open-guided-response-btn"');
+    expect(html).toContain('>GUIDED RESPONSE</button>');
     expect(styles).toContain('#guided-response #guided-open-plume-btn');
+    expect(styles).toContain('#chemical-id-results #open-guided-response-btn');
   });
 
   it("opens Guided Response from both Chemical Profile and Plume Model", () => {
@@ -102,7 +106,7 @@ describe("Guided Response workflow", () => {
 
   it("provides the new view, required actions, and compact disclaimers", () => {
     expect(html).toContain('id="guided-response" class="view guided-response-page"');
-    expect(guidedHtml).toContain('class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png"');
+    expect(guidedHtml).toContain('class="guided-response-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1"');
     expect(guidedHtml).toMatch(/guided-response-logo[^>]*>[\s\S]*<div class="hazmat-page-hero-content">[\s\S]*<h1 class="hazmat-hero-title">Guided Response<\/h1>/s);
     expect(guidedHtml).toContain('Command Actions');
     for (const id of [
@@ -212,7 +216,7 @@ describe("Guided Response workflow", () => {
     expect(ppeEngine).toContain("failedLevelCChecks");
     expect(ppeEngine).toContain("conditions.cartridgeVerified === true");
     expect(ppeEngine).toContain("conditions.concentrationBelowLimits === true");
-    expect(script).toContain("const ppeLevelTiles");
+    expect(script).not.toContain("const ppeLevelTiles");
     expect(script).toContain("Source Details / Manufacturer Details");
   });
 
@@ -234,15 +238,13 @@ describe("Guided Response workflow", () => {
     expect(script).toContain('PPE recommendations are source-backed planning guidance');
   });
 
-  it("renders exactly four PPE option tiles and keeps raw options collapsed", () => {
-    const tileDefinitions = script.slice(
-      script.indexOf('const ppeLevelTiles'),
-      script.indexOf('function appendPpeRecommendationList'),
-    );
-    expect(tileDefinitions.match(/'LEVEL_[A-D]_[^']+'/g)).toHaveLength(4);
+  it("renders one highlighted source-backed PPE recommendation and keeps raw options collapsed", () => {
+    expect(script).not.toContain('ppe-level-options');
+    expect(script).not.toContain('ppe-level-option');
     expect(script).toContain("const rawDetails = document.createElement('details')");
     expect(script).not.toContain('rawDetails.open = true');
-    expect(styles).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(styles).toContain('#chemical-id-results .ppe-recommendation-status');
+    expect(styles).toContain('border: 3px solid #f6c343;');
   });
 
   it("keeps the Tactical Decision Flow Life Safety stage compact and ordered", () => {

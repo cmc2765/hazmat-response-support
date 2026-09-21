@@ -73,7 +73,7 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
     expect(html).toContain('id="hazard-id-search-workspace"');
     expect(profileToolbar).toContain('id="chemical-profile-back-btn"');
     expect(profileToolbar).toContain('id="open-chemcompare-btn"');
-    expect(profileToolbar).not.toContain('id="open-guided-response-btn"');
+    expect(profileToolbar).toContain('id="open-guided-response-btn"');
     expect(profileToolbar).toContain('id="open-plume-btn"');
     expect(profileToolbar).not.toContain('id="profile-export-btn"');
     expect(profileToolbar).not.toContain('id="profile-save-chemical-btn"');
@@ -86,7 +86,7 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
   });
 
   it("uses the transparent HAZMATIQ artwork on Guided Response", () => {
-    expect(html).toContain('class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png"');
+    expect(html).toContain('class="guided-response-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1"');
   });
 
   it("maps selected chemical profile fields into every operational consumer", () => {

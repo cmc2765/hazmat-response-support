@@ -38,7 +38,8 @@ describe("plume map views", () => {
   });
 
   it("keeps one persistent map style when switching basemaps", () => {
-    expect(plumeUi).not.toContain("plumeMap.setStyle(");
+    expect(plumeUi).toContain("plumeMap.setStyle(plumeFallbackMapStyle);");
+    expect(plumeUi).toContain('applyPlumeFallbackMapStyle');
     expect(plumeUi).toContain("syncPlumeBasemapLayer();");
     expect(plumeUi).toContain("activePlumeMapView === 'street' ? 'none' : 'visible'");
     expect(plumeUi).toContain("activePlumeMapView === 'tactical'");
@@ -175,7 +176,7 @@ describe("plume map views", () => {
   it("shows the four plume planning and verification notices", () => {
     expect(plumeHtml).not.toContain('class="plume-safety-disclaimer"');
     expect(plumeHtml).toContain('class="plume-planning-notices"');
-    expect(html).toContain("HazMatIQ is a decision-support and planning tool.");
+    expect(html).toContain("HAZSCOPE is a decision-support and planning tool.");
     expect(html).toContain("Plume results are planning estimates only");
     expect(html).toContain("No Current Data Exists");
     expect(html).toContain("Weather data source and observation time must be verified.");
@@ -191,7 +192,7 @@ describe("plume map views", () => {
       "No Current Data Exists",
       "Blocked Pending Validation",
     ]) expect(plumeUi).toContain(status);
-    expect(plumeUi).toContain("HazMatIQ does not infer an ensemble level from incomplete source coverage.");
+    expect(plumeUi).toContain("HAZSCOPE does not infer an ensemble level from incomplete source coverage.");
     expect(plumeUi).toContain("Suit compatibility not verified from current source.");
     expect(plumeUi).not.toContain("hasScba ? (needsLevelA ? 'Level A' : 'Level B')");
   });

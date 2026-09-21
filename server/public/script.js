@@ -927,7 +927,7 @@ const householdEstimateLabels = Object.freeze({
 const ppeSuitWarning = 'PPE recommendations are source-backed planning guidance and must be verified by Incident Command, air monitoring, oxygen concentration, concentration below IDLH/exposure limits, suit compatibility, cartridge suitability, and agency SOPs before entry.';
 const medicalProtectiveWarning = 'Verify all medical guidance, protective actions, isolation distances, and evacuation/shelter decisions with official sources, agency SOPs, field observations, and Incident Command.';
 const plumePlanningNotices = [
-  'HazMatIQ is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.',
+  'HAZSCOPE is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.',
   'Plume results are planning estimates only and are not a substitute for field monitoring, official modeling, or Incident Command decision-making.',
   'Missing, outdated, or unverified data should be treated as No Current Data Exists until confirmed by an approved source.',
   'Weather data source and observation time must be verified. Stale or manually entered weather can significantly affect plume output.',
@@ -1116,12 +1116,12 @@ function selectedChemicalOperationalData({ record = activeChemicalRecord, chemic
 function cleanIncidentOperationalMode(value) {
   const normalized = String(value ?? '').trim().toUpperCase().replace(/[\s-]+/g, '_');
   const modes = {
-    HAZMATIQ_ESTIMATE: 'HazMatIQ Estimate',
-    HAZMATIQ_VALIDATED: 'HazMatIQ Validated',
-    HAZMATIQ_FIELD_VERIFIED: 'HazMatIQ Field Verified',
+    HAZMATIQ_ESTIMATE: 'HAZSCOPE Estimate',
+    HAZMATIQ_VALIDATED: 'HAZSCOPE Validated',
+    HAZMATIQ_FIELD_VERIFIED: 'HAZSCOPE Field Verified',
     ERG_PROTECTIVE_ACTION_OVERLAY_ONLY: 'ERG Overlay Only',
     BLOCKED_MISSING_REQUIRED_DATA: 'Missing Required Data',
-    PLANNING_ESTIMATE: 'HazMatIQ Estimate',
+    PLANNING_ESTIMATE: 'HAZSCOPE Estimate',
   };
   return modes[normalized] || (value ? String(value).replace(/_/g, ' ') : 'Assessment Pending');
 }
@@ -1365,6 +1365,12 @@ function renderIncidentCommandDashboard() {
   if (incidentNameInput && document.activeElement !== incidentNameInput) incidentNameInput.value = model.incidentName === 'Incident not named' ? '' : model.incidentName;
   const locationInput = document.getElementById('incident-address-input');
   if (locationInput && document.activeElement !== locationInput) locationInput.value = model.incident.address || '';
+  ['incident-city', 'incident-state', 'incident-zip'].forEach((id) => {
+    const input = document.getElementById(id);
+    const field = id.replace('incident-', '');
+    if (input && document.activeElement !== input) input.value = model.incident[field] || '';
+  });
+  syncIncidentAddressDownstream();
   const productInput = document.getElementById('incident-product');
   if (productInput && document.activeElement !== productInput) productInput.value = model.incident.chemicalName || '';
   const modeInput = document.getElementById('incident-operational-mode');
@@ -2335,6 +2341,7 @@ incidentAddressInput?.addEventListener('input', () => {
   const coordinateInput = document.getElementById('incident-coordinates-input');
   if (coordinateInput) coordinateInput.value = '';
   const value = incidentAddressInput.value.trim();
+  syncIncidentAddressDownstream();
   if (value.length < 3) return;
   incidentAddressSearchTimer = window.setTimeout(() => void searchIncidentAddresses(value), 350);
 });
@@ -2358,11 +2365,42 @@ document.addEventListener('click', (event) => {
 });
 
 function getIncidentAddressValue() {
-  return ['incident-address-input', 'incident-city', 'incident-state']
+  return ['incident-address-input', 'incident-city', 'incident-state', 'incident-zip']
     .map((id) => document.getElementById(id)?.value.trim())
     .filter(Boolean)
     .join(', ');
 }
+
+function syncIncidentAddressDownstream() {
+  const address = getIncidentAddressValue();
+  if (!address) return;
+
+  const plumeAddress = document.getElementById('plume-map-address-input');
+  if (plumeAddress) plumeAddress.value = address;
+
+  const reportAddressFields = {
+    address,
+    city: document.getElementById('incident-city')?.value.trim() || '',
+    state: document.getElementById('incident-state')?.value.trim() || '',
+    zip: document.getElementById('incident-zip')?.value.trim() || '',
+  };
+  Object.entries(reportAddressFields).forEach(([name, value]) => {
+    const field = document.querySelector(`#completed-report-edit-form [name="${name}"]`);
+    if (field && !field.dataset.dirty) field.value = value;
+  });
+
+  document.querySelectorAll('#ics-form-fields input, #ics-form-fields textarea').forEach((field) => {
+    if (field.dataset.dirty || !/(address|location)/i.test(field.name || '')) return;
+    field.value = address;
+  });
+}
+
+['incident-address-input', 'incident-city', 'incident-state', 'incident-zip'].forEach((id) => {
+  document.getElementById(id)?.addEventListener('input', () => {
+    plumeManualLocation = null;
+    syncIncidentAddressDownstream();
+  });
+});
 
 function setIncidentStatus(message) {
   const status = document.getElementById('incident-location-status');
@@ -3051,14 +3089,16 @@ function createChemmMedicalEmbed(profile) {
 
   const fallback = document.createElement('p');
   fallback.className = 'chemical-profile-medical-embed-fallback';
+  const fallbackLead = document.createElement('strong');
+  fallbackLead.textContent = 'CHEMM opens in a separate window for browser compatibility. ';
   const link = document.createElement('a');
   link.href = frame.src;
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
   link.textContent = 'Open CHEMM Medical Management Guidelines in a new tab';
-  fallback.append('If the embedded page is unavailable, ', link, '.');
+  fallback.append(fallbackLead, link);
 
-  section.append(heading, description, frame, fallback);
+  section.append(heading, description, fallback, frame);
   return section;
 }
 
@@ -3309,13 +3349,6 @@ function createChemicalProfileColumn(name, sections) {
   return column;
 }
 
-const ppeLevelTiles = Object.freeze([
-  ['LEVEL_A_VAPOR_PROTECTIVE_SCBA', 'Vapor Protective Level A w/ SCBA', 'level-a'],
-  ['LEVEL_B_SCBA', 'Level B w/ SCBA', 'level-b'],
-  ['LEVEL_C_APR_APPROPRIATE_CARTRIDGE', 'Level C w/ APR — Appropriate Cartridge Required', 'level-c'],
-  ['LEVEL_D_NO_CHEMICAL_PROTECTION', 'Level D — No Chemical Protection Required', 'level-d'],
-]);
-
 function appendPpeRecommendationList(container, title, values, emptyText = noCurrentDataText) {
   const section = document.createElement('section');
   section.className = 'ppe-recommendation-list-section';
@@ -3352,27 +3385,6 @@ function createPpeRecommendationCard(recommendation = {}) {
   const badge = document.createElement('strong');
   badge.textContent = recommendation.displayLabel || noCurrentDataText;
   status.append(statusLabel, badge);
-
-  const tileGrid = document.createElement('div');
-  tileGrid.className = 'ppe-level-options';
-  ppeLevelTiles.forEach(([level, label, accent]) => {
-    const tile = document.createElement('article');
-    tile.className = `ppe-level-option ${accent}`;
-    tile.dataset.level = level;
-    const selected = recommendation.selectedLevel === level;
-    let tileState = selected ? 'Recommended' : 'Not Recommended';
-    if (recommendation.selectedLevel === 'NO_CURRENT_DATA_EXISTS') tileState = noCurrentDataText;
-    else if (recommendation.selectedLevel === 'REQUIRES_REVIEW') tileState = level === 'LEVEL_C_APR_APPROPRIATE_CARTRIDGE' ? 'Blocked' : 'Conditional';
-    else if (recommendation.selectedLevel === 'BLOCKED_PENDING_VERIFIED_CHEMICAL_LINK') tileState = 'Blocked';
-    else if (level === 'LEVEL_C_APR_APPROPRIATE_CARTRIDGE' && !recommendation.levelCAllowed) tileState = 'Blocked';
-    tile.dataset.state = tileState.toLowerCase().replace(/\s+/g, '-');
-    const tileTitle = document.createElement('strong');
-    tileTitle.textContent = label;
-    const tileStatus = document.createElement('span');
-    tileStatus.textContent = tileState;
-    tile.append(tileTitle, tileStatus);
-    tileGrid.append(tile);
-  });
 
   const summary = document.createElement('dl');
   summary.className = 'ppe-recommendation-summary';
@@ -3416,7 +3428,7 @@ function createPpeRecommendationCard(recommendation = {}) {
   const disclaimer = document.createElement('p');
   disclaimer.className = 'ppe-recommendation-disclaimer';
   disclaimer.textContent = ppeSuitWarning;
-  section.append(heading, status, tileGrid, summary, support, rawDetails, disclaimer);
+  section.append(heading, status, summary, support, rawDetails, disclaimer);
   return section;
 }
 
@@ -3871,12 +3883,16 @@ function renderChemicalProfile(profile) {
     ] },
     { key: 'detectors', title: 'Detectors', render: () => createDetailedMonitoringSections(profile) },
     { key: 'reactivity', title: 'Reactivity', render: () => [
-      createProfileSection('Reactivity profile', [
-        { label: 'Incompatibilities', value: profileArray(profile?.reactivity?.incompatibilities).join(' · ') || 'Not available' },
-        { label: 'Polymerization risk', value: profileArray(profile?.reactivity?.polymerizationRisk).join(' · ') || 'Not available' },
-        { label: 'Water reactivity', value: profileArray(profile?.reactivity?.waterReactivity).join(' · ') || 'Not available' },
-        { label: 'Oxidizer / reducer concerns', value: profileArray(profile?.reactivity?.oxidizerReducerConcerns).join(' · ') || 'Not available' },
-      ]),
+      (() => {
+        const section = createProfileSection('Reactivity profile', [
+          { label: 'Incompatibilities', value: profileArray(profile?.reactivity?.incompatibilities).join(' · ') || 'Not available' },
+          { label: 'Polymerization risk', value: profileArray(profile?.reactivity?.polymerizationRisk).join(' · ') || 'Not available' },
+          { label: 'Water reactivity', value: profileArray(profile?.reactivity?.waterReactivity).join(' · ') || 'Not available' },
+          { label: 'Oxidizer / reducer concerns', value: profileArray(profile?.reactivity?.oxidizerReducerConcerns).join(' · ') || 'Not available' },
+        ]);
+        section?.classList.add('chemical-profile-reactivity-compact');
+        return section;
+      })(),
       createProfileSection('Stability and decomposition', [
         { label: 'Overall stability', value: profile?.reactivity?.stabilityNotes || 'Not available' },
         { label: 'Mixing risk', value: profile?.reactivity?.chemicalMixtureReactivity || 'Not available' },
@@ -4033,7 +4049,6 @@ function renderChemicalProfile(profile) {
   }
   const summaryParts = [
     hasMeaningfulChemicalProfileData(profile?.header?.cas) ? `CAS: ${profile.header.cas}` : '',
-    profile?.header?.hazard,
   ].filter(hasMeaningfulChemicalProfileData);
   summaryEl.textContent = summaryParts.join(' · ');
   summaryEl.hidden = summaryParts.length === 0;
@@ -5131,7 +5146,7 @@ function buildPpeStartingReference(record) {
     suitStatus: kappler.length || clothing.length ? readinessStatus.imported : readinessStatus.missing,
     summary: hazMatchBest
       ? 'Kappler HazMatch Best Match for the identified chemical; verify the garment and ensemble against incident conditions.'
-      : 'Imported PPE source text is available, but HazMatIQ does not infer an ensemble level from incomplete source coverage.',
+      : 'Imported PPE source text is available, but HAZSCOPE does not infer an ensemble level from incomplete source coverage.',
     source: `${readinessStatus.imported}: ${hasNiosh ? 'NIOSH NPG' : 'Chemical Companion'}${kappler.length ? ', Kappler HazMatch' : ''}.`,
     details: [
       clothing.length ? `Protective clothing — ${clothing.join('; ')}` : 'Protective clothing level: not specified.',
@@ -6399,6 +6414,15 @@ let threatZoneImpactSummary = null;
 let latestPlumeWeather = null;
 let plumeAutoReplotTimer = null;
 const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
+const plumeFallbackMapStyle = Object.freeze({
+  version: 8,
+  sources: {},
+  layers: [{
+    id: 'plume-fallback-background',
+    type: 'background',
+    paint: { 'background-color': '#0b2f4a' },
+  }],
+});
 const plumeSatelliteSourceId = 'plume-satellite-basemap';
 const plumeSatelliteLayerId = 'plume-satellite-basemap-layer';
 const plumeTerrainSourceId = 'plume-terrain-dem';
@@ -6424,6 +6448,7 @@ let plumeMapViewToken = 0;
 let configuredPlumeBuildingLayers = [];
 let plumeBuildingsVisible = false;
 let plumeMapFallbackInProgress = false;
+let plumeFallbackStyleApplied = false;
 let tactical3dLoaderPromise = null;
 const tactical3dScriptUrl = 'tactical-3d.js?v=photorealistic-1';
 const threatZoneColors = { 3: '#d71920', 2: '#f28c18', 1: '#ffd323' };
@@ -6777,6 +6802,18 @@ function syncPlumeBasemapLayer() {
   );
 }
 
+function applyPlumeFallbackMapStyle(message = 'Street basemap unavailable — using satellite imagery.') {
+  if (!plumeMap || plumeFallbackStyleApplied) return;
+  plumeFallbackStyleApplied = true;
+  try {
+    plumeMap.setStyle(plumeFallbackMapStyle);
+    setText('plume-overlay-status', message);
+  } catch (error) {
+    plumeFallbackStyleApplied = false;
+    setText('plume-overlay-status', error instanceof Error ? error.message : 'The plume map could not initialize.');
+  }
+}
+
 function restorePlumeMapOverlays() {
   // style.load means the style graph is ready for custom sources/layers even
   // while isStyleLoaded() remains false waiting on remote basemap tiles.
@@ -6944,7 +6981,11 @@ function ensurePlumeMap(location = null) {
         }
         resolve();
       };
-      const timeoutId = window.setTimeout(finish, 8000);
+      const timeoutId = window.setTimeout(() => {
+        if (settled) return;
+        applyPlumeFallbackMapStyle();
+        window.setTimeout(finish, 1000);
+      }, 4000);
     plumeMap.once('style.load', finish);
     plumeMap.on('style.load', () => {
       if (plumeViewUses3d() && !enablePlumeTerrain()) {
@@ -6981,6 +7022,10 @@ function ensurePlumeMap(location = null) {
       updateIncidentLocationFromMap(lng, lat, 'Incident pin placed from map click');
     });
     plumeMap.on('error', (event) => {
+      if (!event?.sourceId && event?.error?.message && !plumeFallbackStyleApplied) {
+        applyPlumeFallbackMapStyle();
+        return;
+      }
       if (event?.sourceId === plumeTerrainSourceId || /raster-dem|terrain/i.test(event?.error?.message || '')) {
         fallbackPlumeMapToSatellite('Tactical 3D terrain could not load. Satellite view restored.');
         return;
@@ -7104,7 +7149,7 @@ function plumeResultToGeoJson(result, origin) {
         properties: {
           label: `${zone.thresholdKind}-${zone.thresholdLevel}`,
           zoneId: `modeled-${index}`,
-          source: `EPA AEGL ${result.endpoint?.selectedDurationMinutes || result.inputs?.endpointDurationMinutes || 60}-minute endpoint · HazMatIQ Planning Estimate`,
+          source: `EPA AEGL ${result.endpoint?.selectedDurationMinutes || result.inputs?.endpointDurationMinutes || 60}-minute endpoint · HAZSCOPE Planning Estimate`,
           thresholdKind: zone.thresholdKind,
           thresholdLevel: zone.thresholdLevel,
           threatRank,
@@ -8160,7 +8205,7 @@ async function getIncidentCoordinates({ requestGps = true, allowPlumeManual = fa
   if (entered) return { ...entered, source: 'Incident Dashboard' };
   const incident = getActiveIncident();
   const address = getIncidentAddressValue();
-  const savedAddress = [incident?.address, incident?.city, incident?.state].filter(Boolean).join(', ');
+  const savedAddress = [incident?.address, incident?.city, incident?.state, incident?.zip].filter(Boolean).join(', ');
   const saved = incident?.latitude !== '' && incident?.longitude !== ''
     && incident?.latitude != null && incident?.longitude != null
     ? parseGpsCoordinate(`${incident.latitude}, ${incident.longitude}`) : null;
@@ -9070,7 +9115,7 @@ function updatePlumeEvidenceStatus(result = null) {
     setText('plume-confidence-badge', 'Insufficient Data');
     return;
   }
-  setText('plume-model-mode-badge', result.modelModeLabel || result.display || 'HazMatIQ Planning Estimate');
+  setText('plume-model-mode-badge', result.modelModeLabel || result.display || 'HAZSCOPE Planning Estimate');
   setText('plume-confidence-badge', result.confidenceLevel || result.plumeStatus || 'Requires Review');
   setText('plume-source-strength-badge', result.sourceStrength?.status || (result.mode === 'erg-protective-action' ? 'Not Applicable — ERG Overlay' : 'Requires Review'));
   setText('plume-source-strength-detail', result.sourceStrength
@@ -9331,7 +9376,7 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
     },
     model: {
       modelMode: modeled.result.modelMode || 'HAZMATIQ_PLANNING_ESTIMATE',
-      modelModeLabel: modeled.result.modelModeLabel || 'HazMatIQ Planning Estimate',
+      modelModeLabel: modeled.result.modelModeLabel || 'HAZSCOPE Planning Estimate',
       modelFamily: modeled.result.modelFamily || 'Gaussian neutral gas',
       modelName: modeled.result.modelName || modeled.result.modelMetadata?.modelName || noCurrentDataText,
       formulaName: 'Gaussian plume / puff screening equations',
@@ -9980,16 +10025,51 @@ function applyPlumeNavigationContext(context) {
 }
 
 function openPlumeModel(context = {}) {
-  const normalized = normalizePlumeNavigationContext(context);
+  let normalized;
+  try {
+    normalized = normalizePlumeNavigationContext(context);
+  } catch (error) {
+    console.error('[plume-navigation] context normalization failed; opening the Plume Model without optional context.', error);
+    normalized = {
+      sourcePage: context.sourcePage || activeViewId(),
+      chemicalId: context.chemical?.selectedChemicalId ?? context.chemical?.id ?? null,
+      chemicalName: context.chemical?.name || '',
+      cas: '',
+      un: '',
+      ergGuide: '',
+      incidentId: null,
+      incidentName: '',
+      latitude: null,
+      longitude: null,
+      address: '',
+      releaseData: {},
+      weatherData: {},
+    };
+  }
   plumeNavigationContext = normalized;
   window.HazMatIQ ||= {};
   window.HazMatIQ.plumeNavigationContext = normalized;
   window.HazMatIQ.activePageContext = normalized;
   // This is the only page owner for plume navigation. The skip flag prevents
   // showView from routing back through this initializer.
-  showView('plume', { skipPlumeInitialization: true });
-  applyPlumeNavigationContext(normalized);
-  window.requestAnimationFrame(() => void refreshPlumeWorkspace({ requestGps: true }));
+  try {
+    showView('plume', { skipPlumeInitialization: true });
+  } catch (error) {
+    console.error('[plume-navigation] Plume Model activation failed.', error);
+    return normalized;
+  }
+  window.HazMatIQ.activePageContext = normalized;
+  try {
+    applyPlumeNavigationContext(normalized);
+  } catch (error) {
+    console.error('[plume-navigation] optional context application failed; Plume Model remains open.', error);
+  }
+  const scheduleRefresh = typeof window.requestAnimationFrame === 'function'
+    ? window.requestAnimationFrame.bind(window)
+    : (callback) => window.setTimeout(callback, 0);
+  scheduleRefresh(() => void refreshPlumeWorkspace({ requestGps: true }).catch((error) => {
+    console.error('[plume-navigation] optional Plume Model refresh failed.', error);
+  }));
   return normalized;
 }
 
@@ -10106,7 +10186,7 @@ document.getElementById('open-plume-btn')?.addEventListener('click', () => openP
   chemical: activeChemical,
   chemicalRecord: activeChemicalRecord,
 }));
-document.getElementById('open-guided-response-btn')?.addEventListener('click', openGuidedResponseWorkspace);
+document.getElementById('open-guided-response-btn')?.addEventListener('click', () => void openGuidedResponseWorkspace());
 document.getElementById('guided-open-plume-btn')?.addEventListener('click', openPlumeWorkspace);
 document.getElementById('guided-back-btn')?.addEventListener('click', () => showView('lookup'));
 document.getElementById('guided-save-record-btn')?.addEventListener('click', () => {

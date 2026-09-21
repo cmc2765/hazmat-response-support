@@ -148,7 +148,7 @@ describe("HazMatIQ Command Bar", () => {
     expect(html).toContain('id="command-menu-toggle"');
     expect(html).toContain('id="workspace-navigation-drawer"');
     expect(html).toContain('class="brand-logo-command"');
-    expect(html).toContain('src="assets/hazmatiq-logo-command.png"');
+    expect(html).toContain('src="assets/hazscope-incident-intelligence-response-planning.png?v=1"');
     expect(html).toContain('<span class="command-center-label">Command Dashboard</span>');
     const systemStatus = html.slice(
       html.indexOf('<div class="notification-item notification-system">'),
@@ -203,7 +203,7 @@ describe("HazMatIQ Command Bar", () => {
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
     expect(styles).toMatch(/\.command-header \.brand-logo-command \{[\s\S]*?object-fit: contain;/);
     expect(html).toContain('class="module-btn command-brand-home"');
-    expect(html).toContain('data-view="overview" aria-label="Return to the HazMatIQ Home Page"');
+    expect(html).toContain('data-view="overview" aria-label="Return to the HAZSCOPE Home Page"');
     expect(html).not.toContain('id="notification-details-btn"');
     expect(html).not.toContain('id="notification-ack-btn"');
     expect(html).not.toContain('id="command-smoke-canvas"');
@@ -258,7 +258,7 @@ describe("HazMatIQ Command Bar", () => {
     expect(styles).toContain("gap: 10px;");
     expect(styles).not.toContain("Final Home cascade lock");
     expect(styles).not.toContain("Homepage brand-first sizing and full-width launcher layout");
-    expect(styles).toContain("width: min(1134px, calc(60vw - clamp(8px, 0.7vw, 11px)));");
+    expect(styles).toContain("grid-template-columns: repeat(3, minmax(0, 1fr)) !important;");
     expect(styles).toContain(".workspace-drawer-nav .workspace-home-btn");
     expect(styles).toMatch(/\.workspace-home-btn img \{[\s\S]*?width: min\(270px, 100%\);[\s\S]*?height: 54px;/);
     expect(styles).toContain("height: auto;");

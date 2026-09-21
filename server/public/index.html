@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HazMatIQ Prototype</title>
+    <title>HAZSCOPE Prototype</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
-    <link rel="stylesheet" href="styles.css?v=home-topo-2" />
-    <link rel="stylesheet" href="plume-overrides.css?v=3" />
-    <link rel="stylesheet" href="hero-overrides.css?v=6" />
+    <link rel="stylesheet" href="styles.css?v=hero-logo-static-2" />
+    <link rel="stylesheet" href="plume-overrides.css?v=9" />
+    <link rel="stylesheet" href="hero-overrides.css?v=8" />
     <link rel="stylesheet" href="hazard-id-overrides.css?v=3" />
     <link rel="stylesheet" href="global-ui-overrides.css?v=14" />
-    <link rel="stylesheet" href="incident-overrides.css?v=2" />
+    <link rel="stylesheet" href="incident-overrides.css?v=3" />
     <link rel="stylesheet" href="preplan-overrides.css?v=1" />
-    <link rel="stylesheet" href="chemical-intel.css?v=hazard-profile-panel-24" />
+    <link rel="stylesheet" href="chemical-intel.css?v=hazard-profile-panel-26" />
     <link rel="stylesheet" href="guided-response-overrides.css?v=1" />
     <link rel="stylesheet" href="hazard-profile-page.css?v=1" />
     <link rel="stylesheet" href="page-shell.css?v=1" />
@@ -24,15 +24,15 @@
         <span class="command-header-contours" aria-hidden="true"></span>
         <div class="hazmat-command-identity">
           <div class="brand">
-            <button class="module-btn command-brand-home" id="command-brand-home" type="button" aria-label="Return to the HazMatIQ Home Page" title="Return to HazMatIQ Home">
-              <img class="brand-logo-command" src="assets/hazmatiq-logo-command.png" alt="HazMatIQ — Incident Intelligence" />
+            <button class="module-btn command-brand-home" id="command-brand-home" type="button" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home">
+              <img class="brand-logo-command" src="assets/HAZSCOPE-banner.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
             </button>
           </div>
         </div>
 
         <div class="command-header-footer">
           <section class="notification-center hazmat-command-context" id="notification-center" role="status" aria-live="polite" aria-atomic="false" data-severity="normal">
-            <strong class="notification-center-title sr-only">HazMatIQ Command Status</strong>
+            <strong class="notification-center-title sr-only">HAZSCOPE Command Status</strong>
             <div class="notification-feed">
               <div class="notification-item notification-system">
                 <div class="command-center-launch">
@@ -63,7 +63,7 @@
           <button class="workspace-drawer-close" id="workspace-drawer-close" type="button" aria-label="Close workspace navigation">Close</button>
         </header>
         <nav class="workspace-drawer-nav" aria-label="Workspace navigation">
-          <button class="workspace-drawer-home" type="button" data-view="overview" aria-label="Return to the HazMatIQ Home Page" title="Return to HazMatIQ Home"><img src="assets/hazmatiq-logo-command.png" alt="HazMatIQ" /></button>
+          <button class="workspace-drawer-home" type="button" data-view="overview" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home"><img src="assets/HAZSCOPE-banner.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" /></button>
           <button class="module-btn" data-view="incident">INCIDENT COMMAND</button>
           <button class="module-btn" data-view="lookup">HAZARD ID</button>
           <button class="module-btn" data-view="plume">PLUME MODELING</button>
@@ -137,7 +137,7 @@
                 </section>
               </div>
 
-              <section class="command-promo-grid overview-promo-strip" aria-label="HazMatIQ capability highlights">
+              <section class="command-promo-grid overview-promo-strip" aria-label="HAZSCOPE capability highlights">
                 <article class="overview-promo-box promo-chemical"><span aria-hidden="true">⚗</span><div><strong>Chemical ID</strong><small>Source-backed hazard profiles</small></div></article>
                 <article class="overview-promo-box promo-cbrn"><span aria-hidden="true">☣</span><div><strong>Warfare Agents</strong><small>CBRN identification support</small></div></article>
                 <article class="overview-promo-box promo-rad"><span aria-hidden="true">☢</span><div><strong>Radiological ID</strong><small>Isotope response intelligence</small></div></article>
@@ -273,7 +273,7 @@
 
                 <div class="incident-command-main-grid">
                   <article class="incident-command-panel incident-command-brief-panel">
-                    <h2><span aria-hidden="true">📋</span> Incident Brief <span class="incident-command-panel-actions"><button class="incident-command-panel-action" type="button" data-incident-command-action="chemical-profile">VIEW CHEMICAL PROFILE</button><button class="incident-command-panel-action" type="button" data-incident-command-action="export-package" aria-label="Print or export incident brief" title="Print or export incident brief"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5h-2M7 14h10v7H7z" /></svg></button></span></h2>
+                    <h2><span aria-hidden="true">📋</span><span class="incident-command-panel-title">Incident Brief</span><span class="incident-command-panel-actions"><button class="incident-command-panel-action" type="button" data-incident-command-action="chemical-profile">VIEW CHEMICAL PROFILE</button><button class="incident-command-panel-action" type="button" data-incident-command-action="export-package" aria-label="Print or export incident brief" title="Print or export incident brief"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5h-2M7 14h10v7H7z" /></svg></button></span></h2>
                     <dl id="ic-brief-list" class="incident-command-brief-list"></dl>
                     <div id="ic-chemical-summary" class="incident-command-chemical-summary" aria-live="polite"></div>
                   </article>
@@ -562,7 +562,7 @@
             <header class="hazmat-page-hero variant-chemical hazard-id-page-hero" id="hazard-id-search-hero">
               <span class="hazard-id-hero-atmosphere" aria-hidden="true"></span>
               <div class="hazmat-page-hero-content">
-                <img class="hazard-id-hero-logo" src="assets/hazmatiq-logo-command.png" alt="HazMatIQ — Incident Intelligence" />
+                <img class="hazard-id-hero-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
                 <h1 class="hazmat-hero-title">HAZARD ID</h1>
                 <p class="hazmat-hero-subtitle">Search, Identify, Verify, Respond.</p>
               </div>
@@ -614,6 +614,7 @@
                   <strong>Chemical Profile</strong>
                   <div class="chemical-profile-toolbar-actions">
                     <button class="chemical-action-button chemical-profile-plume" id="open-plume-btn" type="button">PLOT PLUME</button>
+                    <button class="chemical-action-button chemical-profile-guided" id="open-guided-response-btn" type="button">GUIDED RESPONSE</button>
                     <button class="chemical-action-button chem-compare" id="open-chemcompare-btn" type="button">CHEM COMPARE</button>
                   </div>
                 </header>
@@ -734,7 +735,7 @@
           <section id="guided-response" class="view guided-response-page" data-page-root="guided-response" data-page-name="Guided Response">
             <header class="hazmat-page-hero variant-guided-response guided-response-heading">
               <div class="guided-response-brand">
-                <img class="guided-response-logo" src="assets/hazmatiq-logo-transparent.png" alt="HAZMATIQ — Incident Intelligence" />
+                <img class="guided-response-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
                 <div class="hazmat-page-hero-content">
                   <h1 class="hazmat-hero-title">Guided Response</h1>
                   <p class="hazmat-hero-subtitle">Tactical Decision Support.</p>
@@ -968,7 +969,7 @@
               </div>
             </form>
 
-            <section class="plume-compact-card plume-endpoint-card" aria-labelledby="plume-endpoint-card-heading">
+            <section class="plume-compact-card plume-endpoint-card" aria-labelledby="plume-endpoint-card-heading" hidden>
               <header><h3 id="plume-endpoint-card-heading">Endpoint / LOC</h3><strong id="plume-endpoint-badge">Missing</strong></header>
               <p id="plume-endpoint-detail">Select a verified chemical.</p>
               <p id="plume-endpoint-levels">AEGL values appear after source-backed endpoint selection.</p>
@@ -1080,7 +1081,7 @@
                   <div><dt>Terrain Status</dt><dd id="plume-model-terrain-status">Flat-ground planning baseline; no terrain correction is applied.</dd></div>
                 </dl>
                 <div class="plume-planning-notices">
-                  <p>HazMatIQ is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.</p>
+                  <p>HAZSCOPE is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.</p>
                   <p>Plume results are planning estimates only and are not a substitute for field monitoring, official modeling, or Incident Command decision-making.</p>
                   <p>Missing, outdated, or unverified data should be treated as No Current Data Exists until confirmed by an approved source.</p>
                   <p>Weather data source and observation time must be verified. Stale or manually entered weather can significantly affect plume output.</p>
@@ -1176,7 +1177,7 @@
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Monitoring Equipment</h1><p class="hazmat-hero-subtitle">Monitor Readiness, PPE &amp; Field Assets.</p><div class="hazmat-hero-chip-row"><span class="hazmat-hero-chip monitor-simulated-label">Training Data · Simulated</span></div></div>
             </header>
 
-            <p class="monitor-purpose">HazMatIQ uses FirstDue as the future system of record for apparatus, equipment, inspections, calibration, and weekly checks. HazMatIQ tracks which monitors are assigned to this incident, displays readings, and records timestamped monitoring activity for reports.</p>
+            <p class="monitor-purpose">HAZSCOPE uses FirstDue as the future system of record for apparatus, equipment, inspections, calibration, and weekly checks. HAZSCOPE tracks which monitors are assigned to this incident, displays readings, and records timestamped monitoring activity for reports.</p>
 
             <section class="monitor-status-bar" aria-label="Monitoring data status">
               <label>Data Source
@@ -1252,11 +1253,11 @@
 
             <section id="monitor-inventory" class="monitor-tab-panel" role="tabpanel" aria-labelledby="monitor-inventory-tab" hidden>
               <div class="monitor-section-heading">
-                <div><h3>Monitor Inventory / FirstDue Source</h3><p>Reference records used when assigning monitors in HazMatIQ; this is not the official inspection or calibration system.</p></div>
-                <div class="monitor-actions"><button class="monitor-add-btn" id="monitor-add-device" type="button">Add Manual Monitor</button><button type="button" id="monitor-firstdue-import">Import FirstDue Export</button><button type="button" id="monitor-inventory-export">Export HazMatIQ Monitor Inventory</button></div>
+                <div><h3>Monitor Inventory / FirstDue Source</h3><p>Reference records used when assigning monitors in HAZSCOPE; this is not the official inspection or calibration system.</p></div>
+                <div class="monitor-actions"><button class="monitor-add-btn" id="monitor-add-device" type="button">Add Manual Monitor</button><button type="button" id="monitor-firstdue-import">Import FirstDue Export</button><button type="button" id="monitor-inventory-export">Export HAZSCOPE Monitor Inventory</button></div>
               </div>
-              <article class="monitor-source-card"><div><h4>FirstDue Equipment Source</h4><p>FirstDue remains the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HazMatIQ can use manual monitor entries now and may later import approved FirstDue equipment records.</p></div><span class="monitor-state offline">Status: Not Connected</span></article>
-              <p class="monitor-reference-note">Calibration, inspection, and weekly-check records should continue to be maintained in FirstDue according to agency policy. HazMatIQ displays these fields only as reference data when manually entered or imported through approved access.</p>
+              <article class="monitor-source-card"><div><h4>FirstDue Equipment Source</h4><p>FirstDue remains the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HAZSCOPE can use manual monitor entries now and may later import approved FirstDue equipment records.</p></div><span class="monitor-state offline">Status: Not Connected</span></article>
+              <p class="monitor-reference-note">Calibration, inspection, and weekly-check records should continue to be maintained in FirstDue according to agency policy. HAZSCOPE displays these fields only as reference data when manually entered or imported through approved access.</p>
               <p class="monitor-form-status" id="monitor-firstdue-status" role="status"></p>
               <section class="monitor-saved-inventory" id="monitor-saved-inventory" hidden>
                 <div class="monitor-inventory-label"><h4>Saved Monitor Inventory</h4><span>Stored on this device</span></div>
@@ -1333,10 +1334,10 @@
                 <span class="monitor-state caution">Pending SDK/API</span>
                 <p class="safety-suite-message">Official Honeywell Safety Suite SDK/API connection not configured. Add approved Honeywell web-service credentials or SDK access to enable live AreaRAE readings.</p>
                 <ul class="safety-suite-checklist">
-                  <li>Confirm AreaRAE monitors appear in Safety Suite</li><li>Obtain official Honeywell SDK/API documentation</li><li>Obtain approved credentials</li><li>Build secure backend adapter</li><li>Stream live readings into HazMatIQ</li><li>Save significant readings to Monitor Activity Log</li><li>Push monitor readings/locations to Live Map</li>
+                  <li>Confirm AreaRAE monitors appear in Safety Suite</li><li>Obtain official Honeywell SDK/API documentation</li><li>Obtain approved credentials</li><li>Build secure backend adapter</li><li>Stream live readings into HAZSCOPE</li><li>Save significant readings to Monitor Activity Log</li><li>Push monitor readings/locations to Live Map</li>
                 </ul>
                 <p class="monitor-placeholder-note">No live connection is attempted by this Phase 2 page.</p>
-              </article><article class="safety-suite-card"><div><p class="eyebrow">Integration status</p><h3>FirstDue Equipment / Apparatus Source</h3></div><span class="monitor-state offline">Pending approved access</span><p class="safety-suite-message">FirstDue is the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HazMatIQ should use approved FirstDue API/export access only. No scraping or login automation.</p><ul class="safety-suite-checklist"><li>Confirm approved export format</li><li>Map FirstDue equipment fields to HazMatIQ monitor records</li><li>Import approved CSV/JSON export</li><li>Keep readiness data reference-only</li><li>Keep official inspection/calibration records in FirstDue</li></ul><p class="monitor-placeholder-note">No FirstDue connection is attempted by this page.</p></article></div>
+              </article><article class="safety-suite-card"><div><p class="eyebrow">Integration status</p><h3>FirstDue Equipment / Apparatus Source</h3></div><span class="monitor-state offline">Pending approved access</span><p class="safety-suite-message">FirstDue is the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HAZSCOPE should use approved FirstDue API/export access only. No scraping or login automation.</p><ul class="safety-suite-checklist"><li>Confirm approved export format</li><li>Map FirstDue equipment fields to HAZSCOPE monitor records</li><li>Import approved CSV/JSON export</li><li>Keep readiness data reference-only</li><li>Keep official inspection/calibration records in FirstDue</li></ul><p class="monitor-placeholder-note">No FirstDue connection is attempted by this page.</p></article></div>
             </section>
           </section>
 
@@ -1428,7 +1429,7 @@
 
           <section id="source" class="view sources-page" data-page-root="sources" data-page-name="Sources">
             <header class="hazmat-page-hero variant-about">
-              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">About HazMatIQ</h1><p class="hazmat-hero-subtitle">Incident Intelligence &amp; Source Transparency.</p></div>
+              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">About HAZSCOPE</h1><p class="hazmat-hero-subtitle">Incident Intelligence &amp; Source Transparency.</p></div>
             </header>
             <div class="panel-card">
               <div class="chemical-card-header">
@@ -1439,7 +1440,7 @@
                 <li><span>CAMEO Chemicals</span><strong>Bundled chemical and reactivity records</strong></li>
                 <li><span>NIOSH Pocket Guide</span><strong>Bundled exposure and physical-property records</strong></li>
                 <li><span>ERG 2024</span><strong>Guide and Table 1 response data</strong></li>
-                <li><span>HazMatIQ plume model</span><strong>Backend threshold isopleths rendered as GIS polygons</strong></li>
+                <li><span>HAZSCOPE plume model</span><strong>Backend threshold isopleths rendered as GIS polygons</strong></li>
                 <li><span>Planning Plume</span><strong>Source-backed AEGL endpoints with ERG fallback</strong></li>
               </ul>
             </div>
@@ -1458,7 +1459,7 @@
     <script src="weather-radar-providers.js"></script>
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
-    <script src="script.js?v=chemical-profile-hotfix-1"></script>
+    <script src="script.js?v=chemical-profile-hotfix-3"></script>
     <script src="incident-command.js"></script>
     <script src="hazard-profile.js"></script>
     <script src="reports.js"></script>

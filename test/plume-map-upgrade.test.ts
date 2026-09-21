@@ -29,7 +29,8 @@ describe('Plume Model first-class map upgrade', () => {
     expect(script).toContain("plumeMap.setTerrain({ source: plumeTerrainSourceId, exaggeration: 1.05 })");
     expect(script).toContain('const cameraBeforeSwitch = plumeMap ?');
     expect(script).toContain("if (!cameraBeforeSwitch && activeZones?.features?.length)");
-    expect(script).not.toContain('plumeMap.setStyle(');
+    expect(script).toContain('applyPlumeFallbackMapStyle');
+    expect(script).toContain('const plumeFallbackMapStyle');
     const setView = script.slice(script.indexOf('async function setPlumeMapView'), script.indexOf('async function clearThreatZones'));
     expect(setView).not.toContain('runBackendPlume(');
     expect(setView).not.toContain('plotPlumeFromControls(');
@@ -80,6 +81,19 @@ describe('Plume Model first-class map upgrade', () => {
     expect(script).toContain("https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/");
     expect(html).toContain('id="plume-tactical-attribution"');
     expect(tactical3d).toContain("Photorealistic Tactical 3D unavailable — using Satellite.");
+  });
+
+  it('keeps release and weather panels dark outside with consistent white entry controls', () => {
+    expect(html).toContain('plume-overrides.css?v=9');
+    expect(plumeStyles).toContain('#plume.view.active .plume-control-column .plume-model-section');
+    expect(plumeStyles).toContain('background: linear-gradient(180deg, #102a43 0%, #0a2036 100%) !important;');
+    expect(plumeStyles).toContain('#plume.view.active .plume-release-grid .plume-model-field input:not([type="checkbox"]):not([type="file"]),');
+    expect(plumeStyles).toContain('background: #fff !important;');
+    expect(plumeStyles).toContain('grid-template-columns: repeat(2, minmax(0, 1fr)) !important;');
+  });
+
+  it('removes the Endpoint / LOC card from the visible left control column', () => {
+    expect(html).toContain('class="plume-compact-card plume-endpoint-card" aria-labelledby="plume-endpoint-card-heading" hidden');
   });
 
   it('lazy-loads one Cesium viewer, preserves operational markers, and supports camera actions', () => {

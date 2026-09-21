@@ -105,7 +105,7 @@ describe("Chemical Profile UI system", () => {
     for (const tab of ["Overview", "Properties", "Exposures", "PPE & Monitoring", "Response", "Medical", "Decon", "Sources"]) {
       expect(script).toContain(`['${tab}'`);
     }
-    for (const actionId of ["open-plume-btn", "open-chemcompare-btn", "chemical-profile-back-btn"]) {
+    for (const actionId of ["open-plume-btn", "open-guided-response-btn", "open-chemcompare-btn", "chemical-profile-back-btn"]) {
       expect(html).toContain(`id="${actionId}"`);
     }
   });
@@ -169,6 +169,7 @@ describe("Chemical Profile UI system", () => {
     }
     expect(script).toContain('function createChemmMedicalEmbed(profile)');
     expect(script).toContain("createProfileSection('Entry Cautions'");
+    expect(script).toContain("CHEMM opens in a separate window for browser compatibility.");
     expect(script).toContain("createProfileSection('Source Traceability', chemicalProfileSources(profile), true)");
     expect(script).toContain('content.replaceChildren(fragment);');
     expect(styles).toContain('.chemical-profile-content-card');
@@ -189,7 +190,7 @@ describe("Chemical Profile UI system", () => {
 
   it("uses the reference toolbar, light-grey search field and built-in profile icons", () => {
     expect(html).toContain('class="chemical-profile-toolbar"');
-    expect(html).toMatch(/id="open-plume-btn"[^>]*>PLOT PLUME<\/button>\s*<button[^>]*id="open-chemcompare-btn"/s);
+    expect(html).toMatch(/id="open-plume-btn"[^>]*>PLOT PLUME<\/button>[\s\S]*id="open-chemcompare-btn"/s);
     expect(styles).toContain('#chemical-id-results .chemical-profile-toolbar');
     expect(styles).toContain('background: #d7dce1;');
     expect(script).toContain('function createChemicalProfileIcon');
