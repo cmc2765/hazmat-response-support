@@ -8806,7 +8806,7 @@ body.workspace-drawer-open { overflow: hidden; }
     border: 1px solid var(--border);
     border-radius: 14px;
     background: var(--panel);
-    overflow: hidden;
+    overflow: visible;
   }
 
   #plume .plume-model-section:first-child {
@@ -8879,9 +8879,7 @@ body.workspace-drawer-open { overflow: hidden; }
 
   #plume .plume-model-section { padding: 8px; }
   #plume section.plume-model-section {
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    gap: 6px;
+    display: block;
   }
   #plume .plume-model-section-heading {
     display: grid;
@@ -8903,9 +8901,7 @@ body.workspace-drawer-open { overflow: hidden; }
   }
   #plume section.plume-model-section > .plume-model-section-grid {
     min-height: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-gutter: stable;
+    overflow: visible;
   }
   #plume section.plume-model-section .container-profile { display: grid; }
   #plume .plume-model-section > summary {
@@ -8927,15 +8923,12 @@ body.workspace-drawer-open { overflow: hidden; }
     line-height: 1.25;
   }
   #plume .plume-model-section[open] {
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    gap: 6px;
+    display: block;
   }
   #plume .plume-model-section[open] > .plume-model-section-grid,
   #plume .plume-model-section[open] > .plume-card-details {
     min-height: 0;
-    overflow-y: auto;
-    scrollbar-gutter: stable;
+    overflow: visible;
   }
   #plume .plume-model-section .demographics-summary,
   #plume .plume-model-section .demographics-source-status { margin: 0 0 6px; font-size: 0.7rem; }
@@ -8993,14 +8986,10 @@ body.workspace-drawer-open { overflow: hidden; }
     overflow: visible;
   }
 
-  #plume #plume-demographics,
-  #plume .plume-model-section:first-child {
+  #plume #plume-demographics {
     grid-row: 1;
     width: 100%;
-    height: 440px;
-    max-height: 440px;
     box-sizing: border-box;
-    overflow: hidden;
   }
 
   #plume .plume-model-section:first-child { grid-column: 1; }
@@ -9017,13 +9006,7 @@ body.workspace-drawer-open { overflow: hidden; }
     padding: 8px;
   }
 
-  #plume .plume-lower-card-content,
-  #plume section.plume-model-section > .plume-model-section-grid {
-    min-height: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-gutter: stable;
-  }
+  #plume .plume-lower-card-content { min-height: 0; }
 
   #plume #plume-demographics[open] {
     display: grid;

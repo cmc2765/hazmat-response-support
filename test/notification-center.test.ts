@@ -6,8 +6,9 @@ const styles = readFileSync(new URL("../server/public/styles.css", import.meta.u
 const script = readFileSync(new URL("../server/public/script.js", import.meta.url), "utf8");
 
 describe("HazMatIQ Command Bar", () => {
-  it("integrates compact tactical status into the global command bar", () => {
+  it("places the live tactical status in the homepage status bar", () => {
     expect(html).toContain('class="topbar hazmat-command-bar command-header"');
+    expect(html).toContain('class="home-status-bar"');
     expect(html).toContain('id="notification-center"');
     expect(html).toContain('class="notification-center hazmat-command-context"');
     expect(html).toContain("<span>System</span>");
@@ -149,12 +150,13 @@ describe("HazMatIQ Command Bar", () => {
     expect(html).toContain('id="workspace-navigation-drawer"');
     expect(html).toContain('class="brand-logo-command"');
     expect(html).toContain('src="assets/hazscope-incident-intelligence-response-planning.png?v=1"');
-    expect(html).toContain('<span class="command-center-label">Command Dashboard</span>');
-    const systemStatus = html.slice(
-      html.indexOf('<div class="notification-item notification-system">'),
-      html.indexOf('<div class="notification-item notification-weather-item">'),
+    const commandHeader = html.slice(
+      html.indexOf('<header class="topbar hazmat-command-bar command-header">'),
+      html.indexOf('</header>'),
     );
-    expect(systemStatus).toContain('id="command-menu-toggle"');
+    expect(commandHeader).toContain('class="command-menu-toggle global-command-menu-toggle"');
+    expect(commandHeader).not.toContain('id="notification-center"');
+    expect(html).toContain('class="notification-system-message" id="tactical-alert-message"');
     expect(html).not.toContain('id="command-bar-mode"');
     expect(html).not.toContain('class="department-logo-link"');
     expect(html).not.toContain('id="command-profile-control"');

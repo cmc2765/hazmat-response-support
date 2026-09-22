@@ -87,17 +87,15 @@
   grid-template-columns: minmax(280px, 23fr) minmax(0, 54fr) minmax(280px, 23fr);
   gap: 12px;
   min-height: 0;
-  align-items: stretch;
+  align-items: start;
   box-sizing: border-box;
 }
 #plume.view.active .plume-v2-workspace > .plume-v2-input-column { grid-column: 1; min-width: 0; min-height: 0; }
 #plume.view.active .plume-v2-workspace > .plume-v2-map-column { grid-column: 2; min-width: 0; min-height: 0; }
 #plume.view.active .plume-v2-workspace > .plume-v2-intelligence-column { grid-column: 3; min-width: 0; min-height: 0; }
-#plume.view.active .plume-v2-input-column,
-#plume.view.active .plume-v2-intelligence-column { overflow: auto; scrollbar-gutter: stable; }
-#plume.view.active .plume-v2-input-column { display: flex; flex-direction: column; gap: 10px; }
-#plume.view.active .plume-v2-map-column { display: flex; flex-direction: column; }
-#plume.view.active .plume-v2-intelligence-column { display: flex; flex-direction: column; gap: 10px; }
+#plume.view.active .plume-v2-input-column { display: flex; flex-direction: column; align-self: start; gap: 10px; height: auto; max-height: none; overflow: visible; }
+#plume.view.active .plume-v2-map-column { display: flex; flex-direction: column; align-self: start; }
+#plume.view.active .plume-v2-intelligence-column { display: flex; flex-direction: column; gap: 10px; max-height: none; overflow: visible; }
 
 #plume.view.active .plume-model-controls {
   display: block;
@@ -107,7 +105,7 @@
   background: transparent;
   box-shadow: none;
 }
-#plume.view.active .plume-model-input-grid { display: flex; flex-direction: column; gap: 10px; }
+#plume.view.active .plume-model-input-grid { display: flex; flex-direction: column; gap: 10px; min-height: 0; overflow: visible; }
 #plume.view.active .plume-model-input-grid > .plume-model-section { order: 0; }
 #plume.view.active .plume-model-section {
   box-sizing: border-box;
@@ -117,7 +115,11 @@
   border-radius: 10px;
   background: linear-gradient(180deg, #0b2943, #061a2e);
   color: #f8fafc;
+  height: auto;
+  max-height: none;
 }
+#plume.view.active .plume-model-section:first-child,
+#plume.view.active .plume-model-section:first-child > .plume-model-section-grid { overflow: visible; }
 #plume.view.active .plume-model-section-heading {
   display: grid;
   grid-template-columns: 34px minmax(0, 1fr) auto;
@@ -193,6 +195,7 @@
 #plume.view.active .plume-model-field input:not([type="checkbox"]):not([type="file"]),
 #plume.view.active .plume-model-field select { box-sizing: border-box; width: 100%; min-width: 0; min-height: 35px; margin-top: 4px; border: 1px solid #9db2c4; border-radius: 6px; background: #fff; color: #061a2e; font-size: 14px; }
 #plume.view.active .plume-model-field input[type="number"] { padding-right: 28px; }
+#plume.view.active #plume-release-duration-field input { padding-right: 32px; }
 #plume.view.active .plume-model-field small { color: #9fb8cb; font-size: 10px; }
 #plume.view.active .plume-chemical-search,
 #plume.view.active .plume-linked-input,
@@ -263,25 +266,97 @@
 #plume.view.active .plume-left-plot-button:hover,
 #plume.view.active .plume-left-plot-button:focus-visible { border-color: #ffd323; background: linear-gradient(180deg, #ff3942, #d71920); }
 
-#plume.view.active .plume-v2-map-card { display: flex; min-height: 620px; flex: 1 1 auto; flex-direction: column; overflow: hidden; border: 1px solid #1d648f; border-radius: 10px; background: #020f1d; }
-#plume.view.active .plume-v2-location-toolbar { display: grid; grid-template-columns: minmax(200px, 1fr) repeat(4, auto); gap: 8px; align-items: end; padding: 10px; border-bottom: 1px solid #1d648f; }
+#plume.view.active .plume-v2-map-card { display: flex; min-height: 0; flex: 0 0 auto; flex-direction: column; overflow: hidden; border: 1px solid #1d648f; border-radius: 10px; background: #020f1d; }
+
+/* The map toolbar is one control surface: a wide location anchor followed by
+   four equally weighted actions. */
+#plume.view.active .plume-v2-location-toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.6fr) repeat(4, minmax(112px, .82fr));
+  gap: 8px;
+  align-items: end;
+  padding: 12px;
+  border-bottom: 1px solid #1d648f;
+  background: linear-gradient(180deg, rgba(8, 37, 61, .78), rgba(2, 15, 29, .82));
+}
 #plume.view.active .plume-location-field { min-width: 0; }
-#plume.view.active .plume-location-field > span { display: block; color: #b9d1df; font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
-#plume.view.active .plume-location-input { box-sizing: border-box; width: 100%; min-height: 41px; margin-top: 4px; padding: 8px 10px; border: 1px solid #43799e; border-radius: 6px; background: #102a43; color: #fff; font-size: 15px; }
+#plume.view.active .plume-location-field > span {
+  display: block;
+  margin-bottom: 5px;
+  color: #b9d1df;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+#plume.view.active .plume-location-input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+  margin: 0;
+  padding: 8px 11px;
+  border: 1px solid #43799e;
+  border-radius: 6px;
+  background: #102a43;
+  color: #fff;
+  font-size: 14px;
+}
 #plume.view.active .plume-map-button,
-#plume.view.active .plume-layer-button { min-height: 41px; padding: 8px 12px; border: 1px solid #2672a5; border-radius: 6px; background: #09233b; color: #f8fafc; font-size: 12px; font-weight: 850; }
+#plume.view.active .plume-layer-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid #2672a5;
+  border-radius: 6px;
+  background: #09233b;
+  color: #f8fafc;
+  font-size: clamp(11px, .72vw, 13px);
+  font-weight: 850;
+  line-height: 1.15;
+  text-align: center;
+}
 #plume.view.active .plume-map-button.primary { border-color: #ff3942; background: #df1824; }
-#plume.view.active .plume-v2-map-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; padding: 9px 10px; border-bottom: 1px solid #1d648f; }
+
+/* The three lower groups are equal tactical blocks with the same header,
+   button rhythm, and framing. */
+#plume.view.active .plume-v2-map-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  align-items: stretch;
+  padding: 10px 12px 12px;
+  border-bottom: 1px solid #1d648f;
+}
 #plume.view.active .plume-map-mode-controls,
 #plume.view.active .plume-map-layer-controls,
-#plume.view.active .plume-map-action-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; min-width: 0; }
-#plume.view.active .plume-map-control-label { flex-basis: 100%; color: #a9c5d7; font-size: 10px; font-weight: 950; letter-spacing: .08em; }
-#plume.view.active .plume-layer-button { width: auto; flex: 0 0 auto; min-height: 40px; padding: 0 14px; white-space: nowrap; }
+#plume.view.active .plume-map-action-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid rgba(45, 125, 165, .72);
+  border-radius: 8px;
+  background: rgba(8, 37, 61, .72);
+}
+#plume.view.active .plume-map-control-label {
+  grid-column: 1 / -1;
+  color: #a9c5d7;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: .1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+#plume.view.active .plume-layer-button { white-space: normal; }
 #plume.view.active .plume-layer-button.active { border-color: #ffd323; background: #ffd323; color: #061a2e; }
-#plume.view.active .plume-map-shell { position: relative; flex: 1 1 auto; min-height: 620px; height: auto; }
+#plume.view.active .plume-layer-button:disabled { cursor: not-allowed; opacity: .52; }
+#plume.view.active .plume-map-shell { position: relative; flex: 0 0 auto; width: 100%; height: clamp(420px, 62vh, 720px); min-height: 420px; max-height: 720px; }
 #plume.view.active .plume-map-frame { position: absolute; inset: 0; width: 100%; height: 100%; }
 #plume.view.active #plume-gis-map,
-#plume.view.active #plume-tactical-3d-map { min-height: 620px; }
+#plume.view.active #plume-tactical-3d-map { min-height: 0; }
 #plume.view.active .plume-map-shell .plume-tactical-3d-frame { overflow: hidden; background: #071522; }
 #plume.view.active .plume-map-shell .cesium-viewer,
 #plume.view.active .plume-map-shell .cesium-widget,
@@ -363,21 +438,18 @@
   padding: 0 !important;
 }
 
-@media (max-width: 1199px) and (min-width: 951px) {
+@media (max-width: 1300px) and (min-width: 951px) {
   #plume.view.active .plume-v2-workspace { grid-template-columns: minmax(220px, 20fr) minmax(0, 60fr) minmax(220px, 20fr); }
-  #plume.view.active .plume-v2-location-toolbar { grid-template-columns: minmax(170px, 1fr) repeat(4, minmax(74px, auto)); }
+  #plume.view.active .plume-v2-location-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   #plume.view.active .plume-v2-header { grid-template-columns: 1fr; min-height: 174px; }
   #plume.view.active .plume-v2-header-context { min-height: 64px; }
-  #plume.view.active .plume-v2-location-toolbar { grid-template-columns: 1fr 1fr 1fr; }
   #plume.view.active .plume-location-field { grid-column: 1 / -1; }
 }
 @media (max-width: 950px) {
   #plume.view.active { overflow: visible; }
   #plume.view.active .plume-v2-workspace { grid-template-columns: 1fr; }
-  #plume.view.active .plume-v2-input-column,
-  #plume.view.active .plume-v2-intelligence-column { overflow: visible; }
-  #plume.view.active .plume-v2-map-column { min-height: 680px; }
-  #plume.view.active .plume-map-shell { min-height: 620px; }
+  #plume.view.active .plume-v2-map-column { min-height: 0; }
+  #plume.view.active .plume-map-shell { height: clamp(400px, 55vh, 580px); min-height: 400px; max-height: 580px; }
 }
 @media (max-width: 620px) {
   #plume.view.active .plume-v2-header { grid-template-columns: 1fr; padding: 12px; }
@@ -391,5 +463,6 @@
   #plume.view.active .plume-weather-grid > * { grid-column: 1 !important; }
   #plume.view.active .plume-v2-location-toolbar { grid-template-columns: 1fr 1fr; }
   #plume.view.active .plume-location-field { grid-column: 1 / -1; }
-  #plume.view.active .plume-v2-map-column { min-height: 620px; }
+  #plume.view.active .plume-v2-map-column { min-height: 0; }
+  #plume.view.active .plume-map-shell { height: clamp(360px, 52vh, 520px); min-height: 360px; max-height: 520px; }
 }

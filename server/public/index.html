@@ -43,8 +43,8 @@
           <button class="module-btn app-nav-item" type="button" data-view="map" aria-label="Open Live Map">
             <span class="app-nav-icon" aria-hidden="true">⌖</span><span class="app-nav-label">Live Map</span>
           </button>
-          <button class="module-btn app-nav-item" type="button" data-view="incident" aria-label="Open Incident Command">
-            <span class="app-nav-icon" aria-hidden="true">✣</span><span class="app-nav-label">Incident Command</span>
+          <button class="module-btn app-nav-item" type="button" data-view="incident" aria-label="Open Command">
+            <span class="app-nav-icon" aria-hidden="true">✣</span><span class="app-nav-label">COMMAND</span>
           </button>
           <button class="module-btn app-nav-item" type="button" data-view="report" aria-label="Open Reports">
             <span class="app-nav-icon" aria-hidden="true">▤</span><span class="app-nav-label">Reports</span>
@@ -62,31 +62,7 @@
             <span class="app-nav-icon" aria-hidden="true">⚙</span><span class="app-nav-label">Settings</span>
           </button>
         </nav>
-
-        <div class="command-header-footer">
-          <section class="notification-center hazmat-command-context" id="notification-center" role="status" aria-live="polite" aria-atomic="false" data-severity="normal">
-            <strong class="notification-center-title sr-only">HAZSCOPE Command Status</strong>
-            <div class="notification-feed">
-              <div class="notification-item notification-system">
-                <div class="command-center-launch">
-                  <button class="command-menu-toggle" id="command-menu-toggle" type="button" aria-label="Open additional module navigation" aria-controls="workspace-navigation-drawer" aria-expanded="false"><span></span><span></span><span></span></button>
-                  <span class="command-center-label">Command Dashboard</span>
-                </div>
-                <div class="notification-system-heading"><span>System</span><time class="notification-updated" id="notification-updated" aria-label="Current 24-hour time">00:00:00</time></div>
-                <strong class="notification-system-message" id="tactical-alert-message">System Normal</strong>
-              </div>
-              <div class="notification-item notification-weather-item">
-                <span>Weather</span>
-                <strong id="notification-weather">Awaiting live weather data</strong>
-              </div>
-              <div class="notification-item">
-                <span>Alerts</span>
-                <strong id="notification-monitoring">No Alerts Found</strong>
-              </div>
-            </div>
-            <button class="notification-alert-count" id="notification-alert-count" type="button" aria-haspopup="dialog" aria-controls="notification-drawer">Alerts: 0</button>
-          </section>
-        </div>
+        <button class="command-menu-toggle global-command-menu-toggle" id="command-menu-toggle" type="button" aria-label="Open additional module navigation" aria-controls="workspace-navigation-drawer" aria-expanded="false"><span></span><span></span><span></span></button>
       </header>
 
       <div class="workspace-drawer-backdrop" id="workspace-drawer-backdrop" hidden></div>
@@ -183,6 +159,27 @@
                 <article class="overview-promo-box promo-reports"><span aria-hidden="true">▣</span><div><strong>ICS Reports</strong><small>Forms, exports, and archives</small></div></article>
               </section>
             </article>
+          </section>
+
+          <section class="home-status-bar" aria-label="Dashboard operational status">
+            <section class="notification-center hazmat-command-context" id="notification-center" role="status" aria-live="polite" aria-atomic="false" data-severity="normal">
+              <strong class="notification-center-title sr-only">HAZSCOPE Command Status</strong>
+              <div class="notification-feed">
+                <div class="notification-item notification-system">
+                  <div class="notification-system-heading"><span>System</span><time class="notification-updated" id="notification-updated" aria-label="Current 24-hour time">00:00:00</time></div>
+                  <strong class="notification-system-message" id="tactical-alert-message">System Normal</strong>
+                </div>
+                <div class="notification-item notification-weather-item">
+                  <span>Weather</span>
+                  <strong id="notification-weather">Awaiting live weather data</strong>
+                </div>
+                <div class="notification-item notification-alerts-item">
+                  <span>Alerts</span>
+                  <strong id="notification-monitoring">No Alerts Found</strong>
+                  <button class="notification-alert-count" id="notification-alert-count" type="button" aria-haspopup="dialog" aria-controls="notification-drawer">Alerts: 0</button>
+                </div>
+              </div>
+            </section>
           </section>
 
           <section id="planning-tools" class="view planning-page" data-page-root="planning" data-page-name="Planning">
@@ -890,7 +887,7 @@
                     </label>
                     <label class="plume-model-field plume-required-field" id="plume-release-duration-field" for="plume-release-duration">
                       <span class="plume-required-label">Release duration (minutes) <b>Required</b></span>
-                      <input id="plume-release-duration" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="Required in minutes" />
+                      <input id="plume-release-duration" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="Required" />
                     </label>
                     <label class="plume-model-field" for="plume-release-height">
                       <span>Release height (ft) <b class="plume-optional-label">Optional</b></span>

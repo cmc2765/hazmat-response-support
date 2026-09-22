@@ -1593,6 +1593,7 @@ function clearActiveIncidentState() {
   notificationWeatherLocation = null;
   plumeIncidentLocation = null;
   plumeManualLocation = null;
+  plumeLocationSelectionLocked = false;
   currentThreatZoneGeoJson = null;
   currentThreatZoneGuideGeoJson = null;
   currentErgIsolationGeoJson = null;
@@ -6494,6 +6495,7 @@ let plumeMap = null;
 let plumeMapReady = null;
 let plumeSourceMarker = null;
 let plumeIncidentLocation = null;
+let plumeLocationSelectionLocked = false;
 let currentThreatZoneGeoJson = null;
 let currentThreatZoneGuideGeoJson = null;
 let currentErgIsolationGeoJson = null;
@@ -6562,11 +6564,9 @@ const threatZoneColorNames = { 3: 'red', 2: 'orange', 1: 'yellow' };
 function getTactical3dState() {
   const incident = getActiveIncident();
   const coordinateInput = parseGpsCoordinate(document.getElementById('incident-coordinates-input')?.value);
-  const incidentLocation = plumeIncidentLocation || coordinateInput || (
-    incident?.latitude !== '' && incident?.longitude !== '' && incident?.latitude != null && incident?.longitude != null
-      ? { lat: Number(incident.latitude), lon: Number(incident.longitude), source: 'Saved incident location' }
-      : null
-  );
+  const incidentLocation = normalizePlumeLocation(plumeIncidentLocation)
+    || coordinateInput
+    || normalizePlumeLocation({ lat: incident?.latitude, lon: incident?.longitude, source: 'Saved incident location' });
   const releasePoint = plumeSourceMarker?.getLngLat?.();
   const operationalMarkers = [
     ...(liveMapState?.markers || []),
@@ -7032,16 +7032,18 @@ async function toggleErgIsolationOverlay() {
 }
 
 function updateIncidentLocationFromMap(lng, lat, action) {
+  const location = normalizePlumeLocation({ lat, lon: lng, source: 'Map release pin' });
+  if (!location) return;
   const input = document.getElementById('incident-coordinates-input');
-  if (input) input.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-  setIncidentStatus(`${action}: ${lat.toFixed(6)}, ${lng.toFixed(6)}. Updating plume…`);
+  if (input) input.value = `${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}`;
+  setIncidentStatus(`${action}: ${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}. Updating plume…`);
   if (hasActiveIncident()) saveIncidentBrief({ quiet: true });
-  plumeSourceMarker?.setLngLat([lng, lat]);
-  const location = { lat, lon: lng, source: 'Map release pin' };
+  plumeSourceMarker?.setLngLat([location.lon, location.lat]);
+  plumeLocationSelectionLocked = true;
   plumeIncidentLocation = location;
   syncTactical3dState();
   if (activePlumeCommand) {
-    setText('plume-gps-summary', `${lat.toFixed(6)}, ${lng.toFixed(6)}`);
+    setText('plume-gps-summary', `${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}`);
     setText('plume-location-source', location.source);
     window.clearTimeout(plumeAutoReplotTimer);
     plumeAutoReplotTimer = window.setTimeout(() => {
@@ -7054,14 +7056,15 @@ function updateIncidentLocationFromMap(lng, lat, action) {
 
 function ensurePlumeMap(location = null) {
   if (!window.maplibregl) throw new Error('The local GIS map library did not load.');
+  const validLocation = normalizePlumeLocation(location);
   updatePlumeMapViewButtons();
   if (!plumeMap) {
     const initialViewName = activePlumeMapView === 'tactical' ? 'satellite' : activePlumeMapView;
     const view = plumeMapViews[initialViewName] || plumeMapViews.satellite;
     plumeMap = new window.maplibregl.Map({
       container: 'plume-gis-map',
-      center: location ? [location.lon, location.lat] : [-98.5, 39.5],
-      zoom: location ? 13 : 3,
+      center: validLocation ? [validLocation.lon, validLocation.lat] : [-98.5, 39.5],
+      zoom: validLocation ? 13 : 3,
       style: view.style,
       pitch: view.pitch,
       bearing: view.bearing,
@@ -7141,16 +7144,19 @@ function ensurePlumeMap(location = null) {
   plumeMap.resize();
   updatePlumeCompass();
   // A regional preview is not an incident location: do not place a release pin yet.
-  if (!location) return plumeMapReady;
-  plumeIncidentLocation = { lat: location.lat, lon: location.lon, source: location.source };
-  plumeMap.easeTo({ center: [location.lon, location.lat], zoom: Math.max(13, plumeMap.getZoom()), duration: 400 });
+  if (!validLocation) return plumeMapReady;
+  // A late GPS response must not move the map after the responder has chosen
+  // a release point or explicitly loaded the incident location.
+  if (plumeLocationSelectionLocked && validLocation.source === 'Current device GPS') return plumeMapReady;
+  plumeIncidentLocation = validLocation;
+  plumeMap.easeTo({ center: [validLocation.lon, validLocation.lat], zoom: Math.max(13, plumeMap.getZoom()), duration: 400 });
   if (!plumeSourceMarker) {
     plumeSourceMarker = new window.maplibregl.Marker({
       color: '#d71920',
       draggable: true,
       className: 'plume-source-marker',
     })
-      .setLngLat([location.lon, location.lat])
+      .setLngLat([validLocation.lon, validLocation.lat])
       .setPopup(new window.maplibregl.Popup().setText('Release source — drag pin to adjust'))
       .addTo(plumeMap);
     plumeSourceMarker.on('dragstart', () => {
@@ -7161,7 +7167,7 @@ function ensurePlumeMap(location = null) {
       updateIncidentLocationFromMap(lng, lat, 'Incident pin moved');
     });
   } else {
-    plumeSourceMarker.setLngLat([location.lon, location.lat]);
+    plumeSourceMarker.setLngLat([validLocation.lon, validLocation.lat]);
   }
   syncTactical3dState();
   return plumeMapReady;
@@ -8241,20 +8247,42 @@ function parseGpsCoordinate(value) {
   if (!match) return null;
   const lat = Number(match[1]);
   const lon = Number(match[2]);
-  if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) return null;
+  if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180 || (lat === 0 && lon === 0)) return null;
   return { lat, lon };
+}
+
+function normalizePlumeLocation(location) {
+  if (!location || typeof location !== 'object') return null;
+  const lat = Number(location.lat ?? location.latitude);
+  const lon = Number(location.lon ?? location.longitude ?? location.lng);
+  if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180 || (lat === 0 && lon === 0)) return null;
+  return { ...location, lat, lon };
+}
+
+function getGpsErrorMessage(error) {
+  if (error?.code === 1) return 'Browser GPS permission was denied.';
+  if (error?.code === 2) return 'Browser GPS is unavailable at this location.';
+  if (error?.code === 3) return 'Browser GPS timed out before a fix was received.';
+  return error instanceof Error ? error.message : 'Browser GPS could not provide a valid location.';
 }
 
 function getCurrentGps() {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
-      reject(new Error('GPS is not supported by this device.'));
+      reject(new Error('Browser GPS is not supported by this device.'));
       return;
     }
     navigator.geolocation.getCurrentPosition(
-      ({ coords }) => resolve({ lat: coords.latitude, lon: coords.longitude }),
-      () => reject(new Error('GPS permission was denied or the location is unavailable.')),
-      { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 },
+      ({ coords }) => {
+        const location = normalizePlumeLocation({ lat: coords?.latitude, lon: coords?.longitude });
+        if (!location) {
+          reject(new Error('Browser GPS returned an invalid location.'));
+          return;
+        }
+        resolve(location);
+      },
+      (error) => reject(new Error(getGpsErrorMessage(error))),
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 },
     );
   });
 }
@@ -8262,6 +8290,17 @@ function getCurrentGps() {
 function setText(id, value) {
   const element = document.getElementById(id);
   if (element) element.textContent = value;
+}
+
+function clearPlumeLocationState() {
+  plumeIncidentLocation = null;
+  plumeManualLocation = null;
+  plumeLocationSelectionLocked = false;
+  plumeSourceMarker?.remove?.();
+  plumeSourceMarker = null;
+  setText('plume-gps-summary', '');
+  setText('plume-location-source', 'Location required');
+  syncTactical3dState();
 }
 
 function degreesToCompass(degrees) {
@@ -8304,10 +8343,31 @@ function formatTempFahrenheit(str) {
 }
 
 async function getIncidentCoordinates({ requestGps = true, allowPlumeManual = false } = {}) {
-  if (allowPlumeManual && plumeManualLocation) return plumeManualLocation;
+  const selectedManualLocation = allowPlumeManual && plumeLocationSelectionLocked
+    ? normalizePlumeLocation(plumeManualLocation)
+    : null;
+  if (selectedManualLocation) return selectedManualLocation;
+
+  let gpsError = null;
+  if (requestGps && !plumeLocationSelectionLocked) {
+    try {
+      const gps = await getCurrentGps();
+      const input = document.getElementById('incident-coordinates-input');
+      if (input) input.value = `${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}`;
+      setText('plume-map-address-status', 'Current browser GPS acquired.');
+      return { ...gps, source: 'Current device GPS' };
+    } catch (error) {
+      gpsError = error;
+    }
+  }
+
+  const useFallbackLocation = (location) => {
+    if (gpsError && location) setText('plume-map-address-status', `${gpsError.message} Using ${location.source || 'the available incident location'}.`);
+    return location;
+  };
   const input = document.getElementById('incident-coordinates-input');
   const entered = parseGpsCoordinate(input?.value);
-  if (entered) return { ...entered, source: 'Incident Dashboard' };
+  if (entered) return useFallbackLocation({ ...entered, source: 'Incident Dashboard' });
   const incident = getActiveIncident();
   const address = getIncidentAddressValue();
   const savedAddress = [incident?.address, incident?.city, incident?.state, incident?.zip].filter(Boolean).join(', ');
@@ -8316,19 +8376,27 @@ async function getIncidentCoordinates({ requestGps = true, allowPlumeManual = fa
     ? parseGpsCoordinate(`${incident.latitude}, ${incident.longitude}`) : null;
   if (saved && (!address || address === savedAddress)) {
     if (input) input.value = `${saved.lat.toFixed(6)}, ${saved.lon.toFixed(6)}`;
-    return { ...saved, source: 'Saved incident location' };
+    return useFallbackLocation({ ...saved, source: 'Saved incident location' });
   }
   if (address) {
-    const match = await geocodePlumeAddress(address);
+    let match = null;
+    try {
+      match = await geocodePlumeAddress(address);
+    } catch {
+      // The remaining coordinate fallbacks still work when address lookup is offline.
+    }
     if (match) {
       if (input) input.value = `${match.lat.toFixed(6)}, ${match.lon.toFixed(6)}`;
-      return { ...match, source: 'Incident Brief address' };
+      return useFallbackLocation({ ...match, source: 'Incident Brief address' });
     }
   }
   if (!requestGps) return null;
-  const gps = await getCurrentGps();
-  if (input) input.value = `${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}`;
-  return { ...gps, source: 'Current device GPS' };
+  const fallbackManualLocation = normalizePlumeLocation(plumeManualLocation);
+  if (fallbackManualLocation) return useFallbackLocation(fallbackManualLocation);
+  if (gpsError) {
+    throw new Error(`${gpsError.message} No valid incident, saved, or manual location is available.`);
+  }
+  return null;
 }
 
 async function geocodePlumeAddress(address) {
@@ -8343,8 +8411,7 @@ async function geocodePlumeAddress(address) {
   const candidate = result?.candidates?.[0];
   const lat = candidate?.location?.y;
   const lon = candidate?.location?.x;
-  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
-  return { lat, lon, address: candidate.address || address };
+  return normalizePlumeLocation({ lat, lon, address: candidate?.address || address });
 }
 
 async function useManualPlumeAddress() {
@@ -8357,15 +8424,22 @@ async function useManualPlumeAddress() {
     return;
   }
   if (button) button.disabled = true;
+  plumeLocationSelectionLocked = true;
   setText('plume-map-address-status', 'Locating address…');
   try {
     const coordinates = parseGpsCoordinate(address);
-    const location = coordinates || await geocodePlumeAddress(address);
+    let location = coordinates;
+    try {
+      location ||= await geocodePlumeAddress(address);
+    } catch {
+      location = null;
+    }
     if (!location) {
+      plumeLocationSelectionLocked = false;
       setText('plume-map-address-status', 'Location not found. Enter a more specific address or latitude, longitude.');
       return;
     }
-    plumeManualLocation = { ...location, source: coordinates ? 'Manual plume coordinates' : 'Manual plume address' };
+    plumeManualLocation = normalizePlumeLocation({ ...location, source: coordinates ? 'Manual plume coordinates' : 'Manual plume address' });
     if (input) input.value = location.address || `${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}`;
     setText('plume-map-address-status', `Plume map centered on ${location.address || `${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}`}.`);
     if (activePlumeCommand) await plotPlumeFromControls(plumeManualLocation);
@@ -8379,11 +8453,13 @@ async function useIncidentPlumeLocation() {
   const button = document.getElementById('use-plume-incident-location-btn');
   const input = document.getElementById('plume-map-address-input');
   button?.setAttribute('disabled', '');
+  plumeLocationSelectionLocked = true;
   plumeManualLocation = null;
   setText('plume-map-address-status', 'Loading incident location…');
   try {
     const location = await getIncidentCoordinates({ requestGps: false });
     if (!location) {
+      plumeLocationSelectionLocked = false;
       setText('plume-map-address-status', 'No incident location is available. Enter an address or coordinates.');
       return;
     }
@@ -10042,13 +10118,18 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
     location = await getIncidentCoordinates({ requestGps, allowPlumeManual: true });
   } catch (error) {
     if (token !== plumeRefreshToken) return;
-    if (status) status.textContent = `${error.message} Enter an address or coordinates above to load local weather.`;
-    setText('plume-location-source', 'Location required');
+    const message = error instanceof Error ? error.message : 'A valid location could not be resolved.';
+    clearPlumeLocationState();
+    if (status) status.textContent = `${message} Enter an address or coordinates above to load local weather.`;
+    setText('plume-map-address-status', message);
     return;
   }
   if (token !== plumeRefreshToken) return;
   if (!location) {
-    if (status) status.textContent = 'Enter an address or coordinates above to load local weather.';
+    const message = 'No valid incident, saved, manual, or browser GPS location is available.';
+    clearPlumeLocationState();
+    if (status) status.textContent = message;
+    setText('plume-map-address-status', message);
     return;
   }
 
@@ -10142,6 +10223,13 @@ function activeViewId() {
 }
 
 function normalizePlumeNavigationContext(input = {}) {
+  const normalizeLocation = (location) => {
+    if (!location || typeof location !== 'object') return null;
+    const lat = Number(location.lat ?? location.latitude);
+    const lon = Number(location.lon ?? location.longitude ?? location.lng);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180 || (lat === 0 && lon === 0)) return null;
+    return { ...location, lat, lon };
+  };
   const sourcePage = input.sourcePage || activeViewId();
   const activeIncident = input.incident || getActiveIncident();
   const planningState = readPlanningState();
@@ -10158,19 +10246,18 @@ function normalizePlumeNavigationContext(input = {}) {
   const profileHeader = record?.profile?.header || activeIncident?.chemicalProfile?.header || {};
   const savedLocation = savedPlume.location || savedPlume.output?.mapCenter;
   const liveMapCenter = sourcePage === 'map' ? window.hazmatiqLiveMap?.getCenter?.() : null;
-  const suppliedLocation = input.location || (sourcePage === 'plume' && plumeManualLocation ? {
+  const suppliedLocation = normalizeLocation(input.location)
+    || normalizeLocation(sourcePage === 'plume' && plumeManualLocation ? {
     latitude: plumeManualLocation.lat,
     longitude: plumeManualLocation.lon,
     address: plumeManualLocation.address,
-  } : null) || (
-    Number.isFinite(Number(input.latitude)) && Number.isFinite(Number(input.longitude))
-      ? { latitude: Number(input.latitude), longitude: Number(input.longitude), address: input.address }
-      : null
-  ) || (liveMapCenter ? { latitude: liveMapCenter.lat, longitude: liveMapCenter.lng } : null);
-  const location = suppliedLocation || (activeIncident?.latitude !== '' && activeIncident?.longitude !== ''
-    ? { latitude: Number(activeIncident.latitude), longitude: Number(activeIncident.longitude), address: activeIncident.address }
-    : Array.isArray(savedLocation) && savedLocation.length >= 2
-      ? { latitude: Number(savedLocation[1]), longitude: Number(savedLocation[0]) }
+  } : null)
+    || normalizeLocation({ latitude: input.latitude, longitude: input.longitude, address: input.address })
+    || normalizeLocation(liveMapCenter ? { latitude: liveMapCenter.lat, longitude: liveMapCenter.lng } : null);
+  const location = suppliedLocation
+    || normalizeLocation({ latitude: activeIncident?.latitude, longitude: activeIncident?.longitude, address: activeIncident?.address })
+    || normalizeLocation(Array.isArray(savedLocation) && savedLocation.length >= 2
+      ? { latitude: savedLocation[1], longitude: savedLocation[0] }
       : null);
   const releaseData = input.releaseData || {
     releaseKind: document.getElementById('plume-release-type')?.value || savedPlume.release?.releaseType,
@@ -10231,19 +10318,26 @@ function applyPlumeNavigationContext(context) {
       status: 'ready',
     });
   }
-  if (context.latitude !== null && context.longitude !== null) {
-    const coordinateText = `${Number(context.latitude).toFixed(6)}, ${Number(context.longitude).toFixed(6)}`;
+  const contextLocation = normalizePlumeLocation(context);
+  if (contextLocation) {
+    const coordinateText = `${contextLocation.lat.toFixed(6)}, ${contextLocation.lon.toFixed(6)}`;
     const incidentCoordinates = document.getElementById('incident-coordinates-input');
     if (incidentCoordinates && !incidentCoordinates.value.trim()) incidentCoordinates.value = coordinateText;
     const plumeAddress = document.getElementById('plume-map-address-input');
     if (plumeAddress && !plumeAddress.value.trim()) plumeAddress.value = context.address || coordinateText;
     plumeManualLocation = {
-      lat: Number(context.latitude),
-      lon: Number(context.longitude),
+      lat: contextLocation.lat,
+      lon: contextLocation.lon,
       address: context.address || undefined,
       source: context.sourcePage === 'map' ? 'Live Map context' : 'Navigation context',
     };
-  } else if (context.sourcePage !== 'plume') plumeManualLocation = null;
+    // A location carried from the Live Map is an explicit responder choice.
+    // Incident/navigation context remains a fallback if initial GPS succeeds.
+    plumeLocationSelectionLocked = context.sourcePage === 'map';
+  } else if (context.sourcePage !== 'plume') {
+    plumeManualLocation = null;
+    plumeLocationSelectionLocked = false;
+  }
   const setControl = (id, value) => {
     const control = document.getElementById(id);
     if (control && value !== undefined && value !== null && value !== '') control.value = String(value);
@@ -10628,6 +10722,7 @@ document.getElementById('use-plume-incident-location-btn')?.addEventListener('cl
 });
 document.getElementById('plume-map-address-input')?.addEventListener('input', () => {
   plumeManualLocation = null;
+  plumeLocationSelectionLocked = false;
   setText('plume-map-address-status', '');
 });
 document.querySelectorAll('[data-plume-layer]').forEach((button) => {
