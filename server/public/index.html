@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css?v=hero-logo-static-2" />
     <link rel="stylesheet" href="hero-overrides.css?v=8" />
     <link rel="stylesheet" href="hazard-id-overrides.css?v=3" />
-    <link rel="stylesheet" href="global-ui-overrides.css?v=14" />
+    <link rel="stylesheet" href="global-ui-overrides.css?v=15" />
     <link rel="stylesheet" href="incident-overrides.css?v=3" />
     <link rel="stylesheet" href="preplan-overrides.css?v=1" />
     <link rel="stylesheet" href="chemical-intel.css?v=hazard-profile-panel-26" />
@@ -21,45 +21,44 @@
     <div class="app-shell">
       <header class="topbar hazmat-command-bar command-header">
         <span class="command-header-plume" aria-hidden="true"></span>
-        <span class="command-header-contours" aria-hidden="true"></span>
         <div class="hazmat-command-identity">
           <div class="brand">
             <button class="module-btn command-brand-home" id="command-brand-home" type="button" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home">
-              <img class="brand-logo-command" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
+              <img class="brand-logo-command" src="assets/HAZSCOPE-New-Logo.png?v=2" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
             </button>
           </div>
         </div>
 
         <nav class="app-primary-nav" id="app-primary-nav" aria-label="Primary navigation">
           <button class="module-btn app-nav-item" type="button" data-view="overview" aria-label="Open Dashboard" aria-current="page">
-            <span class="app-nav-icon" aria-hidden="true">▦</span><span class="app-nav-label">Dashboard</span>
+            <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg></span><span class="app-nav-label label">Dashboard</span>
           </button>
           <button class="module-btn app-nav-item" type="button" data-view="lookup" aria-label="Open Hazard ID">
-            <span class="app-nav-icon" aria-hidden="true">▲</span><span class="app-nav-label">Hazard ID</span>
+            <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="m12 2.8 9.2 9.2-9.2 9.2L2.8 12 12 2.8Z" /><path d="M12 7.3v5.2" /><circle cx="12" cy="16.5" r=".8" fill="currentColor" stroke="none" /></svg></span><span class="app-nav-label label">Hazard ID</span>
           </button>
           <button class="module-btn app-nav-item" type="button" data-view="plume" aria-label="Open Plume Model">
-            <span class="app-nav-icon" aria-hidden="true">◒</span><span class="app-nav-label">Plume Model</span>
+            <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M3 8h7c2 0 2.5-3 0-3" /><path d="M3 12h12c2.7 0 3.5-3.5.6-4.5" /><path d="M3 16h7c3 0 4.5 3.7 7 3.7 1.6 0 2.8-.7 4-1.8" /><path d="M16 12h5m-2.5-2.5L21 12l-2.5 2.5" /></svg></span><span class="app-nav-label label">Plume Model</span>
           </button>
           <button class="module-btn app-nav-item" type="button" data-view="map" aria-label="Open Live Map">
-            <span class="app-nav-icon" aria-hidden="true">⌖</span><span class="app-nav-label">Live Map</span>
+            <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 21s6-5.1 6-10.1a6 6 0 1 0-12 0C6 15.9 12 21 12 21Z" /><circle cx="12" cy="10.8" r="2.1" /><path d="M3 10.8h3m12 0h3M12 2.8v2.1M12 16.7v3" /></svg></span><span class="app-nav-label label">Live Map</span>
           </button>
           <button class="module-btn app-nav-item" type="button" data-view="incident" aria-label="Open Command">
-            <span class="app-nav-icon" aria-hidden="true">✣</span><span class="app-nav-label">COMMAND</span>
+            <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="3" /><circle cx="12" cy="12" r="8" /><path d="M12 2v3m0 14v3M2 12h3m14 0h3" /><circle cx="12" cy="4" r="1" fill="currentColor" stroke="none" /><circle cx="20" cy="12" r="1" fill="currentColor" stroke="none" /></svg></span><span class="app-nav-label label">COMMAND</span>
           </button>
           <button class="module-btn app-nav-item" type="button" data-view="report" aria-label="Open Reports">
-            <span class="app-nav-icon" aria-hidden="true">▤</span><span class="app-nav-label">Reports</span>
+            <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="5" y="4.5" width="14" height="17" rx="2" /><path d="M9 4.5V3h6v1.5M8.5 10h7m-7 4h7m-7 4h4" /></svg></span><span class="app-nav-label label">Reports</span>
           </button>
           <button class="module-btn app-nav-item app-nav-secondary" type="button" data-view="monitor" aria-label="Open Equipment">
-            <span class="app-nav-icon" aria-hidden="true">▣</span><span class="app-nav-label">Equipment</span>
+            <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="6" width="16" height="13" rx="2" /><path d="M8 6V4h8v2m-9 5h2m-2 3h2m6-3h2m-2 3h2" /><circle cx="12" cy="15.5" r="1.5" /></svg></span><span class="app-nav-label label">Equipment</span>
           </button>
           <button class="module-btn app-nav-item app-nav-secondary" type="button" data-view="source" aria-label="Open Sources">
-            <span class="app-nav-icon" aria-hidden="true">▥</span><span class="app-nav-label">Sources</span>
+            <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><ellipse cx="12" cy="5" rx="7" ry="2.5" /><path d="M5 5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V5m-14 6v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6" /></svg></span><span class="app-nav-label label">Sources</span>
           </button>
           <button class="module-btn app-nav-item app-nav-secondary" type="button" data-view="planning-tools" aria-label="Open Planning">
-            <span class="app-nav-icon" aria-hidden="true">▰</span><span class="app-nav-label">Planning</span>
+            <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 18c3-8 5-8 8-4s5 4 8-8" /><circle cx="4" cy="18" r="2" /><circle cx="20" cy="6" r="2" /><path d="M4 4h5M4 4v5" /></svg></span><span class="app-nav-label label">Planning</span>
           </button>
           <button class="module-btn app-nav-item app-nav-secondary app-nav-settings" id="app-settings-nav" type="button" aria-label="Open Settings">
-            <span class="app-nav-icon" aria-hidden="true">⚙</span><span class="app-nav-label">Settings</span>
+            <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 6h16M4 12h16M4 18h16" /><circle cx="8" cy="6" r="2" /><circle cx="15" cy="12" r="2" /><circle cx="10" cy="18" r="2" /></svg></span><span class="app-nav-label label">Settings</span>
           </button>
         </nav>
         <button class="command-menu-toggle global-command-menu-toggle" id="command-menu-toggle" type="button" aria-label="Open additional module navigation" aria-controls="workspace-navigation-drawer" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -72,7 +71,7 @@
           <button class="workspace-drawer-close" id="workspace-drawer-close" type="button" aria-label="Close workspace navigation">Close</button>
         </header>
         <nav class="workspace-drawer-nav" aria-label="Workspace navigation">
-          <button class="workspace-drawer-home" type="button" data-view="overview" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home"><img src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" /></button>
+          <button class="workspace-drawer-home" type="button" data-view="overview" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home"><img src="assets/HAZSCOPE-New-Logo.png?v=2" alt="HAZSCOPE — Incident Intelligence + Response Planning" /></button>
           <button class="module-btn" data-view="incident">INCIDENT COMMAND</button>
           <button class="module-btn" data-view="lookup">HAZARD ID</button>
           <button class="module-btn" data-view="plume">PLUME MODELING</button>
@@ -595,7 +594,7 @@
             <header class="hazmat-page-hero variant-chemical hazard-id-page-hero" id="hazard-id-search-hero">
               <span class="hazard-id-hero-atmosphere" aria-hidden="true"></span>
               <div class="hazmat-page-hero-content">
-                <img class="hazard-id-hero-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" hidden />
+                <img class="hazard-id-hero-logo" src="assets/HAZSCOPE-New-Logo.png?v=2" alt="HAZSCOPE — Incident Intelligence + Response Planning" hidden />
                 <h1 class="hazmat-hero-title">HAZARD ID</h1>
                 <p class="hazmat-hero-subtitle">Search, Identify, Verify, Respond.</p>
               </div>
@@ -768,7 +767,7 @@
           <section id="guided-response" class="view guided-response-page" data-page-root="guided-response" data-page-name="Guided Response">
             <header class="hazmat-page-hero variant-guided-response guided-response-heading">
               <div class="guided-response-brand">
-                <img class="guided-response-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" hidden />
+                <img class="guided-response-logo" src="assets/HAZSCOPE-New-Logo.png?v=2" alt="HAZSCOPE — Incident Intelligence + Response Planning" hidden />
                 <div class="hazmat-page-hero-content">
                   <h1 class="hazmat-hero-title">Guided Response</h1>
                   <p class="hazmat-hero-subtitle">Tactical Decision Support.</p>
@@ -827,7 +826,7 @@
                     <circle class="plume-hero-source" cx="13" cy="28" r="5"/>
                   </svg>
                 </span>
-                <div class="hazmat-page-hero-content"><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><p class="hazmat-hero-subtitle">Weather-aware threat-zone planning.</p><small id="plume-header-chemical" hidden>Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers" hidden>CAS / UN / ERG pending</small></div>
+                <div class="hazmat-page-hero-content"><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><p class="hazmat-hero-subtitle">Weather-aware threat-zone planning.</p><small id="plume-mode-indicator" class="plume-mode-indicator">STANDALONE PLANNING</small><small id="plume-header-chemical" hidden>Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers" hidden>CAS / UN / ERG pending</small></div>
               </div>
               <div class="plume-v2-header-context" aria-label="Current plume context">
                 <div><span>Location</span><strong id="plume-header-location">Location pending</strong></div>
@@ -886,7 +885,7 @@
                       <input id="plume-puff-duration" type="number" min="1" step="1" inputmode="numeric" placeholder="Required for puff" />
                     </label>
                     <label class="plume-model-field plume-required-field" id="plume-release-duration-field" for="plume-release-duration">
-                      <span class="plume-required-label">Release duration (minutes) <b>Required</b></span>
+                      <span class="plume-required-label">Duration (min) <b>Required</b></span>
                       <input id="plume-release-duration" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="Required" />
                     </label>
                     <label class="plume-model-field" for="plume-release-height">
@@ -1016,7 +1015,7 @@
                   </header>
                   <div class="plume-model-section-grid plume-criteria-grid">
                     <label class="plume-model-field" for="plume-endpoint-duration">
-                      <span>AEGL / endpoint duration</span>
+                      <span>Endpoint</span>
                       <select id="plume-endpoint-duration">
                         <option value="10">10 minutes</option>
                         <option value="30">30 minutes</option>
@@ -1024,7 +1023,6 @@
                         <option value="240">240 minutes</option>
                         <option value="480">480 minutes</option>
                       </select>
-                      <small id="plume-endpoint-status">AEGL lookup occurs after verified Chemical Companion/CAS linkage.</small>
                     </label>
                     <details class="plume-advanced-inputs">
                       <summary>Advanced Criteria <small>ERG fallback controls</small></summary>
@@ -1118,19 +1116,19 @@
                   <div id="plume-command-zone-summary" class="plume-zone-summary" aria-live="polite">
                     <article class="plume-zone-result level-3" data-zone-level="3">
                       <span class="plume-zone-result-icon" aria-hidden="true">☠</span>
-                      <div><strong>AEGL-3 <b id="plume-zone-distance-3">—</b></strong><small id="plume-zone-distance-km-3">Awaiting model</small><span>Life-threatening effects possible</span></div>
+                      <div><strong>AEGL-3 <b id="plume-zone-distance-3">—</b></strong><small id="plume-zone-distance-km-3">Awaiting model</small><dl class="plume-zone-impact"><div><dt>Population</dt><dd id="plume-zone-population-3">Source unavailable</dd></div><div><dt>Critical</dt><dd id="plume-zone-structures-3">Source unavailable</dd></div><div><dt>Area</dt><dd id="plume-zone-area-3">—</dd></div><div><dt>Validity</dt><dd id="plume-zone-validity-3">Awaiting model</dd></div></dl><details class="plume-zone-details"><summary>Details</summary><dl><div><dt>Crosswind</dt><dd id="plume-zone-crosswind-3">—</dd></div></dl></details><details class="plume-zone-facilities"><summary>Facility details</summary><ul id="plume-zone-facility-list-3"></ul></details></div>
                     </article>
                     <article class="plume-zone-result level-2" data-zone-level="2">
                       <span class="plume-zone-result-icon" aria-hidden="true">⚠</span>
-                      <div><strong>AEGL-2 <b id="plume-zone-distance-2">—</b></strong><small id="plume-zone-distance-km-2">Awaiting model</small><span>Serious, long-lasting effects possible</span></div>
+                      <div><strong>AEGL-2 <b id="plume-zone-distance-2">—</b></strong><small id="plume-zone-distance-km-2">Awaiting model</small><dl class="plume-zone-impact"><div><dt>Population</dt><dd id="plume-zone-population-2">Source unavailable</dd></div><div><dt>Critical</dt><dd id="plume-zone-structures-2">Source unavailable</dd></div><div><dt>Area</dt><dd id="plume-zone-area-2">—</dd></div><div><dt>Validity</dt><dd id="plume-zone-validity-2">Awaiting model</dd></div></dl><details class="plume-zone-details"><summary>Details</summary><dl><div><dt>Crosswind</dt><dd id="plume-zone-crosswind-2">—</dd></div></dl></details><details class="plume-zone-facilities"><summary>Facility details</summary><ul id="plume-zone-facility-list-2"></ul></details></div>
                     </article>
                     <article class="plume-zone-result level-1" data-zone-level="1">
                       <span class="plume-zone-result-icon" aria-hidden="true">!</span>
-                      <div><strong>AEGL-1 <b id="plume-zone-distance-1">—</b></strong><small id="plume-zone-distance-km-1">Awaiting model</small><span>Notable discomfort possible</span></div>
+                      <div><strong>AEGL-1 <b id="plume-zone-distance-1">—</b></strong><small id="plume-zone-distance-km-1">Awaiting model</small><dl class="plume-zone-impact"><div><dt>Population</dt><dd id="plume-zone-population-1">Source unavailable</dd></div><div><dt>Critical</dt><dd id="plume-zone-structures-1">Source unavailable</dd></div><div><dt>Area</dt><dd id="plume-zone-area-1">—</dd></div><div><dt>Validity</dt><dd id="plume-zone-validity-1">Awaiting model</dd></div></dl><details class="plume-zone-details"><summary>Details</summary><dl><div><dt>Crosswind</dt><dd id="plume-zone-crosswind-1">—</dd></div></dl></details><details class="plume-zone-facilities"><summary>Facility details</summary><ul id="plume-zone-facility-list-1"></ul></details></div>
                     </article>
                   </div>
                   <p id="plume-result-summary" class="plume-intelligence-note">Awaiting valid release and weather inputs.</p>
-                  <dl class="plume-command-facts">
+                  <details class="plume-command-facts-details"><summary>Model facts</summary><dl class="plume-command-facts">
                     <div><dt>Downwind Direction</dt><dd id="plume-command-downwind">No Current Data Exists</dd></div>
                     <div><dt>Affected Area (AEGL-1)</dt><dd id="plume-command-affected-area">No Current Data Exists</dd></div>
                     <div><dt>Maximum modeled distance</dt><dd id="plume-command-max-distance">No Current Data Exists</dd></div>
@@ -1142,28 +1140,34 @@
                     <div><dt>Source Status</dt><dd id="plume-command-source-status">No Current Data Exists</dd></div>
                     <div><dt>Weather Status</dt><dd id="plume-command-weather-status">No Current Data Exists</dd></div>
                     <div><dt>Computed</dt><dd id="plume-model-time-summary">No Current Data Exists</dd></div>
-                  </dl>
+                  </dl></details>
+                </section>
+
+                <section class="plume-intelligence-card plume-guidance-card">
+                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Operational response</span><h2>Guided Response</h2></div></header>
+                  <p class="plume-intelligence-note">Consumes the current plume result, verified chemical guidance, weather, and mapped receptors.</p>
+                  <details open><summary>Protective Action <small id="plume-guided-protective-source">OPERATIONAL INFERENCE</small></summary><p id="plume-guided-protective">Available after a valid model response.</p></details>
+                  <details><summary>Tactical Priorities <small>MODEL-DERIVED + OPERATIONAL INFERENCE</small></summary><p id="plume-guided-tactical">Available after a valid model response.</p></details>
+                  <details><summary>Critical Facilities <small>OPENSTREETMAP INTERSECTION</small></summary><p id="plume-guided-critical">Mapped facilities load after a valid plume result.</p></details>
+                  <details><summary>Monitoring <small id="plume-guided-monitoring-source">CHEMICAL-DERIVED + OPERATIONAL INFERENCE</small></summary><p id="plume-guidance-requirements">Available after a model response.</p></details>
+                  <details><summary>Command Considerations <small>OPERATIONAL INFERENCE</small></summary><p id="plume-guided-command">Available after a valid model response.</p></details>
+                  <details><summary>Assumptions / Limitations</summary><p id="plume-guidance-assumptions">Available after a model response.</p><p id="plume-guidance-limitations">Available after a model response.</p></details>
                 </section>
 
                 <section class="plume-intelligence-card plume-readiness-card">
-                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Readiness and validation</span><h2>Model Status</h2></div><span class="plume-status-badge" id="plume-command-model-mode">Not Modeled</span></header>
-                  <p class="plume-intelligence-note" id="plume-readiness-reason">Awaiting a verified chemical, location, release, weather, and endpoint.</p>
-                  <div class="plume-readiness-grid">
+                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Readiness and validation</span><h2>Model Readiness</h2></div><span class="plume-status-badge" id="plume-command-model-mode">Not Modeled</span></header>
+                  <details class="plume-readiness-details">
+                    <summary>Validation details</summary>
+                    <p class="plume-intelligence-note" id="plume-readiness-reason">Awaiting a verified chemical, location, release, weather, and endpoint.</p>
+                    <div class="plume-readiness-grid">
                     <div><span>Chemical</span><strong id="plume-command-readiness-master">Requires Review</strong><small id="plume-command-readiness-cas">CAS pending</small></div>
                     <div><span>Release</span><strong id="plume-command-readiness-release">Needs Input</strong><small id="plume-command-readiness-release-detail">Enter release inputs.</small></div>
                     <div><span>Weather</span><strong id="plume-command-weather-quality-badge">Needs Input</strong><small id="plume-command-weather-quality-detail">Current weather required.</small></div>
                     <div><span>Endpoint</span><strong id="plume-command-endpoint-badge">Missing</strong><small id="plume-command-endpoint-detail">Select a verified chemical.</small></div>
                     <div><span>Source</span><strong id="plume-command-source-strength-badge">Requires Review</strong><small id="plume-command-source-strength-detail">Source context pending.</small></div>
                     <div><span>Validation</span><strong id="plume-command-validation-status">No Current Data Exists</strong><small id="plume-command-weather-summary">Planning estimate only.</small></div>
-                  </div>
-                </section>
-
-                <section class="plume-intelligence-card plume-guidance-card">
-                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Operational guidance</span><h2>Operational Guidance</h2></div></header>
-                  <p class="plume-intelligence-note">Source-backed verification guidance for the current planning result.</p>
-                  <details open><summary>Field Verification</summary><p id="plume-guidance-requirements">Available after a model response.</p></details>
-                  <details><summary>Assumptions</summary><p id="plume-guidance-assumptions">Available after a model response.</p></details>
-                  <details><summary>Limitations</summary><p id="plume-guidance-limitations">Available after a model response.</p></details>
+                    </div>
+                  </details>
                 </section>
 
                 <details class="plume-intelligence-card plume-command-details">

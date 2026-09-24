@@ -3672,49 +3672,7 @@ h1 { font-weight: 800; }
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-.command-header::before {
-  position: absolute;
-  z-index: -3;
-  inset: 0;
-  content: "";
-  background-image:
-    linear-gradient(rgba(148, 194, 231, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 194, 231, 0.08) 1px, transparent 1px);
-  background-size: 34px 34px;
-  opacity: 1;
-  animation: commandGridDrift 32s linear infinite;
-  pointer-events: none;
-}
-
-.command-header::after {
-  position: absolute;
-  z-index: -2;
-  top: 51%;
-  left: 82%;
-  width: max(52vw, 650px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  content: "";
-  background:
-    repeating-radial-gradient(circle, transparent 0 74px, rgba(148, 194, 231, 0.055) 75px 76px),
-    conic-gradient(
-      from 210deg,
-      transparent 0deg,
-      rgba(46, 140, 255, 0) 40deg,
-      rgba(92, 177, 255, 0.28) 47deg,
-      rgba(255, 215, 105, 0.2) 51deg,
-      transparent 59deg,
-      transparent 360deg
-    );
-  opacity: 0.42;
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: 50% 50%;
-  animation: commandRadarSweep 22s linear infinite;
-  pointer-events: none;
-}
-
-.command-header-plume,
-.command-header-contours {
+.command-header-plume {
   position: absolute;
   pointer-events: none;
 }
@@ -3731,23 +3689,6 @@ h1 { font-weight: 800; }
   animation: commandPlumeBreathe 14s ease-in-out infinite alternate;
 }
 
-.command-header-contours {
-  z-index: -1;
-  top: -70%;
-  right: 5%;
-  width: 48%;
-  height: 240%;
-  border-radius: 50%;
-  background: repeating-radial-gradient(
-    ellipse at 72% 52%,
-    transparent 0 16px,
-    rgba(221, 231, 242, 0.12) 17px 18px,
-    transparent 19px 31px
-  );
-  opacity: 0.42;
-  transform: rotate(-7deg);
-  animation: commandContourDrift 26s ease-in-out infinite alternate;
-}
 
 .command-header .hazmat-command-identity,
 .command-header .command-header-footer {
@@ -3935,10 +3876,7 @@ h1 { font-weight: 800; }
   box-shadow: none;
 }
 
-.app-shell:not(:has(#overview.view.active)) > .command-header::before,
-.app-shell:not(:has(#overview.view.active)) > .command-header::after,
-.app-shell:not(:has(#overview.view.active)) > .command-header .command-header-plume,
-.app-shell:not(:has(#overview.view.active)) > .command-header .command-header-contours {
+.app-shell:not(:has(#overview.view.active)) > .command-header .command-header-plume {
   display: none;
 }
 
@@ -4007,24 +3945,9 @@ h1 { font-weight: 800; }
   }
 }
 
-@keyframes commandGridDrift {
-  from { background-position: 0 0, 0 0; }
-  to { background-position: 68px 34px, 68px 34px; }
-}
-
-@keyframes commandRadarSweep {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
 @keyframes commandPlumeBreathe {
   from { transform: translateX(-8px) scale(1); opacity: 0.1; }
   to { transform: translateX(10px) scale(1.04); opacity: 0.18; }
-}
-
-@keyframes commandContourDrift {
-  from { transform: translateX(-6px) rotate(-7deg) scale(1); }
-  to { transform: translateX(8px) rotate(-5deg) scale(1.035); }
 }
 
 @media (max-width: 1100px) {
@@ -4058,12 +3981,7 @@ h1 { font-weight: 800; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .command-header::before,
-  .command-header::after,
-  .command-header-plume,
-  .command-header-contours {
-    animation: none;
-  }
+  .command-header-plume { animation: none; }
 }
 
 .app-shell:has(#overview.view.active) > .layout {
@@ -10796,114 +10714,6 @@ body,
   .overview-command-links .module-btn { flex: 1 1 calc(50% - 6px); }
 }
 
-/* Compact command hero, natural page scrolling, and dashboard drawer branding. */
-.hazmat-command-bar.topbar {
-  position: relative;
-  top: auto;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: clamp(118px, 15vh, 154px) 64px;
-  gap: 8px;
-  min-height: 0;
-  height: auto;
-  padding: 10px 16px 12px;
-}
-
-.hazmat-command-identity {
-  display: block;
-  height: clamp(118px, 15vh, 154px);
-  overflow: hidden;
-}
-
-.hazmat-command-identity .brand {
-  height: 100%;
-  overflow: hidden;
-}
-
-.brand-logo-command {
-  width: clamp(520px, 42vw, 820px);
-  max-width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  transform: none;
-}
-
-.command-header-footer {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
-  align-items: stretch;
-  gap: 7px;
-  height: 64px;
-  margin-top: 0;
-}
-
-.hazmat-command-context.notification-center {
-  width: 100%;
-  height: 64px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  backdrop-filter: none;
-}
-
-.hazmat-command-context.notification-center[data-severity] {
-  background: transparent;
-}
-
-.hazmat-command-context .notification-feed {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 7px;
-}
-
-.hazmat-command-context .notification-item,
-.hazmat-command-context .notification-system {
-  display: grid;
-  min-height: 52px;
-  padding: 5px 8px;
-}
-
-.hazmat-command-context[data-severity]:not([data-severity="normal"]) .notification-item:not(.notification-system) {
-  display: grid;
-}
-
-.hazmat-command-context[data-severity]:not([data-severity="normal"]) .notification-system {
-  grid-column: auto;
-}
-
-.hazmat-command-context .notification-alert-count {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  margin: 0;
-}
-
-.hazmat-command-context .notification-feed > :last-child {
-  padding-right: 84px;
-}
-
-.command-center-launch {
-  justify-content: center;
-  min-width: 0;
-  min-height: 52px;
-  padding: 5px 10px;
-  border: 1px solid rgba(76, 117, 151, 0.64);
-  border-radius: 7px;
-  background: rgba(11, 41, 68, 0.92);
-  text-align: center;
-}
-
-.command-center-launch .command-menu-toggle {
-  width: 42px;
-  height: 42px;
-  flex-basis: 42px;
-}
-
-.command-center-label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .command-hero-scene {
   position: absolute;
   z-index: 0;
@@ -11391,139 +11201,6 @@ body,
   .hazard-profile-toolbar { grid-template-columns: 1fr 1fr; }
   .hazard-profile-toolbar > strong { grid-column: 1 / -1; grid-row: 1; }
   .hazard-profile-toolbar button { grid-row: 2; }
-}
-
-/* Restored command-logo proportions and compact three-zone status row. */
-.command-header.hazmat-command-bar.topbar {
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: 154px 72px;
-  align-items: stretch;
-  gap: 10px;
-  min-height: 250px;
-  padding: 10px 16px 12px;
-}
-
-.command-header .hazmat-command-identity,
-.command-header .hazmat-command-identity .brand {
-  width: 100%;
-  height: 154px;
-}
-
-.command-brand-home.module-btn,
-.command-brand-home.module-btn:hover,
-.command-brand-home.module-btn:focus-visible,
-.command-brand-home.module-btn.active {
-  width: clamp(520px, 42vw, 820px);
-  max-width: 100%;
-  height: 154px;
-}
-
-.command-header .brand-logo-command {
-  width: clamp(520px, 42vw, 820px);
-  max-width: 100%;
-  height: 154px;
-  object-fit: contain;
-  object-position: left center;
-}
-
-.command-header .command-header-footer {
-  grid-template-columns: minmax(220px, 0.52fr) minmax(0, 2.48fr);
-  align-items: stretch;
-  gap: 10px;
-  height: 72px;
-}
-
-.command-header .command-center-launch {
-  justify-content: flex-start;
-  min-width: 220px;
-  min-height: 72px;
-  padding: 9px 16px;
-}
-
-.command-header .command-center-label {
-  overflow: visible;
-  color: #f6c343;
-  font-size: 0.78rem;
-  letter-spacing: 0.13em;
-  text-overflow: clip;
-  white-space: nowrap;
-}
-
-.command-header .hazmat-command-context.notification-center {
-  height: 72px;
-}
-
-.command-header .hazmat-command-context .notification-feed {
-  grid-template-columns: minmax(150px, 0.85fr) minmax(300px, 1.5fr) minmax(150px, 0.85fr);
-  gap: 8px;
-}
-
-.command-header .hazmat-command-context .notification-item,
-.command-header .hazmat-command-context .notification-system {
-  min-height: 72px;
-  padding: 7px 10px;
-}
-
-.command-header .hazmat-command-context .notification-item > span {
-  display: block;
-  font-size: 0.68rem;
-}
-
-.command-header .hazmat-command-context .notification-item > strong,
-.command-header .hazmat-command-context .notification-updated {
-  font-size: 0.72rem;
-}
-
-.command-header .hazmat-command-context .notification-weather-item > strong {
-  font-size: 0.78rem;
-}
-
-@media (max-width: 900px) {
-  .command-header.hazmat-command-bar.topbar {
-    grid-template-rows: 132px auto;
-    min-height: 0;
-  }
-
-  .command-header .hazmat-command-identity,
-  .command-header .hazmat-command-identity .brand,
-  .command-brand-home.module-btn,
-  .command-brand-home.module-btn:hover,
-  .command-brand-home.module-btn:focus-visible,
-  .command-brand-home.module-btn.active,
-  .command-header .brand-logo-command {
-    height: 132px;
-  }
-
-  .command-header .command-header-footer {
-    grid-template-columns: minmax(190px, 0.6fr) minmax(0, 2.4fr);
-  }
-
-  .command-header .command-center-launch { min-width: 190px; }
-  .command-header .hazmat-command-context .notification-feed { grid-template-columns: minmax(110px, 0.8fr) minmax(220px, 1.5fr) minmax(110px, 0.8fr); }
-}
-
-@media (max-width: 680px) {
-  .command-header.hazmat-command-bar.topbar { grid-template-rows: 112px auto; }
-  .command-header .hazmat-command-identity,
-  .command-header .hazmat-command-identity .brand,
-  .command-brand-home.module-btn,
-  .command-brand-home.module-btn:hover,
-  .command-brand-home.module-btn:focus-visible,
-  .command-brand-home.module-btn.active,
-  .command-header .brand-logo-command { height: 112px; }
-  .command-header .command-header-footer { grid-template-columns: 1fr; height: auto; }
-  .command-header .command-center-launch { justify-content: center; width: 100%; min-width: 0; min-height: 62px; }
-  .command-header .hazmat-command-context.notification-center { height: auto; }
-  .command-header .hazmat-command-context .notification-feed { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .command-header .hazmat-command-context .notification-item,
-  .command-header .hazmat-command-context .notification-system { min-height: 66px; }
-}
-
-@media (max-width: 460px) {
-  .command-header .hazmat-command-context .notification-feed { grid-template-columns: 1fr; }
-  .command-header .hazmat-command-context .notification-item,
-  .command-header .hazmat-command-context .notification-system { min-height: 58px; }
-  .command-header .hazmat-command-context .notification-feed > :last-child { padding-right: 74px; }
 }
 
 /* Shared workspace rhythm keeps section spacing consistent across every view. */
@@ -12623,94 +12300,6 @@ button[data-command-view="guided-response"]:disabled,
   #overview .overview-action-arrow { padding-left: 25px; font-size: 2.4rem; }
 }
 
-/* Restore the approved command identity: large logo with its menu directly below. */
-.command-header.hazmat-command-bar.topbar {
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto auto;
-  align-items: stretch;
-  gap: 10px;
-  min-height: 408px;
-  padding: 10px 16px 14px;
-}
-
-.command-header .hazmat-command-identity {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 5px;
-  width: 100%;
-  height: auto;
-}
-
-.command-header .hazmat-command-identity .brand,
-.command-header .command-brand-home.module-btn,
-.command-header .command-brand-home.module-btn:hover,
-.command-header .command-brand-home.module-btn:focus-visible,
-.command-header .command-brand-home.module-btn.active,
-.command-header .brand-logo-command {
-  width: min(1240px, 100%);
-  max-width: 100%;
-  height: 218px;
-}
-
-.command-header .command-brand-home.module-btn,
-.command-header .command-brand-home.module-btn:hover,
-.command-header .command-brand-home.module-btn:focus-visible,
-.command-header .command-brand-home.module-btn.active {
-  justify-content: flex-start;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.command-header .brand-logo-command {
-  object-fit: contain;
-  object-position: left center;
-}
-
-.command-header .hazmat-command-identity .command-center-launch {
-  justify-self: start;
-  justify-content: flex-start;
-  width: fit-content;
-  min-width: 250px;
-  min-height: 58px;
-  padding: 8px 16px;
-}
-
-.command-header .command-header-footer {
-  display: flex;
-  align-items: stretch;
-  justify-content: flex-end;
-  width: 100%;
-  height: auto;
-}
-
-.command-header .hazmat-command-context.notification-center {
-  width: min(1040px, 100%);
-  height: 72px;
-}
-
-@media (max-width: 900px) {
-  .command-header.hazmat-command-bar.topbar { min-height: 0; }
-  .command-header .hazmat-command-identity .brand,
-  .command-header .command-brand-home.module-btn,
-  .command-header .command-brand-home.module-btn:hover,
-  .command-header .command-brand-home.module-btn:focus-visible,
-  .command-header .command-brand-home.module-btn.active,
-  .command-header .brand-logo-command { height: 174px; }
-}
-
-@media (max-width: 680px) {
-  .command-header .hazmat-command-identity .brand,
-  .command-header .command-brand-home.module-btn,
-  .command-header .command-brand-home.module-btn:hover,
-  .command-header .command-brand-home.module-btn:focus-visible,
-  .command-header .command-brand-home.module-btn.active,
-  .command-header .brand-logo-command { height: 132px; }
-  .command-header .hazmat-command-identity .command-center-launch,
-  .command-header .hazmat-command-context.notification-center { width: 100%; }
-}
-
 /* Approved command-launch copy and touch targets; keep Home limited to three launchers. */
 .app-shell:has(#overview.view.active) > .footer-note {
   display: none;
@@ -12787,97 +12376,6 @@ body:has(#overview.view.active),
 
 .app-shell:has(#overview.view.active) {
   overflow-x: hidden;
-}
-
-.app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto auto;
-  gap: 4px;
-  width: 100%;
-  min-height: 0;
-  margin: 0;
-  padding: 4px clamp(8px, 0.7vw, 11px) 4px;
-  overflow: hidden;
-  border: 0;
-  border-radius: 0;
-  background: #020d17;
-  box-shadow: none;
-}
-
-/* The supplied VECTIQ banner provides the complete header scene. */
-.app-shell:has(#overview.view.active) > .command-header::before,
-.app-shell:has(#overview.view.active) > .command-header::after {
-  display: none;
-}
-
-.app-shell:has(#overview.view.active) > .command-header::before {
-  animation: none;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .command-header-contours,
-.app-shell:has(#overview.view.active) > .command-header .command-header-plume {
-  display: none;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
-  position: relative;
-  z-index: 3;
-  display: grid;
-  justify-items: start;
-  gap: 0;
-  width: 100%;
-  height: auto;
-  padding-bottom: 0;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
-.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn,
-.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:hover,
-.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:focus-visible,
-.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn.active {
-  display: block;
-  width: 100%;
-  max-width: none;
-  height: clamp(210px, 20vw, 335px);
-  aspect-ratio: auto;
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background:
-    radial-gradient(ellipse 42% 78% at 38% 52%, rgba(74, 103, 122, 0.16), transparent 68%),
-    radial-gradient(ellipse 34% 70% at 72% 44%, rgba(57, 88, 108, 0.14), transparent 72%),
-    radial-gradient(ellipse 28% 60% at 96% 56%, rgba(30, 61, 82, 0.2), transparent 76%),
-    #020d17;
-  box-shadow: none;
-  overflow: hidden;
-  animation: none !important;
-  scale: 1 !important;
-  transition: none !important;
-  transform: none !important;
-}
-
-.app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-  display: block;
-  width: 100%;
-  max-width: none;
-  height: 100%;
-  margin: 0;
-  object-fit: contain;
-  object-position: left center;
-  transform: none;
-  pointer-events: none;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  filter: none;
-  mix-blend-mode: lighten;
-  scale: 1;
-  transition: none;
-  -webkit-mask-image: radial-gradient(ellipse 85% 100% at center, #000 68%, rgba(0, 0, 0, 0.96) 76%, rgba(0, 0, 0, 0.6) 88%, transparent 100%);
-  mask-image: radial-gradient(ellipse 85% 100% at center, #000 68%, rgba(0, 0, 0, 0.96) 76%, rgba(0, 0, 0, 0.6) 88%, transparent 100%);
 }
 
 .app-shell:has(#overview.view.active) > .command-header .command-center-label {
@@ -13217,32 +12715,6 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 }
 
 @media (max-width: 760px) {
-  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
-    padding: 4px 7px 6px;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:hover,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn:focus-visible,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn.active {
-    width: min(94vw, 680px);
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-feed {
-    gap: 5px;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-item,
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system {
-    min-height: 46px;
-    padding: 2px 5px;
-  }
-
-  .command-header .hazmat-command-context .notification-system {
-    padding-inline: 52px;
-  }
-
   .app-shell:has(#overview.view.active) > .layout {
     padding-right: clamp(14px, 4vw, 24px);
     padding-left: 6px;

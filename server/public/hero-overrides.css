@@ -107,7 +107,7 @@
   .view:not(#overview) > .plume-page-header { min-height: 138px !important; padding: 12px !important; }
 }
 
-/* Canonical homepage HAZSCOPE banner. */
+/* Canonical homepage HAZSCOPE hero with a CSS-only haze treatment. */
 .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
   display: flex !important;
   flex-direction: column !important;
@@ -122,7 +122,14 @@
   gap: 8px !important;
   row-gap: 8px !important;
   overflow: visible !important;
-  background: #020d17 !important;
+  background:
+    linear-gradient(180deg, rgba(11, 41, 68, .28), rgba(6, 26, 46, .48)),
+    url("assets/hazscope-hero-smoke.png") center center / cover no-repeat !important;
+}
+.app-shell:has(#overview.view.active) > .command-header::before,
+.app-shell:has(#overview.view.active) > .command-header::after {
+  display: none !important;
+  animation: none !important;
 }
 .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
   position: relative !important;
@@ -154,9 +161,7 @@
   padding: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
-  /* Keep the compass circular while the pseudo-element below fades its edge
-     into the full-width smoke backdrop without changing header dimensions. */
-  background: url("assets/HAZSCOPE-banner.png?v=1") center center / cover no-repeat !important;
+  background: transparent !important;
   box-shadow: none !important;
   opacity: 1 !important;
   visibility: visible !important;
@@ -167,15 +172,43 @@
 .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn::before {
   content: "";
   position: absolute;
-  inset: 0 auto 0 0;
-  width: min(1339px, 100%);
-  background: url("assets/HAZSCOPE-banner.png?v=1") left center / auto 160% no-repeat;
-  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 76%, rgba(0, 0, 0, .86) 87%, rgba(0, 0, 0, .32) 96%, transparent 100%);
-  mask-image: linear-gradient(90deg, #000 0%, #000 76%, rgba(0, 0, 0, .86) 87%, rgba(0, 0, 0, .32) 96%, transparent 100%);
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 18% 58%, rgba(145, 205, 234, .14), transparent 30%),
+    radial-gradient(ellipse at 46% 26%, rgba(58, 139, 193, .22), transparent 34%),
+    radial-gradient(ellipse at 80% 68%, rgba(28, 93, 142, .3), transparent 40%);
+  filter: blur(18px);
+  opacity: .9;
   pointer-events: none;
 }
+.app-shell:has(#overview.view.active) > .command-header .command-header-plume {
+  position: absolute !important;
+  display: block !important;
+  z-index: 1 !important;
+  inset: 0 !important;
+  background:
+    radial-gradient(ellipse at 12% 70%, rgba(61, 153, 211, .24), transparent 28%),
+    radial-gradient(ellipse at 35% 30%, rgba(208, 231, 245, .11), transparent 24%),
+    radial-gradient(ellipse at 72% 60%, rgba(43, 118, 177, .2), transparent 33%),
+    radial-gradient(ellipse at 94% 24%, rgba(115, 174, 212, .14), transparent 25%);
+  filter: blur(16px);
+  opacity: .85;
+  animation: commandPlumeBreathe 14s ease-in-out infinite alternate;
+}
 .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-  display: none !important;
+  display: block !important;
+  position: absolute !important;
+  z-index: 1 !important;
+  left: 0 !important;
+  top: 50% !important;
+  width: auto !important;
+  max-width: none !important;
+  height: 136% !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+  transform: translateY(-50%) !important;
   pointer-events: none !important;
 }
 .app-shell:has(#overview.view.active) > .command-header .command-header-footer {

@@ -7138,7 +7138,9 @@ function ensurePlumeMap(location = null) {
         fallbackPlumeMapToSatellite('Tactical 3D terrain could not load. Satellite view restored.');
         return;
       }
-      if (event?.error?.message) setText('plume-overlay-status', `Map layer error: ${event.error.message}`);
+      if (event?.error?.message && !/quota\s+(?:has\s+been\s+)?exceed/i.test(event.error.message)) {
+        setText('plume-overlay-status', `Map layer error: ${event.error.message}`);
+      }
     });
   }
   plumeMap.resize();
@@ -7267,6 +7269,7 @@ function plumeResultToGeoJson(result, origin) {
           colorName: threatZoneColorNames[threatRank],
           color: threatZoneColors[threatRank],
           maxDownwindM: zone.maxDownwindM,
+          maxCrosswindM: zone.maxCrosswindM,
           rangeTruncated: zone.rangeTruncated === true,
           modelMode: result.modelMode || 'HAZMATIQ_PLANNING_ESTIMATE',
           overlayMode: 'modeled-concentration-contour',
@@ -8289,7 +8292,11 @@ function getCurrentGps() {
 
 function setText(id, value) {
   const element = document.getElementById(id);
-  if (element) element.textContent = value;
+  if (!element) return;
+  const message = String(value ?? '');
+  // Provider quota notices are not operational guidance and should not occupy
+  // the bottom Plume map status row. Keep other map/status errors visible.
+  element.textContent = element.closest('#plume') && /quota\s+(?:has\s+been\s+)?exceed/i.test(message) ? '' : message;
 }
 
 function clearPlumeLocationState() {
