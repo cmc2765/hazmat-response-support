@@ -41,6 +41,8 @@
         timestamp,
         opacity,
         animationPlaying,
+        frameIndex,
+        frameCount: frames.length,
         supportsAnimation: Boolean(provider?.supportsAnimation && frames.length > 1),
         attribution: provider?.attribution || '',
         limitations: provider?.limitations || [],
@@ -169,11 +171,16 @@
       animationPlaying = true;
       status();
       animationTimer = window.setInterval(() => {
-        frameIndex = (frameIndex + 1) % frames.length;
-        const frame = frames[frameIndex];
-        setTiles({ tiles: frame.tiles });
-        status();
+        setFrame((frameIndex + 1) % frames.length);
       }, FRAME_INTERVAL_MS);
+    }
+
+    function setFrame(index) {
+      if (!frames.length) return;
+      frameIndex = Math.max(0, Math.min(frames.length - 1, Number(index) || 0));
+      const frame = frames[frameIndex];
+      setTiles({ tiles: frame.tiles });
+      status();
     }
 
     const controller = {
@@ -196,11 +203,23 @@
       },
       play,
       pause() { stopAnimation(); status(); },
+      setFrame,
       reorder,
       refresh,
       ownsSource(sourceId) { return sourceId === ids.source; },
       isEnabled() { return enabled; },
-      getState() { return { enabled, selectedProviderId, activeProvider, opacity, frames, frameIndex, animationPlaying }; },
+      getState() {
+        return {
+          enabled,
+          selectedProviderId,
+          activeProvider,
+          opacity,
+          frames,
+          frameIndex,
+          frameCount: frames.length,
+          animationPlaying,
+        };
+      },
     };
     document.addEventListener('visibilitychange', () => { if (!document.hidden && enabled) void refresh(); });
     map.on('style.load', () => { if (enabled) void activate(selectedProviderId); });

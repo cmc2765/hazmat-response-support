@@ -1,21 +1,20 @@
 import { readFileSync } from 'node:fs';
-import { runInNewContext } from 'node:vm';
 import { describe, expect, it } from 'vitest';
 
 const html = readFileSync(new URL('../server/public/index.html', import.meta.url), 'utf8');
 const script = readFileSync(new URL('../server/public/script.js', import.meta.url), 'utf8');
 const plumeStyles = readFileSync(new URL('../server/public/plume-overrides.css', import.meta.url), 'utf8');
-const tactical3d = readFileSync(new URL('../server/public/tactical-3d.js', import.meta.url), 'utf8');
 
-describe('Plume Model first-class map upgrade', () => {
-  it('provides the requested map modes and separates overlays from mode controls', () => {
-    for (const mode of ['satellite', 'tactical', 'street']) {
+describe('Plume Model Tactical 3D map restoration', () => {
+  it('provides the requested map modes and one shared map surface', () => {
+    for (const mode of ['satellite', 'tactical', 'street', 'terrain3d']) {
       expect(html).toContain(`data-plume-map-view="${mode}"`);
     }
     expect(html).toContain('Tactical 3D');
     expect(html).toContain('>Street</button>');
     expect(html).not.toContain('Street / Standard');
-    expect(html).toContain('id="plume-tactical-3d-map"');
+    expect(html).toContain('id="plume-gis-map"');
+    expect(html).not.toContain('id="plume-tactical-3d-map"');
     expect(html).toContain('class="plume-map-mode-controls"');
     expect(html).toContain('class="plume-map-layer-controls"');
     for (const layer of ['zones', 'centerline', 'distance']) {
@@ -23,48 +22,42 @@ describe('Plume Model first-class map upgrade', () => {
     }
   });
 
-  it('keeps MapLibre for standard modes and shares plume state without recalculation', () => {
-    expect(script).toContain("const plumeLayerState = { zones: true, centerline: true, distance: false, hazards: false }");
-    expect(script).toContain("const plumeTerrainSourceId = 'plume-terrain-dem'");
-    expect(script).toContain("plumeMap.setTerrain({ source: plumeTerrainSourceId, exaggeration: 1.05 })");
-    expect(script).toContain('const cameraBeforeSwitch = plumeMap ?');
-    expect(script).toContain("if (!cameraBeforeSwitch && activeZones?.features?.length)");
-    expect(script).toContain('applyPlumeFallbackMapStyle');
-    expect(script).toContain('const plumeFallbackMapStyle');
+  it('restores the historical Liberty Tactical 3D camera on the current MapLibre instance', () => {
+    expect(script).toContain("const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty'");
+    expect(script).toContain("tactical: { style: plumeMapStyleUrl, pitch: 28, bearing: 0 }");
+    expect(script).toContain("let plumeMapStyleMode = 'base'");
+    expect(script).toContain('buildTacticalPlumeMapStyle');
+    expect(script).toContain('desaturatePlumeMapColor');
+    expect(script).toContain("setText('plume-terrain-status', 'Tactical 3D · desaturated basemap')");
+  });
+
+  it('switches modes without recalculating or replacing plume geometry', () => {
     const setView = script.slice(script.indexOf('async function setPlumeMapView'), script.indexOf('async function clearThreatZones'));
     expect(setView).not.toContain('runBackendPlume(');
     expect(setView).not.toContain('plotPlumeFromControls(');
-    expect(setView).toContain('loadTactical3dRenderer()');
-    expect(setView).toContain('getTactical3dState()');
-    expect(script).toContain('threatZones: currentThreatZoneGeoJson');
-    expect(script).toContain('guideGeoJson: currentThreatZoneGuideGeoJson');
-    expect(script).toContain('syncTactical3dState();');
+    expect(setView).toContain('setPlumeMapStyle(buildTacticalPlumeMapStyle(), targetMode)');
+    expect(setView).toContain('restorePlumeMapOverlays();');
+    expect(script).toContain('const plumeLayerState = { zones: true, centerline: true, distance: false, hazards: false }');
+    expect(script).toContain("const plumeSatelliteSourceId = 'plume-satellite-basemap'");
+    expect(script).toContain("const plumeTerrainSourceId = 'plume-terrain-dem'");
+    expect(script).toContain('plumeMap.setTerrain({ source: plumeTerrainSourceId, exaggeration: 1.05 })');
+    expect(script).toContain('currentThreatZoneGeoJson = activeZones;');
+    expect(script).toContain('plumeSourceMarker');
   });
 
-  it('uses a distinct photorealistic renderer for Tactical 3D', () => {
-    expect(script).toContain("const tactical3dScriptUrl = 'tactical-3d.js?v=photorealistic-1'");
-    expect(script).toContain("tactical: { renderer: 'cesium-google-photorealistic'");
-    expect(html).not.toContain('tactical-3d.js');
-    expect(tactical3d).toContain('new Cesium.Viewer(container');
-    expect(tactical3d).toContain('createGooglePhotorealistic3DTileset');
-    expect(tactical3d).toContain('usingOnlyWithGoogleGeocoder: true');
-    expect(tactical3d).toContain('showCreditsOnScreen: true');
-    expect(tactical3d).not.toContain('fill-extrusion');
-    expect(tactical3d).not.toMatch(/YOUR_(?:API_)?KEY/);
-  });
-
-  it('keeps 3D Terrain separate and provides safe provider fallback', () => {
+  it('keeps Satellite, Street, and 3D Terrain basemap paths separate from Tactical', () => {
+    expect(script).toContain("const targetMode = viewName === 'tactical' ? 'tactical' : 'base'");
+    expect(script).toContain("activePlumeMapView === 'tactical') return;");
+    expect(script).toContain("activePlumeMapView === 'street' ? 'none' : 'visible'");
     expect(script).toContain("type: 'raster-dem'");
     expect(script).toContain("encoding: 'terrarium'");
     expect(script).toContain("type: 'fill-extrusion'");
     expect(script).toContain('fallbackPlumeMapToSatellite');
-    expect(tactical3d).toContain('Photorealistic Tactical 3D unavailable — using Satellite.');
-    expect(tactical3d).toContain("fetch('/api/map/config'");
-    expect(tactical3d).toContain("throw new Error('Google Maps Platform Photorealistic 3D Tiles are not configured.')");
-    expect(script).toContain('plumeMap.on(\'error\'');
+    expect(script).not.toContain('tactical3d.js');
+    expect(script).not.toContain('new Cesium.Viewer');
   });
 
-  it('adds fit and recenter controls without changing release or plume calculations', () => {
+  it('keeps the release point, overlay controls, and camera actions on the shared map', () => {
     for (const id of ['plume-fit-view-btn', 'plume-recenter-incident-btn', 'plume-recenter-release-btn']) {
       expect(html).toContain(`id="${id}"`);
     }
@@ -72,57 +65,15 @@ describe('Plume Model first-class map upgrade', () => {
     expect(script).toContain('async function recenterPlumeOnIncident()');
     expect(script).toContain('function recenterPlumeOnRelease()');
     expect(script).toContain('plumeMap.fitBounds(bounds');
+    expect(script).toContain('plumeMap.easeTo({ center: [release.lng, release.lat]');
     expect(plumeStyles).toContain('.plume-map-control-label');
   });
 
-  it('retains visible provider attribution and local/offline-safe fallback messaging', () => {
+  it('retains visible attribution and dark field-ready controls', () => {
     expect(html).toContain('© OpenFreeMap · © OpenMapTiles · Imagery © Esri');
-    expect(script).toContain("const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty'");
     expect(script).toContain("https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/");
-    expect(html).toContain('id="plume-tactical-attribution"');
-    expect(tactical3d).toContain("Photorealistic Tactical 3D unavailable — using Satellite.");
-  });
-
-  it('keeps release and weather panels dark outside with consistent white entry controls', () => {
-    expect(html).toContain('plume-overrides.css?v=10');
+    expect(html).not.toContain('plume-tactical-attribution');
     expect(plumeStyles).toContain('#plume.view.active .plume-v2-input-column');
     expect(plumeStyles).toContain('background: linear-gradient(180deg, #0b2943, #061a2e);');
-    expect(plumeStyles).toContain('#plume.view.active .plume-model-field input:not([type="checkbox"]):not([type="file"]),');
-    expect(plumeStyles).toContain('background: #fff;');
-    expect(plumeStyles).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
-  });
-
-  it('removes the Endpoint / LOC card from the visible left control column', () => {
-    expect(html).toContain('class="plume-compact-card plume-endpoint-card" aria-labelledby="plume-endpoint-card-heading" hidden');
-  });
-
-  it('lazy-loads one Cesium viewer, preserves operational markers, and supports camera actions', () => {
-    expect(tactical3d).toContain("if (state.viewer)");
-    expect(tactical3d).toContain('state.viewer.useDefaultRenderLoop = false');
-    expect(tactical3d).toContain('nextState.releasePoint');
-    expect(tactical3d).toContain('nextState.incidentLocation');
-    expect(tactical3d).toContain('nextState.operationalMarkers');
-    for (const action of ['rotate', 'tilt', 'resetNorth', 'recenter', 'fit']) {
-      expect(tactical3d).toContain(`function ${action}`);
-    }
-  });
-
-  it('reports the exact fallback when the Tactical 3D key is missing', async () => {
-    const messages: string[] = [];
-    const context = {
-      fetch: async () => ({ ok: true, json: async () => ({ googleMapsTileApiKey: '' }) }),
-      window: { WebGLRenderingContext: {}, HazMatIQ: {} },
-      document: { getElementById: () => ({}) },
-    } as Record<string, unknown>;
-    runInNewContext(tactical3d, context);
-    const api = (context.window as {
-      HazMatIQ: {
-        tactical3d: {
-          activate: (nextState: unknown, options?: { onUnavailable?: (message: string) => void }) => Promise<unknown>;
-        };
-      };
-    }).HazMatIQ.tactical3d;
-    await expect(api.activate({}, { onUnavailable: (message: string) => messages.push(message) })).rejects.toThrow('not configured');
-    expect(messages).toEqual(['Photorealistic Tactical 3D unavailable — using Satellite.']);
   });
 });

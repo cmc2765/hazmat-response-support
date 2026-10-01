@@ -821,6 +821,91 @@ h1 { font-weight: 800; }
   pointer-events: none;
 }
 
+.live-map-layer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.live-map-layer-bar button {
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid #9dafbf;
+  border-radius: 7px;
+  background: #fff;
+  color: #102a43;
+  cursor: pointer;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.live-map-layer-bar button:hover,
+.live-map-layer-bar button:focus-visible,
+.live-map-layer-bar button.active {
+  border-color: #0d5d91;
+  background: #0d5d91;
+  color: #fff;
+  outline: none;
+}
+
+.live-map-stage {
+  position: relative;
+  min-height: 520px;
+  overflow: hidden;
+  border: 1px solid #9dafbf;
+  border-radius: 10px;
+  background: #dfe8ee;
+}
+
+#live-gis-map {
+  width: 100%;
+  height: min(70dvh, 720px);
+  min-height: 520px;
+}
+
+.live-map-panels {
+  position: absolute;
+  z-index: 8;
+  top: 12px;
+  right: 12px;
+  width: min(285px, calc(100% - 24px));
+  pointer-events: none;
+}
+
+.live-radar-panel {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid rgba(180, 218, 241, .78);
+  border-radius: 10px;
+  background: rgba(5, 25, 43, .94) !important;
+  box-shadow: 0 10px 26px rgba(3, 14, 25, .38);
+  color: #f8fafc;
+  font-size: .75rem;
+  pointer-events: auto;
+}
+
+.live-radar-panel-heading,
+.live-radar-control-row,
+.live-radar-panel label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.live-radar-panel-heading strong { color: #fff; font-size: .85rem; }
+.live-radar-panel-heading span { color: #ffd323; font-size: .68rem; font-weight: 900; text-transform: uppercase; }
+.live-radar-panel label { color: #b9d0df; font-size: .7rem; }
+.live-radar-panel output { color: #fff; font-weight: 800; text-align: right; }
+.live-radar-panel select,
+.live-radar-panel input[type="range"] { width: 100%; }
+.live-radar-panel select { min-height: 30px; padding: 4px 6px; }
+.live-radar-panel input[type="range"] { accent-color: #ffd323; }
+.live-radar-panel .ghost-btn { min-height: 30px; padding: 4px 9px; background: #123e60; border-color: #5488aa; color: #fff; font-size: .7rem; }
+.live-radar-panel small { color: #b9d0df; line-height: 1.25; }
+
 .live-map-panels > div:not([hidden]) {
   display: grid;
   gap: 5px;

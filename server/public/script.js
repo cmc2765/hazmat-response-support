@@ -565,6 +565,7 @@ function activatePage(targetId, { preserveHazardState = false, skipPlumeInitiali
   const activationContext = plumeContext || pageContext;
   const targetView = [...views].find((view) => view.id === targetId);
   if (!targetView) return null;
+  if (targetId !== 'plume' && plumeMapMaximized) setPlumeMapMaximized(false);
   if (targetId === 'plume' && !skipPlumeInitialization) {
     return openPlumeModel(activationContext);
   }
@@ -711,6 +712,7 @@ workspaceDrawerClose?.addEventListener('click', () => closeWorkspaceDrawer());
 workspaceDrawerBackdrop?.addEventListener('click', () => closeWorkspaceDrawer());
 window.addEventListener('resize', () => {
   if (!workspaceDrawer?.hidden) positionHomepageWorkspaceDrawer();
+  if (plumeMap) resizePlumeMapAfterLayout();
 });
 workspaceDrawer?.querySelectorAll('[data-view]').forEach((control) => {
   control.addEventListener('click', () => closeWorkspaceDrawer({ restoreFocus: false }));
@@ -883,6 +885,8 @@ const incidentContainerFieldIds = [
 ];
 const incidentsStorageKey = 'hazmatiq_incidents';
 const activeIncidentIdStorageKey = 'hazmatiq_active_incident_id';
+const incidentSnapshotDbName = 'hazmatiq_incident_snapshots';
+const incidentSnapshotStoreName = 'map_snapshots';
 const systemModeStorageKey = 'hazmatiq_system_mode';
 const plumePlanningStorageKey = 'hazmatiq_plume_planning_session';
 const guidedResponseTacticalStorageKey = 'hazmatiq_guided_response_tactical_record';
@@ -952,6 +956,72 @@ let openIcsFormObjectUrl = null;
 let openIncidentSummaryId = null;
 
 // Local-only storage until incident records move to a database.
+function isQuotaExceededError(error) {
+  return error?.name === 'QuotaExceededError'
+    || error?.code === 22
+    || /quota/i.test(String(error?.message || ''));
+}
+
+function persistIncidentMapSnapshot(incidentId, imageData) {
+  if (!window.indexedDB || !incidentId || !imageData) return false;
+  try {
+    const request = window.indexedDB.open(incidentSnapshotDbName, 1);
+    request.onupgradeneeded = () => {
+      request.result.createObjectStore(incidentSnapshotStoreName, { keyPath: 'incidentId' });
+    };
+    request.onsuccess = () => {
+      const database = request.result;
+      const transaction = database.transaction(incidentSnapshotStoreName, 'readwrite');
+      transaction.objectStore(incidentSnapshotStoreName).put({ incidentId, imageData, savedAt: new Date().toISOString() });
+      transaction.oncomplete = () => database.close();
+      transaction.onerror = () => database.close();
+    };
+    request.onerror = () => {};
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function readIncidentMapSnapshot(incidentId) {
+  if (!window.indexedDB || !incidentId) return Promise.resolve('');
+  return new Promise((resolve) => {
+    try {
+      const request = window.indexedDB.open(incidentSnapshotDbName, 1);
+      request.onupgradeneeded = () => {
+        request.result.createObjectStore(incidentSnapshotStoreName, { keyPath: 'incidentId' });
+      };
+      request.onsuccess = () => {
+        const database = request.result;
+        const transaction = database.transaction(incidentSnapshotStoreName, 'readonly');
+        const getRequest = transaction.objectStore(incidentSnapshotStoreName).get(incidentId);
+        getRequest.onsuccess = () => {
+          database.close();
+          resolve(getRequest.result?.imageData || '');
+        };
+        getRequest.onerror = () => {
+          database.close();
+          resolve('');
+        };
+      };
+      request.onerror = () => resolve('');
+    } catch {
+      resolve('');
+    }
+  });
+}
+
+function compactIncidentForLocalStorage(incident) {
+  if (!incident || typeof incident !== 'object' || typeof incident.plumeMapImage !== 'string' || !incident.plumeMapImage) return incident;
+  if (!persistIncidentMapSnapshot(incident.incidentId, incident.plumeMapImage)) return incident;
+  const { plumeMapImage, ...compact } = incident;
+  return {
+    ...compact,
+    plumeMapImageRef: incident.incidentId,
+    plumeMapImageStorage: 'indexeddb',
+  };
+}
+
 function readIncidents() {
   try {
     const incidents = JSON.parse(window.localStorage.getItem(incidentsStorageKey) || '[]');
@@ -962,9 +1032,18 @@ function readIncidents() {
 }
 
 function writeIncidents(incidents) {
-  window.localStorage.setItem(incidentsStorageKey, JSON.stringify(incidents));
+  const localIncidents = incidents.map(compactIncidentForLocalStorage);
+  let savedLocally = false;
+  try {
+    window.localStorage.setItem(incidentsStorageKey, JSON.stringify(localIncidents));
+    savedLocally = true;
+  } catch (error) {
+    if (!isQuotaExceededError(error)) console.warn('Incident records could not be saved locally.', error);
+    setIncidentStatus('Local storage is full. Existing incident records were preserved; this update remains available in memory and will retry backend sync.');
+  }
   window.clearTimeout(incidentSyncTimer);
   incidentSyncTimer = window.setTimeout(() => syncIncidentsToBackend(incidents), 250);
+  return savedLocally;
 }
 
 async function syncIncidentsToBackend(incidents = readIncidents()) {
@@ -1506,8 +1585,17 @@ function readPlanningState() {
 function savePlanningState(update) {
   try {
     const current = readPlanningState();
-    window.localStorage.setItem(plumePlanningStorageKey, JSON.stringify({ ...current, ...update }));
-  } catch {
+    const next = { ...current, ...update };
+    if (typeof next.plumeMapImage === 'string' && next.plumeMapImage) {
+      if (persistIncidentMapSnapshot('planning', next.plumeMapImage)) {
+        delete next.plumeMapImage;
+        next.plumeMapImageRef = 'planning';
+        next.plumeMapImageStorage = 'indexeddb';
+      }
+    }
+    window.localStorage.setItem(plumePlanningStorageKey, JSON.stringify(next));
+  } catch (error) {
+    if (isQuotaExceededError(error)) setText('plume-input-status', 'Local storage is full. Plume calculations remain available for this session; map snapshots are kept out of the incident record.');
     // Planning state can remain in memory if browser storage is unavailable.
   }
 }
@@ -1648,7 +1736,13 @@ function createIncidentRecord() {
     icsForms: Object.fromEntries(icsFormCatalog.map(([id]) => [id, { fields: {}, createdAt: now.toISOString() }])),
   };
   writeIncidents([incident, ...incidents]);
-  window.localStorage.setItem(activeIncidentIdStorageKey, incident.incidentId);
+  try {
+    window.localStorage.setItem(activeIncidentIdStorageKey, incident.incidentId);
+  } catch (error) {
+    setIncidentStatus(isQuotaExceededError(error)
+      ? 'Incident created in this session, but browser storage is full. Preserve/export the report before closing this tab.'
+      : 'Incident created, but the active incident pointer could not be saved locally.');
+  }
   setSystemMode('incident');
   startIncidentTimer();
   renderIncidentLists();
@@ -2055,6 +2149,24 @@ function saveCompletedReportEdits() {
   openIncidentSummary(openIncidentSummaryId);
 }
 
+function appendIncidentMapSnapshot(content, incident, imageData) {
+  if (!content || !incident || !imageData) return;
+  const mapSection = document.createElement('section');
+  mapSection.className = 'report-summary-block plume-map-summary';
+  const mapHeading = document.createElement('h3');
+  mapHeading.textContent = `${incident.incidentName || 'Incident'} Plume Model`;
+  const mapTimestamp = document.createElement('p');
+  mapTimestamp.className = 'muted';
+  mapTimestamp.textContent = incident.plumeUpdatedAt
+    ? `Plume model generated ${new Date(incident.plumeUpdatedAt).toLocaleString()}`
+    : 'Plume model date and time unavailable';
+  const mapImage = document.createElement('img');
+  mapImage.src = imageData;
+  mapImage.alt = 'Most recent plume model map for this incident';
+  mapSection.append(mapHeading, mapTimestamp, mapImage);
+  content.append(mapSection);
+}
+
 function openIncidentSummary(incidentId) {
   const incident = readIncidents().find((item) => item.incidentId === incidentId);
   const summary = document.getElementById('incident-report-summary');
@@ -2106,21 +2218,11 @@ function openIncidentSummary(incidentId) {
     ['Source', incident.plumeSummary?.source],
     ['Details', incident.plumeSummary?.details || []],
   ]);
-  if (incident.plumeMapImage) {
-    const mapSection = document.createElement('section');
-    mapSection.className = 'report-summary-block plume-map-summary';
-    const mapHeading = document.createElement('h3');
-    mapHeading.textContent = `${incident.incidentName || 'Incident'} Plume Model`;
-    const mapTimestamp = document.createElement('p');
-    mapTimestamp.className = 'muted';
-    mapTimestamp.textContent = incident.plumeUpdatedAt
-      ? `Plume model generated ${new Date(incident.plumeUpdatedAt).toLocaleString()}`
-      : 'Plume model date and time unavailable';
-    const mapImage = document.createElement('img');
-    mapImage.src = incident.plumeMapImage;
-    mapImage.alt = 'Most recent plume model map for this incident';
-    mapSection.append(mapHeading, mapTimestamp, mapImage);
-    content.append(mapSection);
+  appendIncidentMapSnapshot(content, incident, incident.plumeMapImage);
+  if (!incident.plumeMapImage && incident.plumeMapImageRef) {
+    void readIncidentMapSnapshot(incident.plumeMapImageRef).then((imageData) => {
+      if (openIncidentSummaryId === incidentId) appendIncidentMapSnapshot(content, incident, imageData);
+    });
   }
   appendIncidentSummarySection(content, 'Documentation Notes', [['Notes', incident.notes]]);
   if (incident.status === 'Completed') appendCompletedIcsForms(content, incident);
@@ -3894,7 +3996,7 @@ function formatHazardClassLines(value) {
   })).values()];
 }
 
-function renderChemicalProfile(profile) {
+function renderChemicalProfile(profile, { printPageKeys = null, printSnapshot = false } = {}) {
   profile = normalizeChemicalProfileForUi(profile);
   const content = document.getElementById('chemical-profile-content');
   const tabs = document.getElementById('chemical-profile-tabs');
@@ -4121,19 +4223,46 @@ function renderChemicalProfile(profile) {
 
   const activeSection = sections.find((section) => section.key === activeKey) || sections[0];
   content.dataset.activeTab = activeKey;
+  if (printSnapshot) content.dataset.printSnapshot = 'true';
+  else delete content.dataset.printSnapshot;
   const fragment = document.createDocumentFragment();
   let renderedSections = [];
   try {
-    renderedSections = (activeSection.render() || []).filter(Boolean);
-    renderedSections.forEach((element) => fragment.append(element));
-    if (activeKey !== 'sources') {
-      const sourceSummary = createChemicalProfileSourceSummary(profile, activeKey === 'overview');
-      if (sourceSummary) fragment.append(sourceSummary);
+    if (printSnapshot) {
+      const selectedKeys = new Set(printPageKeys || tabsList.map(([, key]) => key));
+      tabsList.forEach(([label, key]) => {
+        if (!selectedKeys.has(key)) return;
+        const sectionDefinition = sections.find((section) => section.key === key);
+        if (!sectionDefinition) return;
+        const page = document.createElement('section');
+        page.className = 'chemical-profile-print-page';
+        page.dataset.printPage = key;
+        const pageHeading = document.createElement('h2');
+        pageHeading.textContent = label;
+        page.append(pageHeading);
+        const pageSections = (sectionDefinition.render() || []).filter(Boolean);
+        pageSections.forEach((element) => page.append(element));
+        if (key !== 'sources') {
+          const sourceSummary = createChemicalProfileSourceSummary(profile, true);
+          if (sourceSummary) page.append(sourceSummary);
+        }
+        if (pageSections.length) {
+          renderedSections.push(page);
+          fragment.append(page);
+        }
+      });
+    } else {
+      renderedSections = (activeSection.render() || []).filter(Boolean);
+      renderedSections.forEach((element) => fragment.append(element));
+      if (activeKey !== 'sources') {
+        const sourceSummary = createChemicalProfileSourceSummary(profile, activeKey === 'overview');
+        if (sourceSummary) fragment.append(sourceSummary);
+      }
     }
   } catch (error) {
     console.error('Chemical profile section rendering failed.', error);
   }
-  if (!renderedSections.length) fragment.append(createChemicalProfileEmptyState());
+  if (!renderedSections.length && !printSnapshot) fragment.append(createChemicalProfileEmptyState());
   content.replaceChildren(fragment);
   if (typeof content.scrollTo === 'function') content.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   else {
@@ -5984,19 +6113,210 @@ function exportCurrentChemicalProfile() {
   setChemicalSearchStatus(`${activeChemicalRecord.name} profile exported.`, 'success');
 }
 
-function printCurrentChemicalProfile() {
-  if (!activeChemical || !activeChemicalRecord) {
+let chemicalProfilePrintState = null;
+
+function chemicalProfilePrintProfile() {
+  return activeChemicalRecord?.profile
+    || window.HazMatIQ?.getActiveHazardState?.()?.profile
+    || null;
+}
+
+function chemicalProfilePrintAvailable(value) {
+  return hasMeaningfulChemicalProfileData(value) && String(value).trim() !== noCurrentDataText;
+}
+
+function chemicalProfilePrintIdentifierValues(profile) {
+  const header = profile?.header || {};
+  const hazardClass = formatHazardClassLines(header.hazardClass || header.hazard).join(', ');
+  return [
+    ['CAS', header.cas],
+    ['UN/NA', header.un],
+    ['ERG Guide', header.ergGuide],
+    ['Hazard Class', hazardClass],
+  ].filter(([, value]) => chemicalProfilePrintAvailable(value));
+}
+
+function chemicalProfilePrintCleanClone(root) {
+  root.querySelectorAll('button, nav, a, iframe, [hidden], .chemical-profile-medical-embed-frame, .chemical-profile-empty-state').forEach((element) => element.remove());
+  root.querySelectorAll('details').forEach((details) => { details.open = true; });
+  root.querySelectorAll('.chemical-profile-section').forEach((section) => {
+    const contentText = [...section.children]
+      .filter((child) => !child.matches('h4'))
+      .map((child) => child.textContent || '')
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (!contentText) section.remove();
+  });
+}
+
+function buildChemicalProfilePrintRoot(profile) {
+  const root = document.getElementById('chemical-profile-print-root');
+  const sourceContent = document.getElementById('chemical-profile-content');
+  if (!root || !sourceContent) return false;
+
+  const header = document.createElement('header');
+  header.className = 'chemical-profile-print-header';
+  const eyebrow = document.createElement('p');
+  eyebrow.className = 'chemical-profile-print-eyebrow';
+  eyebrow.textContent = 'HAZSCOPE Chemical Profile';
+  const title = document.createElement('h1');
+  title.textContent = profile?.header?.name || document.getElementById('chemical-name')?.textContent || 'Chemical Profile';
+  header.append(eyebrow, title);
+
+  const identifiers = chemicalProfilePrintIdentifierValues(profile);
+  if (identifiers.length) {
+    const identifierBlock = document.createElement('dl');
+    identifierBlock.className = 'chemical-profile-print-identifiers';
+    identifiers.forEach(([label, value]) => {
+      const row = document.createElement('div');
+      const term = document.createElement('dt');
+      term.textContent = label;
+      const description = document.createElement('dd');
+      description.textContent = value;
+      row.append(term, description);
+      identifierBlock.append(row);
+    });
+    header.append(identifierBlock);
+  }
+
+  const summary = document.getElementById('chemical-summary');
+  if (summary && !summary.hidden && summary.textContent.trim()) {
+    const summaryText = document.createElement('p');
+    summaryText.className = 'chemical-profile-print-summary';
+    summaryText.textContent = summary.textContent.trim();
+    header.append(summaryText);
+  }
+
+  const hazardOverview = document.getElementById('chemical-hazard-overview-list');
+  if (hazardOverview?.children.length) {
+    const overview = document.createElement('section');
+    overview.className = 'chemical-profile-print-overview';
+    const overviewHeading = document.createElement('h2');
+    overviewHeading.textContent = 'Hazard Overview';
+    overview.append(overviewHeading, hazardOverview.cloneNode(true));
+    header.append(overview);
+  }
+
+  const sourceLabels = chemicalProfileSources(profile);
+  const printDate = document.createElement('p');
+  printDate.className = 'chemical-profile-print-date';
+  printDate.textContent = `Print date: ${new Intl.DateTimeFormat(undefined, { dateStyle: 'long' }).format(new Date())}`;
+  header.append(printDate);
+
+  const content = sourceContent.cloneNode(true);
+  chemicalProfilePrintCleanClone(content);
+  const footer = document.createElement('footer');
+  footer.className = 'chemical-profile-print-sources';
+  const footerLabel = document.createElement('strong');
+  footerLabel.textContent = 'Sources';
+  const footerText = document.createElement('span');
+  footerText.textContent = sourceLabels.length ? sourceLabels.join(' · ') : 'Source labels unavailable; review required.';
+  footer.append(footerLabel, footerText);
+
+  root.replaceChildren(header, content, footer);
+  root.setAttribute('aria-hidden', 'false');
+  return true;
+}
+
+function populateChemicalProfilePrintPages() {
+  const tabs = document.querySelectorAll('#chemical-profile-tabs [data-tab]');
+  const pages = document.getElementById('chemical-profile-print-pages');
+  const allPages = document.getElementById('chemical-profile-print-all');
+  if (!pages || !allPages) return [];
+  pages.replaceChildren();
+  const pageKeys = [];
+  tabs.forEach((tab) => {
+    const key = tab.dataset.tab;
+    const label = tab.textContent.trim();
+    if (!key || !label) return;
+    pageKeys.push(key);
+    const wrapper = document.createElement('label');
+    wrapper.className = 'chemical-profile-print-option';
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = allPages.checked;
+    checkbox.dataset.profilePrintKey = key;
+    const text = document.createElement('span');
+    text.textContent = label;
+    wrapper.append(checkbox, text);
+    pages.append(wrapper);
+  });
+  return pageKeys;
+}
+
+function setChemicalProfilePrintDialog(open) {
+  const dialog = document.getElementById('chemical-profile-print-dialog');
+  if (!dialog) return;
+  if (open) {
+    populateChemicalProfilePrintPages();
+    const allPages = document.getElementById('chemical-profile-print-all');
+    if (allPages) allPages.checked = true;
+    if (typeof dialog.showModal === 'function') dialog.showModal();
+    else dialog.setAttribute('open', '');
+    dialog.querySelector('input')?.focus();
+  } else if (typeof dialog.close === 'function') dialog.close();
+  else dialog.removeAttribute('open');
+}
+
+function startChemicalProfilePrint(pageKeys) {
+  const profile = chemicalProfilePrintProfile();
+  if (!profile) {
     setChemicalSearchStatus('Select a verified Chemical Companion record before printing.', 'error');
     return;
   }
+  const activeTab = document.getElementById('chemical-profile-content')?.dataset.activeTab || profile.activeTab || 'overview';
+  const profileSnapshot = { ...profile, activeTab };
+  const selectedKeys = pageKeys.length ? pageKeys : [...document.querySelectorAll('#chemical-profile-tabs [data-tab]')].map((tab) => tab.dataset.tab);
+  renderChemicalProfile(profileSnapshot, { printPageKeys: selectedKeys, printSnapshot: true });
+  if (!buildChemicalProfilePrintRoot(profileSnapshot)) return;
+  chemicalProfilePrintState = { profile: profileSnapshot };
+  setChemicalProfilePrintDialog(false);
   document.body.classList.add('printing-chemical-profile');
-  window.print();
-  window.setTimeout(() => document.body.classList.remove('printing-chemical-profile'), 0);
+  window.setTimeout(() => window.print(), 0);
 }
 
-window.addEventListener('afterprint', () => {
+function cleanupChemicalProfilePrint() {
   document.body.classList.remove('printing-chemical-profile');
+  const root = document.getElementById('chemical-profile-print-root');
+  if (root) {
+    root.replaceChildren();
+    root.setAttribute('aria-hidden', 'true');
+  }
+  const state = chemicalProfilePrintState;
+  chemicalProfilePrintState = null;
+  if (state?.profile) renderChemicalProfile(state.profile);
+}
+
+function printCurrentChemicalProfile() {
+  setChemicalProfilePrintDialog(true);
+}
+
+document.getElementById('chemical-profile-print-export-btn')?.addEventListener('click', printCurrentChemicalProfile);
+document.getElementById('chemical-profile-print-cancel-btn')?.addEventListener('click', () => setChemicalProfilePrintDialog(false));
+document.getElementById('chemical-profile-print-all')?.addEventListener('change', (event) => {
+  document.querySelectorAll('[data-profile-print-key]').forEach((checkbox) => {
+    checkbox.checked = event.currentTarget.checked;
+  });
 });
+document.getElementById('chemical-profile-print-pages')?.addEventListener('change', () => {
+  const pageCheckboxes = [...document.querySelectorAll('[data-profile-print-key]')];
+  const allPages = document.getElementById('chemical-profile-print-all');
+  if (allPages) allPages.checked = pageCheckboxes.length > 0 && pageCheckboxes.every((checkbox) => checkbox.checked);
+});
+document.getElementById('chemical-profile-print-dialog')?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const pageKeys = [...document.querySelectorAll('[data-profile-print-key]:checked')].map((checkbox) => checkbox.dataset.profilePrintKey);
+  const status = document.getElementById('chemical-profile-print-status');
+  if (!pageKeys.length) {
+    if (status) status.textContent = 'Select at least one information page.';
+    document.querySelector('[data-profile-print-key]')?.focus();
+    return;
+  }
+  startChemicalProfilePrint(pageKeys);
+});
+
+window.addEventListener('afterprint', cleanupChemicalProfilePrint);
 
 function renderSavedChemicals() {
   const list = document.getElementById('my-chemicals-list');
@@ -6527,7 +6847,7 @@ const plumeFallbackMapStyle = Object.freeze({
   layers: [{
     id: 'plume-fallback-background',
     type: 'background',
-    paint: { 'background-color': '#0b2f4a' },
+    paint: { 'background-color': '#d6dee5' },
   }],
 });
 const plumeSatelliteSourceId = 'plume-satellite-basemap';
@@ -6536,10 +6856,14 @@ const plumeTerrainSourceId = 'plume-terrain-dem';
 const plumeTacticalBuildingLayerId = 'plume-tactical-buildings-3d';
 const plumeMapViewStorageKey = 'hazmatiq_plume_map_view';
 const plumeTerrainTilesUrl = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
+const plumeSatelliteTileUrls = [
+  'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+];
 const plumeMapViews = {
   street: { style: plumeMapStyleUrl, pitch: 0, bearing: 0 },
   satellite: { style: plumeMapStyleUrl, pitch: 0, bearing: 0 },
-  tactical: { renderer: 'cesium-google-photorealistic', label: 'Photorealistic Tactical 3D' },
+  tactical: { style: plumeMapStyleUrl, pitch: 28, bearing: 0 },
   terrain3d: { style: plumeMapStyleUrl, pitch: 60, bearing: -20, minZoom: 15, requires3d: true },
 };
 function readStoredPlumeMapView() {
@@ -6556,75 +6880,36 @@ let configuredPlumeBuildingLayers = [];
 let plumeBuildingsVisible = false;
 let plumeMapFallbackInProgress = false;
 let plumeFallbackStyleApplied = false;
-let tactical3dLoaderPromise = null;
-const tactical3dScriptUrl = 'tactical-3d.js?v=photorealistic-1';
+let plumeBaseMapStyle = null;
+let plumeMapStyleMode = 'base';
+let plumeMapMaximized = false;
 const threatZoneColors = { 3: '#d71920', 2: '#f28c18', 1: '#ffd323' };
 const threatZoneColorNames = { 3: 'red', 2: 'orange', 1: 'yellow' };
 
-function getTactical3dState() {
-  const incident = getActiveIncident();
-  const coordinateInput = parseGpsCoordinate(document.getElementById('incident-coordinates-input')?.value);
-  const incidentLocation = normalizePlumeLocation(plumeIncidentLocation)
-    || coordinateInput
-    || normalizePlumeLocation({ lat: incident?.latitude, lon: incident?.longitude, source: 'Saved incident location' });
-  const releasePoint = plumeSourceMarker?.getLngLat?.();
-  const operationalMarkers = [
-    ...(liveMapState?.markers || []),
-    ...(liveMapState?.monitors || []),
-  ].filter((marker) => ['icp', 'staging', 'monitors'].includes(String(marker.layer || '').toLowerCase()));
-  return {
-    threatZones: currentThreatZoneGeoJson,
-    guideGeoJson: currentThreatZoneGuideGeoJson,
-    layers: { ...plumeLayerState },
-    releasePoint: releasePoint ? { lat: releasePoint.lat, lon: releasePoint.lng } : incidentLocation,
-    incidentLocation,
-    operationalMarkers,
-  };
-}
-
-function loadTactical3dRenderer() {
-  if (window.HazMatIQ?.tactical3d) return Promise.resolve(window.HazMatIQ.tactical3d);
-  if (tactical3dLoaderPromise) return tactical3dLoaderPromise;
-  tactical3dLoaderPromise = new Promise((resolve, reject) => {
-    const existing = document.querySelector(`script[src^="${tactical3dScriptUrl.split('?')[0]}"]`);
-    if (existing) {
-      existing.addEventListener('load', () => window.HazMatIQ?.tactical3d
-        ? resolve(window.HazMatIQ.tactical3d)
-        : reject(new Error('Tactical 3D renderer did not initialize.')), { once: true });
-      existing.addEventListener('error', () => reject(new Error('Tactical 3D renderer could not be loaded.')), { once: true });
-      return;
-    }
-    const script = document.createElement('script');
-    script.src = tactical3dScriptUrl;
-    script.async = true;
-    script.addEventListener('load', () => window.HazMatIQ?.tactical3d
-      ? resolve(window.HazMatIQ.tactical3d)
-      : reject(new Error('Tactical 3D renderer did not initialize.')), { once: true });
-    script.addEventListener('error', () => reject(new Error('Tactical 3D renderer could not be loaded.')), { once: true });
-    document.body.append(script);
-  }).catch((error) => {
-    tactical3dLoaderPromise = null;
-    throw error;
+function resizePlumeMapAfterLayout() {
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      if (!plumeMap) return;
+      plumeMap.resize();
+      updatePlumeCompass();
+    });
   });
-  return tactical3dLoaderPromise;
 }
 
-function showTactical3dSurface(active) {
-  const map = document.getElementById('plume-gis-map');
-  const tactical = document.getElementById('plume-tactical-3d-map');
-  const mapAttribution = document.getElementById('plume-map-attribution');
-  const tacticalAttribution = document.getElementById('plume-tactical-attribution');
-  if (map) map.hidden = active;
-  if (tactical) tactical.hidden = !active;
-  if (mapAttribution) mapAttribution.hidden = active;
-  if (tacticalAttribution) tacticalAttribution.hidden = !active;
-  if (active) window.HazMatIQ?.tactical3d?.resize?.();
-  else plumeMap?.resize?.();
-}
-
-function syncTactical3dState() {
-  if (activePlumeMapView !== 'tactical') return;
-  void window.HazMatIQ?.tactical3d?.sync?.(getTactical3dState());
+function setPlumeMapMaximized(maximized) {
+  const plumeView = document.getElementById('plume');
+  const maximizeButton = document.getElementById('plume-map-maximize-btn');
+  const minimizeButton = document.getElementById('plume-map-minimize-btn');
+  if (!plumeView || !maximizeButton || !minimizeButton) return;
+  plumeMapMaximized = Boolean(maximized);
+  plumeView.classList.toggle('plume-map-maximized', plumeMapMaximized);
+  document.body.classList.toggle('plume-map-maximized-open', plumeMapMaximized);
+  maximizeButton.hidden = plumeMapMaximized;
+  minimizeButton.hidden = !plumeMapMaximized;
+  maximizeButton.setAttribute('aria-pressed', String(plumeMapMaximized));
+  if (plumeMapMaximized) plumeView.setAttribute('data-map-maximized', 'true');
+  else plumeView.removeAttribute('data-map-maximized');
+  resizePlumeMapAfterLayout();
 }
 
 function updatePlumeMapViewButtons() {
@@ -6635,19 +6920,19 @@ function updatePlumeMapViewButtons() {
   });
 }
 
+function setPlumeMapAvailability(message = '', state = 'warning') {
+  const availability = document.getElementById('plume-map-availability');
+  if (availability) {
+    availability.textContent = message;
+    availability.hidden = !message;
+    availability.dataset.state = state;
+  }
+  if (message) setText('plume-overlay-status', message);
+}
+
 function updatePlumeCompass() {
   const control = document.getElementById('plume-compass-control');
   if (!control) return;
-  if (activePlumeMapView === 'tactical') {
-    const camera = window.HazMatIQ?.tactical3d?.cameraState?.();
-    control.hidden = !camera;
-    if (!camera) return;
-    const bearing = (Number(camera.heading || 0) * 180 / Math.PI + 360) % 360;
-    const arrow = document.getElementById('plume-compass-arrow');
-    if (arrow) arrow.style.transform = `rotate(${-bearing}deg)`;
-    setText('plume-bearing-output', `${Math.round(bearing)}° · ${Math.round(Number(camera.pitch || 0) * 180 / Math.PI)}° tilt`);
-    return;
-  }
   const supported = Boolean(plumeMap?.getBearing && plumeMap?.getPitch && plumeMap?.easeTo);
   control.hidden = !supported;
   if (!supported) return;
@@ -6658,31 +6943,21 @@ function updatePlumeCompass() {
 }
 
 function rotatePlumeMap(delta) {
-  if (activePlumeMapView === 'tactical') {
-    window.HazMatIQ?.tactical3d?.rotate?.(delta);
-    updatePlumeCompass();
-    return;
-  }
   if (!plumeMap?.getBearing || !plumeMap?.easeTo) return;
   plumeMap.easeTo({ bearing: plumeMap.getBearing() + delta, duration: 350 });
 }
 
+function zoomPlumeMap(delta) {
+  if (!plumeMap?.getZoom || !plumeMap?.easeTo) return;
+  plumeMap.easeTo({ zoom: Math.max(1, Math.min(22, plumeMap.getZoom() + delta)), duration: 250 });
+}
+
 function resetPlumeMapNorth() {
-  if (activePlumeMapView === 'tactical') {
-    window.HazMatIQ?.tactical3d?.resetNorth?.();
-    updatePlumeCompass();
-    return;
-  }
   if (!plumeMap?.easeTo) return;
   plumeMap.easeTo({ bearing: 0, pitch: 0, duration: 450 });
 }
 
 function tiltPlumeMap(delta) {
-  if (activePlumeMapView === 'tactical') {
-    window.HazMatIQ?.tactical3d?.tilt?.(delta);
-    updatePlumeCompass();
-    return;
-  }
   if (!plumeMap?.getPitch || !plumeMap?.easeTo) return;
   const pitch = Math.max(0, Math.min(70, plumeMap.getPitch() + delta));
   plumeMap.easeTo({ pitch, duration: 350 });
@@ -6690,6 +6965,10 @@ function tiltPlumeMap(delta) {
 
 function plumeViewUses3d(viewName = activePlumeMapView) {
   return viewName === 'terrain3d';
+}
+
+function plumeViewShowsBuildings(viewName = activePlumeMapView) {
+  return plumeBuildingsVisible && (viewName === 'tactical' || viewName === 'terrain3d');
 }
 
 function enablePlumeTerrain() {
@@ -6727,11 +7006,6 @@ function setPlumeMapResultVisible(hasResult) {
 }
 
 function resetPlumeMapView() {
-  if (activePlumeMapView === 'tactical') {
-    window.HazMatIQ?.tactical3d?.resetNorth?.();
-    window.HazMatIQ?.tactical3d?.recenter?.('incident');
-    return;
-  }
   if (!plumeMap?.easeTo) return;
   const view = plumeMapViews[activePlumeMapView] || plumeMapViews.satellite;
   plumeMap.easeTo({
@@ -6743,11 +7017,6 @@ function resetPlumeMapView() {
 }
 
 async function fitPlumeToView() {
-  if (activePlumeMapView === 'tactical') {
-    window.HazMatIQ?.tactical3d?.fit?.();
-    setText('plume-layers-status', 'Plume fitted to Tactical 3D view.');
-    return;
-  }
   if (!plumeMap) return;
   if (plumeMapReady) await plumeMapReady;
   const bounds = new window.maplibregl.LngLatBounds();
@@ -6773,11 +7042,6 @@ async function fitPlumeToView() {
 }
 
 async function recenterPlumeOnIncident() {
-  if (activePlumeMapView === 'tactical') {
-    window.HazMatIQ?.tactical3d?.recenter?.('incident');
-    setText('plume-layers-status', 'Incident location centered in Tactical 3D.');
-    return;
-  }
   if (!plumeMap) return;
   const location = await getIncidentCoordinates({ requestGps: false });
   if (!location) {
@@ -6789,11 +7053,6 @@ async function recenterPlumeOnIncident() {
 }
 
 function recenterPlumeOnRelease() {
-  if (activePlumeMapView === 'tactical') {
-    window.HazMatIQ?.tactical3d?.recenter?.('release');
-    setText('plume-layers-status', 'Release point centered in Tactical 3D.');
-    return;
-  }
   const release = plumeSourceMarker?.getLngLat?.();
   if (!plumeMap || !release) {
     setText('plume-layers-status', 'Release point is not available until a plume location is loaded.');
@@ -6805,8 +7064,8 @@ function recenterPlumeOnRelease() {
 
 function updatePlumeTerrainStatus() {
   if (activePlumeMapView === 'tactical') {
-    setText('plume-terrain-status', 'Photorealistic Tactical 3D');
-    setText('plume-model-terrain-status', 'Photorealistic Tactical 3D · visual context only — plume math remains flat-ground');
+    setText('plume-terrain-status', 'Tactical 3D · desaturated basemap');
+    setText('plume-model-terrain-status', 'Tactical 3D · visual context only — plume math remains flat-ground');
     return;
   }
   if (!plumeViewUses3d()) {
@@ -6855,9 +7114,11 @@ function detectConfiguredPlumeBuildings() {
       }
     }
   }
-  configuredPlumeBuildingLayers.forEach((id) => plumeMap.setLayoutProperty(id, 'visibility', plumeViewUses3d() && plumeBuildingsVisible ? 'visible' : 'none'));
+  configuredPlumeBuildingLayers.forEach((id) => plumeMap.setLayoutProperty(id, 'visibility', plumeViewShowsBuildings() ? 'visible' : 'none'));
   if (!button) return;
   button.disabled = configuredPlumeBuildingLayers.length === 0;
+  button.classList.toggle('active', plumeViewShowsBuildings() && plumeBuildingsVisible);
+  button.setAttribute('aria-pressed', String(plumeViewShowsBuildings() && plumeBuildingsVisible));
   button.title = configuredPlumeBuildingLayers.length
     ? 'Toggle configured 3D building layers'
     : '3D building height data not configured.';
@@ -6874,18 +7135,106 @@ function toggleConfiguredPlumeBuildings() {
     return;
   }
   plumeBuildingsVisible = !plumeBuildingsVisible;
-  configuredPlumeBuildingLayers.forEach((id) => plumeMap.setLayoutProperty(id, 'visibility', plumeViewUses3d() && plumeBuildingsVisible ? 'visible' : 'none'));
+  configuredPlumeBuildingLayers.forEach((id) => plumeMap.setLayoutProperty(id, 'visibility', plumeViewShowsBuildings() ? 'visible' : 'none'));
   const button = document.getElementById('plume-buildings-toggle');
   button?.classList.toggle('active', plumeBuildingsVisible);
   button?.setAttribute('aria-pressed', String(plumeBuildingsVisible));
 }
 
+const plumeTacticalColorProperties = new Set([
+  'background-color',
+  'fill-color',
+  'fill-extrusion-color',
+  'line-color',
+  'circle-color',
+  'circle-stroke-color',
+  'text-color',
+  'text-halo-color',
+]);
+
+function clonePlumeMapStyle(style) {
+  return style ? JSON.parse(JSON.stringify(style)) : null;
+}
+
+function desaturatePlumeMapColor(value) {
+  if (typeof value !== 'string') return value;
+  const hex = value.trim().match(/^#([0-9a-f]{3,8})$/i);
+  if (hex) {
+    const raw = hex[1];
+    const expanded = raw.length <= 4 ? raw.split('').map((part) => part + part).join('') : raw;
+    const channels = [0, 2, 4].map((offset) => Number.parseInt(expanded.slice(offset, offset + 2), 16));
+    if (channels.some((channel) => !Number.isFinite(channel))) return value;
+    const gray = Math.round(channels[0] * 0.299 + channels[1] * 0.587 + channels[2] * 0.114);
+    const alpha = expanded.length === 8 ? Number.parseInt(expanded.slice(6, 8), 16) / 255 : 1;
+    return alpha < 1 ? `rgba(${gray}, ${gray}, ${gray}, ${alpha.toFixed(3)})` : `rgb(${gray}, ${gray}, ${gray})`;
+  }
+  const rgb = value.match(/^rgba?\(\s*([\d.]+)[, ]+\s*([\d.]+)[, ]+\s*([\d.]+)(?:[,/]\s*([\d.]+))?\s*\)$/i);
+  if (!rgb) return value;
+  const channels = rgb.slice(1, 4).map(Number);
+  if (channels.some((channel) => !Number.isFinite(channel))) return value;
+  const gray = Math.round(channels[0] * 0.299 + channels[1] * 0.587 + channels[2] * 0.114);
+  return rgb[4] ? `rgba(${gray}, ${gray}, ${gray}, ${rgb[4]})` : `rgb(${gray}, ${gray}, ${gray})`;
+}
+
+function desaturatePlumeMapPaintValue(value) {
+  if (Array.isArray(value)) return value.map(desaturatePlumeMapPaintValue);
+  return desaturatePlumeMapColor(value);
+}
+
+function hasPlumeVectorBasemap(style) {
+  return Boolean(style?.sources && Object.keys(style.sources).length
+    && style?.layers?.some((layer) => layer.source));
+}
+
+function buildTacticalPlumeMapStyle() {
+  const style = clonePlumeMapStyle(plumeBaseMapStyle);
+  if (!hasPlumeVectorBasemap(style)) return null;
+  style.metadata = { ...(style.metadata || {}), hazscopeTactical: true };
+  style.layers = (style.layers || []).map((layer) => {
+    const nextLayer = { ...layer, paint: layer.paint ? { ...layer.paint } : layer.paint };
+    if (nextLayer.paint) {
+      Object.entries(nextLayer.paint).forEach(([property, value]) => {
+        if (plumeTacticalColorProperties.has(property)) nextLayer.paint[property] = desaturatePlumeMapPaintValue(value);
+      });
+    }
+    return nextLayer;
+  });
+  return style;
+}
+
+async function setPlumeMapStyle(style, mode) {
+  if (!plumeMap || !style) return false;
+  if (plumeMapStyleMode === mode) return true;
+  const loaded = await new Promise((resolve) => {
+    let settled = false;
+    const finish = (success) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timeoutId);
+      resolve(success);
+    };
+    const timeoutId = window.setTimeout(() => finish(false), 5000);
+    plumeMap.once('style.load', () => finish(true));
+    try {
+      plumeMap.setStyle(style, { diff: false });
+    } catch {
+      finish(false);
+    }
+  });
+  if (!loaded) return false;
+  plumeFallbackStyleApplied = false;
+  plumeMapStyleMode = mode;
+  setPlumeMapAvailability('', 'ready');
+  return true;
+}
+
 function syncPlumeBasemapLayer() {
   if (!plumeMap?.getStyle()) return;
+  if (activePlumeMapView === 'tactical' && !plumeFallbackStyleApplied) return;
   if (!plumeMap.getSource(plumeSatelliteSourceId)) {
     plumeMap.addSource(plumeSatelliteSourceId, {
       type: 'raster',
-      tiles: ['https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+      tiles: plumeSatelliteTileUrls,
       tileSize: 256,
       maxzoom: 19,
       attribution: 'Esri, Maxar, Earthstar Geographics, and the GIS User Community',
@@ -6912,10 +7261,10 @@ function applyPlumeFallbackMapStyle(message = 'Street basemap unavailable — us
   plumeFallbackStyleApplied = true;
   try {
     plumeMap.setStyle(plumeFallbackMapStyle);
-    setText('plume-overlay-status', message);
+    setPlumeMapAvailability(message, 'fallback');
   } catch (error) {
     plumeFallbackStyleApplied = false;
-    setText('plume-overlay-status', error instanceof Error ? error.message : 'The plume map could not initialize.');
+    setPlumeMapAvailability(error instanceof Error ? error.message : 'The plume map could not initialize.', 'error');
   }
 }
 
@@ -6930,7 +7279,13 @@ function restorePlumeMapOverlays() {
 }
 
 function fallbackPlumeMapToSatellite(message = 'Tactical 3D is unavailable on this device. Satellite view restored.') {
-  if (plumeMapFallbackInProgress || activePlumeMapView === 'satellite') return;
+  if (plumeMapFallbackInProgress) return;
+  if (activePlumeMapView === 'satellite') {
+    setPlumeMapAvailability(message, 'fallback');
+    setText('plume-layers-status', message);
+    syncPlumeBasemapLayer();
+    return;
+  }
   plumeMapFallbackInProgress = true;
   activePlumeMapView = 'satellite';
   plumeMapViewToken += 1;
@@ -6939,9 +7294,15 @@ function fallbackPlumeMapToSatellite(message = 'Tactical 3D is unavailable on th
   } catch {
     // In-memory state is sufficient for this session.
   }
-  window.HazMatIQ?.tactical3d?.deactivate?.();
-  showTactical3dSurface(false);
   disablePlumeTerrain();
+  if (plumeMapStyleMode !== 'base' && plumeBaseMapStyle) {
+    try {
+      plumeMap.setStyle(clonePlumeMapStyle(plumeBaseMapStyle), { diff: false });
+      plumeMapStyleMode = 'base';
+    } catch {
+      // The existing map can still recover through the style error handler.
+    }
+  }
   configuredPlumeBuildingLayers.forEach((id) => plumeMap?.getLayer(id)
     && plumeMap.setLayoutProperty(id, 'visibility', 'none'));
   updatePlumeMapViewButtons();
@@ -6949,7 +7310,7 @@ function fallbackPlumeMapToSatellite(message = 'Tactical 3D is unavailable on th
   const center = plumeMap?.getCenter?.();
   const zoom = plumeMap?.getZoom?.();
   if (center && Number.isFinite(zoom)) plumeMap.easeTo({ center, zoom, pitch: 0, bearing: 0, duration: 350 });
-  setText('plume-overlay-status', message);
+  setPlumeMapAvailability(message, 'fallback');
   setText('plume-layers-status', message);
   plumeMapFallbackInProgress = false;
 }
@@ -7041,7 +7402,6 @@ function updateIncidentLocationFromMap(lng, lat, action) {
   plumeSourceMarker?.setLngLat([location.lon, location.lat]);
   plumeLocationSelectionLocked = true;
   plumeIncidentLocation = location;
-  syncTactical3dState();
   if (activePlumeCommand) {
     setText('plume-gps-summary', `${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}`);
     setText('plume-location-source', location.source);
@@ -7071,7 +7431,6 @@ function ensurePlumeMap(location = null) {
       preserveDrawingBuffer: true,
       attributionControl: false,
     });
-    plumeMap.addControl(new window.maplibregl.NavigationControl(), 'bottom-right');
     plumeMap.scrollZoom.enable();
     // `load` waits for remote basemap resources and can leave plume modeling
     // blocked indefinitely when a tile host is slow. The style graph is enough
@@ -7083,6 +7442,15 @@ function ensurePlumeMap(location = null) {
         settled = true;
         window.clearTimeout(timeoutId);
         try {
+          const loadedStyle = plumeMap.getStyle();
+          if (!plumeBaseMapStyle && hasPlumeVectorBasemap(loadedStyle)) {
+            plumeBaseMapStyle = clonePlumeMapStyle(loadedStyle);
+            plumeFallbackStyleApplied = false;
+            plumeMapStyleMode = 'base';
+            setPlumeMapAvailability('', 'ready');
+          } else if (plumeFallbackStyleApplied) {
+            plumeMapStyleMode = 'fallback';
+          }
           syncPlumeBasemapLayer();
         } catch {
           // A timeout may resolve before the remote style graph is writable.
@@ -7096,11 +7464,19 @@ function ensurePlumeMap(location = null) {
       }, 4000);
     plumeMap.once('style.load', finish);
     plumeMap.on('style.load', () => {
-      if (plumeViewUses3d() && !enablePlumeTerrain()) {
-        fallbackPlumeMapToSatellite('Tactical 3D is not configured or supported here. Satellite view restored.');
+      const style = plumeMap.getStyle();
+      if (!plumeBaseMapStyle && hasPlumeVectorBasemap(style) && !plumeFallbackStyleApplied) {
+        plumeBaseMapStyle = clonePlumeMapStyle(style);
+        plumeMapStyleMode = 'base';
+        setPlumeMapAvailability('', 'ready');
       }
+      if (plumeViewUses3d() && !enablePlumeTerrain()) {
+        fallbackPlumeMapToSatellite('3D Terrain is not configured or supported here. Satellite view restored.');
+      }
+      syncPlumeBasemapLayer();
       detectConfiguredPlumeBuildings();
       updatePlumeTerrainStatus();
+      restorePlumeMapOverlays();
     });
     plumeMap.on('rotate', updatePlumeCompass);
     plumeMap.on('pitch', updatePlumeCompass);
@@ -7130,16 +7506,26 @@ function ensurePlumeMap(location = null) {
       updateIncidentLocationFromMap(lng, lat, 'Incident pin placed from map click');
     });
     plumeMap.on('error', (event) => {
-      if (!event?.sourceId && event?.error?.message && !plumeFallbackStyleApplied) {
-        applyPlumeFallbackMapStyle();
-        return;
-      }
-      if (event?.sourceId === plumeTerrainSourceId || /raster-dem|terrain/i.test(event?.error?.message || '')) {
+      const errorMessage = event?.error?.message || 'Map provider returned an unavailable resource.';
+      if (event?.sourceId === plumeTerrainSourceId || /raster-dem|terrain/i.test(errorMessage)) {
         fallbackPlumeMapToSatellite('Tactical 3D terrain could not load. Satellite view restored.');
         return;
       }
+      if (event?.sourceId === plumeSatelliteSourceId || /arcgis|imagery|raster/i.test(errorMessage)) {
+        setPlumeMapAvailability('Satellite imagery is unavailable from the configured providers. The working map surface, plume zones, and markers remain available.', 'fallback');
+        setText('plume-layers-status', 'Imagery provider unavailable; plume overlays retained.');
+        return;
+      }
+      if (activePlumeMapView === 'tactical' && event?.error?.message) {
+        fallbackPlumeMapToSatellite('Tactical 3D basemap failed here. Satellite view restored.');
+        return;
+      }
+      if (!event?.sourceId && event?.error?.message && !plumeFallbackStyleApplied) {
+        applyPlumeFallbackMapStyle('Street/tactical basemap unavailable. Showing a readable local canvas with plume overlays and markers retained.');
+        return;
+      }
       if (event?.error?.message && !/quota\s+(?:has\s+been\s+)?exceed/i.test(event.error.message)) {
-        setText('plume-overlay-status', `Map layer error: ${event.error.message}`);
+        setPlumeMapAvailability(`Map layer error: ${errorMessage}`, 'error');
       }
     });
   }
@@ -7171,7 +7557,6 @@ function ensurePlumeMap(location = null) {
   } else {
     plumeSourceMarker.setLngLat([validLocation.lon, validLocation.lat]);
   }
-  syncTactical3dState();
   return plumeMapReady;
 }
 
@@ -7856,7 +8241,6 @@ function setPlumeLayerVisibility(layerName, visible) {
     if (plumeMap?.getLayer(id)) plumeMap.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
   });
   if (layerName === 'distance') syncDistanceDomMarkers();
-  if (activePlumeMapView === 'tactical') window.HazMatIQ?.tactical3d?.setLayerVisibility?.(layerName, visible);
 }
 
 function syncDistanceDomMarkers() {
@@ -8044,7 +8428,6 @@ function addThreatZoneLayers() {
       'text-halo-width': 2,
     },
   });
-  syncTactical3dState();
 }
 
 function getPlumeHazardsBounds() {
@@ -8169,33 +8552,23 @@ async function setPlumeMapView(viewName) {
     // In-memory mode state remains available for this session.
   }
   updatePlumeMapViewButtons();
-
-  if (viewName === 'tactical') {
-    try {
-      if (!plumeMap) await ensurePlumeMap();
-      const renderer = await loadTactical3dRenderer();
-      await renderer.activate(getTactical3dState(), {
-        camera: cameraBeforeSwitch,
-        onUnavailable: (message) => fallbackPlumeMapToSatellite(message),
-      });
-      if (switchToken !== plumeMapViewToken || activePlumeMapView !== viewName) {
-        renderer.deactivate();
-        return;
-      }
-      showTactical3dSurface(true);
-      updatePlumeTerrainStatus();
-      updatePlumeCompass();
-      setText('plume-layers-status', 'Photorealistic Tactical 3D active. Plume geometry is shared from the model.');
-    } catch {
-      fallbackPlumeMapToSatellite();
-    }
-    return;
-  }
-
-  window.HazMatIQ?.tactical3d?.deactivate?.();
-  showTactical3dSurface(false);
   if (!plumeMap) await ensurePlumeMap();
   if (plumeMapReady) await plumeMapReady;
+  if (switchToken !== plumeMapViewToken || activePlumeMapView !== viewName) return;
+  const targetMode = viewName === 'tactical' ? 'tactical' : 'base';
+  if (targetMode === 'tactical') {
+    plumeBuildingsVisible = true;
+    if (!await setPlumeMapStyle(buildTacticalPlumeMapStyle(), targetMode)) {
+      fallbackPlumeMapToSatellite('Tactical 3D is unavailable for this map provider or location. Satellite view restored.');
+      return;
+    }
+  } else {
+    plumeBuildingsVisible = false;
+    if (!await setPlumeMapStyle(clonePlumeMapStyle(plumeBaseMapStyle), targetMode)) {
+      fallbackPlumeMapToSatellite('The selected map style could not load. Satellite view restored.');
+      return;
+    }
+  }
   if (switchToken !== plumeMapViewToken || activePlumeMapView !== viewName) return;
   if (plumeViewUses3d(viewName) && !enablePlumeTerrain()) {
     fallbackPlumeMapToSatellite();
@@ -8222,6 +8595,9 @@ async function setPlumeMapView(viewName) {
   } else {
     plumeMap.easeTo(camera);
   }
+  if (viewName === 'tactical') setText('plume-layers-status', configuredPlumeBuildingLayers.length
+    ? 'Tactical 3D active. Raised structures shown; plume geometry is shared from the model.'
+    : 'Tactical 3D active. Building height data is unavailable here; plume geometry is shared from the model.');
   updatePlumeTerrainStatus();
   updatePlumeCompass();
 }
@@ -8236,7 +8612,6 @@ async function clearThreatZones(message = '') {
   }
   currentThreatZoneGeoJson = null;
   currentThreatZoneGuideGeoJson = null;
-  syncTactical3dState();
   setPlumeMapResultVisible(false);
   syncDistanceDomMarkers();
   activePlumeCommand = null;
@@ -8307,7 +8682,6 @@ function clearPlumeLocationState() {
   plumeSourceMarker = null;
   setText('plume-gps-summary', '');
   setText('plume-location-source', 'Location required');
-  syncTactical3dState();
 }
 
 function degreesToCompass(degrees) {
@@ -8481,6 +8855,7 @@ async function useIncidentPlumeLocation() {
 }
 
 async function fetchOpenMeteo(lat, lon) {
+  if (!Number.isFinite(Number(lat)) || !Number.isFinite(Number(lon)) || Math.abs(Number(lat)) > 90 || Math.abs(Number(lon)) > 180) return null;
   const parameters = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lon),
@@ -8495,6 +8870,7 @@ async function fetchOpenMeteo(lat, lon) {
 }
 
 async function fetchNwsObservation(lat, lon) {
+  if (!Number.isFinite(Number(lat)) || !Number.isFinite(Number(lon)) || Math.abs(Number(lat)) > 90 || Math.abs(Number(lon)) > 180) return null;
   const points = await fetchJson(`https://api.weather.gov/points/${lat.toFixed(4)},${lon.toFixed(4)}`);
   const stationUrl = points?.properties?.observationStations;
   if (!stationUrl) return null;
@@ -8516,6 +8892,9 @@ async function fetchNwsObservation(lat, lon) {
 }
 
 async function fetchWeatherSources(lat, lon) {
+  if (!Number.isFinite(Number(lat)) || !Number.isFinite(Number(lon)) || Math.abs(Number(lat)) > 90 || Math.abs(Number(lon)) > 180 || (Number(lat) === 0 && Number(lon) === 0)) {
+    return { openMeteo: null, nws: null };
+  }
   const proxyQuery = new URLSearchParams({ lat: String(lat), lon: String(lon), refresh: String(Date.now()) });
   const proxy = await fetchJson(`/api/weather/current?${proxyQuery}`, { timeoutMs: 10000 });
   if (proxy?.openMeteo || proxy?.nws) {
@@ -8785,12 +9164,69 @@ function getWeatherFreshnessStatus(observationTime) {
   return getWeatherFreshness(observationTime).status;
 }
 
+function updatePlumeWindIndicator({ source = '', observationTime = '', message = '' } = {}) {
+  const sourceMode = document.getElementById('plume-weather-source')?.value || '';
+  const reading = document.getElementById('plume-weather-wind-reading');
+  const meta = document.getElementById('plume-weather-wind-meta');
+  const arrow = document.getElementById('plume-weather-wind-arrow');
+  if (!reading || !meta) return;
+  const liveObservation = ['auto-live', 'open-meteo'].includes(sourceMode)
+    ? (sourceMode === 'open-meteo' ? plumeWeatherSources.openMeteo : latestPlumeWeather)
+    : null;
+  const direction = Number(liveObservation?.windDirDeg ?? document.getElementById('plume-wind-direction')?.value);
+  const speed = Number(liveObservation?.windSpeedMph ?? document.getElementById('plume-wind-speed')?.value);
+  const valid = Number.isFinite(direction) && Number.isFinite(speed) && speed >= 0;
+  const freshness = getWeatherFreshness(observationTime);
+  const displaySource = source || (sourceMode === 'manual' ? 'Manual Entry' : sourceMode === 'columbia-live' ? 'Columbia Weather Station' : 'Weather source pending');
+  const freshnessLabel = sourceMode === 'manual'
+    ? 'Manual — verify'
+    : sourceMode === 'columbia-live'
+      ? 'Sample — not connected'
+      : freshness.status;
+  const statusNote = message || freshnessLabel;
+  if (sourceMode === 'columbia-live') {
+    reading.textContent = valid
+      ? `Wind from ${Math.round(direction)}° · ${speed.toFixed(1)} mph · Sample — not connected`
+      : 'No live observation · Sample — not connected';
+  } else if (valid) {
+    reading.textContent = `Wind from ${Math.round((direction + 360) % 360)}° · ${speed.toFixed(1)} mph`;
+  } else {
+    reading.textContent = 'Wind observation unavailable';
+  }
+  meta.textContent = `${observationTime || 'Time unknown'} · ${displaySource} · ${statusNote}`;
+  if (arrow) arrow.style.transform = valid ? `rotate(${direction}deg)` : 'rotate(0deg)';
+
+  const glanceReading = document.getElementById('plume-weather-glance-reading');
+  const glanceMeta = document.getElementById('plume-weather-glance-meta');
+  const glanceArrow = document.getElementById('plume-weather-glance-arrow');
+  const glanceStatus = document.getElementById('plume-weather-glance-status');
+  const glanceSource = document.getElementById('plume-weather-glance-source');
+  const glanceTime = document.getElementById('plume-weather-glance-time');
+  const glanceTemperature = document.getElementById('plume-weather-glance-temperature');
+  if (glanceReading) glanceReading.textContent = reading.textContent;
+  if (glanceMeta) glanceMeta.textContent = meta.textContent;
+  if (glanceArrow) glanceArrow.style.transform = valid ? `rotate(${direction}deg)` : 'rotate(0deg)';
+  if (glanceStatus) glanceStatus.textContent = statusNote;
+  if (glanceSource) glanceSource.textContent = displaySource;
+  if (glanceTime) {
+    const parsedObservation = observationTime ? new Date(observationTime) : null;
+    glanceTime.textContent = parsedObservation && !Number.isNaN(parsedObservation.getTime())
+      ? parsedObservation.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      : '—';
+  }
+  if (glanceTemperature) {
+    const temperature = Number(document.getElementById('plume-temperature')?.value);
+    glanceTemperature.textContent = Number.isFinite(temperature) ? `${temperature.toFixed(1)}°F` : '—';
+  }
+}
+
 function updatePlumeWeatherSourceStatus(source, observationTime = '', message = '') {
   const freshness = getWeatherFreshness(observationTime);
   setText('plume-weather-source-name', source || 'Not available');
   setText('plume-weather-source-state', message || freshness.status);
   setText('plume-weather-observation-time', observationTime || 'Not available');
   setText('plume-weather-age', freshness.ageMinutes === null ? 'Unknown' : `${Math.round(freshness.ageMinutes)} minutes`);
+  updatePlumeWindIndicator({ source, observationTime, message });
   updatePlumeInputSummaries();
 }
 
@@ -9173,6 +9609,12 @@ function readPlumeModelInputs(location) {
 
 async function runBackendPlume(inputs) {
   if (!activeChemical) return { summary: 'Identify a chemical before running the plume model.', result: null };
+  const validLocation = normalizePlumeLocation({ lat: inputs?.lat, lon: inputs?.lng });
+  const validWeather = [inputs?.windSpeedMps, inputs?.windDirDeg, inputs?.tempC]
+    .every((value) => Number.isFinite(Number(value)));
+  if (!validLocation || !validWeather) {
+    return { summary: 'Cannot send the plume request until location and weather values are valid.', result: null };
+  }
 
   try {
     const response = await fetch('/api/plume/run', {
@@ -9390,6 +9832,11 @@ function updateOperationalPlumeReadiness(availability = latestPlumeAvailability,
   const selectedMode = endpointFound && !missing.length ? 'Planning Plume' : 'Blocked';
   setText('plume-model-mode-badge', selectedMode);
   setText('plume-header-mode-chip', selectedMode === 'Planning Plume' ? 'Planning Estimate' : selectedMode);
+  setPlumeStatusBadge(
+    'plume-command-model-mode',
+    selectedMode === 'Planning Plume' ? 'Ready for planning' : 'Needs Input',
+    selectedMode === 'Planning Plume' ? 'verified' : 'missing',
+  );
   const readinessReason = reason || (endpointFound
     ? missing.length ? `AEGL / LOC found. Missing: ${missing.join(', ')}.` : 'AEGL / LOC and required plume inputs are available.'
     : 'No verified AEGL / LOC endpoint is available for this plume estimate.');
@@ -9410,7 +9857,6 @@ function updateOperationalPlumeReadiness(availability = latestPlumeAvailability,
     : 'Context is retained for validation; no thermodynamic source-term calculation is implied.');
   setText('plume-command-validation-status', result?.validationStatus || (endpointFound && !missing.length ? 'Ready for planning' : 'Needs Input'));
   setText('plume-command-weather-summary', result?.weather?.freshness || (missingWeather.length ? missingWeather.join(', ') : 'Planning weather status'));
-  setText('plume-command-model-mode', selectedMode);
   const incidentAddress = getIncidentAddressValue?.() || plumeManualLocation?.address || '';
   const liveWind = latestPlumeWeather?.windSpeedMph;
   const liveDirection = latestPlumeWeather?.windDirectionDeg;
@@ -9536,6 +9982,8 @@ function updatePlumeInputSummaries() {
     : plumeSummaryValue(modelSource));
 
   const sourceMode = document.getElementById('plume-weather-source')?.value;
+  const samplePanel = document.getElementById('plume-cws-sample');
+  if (samplePanel) samplePanel.hidden = sourceMode !== 'columbia-live';
   const source = document.getElementById('plume-weather-source-name')?.textContent?.trim()
     || controlValue('plume-weather-source', { selectedLabel: true });
   const observationTime = plumeSummaryValue(document.getElementById('plume-weather-observation-time')?.textContent);
@@ -9571,6 +10019,11 @@ function updatePlumeInputSummaries() {
   else if (/stale/i.test(sourceStatus)) setPlumeStatusBadge('plume-weather-badge', 'Stale Weather', 'warning');
   else if (/live|current/i.test(sourceStatus)) setPlumeStatusBadge('plume-weather-badge', 'Verified Source', 'verified');
   else setPlumeStatusBadge('plume-weather-badge', 'Verify Weather', 'verify');
+  updatePlumeWindIndicator({
+    source,
+    observationTime: document.getElementById('plume-weather-observation-time')?.textContent?.trim() || '',
+    message: sourceStatus,
+  });
 }
 
 function getMissingPlumeRequiredInputs() {
@@ -10634,6 +11087,8 @@ document.getElementById('use-live-plume-weather-btn')?.addEventListener('click',
 });
 document.getElementById('plume-weather-source')?.addEventListener('change', (event) => {
   const source = event.target.value;
+  const samplePanel = document.getElementById('plume-cws-sample');
+  if (samplePanel) samplePanel.hidden = source !== 'columbia-live';
   document.querySelectorAll('.plume-columbia-csv').forEach((field) => {
     field.hidden = source !== 'columbia-csv';
   });
@@ -10641,7 +11096,11 @@ document.getElementById('plume-weather-source')?.addEventListener('change', (eve
     field.hidden = source !== 'manual';
   });
   if (source === 'columbia-live') {
-    updatePlumeWeatherSourceStatus('Columbia Weather Station', '', 'Columbia Weather Station selected. Live station connection not configured yet.');
+    ['plume-wind-speed', 'plume-wind-direction', 'plume-temperature', 'plume-elevation'].forEach((id) => {
+      const input = document.getElementById(id);
+      if (input) input.value = '';
+    });
+    updatePlumeWeatherSourceStatus('Columbia Weather Station', '', 'Sample — not connected. This sample is not used by Plot Plume.');
   } else if (source === 'columbia-csv') {
     updatePlumeWeatherSourceStatus('Columbia CSV Import', '', 'Time unknown');
   } else if (source === 'manual') {
@@ -10703,14 +11162,23 @@ window.setInterval(() => {
 document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
   button.addEventListener('click', () => setPlumeMapView(button.dataset.plumeMapView));
 });
+document.getElementById('plume-map-maximize-btn')?.addEventListener('click', () => setPlumeMapMaximized(true));
+document.getElementById('plume-map-minimize-btn')?.addEventListener('click', () => setPlumeMapMaximized(false));
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && plumeMapMaximized) {
+    event.preventDefault();
+    setPlumeMapMaximized(false);
+  }
+});
 document.getElementById('plume-buildings-toggle')?.addEventListener('click', toggleConfiguredPlumeBuildings);
 document.getElementById('plume-fit-view-btn')?.addEventListener('click', () => void fitPlumeToView());
-document.getElementById('plume-recenter-incident-btn')?.addEventListener('click', () => void recenterPlumeOnIncident());
-document.getElementById('plume-recenter-release-btn')?.addEventListener('click', recenterPlumeOnRelease);
+document.getElementById('plume-recenter-map-btn')?.addEventListener('click', () => void recenterPlumeOnIncident());
 document.getElementById('plume-reset-view-btn')?.addEventListener('click', resetPlumeMapView);
 document.querySelectorAll('[data-plume-camera]').forEach((button) => {
   button.addEventListener('click', () => {
     const actions = {
+      'zoom-in': () => zoomPlumeMap(1),
+      'zoom-out': () => zoomPlumeMap(-1),
       'rotate-left': () => rotatePlumeMap(-15),
       'rotate-right': () => rotatePlumeMap(15),
       'tilt-up': () => tiltPlumeMap(10),
@@ -11183,6 +11651,85 @@ function removeLiveRadarOverlay() {
   document.querySelector('.live-map-stage')?.classList.remove('radar-enhanced');
 }
 
+function radarTimeLabel(timestamp) {
+  if (!timestamp) return 'Current / time unavailable';
+  const date = new Date(timestamp);
+  return Number.isFinite(date.getTime()) ? date.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : 'Time unavailable';
+}
+
+function syncLiveRadarControls(state = {}) {
+  const source = document.getElementById('live-radar-source');
+  const frame = document.getElementById('live-radar-frame');
+  const play = document.getElementById('live-radar-play');
+  const refresh = document.getElementById('live-radar-refresh');
+  const opacity = document.getElementById('live-radar-opacity');
+  const opacityValue = document.getElementById('live-radar-opacity-value');
+  const frameTime = document.getElementById('live-radar-frame-time');
+  const statusBadge = document.getElementById('live-radar-status-badge');
+  const sourceStatus = document.getElementById('live-radar-source-status');
+  if (!source && !frame && !statusBadge) return;
+  if (source && state.selectedProviderId && document.activeElement !== source) source.value = state.selectedProviderId;
+  const frameCount = Number(state.frameCount || state.frames?.length || 0);
+  if (frame) {
+    frame.max = String(Math.max(0, frameCount - 1));
+    frame.value = String(Math.max(0, Number(state.frameIndex) || 0));
+    frame.disabled = !state.enabled || frameCount < 2;
+  }
+  if (play) {
+    play.textContent = state.animationPlaying ? 'Pause' : 'Play';
+    play.disabled = !state.enabled || !state.supportsAnimation;
+    play.setAttribute('aria-pressed', String(Boolean(state.animationPlaying)));
+  }
+  if (refresh) refresh.disabled = !state.enabled;
+  if (opacity && Number.isFinite(Number(state.opacity)) && document.activeElement !== opacity) opacity.value = String(state.opacity);
+  if (opacityValue) opacityValue.textContent = `${Math.round((Number(state.opacity) || 0.58) * 100)}%`;
+  if (frameTime) frameTime.textContent = radarTimeLabel(state.timestamp);
+  if (statusBadge) statusBadge.textContent = state.enabled ? (state.providerName || 'Radar') : 'Off';
+  if (sourceStatus) {
+    const availability = state.enabled ? `${state.status || 'Status unavailable'}.` : 'Radar off.';
+    const fallback = state.fallbackMessage ? ` ${state.fallbackMessage}` : '';
+    sourceStatus.textContent = `${availability}${fallback} Visual situational awareness only; plume calculations are unchanged.`;
+  }
+}
+
+function getLiveRadarController() {
+  if (liveRadarController) return liveRadarController;
+  const map = liveMap || window.hazmatiqLiveMap;
+  if (!map || !window.HazMatWeatherRadar) return null;
+  liveRadarController = window.HazMatWeatherRadar.createController(liveMap || map, {
+    prefix: 'live-weather-radar',
+    beforeLayerId: livePlumeFillLayerId,
+    providerId: 'BEST_AVAILABLE',
+    onAvailability: (_, provider) => setText('live-map-status', `${provider.displayName} active.`),
+    onFallback: () => setText('live-map-status', 'Primary radar unavailable. NOAA/NWS fallback active.'),
+    onStateChange: syncLiveRadarControls,
+  });
+  liveRadarController.setOpacity(0.58);
+  return liveRadarController;
+}
+
+function bindLiveRadarControls() {
+  const source = document.getElementById('live-radar-source');
+  const frame = document.getElementById('live-radar-frame');
+  const play = document.getElementById('live-radar-play');
+  const refresh = document.getElementById('live-radar-refresh');
+  const opacity = document.getElementById('live-radar-opacity');
+  window.addEventListener('hazmatiq:radar-state', (event) => syncLiveRadarControls(event.detail || {}));
+  source?.addEventListener('change', () => {
+    const controller = getLiveRadarController();
+    if (controller) void controller.selectProvider(source.value);
+  });
+  frame?.addEventListener('input', () => getLiveRadarController()?.setFrame(frame.value));
+  play?.addEventListener('click', () => {
+    const controller = getLiveRadarController();
+    if (!controller) return;
+    if (controller.getState().animationPlaying) controller.pause();
+    else controller.play();
+  });
+  refresh?.addEventListener('click', () => void getLiveRadarController()?.refresh());
+  opacity?.addEventListener('input', () => getLiveRadarController()?.setOpacity(opacity.value));
+}
+
 function updateLiveRadarOverlay() {
   if (!liveMap?.isStyleLoaded()) return;
   const enabled = Boolean(liveMapState?.activeLayers?.weatherRadar);
@@ -11195,15 +11742,9 @@ function updateLiveRadarOverlay() {
     setText('live-map-status', 'Weather radar is unavailable.');
     return;
   }
-  liveRadarController ||= window.HazMatWeatherRadar.createController(liveMap, {
-    prefix: 'live-weather-radar',
-    beforeLayerId: livePlumeFillLayerId,
-    providerId: 'BEST_AVAILABLE',
-    onAvailability: (_, provider) => setText('live-map-status', `${provider.displayName} active.`),
-    onFallback: () => setText('live-map-status', 'Primary radar unavailable. NOAA/NWS fallback active.'),
-  });
-  liveRadarController.setOpacity(0.58);
-  void liveRadarController.enable();
+  const controller = getLiveRadarController();
+  if (!controller) return;
+  void controller.enable();
 }
 
 function initializeLiveMap() {
@@ -11307,6 +11848,8 @@ document.querySelectorAll('[data-live-layer]').forEach((button) => {
     saveLiveMapState(`${button.textContent} layer ${liveMapState.activeLayers[layer] ? 'shown' : 'hidden'}.`);
   });
 });
+
+bindLiveRadarControls();
 
 document.getElementById('live-map-add-marker')?.addEventListener('click', () => {
   const dialog = document.getElementById('live-map-marker-dialog');

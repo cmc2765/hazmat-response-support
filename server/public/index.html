@@ -648,6 +648,7 @@
                     <button class="chemical-action-button chemical-profile-plume" id="open-plume-btn" type="button">PLOT PLUME</button>
                     <button class="chemical-action-button chemical-profile-guided" id="open-guided-response-btn" type="button">GUIDED RESPONSE</button>
                     <button class="chemical-action-button chem-compare" id="open-chemcompare-btn" type="button">CHEM COMPARE</button>
+                    <button class="ghost-btn chemical-profile-print-export" id="chemical-profile-print-export-btn" type="button" aria-haspopup="dialog">Print / Export</button>
                   </div>
                 </header>
                 <article class="panel-card chemical-profile-header-card">
@@ -688,6 +689,30 @@
                 </footer>
               </div>
             </div>
+
+            <dialog id="chemical-profile-print-dialog" class="chemical-profile-print-dialog" aria-labelledby="chemical-profile-print-title">
+              <form method="dialog" class="chemical-profile-print-form">
+                <div class="chemical-profile-print-heading">
+                  <p class="eyebrow">Chemical Profile</p>
+                  <h2 id="chemical-profile-print-title">Print / Export</h2>
+                </div>
+                <p class="chemical-profile-print-instructions">Choose the information pages to include. “All pages” includes every populated profile page, not only the tab currently visible.</p>
+                <fieldset>
+                  <legend>Pages to print</legend>
+                  <label class="chemical-profile-print-option chemical-profile-print-all-option">
+                    <input id="chemical-profile-print-all" type="checkbox" checked />
+                    <span><strong>All pages</strong><small>Full Chemical Profile</small></span>
+                  </label>
+                  <div id="chemical-profile-print-pages" class="chemical-profile-print-pages"></div>
+                </fieldset>
+                <p id="chemical-profile-print-status" class="chemical-profile-print-status" role="status" aria-live="polite"></p>
+                <div class="chemical-profile-print-actions">
+                  <button id="chemical-profile-print-cancel-btn" class="ghost-btn" type="button">Cancel</button>
+                  <button id="chemical-profile-print-confirm-btn" class="primary-btn" type="submit">Print / Save PDF</button>
+                </div>
+              </form>
+            </dialog>
+            <section id="chemical-profile-print-root" class="chemical-profile-print-root" aria-hidden="true"></section>
 
             <div id="hazard-profile-results" class="hazard-profile-results" hidden>
               <div class="hazard-profile-shell">
@@ -826,7 +851,7 @@
                     <circle class="plume-hero-source" cx="13" cy="28" r="5"/>
                   </svg>
                 </span>
-                <div class="hazmat-page-hero-content"><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><p class="hazmat-hero-subtitle">Weather-aware threat-zone planning.</p><small id="plume-mode-indicator" class="plume-mode-indicator">STANDALONE PLANNING</small><small id="plume-header-chemical" hidden>Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers" hidden>CAS / UN / ERG pending</small></div>
+                <div class="hazmat-page-hero-content"><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><small id="plume-header-chemical" hidden>Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers" hidden>CAS / UN / ERG pending</small></div>
               </div>
               <div class="plume-v2-header-context" aria-label="Current plume context">
                 <div><span>Location</span><strong id="plume-header-location">Location pending</strong></div>
@@ -846,10 +871,13 @@
                   </header>
                   <div class="plume-model-section-grid plume-release-grid">
                     <label class="plume-model-field plume-chemical-field plume-required-field" for="plume-chemical-input">
-                      <span class="plume-required-label">Chemical <b>Required</b></span>
+                      <span class="plume-required-label">Chemical</span>
                       <div class="plume-chemical-search">
                         <div class="plume-linked-input">
-                          <input id="plume-chemical-input" type="text" placeholder="Name, Chemical ID, UN, or CAS" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="plume-chemical-suggestions" aria-describedby="plume-input-status" />
+                          <span class="plume-required-control plume-chemical-input-control">
+                            <input id="plume-chemical-input" type="text" placeholder="Name, Chemical ID, UN, or CAS" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="plume-chemical-suggestions" aria-describedby="plume-input-status" />
+                            <span class="plume-required-inside" aria-hidden="true">Required</span>
+                          </span>
                           <button class="ghost-btn" id="change-plume-chemical-btn" type="button">Browse</button>
                         </div>
                         <div id="plume-chemical-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
@@ -861,18 +889,23 @@
                       </div>
                     </label>
                     <label class="plume-model-field plume-required-field" for="plume-release-type">
-                      <span class="plume-required-label">Release type <b>Required</b></span>
-                      <select id="plume-release-type">
-                        <option value="plume">Continuous release</option>
-                        <option value="puff">Instantaneous release</option>
-                      </select>
+                      <span class="plume-required-label">Release type</span>
+                      <span class="plume-required-control">
+                        <select id="plume-release-type">
+                          <option value="plume">Continuous release</option>
+                          <option value="puff">Instantaneous release</option>
+                        </select>
+                        <span class="plume-required-inside" aria-hidden="true">Required</span>
+                      </span>
                     </label>
                     <label class="plume-model-field plume-required-field" for="plume-release-quantity">
-                      <span class="plume-required-label"><span id="plume-release-quantity-label">Release rate</span> <b>Required</b></span>
+                      <span class="plume-required-label"><span id="plume-release-quantity-label">Release rate</span><span class="plume-field-unit-heading">Units</span></span>
                       <div class="plume-quantity-input">
-                        <input id="plume-release-quantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Required" required />
+                        <span class="plume-required-control plume-number-control">
+                          <input id="plume-release-quantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter value" required />
+                          <span class="plume-required-inside" aria-hidden="true">Required</span>
+                        </span>
                         <span class="plume-quantity-unit">
-                          <span class="plume-quantity-unit-label" aria-hidden="true">Unit</span>
                           <select id="plume-release-unit" aria-label="Release quantity unit">
                             <option value="lb-min">lb/min</option>
                             <option value="lb-sec">lb/sec</option>
@@ -881,12 +914,18 @@
                       </div>
                     </label>
                     <label class="plume-model-field plume-required-field" id="plume-puff-duration-field" for="plume-puff-duration" hidden>
-                      <span class="plume-required-label">Puff evaluation time (seconds) <b>Required</b></span>
-                      <input id="plume-puff-duration" type="number" min="1" step="1" inputmode="numeric" placeholder="Required for puff" />
+                      <span class="plume-required-label">Puff evaluation time (seconds)</span>
+                      <span class="plume-required-control">
+                        <input id="plume-puff-duration" type="number" min="1" step="1" inputmode="numeric" placeholder="Enter seconds" />
+                        <span class="plume-required-inside" aria-hidden="true">Required</span>
+                      </span>
                     </label>
                     <label class="plume-model-field plume-required-field" id="plume-release-duration-field" for="plume-release-duration">
-                      <span class="plume-required-label">Duration (min) <b>Required</b></span>
-                      <input id="plume-release-duration" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="Required" />
+                      <span class="plume-required-label">Duration (min)</span>
+                      <span class="plume-required-control">
+                        <input id="plume-release-duration" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="Enter minutes" />
+                        <span class="plume-required-inside" aria-hidden="true">Required</span>
+                      </span>
                     </label>
                     <label class="plume-model-field" for="plume-release-height">
                       <span>Release height (ft) <b class="plume-optional-label">Optional</b></span>
@@ -944,13 +983,26 @@
                         <select id="plume-weather-source">
                           <option value="auto-live" selected>Best Current Live Source</option>
                           <option value="open-meteo">Open-Meteo</option>
-                          <option value="columbia-live">Columbia Weather Station</option>
-                          <option value="columbia-csv">Columbia CSV Import</option>
+                          <option value="columbia-live">Columbia Weather Station — sample only (not connected)</option>
+                          <option value="columbia-csv">Columbia CSV Import — field upload</option>
                           <option value="manual">Manual Entry</option>
                         </select>
                       </label>
                       <button class="ghost-btn plume-weather-refresh" id="use-live-plume-weather-btn" type="button">Refresh</button>
                     </div>
+                    <section class="plume-cws-sample" id="plume-cws-sample" aria-label="Columbia weather sample display" hidden>
+                      <div class="plume-cws-sample-heading"><strong>Columbia weather station sample</strong><span>Sample — not connected</span></div>
+                      <small>Illustrative fields only. This is not a live station feed and never supplies Plot Plume. Endpoint, credentials, format, and units are pending the CWS/MicroServer details.</small>
+                      <dl class="plume-cws-sample-grid">
+                        <div><dt>Wind direction</dt><dd id="cws-sample-wind-direction">247.3° · Sample — not connected</dd></div>
+                        <div><dt>Wind speed</dt><dd id="cws-sample-wind-speed">2.5 · Sample — not connected</dd></div>
+                        <div><dt>Gust</dt><dd id="cws-sample-gust">Not supplied · Sample — not connected</dd></div>
+                        <div><dt>Temperature</dt><dd id="cws-sample-temperature">24 · Sample — not connected</dd></div>
+                        <div><dt>Observation time</dt><dd id="cws-sample-observation">2026-08-17 18:00 UTC · Sample — not connected</dd></div>
+                        <div><dt>Source</dt><dd id="cws-sample-source">CWS/MicroServer · Sample — not connected</dd></div>
+                        <div><dt>Live/Stale status</dt><dd id="cws-sample-status">Stale · Sample — not connected</dd></div>
+                      </dl>
+                    </section>
                     <label class="plume-model-field plume-columbia-csv" for="plume-columbia-csv" hidden>
                       <span>Upload CSV</span>
                       <input id="plume-columbia-csv" type="file" accept=".csv,text/csv" />
@@ -983,6 +1035,13 @@
                         <small>Status <strong id="plume-weather-source-state">Awaiting verification</strong></small>
                         <small>Observation <strong id="plume-weather-observation-time">Not available</strong></small>
                         <small>Age <strong id="plume-weather-age">Unknown</strong></small>
+                      </div>
+                      <div class="plume-weather-wind-indicator" id="plume-weather-wind-indicator" role="status" aria-live="polite">
+                        <div class="plume-weather-wind-compass" aria-hidden="true"><span>N</span><i id="plume-weather-wind-arrow"></i></div>
+                        <div class="plume-weather-wind-copy">
+                          <strong id="plume-weather-wind-reading">Wind observation unavailable</strong>
+                          <small id="plume-weather-wind-meta">Direction, speed, time, source, and freshness will appear here.</small>
+                        </div>
                       </div>
                       <label class="plume-model-field" for="plume-elevation">
                         <span>Reported location elevation (ft)</span>
@@ -1035,6 +1094,27 @@
               </div>
             </form>
 
+            <section class="plume-weather-at-a-glance" aria-label="Current weather and wind direction">
+              <div class="plume-weather-glance-heading">
+                <div><span class="plume-eyebrow">Current conditions</span><strong>Weather at a glance</strong></div>
+                <span id="plume-weather-glance-status">Awaiting weather</span>
+              </div>
+              <div class="plume-weather-glance-main">
+                <div class="plume-weather-glance-compass" aria-hidden="true">
+                  <span>N</span><span>E</span><span>S</span><span>W</span><i id="plume-weather-glance-arrow"></i>
+                </div>
+                <div class="plume-weather-glance-reading">
+                  <strong id="plume-weather-glance-reading">Wind observation unavailable</strong>
+                  <small id="plume-weather-glance-meta">Direction, speed, source, and freshness will appear here.</small>
+                </div>
+              </div>
+              <div class="plume-weather-glance-metrics" aria-label="Current weather values">
+                <span>Temp <strong id="plume-weather-glance-temperature">—</strong></span>
+                <span>Source <strong id="plume-weather-glance-source">—</strong></span>
+                <span>Observed <strong id="plume-weather-glance-time">—</strong></span>
+              </div>
+            </section>
+
             <button class="plume-left-plot-button" id="plume-left-plot-btn" type="submit" form="plume-model-form">Plot Plume</button>
 
             <section class="plume-compact-card plume-endpoint-card" aria-labelledby="plume-endpoint-card-heading" hidden>
@@ -1058,37 +1138,44 @@
                     <button class="plume-map-button primary" id="plot-plume-btn" type="button" disabled>Plot Plume</button>
                     <button class="module-btn plume-map-button secondary plume-live-radar-link" type="button" data-view="map">Open Live Map</button>
                   </form>
-                  <div class="plume-v2-map-controls" role="group" aria-label="Plume basemap">
-                    <div class="plume-map-mode-controls" role="group" aria-label="Map mode">
-                      <span class="plume-map-control-label">MAP MODE</span>
-                      <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
-                      <button class="plume-layer-button" type="button" data-plume-map-view="tactical" aria-pressed="false">Tactical 3D</button>
-                      <button class="plume-layer-button" type="button" data-plume-map-view="street" aria-pressed="false">Street</button>
-                      <button class="plume-layer-button" type="button" data-plume-map-view="terrain3d" aria-pressed="false">3D Terrain</button>
-                    </div>
-                    <div class="plume-map-layer-controls" role="group" aria-label="Map layers and overlays">
-                      <span class="plume-map-control-label">LAYERS</span>
-                      <button class="plume-layer-button active" type="button" data-plume-layer="zones" aria-pressed="true">Threat Zones</button>
-                      <button class="plume-layer-button active" type="button" data-plume-layer="centerline" aria-pressed="true">Plume</button>
-                      <button class="plume-layer-button" type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
-                      <button class="plume-layer-button" id="plume-buildings-toggle" type="button" aria-pressed="false" disabled>Buildings</button>
-                    </div>
-                    <div class="plume-map-action-controls" role="group" aria-label="Map actions">
-                      <span class="plume-map-control-label">ACTIONS</span>
-                      <button class="plume-layer-button" id="plume-fit-view-btn" type="button">Fit Plume</button>
-                      <button class="plume-layer-button" id="plume-recenter-incident-btn" type="button">Recenter Incident</button>
-                      <button class="plume-layer-button" id="plume-recenter-release-btn" type="button">Recenter Release</button>
-                      <button class="plume-layer-button" id="plume-reset-view-btn" type="button">Reset View</button>
-                    </div>
+                  <div class="plume-v2-map-controls" role="group" aria-label="Plume map controls">
+                      <div class="plume-map-mode-controls" role="group" aria-label="Map mode">
+                        <span class="plume-map-control-label">MAP MODE</span>
+                        <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
+                        <button class="plume-layer-button" type="button" data-plume-map-view="tactical" aria-pressed="false">Tactical 3D</button>
+                        <button class="plume-layer-button" type="button" data-plume-map-view="street" aria-pressed="false">Street</button>
+                        <button class="plume-layer-button" type="button" data-plume-map-view="terrain3d" aria-pressed="false">3D Terrain</button>
+                      </div>
+                      <div class="plume-map-layer-controls" role="group" aria-label="Map layers and overlays">
+                        <span class="plume-map-control-label">LAYERS</span>
+                        <button class="plume-layer-button active" type="button" data-plume-layer="zones" aria-pressed="true">Threat Zones</button>
+                        <button class="plume-layer-button active" type="button" data-plume-layer="centerline" aria-pressed="true">Plume</button>
+                        <button class="plume-layer-button" type="button" data-plume-layer="distance" aria-pressed="false">Distance</button>
+                        <button class="plume-layer-button" id="plume-buildings-toggle" type="button" aria-pressed="false" disabled>Buildings</button>
+                      </div>
+                      <div class="plume-map-action-controls" role="group" aria-label="Map actions">
+                        <span class="plume-map-control-label">ACTIONS</span>
+                        <button class="plume-layer-button" id="plume-fit-view-btn" type="button">Fit Plume</button>
+                        <button class="plume-layer-button" id="plume-recenter-map-btn" type="button">Recenter Map</button>
+                        <button class="plume-layer-button" id="plume-reset-view-btn" type="button">Reset View</button>
+                      </div>
                   </div>
                   <div class="plume-map-shell plume-v2-map-shell">
+                    <button class="plume-map-maximize-button" id="plume-map-maximize-btn" type="button" aria-label="Maximize map" title="Maximize map">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" /></svg>
+                    </button>
+                    <button class="plume-map-maximize-button plume-map-minimize-button" id="plume-map-minimize-btn" type="button" aria-label="Minimize map" title="Minimize map" hidden>
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5" /></svg>
+                    </button>
                     <div id="plume-gis-map" class="plume-map-frame" role="application" aria-label="Interactive incident plume map"></div>
-                    <div id="plume-tactical-3d-map" class="plume-map-frame plume-tactical-3d-frame" role="application" aria-label="Photorealistic Tactical 3D incident map" hidden></div>
+                    <div class="plume-map-availability" id="plume-map-availability" role="status" aria-live="polite" hidden></div>
                     <div class="plume-terrain-status" id="plume-terrain-status">Satellite View</div>
                     <div class="plume-wind-direction-status" id="plume-wind-direction-status">Missing Wind Direction</div>
                     <div class="plume-compass-control" id="plume-compass-control" aria-label="Map rotation and tilt controls">
                       <div class="plume-compass-ring" aria-hidden="true"><span class="plume-compass-north">N</span><span class="plume-compass-arrow" id="plume-compass-arrow"></span></div>
                       <div class="plume-compass-buttons">
+                        <button class="plume-compass-button zoom-in" type="button" data-plume-camera="zoom-in" aria-label="Zoom map in" title="Zoom In">+</button>
+                        <button class="plume-compass-button zoom-out" type="button" data-plume-camera="zoom-out" aria-label="Zoom map out" title="Zoom Out">−</button>
                         <button class="plume-compass-button left" type="button" data-plume-camera="rotate-left" aria-label="Rotate map left" title="Rotate Left">↶</button>
                         <button class="plume-compass-button right" type="button" data-plume-camera="rotate-right" aria-label="Rotate map right" title="Rotate Right">↷</button>
                         <button class="plume-compass-button tilt-up" type="button" data-plume-camera="tilt-up" aria-label="Tilt map up" title="Tilt Up">＋</button>
@@ -1104,7 +1191,6 @@
                     <span id="plume-layers-status" role="status" aria-live="polite"></span>
                     <span id="plume-input-status" role="status" aria-live="polite"></span>
                     <span id="plume-map-attribution">© OpenFreeMap · © OpenMapTiles · Imagery © Esri</span>
-                    <span id="plume-tactical-attribution" hidden>© Google Maps Platform · Photorealistic 3D Tiles</span>
                   </footer>
                 </article>
               </main>
@@ -1155,9 +1241,8 @@
                 </section>
 
                 <section class="plume-intelligence-card plume-readiness-card">
-                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Readiness and validation</span><h2>Model Readiness</h2></div><span class="plume-status-badge" id="plume-command-model-mode">Not Modeled</span></header>
                   <details class="plume-readiness-details">
-                    <summary>Validation details</summary>
+                    <summary><span class="plume-readiness-summary-label">Model Readiness <small>Readiness and validation</small></span><span class="plume-status-badge" id="plume-command-model-mode" data-state="missing">Not Modeled</span></summary>
                     <p class="plume-intelligence-note" id="plume-readiness-reason">Awaiting a verified chemical, location, release, weather, and endpoint.</p>
                     <div class="plume-readiness-grid">
                     <div><span>Chemical</span><strong id="plume-command-readiness-master">Requires Review</strong><small id="plume-command-readiness-cas">CAS pending</small></div>
@@ -1289,6 +1374,24 @@
                 <div data-live-panel="zones" hidden><strong>Zone placeholders</strong><p>Hot, Warm, Cold, Isolation, Evacuation, and Shelter-in-Place.</p><small>Zone drawing tools pending.</small></div>
                 <div data-live-panel="traffic" hidden>Traffic integration pending. Use approved DOT/traffic data source.</div>
                 <div data-live-panel="trafficCams" hidden>Saved traffic camera locations are shown. <a href="https://algotraffic.com/Cameras" target="_blank" rel="noopener noreferrer">Open ALGO Traffic Cameras</a></div>
+                <div data-live-panel="weatherRadar" class="live-radar-panel" hidden aria-label="Weather radar controls">
+                  <div class="live-radar-panel-heading"><strong>Weather radar</strong><span id="live-radar-status-badge">Off</span></div>
+                  <label for="live-radar-source">Source</label>
+                  <select id="live-radar-source">
+                    <option value="BEST_AVAILABLE">Best available</option>
+                    <option value="RAINVIEWER_VISUAL_PROTOTYPE">RainViewer visual</option>
+                    <option value="NOAA_MRMS_OFFICIAL_FALLBACK">NOAA/NWS fallback</option>
+                  </select>
+                  <div class="live-radar-control-row">
+                    <button class="ghost-btn" id="live-radar-play" type="button">Play</button>
+                    <button class="ghost-btn" id="live-radar-refresh" type="button">Refresh</button>
+                  </div>
+                  <label for="live-radar-frame">Frame <output id="live-radar-frame-time">Current / time unavailable</output></label>
+                  <input id="live-radar-frame" type="range" min="0" max="0" value="0" step="1" disabled />
+                  <label for="live-radar-opacity">Opacity <output id="live-radar-opacity-value">58%</output></label>
+                  <input id="live-radar-opacity" type="range" min="0.1" max="1" value="0.58" step="0.05" />
+                  <small id="live-radar-source-status">Visual situational awareness only. Radar does not change plume calculations.</small>
+                </div>
                 <div data-live-panel="plume" hidden><strong id="live-plume-status">Plume Overlay Active</strong></div>
                 <div id="live-map-selected" hidden></div>
               </div>

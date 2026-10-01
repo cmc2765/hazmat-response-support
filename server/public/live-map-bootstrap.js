@@ -137,13 +137,15 @@
       setMessage('Weather radar unavailable.');
       return;
     }
-    radarController ||= window.HazMatWeatherRadar.createController(map, {
-      prefix: 'live-weather-radar',
-      beforeLayerId: 'live-plume-overlay-fill',
-      providerId: 'BEST_AVAILABLE',
-      onFallback: () => setMessage('Primary radar unavailable. NOAA/NWS fallback active.'),
-    });
-    radarController.setOpacity(0.58);
+    if (!radarController) {
+      radarController = window.HazMatWeatherRadar.createController(map, {
+        prefix: 'live-weather-radar',
+        beforeLayerId: 'live-plume-overlay-fill',
+        providerId: 'BEST_AVAILABLE',
+        onFallback: () => setMessage('Primary radar unavailable. NOAA/NWS fallback active.'),
+      });
+      radarController.setOpacity(0.58);
+    }
     void radarController.enable();
   }
 
