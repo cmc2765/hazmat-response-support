@@ -79,6 +79,11 @@ describe("plume map views", () => {
     expect(styles).toContain("#map.active .live-map-stage,\n  #map.active #live-gis-map");
   });
 
+  it("keeps the Live Map stage in the flexible grid row", () => {
+    expect(styles).toContain("grid-template-rows: auto auto minmax(0, 1fr) auto;");
+    expect(styles).not.toContain("grid-template-rows: auto auto auto minmax(0, 1fr) auto;");
+  });
+
   it("builds the Plume Model as a large tactical map with floating intelligence", () => {
     expect(tacticalMapStyles).toContain("grid-template-columns: minmax(280px, 23fr) minmax(0, 54fr) minmax(280px, 23fr);");
     expect(tacticalMapStyles).toContain("#plume.view.active .plume-v2-workspace");
@@ -498,6 +503,18 @@ describe("plume map views", () => {
     expect(radarUi).toContain("const DEFAULT_OPACITY = 0.58");
     expect(radarUi).toContain("'raster-resampling': 'linear'");
     expect(plumeUi).toContain("liveRadarController.setOpacity(0.58)");
+  });
+
+  it("renders NASA FIRMS detections as a cached, clustered Live Map overlay", () => {
+    expect(plumeUi).toContain("const wildfireClientCacheMs = 7 * 60 * 1000;");
+    expect(plumeUi).toContain("cluster: true");
+    expect(plumeUi).toContain("mapBoundsContainBounds");
+    expect(plumeUi).toContain("ACTIVE FIRE DETECTION");
+    expect(plumeUi).toContain("Thermal detection does not necessarily represent a confirmed wildfire perimeter.");
+    expect(plumeUi).toContain("wildfireResultToGeoJson");
+    expect(plumeUi).toContain("new Map((result?.features || []).map((feature) => [feature.id, feature]))");
+    expect(plumeUi).toContain("hours: '24'");
+    expect(html).toContain('data-live-layer="wildfireFires"');
   });
 
   it("keeps only one primary radar and the official NOAA fallback in the runtime registry", () => {

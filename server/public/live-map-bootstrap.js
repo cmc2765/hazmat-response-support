@@ -118,7 +118,16 @@
         if (action === 'zoom-out') map.zoomOut();
         if (action === 'compass') map.resetNorthPitch?.();
         if (action === 'recenter') {
-          navigator.geolocation?.getCurrentPosition(({ coords }) => map.easeTo({ center: [coords.longitude, coords.latitude], zoom: 15 }));
+          navigator.geolocation?.getCurrentPosition(({ coords }) => {
+            const location = { lon: coords.longitude, lat: coords.latitude };
+            map.easeTo({ center: [location.lon, location.lat], zoom: 15 });
+            if (typeof window.HazMatIQ?.updateLiveMapGpsMarker === 'function') window.HazMatIQ.updateLiveMapGpsMarker(location);
+            const gpsStatus = document.getElementById('live-map-gps-status');
+            if (gpsStatus) gpsStatus.innerHTML = '<i class="status-dot is-green"></i><b>GPS</b> LIVE';
+          }, () => {
+            const gpsStatus = document.getElementById('live-map-gps-status');
+            if (gpsStatus) gpsStatus.innerHTML = '<i class="status-dot is-red"></i><b>GPS</b> UNAVAILABLE';
+          });
         }
       });
     });
@@ -289,7 +298,10 @@
   function startFallbackMap() {
     const view = document.getElementById('map');
     const container = document.getElementById('live-gis-map');
-    if (!view?.classList.contains('active') || !container || container.querySelector('.maplibregl-canvas')) return;
+    // The canonical Live Map initializer in script.js owns the map instance.
+    // This bootstrap remains a control/style fallback, but must never create a
+    // second MapLibre instance or duplicate the overlay state.
+    if (!view?.classList.contains('active') || !container || window.hazmatiqLiveMap || container.querySelector('.maplibregl-canvas')) return;
     if (!window.maplibregl) {
       setMessage('Map library unavailable.');
       return;
@@ -337,8 +349,10 @@
       } else setMessage(`Map error: ${event?.error?.message || 'Basemap unavailable.'}`);
     });
     navigator.geolocation?.getCurrentPosition(({ coords }) => {
-      fallbackMap.jumpTo({ center: [coords.longitude, coords.latitude], zoom: 15 });
-      const gpsStatus = document.querySelector('.live-map-status-item:first-child');
+      const location = { lon: coords.longitude, lat: coords.latitude };
+      fallbackMap.jumpTo({ center: [location.lon, location.lat], zoom: 15 });
+      if (typeof window.HazMatIQ?.updateLiveMapGpsMarker === 'function') window.HazMatIQ.updateLiveMapGpsMarker(location);
+      const gpsStatus = document.getElementById('live-map-gps-status') || document.querySelector('.live-map-status-item:first-child');
       if (gpsStatus) gpsStatus.innerHTML = '<i class="status-dot is-green"></i><b>GPS</b> LIVE';
     });
   }

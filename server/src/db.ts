@@ -3,7 +3,13 @@
 // Back up by copying the file. No server process needed.
 
 import dotenv from "dotenv";
-dotenv.config();
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+// Resolve the server-local environment file from this module instead of the
+// process working directory. The root `npm run dev` script starts the server
+// from the repository root, while the documented secrets live in server/.env.
+dotenv.config({ path: path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../.env") });
 
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import Database from "better-sqlite3";

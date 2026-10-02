@@ -10091,7 +10091,7 @@ body.workspace-drawer-open { overflow: hidden; }
 
 @media (min-width: 820px) {
   #map.view.active {
-    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
   }
 
   #map > .hazmat-page-hero {
@@ -13704,6 +13704,40 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 #map .wildfire-live-map-panel { display: grid; gap: 4px; }
 #map .wildfire-live-map-panel strong { color: #ffd323; font-size: .62rem; letter-spacing: .09em; }
 #map .wildfire-live-map-panel span { color: #c8dbe5; font-size: .63rem; line-height: 1.45; }
+#map #live-map-selected:not([hidden]) {
+  display: grid;
+  gap: 8px;
+  max-width: min(330px, calc(100vw - 42px));
+  padding: 10px;
+  border: 1px solid rgba(255, 211, 35, .72);
+  border-radius: 6px;
+  background: rgba(4, 20, 33, .95);
+  color: #e7f3f9;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .34);
+}
+#map #live-map-selected[hidden] { display: none; }
+#map #live-map-selected > strong { color: #ffd323; font-size: .68rem; letter-spacing: .09em; }
+#map #live-map-selected dl { display: grid; gap: 3px; margin: 0; }
+#map #live-map-selected dl > div { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 8px; }
+#map #live-map-selected dt { color: #8faec4; font-size: .6rem; font-weight: 800; }
+#map #live-map-selected dd { min-width: 0; margin: 0; color: #f5fbff; font-size: .62rem; overflow-wrap: anywhere; }
+#map #live-map-selected small { color: #b8cbd6; font-size: .58rem; line-height: 1.35; }
+#map .live-map-gps-marker {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #2f9dff;
+  box-shadow: 0 0 0 5px rgba(47, 157, 255, .24), 0 2px 12px rgba(0, 0, 0, .55);
+}
+#map .live-map-gps-marker::after {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: #082540;
+  content: "";
+}
 
 #map .live-map-stage {
   height: 100%;
@@ -13787,6 +13821,48 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   #map.live-map-page { height: auto; min-height: 100dvh; overflow: visible; }
   #map .live-map-stage,
   #map #live-gis-map { height: min(70dvh, 720px); min-height: 480px; }
+}
+
+/* The homepage hero uses the full wordmark artwork. At tablet widths it must
+   still size from the image ratio instead of the clipped desktop hero box. */
+@media (max-width: 900px) {
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity,
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+    position: static !important;
+    width: min(92vw, 620px) !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 1100px) and (orientation: landscape) and (max-height: 700px) {
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+    position: static !important;
+    width: min(68vw, 520px) !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+  }
 }
 
 @media (max-width: 620px) {

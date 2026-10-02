@@ -54,16 +54,23 @@ function numberOrNull(value: unknown): number | null {
 
 function detectedAt(row: Record<string, string>): string | null {
   if (!row.acq_date) return null;
-  const time = String(row.acq_time || "0000").padStart(4, "0");
+  const time = String(row.acq_time || "0000").replace(/\D/g, "").padStart(4, "0").slice(0, 4);
   const date = new Date(`${row.acq_date}T${time.slice(0, 2)}:${time.slice(2, 4)}:00Z`);
   return Number.isFinite(date.getTime()) ? date.toISOString() : null;
+}
+
+function normalizeSatellite(value: unknown): string | null {
+  const satellite = String(value ?? "").trim().toUpperCase().replace(/[ _]/g, "-");
+  if (/^(?:N|NOAA-?)20$/.test(satellite)) return "NOAA-20";
+  if (/^(?:N|NOAA-?)21$/.test(satellite)) return "NOAA-21";
+  return satellite || null;
 }
 
 export function normalizeFirmsRow(row: Record<string, string>): FirmsDetection | null {
   const latitude = numberOrNull(row.latitude);
   const longitude = numberOrNull(row.longitude);
   if (latitude === null || longitude === null) return null;
-  const satellite = row.satellite === "N20" ? "NOAA-20" : row.satellite === "N21" ? "NOAA-21" : row.satellite || null;
+  const satellite = normalizeSatellite(row.satellite);
   const id = [satellite || "VIIRS", row.acq_date, row.acq_time, latitude.toFixed(5), longitude.toFixed(5)].join(":");
   return {
     id,
@@ -74,9 +81,9 @@ export function normalizeFirmsRow(row: Record<string, string>): FirmsDetection |
       detectedAt: detectedAt(row),
       satellite,
       instrument: row.instrument || null,
-      confidence: row.confidence || null,
+      confidence: row.confidence || row.confidence_category || null,
       frp: numberOrNull(row.frp),
-      dayNight: row.daynight || null,
+      dayNight: row.daynight || row.day_night || null,
       source: FIRMS_SOURCE,
       brightTi4: numberOrNull(row.bright_ti4),
       scan: numberOrNull(row.scan),
@@ -126,22 +133,30 @@ export async function queryFirms(
 
   try {
     const all: FirmsDetection[] = [];
+    const failures: string[] = [];
     for (const section of splitBounds(bounds)) {
       const area = `${section.west},${section.south},${section.east},${section.north}`;
       for (const sensor of FIRMS_SENSORS) {
         const url = `${FIRMS_ENDPOINT}/${encodeURIComponent(mapKey)}/${sensor}/${area}/${dayRange}`;
-        const response = await fetchWithTimeout(fetchImpl, url);
-        if (!response.ok) throw new Error(`NASA FIRMS HTTP ${response.status}`);
-        const text = await response.text();
-        if (/^\s*(error|invalid|unauthorized)/i.test(text)) throw new Error("NASA FIRMS returned an error response");
-        all.push(...normalizeFirmsCsv(text));
+        try {
+          const response = await fetchWithTimeout(fetchImpl, url);
+          if (!response.ok) throw new Error(`NASA FIRMS HTTP ${response.status}`);
+          const text = await response.text();
+          if (/^\s*(error|invalid|unauthorized)/i.test(text)) throw new Error("NASA FIRMS returned an error response");
+          all.push(...normalizeFirmsCsv(text));
+        } catch (error) {
+          failures.push(`${sensor}: ${error instanceof Error ? error.message : "request failed"}`);
+        }
       }
+    }
+    if (!all.length && failures.length === splitBounds(bounds).length * FIRMS_SENSORS.length) {
+      throw new Error(failures.join("; "));
     }
     const unique = [...new Map(all.map((feature) => [feature.id, feature])).values()]
       .filter((feature) => withinHours(feature, bounds, boundedHours));
     const retrievedAt = new Date().toISOString();
     cacheResult(cache, cacheKey, unique);
-    return result("CONNECTED", unique, retrievedAt);
+    return result("CONNECTED", unique, retrievedAt, failures.length ? `Partial NASA FIRMS response: ${failures.join("; ")}` : undefined);
   } catch (error) {
     const stale = readStale(cache, cacheKey);
     const message = error instanceof Error ? error.message : "NASA FIRMS unavailable";

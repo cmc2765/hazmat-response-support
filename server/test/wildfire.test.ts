@@ -64,6 +64,27 @@ describe("wildfire source status and bounded queries", () => {
     expect(requested[0]).toContain("-87.1,33,-86,34");
   });
 
+  it("filters detections to the requested bounds and removes duplicates across sensor requests", async () => {
+    const now = new Date();
+    const date = now.toISOString().slice(0, 10);
+    const time = now.toISOString().slice(11, 16).replace(":", "");
+    const csv = [
+      "latitude,longitude,satellite,acq_date,acq_time,instrument,confidence,frp,daynight",
+      `33.25,-86.75,N20,${date},${time},VIIRS,n,12.4,D`,
+      `35.25,-86.75,N21,${date},${time},VIIRS,h,8.2,D`,
+      "",
+    ].join("\n");
+    const result = await queryFirms(bounds, 24, `filter-test-${Date.now()}`, async () => new Response(csv, { status: 200 }));
+    expect(result.status).toBe("CONNECTED");
+    expect(result.features).toHaveLength(1);
+    expect(result.features[0]?.properties).toMatchObject({ latitude: 33.25, longitude: -86.75, satellite: "NOAA-20" });
+  });
+
+  it("reports an upstream FIRMS failure as ERROR when no cached response exists", async () => {
+    const result = await queryFirms(bounds, 24, `error-test-${Date.now()}`, async () => new Response("unauthorized", { status: 401 }));
+    expect(result).toMatchObject({ status: "ERROR", source: "NASA FIRMS", count: 0 });
+  });
+
   it("returns a WFIGS service failure as ERROR", async () => {
     const result = await queryWfigs({ ...bounds, west: -88 }, async () => new Response("upstream unavailable", { status: 503 }));
     expect(result).toMatchObject({ status: "ERROR", source: "NIFC / WFIGS", count: 0 });

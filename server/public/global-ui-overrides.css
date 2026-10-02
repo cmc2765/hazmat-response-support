@@ -885,3 +885,144 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   color: #fff !important;
   box-shadow: none !important;
 }
+
+/* Mobile dashboard brand: the homepage hero uses the real logo artwork, so
+   its aspect ratio must determine the box. The former oversized absolute
+   treatment rendered a ~2.7:1 image wider than the phone and clipped the
+   wordmark/subtitle inside the identity container. */
+@media (max-width: 760px) {
+  .app-shell:has(#overview.view.active) {
+    padding-top: calc(6px + env(safe-area-inset-top)) !important;
+    padding-right: 6px !important;
+    padding-bottom: 6px !important;
+    padding-left: 6px !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 8px 8px 7px !important;
+    gap: 8px !important;
+    overflow: visible !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity,
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn {
+    position: static !important;
+    display: flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+    position: static !important;
+    display: block !important;
+    width: min(92vw, 620px) !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    margin-inline: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .global-command-menu-toggle {
+    position: static !important;
+    align-self: flex-end !important;
+    flex: 0 0 44px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    margin: 0 2px 0 0 !important;
+    transform: none !important;
+  }
+}
+
+/* Keep the same no-crop guarantee in phone landscape, where the viewport is
+   short and the brand should remain compact without changing its proportions. */
+@media (max-width: 760px) and (orientation: landscape) {
+  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+    width: min(78vw, 520px) !important;
+  }
+}
+
+/* Apply the same no-crop contract to tablet portrait/landscape widths after
+   the legacy homepage hero rules have loaded. */
+@media (min-width: 761px) and (max-width: 900px) {
+  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 8px !important;
+    gap: 8px !important;
+    overflow: visible !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity,
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn {
+    position: static !important;
+    display: flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+    position: static !important;
+    width: min(92vw, 620px) !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    margin-inline: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .app-primary-nav {
+    display: none !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .global-command-menu-toggle {
+    display: grid !important;
+    align-self: flex-end !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    margin: 0 2px 0 0 !important;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1100px) and (orientation: landscape) and (max-height: 700px) {
+  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+    width: min(68vw, 520px) !important;
+  }
+}

@@ -6846,6 +6846,7 @@ let plumeDistanceMarkers = [];
 let plumeMeasurementPopup = null;
 let threatIntelligence = { status: 'idle', modelRunId: null, generatedAt: null, zones: {}, affectedFacilities: [], sourceStatuses: [], errors: [] };
 let threatIntelligenceRequest = Promise.resolve(null);
+let threatIntelligenceRequestToken = 0;
 let latestPlumeModelResult = null;
 let currentPlume3dEnvelopeGeoJson = null;
 let plumeManualLocation = null;
@@ -8067,16 +8068,18 @@ function threatIntelligenceLookup() {
 
 async function loadThreatIntelligence(zones, modelResult) {
   const modelRunId = `model-${modelResult?.computedAt || Date.now()}`;
+  const requestToken = ++threatIntelligenceRequestToken;
   setThreatIntelligenceLoading(zones, modelRunId);
   threatIntelligenceRequest = fetchThreatZoneFacilities(zones)
     .then((lookup) => {
+      if (requestToken !== threatIntelligenceRequestToken) return lookup;
       setThreatIntelligence(buildThreatIntelligence(lookup, zones, modelRunId));
       return lookup;
     })
     .catch((error) => {
       const message = error instanceof Error ? error.message : 'Facility data unavailable';
       const failed = { status: 'error', lookupStatus: 'error', modelRunId, generatedAt: new Date().toISOString(), zones: Object.fromEntries((zones || []).map((zone) => [threatZoneKey(zone), emptyThreatZoneRecord(zone)])), affectedFacilities: [], sourceStatuses: [], errors: [message] };
-      setThreatIntelligence(failed);
+      if (requestToken === threatIntelligenceRequestToken) setThreatIntelligence(failed);
       return failed;
     });
   return threatIntelligenceRequest;
@@ -8861,6 +8864,17 @@ function addPlume3dEnvelopeLayers() {
 
 function updatePlume3dEnvelope() {
   updatePlume3dModelFacts();
+  // The dedicated 3D Plume renderer is intentionally dormant in 3D Terrain.
+  // Terrain owns elevation/building presentation; an old plume mesh must not
+  // leak into that separate mode.
+  if (!plumeViewIsPlume()) {
+    currentPlume3dEnvelopeGeoJson = null;
+    currentPlume3dMeshData = null;
+    setPlume3dEnvelopeVisibility(false);
+    const terrainStatus = document.getElementById('plume-3d-envelope-status');
+    if (terrainStatus) terrainStatus.hidden = true;
+    return;
+  }
   currentPlume3dEnvelopeGeoJson = buildPlume3dEnvelopeGeoJson();
   if (!currentPlume3dEnvelopeGeoJson) {
     currentPlume3dMeshData = null;
@@ -9256,6 +9270,7 @@ async function setPlumeMapView(viewName) {
 }
 
 async function clearThreatZones(message = '') {
+  threatIntelligenceRequestToken += 1;
   if (plumeMap && plumeMapReady) {
     await plumeMapReady;
     const source = plumeMap.getSource('hazmat-threat-zones');
@@ -12301,6 +12316,7 @@ const latestPlumeOverlayStorageKey = 'hazmatiq_latest_plume_overlay';
 let liveMap = null;
 let liveMapState = null;
 let liveMapMarkers = [];
+let liveMapGpsMarker = null;
 let liveMapGpsRequested = false;
 // Vector street style includes roads, buildings, parks, schools, hospitals, and POIs.
 const liveMapDetailedStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
@@ -12326,6 +12342,10 @@ const wildfireLayerDefinitions = {
 const wildfireData = { firms: [], perimeters: [], smoke: [] };
 let wildfireRequestToken = 0;
 let wildfireRefreshTimer = null;
+const wildfireClientCacheMs = 7 * 60 * 1000;
+const wildfireErrorRetryMs = 30 * 1000;
+const wildfireRequestState = new Map();
+let wildfireStatusState = null;
 
 function defaultLiveMapState() {
   return {
@@ -12375,6 +12395,28 @@ function updateLiveMapPanels() {
 
 function setTier2MapStatus(message) {
   setText('tier2-live-map-status', message);
+}
+
+function setLiveMapGpsStatus(state, message = '') {
+  const status = document.getElementById('live-map-gps-status');
+  if (!status) return;
+  const dot = state === 'live' ? 'is-green' : state === 'error' ? 'is-red' : 'is-yellow';
+  status.innerHTML = `<i class="status-dot ${dot}"></i><b>GPS</b> ${state === 'live' ? 'LIVE' : state === 'error' ? 'UNAVAILABLE' : 'LOCATING'}`;
+  if (message) status.title = message;
+}
+
+function updateLiveMapGpsMarker(location) {
+  const map = liveMap || window.hazmatiqLiveMap;
+  if (!map || !location) return;
+  liveMapGpsMarker?.remove();
+  const element = document.createElement('div');
+  element.className = 'live-map-gps-marker';
+  element.setAttribute('aria-label', 'Current device GPS location');
+  element.title = 'Current device GPS location';
+  liveMapGpsMarker = new window.maplibregl.Marker({ element, anchor: 'center' })
+    .setLngLat([Number(location.lon), Number(location.lat)])
+    .addTo(map);
+  setLiveMapGpsStatus('live');
 }
 
 function removeTier2FacilitiesOverlay() {
@@ -12599,9 +12641,11 @@ function addTier2FacilitiesLayers(geojson) {
   liveMap.addLayer({ id: tier2FacilitiesClusterLayerId, type: 'circle', source: tier2FacilitiesSourceId, filter: ['has', 'point_count'], paint: {
     'circle-color': '#0d3457', 'circle-radius': ['step', ['get', 'point_count'], 17, 25, 21, 100, 26], 'circle-stroke-color': '#f6c343', 'circle-stroke-width': 2,
   } }, firstSymbolLayer);
-  liveMap.addLayer({ id: tier2FacilitiesClusterCountLayerId, type: 'symbol', source: tier2FacilitiesSourceId, filter: ['has', 'point_count'], layout: {
-    'text-field': ['get', 'point_count_abbreviated'], 'text-size': 12, 'text-font': ['Open Sans Bold'],
-  }, paint: { 'text-color': '#ffffff' } }, firstSymbolLayer);
+  if (liveMap.getStyle()?.glyphs) {
+    liveMap.addLayer({ id: tier2FacilitiesClusterCountLayerId, type: 'symbol', source: tier2FacilitiesSourceId, filter: ['has', 'point_count'], layout: {
+      'text-field': ['get', 'point_count_abbreviated'], 'text-size': 12, 'text-font': ['Open Sans Bold'],
+    }, paint: { 'text-color': '#ffffff' } }, firstSymbolLayer);
+  }
   liveMap.addLayer({ id: tier2FacilitiesPointLayerId, type: 'circle', source: tier2FacilitiesSourceId, filter: ['!', ['has', 'point_count']], paint: {
     // The transparent query layer keeps clustering and hit-testing in WebGL;
     // visible facilities use the blank-valued NFPA-704-style DOM placard.
@@ -12642,13 +12686,42 @@ function scheduleTier2FacilitiesRefresh() {
 }
 
 function wildfireResultToGeoJson(result) {
+  const features = [...new Map((result?.features || []).map((feature) => [feature.id, feature])).values()];
   return {
     type: 'FeatureCollection',
-    features: (result?.features || []).map((feature) => ({
+    features: features.map((feature) => ({
       type: 'Feature', id: feature.id, geometry: feature.geometry,
       properties: { ...(feature.properties || {}), wildfireId: feature.id, source: feature.source },
     })),
   };
+}
+
+function mapBoundsContainBounds(outer, inner) {
+  if (!outer || !inner) return false;
+  return [
+    [inner.west, inner.south], [inner.west, inner.north],
+    [inner.east, inner.south], [inner.east, inner.north],
+  ].every(([longitude, latitude]) => {
+    const latitudeInRange = latitude >= outer.south && latitude <= outer.north;
+    const longitudeInRange = outer.west <= outer.east
+      ? longitude >= outer.west && longitude <= outer.east
+      : longitude >= outer.west || longitude <= outer.east;
+    return latitudeInRange && longitudeInRange;
+  });
+}
+
+function liveWildfireBounds() {
+  if (!liveMap) return null;
+  const bounds = liveMap.getBounds();
+  return { west: bounds.getWest(), south: bounds.getSouth(), east: bounds.getEast(), north: bounds.getNorth() };
+}
+
+function shouldRefreshWildfireLayer(layer, bounds) {
+  const previous = wildfireRequestState.get(layer);
+  if (!previous || !bounds) return true;
+  const age = Date.now() - previous.requestedAt;
+  if (previous.status === 'ERROR' && age < wildfireErrorRetryMs) return false;
+  return age >= wildfireClientCacheMs || !mapBoundsContainBounds(previous.bounds, bounds);
 }
 
 function wildfireStatusText(status, count = 0) {
@@ -12707,7 +12780,9 @@ function addWildfireLayers(layer, geojson) {
   if (layer === 'wildfireFires') {
     liveMap.addSource(definition.sourceId, { type: 'geojson', data: geojson, cluster: true, clusterMaxZoom: 12, clusterRadius: 42 });
     liveMap.addLayer({ id: 'wildfire-firms-clusters', type: 'circle', source: definition.sourceId, filter: ['has', 'point_count'], paint: { 'circle-color': '#f04b32', 'circle-radius': ['step', ['get', 'point_count'], 16, 25, 20, 100, 25], 'circle-stroke-color': '#ffd323', 'circle-stroke-width': 2 } }, firstSymbolLayer);
-    liveMap.addLayer({ id: 'wildfire-firms-cluster-count', type: 'symbol', source: definition.sourceId, filter: ['has', 'point_count'], layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-size': 11, 'text-font': ['Open Sans Bold'] }, paint: { 'text-color': '#fff' } }, firstSymbolLayer);
+    if (liveMap.getStyle()?.glyphs) {
+      liveMap.addLayer({ id: 'wildfire-firms-cluster-count', type: 'symbol', source: definition.sourceId, filter: ['has', 'point_count'], layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-size': 11, 'text-font': ['Open Sans Bold'] }, paint: { 'text-color': '#fff' } }, firstSymbolLayer);
+    }
     liveMap.addLayer({ id: 'wildfire-firms-points', type: 'circle', source: definition.sourceId, filter: ['!', ['has', 'point_count']], paint: { 'circle-color': '#ff4c32', 'circle-radius': 6, 'circle-stroke-color': '#ffe15a', 'circle-stroke-width': 1.5, 'circle-opacity': 0.92 } }, firstSymbolLayer);
   } else if (layer === 'wildfirePerimeters') {
     liveMap.addSource(definition.sourceId, { type: 'geojson', data: geojson });
@@ -12725,17 +12800,41 @@ function showWildfireFeature(feature, coordinates = null) {
   const panel = document.getElementById('live-map-selected');
   if (!panel) return;
   const properties = feature.properties || {};
+  const source = properties.source || feature.source;
   panel.replaceChildren();
   const title = document.createElement('strong');
-  title.textContent = properties.incidentName || properties.source || 'Wildfire intelligence';
-  const details = document.createElement('span');
-  const values = feature.source === 'NASA FIRMS'
-    ? [`${properties.satellite || 'VIIRS'} detection`, properties.detectedAt ? new Date(properties.detectedAt).toLocaleString() : 'Detection time not reported', properties.confidence ? `Confidence ${properties.confidence}` : '', properties.frp != null ? `FRP ${properties.frp}` : '', `${Number(feature.geometry.coordinates[1]).toFixed(5)}, ${Number(feature.geometry.coordinates[0]).toFixed(5)}`]
-    : feature.source === 'NIFC / WFIGS'
+  title.textContent = source === 'NASA FIRMS' ? 'ACTIVE FIRE DETECTION' : properties.incidentName || source || 'Wildfire intelligence';
+  if (source === 'NASA FIRMS') {
+    const details = document.createElement('dl');
+    const fields = [
+      ['Detected', properties.detectedAt ? new Date(properties.detectedAt).toLocaleString() : 'Not reported'],
+      ['Satellite', properties.satellite || 'Not reported'],
+      ['Instrument', properties.instrument || 'Not reported'],
+      ['Confidence', properties.confidence || 'Not reported'],
+      ['FRP', properties.frp == null ? 'Not reported' : `${properties.frp} MW`],
+      ['Day/Night', properties.dayNight || 'Not reported'],
+      ['Source', 'NASA FIRMS'],
+    ];
+    fields.forEach(([label, value]) => {
+      const row = document.createElement('div');
+      const rowLabel = document.createElement('dt');
+      rowLabel.textContent = label;
+      const rowValue = document.createElement('dd');
+      rowValue.textContent = String(value);
+      row.append(rowLabel, rowValue);
+      details.appendChild(row);
+    });
+    const disclaimer = document.createElement('small');
+    disclaimer.textContent = 'Thermal detection does not necessarily represent a confirmed wildfire perimeter.';
+    panel.append(title, details, disclaimer);
+  } else {
+    const details = document.createElement('span');
+    const values = source === 'NIFC / WFIGS'
       ? [`${properties.acres ?? 'Acres not reported'} acres`, properties.updatedAt ? `Updated ${properties.updatedAt}` : 'Update time not reported']
       : [`Density ${properties.density || 'not reported'}`, properties.startTime ? `Start ${properties.startTime}` : '', properties.endTime ? `End ${properties.endTime}` : ''];
-  details.textContent = [feature.source, ...values].filter(Boolean).join(' · ');
-  panel.append(title, details);
+    details.textContent = [source, ...values].filter(Boolean).join(' · ');
+    panel.append(title, details);
+  }
   panel.hidden = false;
   if (coordinates && liveMap) liveMap.panTo(coordinates, { duration: 180 });
 }
@@ -12765,26 +12864,40 @@ async function updateWildfireOverlay(layer) {
     return;
   }
   const definition = wildfireLayerDefinitions[layer];
-  const bounds = liveMap.getBounds();
-  const params = new URLSearchParams({ west: String(bounds.getWest()), east: String(bounds.getEast()), south: String(bounds.getSouth()), north: String(bounds.getNorth()) });
+  const bounds = liveWildfireBounds();
+  if (!bounds) return;
+  if (!shouldRefreshWildfireLayer(layer, bounds)) {
+    addWildfireLayers(layer, wildfireResultToGeoJson({ features: wildfireData[definition.source] }));
+    return;
+  }
+  const params = new URLSearchParams({ west: String(bounds.west), east: String(bounds.east), south: String(bounds.south), north: String(bounds.north), hours: '24' });
   const token = ++wildfireRequestToken;
+  wildfireRequestState.set(layer, { bounds, requestedAt: Date.now(), status: 'CHECKING' });
   setWildfireStatus(definition.source, { status: 'CHECKING', count: 0 });
   try {
     const result = await fetchJson(`${definition.endpoint}?${params}`);
     if (token !== wildfireRequestToken || !liveMapState?.activeLayers?.[layer]) return;
     if (!result) throw new Error('Source request failed');
     wildfireData[definition.source] = result.features || [];
+    wildfireRequestState.set(layer, { bounds, requestedAt: Date.now(), status: result.status || 'ERROR' });
     setWildfireStatus(definition.source, result);
     addWildfireLayers(layer, wildfireResultToGeoJson(result));
   } catch (error) {
+    wildfireRequestState.set(layer, { bounds, requestedAt: Date.now(), status: 'ERROR' });
     setWildfireStatus(definition.source, { status: 'ERROR', error: error.message, count: 0 });
   }
 }
 
 async function refreshWildfireStatus() {
   if (!liveMap) return;
-  const bounds = liveMap.getBounds();
-  const params = new URLSearchParams({ west: String(bounds.getWest()), east: String(bounds.getEast()), south: String(bounds.getSouth()), north: String(bounds.getNorth()) });
+  const bounds = liveWildfireBounds();
+  if (!bounds) return;
+  if (wildfireStatusState && Date.now() - wildfireStatusState.requestedAt < wildfireClientCacheMs && mapBoundsContainBounds(wildfireStatusState.bounds, bounds)) {
+    restoreWildfireLayers();
+    return;
+  }
+  const params = new URLSearchParams({ west: String(bounds.west), east: String(bounds.east), south: String(bounds.south), north: String(bounds.north), hours: '24' });
+  wildfireStatusState = { bounds, requestedAt: Date.now() };
   const result = await fetchJson(`/api/wildfire/status?${params}`);
   if (!result) {
     ['firms', 'perimeters', 'smoke'].forEach((source) => setWildfireStatus(source, { status: 'ERROR', error: 'Source status unavailable.' }));
@@ -12793,6 +12906,7 @@ async function refreshWildfireStatus() {
   [['firms', 'wildfireFires'], ['perimeters', 'wildfirePerimeters'], ['smoke', 'wildfireSmoke']].forEach(([source, layer]) => {
     const feed = result[source];
     wildfireData[source] = feed?.features || [];
+    wildfireRequestState.set(layer, { bounds, requestedAt: Date.now(), status: feed?.status || 'ERROR' });
     setWildfireStatus(source, feed);
     if (liveMapState?.activeLayers?.[layer]) addWildfireLayers(layer, wildfireResultToGeoJson(feed));
   });
@@ -13109,6 +13223,14 @@ function initializeLiveMap() {
         }
         return;
       }
+      // A failed raster/vector tile should not replace the entire style. Keep
+      // the map canvas and its working layers visible while reporting the
+      // degraded basemap condition.
+      if (event?.sourceId) {
+        setText('live-map-status', `Basemap tile unavailable: ${event?.error?.message || 'source error'}.`);
+        document.querySelector('.live-map-stage')?.classList.add('map-ready');
+        return;
+      }
       const message = event?.error?.message || 'Basemap could not load.';
       if (!liveMapFallbackStyleApplied && liveMap) {
         liveMapFallbackStyleApplied = true;
@@ -13147,11 +13269,14 @@ function initializeLiveMap() {
     setText('live-map-status', 'Locating current GPS position…');
     getCurrentGps().then((gps) => {
       liveMap.jumpTo({ center: [gps.lon, gps.lat], zoom: Math.max(liveMap.getZoom(), 15) });
+      updateLiveMapGpsMarker(gps);
+      setLiveMapGpsStatus('live');
       saveLiveMapState(`Map centered on current GPS: ${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}.`);
       void fetchWeatherSources(gps.lat, gps.lon).then(({ openMeteo, nws }) => {
         latestPlumeWeather = selectPlumeWeather(openMeteo, nws);
       }).catch(() => {});
     }).catch((error) => {
+      setLiveMapGpsStatus('error', error.message);
       setText('live-map-status', `${error.message} Showing the saved map location.`);
     });
   }
@@ -13495,3 +13620,6 @@ window.HazMatIQ.incidentCommandLegacy = {
   renderIncidentLists,
   showView,
 };
+
+// Bridge used by the optional Live Map bootstrap when it wins initialization.
+window.HazMatIQ.updateLiveMapGpsMarker = updateLiveMapGpsMarker;
