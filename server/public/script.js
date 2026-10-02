@@ -1,3 +1,5 @@
+window.hazmatiqLiveMapCanonicalOwner = true;
+
 const buttons = document.querySelectorAll('.module-btn');
 const views = document.querySelectorAll('.view');
 const appShell = document.querySelector('.app-shell');
@@ -551,7 +553,9 @@ function initializeActivePage(targetId, { skipPlumeInitialization = false, conte
   if (targetId === 'lookup') window.HazMatIQ.initializeHazardProfilePage?.(context);
   if (targetId === 'monitor') window.HazMatIQ.initializeEquipmentPage?.(context);
   if (targetId === 'source') window.HazMatIQ.initializeSourcesPage?.(context);
-  if (targetId === 'map') window.requestAnimationFrame(initializeLiveMap);
+  if (targetId === 'map') {
+    window.requestAnimationFrame(() => window.requestAnimationFrame(initializeLiveMap));
+  }
   if (targetId === 'plume') {
     updatePlumeModeLabel();
     window.requestAnimationFrame(() => plumeMap?.resize());
@@ -6934,6 +6938,7 @@ let configuredPlumeBuildingLayers = [];
 let plumeBuildingsVisible = false;
 let plume3dCustomLayer = null;
 let currentPlume3dMeshData = null;
+let plume3dFailureReason = '';
 let plumeMapFallbackInProgress = false;
 let plumeFallbackStyleApplied = false;
 let plumeBaseMapStyle = null;
@@ -8604,12 +8609,31 @@ function buildPlume3dEnvelopeGeoJson() {
   const model = window.HazScopePlume3D;
   const result = latestPlumeModelResult;
   const zones = currentThreatZoneGeoJson?.features || [];
+  plume3dFailureReason = '';
   currentPlume3dMeshData = null;
-  if (!model || !result || result.mode !== 'aegl-plume' || !zones.length) return null;
+  if (!model) {
+    plume3dFailureReason = 'The 3D plume model is unavailable.';
+    return null;
+  }
+  if (!result || result.mode !== 'aegl-plume') {
+    plume3dFailureReason = 'An AEGL plume model result is required before 3D Plume can render.';
+    return null;
+  }
+  if (!zones.length) {
+    plume3dFailureReason = 'No authoritative threat-zone features are available.';
+    return null;
+  }
   const inputs = result.inputs || {};
   const origin = plume3dOrigin(inputs);
   const windFromDeg = Number(inputs.windDirDeg ?? zones[0]?.properties?.windFromDeg);
-  if (!origin || !Number.isFinite(windFromDeg)) return null;
+  if (!origin) {
+    plume3dFailureReason = 'The release location is unavailable.';
+    return null;
+  }
+  if (!Number.isFinite(windFromDeg)) {
+    plume3dFailureReason = 'Wind direction is unavailable.';
+    return null;
+  }
   const profile = activeChemicalRecord?.profile || {};
   const features = [];
   const meshPaths = [];
@@ -8688,11 +8712,47 @@ function buildPlume3dEnvelopeGeoJson() {
     }
   });
   if (!features.length) {
+    plume3dFailureReason = 'The AEGL zones did not produce continuous 3D sections.';
     currentPlume3dMeshData = null;
     return null;
   }
   currentPlume3dMeshData = { origin, windFromDeg, paths: meshPaths };
+  if (!meshPaths.length) {
+    plume3dFailureReason = 'The 3D mesh contains no continuous paths.';
+    currentPlume3dMeshData = null;
+    return null;
+  }
   return { type: 'FeatureCollection', features };
+}
+
+function getPlume3dDiagnostic() {
+  const customLayer = plumeMap?.getLayer?.(plume3dCustomLayerId);
+  const meshData = currentPlume3dMeshData;
+  const vertexCount = Number(plume3dCustomLayer?.vertexCount) || 0;
+  return {
+    activeView: activePlumeMapView,
+    threatZoneFeatureCount: currentThreatZoneGeoJson?.features?.length || 0,
+    envelopeFeatureCount: currentPlume3dEnvelopeGeoJson?.features?.length || 0,
+    meshPathCount: meshData?.paths?.length || 0,
+    meshVertexCount: vertexCount,
+    customLayerExists: Boolean(customLayer),
+    customLayerVisible: Boolean(plume3dCustomLayer?.visible),
+    styleLoaded: Boolean(plumeMap?.isStyleLoaded?.()),
+    terrainEnabled: Boolean(plumeMap?.getTerrain?.()),
+  };
+}
+
+function reportPlume3dFailure(message, error = null) {
+  const detail = error instanceof Error ? error.message : String(error || message);
+  const fullMessage = detail && detail !== message ? `${message}: ${detail}` : message;
+  console.error('3D PLUME RENDER ERROR', fullMessage, getPlume3dDiagnostic());
+  const status = document.getElementById('plume-3d-envelope-status');
+  if (status) {
+    status.hidden = false;
+    status.classList.add('is-error');
+    status.textContent = `3D PLUME RENDER ERROR · ${fullMessage}`;
+  }
+  setText('plume-layers-status', `3D Plume renderer unavailable: ${fullMessage}`);
 }
 
 function setPlume3dEnvelopeVisibility(visible) {
@@ -8716,7 +8776,19 @@ function buildPlume3dMeshVertices(meshData) {
     const terrain = Number(branch.terrainElevationM) || 0;
     const centerline = Math.max(Number(branch.baseAGL) || 0, Number(branch.centerlineAGL) || 0);
     const spread = Math.max(1, Number(branch.verticalSpreadM) || centerline * 0.45);
-    const altitude = terrain + Math.max(Number(branch.baseAGL) || 0, centerline + Math.sin(theta) * spread);
+    const baseMSL = Number.isFinite(Number(branch.baseMSL))
+      ? Number(branch.baseMSL)
+      : terrain + Math.max(0, Number(branch.baseAGL) || 0);
+    const topMSL = Math.max(
+      baseMSL + 0.5,
+      Number.isFinite(Number(branch.topMSL))
+        ? Number(branch.topMSL)
+        : terrain + Math.max(Number(branch.baseAGL) || 0, centerline + spread),
+    );
+    const altitude = Math.max(
+      terrain + 0.5,
+      baseMSL + ((Math.sin(theta) + 1) * 0.5) * (topMSL - baseMSL),
+    );
     const coordinate = localMetersToLngLat([
       Number(branch.downwindDistanceM) || 0,
       (Number(branch.centerY) || 0) + Math.cos(theta) * width,
@@ -8778,6 +8850,9 @@ function createPlume3dCustomLayer() {
         }
       `);
       gl.compileShader(vertexShader);
+      if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
+        throw new Error(`Vertex shader compilation failed: ${gl.getShaderInfoLog(vertexShader) || 'unknown error'}`);
+      }
       const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
       gl.shaderSource(fragmentShader, `
         precision mediump float;
@@ -8785,10 +8860,16 @@ function createPlume3dCustomLayer() {
         void main() { gl_FragColor = v_color; }
       `);
       gl.compileShader(fragmentShader);
+      if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
+        throw new Error(`Fragment shader compilation failed: ${gl.getShaderInfoLog(fragmentShader) || 'unknown error'}`);
+      }
       this.program = gl.createProgram();
       gl.attachShader(this.program, vertexShader);
       gl.attachShader(this.program, fragmentShader);
       gl.linkProgram(this.program);
+      if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+        throw new Error(`3D plume shader link failed: ${gl.getProgramInfoLog(this.program) || 'unknown error'}`);
+      }
       gl.deleteShader(vertexShader);
       gl.deleteShader(fragmentShader);
       this.positionLocation = gl.getAttribLocation(this.program, 'a_pos');
@@ -8805,6 +8886,7 @@ function createPlume3dCustomLayer() {
       gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
       gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
       this.vertexCount = vertices.length / 7;
+      this.lastVertexCount = this.vertexCount;
     },
     render(gl, args) {
       if (!this.visible || !this.vertexBuffer || !this.vertexCount || !this.program) return;
@@ -8820,6 +8902,8 @@ function createPlume3dCustomLayer() {
       gl.enable(gl.BLEND);
       gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
       gl.enable(gl.DEPTH_TEST);
+      gl.depthFunc(gl.LEQUAL);
+      gl.disable(gl.CULL_FACE);
       gl.depthMask(false);
       gl.drawArrays(gl.TRIANGLES, 0, this.vertexCount);
       gl.depthMask(true);
@@ -8843,7 +8927,10 @@ function meshDataForCurrentPlume() {
 }
 
 function addPlume3dEnvelopeLayers() {
-  if (!plumeMap || !currentPlume3dEnvelopeGeoJson) return;
+  if (!plumeMap || !currentPlume3dEnvelopeGeoJson) {
+    reportPlume3dFailure(plume3dFailureReason || '3D plume geometry is unavailable.');
+    return false;
+  }
   Object.values(plume3dEnvelopeLayerIds).forEach((id) => {
     if (plumeMap.getLayer(id)) plumeMap.removeLayer(id);
   });
@@ -8854,12 +8941,23 @@ function addPlume3dEnvelopeLayers() {
       const buildingAnchor = configuredPlumeBuildingLayers.find((buildingId) => plumeMap.getLayer(buildingId));
       plumeMap.addLayer(plume3dCustomLayer, buildingAnchor);
     } catch (error) {
-      console.warn('Calculated 3D plume mesh could not be displayed.', error);
-      return;
+      reportPlume3dFailure('The custom mesh layer could not be added.', error);
+      return false;
     }
   }
-  plume3dCustomLayer.update(currentPlume3dMeshData);
+  try {
+    plume3dCustomLayer.update(currentPlume3dMeshData);
+  } catch (error) {
+    reportPlume3dFailure('The custom mesh vertex buffer could not be uploaded.', error);
+    return false;
+  }
   setPlume3dEnvelopeVisibility(plumeViewIsPlume());
+  const vertexCount = Number(plume3dCustomLayer.vertexCount) || 0;
+  if (!plumeMap.getLayer(plume3dCustomLayerId) || vertexCount <= 0) {
+    reportPlume3dFailure('The custom mesh layer has no renderable vertices.');
+    return false;
+  }
+  return true;
 }
 
 function updatePlume3dEnvelope() {
@@ -8873,22 +8971,32 @@ function updatePlume3dEnvelope() {
     setPlume3dEnvelopeVisibility(false);
     const terrainStatus = document.getElementById('plume-3d-envelope-status');
     if (terrainStatus) terrainStatus.hidden = true;
-    return;
+    return false;
   }
   currentPlume3dEnvelopeGeoJson = buildPlume3dEnvelopeGeoJson();
   if (!currentPlume3dEnvelopeGeoJson) {
     currentPlume3dMeshData = null;
     setPlume3dEnvelopeVisibility(false);
     const status = document.getElementById('plume-3d-envelope-status');
-    if (status) status.hidden = true;
-    return;
+    if (status) status.hidden = false;
+    reportPlume3dFailure(plume3dFailureReason || '3D plume geometry could not be built.');
+    return false;
   }
-  addPlume3dEnvelopeLayers();
+  const envelopeAdded = addPlume3dEnvelopeLayers();
+  if (!envelopeAdded) return false;
   const status = document.getElementById('plume-3d-envelope-status');
   if (status) {
-    status.hidden = !plumeViewIsPlume();
+    status.hidden = false;
+    status.classList.remove('is-error');
     status.textContent = `3D Operational Plume Envelope · Urban / Terrain / Weather Aware · ${currentPlume3dEnvelopeGeoJson.features.length} calculated sections · estimated, not CFD`;
   }
+  const diagnostic = getPlume3dDiagnostic();
+  console.info('3D PLUME DIAGNOSTIC', diagnostic);
+  if (!diagnostic.customLayerExists || !diagnostic.customLayerVisible || diagnostic.meshVertexCount <= 0) {
+    reportPlume3dFailure('The 3D plume layer is present but not visibly renderable.');
+    return false;
+  }
+  return true;
 }
 
 function setPlumeLayerVisibility(layerName, visible) {
@@ -9241,10 +9349,15 @@ async function setPlumeMapView(viewName) {
   currentThreatZoneGeoJson = activeZones;
   syncPlumeBasemapLayer();
   restorePlumeMapOverlays();
-  if (plumeViewIsPlume(viewName) && currentThreatZoneGeoJson?.features?.length) {
-    plumeMap.once('idle', () => {
-      if (switchToken === plumeMapViewToken && activePlumeMapView === viewName) updatePlume3dEnvelope();
-    });
+  if (plumeViewIsPlume(viewName)) {
+    // Build immediately after style readiness. Remote terrain/imagery can keep
+    // MapLibre busy indefinitely, so the renderer must not depend on idle.
+    updatePlume3dEnvelope();
+    if (currentThreatZoneGeoJson?.features?.length) {
+      plumeMap.once('idle', () => {
+        if (switchToken === plumeMapViewToken && activePlumeMapView === viewName) updatePlume3dEnvelope();
+      });
+    }
   }
 
   const cameraBearing = viewName === 'plume3d' ? plume3dCameraBearing() : view.bearing;
@@ -9262,9 +9375,6 @@ async function setPlumeMapView(viewName) {
   } else {
     plumeMap.easeTo(camera);
   }
-  if (viewName === 'plume3d') setText('plume-layers-status', configuredPlumeBuildingLayers.length
-    ? '3D Plume active. Raised structures shown; vertical envelope is calculated from the current model result.'
-    : '3D Plume active. Building height data is unavailable here; vertical envelope is calculated from the current model result.');
   updatePlumeTerrainStatus();
   updatePlumeCompass();
 }
@@ -12313,11 +12423,18 @@ document.addEventListener('pointerup', () => {
 
 const liveMapStorageKey = 'hazmatiq_live_map_state';
 const latestPlumeOverlayStorageKey = 'hazmatiq_latest_plume_overlay';
+const liveMapLayerGroups = {
+  incident: ['plume', 'icp', 'entry', 'decon', 'staging', 'monitors', 'medical'],
+  wildfire: ['wildfireFires', 'wildfirePerimeters', 'wildfireSmoke'],
+  facilities: ['tier2Facilities'],
+  more: ['trafficCams', 'zones'],
+};
 let liveMap = null;
 let liveMapState = null;
 let liveMapMarkers = [];
 let liveMapGpsMarker = null;
 let liveMapGpsRequested = false;
+let liveMapResizeObserver = null;
 // Vector street style includes roads, buildings, parks, schools, hospitals, and POIs.
 const liveMapDetailedStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
 let liveMapFallbackStyleApplied = false;
@@ -12334,6 +12451,7 @@ let tier2FacilitiesRefreshTimer = null;
 let tier2FacilitiesRequestToken = 0;
 let tier2FacilitiesPopup = null;
 let tier2FacilityMarkers = [];
+let tier2FacilityClusterMarkers = [];
 const wildfireLayerDefinitions = {
   wildfireFires: { source: 'firms', endpoint: '/api/wildfire/firms', sourceId: 'wildfire-firms', layerIds: ['wildfire-firms-clusters', 'wildfire-firms-cluster-count', 'wildfire-firms-points'] },
   wildfirePerimeters: { source: 'perimeters', endpoint: '/api/wildfire/perimeters', sourceId: 'wildfire-perimeters', layerIds: ['wildfire-perimeters-fill', 'wildfire-perimeters-outline'] },
@@ -12342,6 +12460,8 @@ const wildfireLayerDefinitions = {
 const wildfireData = { firms: [], perimeters: [], smoke: [] };
 let wildfireRequestToken = 0;
 let wildfireRefreshTimer = null;
+let wildfireFireMarkers = [];
+let wildfireFireMarkerRenderTimer = null;
 const wildfireClientCacheMs = 7 * 60 * 1000;
 const wildfireErrorRetryMs = 30 * 1000;
 const wildfireRequestState = new Map();
@@ -12391,6 +12511,12 @@ function updateLiveMapPanels() {
   document.querySelectorAll('[data-live-panel]').forEach((panel) => {
     panel.hidden = !liveMapState?.activeLayers?.[panel.dataset.livePanel];
   });
+  Object.entries(liveMapLayerGroups).forEach(([group, layers]) => {
+    const count = layers.filter((layer) => liveMapState?.activeLayers?.[layer]).length;
+    document.querySelector(`[data-layer-group="${group}"]`)?.classList.toggle('active', count > 0);
+    const countElement = document.querySelector(`[data-layer-count="${group}"]`);
+    if (countElement) countElement.textContent = String(count);
+  });
 }
 
 function setTier2MapStatus(message) {
@@ -12422,7 +12548,9 @@ function updateLiveMapGpsMarker(location) {
 function removeTier2FacilitiesOverlay() {
   if (!liveMap) return;
   tier2FacilityMarkers.forEach((marker) => marker.remove());
+  tier2FacilityClusterMarkers.forEach((marker) => marker.remove());
   tier2FacilityMarkers = [];
+  tier2FacilityClusterMarkers = [];
   [tier2FacilitiesPointLabelLayerId, tier2FacilitiesPointLayerId, tier2FacilitiesClusterCountLayerId, tier2FacilitiesClusterLayerId]
     .forEach((layerId) => {
       if (liveMap.getLayer(layerId)) liveMap.removeLayer(layerId);
@@ -12456,22 +12584,68 @@ function createTier2FacilityMarkerElement(facility) {
   return element;
 }
 
-function renderTier2FacilityMarkers() {
-  if (!liveMap?.isStyleLoaded() || !liveMap.getLayer(tier2FacilitiesPointLayerId)) return;
-  tier2FacilityMarkers.forEach((marker) => marker.remove());
-  tier2FacilityMarkers = [];
-  const renderedFeatures = liveMap.queryRenderedFeatures({ layers: [tier2FacilitiesPointLayerId] });
-  const sourceFeatures = liveMap.querySourceFeatures(tier2FacilitiesSourceId)
-    .filter((feature) => !feature.properties?.point_count && feature.geometry?.type === 'Point');
-  const features = [...renderedFeatures, ...sourceFeatures];
+function createTier2FacilityClusterMarkerElement(feature) {
+  const element = document.createElement('button');
+  element.type = 'button';
+  element.className = 'tier2-facility-cluster-marker';
+  const count = Number(feature.properties?.point_count || 0);
+  element.textContent = String(count);
+  element.title = `${count} Tier II facilities — click to expand`;
+  element.setAttribute('aria-label', `${count} Tier II facilities — click to expand`);
+  element.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const clusterId = feature.properties?.cluster_id;
+    const source = liveMap?.getSource(tier2FacilitiesSourceId);
+    if (clusterId == null || typeof source?.getClusterExpansionZoom !== 'function') return;
+    source.getClusterExpansionZoom(clusterId, (error, zoom) => {
+      if (!error) liveMap.easeTo({ center: feature.geometry.coordinates, zoom });
+    });
+  });
+  return element;
+}
+
+function visiblePointSourceFeatures(sourceId) {
+  if (!liveMap?.querySourceFeatures || !liveMap.getBounds) return [];
+  const bounds = liveMap.getBounds();
   const seen = new Set();
-  features.forEach((feature) => {
+  return liveMap.querySourceFeatures(sourceId).filter((feature) => {
+    if (feature.geometry?.type !== 'Point') return false;
+    const coordinates = feature.geometry.coordinates;
+    if (!bounds.contains(coordinates)) return false;
+    const key = feature.properties?.cluster_id != null
+      ? `cluster:${feature.properties.cluster_id}`
+      : `feature:${feature.id ?? feature.properties?.id ?? coordinates.join(',')}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function renderTier2FacilityMarkers() {
+  if (!liveMap?.isStyleLoaded() || !liveMap.getSource(tier2FacilitiesSourceId)) return;
+  tier2FacilityMarkers.forEach((marker) => marker.remove());
+  tier2FacilityClusterMarkers.forEach((marker) => marker.remove());
+  tier2FacilityMarkers = [];
+  tier2FacilityClusterMarkers = [];
+  visiblePointSourceFeatures(tier2FacilitiesSourceId).forEach((feature) => {
+    if (feature.properties?.point_count) {
+      tier2FacilityClusterMarkers.push(new window.maplibregl.Marker({ element: createTier2FacilityClusterMarkerElement(feature), anchor: 'center' })
+        .setLngLat(feature.geometry.coordinates)
+        .addTo(liveMap));
+      return;
+    }
     const facility = { ...feature.properties, latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0] };
-    if (!facility.id || seen.has(facility.id)) return;
-    seen.add(facility.id);
+    if (!facility.id) return;
     tier2FacilityMarkers.push(new window.maplibregl.Marker({ element: createTier2FacilityMarkerElement(facility), anchor: 'center' })
       .setLngLat([Number(facility.longitude), Number(facility.latitude)])
       .addTo(liveMap));
+  });
+  console.info('TIER II DIAGNOSTIC', {
+    clusterMarkerCount: tier2FacilityClusterMarkers.length,
+    individualMarkerCount: tier2FacilityMarkers.length,
+    emptyBlueCircleClusterCount: 0,
+    visibleLayerExists: tier2FacilityClusterMarkers.length + tier2FacilityMarkers.length > 0,
+    queryLayerExists: Boolean(liveMap.getLayer(tier2FacilitiesClusterLayerId) && liveMap.getLayer(tier2FacilitiesPointLayerId)),
   });
 }
 
@@ -12639,13 +12813,11 @@ function addTier2FacilitiesLayers(geojson) {
   liveMap.addSource(tier2FacilitiesSourceId, { type: 'geojson', data: geojson, cluster: true, clusterMaxZoom: 12, clusterRadius: 48 });
   const firstSymbolLayer = liveMap.getStyle().layers.find((layer) => layer.type === 'symbol')?.id;
   liveMap.addLayer({ id: tier2FacilitiesClusterLayerId, type: 'circle', source: tier2FacilitiesSourceId, filter: ['has', 'point_count'], paint: {
-    'circle-color': '#0d3457', 'circle-radius': ['step', ['get', 'point_count'], 17, 25, 21, 100, 26], 'circle-stroke-color': '#f6c343', 'circle-stroke-width': 2,
+    // DOM markers carry the number; this layer remains invisible for source
+    // querying and cluster hit-testing so glyph availability cannot create an
+    // empty blue circle.
+    'circle-opacity': 0, 'circle-stroke-opacity': 0, 'circle-radius': 26,
   } }, firstSymbolLayer);
-  if (liveMap.getStyle()?.glyphs) {
-    liveMap.addLayer({ id: tier2FacilitiesClusterCountLayerId, type: 'symbol', source: tier2FacilitiesSourceId, filter: ['has', 'point_count'], layout: {
-      'text-field': ['get', 'point_count_abbreviated'], 'text-size': 12, 'text-font': ['Open Sans Bold'],
-    }, paint: { 'text-color': '#ffffff' } }, firstSymbolLayer);
-  }
   liveMap.addLayer({ id: tier2FacilitiesPointLayerId, type: 'circle', source: tier2FacilitiesSourceId, filter: ['!', ['has', 'point_count']], paint: {
     // The transparent query layer keeps clustering and hit-testing in WebGL;
     // visible facilities use the blank-valued NFPA-704-style DOM placard.
@@ -12763,10 +12935,74 @@ function setWildfireStatus(source, result) {
 
 function removeWildfireLayers(definition) {
   if (!liveMap) return;
+  if (definition?.sourceId === 'wildfire-firms') {
+    wildfireFireMarkers.forEach((marker) => marker.remove());
+    wildfireFireMarkers = [];
+  }
   [...definition.layerIds].reverse().forEach((layerId) => {
     if (liveMap.getLayer(layerId)) liveMap.removeLayer(layerId);
   });
   if (liveMap.getSource(definition.sourceId)) liveMap.removeSource(definition.sourceId);
+}
+
+function createWildfireFireMarkerElement(feature) {
+  const isCluster = Number(feature.properties?.point_count || 0) > 0;
+  const element = document.createElement('button');
+  element.type = 'button';
+  element.className = isCluster ? 'wildfire-fire-cluster-marker' : 'wildfire-fire-marker';
+  element.setAttribute('aria-label', isCluster
+    ? `${feature.properties.point_count} active fire detections — click to expand`
+    : 'NASA FIRMS active fire detection');
+  element.title = isCluster ? `${feature.properties.point_count} active fire detections — click to expand` : 'NASA FIRMS active fire detection';
+  const flame = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  flame.setAttribute('viewBox', '0 0 24 24');
+  flame.setAttribute('aria-hidden', 'true');
+  flame.innerHTML = '<path d="M12.2 2.2c.9 3.3-.8 4.8-2.3 6.3-1.1 1.1-2.1 2.2-2.1 4.2 0 2.3 1.8 4.1 4.2 4.1 2.8 0 4.8-2.1 4.8-4.9 0-1.5-.7-3-2.1-4.5.1 2-1 2.9-1.9 3.5.2-2.9-.1-5.6-.6-8.7Z"/><path class="wildfire-fire-marker-core" d="M12.1 11.3c.7 1.1 1 2 1 2.9 0 1.1-.7 1.9-1.8 1.9-1 0-1.8-.8-1.8-1.8 0-.8.4-1.4 1-2 .5-.5 1-1 1.6-2Z"/>';
+  element.appendChild(flame);
+  if (isCluster) {
+    const count = document.createElement('span');
+    count.className = 'wildfire-fire-cluster-count';
+    count.textContent = String(feature.properties.point_count);
+    element.appendChild(count);
+  }
+  element.addEventListener('click', (event) => {
+    event.stopPropagation();
+    if (isCluster) {
+      const source = liveMap?.getSource('wildfire-firms');
+      const clusterId = feature.properties?.cluster_id;
+      if (clusterId == null || typeof source?.getClusterExpansionZoom !== 'function') return;
+      source.getClusterExpansionZoom(clusterId, (error, zoom) => {
+        if (!error) liveMap.easeTo({ center: feature.geometry.coordinates, zoom });
+      });
+    } else {
+      showWildfireFeature(feature, feature.geometry.coordinates);
+    }
+  });
+  return element;
+}
+
+function renderWildfireFireMarkers() {
+  if (!liveMap?.isStyleLoaded() || !liveMap.getSource('wildfire-firms')) return;
+  wildfireFireMarkers.forEach((marker) => marker.remove());
+  wildfireFireMarkers = [];
+  const features = visiblePointSourceFeatures('wildfire-firms');
+  features.forEach((feature) => {
+    wildfireFireMarkers.push(new window.maplibregl.Marker({ element: createWildfireFireMarkerElement(feature), anchor: 'center' })
+      .setLngLat(feature.geometry.coordinates)
+      .addTo(liveMap));
+  });
+  console.info('FIRMS DIAGNOSTIC', {
+    apiFeatureCount: wildfireData.firms.length,
+    sourceFeatureCount: features.length,
+    renderedMarkerCount: wildfireFireMarkers.length,
+    visibleLayerExists: wildfireFireMarkers.length > 0,
+    queryLayerExists: Boolean(liveMap.getLayer('wildfire-firms-clusters') && liveMap.getLayer('wildfire-firms-points')),
+  });
+}
+
+function scheduleWildfireFireMarkerRender() {
+  window.clearTimeout(wildfireFireMarkerRenderTimer);
+  wildfireFireMarkerRenderTimer = window.setTimeout(renderWildfireFireMarkers, 60);
 }
 
 function addWildfireLayers(layer, geojson) {
@@ -12775,15 +13011,20 @@ function addWildfireLayers(layer, geojson) {
   const firstSymbolLayer = liveMap.getStyle().layers.find((item) => item.type === 'symbol')?.id;
   if (liveMap.getSource(definition.sourceId)) {
     liveMap.getSource(definition.sourceId).setData(geojson);
+    if (layer === 'wildfireFires') scheduleWildfireFireMarkerRender();
     return;
   }
   if (layer === 'wildfireFires') {
     liveMap.addSource(definition.sourceId, { type: 'geojson', data: geojson, cluster: true, clusterMaxZoom: 12, clusterRadius: 42 });
-    liveMap.addLayer({ id: 'wildfire-firms-clusters', type: 'circle', source: definition.sourceId, filter: ['has', 'point_count'], paint: { 'circle-color': '#f04b32', 'circle-radius': ['step', ['get', 'point_count'], 16, 25, 20, 100, 25], 'circle-stroke-color': '#ffd323', 'circle-stroke-width': 2 } }, firstSymbolLayer);
-    if (liveMap.getStyle()?.glyphs) {
-      liveMap.addLayer({ id: 'wildfire-firms-cluster-count', type: 'symbol', source: definition.sourceId, filter: ['has', 'point_count'], layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-size': 11, 'text-font': ['Open Sans Bold'] }, paint: { 'text-color': '#fff' } }, firstSymbolLayer);
-    }
-    liveMap.addLayer({ id: 'wildfire-firms-points', type: 'circle', source: definition.sourceId, filter: ['!', ['has', 'point_count']], paint: { 'circle-color': '#ff4c32', 'circle-radius': 6, 'circle-stroke-color': '#ffe15a', 'circle-stroke-width': 1.5, 'circle-opacity': 0.92 } }, firstSymbolLayer);
+    liveMap.addLayer({ id: 'wildfire-firms-clusters', type: 'circle', source: definition.sourceId, filter: ['has', 'point_count'], paint: {
+      // Inline SVG DOM markers provide the visible fire symbol and count;
+      // this layer remains invisible for source querying and map hit-testing.
+      'circle-opacity': 0, 'circle-stroke-opacity': 0, 'circle-radius': ['step', ['get', 'point_count'], 18, 25, 22, 100, 26],
+    } }, firstSymbolLayer);
+    liveMap.addLayer({ id: 'wildfire-firms-points', type: 'circle', source: definition.sourceId, filter: ['!', ['has', 'point_count']], paint: {
+      'circle-opacity': 0, 'circle-stroke-opacity': 0, 'circle-radius': 16,
+    } }, firstSymbolLayer);
+    scheduleWildfireFireMarkerRender();
   } else if (layer === 'wildfirePerimeters') {
     liveMap.addSource(definition.sourceId, { type: 'geojson', data: geojson });
     liveMap.addLayer({ id: 'wildfire-perimeters-fill', type: 'fill', source: definition.sourceId, paint: { 'fill-color': '#f04432', 'fill-opacity': 0.16 } }, firstSymbolLayer);
@@ -12848,6 +13089,8 @@ function bindWildfireMapEvents() {
     if (!feature || feature.properties?.cluster_id == null || typeof source?.getClusterExpansionZoom !== 'function') return;
     source.getClusterExpansionZoom(feature.properties.cluster_id, (error, zoom) => { if (!error) liveMap.easeTo({ center: feature.geometry.coordinates, zoom }); });
   });
+  liveMap.on('idle', scheduleWildfireFireMarkerRender);
+  liveMap.on('moveend', scheduleWildfireFireMarkerRender);
   ['wildfire-firms-points', 'wildfire-perimeters-fill', 'wildfire-smoke-fill'].forEach((layerId) => {
     liveMap.on('click', layerId, (event) => {
       const feature = event.features?.[0];
@@ -13071,6 +13314,18 @@ function radarTimeLabel(timestamp) {
   return Number.isFinite(date.getTime()) ? date.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : 'Time unavailable';
 }
 
+function logLiveRadarDiagnostic() {
+  const source = document.getElementById('live-radar-source');
+  if (!source) return;
+  const computed = window.getComputedStyle(source);
+  console.info('LIVE RADAR DIAGNOSTIC', {
+    selectColor: computed.color,
+    selectBackgroundColor: computed.backgroundColor,
+    disabled: source.disabled,
+    focused: document.activeElement === source,
+  });
+}
+
 function syncLiveRadarControls(state = {}) {
   const source = document.getElementById('live-radar-source');
   const frame = document.getElementById('live-radar-frame');
@@ -13104,6 +13359,7 @@ function syncLiveRadarControls(state = {}) {
     const fallback = state.fallbackMessage ? ` ${state.fallbackMessage}` : '';
     sourceStatus.textContent = `${availability}${fallback} Visual situational awareness only; plume calculations are unchanged.`;
   }
+  logLiveRadarDiagnostic();
 }
 
 function getLiveRadarController() {
@@ -13161,6 +13417,62 @@ function updateLiveRadarOverlay() {
   void controller.enable();
 }
 
+function getLiveMapDiagnosticBox(element) {
+  if (!element) return null;
+  const rect = element.getBoundingClientRect();
+  const style = window.getComputedStyle(element);
+  return {
+    width: Math.round(rect.width),
+    height: Math.round(rect.height),
+    top: Math.round(rect.top),
+    bottom: Math.round(rect.bottom),
+    display: style.display,
+    visibility: style.visibility,
+    position: style.position,
+    overflow: style.overflow,
+  };
+}
+
+function logLiveMapDiagnostic() {
+  const container = document.getElementById('live-gis-map');
+  const map = liveMap || window.hazmatiqLiveMap;
+  const canvasContainer = container?.querySelector('.maplibregl-canvas-container');
+  const canvas = container?.querySelector('.maplibregl-canvas');
+  const center = map?.getCenter?.();
+  console.info('LIVE MAP DIAGNOSTIC', {
+    active: Boolean(document.getElementById('map')?.classList.contains('active')),
+    stageSize: getLiveMapDiagnosticBox(document.querySelector('.live-map-stage')),
+    containerSize: getLiveMapDiagnosticBox(container),
+    canvasPresent: Boolean(canvas),
+    canvasSize: getLiveMapDiagnosticBox(canvas),
+    mapInstance: Boolean(window.hazmatiqLiveMap),
+    mapLoaded: Boolean(map?.loaded?.()),
+    styleLoaded: Boolean(map?.isStyleLoaded?.()),
+    center: center ? { lng: Number(center.lng.toFixed(5)), lat: Number(center.lat.toFixed(5)) } : null,
+    zoom: map?.getZoom?.() ?? null,
+    elements: {
+      map: getLiveMapDiagnosticBox(document.getElementById('map')),
+      stage: getLiveMapDiagnosticBox(document.querySelector('.live-map-stage')),
+      container: getLiveMapDiagnosticBox(container),
+      canvasContainer: getLiveMapDiagnosticBox(canvasContainer),
+      canvas: getLiveMapDiagnosticBox(canvas),
+    },
+  });
+}
+
+function observeLiveMapContainer(container) {
+  if (!window.ResizeObserver || !container || liveMapResizeObserver?.__container === container) return;
+  liveMapResizeObserver?.disconnect();
+  liveMapResizeObserver = new window.ResizeObserver(() => {
+    if (!document.getElementById('map')?.classList.contains('active')) return;
+    window.requestAnimationFrame(() => {
+      liveMap?.resize();
+    });
+  });
+  liveMapResizeObserver.__container = container;
+  liveMapResizeObserver.observe(container);
+}
+
 function initializeLiveMap() {
   if (!window.maplibregl) {
     setText('live-map-loading', 'Map library unavailable. Refresh the page and try again.');
@@ -13173,10 +13485,14 @@ function initializeLiveMap() {
   setText('live-map-mode', incident ? 'Active Incident' : 'Planning Mode');
   if (!liveMapState) liveMapState = readLiveMapState();
   liveMapState.incidentId = incident?.incidentId || null;
+  const container = document.getElementById('live-gis-map');
+  observeLiveMapContainer(container);
   if (!liveMap) {
-    const container = document.getElementById('live-gis-map');
-    if (!container || container.clientWidth === 0 || container.clientHeight === 0) {
-      if (document.getElementById('map')?.classList.contains('active')) window.setTimeout(initializeLiveMap, 50);
+    const rect = container?.getBoundingClientRect();
+    if (!container || !rect || rect.width <= 100 || rect.height <= 200) {
+      if (document.getElementById('map')?.classList.contains('active')) {
+        window.requestAnimationFrame(initializeLiveMap);
+      }
       return;
     }
     try {
@@ -13262,7 +13578,10 @@ function initializeLiveMap() {
   updateTier2FacilitiesOverlay();
   restoreWildfireLayers();
   renderLiveMapMarkers();
-  window.requestAnimationFrame(() => liveMap.resize());
+  window.requestAnimationFrame(() => {
+    liveMap?.resize();
+    logLiveMapDiagnostic();
+  });
   window.setTimeout(() => liveMap.resize(), 150);
   if (!liveMapGpsRequested) {
     liveMapGpsRequested = true;
@@ -13285,7 +13604,9 @@ function initializeLiveMap() {
 const liveMapViewElement = document.getElementById('map');
 if (liveMapViewElement) {
   new MutationObserver(() => {
-    if (liveMapViewElement.classList.contains('active')) window.requestAnimationFrame(initializeLiveMap);
+    if (liveMapViewElement.classList.contains('active')) {
+      window.requestAnimationFrame(() => window.requestAnimationFrame(initializeLiveMap));
+    }
   }).observe(liveMapViewElement, { attributes: true, attributeFilter: ['class'] });
 }
 

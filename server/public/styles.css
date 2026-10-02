@@ -436,18 +436,6 @@ body {
 
 #plume .plume-page-header .hazmat-hero-subtitle { margin-bottom: 4px; }
 
-@media (min-width: 820px) {
-  #map.view.active {
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
-  }
-
-  #map > .hazmat-page-hero {
-    min-height: 104px;
-    max-height: 132px;
-    margin-bottom: 0;
-  }
-}
-
 button, input, select, textarea, table {
   font-family: var(--hazmatiq-font-body);
 }
@@ -905,6 +893,31 @@ h1 { font-weight: 800; }
 .live-radar-panel input[type="range"] { accent-color: #ffd323; }
 .live-radar-panel .ghost-btn { min-height: 30px; padding: 4px 9px; background: #123e60; border-color: #5488aa; color: #fff; font-size: .7rem; }
 .live-radar-panel small { color: #b9d0df; line-height: 1.25; }
+
+/* Keep native radar controls legible across dark browser/OS form themes. */
+#map .live-radar-panel select {
+  background: #fff;
+  color: #0a2236;
+  font-weight: 800;
+  border: 1px solid #9dafbf;
+  border-radius: 5px;
+}
+#map .live-radar-panel select option {
+  background: #fff;
+  color: #0a2236;
+  font-weight: 800;
+}
+#map .live-radar-panel select:disabled {
+  background: #dce5eb;
+  color: #5f7180;
+  opacity: 1;
+}
+#map .live-radar-panel select:hover { border-color: #f6c343; }
+#map .live-radar-panel select:focus-visible {
+  outline: 2px solid #f6c343;
+  outline-offset: 2px;
+  border-color: #0a527f;
+}
 
 .live-map-panels > div:not([hidden]) {
   display: grid;
@@ -8465,6 +8478,29 @@ body.workspace-drawer-open { overflow: hidden; }
 }
 
 .tier2-live-map-panel span { color: #c9d6e3; font-size: 0.62rem; text-transform: none; }
+.tier2-facility-cluster-marker {
+  display: grid;
+  width: 34px;
+  min-width: 34px;
+  height: 34px;
+  padding: 0;
+  place-items: center;
+  border: 2px solid #f6c343;
+  border-radius: 50%;
+  background: #c62828;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .68), 0 0 0 1px rgba(11, 31, 51, .9);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.tier2-facility-cluster-marker:hover,
+.tier2-facility-cluster-marker:focus-visible {
+  background: #a91f1f;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
 .tier2-facility-marker {
   display: grid;
   width: 34px;
@@ -8512,6 +8548,57 @@ body.workspace-drawer-open { overflow: hidden; }
 .tier2-facility-popup button { border: 0; border-radius: 5px; padding: 7px 9px; background: #0d3457; color: #fff; cursor: pointer; font: inherit; font-size: 0.7rem; font-weight: 700; }
 .tier2-facility-popup button.secondary { background: #e6eef5; color: #0d3457; }
 .tier2-facility-popup button:focus-visible { outline: 2px solid #f6c343; outline-offset: 2px; }
+
+/* Local DOM fire symbols stay visible above imagery, smoke, facilities, and labels. */
+.wildfire-fire-marker,
+.wildfire-fire-cluster-marker {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .72));
+  z-index: 20;
+}
+.wildfire-fire-marker svg,
+.wildfire-fire-cluster-marker svg {
+  width: 26px;
+  height: 30px;
+  overflow: visible;
+}
+.wildfire-fire-marker svg > path:first-child,
+.wildfire-fire-cluster-marker svg > path:first-child {
+  fill: #e43b25;
+  stroke: #17283a;
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+.wildfire-fire-marker-core { fill: #ffd323; }
+.wildfire-fire-cluster-marker { width: 42px; height: 38px; }
+.wildfire-fire-cluster-marker svg { width: 30px; height: 34px; }
+.wildfire-fire-cluster-count {
+  position: absolute;
+  right: -8px;
+  top: -4px;
+  display: grid;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 3px;
+  place-items: center;
+  border: 2px solid #ffd323;
+  border-radius: 999px;
+  background: #8e1d18;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.wildfire-fire-marker:focus-visible,
+.wildfire-fire-cluster-marker:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
 /* Compact tactical alert strip and overlay history drawer. */
 .alert-banner.notification-center {
@@ -9108,60 +9195,6 @@ body.workspace-drawer-open { overflow: hidden; }
   #plume section.plume-model-section > .plume-model-section-grid {
     overflow: visible;
   }
-}
-
-/* Live Map single-screen view; existing page columns remain unchanged. */
-@media (min-width: 820px) {
-  .app-shell:has(#map.active) {
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    height: 100dvh;
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  .app-shell:has(#map.active) .footer-note { display: none; }
-
-  .layout:has(#map.active) {
-    height: 100%;
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  .layout:has(#map.active) > .sidebar {
-    min-height: 0;
-    overflow-y: auto;
-    scrollbar-gutter: stable;
-  }
-
-  .layout:has(#map.active) > .content-area {
-    min-width: 0;
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  #map.view.active {
-    display: grid;
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  #map.active .live-map-command-bar,
-  #map.active .live-map-layer-bar { min-width: 0; }
-
-  #map.active .live-map-stage,
-  #map.active #live-gis-map {
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    min-height: 0;
-  }
-
-  #map.active .live-map-status { margin-bottom: 0; }
 }
 
 @media (max-width: 900px) {
@@ -10087,18 +10120,6 @@ body.workspace-drawer-open { overflow: hidden; }
   min-height: 118px;
   max-height: 150px;
   padding: 13px 16px;
-}
-
-@media (min-width: 820px) {
-  #map.view.active {
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
-  }
-
-  #map > .hazmat-page-hero {
-    min-height: 104px;
-    max-height: 132px;
-    margin-bottom: 0;
-  }
 }
 
 /* Final command-header cascade lock. */
@@ -13740,13 +13761,23 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 }
 
 #map .live-map-stage {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  min-height: 420px;
   height: 100%;
-  min-height: 0;
+  overflow: hidden;
   border: 0;
   border-radius: 0;
   background: #102a3d;
 }
-#map #live-gis-map { min-height: 0; height: 100%; }
+#map #live-gis-map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+}
 #map .live-map-stage::after { position: absolute; z-index: 2; inset: 0; border: 1px solid rgba(115, 186, 222, .26); box-shadow: inset 0 0 45px rgba(4, 20, 33, .32); content: ""; pointer-events: none; }
 #map .live-map-edge-controls,
 #map .live-map-edge-readout { position: absolute; z-index: 9; }
@@ -13801,13 +13832,6 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 #map .live-map-stage:fullscreen #live-gis-map { height: 100%; }
 #map .live-map-stage:fullscreen .live-map-edge-readout { bottom: 18px; }
 
-@media (min-width: 820px) {
-  .app-shell:has(#map.active),
-  .layout:has(#map.active),
-  .layout:has(#map.active) > .content-area { height: 100dvh; min-height: 0; overflow: hidden; }
-  #map.active .live-map-stage, #map.active #live-gis-map { height: 100%; min-height: 0; }
-}
-
 @media (max-width: 900px) {
   #map .live-map-operations { grid-template-columns: minmax(0, 1fr); align-items: start; }
   #map .live-map-control-groups { width: 100%; flex-wrap: wrap; gap: 10px 18px; }
@@ -13819,8 +13843,8 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 
 @media (max-width: 819px) {
   #map.live-map-page { height: auto; min-height: 100dvh; overflow: visible; }
-  #map .live-map-stage,
-  #map #live-gis-map { height: min(70dvh, 720px); min-height: 480px; }
+  #map .live-map-stage { height: min(70dvh, 720px); min-height: 480px; }
+  #map #live-gis-map { height: 100%; min-height: 0; }
 }
 
 /* The homepage hero uses the full wordmark artwork. At tablet widths it must
@@ -13866,6 +13890,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 }
 
 @media (max-width: 620px) {
+  #map .live-map-stage { overflow: visible; }
   #map .live-map-tactical-header { grid-template-columns: 1fr; align-items: start; gap: 8px; min-height: 0; padding: 12px 13px 9px; }
   #map .live-map-incident-readout { width: 100%; min-width: 0; padding: 7px 0 0; border-top: 1px solid var(--map-line); border-left: 0; text-align: left; }
   #map .live-map-operations { padding: 8px 13px; }
@@ -13882,9 +13907,8 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   #map .live-map-tools-panel { left: 0; right: auto; }
 }
 
-/* Final Live Map canvas sizing contract. The map must have a concrete height
-   before MapLibre initializes; percentage heights alone collapse when the
-   surrounding page shell is in its auto-height cascade. */
+/* Live Map layout contract. Keep the stage and canvas in one ownership block so
+   MapLibre always receives a real viewport before it measures the container. */
 @media (min-width: 820px) {
   .app-shell:has(#map.active) {
     display: grid;
@@ -13902,10 +13926,40 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
     overflow: hidden;
   }
 
-  #map.active .live-map-stage { height: 100%; min-height: 0; }
+  .app-shell:has(#map.active) .footer-note { display: none; }
+
+  .layout:has(#map.active) > .sidebar {
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .layout:has(#map.active) > .content-area {
+    min-width: 0;
+  }
+
+  #map.view.active {
+    display: grid;
+    grid-template-rows: auto auto minmax(420px, 1fr) auto;
+    width: 100%;
+    min-width: 0;
+  }
+
+  #map.active .live-map-command-bar,
+  #map.active .live-map-layer-bar { min-width: 0; }
+
+  #map.active .live-map-stage {
+    min-height: 420px;
+    height: 100%;
+  }
 
   #map.active #live-gis-map {
+    position: absolute;
+    inset: 0;
+    width: 100%;
     height: 100%;
-    min-height: 0;
+    min-height: 420px;
   }
+
+  #map.active .live-map-status { margin-bottom: 0; }
 }

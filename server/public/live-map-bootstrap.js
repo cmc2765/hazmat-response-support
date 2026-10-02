@@ -28,7 +28,14 @@
       { id: 'live-satellite-basemap', type: 'raster', source: 'live-satellite-basemap', paint: { 'raster-opacity': 1 } },
     ],
   };
-  const liveMapStyleModes = { street: detailedStreetStyle, satellite: liveSatelliteStyle, terrain3d: detailedStreetStyle };
+  const liveMapStyleModes = { street: detailedStreetStyle, satellite: liveSatelliteStyle };
+  const liveMapStyleModeNames = new Set(['street', 'satellite', 'terrain3d']);
+  // Keep Live Map on the same DEM source and Terrarium interpretation used by
+  // the Plume Model's terrain view. Terrain is added only after the vector
+  // street style is loaded and removed before leaving terrain mode.
+  const liveTerrainSourceId = 'live-terrain-dem';
+  const liveTerrainTilesUrl = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
+  let liveMapStyleRequestToken = 0;
   const layerGroups = {
     incident: ['plume', 'icp', 'entry', 'decon', 'staging', 'monitors', 'medical'],
     wildfire: ['wildfireFires', 'wildfirePerimeters', 'wildfireSmoke'],
@@ -93,7 +100,8 @@
       }
     });
     document.addEventListener('click', (event) => {
-      if (!(event.target instanceof Element) || event.target.closest('.live-map-control-groups')) return;
+      if (!(event.target instanceof Element)
+        || event.target.closest('.live-map-control-groups, .live-map-layer-menus, [data-map-action="layers"]')) return;
       closeLayerMenus();
     });
     document.addEventListener('keydown', (event) => {
@@ -131,9 +139,6 @@
         }
       });
     });
-    document.querySelectorAll('[data-live-layer]').forEach((button) => {
-      button.addEventListener('click', () => window.requestAnimationFrame(() => syncLayerControls(readMapState())));
-    });
   }
 
   function updateMapReadout(map) {
@@ -147,8 +152,62 @@
     if (scale) scale.textContent = `SCALE 1:${Math.max(1000, Math.round(24000 / Math.pow(2, Math.max(0, map.getZoom?.() - 14 || 0)))) .toLocaleString()}`;
   }
 
+  function disableLiveMapTerrain(map) {
+    if (!map) return;
+    try {
+      if (map.getTerrain?.()) map.setTerrain(null);
+      if (map.getSource?.(liveTerrainSourceId) && !map.isStyleLoaded?.()) return;
+      if (map.getSource?.(liveTerrainSourceId)) map.removeSource(liveTerrainSourceId);
+    } catch {
+      // A style transition may already have discarded the optional DEM.
+    }
+  }
+
+  function enableLiveMapTerrain(map) {
+    if (!map?.isStyleLoaded?.() || !map.setTerrain) return false;
+    try {
+      if (!map.getSource(liveTerrainSourceId)) {
+        map.addSource(liveTerrainSourceId, {
+          type: 'raster-dem',
+          tiles: [liveTerrainTilesUrl],
+          tileSize: 256,
+          maxzoom: 15,
+          encoding: 'terrarium',
+          attribution: 'AWS Terrain Tiles / Mapzen',
+        });
+      }
+      map.setTerrain({ source: liveTerrainSourceId, exaggeration: 1.05 });
+      return Boolean(map.getTerrain?.());
+    } catch (error) {
+      console.error('LIVE MAP TERRAIN ERROR', error);
+      return false;
+    }
+  }
+
+  function logLiveTerrainDiagnostic(map, mode) {
+    console.info('LIVE MAP TERRAIN DIAGNOSTIC', {
+      mode,
+      terrainSourcePresent: Boolean(map?.getSource?.(liveTerrainSourceId)),
+      terrainEnabled: Boolean(map?.getTerrain?.()),
+      styleLoaded: Boolean(map?.isStyleLoaded?.()),
+      pitch: map?.getPitch?.() ?? null,
+    });
+  }
+
+  function restoreLiveMapOverlays(map) {
+    // script.js is the canonical owner of the full Live Map overlay lifecycle.
+    // The fallback path still restores its local overlays after a style swap.
+    if (!window.hazmatiqLiveMapCanonicalOwner) {
+      const state = readMapState();
+      syncPlumeOverlay(Boolean(state.activeLayers.plume));
+      syncRadarOverlay(Boolean(state.activeLayers.weatherRadar));
+      renderFallbackMarkers(state);
+    }
+    map?.resize?.();
+  }
+
   function setLiveMapStyle(mode = 'street') {
-    const selected = liveMapStyleModes[mode] ? mode : 'street';
+    const selected = liveMapStyleModeNames.has(mode) ? mode : 'street';
     document.querySelectorAll('[data-map-style]').forEach((button) => {
       const active = button.dataset.mapStyle === selected;
       button.classList.toggle('active', active);
@@ -158,23 +217,41 @@
     const map = window.hazmatiqLiveMap || fallbackMap;
     if (!map) return;
     const isSatellite = Boolean(map.getStyle?.()?.sources?.['live-satellite-basemap']);
-    if (selected === 'terrain3d' && !isSatellite) {
-      map.easeTo({ pitch: 52, bearing: -18, duration: 350 });
+    const requestToken = ++liveMapStyleRequestToken;
+    if (selected !== 'terrain3d') disableLiveMapTerrain(map);
+    const activateTerrain = () => {
+      if (requestToken !== liveMapStyleRequestToken) return;
+      const terrainEnabled = enableLiveMapTerrain(map);
+      map.easeTo({ pitch: terrainEnabled ? 52 : 0, bearing: terrainEnabled ? -18 : 0, duration: 350 });
+      restoreLiveMapOverlays(map);
+      logLiveTerrainDiagnostic(map, selected);
+    };
+    const activateFlatMode = () => {
+      if (requestToken !== liveMapStyleRequestToken) return;
+      map.easeTo({ pitch: 0, bearing: 0, duration: 350 });
+      restoreLiveMapOverlays(map);
+      logLiveTerrainDiagnostic(map, selected);
+    };
+    const currentStyle = map.getStyle?.();
+    if (selected === 'terrain3d') {
+      // Terrain is satellite imagery draped over the shared Plume Model DEM;
+      // never activate it on the vector Street style.
+      if (!isSatellite) {
+        disableLiveMapTerrain(map);
+        map.once('style.load', activateTerrain);
+        map.setStyle(liveSatelliteStyle);
+      } else if (map.isStyleLoaded?.()) {
+        activateTerrain();
+      } else {
+        map.once('style.load', activateTerrain);
+      }
       return;
     }
-    if (selected === 'street') map.easeTo({ pitch: 0, bearing: 0, duration: 350 });
-    const currentStyle = map.getStyle?.();
     if ((selected === 'satellite') !== Boolean(currentStyle?.sources?.['live-satellite-basemap'])) {
-      map.once('style.load', () => {
-        const state = readMapState();
-        syncPlumeOverlay(Boolean(state.activeLayers.plume));
-        syncRadarOverlay(Boolean(state.activeLayers.weatherRadar));
-        renderFallbackMarkers(state);
-        if (selected === 'terrain3d') map.easeTo({ pitch: 52, bearing: -18, duration: 350 });
-      });
+      map.once('style.load', activateFlatMode);
       map.setStyle(liveMapStyleModes[selected]);
-    } else if (selected === 'terrain3d') {
-      map.easeTo({ pitch: 52, bearing: -18, duration: 350 });
+    } else {
+      activateFlatMode();
     }
   }
 
@@ -301,7 +378,7 @@
     // The canonical Live Map initializer in script.js owns the map instance.
     // This bootstrap remains a control/style fallback, but must never create a
     // second MapLibre instance or duplicate the overlay state.
-    if (!view?.classList.contains('active') || !container || window.hazmatiqLiveMap || container.querySelector('.maplibregl-canvas')) return;
+    if (!view?.classList.contains('active') || !container || window.hazmatiqLiveMapCanonicalOwner || window.hazmatiqLiveMap || container.querySelector('.maplibregl-canvas')) return;
     if (!window.maplibregl) {
       setMessage('Map library unavailable.');
       return;
@@ -365,55 +442,6 @@
     const storedStyle = window.localStorage.getItem(liveMapStyleKey);
     if (storedStyle && document.querySelector(`[data-map-style="${storedStyle}"]`)) setLiveMapStyle(storedStyle);
   } catch { /* Use the street map default. */ }
-  const radarButton = document.querySelector('[data-live-layer="weatherRadar"]');
-  let radarWasEnabled = false;
-  radarButton?.addEventListener('click', () => {
-    radarWasEnabled = radarButton.getAttribute('aria-pressed') === 'true';
-  }, { capture: true });
-  radarButton?.addEventListener('click', () => {
-    let enabled = radarButton.getAttribute('aria-pressed') === 'true';
-    // Handle the toggle here when the main Live Map script did not attach its listener.
-    if (enabled === radarWasEnabled) {
-      enabled = !enabled;
-      radarButton.classList.toggle('active', enabled);
-      radarButton.setAttribute('aria-pressed', String(enabled));
-    }
-    const state = readMapState();
-    state.activeLayers.weatherRadar = enabled;
-    writeMapState(state);
-    syncRadarOverlay(enabled);
-  });
-  document.querySelectorAll('[data-live-layer]:not([data-live-layer="weatherRadar"])').forEach((button) => {
-    let wasEnabled = false;
-    button.addEventListener('click', () => {
-      wasEnabled = button.getAttribute('aria-pressed') === 'true';
-    }, { capture: true });
-    button.addEventListener('click', () => {
-      let enabled = button.getAttribute('aria-pressed') === 'true';
-      if (enabled !== wasEnabled) return;
-      enabled = !enabled;
-      const layer = button.dataset.liveLayer;
-      button.classList.toggle('active', enabled);
-      button.setAttribute('aria-pressed', String(enabled));
-      const panel = document.querySelector(`[data-live-panel="${layer}"]`);
-      if (panel) panel.hidden = !enabled;
-      const state = readMapState();
-      state.activeLayers[layer] = enabled;
-      const map = window.hazmatiqLiveMap || fallbackMap;
-      if (enabled && map) ensureMarker(state, layer, map);
-      writeMapState(state);
-      if (layer === 'plume') syncPlumeOverlay(enabled);
-      renderFallbackMarkers(state);
-    });
-  });
-  window.addEventListener('hazmatiq:plume-updated', (event) => {
-    if (event.detail?.plumeGeometry?.features?.length) {
-      window.HazMatIQ ||= {};
-      window.HazMatIQ.latestPlumeOverlay = event.detail;
-    }
-    const state = readMapState();
-    if (state.activeLayers.plume) syncPlumeOverlay(true);
-  });
   const scheduleFallbackMap = () => window.setTimeout(startFallbackMap, 300);
   new MutationObserver(() => {
     if (view.classList.contains('active')) scheduleFallbackMap();
