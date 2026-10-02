@@ -16,6 +16,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "data:niosh": "node scripts/niosh/index.js",
+    "import:tier2-facilities": "npm --prefix server run import:tier2-facilities --",
+    "import:tier2-details": "npm --prefix server run import:tier2-details --",
+    "verify:tier2-links": "npm --prefix server run verify:tier2-links",
     "sample:mock": "node sample/mock-server/server.js",
     "sample:client": "node sample/integration-sample/client.js",
     "sample:all": "node sample/mock-server/server.js & npm run sample:client"

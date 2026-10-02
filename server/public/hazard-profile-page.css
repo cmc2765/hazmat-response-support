@@ -283,3 +283,167 @@
     grid-row: 1;
   }
 }
+
+/* Hazard Profile data-sheet hierarchy: section titles carry the panel identity,
+   while field labels provide a quick amber scan path through the values. */
+#chemical-id-results .chemical-profile-section-heading,
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin: 0 0 2px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(105, 169, 214, 0.42);
+  color: #f6c343;
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.085em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+#chemical-id-results .chemical-profile-section-heading > .chemical-profile-icon {
+  width: 18px;
+  height: 18px;
+  color: #f6c343;
+}
+
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-row {
+  min-width: 0;
+  gap: 6px;
+  padding: 11px 13px 12px;
+  border: 1px solid rgba(61, 125, 170, 0.62);
+  border-left: 3px solid rgba(246, 195, 67, 0.82);
+  border-radius: 5px;
+  background: rgba(6, 31, 52, 0.74);
+  box-shadow: none;
+}
+
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-field-label {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  color: #f6c343;
+  font-size: 0.84rem;
+  font-weight: 850;
+  letter-spacing: 0.075em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-field-label::before {
+  content: "";
+  display: block;
+  flex: 0 0 3px;
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  background: #f6c343;
+  box-shadow: 0 0 8px rgba(246, 195, 67, 0.26);
+}
+
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-row > strong,
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-row > .chemical-profile-value-list,
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-row > .chemical-treatment-columns {
+  min-width: 0;
+  color: #eef7ff;
+  font-size: 0.96rem;
+  font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-row > .chemical-profile-value-list {
+  gap: 5px;
+  margin-top: 1px;
+}
+
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-value-list li {
+  min-width: 0;
+  padding: 5px 8px;
+  border-left-color: rgba(105, 169, 214, 0.72);
+  border-radius: 3px;
+  background: rgba(8, 42, 69, 0.74);
+  overflow-wrap: anywhere;
+}
+
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-list-row {
+  min-width: 0;
+  align-items: start;
+  gap: 7px 12px;
+  padding: 10px 12px !important;
+  border-color: rgba(61, 125, 170, 0.62);
+  border-left: 3px solid rgba(246, 195, 67, 0.82);
+  border-radius: 5px;
+  background: rgba(6, 31, 52, 0.74);
+}
+
+#chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-list-row > span {
+  min-width: 0;
+  color: #eef7ff;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+#chemical-id-results .chemical-profile-medical-guidance-description,
+#chemical-id-results .chemical-profile-medical-guidance-warning {
+  margin: 0;
+  color: #cfe3f2;
+  line-height: 1.5;
+}
+
+#chemical-id-results .chemical-profile-medical-guidance-warning {
+  padding: 8px 10px;
+  border-left: 3px solid #f6c343;
+  background: rgba(246, 195, 67, 0.09);
+  color: #f4e3aa;
+}
+
+#chemical-id-results .chemical-profile-medical-link {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  margin-top: 2px;
+  padding: 9px 13px;
+  border: 1px solid #f6c343;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #ffd968, #f6b914);
+  color: #071f36;
+  font-size: 0.82rem;
+  font-weight: 850;
+  line-height: 1.25;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+#chemical-id-results .chemical-profile-medical-link::after {
+  content: "↗";
+  flex: 0 0 auto;
+  font-size: 1rem;
+}
+
+#chemical-id-results .chemical-profile-medical-link:hover,
+#chemical-id-results .chemical-profile-medical-link:focus-visible {
+  background: #ffe58e;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(246, 195, 67, 0.22), 0 6px 16px rgba(1, 14, 25, 0.24);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 700px) {
+  #chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-list-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #chemical-id-results .chemical-profile-content[data-active-tab] .chemical-profile-section-heading {
+    font-size: 0.9rem;
+  }
+}

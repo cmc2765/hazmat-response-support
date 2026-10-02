@@ -7,10 +7,10 @@ const plumeStyles = readFileSync(new URL('../server/public/plume-overrides.css',
 
 describe('Plume Model Tactical 3D map restoration', () => {
   it('provides the requested map modes and one shared map surface', () => {
-    for (const mode of ['satellite', 'tactical', 'street', 'terrain3d']) {
+    for (const mode of ['satellite', 'plume3d', 'street', 'terrain3d']) {
       expect(html).toContain(`data-plume-map-view="${mode}"`);
     }
-    expect(html).toContain('Tactical 3D');
+    expect(html).toContain('3D Plume');
     expect(html).toContain('>Street</button>');
     expect(html).not.toContain('Street / Standard');
     expect(html).toContain('id="plume-gis-map"');
@@ -24,8 +24,8 @@ describe('Plume Model Tactical 3D map restoration', () => {
 
   it('restores the historical Liberty Tactical 3D camera on the current MapLibre instance', () => {
     expect(script).toContain("const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty'");
-    expect(script).toContain("tactical: { style: plumeMapStyleUrl, pitch: 28, bearing: 0 }");
-    expect(script).toContain("let plumeMapStyleMode = 'base'");
+    expect(script).toContain("plume3d: { style: plumeMapStyleUrl, pitch: 54, bearing: 0, requires3d: true }");
+    expect(script).toContain("let plumeMapStyleMode = 'satellite'");
     expect(script).toContain('buildTacticalPlumeMapStyle');
     expect(script).toContain('desaturatePlumeMapColor');
     expect(script).toContain("setText('plume-terrain-status', 'Tactical 3D · desaturated basemap')");
@@ -35,7 +35,7 @@ describe('Plume Model Tactical 3D map restoration', () => {
     const setView = script.slice(script.indexOf('async function setPlumeMapView'), script.indexOf('async function clearThreatZones'));
     expect(setView).not.toContain('runBackendPlume(');
     expect(setView).not.toContain('plotPlumeFromControls(');
-    expect(setView).toContain('setPlumeMapStyle(buildTacticalPlumeMapStyle(), targetMode)');
+    expect(setView).toContain('buildTacticalPlumeMapStyle()');
     expect(setView).toContain('restorePlumeMapOverlays();');
     expect(script).toContain('const plumeLayerState = { zones: true, centerline: true, distance: false, hazards: false }');
     expect(script).toContain("const plumeSatelliteSourceId = 'plume-satellite-basemap'");
@@ -45,13 +45,15 @@ describe('Plume Model Tactical 3D map restoration', () => {
     expect(script).toContain('plumeSourceMarker');
   });
 
-  it('keeps Satellite, Street, and 3D Terrain basemap paths separate from Tactical', () => {
-    expect(script).toContain("const targetMode = viewName === 'tactical' ? 'tactical' : 'base'");
-    expect(script).toContain("activePlumeMapView === 'tactical') return;");
+  it('keeps Satellite, Street, 3D Terrain, and 3D Plume paths separate', () => {
+    expect(script).toContain("const targetStyle = viewName === 'plume3d'");
+    expect(script).toContain("activePlumeMapView === 'plume3d') return;");
     expect(script).toContain("activePlumeMapView === 'street' ? 'none' : 'visible'");
     expect(script).toContain("type: 'raster-dem'");
     expect(script).toContain("encoding: 'terrarium'");
-    expect(script).toContain("type: 'fill-extrusion'");
+    expect(script).toContain("const plume3dCustomLayerId = 'hazmat-plume-3d-mesh'");
+    expect(script).toContain("type: 'custom'");
+    expect(script).not.toContain("id: plume3dEnvelopeLayerIds.outer");
     expect(script).toContain('fallbackPlumeMapToSatellite');
     expect(script).not.toContain('tactical3d.js');
     expect(script).not.toContain('new Cesium.Viewer');

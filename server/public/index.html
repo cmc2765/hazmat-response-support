@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HAZSCOPE Prototype</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
-    <link rel="stylesheet" href="styles.css?v=hero-logo-static-2" />
+    <link rel="stylesheet" href="styles.css?v=live-map-canvas-3" />
     <link rel="stylesheet" href="hero-overrides.css?v=8" />
     <link rel="stylesheet" href="hazard-id-overrides.css?v=3" />
-    <link rel="stylesheet" href="global-ui-overrides.css?v=15" />
+    <link rel="stylesheet" href="global-ui-overrides.css?v=16" />
     <link rel="stylesheet" href="incident-overrides.css?v=3" />
     <link rel="stylesheet" href="preplan-overrides.css?v=1" />
     <link rel="stylesheet" href="chemical-intel.css?v=hazard-profile-panel-26" />
@@ -284,6 +284,7 @@
                 <section class="incident-command-summary-strip" aria-label="Active incident summary">
                   <label><span><b aria-hidden="true">📋</b> Incident Name</span><input id="incidentName" name="incidentName" type="text" placeholder="Enter incident name" required /><button id="ic-save-incident-name" type="button" aria-label="Save incident name" title="Save incident name">Save</button></label>
                   <label class="incident-command-location-field"><span><b aria-hidden="true">📍</b> Incident Location</span><div class="incident-address-autocomplete"><input id="incident-address-input" type="text" role="combobox" placeholder="Address or location" autocomplete="off" aria-autocomplete="list" aria-controls="incident-address-suggestions" aria-expanded="false" /><div id="incident-address-suggestions" class="chemical-search-suggestions incident-address-suggestions" role="listbox" hidden></div></div></label>
+                  <label><span><b aria-hidden="true">🏭</b> Facility</span><input id="incident-facility-name" type="text" placeholder="Facility name" /></label>
                   <label class="incident-command-chemical-field"><span><b aria-hidden="true">⚗</b> Chemical / Hazard ID</span><div class="chemical-search-input-wrap"><input id="incident-product" type="text" role="combobox" placeholder="Type chemical, UN, or CAS" autocomplete="off" aria-autocomplete="list" aria-controls="incident-product-suggestions" aria-expanded="false" /><div id="incident-product-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div></div></label>
                   <label><span><b aria-hidden="true">🛡</b> Operational Mode</span><select id="incident-operational-mode"><option value="Research &amp; Assessment">Research &amp; Assessment</option><option value="Offensive/Entry">Offensive/Entry</option><option value="Defensive/Control/Contain">Defensive/Control/Contain</option><option value="Non-Intervention">Non-Intervention</option></select></label>
                   <div><span><b aria-hidden="true">◷</b> Real Time</span><time id="ic-real-time" datetime="">--/--/---- --:--:--</time></div>
@@ -833,30 +834,12 @@
           <section id="plume" class="view plume-model-page" data-page-root="plume-model" data-page-name="Plume Model">
             <header class="plume-v2-header hazmat-page-hero hazmat-page-hero-compact variant-plume">
               <div class="plume-v2-header-copy">
-                <span class="plume-hero-plume" aria-hidden="true">
-                  <svg viewBox="0 0 92 56" focusable="false">
-                    <defs>
-                      <linearGradient id="plume-aegl-one" x1="0" x2="1"><stop stop-color="#ffd323" stop-opacity=".92"/><stop offset="1" stop-color="#f6c343" stop-opacity=".32"/></linearGradient>
-                      <linearGradient id="plume-aegl-two" x1="0" x2="1"><stop stop-color="#f28c18"/><stop offset="1" stop-color="#f28c18" stop-opacity=".38"/></linearGradient>
-                      <linearGradient id="plume-aegl-three" x1="0" x2="1"><stop stop-color="#d71920"/><stop offset="1" stop-color="#c1121f" stop-opacity=".45"/></linearGradient>
-                    </defs>
-                    <ellipse class="plume-hero-shadow" cx="53" cy="48" rx="35" ry="5"/>
-                    <path class="plume-hero-zone zone-one" d="M14 28 L78 9 A9 19 0 0 1 78 47 Z"/>
-                    <ellipse class="plume-hero-cap cap-one" cx="78" cy="28" rx="9" ry="19"/>
-                    <path class="plume-hero-zone zone-two" d="M14 28 L73 16 A7 12 0 0 1 73 40 Z"/>
-                    <ellipse class="plume-hero-cap cap-two" cx="73" cy="28" rx="7" ry="12"/>
-                    <path class="plume-hero-zone zone-three" d="M14 28 L65 22 A5 6 0 0 1 65 34 Z"/>
-                    <ellipse class="plume-hero-cap cap-three" cx="65" cy="28" rx="5" ry="6"/>
-                    <path class="plume-hero-centerline" d="M14 28 L87 28"/>
-                    <circle class="plume-hero-source" cx="13" cy="28" r="5"/>
-                  </svg>
-                </span>
                 <div class="hazmat-page-hero-content"><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><small id="plume-header-chemical" hidden>Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers" hidden>CAS / UN / ERG pending</small></div>
               </div>
               <div class="plume-v2-header-context" aria-label="Current plume context">
-                <div><span>Location</span><strong id="plume-header-location">Location pending</strong></div>
-                <div><span>Weather</span><strong id="plume-header-weather">Weather pending</strong></div>
-                <div><span>Model</span><strong id="plume-header-status">Awaiting inputs</strong></div>
+                <div><span>Location</span><strong id="plume-header-location">Awaiting location data</strong></div>
+                <div><span>Weather</span><strong id="plume-header-weather">Awaiting weather data</strong></div>
+                <div><span>Model</span><strong id="plume-header-status">Awaiting Data</strong></div>
               </div>
             </header>
             <div class="plume-v2-workspace">
@@ -870,14 +853,14 @@
                     <span class="plume-card-accent" aria-hidden="true"></span>
                   </header>
                   <div class="plume-model-section-grid plume-release-grid">
-                    <label class="plume-model-field plume-chemical-field plume-required-field" for="plume-chemical-input">
-                      <span class="plume-required-label">Chemical</span>
+                    <div class="plume-model-field plume-chemical-field plume-required-field">
+                      <div class="plume-field-label-row">
+                        <label for="plume-chemical-input">Chemical</label>
+                        <span class="plume-required-badge">Required</span>
+                      </div>
                       <div class="plume-chemical-search">
                         <div class="plume-linked-input">
-                          <span class="plume-required-control plume-chemical-input-control">
-                            <input id="plume-chemical-input" type="text" placeholder="Name, Chemical ID, UN, or CAS" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="plume-chemical-suggestions" aria-describedby="plume-input-status" />
-                            <span class="plume-required-inside" aria-hidden="true">Required</span>
-                          </span>
+                          <input id="plume-chemical-input" type="text" placeholder="Name, Chemical ID, UN, or CAS" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="plume-chemical-suggestions" aria-describedby="plume-input-status" />
                           <button class="ghost-btn" id="change-plume-chemical-btn" type="button">Browse</button>
                         </div>
                         <div id="plume-chemical-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div>
@@ -887,51 +870,56 @@
                         <span id="plume-chemical-un" hidden>UN —</span>
                         <span id="plume-chemical-erg" hidden>ERG —</span>
                       </div>
-                    </label>
-                    <label class="plume-model-field plume-required-field" for="plume-release-type">
-                      <span class="plume-required-label">Release type</span>
-                      <span class="plume-required-control">
-                        <select id="plume-release-type">
-                          <option value="plume">Continuous release</option>
-                          <option value="puff">Instantaneous release</option>
-                        </select>
-                        <span class="plume-required-inside" aria-hidden="true">Required</span>
-                      </span>
-                    </label>
-                    <label class="plume-model-field plume-required-field" for="plume-release-quantity">
-                      <span class="plume-required-label"><span id="plume-release-quantity-label">Release rate</span><span class="plume-field-unit-heading">Units</span></span>
-                      <div class="plume-quantity-input">
-                        <span class="plume-required-control plume-number-control">
-                          <input id="plume-release-quantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter value" required />
-                          <span class="plume-required-inside" aria-hidden="true">Required</span>
-                        </span>
-                        <span class="plume-quantity-unit">
-                          <select id="plume-release-unit" aria-label="Release quantity unit">
-                            <option value="lb-min">lb/min</option>
-                            <option value="lb-sec">lb/sec</option>
-                          </select>
-                        </span>
+                    </div>
+                    <div class="plume-model-field plume-release-type-field plume-required-field">
+                      <div class="plume-field-label-row">
+                        <label for="plume-release-type">Release type</label>
+                        <span class="plume-required-badge">Required</span>
                       </div>
-                    </label>
-                    <label class="plume-model-field plume-required-field" id="plume-puff-duration-field" for="plume-puff-duration" hidden>
-                      <span class="plume-required-label">Puff evaluation time (seconds)</span>
-                      <span class="plume-required-control">
-                        <input id="plume-puff-duration" type="number" min="1" step="1" inputmode="numeric" placeholder="Enter seconds" />
-                        <span class="plume-required-inside" aria-hidden="true">Required</span>
-                      </span>
-                    </label>
-                    <label class="plume-model-field plume-required-field" id="plume-release-duration-field" for="plume-release-duration">
-                      <span class="plume-required-label">Duration (min)</span>
-                      <span class="plume-required-control">
-                        <input id="plume-release-duration" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="Enter minutes" />
-                        <span class="plume-required-inside" aria-hidden="true">Required</span>
-                      </span>
-                    </label>
-                    <label class="plume-model-field" for="plume-release-height">
-                      <span>Release height (ft) <b class="plume-optional-label">Optional</b></span>
+                      <select id="plume-release-type">
+                        <option value="plume">Continuous release</option>
+                        <option value="puff">Instantaneous release</option>
+                      </select>
+                    </div>
+                    <div class="plume-model-field plume-release-quantity-field plume-required-field">
+                      <div class="plume-field-label-row">
+                        <label for="plume-release-quantity"><span id="plume-release-quantity-label">Release rate</span></label>
+                        <span class="plume-required-badge">Required</span>
+                      </div>
+                      <div class="plume-quantity-input">
+                        <input id="plume-release-quantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter value" required />
+                      </div>
+                    </div>
+                    <div class="plume-model-field plume-release-unit-field">
+                      <div class="plume-field-label-row">
+                        <label for="plume-release-unit">Units</label>
+                      </div>
+                      <select id="plume-release-unit" aria-label="Release quantity unit">
+                        <option value="lb-min">lb/min</option>
+                        <option value="lb-sec">lb/sec</option>
+                      </select>
+                    </div>
+                    <div class="plume-model-field plume-release-duration-field plume-required-field" id="plume-puff-duration-field" hidden>
+                      <div class="plume-field-label-row">
+                        <label for="plume-puff-duration">Puff evaluation time (seconds)</label>
+                        <span class="plume-required-badge">Required</span>
+                      </div>
+                      <input id="plume-puff-duration" type="number" min="1" step="1" inputmode="numeric" placeholder="Enter seconds" />
+                    </div>
+                    <div class="plume-model-field plume-release-duration-field plume-required-field" id="plume-release-duration-field">
+                      <div class="plume-field-label-row">
+                        <label for="plume-release-duration">Duration (min)</label>
+                        <span class="plume-required-badge">Required</span>
+                      </div>
+                      <input id="plume-release-duration" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="Enter minutes" />
+                    </div>
+                    <div class="plume-model-field plume-release-height-field">
+                      <div class="plume-field-label-row">
+                        <label for="plume-release-height">Release height (ft) <span class="plume-optional-label">Optional</span></label>
+                      </div>
                       <input id="plume-release-height" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Ground-level default" />
                       <small>Height above ground level.</small>
-                    </label>
+                    </div>
                     <details class="container-profile" aria-label="Editable container planning profile">
                       <summary>Source / Container Details <small>Advanced / Details</small></summary>
                       <div class="container-bubble-grid">
@@ -1067,6 +1055,21 @@
                     </details>
                   </div>
                 </section>
+                <section class="plume-weather-at-a-glance" aria-label="Current weather and wind direction">
+                  <div class="plume-weather-glance-main">
+                    <div class="plume-weather-glance-compass" aria-hidden="true">
+                      <span>N</span><span>E</span><span>S</span><span>W</span><i id="plume-weather-glance-arrow"></i>
+                    </div>
+                    <div class="plume-weather-glance-reading">
+                      <strong id="plume-weather-glance-reading">Wind observation unavailable</strong>
+                    </div>
+                  </div>
+                  <div class="plume-weather-glance-metrics" aria-label="Current weather values">
+                    <span>Temp <strong id="plume-weather-glance-temperature">—</strong></span>
+                    <span>Source <strong id="plume-weather-glance-source">—</strong></span>
+                    <span>Observed <strong id="plume-weather-glance-time">—</strong></span>
+                  </div>
+                </section>
                 <section class="plume-model-section plume-criteria-section" aria-labelledby="plume-criteria-heading">
                   <header class="plume-model-section-heading">
                     <span class="plume-stage-number" aria-hidden="true">3</span>
@@ -1094,27 +1097,6 @@
               </div>
             </form>
 
-            <section class="plume-weather-at-a-glance" aria-label="Current weather and wind direction">
-              <div class="plume-weather-glance-heading">
-                <div><span class="plume-eyebrow">Current conditions</span><strong>Weather at a glance</strong></div>
-                <span id="plume-weather-glance-status">Awaiting weather</span>
-              </div>
-              <div class="plume-weather-glance-main">
-                <div class="plume-weather-glance-compass" aria-hidden="true">
-                  <span>N</span><span>E</span><span>S</span><span>W</span><i id="plume-weather-glance-arrow"></i>
-                </div>
-                <div class="plume-weather-glance-reading">
-                  <strong id="plume-weather-glance-reading">Wind observation unavailable</strong>
-                  <small id="plume-weather-glance-meta">Direction, speed, source, and freshness will appear here.</small>
-                </div>
-              </div>
-              <div class="plume-weather-glance-metrics" aria-label="Current weather values">
-                <span>Temp <strong id="plume-weather-glance-temperature">—</strong></span>
-                <span>Source <strong id="plume-weather-glance-source">—</strong></span>
-                <span>Observed <strong id="plume-weather-glance-time">—</strong></span>
-              </div>
-            </section>
-
             <button class="plume-left-plot-button" id="plume-left-plot-btn" type="submit" form="plume-model-form">Plot Plume</button>
 
             <section class="plume-compact-card plume-endpoint-card" aria-labelledby="plume-endpoint-card-heading" hidden>
@@ -1133,7 +1115,7 @@
                       <span>Plume Location</span>
                       <input class="plume-location-input" id="plume-map-address-input" type="text" placeholder="Enter address, coordinates, or use incident location" autocomplete="street-address" />
                     </label>
-                    <button class="plume-map-button secondary" id="use-plume-incident-location-btn" type="button">Use Incident Location</button>
+                    <button class="plume-map-button secondary" id="use-plume-incident-location-btn" type="button">Use Incident Address</button>
                     <button class="plume-map-button secondary" type="submit">Manual Entry</button>
                     <button class="plume-map-button primary" id="plot-plume-btn" type="button" disabled>Plot Plume</button>
                     <button class="module-btn plume-map-button secondary plume-live-radar-link" type="button" data-view="map">Open Live Map</button>
@@ -1142,9 +1124,9 @@
                       <div class="plume-map-mode-controls" role="group" aria-label="Map mode">
                         <span class="plume-map-control-label">MAP MODE</span>
                         <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
-                        <button class="plume-layer-button" type="button" data-plume-map-view="tactical" aria-pressed="false">Tactical 3D</button>
                         <button class="plume-layer-button" type="button" data-plume-map-view="street" aria-pressed="false">Street</button>
                         <button class="plume-layer-button" type="button" data-plume-map-view="terrain3d" aria-pressed="false">3D Terrain</button>
+                        <button class="plume-layer-button" type="button" data-plume-map-view="plume3d" aria-pressed="false">3D Plume</button>
                       </div>
                       <div class="plume-map-layer-controls" role="group" aria-label="Map layers and overlays">
                         <span class="plume-map-control-label">LAYERS</span>
@@ -1170,6 +1152,27 @@
                     <div id="plume-gis-map" class="plume-map-frame" role="application" aria-label="Interactive incident plume map"></div>
                     <div class="plume-map-availability" id="plume-map-availability" role="status" aria-live="polite" hidden></div>
                     <div class="plume-terrain-status" id="plume-terrain-status">Satellite View</div>
+                    <div class="plume-3d-envelope-status" id="plume-3d-envelope-status" role="status" aria-live="polite" hidden></div>
+                    <details class="plume-3d-model-facts" id="plume-3d-model-facts" hidden>
+                      <summary>3D MODEL FACTS</summary>
+                      <dl>
+                        <div><dt>Model</dt><dd id="plume-3d-fact-version">—</dd></div>
+                        <div><dt>Vapor density</dt><dd id="plume-3d-fact-vapor-density">—</dd></div>
+                        <div><dt>Vapor pressure</dt><dd id="plume-3d-fact-vapor-pressure">—</dd></div>
+                        <div><dt>Specific gravity</dt><dd id="plume-3d-fact-specific-gravity">—</dd></div>
+                        <div><dt>Molecular weight</dt><dd id="plume-3d-fact-molecular-weight">—</dd></div>
+                        <div><dt>Release height</dt><dd id="plume-3d-fact-release-height">—</dd></div>
+                        <div><dt>Release / duration</dt><dd id="plume-3d-fact-release">—</dd></div>
+                        <div><dt>Wind / humidity</dt><dd id="plume-3d-fact-weather">—</dd></div>
+                        <div><dt>Ambient temperature</dt><dd id="plume-3d-fact-temperature">—</dd></div>
+                        <div><dt>Terrain coupling</dt><dd id="plume-3d-fact-terrain">—</dd></div>
+                        <div><dt>Building interaction</dt><dd id="plume-3d-fact-buildings">—</dd></div>
+                        <div><dt>Urban channeling</dt><dd id="plume-3d-fact-channeling">—</dd></div>
+                        <div><dt>3D behavior</dt><dd id="plume-3d-fact-behavior">—</dd></div>
+                        <div><dt>Confidence</dt><dd id="plume-3d-fact-confidence">—</dd></div>
+                      </dl>
+                      <p id="plume-3d-fact-limitations"></p>
+                    </details>
                     <div class="plume-wind-direction-status" id="plume-wind-direction-status">Missing Wind Direction</div>
                     <div class="plume-compass-control" id="plume-compass-control" aria-label="Map rotation and tilt controls">
                       <div class="plume-compass-ring" aria-hidden="true"><span class="plume-compass-north">N</span><span class="plume-compass-arrow" id="plume-compass-arrow"></span></div>
@@ -1234,7 +1237,7 @@
                   <p class="plume-intelligence-note">Consumes the current plume result, verified chemical guidance, weather, and mapped receptors.</p>
                   <details open><summary>Protective Action <small id="plume-guided-protective-source">OPERATIONAL INFERENCE</small></summary><p id="plume-guided-protective">Available after a valid model response.</p></details>
                   <details><summary>Tactical Priorities <small>MODEL-DERIVED + OPERATIONAL INFERENCE</small></summary><p id="plume-guided-tactical">Available after a valid model response.</p></details>
-                  <details><summary>Critical Facilities <small>OPENSTREETMAP INTERSECTION</small></summary><p id="plume-guided-critical">Mapped facilities load after a valid plume result.</p></details>
+                  <details><summary>Critical Facilities <small>NCES / HIFLD POINT-IN-POLYGON</small></summary><p id="plume-guided-critical">Authoritative facility records load after a valid plume result.</p></details>
                   <details><summary>Monitoring <small id="plume-guided-monitoring-source">CHEMICAL-DERIVED + OPERATIONAL INFERENCE</small></summary><p id="plume-guidance-requirements">Available after a model response.</p></details>
                   <details><summary>Command Considerations <small>OPERATIONAL INFERENCE</small></summary><p id="plume-guided-command">Available after a valid model response.</p></details>
                   <details><summary>Assumptions / Limitations</summary><p id="plume-guidance-assumptions">Available after a model response.</p><p id="plume-guidance-limitations">Available after a model response.</p></details>
@@ -1344,32 +1347,99 @@
           </section>
 
           <section id="map" class="view live-map-page" data-page-root="live-map" data-page-name="Live Map">
-            <header class="hazmat-page-hero hazmat-page-hero-compact variant-live-map">
-              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Live Map</h1><p class="hazmat-hero-subtitle">Operational Mapping &amp; Field Intelligence.</p></div>
-            </header>
-            <div class="live-map-command-bar">
-              <div><strong id="live-map-incident-name">Planning Map</strong><span id="live-map-mode">Planning Mode</span></div>
-              <div>
-                <button class="accent-btn" id="live-map-add-marker" type="button">Add Marker</button>
-                <button class="accent-btn" type="button" data-command-view="plume">Plot / Edit Plume</button>
-                <button class="ghost-btn" id="live-map-save" type="button">Save Map</button>
-                <button class="ghost-btn" id="live-map-clear" type="button">Clear Draft Map</button>
+            <header class="hazmat-page-hero hazmat-page-hero-compact variant-live-map live-map-tactical-header">
+              <div class="live-map-title-block">
+                <h1 class="hazmat-hero-title">LIVE MAP</h1>
+                <p class="hazmat-hero-subtitle">Operational Mapping &amp; Field Intelligence.</p>
               </div>
-            </div>
-            <div class="live-map-layer-bar" aria-label="Live Map layers">
-              <button type="button" data-live-layer="icp">ICP</button>
-              <button type="button" data-live-layer="entry">Entry Teams</button>
-              <button type="button" data-live-layer="decon">Decon</button>
-              <button type="button" data-live-layer="staging">Staging</button>
-              <button type="button" data-live-layer="monitors">Monitors</button>
-              <button type="button" data-live-layer="medical">Medical/Rehab</button>
-              <button type="button" data-live-layer="weatherRadar">Weather Radar</button>
-              <button type="button" data-live-layer="plume">Plume Overlay</button>
-              <button type="button" data-live-layer="trafficCams">Traffic Cameras</button>
+              <div class="live-map-incident-readout" aria-label="Current map context">
+                <span>ACTIVE WORKSPACE</span>
+                <strong id="live-map-incident-name">Planning Map</strong>
+                <small id="live-map-mode">Planning Mode</small>
+              </div>
+            </header>
+            <div class="live-map-operations" aria-label="Live Map controls">
+              <div class="live-map-control-groups">
+                <section class="live-map-control-group live-map-base-group" aria-label="Base map">
+                  <span class="live-map-control-label">BASE MAP</span>
+                  <div class="live-map-control-buttons">
+                    <button class="live-map-mode-button" type="button" data-map-style="satellite" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5 12 4l8 3.5v9L12 20l-8-3.5v-9Z"/><path d="m4 7.5 8 3.5 8-3.5M12 11v9"/><path d="M12 4v3"/></svg><span>SATELLITE</span></button>
+                    <button class="live-map-mode-button active" type="button" data-map-style="street" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 5-16 6 16 5-16"/><path d="M3 8h18M3 16h18"/></svg><span>STREET</span></button>
+                    <button class="live-map-mode-button" type="button" data-map-style="terrain3d" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 19 6.4-9 3.3 4 2.5-3 5.8 8"/><path d="M4 19h16M7 7.5l2-2 2 2"/></svg><span>3D TERRAIN</span></button>
+                  </div>
+                </section>
+                <section class="live-map-control-group live-map-ops-group" aria-label="Operational layer groups">
+                  <span class="live-map-control-label">OPERATIONS</span>
+                  <div class="live-map-control-buttons">
+                    <button class="live-map-parent-button" type="button" data-layer-group="incident" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg><span>INCIDENT</span><b data-layer-count="incident">0</b><i aria-hidden="true">⌄</i></button>
+                    <button class="live-map-parent-button" type="button" data-layer-group="wildfire" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 3.5c.8 3.2-1.5 4.2-1.5 6.6 0 1.2.8 2.2 2 2.2 1.8 0 2.7-2 2-4.2 3.1 2.2 4.7 5 4.7 7.5A6.7 6.7 0 1 1 7 10.8c.1 2 1 3.4 2.3 4.4-.1-4.2 1.6-7.9 4.2-11.7Z"/></svg><span>WILDFIRE</span><b data-layer-count="wildfire">0</b><i aria-hidden="true">⌄</i></button>
+                    <button class="live-map-parent-button" type="button" data-layer-group="facilities" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v14H4zM8 6V4h8v2M8 10h8M8 14h3m2 0h3"/><path d="M4 20h16"/></svg><span>FACILITIES</span><b data-layer-count="facilities">0</b><i aria-hidden="true">⌄</i></button>
+                    <button class="live-map-parent-button" type="button" data-layer-group="more" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/><circle cx="8" cy="5" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="10" cy="19" r="2"/></svg><span>MORE</span><i aria-hidden="true">⌄</i></button>
+                  </div>
+                </section>
+                <div class="live-map-layer-menus">
+                  <div class="live-map-layer-menu" data-layer-menu="incident" hidden>
+                    <div class="live-map-menu-heading"><strong>INCIDENT LAYERS</strong><small>FIELD POSITIONS</small></div>
+                    <button type="button" data-live-layer="plume"><span class="live-map-toggle-icon">◈</span><span>Current Plume</span><em>AVAILABLE</em></button>
+                    <button type="button" data-live-layer="icp"><span class="live-map-toggle-icon">◎</span><span>ICP / Command Post</span><em>0</em></button>
+                    <button type="button" data-live-layer="entry"><span class="live-map-toggle-icon">↗</span><span>Entry Teams</span><em>0</em></button>
+                    <button type="button" data-live-layer="decon"><span class="live-map-toggle-icon">＋</span><span>Decon</span><em>0</em></button>
+                    <button type="button" data-live-layer="staging"><span class="live-map-toggle-icon">▣</span><span>Staging</span><em>0</em></button>
+                    <button type="button" data-live-layer="monitors"><span class="live-map-toggle-icon">⌁</span><span>Monitors</span><em>0</em></button>
+                    <button type="button" data-live-layer="medical"><span class="live-map-toggle-icon">✚</span><span>Medical / Rehab</span><em>0</em></button>
+                  </div>
+                  <div class="live-map-layer-menu" data-layer-menu="wildfire" hidden>
+                    <div class="live-map-menu-heading"><strong>WILDFIRE</strong><small>EXTERNAL SOURCES</small></div>
+                    <button type="button" data-live-layer="wildfireFires" data-wildfire-source="firms"><span class="live-map-toggle-icon">◌</span><span>Active Fire Detections<small>NASA FIRMS</small></span><em data-wildfire-status="firms">CHECKING</em></button>
+                    <button type="button" data-live-layer="wildfirePerimeters" data-wildfire-source="perimeters"><span class="live-map-toggle-icon">⌁</span><span>Fire Perimeters<small>NIFC / WFIGS</small></span><em data-wildfire-status="perimeters">CHECKING</em></button>
+                    <button type="button" data-live-layer="wildfireSmoke" data-wildfire-source="smoke"><span class="live-map-toggle-icon">▱</span><span>Smoke Plumes<small>NOAA HMS</small></span><em data-wildfire-status="smoke">CHECKING</em></button>
+                    <button type="button" data-live-layer="weatherRadar"><span class="live-map-toggle-icon">≋</span><span>Weather Radar<small>Situational overlay</small></span><em>READY</em></button>
+                  </div>
+                  <div class="live-map-layer-menu" data-layer-menu="facilities" hidden>
+                    <div class="live-map-menu-heading"><strong>FACILITIES</strong><small>HAZMAT INVENTORY</small></div>
+                    <button type="button" data-live-layer="tier2Facilities"><span class="live-map-toggle-icon">▦</span><span>Tier II / HazMat Facilities<small>E-Plan Tier II · authorized import</small></span><em>AVAILABLE</em></button>
+                    <div class="live-map-menu-foot">Facilities in view: <strong id="live-map-facility-count">0</strong></div>
+                  </div>
+                  <div class="live-map-layer-menu live-map-more-menu" data-layer-menu="more" hidden>
+                    <div class="live-map-menu-heading"><strong>MORE OVERLAYS</strong><small>OPTIONAL FEEDS</small></div>
+                    <button type="button" data-live-layer="trafficCams"><span class="live-map-toggle-icon">▣</span><span>Traffic Cameras</span><em>0</em></button>
+                    <button type="button" data-live-layer="zones"><span class="live-map-toggle-icon">◇</span><span>Response Zones</span><em>0</em></button>
+                  </div>
+                </div>
+                </div>
+                <details class="live-map-tools">
+                  <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5.5 4 4M4 20l4.5-1 10-10a2.8 2.8 0 0 0-4-4l-10 10L4 20Z"/><path d="m12 12 3 3"/></svg><span>MAP TOOLS</span></summary>
+                  <div class="live-map-tools-panel">
+                    <button class="live-map-tool-button" id="live-map-add-marker" type="button"><strong>＋</strong><span>ADD MARKER</span></button>
+                    <button class="live-map-tool-button" type="button" data-command-view="plume"><strong>◈</strong><span>PLOT / EDIT PLUME</span></button>
+                    <button class="live-map-tool-button" id="live-map-save" type="button"><strong>↧</strong><span>SAVE MAP</span></button>
+                    <button class="live-map-tool-button" id="live-map-clear" type="button"><strong>×</strong><span>CLEAR DRAFT</span></button>
+                  </div>
+                </details>
+              <div class="live-map-status-strip" aria-label="Live data status">
+                <span class="live-map-status-item"><i class="status-dot is-gray"></i><b>GPS</b> STANDBY</span>
+                <span class="live-map-status-item"><i class="status-dot is-green"></i><b>TIER II</b> AVAILABLE</span>
+                <span class="live-map-status-item"><i class="status-dot is-yellow"></i><b>PLUME</b> READY</span>
+                <span class="live-map-status-item" id="live-map-firms-status"><i class="status-dot is-gray"></i><b>FIRMS</b> CHECKING</span>
+                <span class="live-map-status-item" id="live-map-wfigs-status"><i class="status-dot is-gray"></i><b>WFIGS</b> CHECKING</span>
+                <span class="live-map-status-item" id="live-map-hms-status"><i class="status-dot is-gray"></i><b>HMS</b> CHECKING</span>
+              </div>
             </div>
             <div class="live-map-stage">
               <div id="live-gis-map" aria-label="Interactive Live HazMat incident map"></div>
               <div id="live-map-loading">Loading map…</div>
+              <div class="live-map-edge-controls live-map-edge-controls-left" aria-label="Map display controls">
+                <button class="live-map-edge-button" type="button" data-map-action="layers" title="Open layer groups"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4M4 17l8 4 8-4"/></svg><span>LAYERS</span></button>
+              </div>
+              <div class="live-map-edge-controls live-map-edge-controls-right" aria-label="Map navigation controls">
+                <button class="live-map-edge-button live-map-icon-button" type="button" data-map-action="zoom-in" title="Zoom in" aria-label="Zoom in">+</button>
+                <button class="live-map-edge-button live-map-icon-button" type="button" data-map-action="zoom-out" title="Zoom out" aria-label="Zoom out">−</button>
+                <button class="live-map-edge-button live-map-icon-button" type="button" data-map-action="compass" title="Reset north" aria-label="Reset north"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m15.2 8.8-2.1 4.3-4.3 2.1 2.1-4.3 4.3-2.1Z"/></svg></button>
+                <button class="live-map-edge-button live-map-icon-button" type="button" data-map-action="recenter" title="Recenter on location" aria-label="Recenter on location"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v5m0 10v5M2 12h5m10 0h5"/></svg></button>
+                <button class="live-map-edge-button live-map-icon-button" type="button" data-map-action="fullscreen" title="Fullscreen map" aria-label="Fullscreen map"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></button>
+              </div>
+              <div class="live-map-edge-readout live-map-edge-readout-left"><span class="live-map-legend-swatch"></span><strong>LEGEND</strong><small>Hazard overlays</small></div>
+              <div class="live-map-edge-readout live-map-edge-readout-right"><strong id="live-map-coordinates">33.2900° N / 86.8100° W</strong><small id="live-map-scale">SCALE 1:24,000</small></div>
               <div class="live-map-panels">
                 <div data-live-panel="zones" hidden><strong>Zone placeholders</strong><p>Hot, Warm, Cold, Isolation, Evacuation, and Shelter-in-Place.</p><small>Zone drawing tools pending.</small></div>
                 <div data-live-panel="traffic" hidden>Traffic integration pending. Use approved DOT/traffic data source.</div>
@@ -1393,10 +1463,14 @@
                   <small id="live-radar-source-status">Visual situational awareness only. Radar does not change plume calculations.</small>
                 </div>
                 <div data-live-panel="plume" hidden><strong id="live-plume-status">Plume Overlay Active</strong></div>
+                <div data-live-panel="tier2Facilities" class="tier2-live-map-panel" hidden aria-label="Tier II facility overlay"><strong>TIER II / HAZMAT FACILITIES</strong><span id="tier2-live-map-status">Overlay off</span></div>
+                <div data-live-panel="wildfireFires" class="wildfire-live-map-panel" hidden aria-label="NASA FIRMS fire detections"><strong>ACTIVE FIRE DETECTIONS</strong><span data-wildfire-panel-status="firms">Checking NASA FIRMS…</span></div>
+                <div data-live-panel="wildfirePerimeters" class="wildfire-live-map-panel" hidden aria-label="NIFC WFIGS fire perimeters"><strong>FIRE PERIMETERS</strong><span data-wildfire-panel-status="perimeters">Checking NIFC / WFIGS…</span></div>
+                <div data-live-panel="wildfireSmoke" class="wildfire-live-map-panel" hidden aria-label="NOAA HMS smoke plumes"><strong>SMOKE PLUMES</strong><span data-wildfire-panel-status="smoke">Checking NOAA HMS…</span></div>
                 <div id="live-map-selected" hidden></div>
               </div>
             </div>
-            <p class="live-map-status" id="live-map-status" role="status">Map draft is stored only on this device.</p>
+            <div class="live-map-status" id="live-map-status" role="status">LOCAL MAP CACHE <span>•</span> Map draft is stored only on this device.</div>
 
             <dialog id="live-map-marker-dialog" class="live-map-marker-dialog">
               <form method="dialog" id="live-map-marker-form">
@@ -1426,7 +1500,7 @@
 
           <section id="monitor" class="view equipment-page" data-page-root="equipment" data-page-name="Equipment">
             <header class="hazmat-page-hero variant-monitoring">
-              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Monitoring Equipment</h1><p class="hazmat-hero-subtitle">Monitor Readiness, PPE &amp; Field Assets.</p><div class="hazmat-hero-chip-row"><span class="hazmat-hero-chip monitor-simulated-label">Training Data · Simulated</span></div></div>
+              <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Equipment</h1><p class="hazmat-hero-subtitle">Monitor Readiness, PPE &amp; Field Assets.</p><div class="hazmat-hero-chip-row"><span class="hazmat-hero-chip monitor-simulated-label">Training Data · Simulated</span></div></div>
             </header>
 
             <p class="monitor-purpose">HAZSCOPE uses FirstDue as the future system of record for apparatus, equipment, inspections, calibration, and weekly checks. HAZSCOPE tracks which monitors are assigned to this incident, displays readings, and records timestamped monitoring activity for reports.</p>
@@ -1445,7 +1519,7 @@
               <button class="monitor-refresh-btn" id="monitor-refresh-readings" type="button">Refresh Readings</button>
             </section>
 
-            <div class="monitor-tabs" id="monitor-tabs" role="tablist" aria-label="Monitoring Equipment sections">
+            <div class="monitor-tabs" id="monitor-tabs" role="tablist" aria-label="Equipment sections">
               <button class="monitor-tab active" type="button" role="tab" aria-selected="true" aria-controls="monitor-live" data-monitor-tab="monitor-live">Live Readings</button>
               <button class="monitor-tab" type="button" role="tab" aria-selected="false" aria-controls="monitor-incident" data-monitor-tab="monitor-incident">Incident Monitors</button>
               <button class="monitor-tab" id="monitor-inventory-tab" type="button" role="tab" aria-selected="false" aria-controls="monitor-inventory" data-monitor-tab="monitor-inventory">Monitor Inventory / FirstDue Source</button>
@@ -1711,7 +1785,8 @@
     <script src="weather-radar-providers.js"></script>
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
-    <script src="script.js?v=chemical-profile-hotfix-3&canonical-grid=1"></script>
+    <script src="plume-3d-model.js?v=plume3d-v2"></script>
+    <script src="script.js?v=chemical-profile-hotfix-3&canonical-grid=1&plume-map-fallback=1&live-map-fallback=2"></script>
     <script src="incident-command.js"></script>
     <script src="hazard-profile.js"></script>
     <script src="reports.js"></script>

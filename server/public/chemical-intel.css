@@ -2705,8 +2705,8 @@
 
 #hazard-profile-results .hazard-profile-source-footer small b { color: #dde7f2; }
 
-#hazard-profile-results .hazard-profile-action-grid,
-#hazard-profile-results .hazard-profile-limitations { display: none; }
+#hazard-profile-results:not([data-hazard-lane]) .hazard-profile-action-grid,
+#hazard-profile-results:not([data-hazard-lane]) .hazard-profile-limitations { display: none; }
 
 @media (max-width: 1420px) {
   #chemical-id-results .chemical-profile-content,

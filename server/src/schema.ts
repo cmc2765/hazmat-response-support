@@ -1,7 +1,7 @@
 // Drizzle ORM schema — SQLite.
 // Defines all tables for the Hazmat Response Support backend.
 
-import { sqliteTable, text, integer, index, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, real, index, uniqueIndex } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 
 // ─── Legacy application source-layer cache (not the identity master) ─────
@@ -217,6 +217,95 @@ export const facilities = sqliteTable(
   }),
 );
 
+// Normalized E-Plan Tier II facility records. This is intentionally separate from
+// the legacy facilities table so the national import can evolve without changing
+// existing facility-search behavior.
+export const tier2Facilities = sqliteTable(
+  "tier2_facilities",
+  {
+    id: text("id").primaryKey(),
+    sourceFacilityId: text("source_facility_id").notNull(),
+    stateFacilityId: text("state_facility_id"),
+    facilityName: text("facility_name"),
+    companyName: text("company_name"),
+    street: text("street"),
+    city: text("city"),
+    county: text("county"),
+    state: text("state"),
+    zip: text("zip"),
+    latitude: real("latitude"),
+    longitude: real("longitude"),
+    coordinateSource: text("coordinate_source"),
+    // E-Plan publishes labels such as "2025(Tier2)"; retain the source context.
+    filingYear: text("filing_year"),
+    filingType: text("filing_type"),
+    maximumOccupants: integer("maximum_occupants"),
+    manned: text("manned").notNull().default("unknown"),
+    sicCode: text("sic_code"),
+    naicsCode: text("naics_code"),
+    lastModifiedDate: text("last_modified_date"),
+    firstSubmitDate: text("first_submit_date"),
+    deRegistrationDate: text("de_registration_date"),
+    hasDocuments: integer("has_documents", { mode: "boolean" }),
+    facilityNote: text("facility_note"),
+    sourceSystem: text("source_system").notNull(),
+    importedAt: text("imported_at").notNull(),
+  },
+  (t) => ({
+    sourceFacilityIdx: uniqueIndex("uq_tier2_facility_source").on(t.sourceSystem, t.sourceFacilityId),
+    coordinateIdx: index("idx_tier2_facilities_coordinates").on(t.latitude, t.longitude),
+    stateIdx: index("idx_tier2_facilities_state").on(t.state),
+  }),
+);
+
+// Future E-Plan chemical inventory import target. No chemical rows are created
+// by the Facility Info importer; sourceFacilityId is the stable join key.
+export const tier2Chemicals = sqliteTable(
+  "tier2_chemicals",
+  {
+    id: text("id").primaryKey(),
+    // Internal relationship to the normalized facility row. sourceFacilityId
+    // remains for source-level traceability and backwards-compatible imports.
+    facilityId: text("facility_id").references(() => tier2Facilities.id, { onDelete: "cascade" }),
+    sourceFacilityId: text("source_facility_id").notNull(),
+    chemicalName: text("chemical_name"),
+    casNumber: text("cas_number"),
+    ehsStatus: text("ehs_status"),
+    maximumQuantity: text("maximum_quantity"),
+    averageDailyQuantity: text("average_daily_quantity"),
+    maximumAmountLargestContainer: text("maximum_amount_largest_container"),
+    physicalState: text("physical_state"),
+    hazardFlags: text("hazard_flags"),
+    storageInformation: text("storage_information"),
+    sourceSystem: text("source_system").notNull(),
+    importedAt: text("imported_at").notNull(),
+  },
+  (t) => ({
+    facilityIdx: index("idx_tier2_chemicals_facility").on(t.facilityId),
+    sourceFacilityIdx: index("idx_tier2_chemicals_source_facility").on(t.sourceFacilityId),
+  }),
+);
+
+export const tier2FacilityContacts = sqliteTable(
+  "tier2_facility_contacts",
+  {
+    id: text("id").primaryKey(),
+    facilityId: text("facility_id").references(() => tier2Facilities.id, { onDelete: "cascade" }),
+    sourceFacilityId: text("source_facility_id").notNull(),
+    contactType: text("contact_type"),
+    name: text("name"),
+    email: text("email"),
+    phone24Hour: text("phone_24_hour"),
+    workPhone: text("work_phone"),
+    sourceSystem: text("source_system").notNull(),
+    importedAt: text("imported_at").notNull(),
+  },
+  (t) => ({
+    facilityIdx: index("idx_tier2_contacts_facility").on(t.facilityId),
+    sourceFacilityIdx: index("idx_tier2_contacts_source_facility").on(t.sourceFacilityId),
+  }),
+);
+
 // ─── Facility ↔ Chemical inventory ───────────────────────────────────────
 export const facilityChemicals = sqliteTable(
   "facility_chemicals",
@@ -278,6 +367,9 @@ export type ChemicalSourceLinkRow = typeof chemicalSourceLinks.$inferSelect;
 export type ChemicalSourceFactRow = typeof chemicalSourceFacts.$inferSelect;
 export type NpgRow = typeof npgRecords.$inferSelect;
 export type ErgRow = typeof ergTable1.$inferSelect;
+export type Tier2FacilityRow = typeof tier2Facilities.$inferSelect;
+export type Tier2ChemicalRow = typeof tier2Chemicals.$inferSelect;
+export type Tier2FacilityContactRow = typeof tier2FacilityContacts.$inferSelect;
 export type ThresholdRow = typeof thresholds.$inferSelect;
 export type FacilityRow = typeof facilities.$inferSelect;
 export type FacilityChemicalRow = typeof facilityChemicals.$inferSelect;

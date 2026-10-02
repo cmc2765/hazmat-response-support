@@ -204,8 +204,9 @@
 #plume.view.active .plume-field-helper { color: #9fb8cb; font-size: 10px; font-weight: 700; letter-spacing: 0; text-transform: none; }
 #plume.view.active .plume-model-field input:not([type="checkbox"]):not([type="file"]),
 #plume.view.active .plume-model-field select { box-sizing: border-box; width: 100%; min-width: 0; min-height: 34px; margin-top: 3px; border: 1px solid #9db2c4; border-radius: 6px; background: #fff; color: #061a2e; font-size: 13px; }
-#plume.view.active input[type="number"] {
-  appearance: auto;
+#plume.view.active .plume-release-grid input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
   display: block;
   width: 100%;
   min-width: 0;
@@ -213,12 +214,10 @@
   box-sizing: border-box;
   padding: 4px 34px 4px 10px;
 }
-#plume.view.active input[type="number"]::-webkit-inner-spin-button,
-#plume.view.active input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: inner-spin-button;
-  width: 22px;
+#plume.view.active .plume-release-grid input[type="number"]::-webkit-inner-spin-button,
+#plume.view.active .plume-release-grid input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
   margin: 0;
-  opacity: 1;
 }
 #plume.view.active .plume-model-field small { color: #9fb8cb; font-size: 9px; line-height: 1.1; }
 #plume.view.active .plume-chemical-search,
@@ -594,16 +593,21 @@
 }
 #plume.view.active .plume-v2-header-copy {
   display: grid;
-  grid-template-columns: 68px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 68px;
   align-items: center;
   gap: 10px;
 }
 #plume.view.active .plume-v2-header-copy .plume-hero-plume {
   display: block;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
   width: 62px;
   height: 48px;
 }
 #plume.view.active .plume-v2-header-copy .hazmat-page-hero-content {
+  grid-column: 1;
+  grid-row: 1;
   min-width: 0;
   display: grid;
   align-content: center;
@@ -1019,26 +1023,6 @@ body.plume-map-maximized-open { overflow: hidden; }
   font-size: 9px;
 }
 
-#plume.view.active .plume-release-grid .plume-required-label {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-}
-#plume.view.active .plume-release-grid .plume-field-unit-heading {
-  margin-left: auto;
-  color: #d9e8f2;
-  font-size: 9px;
-  font-weight: 900;
-  letter-spacing: .06em;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
-#plume.view.active .plume-release-grid > label[for="plume-release-quantity"] .plume-required-label b,
-#plume.view.active .plume-release-grid > #plume-release-duration-field .plume-required-label b {
-  color: #ff3942 !important;
-}
-#plume.view.active .plume-quantity-unit { align-self: stretch; }
-
 #plume.view.active .plume-weather-at-a-glance {
   display: grid;
   flex: 0 0 auto;
@@ -1188,4 +1172,466 @@ body.plume-map-maximized-open { overflow: hidden; }
   color: #fff;
   font-size: 9px;
   font-weight: 900;
+}
+
+/* Use the available left-column gap as a visual weather instrument rather
+   than another titled data card. */
+#plume.view.active .plume-weather-at-a-glance {
+  position: relative;
+  isolation: isolate;
+  min-height: 154px;
+  padding: 12px;
+  overflow: hidden;
+  border-color: #397fa5;
+  background:
+    radial-gradient(circle at 18% 42%, rgba(255, 211, 35, .13), transparent 25%),
+    radial-gradient(circle at 82% 15%, rgba(79, 185, 224, .22), transparent 40%),
+    linear-gradient(135deg, #0b2e4a 0%, #061a2e 70%);
+}
+#plume.view.active .plume-weather-at-a-glance::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: .42;
+  background-image:
+    linear-gradient(rgba(145, 190, 224, .1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(145, 190, 224, .1) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(110deg, transparent 0%, #000 24%, #000 78%, transparent 100%);
+}
+#plume.view.active .plume-weather-at-a-glance::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 18px;
+  right: -14px;
+  width: 58%;
+  height: 36px;
+  border-top: 1px solid rgba(128, 211, 240, .42);
+  border-bottom: 1px solid rgba(128, 211, 240, .2);
+  border-radius: 50%;
+  transform: rotate(-12deg);
+  box-shadow: 0 12px 0 rgba(128, 211, 240, .12), 0 24px 0 rgba(128, 211, 240, .08);
+}
+#plume.view.active .plume-weather-glance-main {
+  position: relative;
+  justify-content: flex-start;
+  min-height: 94px;
+  gap: 13px;
+}
+#plume.view.active .plume-weather-glance-compass {
+  flex-basis: 82px;
+  width: 82px;
+  height: 82px;
+  border-color: #9bd2e9;
+  background:
+    conic-gradient(from -22deg, rgba(255, 211, 35, .18), rgba(79, 185, 224, .2), rgba(255, 57, 66, .12), rgba(79, 185, 224, .2), rgba(255, 211, 35, .18)),
+    radial-gradient(circle, rgba(3, 14, 25, .7) 0 36%, rgba(17, 58, 84, .56) 37% 64%, rgba(3, 14, 25, .28) 65% 100%);
+  box-shadow: 0 0 0 5px rgba(128, 211, 240, .08), 0 0 24px rgba(62, 173, 218, .22), inset 0 0 18px rgba(2, 15, 29, .7);
+}
+#plume.view.active .plume-weather-glance-compass::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(190, 231, 245, .34);
+  border-radius: 50%;
+  background:
+    linear-gradient(90deg, transparent 49%, rgba(190, 231, 245, .25) 50%, transparent 51%),
+    linear-gradient(0deg, transparent 49%, rgba(190, 231, 245, .25) 50%, transparent 51%);
+}
+#plume.view.active .plume-weather-glance-compass::after {
+  inset: 20px;
+  border-color: rgba(255, 211, 35, .56);
+  box-shadow: 0 0 10px rgba(255, 211, 35, .2);
+}
+#plume.view.active .plume-weather-glance-compass > span {
+  font-size: 9px;
+  text-shadow: 0 1px 5px #020f1d;
+}
+#plume.view.active .plume-weather-glance-compass > span:nth-child(1) { top: 7px; }
+#plume.view.active .plume-weather-glance-compass > span:nth-child(2) { right: 7px; }
+#plume.view.active .plume-weather-glance-compass > span:nth-child(3) { bottom: 7px; }
+#plume.view.active .plume-weather-glance-compass > span:nth-child(4) { left: 7px; }
+#plume.view.active .plume-weather-glance-compass > i {
+  left: calc(50% - 1.5px);
+  height: 31px;
+  width: 3px;
+  background: linear-gradient(#ff5962, #d71920);
+  box-shadow: 0 0 9px rgba(255, 57, 66, .75);
+}
+#plume.view.active .plume-weather-glance-compass > i::after {
+  top: -3px;
+  left: -4px;
+  border-right-width: 5px;
+  border-bottom-width: 10px;
+  border-left-width: 5px;
+}
+#plume.view.active .plume-weather-glance-reading {
+  z-index: 1;
+  gap: 5px;
+}
+#plume.view.active .plume-weather-glance-reading strong {
+  max-width: 170px;
+  font-size: 15px;
+  line-height: 1.18;
+  white-space: normal;
+  text-shadow: 0 2px 10px rgba(2, 15, 29, .7);
+}
+#plume.view.active .plume-weather-glance-metrics {
+  position: relative;
+  z-index: 1;
+  gap: 8px;
+  padding-top: 8px;
+}
+#plume.view.active .plume-weather-glance-metrics span {
+  padding: 4px 6px;
+  border: 1px solid rgba(145, 190, 224, .3);
+  border-radius: 5px;
+  background: rgba(2, 15, 29, .35);
+  font-size: 9px;
+}
+#plume.view.active .plume-weather-glance-metrics strong { font-size: 10px; }
+
+/* Chemical Release uses one stable field contract: label row first, control
+   second. Required badges never share the input box or select surface. */
+#plume.view.active .plume-release-grid {
+  grid-template-columns: minmax(0, 1.2fr) minmax(110px, .8fr) minmax(0, 1fr);
+  gap: 12px 10px;
+  align-items: start;
+}
+#plume.view.active .plume-v2-input-column {
+  container: plume-input / inline-size;
+}
+#plume.view.active .plume-release-grid > .plume-chemical-field,
+#plume.view.active .plume-release-grid > .container-profile,
+#plume.view.active .plume-release-grid > .plume-input-review,
+#plume.view.active .plume-release-grid > .plume-release-type-field,
+#plume.view.active .plume-release-grid > .plume-release-height-field {
+  grid-column: 1 / -1;
+}
+#plume.view.active .plume-release-grid > .plume-release-quantity-field {
+  grid-column: 1;
+}
+#plume.view.active .plume-release-grid > .plume-release-unit-field {
+  grid-column: 2;
+}
+#plume.view.active .plume-release-grid > .plume-release-duration-field {
+  grid-column: 3;
+}
+#plume.view.active .plume-release-grid .plume-field-label-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 16px;
+  margin-bottom: 6px;
+}
+#plume.view.active .plume-release-grid .plume-field-label-row > label {
+  min-width: 0;
+  color: #d9e8f2;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+#plume.view.active .plume-release-grid .plume-required-badge {
+  flex: 0 0 auto;
+  color: #ff6b6b;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .06em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+#plume.view.active .plume-release-grid input:not([type="checkbox"]):not([type="file"]),
+#plume.view.active .plume-release-grid select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  margin: 0;
+  padding: 9px 11px;
+  border: 1px solid #8299aa;
+  border-radius: 7px;
+  background: #fff;
+  color: #061a2e;
+  font-size: 13px;
+  line-height: 1.2;
+}
+#plume.view.active .plume-release-grid select {
+  padding-right: 36px;
+}
+#plume.view.active .plume-release-grid input:focus,
+#plume.view.active .plume-release-grid select:focus {
+  border-color: #ffd323;
+  outline: 2px solid rgba(255, 211, 35, .32);
+  outline-offset: 1px;
+}
+#plume.view.active .plume-release-grid .plume-chemical-search,
+#plume.view.active .plume-release-grid .plume-linked-input {
+  min-width: 0;
+}
+#plume.view.active .plume-release-grid .plume-chemical-search {
+  display: grid;
+  gap: 6px;
+}
+#plume.view.active .plume-release-grid .plume-linked-input {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: stretch;
+}
+#plume.view.active .plume-release-grid .plume-linked-input input {
+  min-width: 0;
+}
+#plume.view.active .plume-release-grid .plume-linked-input button {
+  flex: 0 0 auto;
+  width: 78px;
+  min-width: 78px;
+  min-height: 42px;
+  margin: 0;
+  padding: 9px 10px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 850;
+}
+#plume.view.active .plume-release-grid .plume-chemical-identifiers {
+  min-width: 0;
+  margin-top: 0;
+}
+#plume.view.active .plume-release-grid .plume-quantity-input {
+  display: block;
+  min-width: 0;
+}
+#plume.view.active .plume-release-grid .plume-release-height-field > small {
+  display: block;
+  margin-top: 5px;
+  color: #9fb8cb;
+  font-size: 10px;
+  line-height: 1.3;
+}
+#plume.view.active .plume-release-grid .plume-optional-label {
+  color: #9fb8cb;
+  font-size: .9em;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+/* Keep the legacy mobile fallback and container queries aligned. */
+@media (max-width: 720px) {
+  #plume.view.active .plume-release-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #plume.view.active .plume-release-grid > * {
+    grid-column: 1 !important;
+  }
+}
+
+@container plume-input (max-width: 520px) {
+  #plume.view.active .plume-release-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #plume.view.active .plume-release-grid > * {
+    grid-column: 1 !important;
+  }
+}
+
+/* With the color legend removed, give the operational mode and layer choices
+   the freed width and a readable tap target. */
+#plume.view.active .plume-v2-map-controls {
+  min-height: 44px;
+  max-height: 44px;
+}
+#plume.view.active .plume-v2-map-controls > .plume-map-mode-controls,
+#plume.view.active .plume-v2-map-controls > .plume-map-layer-controls {
+  flex: 1 1 auto;
+}
+#plume.view.active .plume-v2-map-controls > .plume-map-mode-controls .plume-layer-button,
+#plume.view.active .plume-v2-map-controls > .plume-map-layer-controls .plume-layer-button {
+  min-height: 30px;
+  padding: 6px 9px;
+  font-size: clamp(10px, .72vw, 12px);
+}
+#plume.view.active .plume-v2-map-controls > .plume-map-action-controls .plume-layer-button {
+  min-height: 28px;
+  padding: 5px 7px;
+  font-size: 9px;
+}
+
+/* Keep the wind picture directly beneath Weather Conditions and give it the
+   visual weight of an operational instrument panel. */
+#plume.view.active .plume-weather-at-a-glance {
+  grid-column: 1 / -1;
+  min-height: 188px;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #4d9ac2;
+  background:
+    linear-gradient(135deg, rgba(14, 62, 91, .98), rgba(4, 22, 38, .98) 72%),
+    repeating-linear-gradient(90deg, transparent 0 18px, rgba(143, 218, 249, .04) 19px 20px);
+  box-shadow: 0 9px 24px rgba(3, 14, 25, .28), inset 0 0 26px rgba(59, 181, 231, .08);
+}
+#plume.view.active .plume-weather-glance-main {
+  display: grid;
+  grid-template-columns: minmax(112px, 148px) minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  min-height: 136px;
+}
+#plume.view.active .plume-weather-glance-compass {
+  width: clamp(112px, 10vw, 148px);
+  height: clamp(112px, 10vw, 148px);
+  flex-basis: auto;
+  border: 2px solid #a8e3f6;
+  background:
+    conic-gradient(from -22deg, rgba(255, 211, 35, .2), rgba(75, 192, 235, .22), rgba(215, 25, 32, .2), rgba(75, 192, 235, .22), rgba(255, 211, 35, .2)),
+    radial-gradient(circle, rgba(3, 14, 25, .85) 0 35%, rgba(14, 68, 97, .78) 36% 64%, rgba(3, 14, 25, .5) 65% 100%);
+  box-shadow: 0 0 0 5px rgba(128, 211, 240, .08), 0 0 28px rgba(62, 173, 218, .3), inset 0 0 20px rgba(2, 15, 29, .84);
+}
+#plume.view.active .plume-weather-glance-compass::before {
+  inset: 9px;
+  border-color: rgba(218, 244, 255, .42);
+  background:
+    repeating-conic-gradient(from 0deg, rgba(190, 231, 245, .35) 0 1deg, transparent 1deg 15deg),
+    linear-gradient(90deg, transparent 49%, rgba(190, 231, 245, .35) 50%, transparent 51%),
+    linear-gradient(0deg, transparent 49%, rgba(190, 231, 245, .35) 50%, transparent 51%);
+}
+#plume.view.active .plume-weather-glance-compass::after {
+  inset: 31%;
+  border: 2px solid rgba(255, 211, 35, .74);
+  box-shadow: 0 0 14px rgba(255, 211, 35, .26);
+}
+#plume.view.active .plume-weather-glance-compass > span {
+  color: #e5f7ff;
+  font-size: 11px;
+  text-shadow: 0 1px 6px #020f1d;
+}
+#plume.view.active .plume-weather-glance-compass > span:nth-child(1) { top: 10px; color: #ffd323; }
+#plume.view.active .plume-weather-glance-compass > span:nth-child(2) { right: 10px; }
+#plume.view.active .plume-weather-glance-compass > span:nth-child(3) { bottom: 10px; }
+#plume.view.active .plume-weather-glance-compass > span:nth-child(4) { left: 10px; }
+#plume.view.active .plume-weather-glance-compass > i {
+  left: calc(50% - 3px);
+  height: 49px;
+  width: 6px;
+  border-radius: 5px;
+  background: linear-gradient(#ff7a80 0%, #ff3942 42%, #b80f1c 100%);
+  box-shadow: 0 0 12px rgba(255, 57, 66, .9), 0 2px 4px rgba(0, 0, 0, .55);
+}
+#plume.view.active .plume-weather-glance-compass > i::after {
+  top: -7px;
+  left: -7px;
+  border-right-width: 10px;
+  border-bottom-width: 17px;
+  border-left-width: 10px;
+  filter: drop-shadow(0 0 4px rgba(255, 57, 66, .7));
+}
+#plume.view.active .plume-weather-glance-reading { gap: 7px; }
+#plume.view.active .plume-weather-glance-reading strong {
+  max-width: none;
+  height: auto;
+  overflow: visible;
+  border: 0;
+  color: #fff;
+  font-size: clamp(12px, 1vw, 15px);
+  line-height: 1.3;
+  text-overflow: clip;
+  white-space: normal;
+  transform: none;
+  box-shadow: none;
+}
+#plume.view.active .plume-weather-glance-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(145, 215, 239, .3);
+}
+#plume.view.active .plume-weather-glance-metrics span { min-width: 0; color: #9fc6d9; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+#plume.view.active .plume-weather-glance-metrics strong { display: block; margin-top: 2px; color: #fff; font-size: 11px; overflow-wrap: anywhere; }
+
+@media (max-width: 620px) {
+  #plume.view.active .plume-weather-at-a-glance { min-height: 168px; padding: 12px; }
+  #plume.view.active .plume-weather-glance-main { grid-template-columns: 104px minmax(0, 1fr); gap: 11px; min-height: 116px; }
+  #plume.view.active .plume-weather-glance-compass { width: 104px; height: 104px; }
+  #plume.view.active .plume-weather-glance-compass > i { height: 40px; }
+  #plume.view.active .plume-weather-glance-metrics { gap: 4px; }
+}
+
+/* The plume model header carries operational context; keep the title clear
+   without the decorative cone graphic. */
+#plume.view.active .plume-v2-header-copy {
+  grid-template-columns: minmax(0, 1fr);
+}
+#plume.view.active .plume-v2-header-copy .hazmat-page-hero-content {
+  grid-column: 1 / -1;
+}
+
+/* Runtime-generated vertical plume readouts stay compact, readable, and out
+   of the map's operational controls. */
+#plume.view.active .plume-3d-envelope-status {
+  position: absolute;
+  z-index: 18;
+  left: 14px;
+  bottom: 42px;
+  max-width: min(420px, calc(100% - 28px));
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 211, 35, .72);
+  border-radius: 6px;
+  background: rgba(4, 24, 42, .92);
+  color: #fff7dd;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.35;
+  box-shadow: 0 5px 14px rgba(3, 14, 25, .32);
+}
+#plume.view.active .plume-3d-model-facts {
+  position: absolute;
+  z-index: 18;
+  top: 14px;
+  right: 14px;
+  width: min(330px, calc(100% - 170px));
+  border: 1px solid rgba(125, 170, 194, .72);
+  border-radius: 7px;
+  background: rgba(4, 24, 42, .94);
+  color: #eaf6fb;
+  box-shadow: 0 5px 14px rgba(3, 14, 25, .32);
+}
+#plume.view.active .plume-3d-model-facts summary {
+  padding: 7px 9px;
+  color: #ffd323;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .1em;
+}
+#plume.view.active .plume-3d-model-facts dl {
+  display: grid;
+  grid-template-columns: minmax(92px, auto) minmax(0, 1fr);
+  gap: 4px 8px;
+  margin: 0;
+  padding: 0 9px 8px;
+  font-size: 9px;
+  line-height: 1.25;
+}
+#plume.view.active .plume-3d-model-facts dl div { display: contents; }
+#plume.view.active .plume-3d-model-facts dt { color: #94b7ca; font-weight: 800; }
+#plume.view.active .plume-3d-model-facts dd { margin: 0; overflow-wrap: anywhere; }
+#plume.view.active .plume-3d-model-facts p {
+  margin: 0;
+  padding: 7px 9px 9px;
+  border-top: 1px solid rgba(125, 170, 194, .26);
+  color: #b9d1dc;
+  font-size: 9px;
+  line-height: 1.35;
+}
+@media (max-width: 620px) {
+  #plume.view.active .plume-3d-model-facts { top: 8px; right: 8px; width: min(270px, calc(100% - 104px)); }
+  #plume.view.active .plume-3d-envelope-status { left: 8px; bottom: 38px; }
 }

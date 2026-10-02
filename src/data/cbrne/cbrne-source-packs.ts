@@ -210,7 +210,7 @@ export const CBRNE_MANUAL_SOURCE_PACKS: readonly CbrneImportPackage[] = [
       category: "NERVE_AGENT" as const,
       agentCodes: [displayName === "Sarin" ? "GB" : "VX"],
       sourceFacts: [
-        fact("DETECTION", "Cholinergic toxidrome indicators", "Pinpoint pupils, secretions, sweating, breathing difficulty, muscle twitching, altered mental status, or seizures can support initial nerve-agent toxidrome recognition.", "Nerve Agents — signs and symptoms"),
+        fact("SYMPTOMS", "Cholinergic toxidrome indicators", "Pinpoint pupils, secretions, sweating, breathing difficulty, muscle twitching, altered mental status, or seizures can support initial nerve-agent toxidrome recognition.", "Nerve Agents — signs and symptoms"),
         fact("MEDICAL", "Medical management context", "Prioritize airway and breathing support, decontamination when indicated, and protocol-directed antidote care under medical direction.", "Nerve Agents — Acute Patient Care Guidelines", "Requires SME Review", "No medication dose is stored in Hazard ID."),
       ],
     })),

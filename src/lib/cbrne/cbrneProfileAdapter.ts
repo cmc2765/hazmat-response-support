@@ -51,12 +51,15 @@ function factsForSection(
 function actionCard(title: string, facts: readonly CbrneSourceFact[]): CbrneActionCard {
   const available = facts.filter((fact) => fact.value !== null);
   const verified = available.length > 0 && available.every((fact) => fact.verificationStatus === "Verified");
+  const operationalSummary = available
+    .slice(0, 2)
+    .map((fact) => String(fact.value).trim())
+    .filter(Boolean)
+    .join(" ");
   return {
     title,
     status: !available.length ? "No Current Data Exists" : verified ? "Source Backed" : "Requires SME Review",
-    summary: !available.length
-      ? "No Current Data Exists"
-      : `Review ${available.length} source-backed fact${available.length === 1 ? "" : "s"} and fact-level verification status.`,
+    summary: !available.length ? "No Current Data Exists" : operationalSummary || "Source-backed responder information is available in the linked section.",
   };
 }
 
@@ -112,6 +115,8 @@ export function adaptCbrneProfile(
   const missingFieldCount = sectionFactGroups.filter((sectionFacts) => sectionFacts.every((fact) => fact.value === null)).length;
   const availableFacts = facts.filter((fact) => fact.value !== null);
   const sourceNames = [...new Set(availableFacts.map((fact) => fact.sourceName))];
+  const scheduleOneFact = availableFacts.find((fact) => fact.sourceRegistryId === "OPCW_SCHEDULE_1"
+    && /schedule\s*1/i.test(String(fact.value)));
   const authoritativeFacts = authoritativeFactsForRecord(record.id);
   const sourceArtifactIds = [...new Set(authoritativeFacts.map((fact) => fact.sourceArtifactId))];
   const requiresSmeReviewCount = availableFacts.filter((fact) => fact.verificationStatus === "Requires SME Review").length;
@@ -144,7 +149,7 @@ export function adaptCbrneProfile(
       unNaNumbers: record.unNaNumbers ?? [],
       radionuclideSymbol: record.radionuclideSymbol ?? null,
       isotopeMassNumber: record.isotopeMassNumber ?? null,
-      opcwSchedule: record.opcwSchedule ?? null,
+      opcwSchedule: record.opcwSchedule ?? (scheduleOneFact ? "Schedule 1 · CWC identity/classification" : null),
     },
     ...sections,
     sourceFacts,

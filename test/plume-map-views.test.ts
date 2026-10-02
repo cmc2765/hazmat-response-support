@@ -43,9 +43,9 @@ describe("plume map views", () => {
     expect(plumeUi).toContain('applyPlumeFallbackMapStyle');
     expect(plumeUi).toContain("syncPlumeBasemapLayer();");
     expect(plumeUi).toContain("activePlumeMapView === 'street' ? 'none' : 'visible'");
-    expect(plumeUi).toContain("activePlumeMapView === 'tactical'");
+    expect(plumeUi).toContain("activePlumeMapView === 'plume3d'");
     expect(plumeUi).toContain("plumeMap.setLayoutProperty(");
-    expect(plumeUi).toContain("await setPlumeMapView('tactical')");
+    expect(plumeUi).toContain("await setPlumeMapView('plume3d')");
     expect(plumeUi).toContain("cameraBeforeSwitch ? {");
   });
 
@@ -388,7 +388,7 @@ describe("plume map views", () => {
   });
 
   it("provides safe basemap, terrain, building, compass, and wind-direction controls", () => {
-    for (const view of ['tactical', 'satellite', 'street', 'terrain3d']) {
+    for (const view of ['plume3d', 'satellite', 'street', 'terrain3d']) {
       expect(plumeHtml).toContain(`data-plume-map-view="${view}"`);
     }
     expect(plumeHtml).toContain('id="plume-buildings-toggle" type="button" aria-pressed="false" disabled');
@@ -397,7 +397,7 @@ describe("plume map views", () => {
     for (const action of ['rotate-left', 'rotate-right', 'tilt-up', 'tilt-down', 'reset-north']) {
       expect(plumeHtml).toContain(`data-plume-camera="${action}"`);
     }
-    expect(plumeUi).toContain('Tactical 3D · visual context only — plume math remains flat-ground');
+    expect(plumeUi).toContain('3D Plume · terrain-aware operational envelope');
     expect(plumeUi).toContain('3D building height data not configured.');
     expect(plumeUi).toContain('Math.max(0, Math.min(70, plumeMap.getPitch() + delta))');
     expect(plumeUi).toContain('Wind from ${Math.round(windFromDegrees)}° · Downwind ${Math.round((windFromDegrees + 180) % 360)}°');

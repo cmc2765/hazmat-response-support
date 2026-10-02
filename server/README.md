@@ -53,6 +53,10 @@ Browser ──> Hono (Node 20) ──┬──> serves server/public/ (static UI
 | GET | `/api/facilities?q=` | Tier II facilities |
 | GET | `/api/facilities/:id` | Single facility with chemicals |
 | GET | `/api/sync/:clientId` | Full delta sync (all tables) |
+| GET | `/api/wildfire/firms?west=&south=&east=&north=&hours=` | NASA FIRMS NOAA-20/21 detections in map bounds |
+| GET | `/api/wildfire/perimeters?west=&south=&east=&north=` | NIFC / WFIGS fire perimeters in map bounds |
+| GET | `/api/wildfire/smoke?west=&south=&east=&north=` | NOAA HMS smoke polygons in map bounds |
+| GET | `/api/wildfire/status?west=&south=&east=&north=` | Current status and counts for all wildfire feeds |
 
 ## Scripts
 
@@ -74,6 +78,7 @@ Browser ──> Hono (Node 20) ──┬──> serves server/public/ (static UI
 |----------|---------|-------------|
 | `PORT` | `3000` | Server port |
 | `SQLITE_PATH` | `./local.db` | SQLite database file path |
+| `NASA_FIRMS_MAP_KEY` | empty | Server-only NASA FIRMS key; empty means active fire detections report `NOT CONFIGURED` |
 
 ## Docker
 

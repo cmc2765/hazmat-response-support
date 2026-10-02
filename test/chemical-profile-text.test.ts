@@ -18,6 +18,7 @@ const script = readFileSync(new URL("../server/public/script.js", import.meta.ur
 const styles = [
   readFileSync(new URL("../server/public/styles.css", import.meta.url), "utf8"),
   readFileSync(new URL("../server/public/chemical-intel.css", import.meta.url), "utf8"),
+  readFileSync(new URL("../server/public/hazard-profile-page.css", import.meta.url), "utf8"),
 ].join("\n");
 
 describe("Chemical Profile text normalization", () => {
@@ -167,9 +168,9 @@ describe("Chemical Profile UI system", () => {
     for (const section of ['Exposure Limits', 'Monitoring Methods', 'Isolation Distances', 'Source Traceability']) {
       expect(script).toContain(`createProfileSection('${section}'`);
     }
-    expect(script).toContain('function createChemmMedicalEmbed(profile)');
+    expect(script).toContain('function createChemmMedicalGuidance(profile)');
     expect(script).toContain("createProfileSection('Entry Cautions'");
-    expect(script).toContain("CHEMM opens in a separate window for browser compatibility.");
+    expect(script).toContain('Open CHEMM Medical Management Guidelines');
     expect(script).toContain("createProfileSection('Source Traceability', chemicalProfileSources(profile), true)");
     expect(script).toContain('content.replaceChildren(fragment);');
     expect(styles).toContain('.chemical-profile-content-card');
@@ -179,11 +180,14 @@ describe("Chemical Profile UI system", () => {
 
   it("uses CHEMM as the Medical tab's primary guidance surface", () => {
     const medical = script.slice(script.indexOf("{ key: 'medical'"), script.indexOf("{ key: 'fire'"));
-    expect(medical).toContain('createChemmMedicalEmbed(profile)');
+    expect(medical).toContain('createChemmMedicalGuidance(profile)');
     expect(medical).toContain("createProfileSection('Entry Cautions'");
-    expect(script).toContain("frame.src = 'https://chemm.hhs.gov/mmghome.htm'");
+    expect(script).toContain("link.href = 'https://chemm.hhs.gov/mmghome.htm'");
+    expect(script).toContain("link.target = '_blank'");
     expect(styles).toContain('grid-template-columns: minmax(0, 1fr) !important;');
-    expect(styles).toContain('.chemical-profile-medical-embed-frame');
+    expect(styles).toContain('.chemical-profile-medical-link');
+    expect(styles).not.toContain('.chemical-profile-medical-embed-frame');
+    expect(script).not.toContain('document.createElement(\'iframe\')');
     expect(medical).not.toContain("createProfileSection('Treatment'");
     expect(medical).not.toContain("createProfileSection('Routes and symptoms'");
   });
@@ -285,6 +289,14 @@ describe("Chemical Profile UI system", () => {
     expect(styles).toContain('grid-template-columns: minmax(0, 1fr) !important;');
     expect(script).toContain("createProfileSection('Entry Cautions'");
     expect(script).toContain("section.dataset.section = 'chemm-medical-guidance'");
+  });
+
+  it("uses tactical field labels and responsive profile heading hooks", () => {
+    expect(script).toContain("label.className = 'chemical-profile-field-label'");
+    expect(script).toContain("heading.className = 'chemical-profile-section-heading'");
+    expect(styles).toContain('.chemical-profile-field-label::before');
+    expect(styles).toContain('.chemical-profile-section-heading');
+    expect(styles).toContain('overflow-wrap: anywhere;');
   });
 
   it("stacks shortened hazard classes in Frontline and the fixed profile header", () => {

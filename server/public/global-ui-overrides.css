@@ -831,3 +831,57 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   font-size: 11px !important;
   line-height: 1 !important;
 }
+
+/* Primary navigation border contract: one continuous steel-blue frame around
+   the nav rail, with the active page retaining HazScope gold. The tabs are
+   sized inside the border box so their active accent can replace the bottom
+   frame edge without a vertical offset or double line. */
+.app-shell > .command-header .app-primary-nav {
+  box-sizing: border-box !important;
+  height: 64px !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border-top: 3px solid #5d89a7 !important;
+  border-right: 0 !important;
+  border-bottom: 3px solid #5d89a7 !important;
+  border-left: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.app-shell > .command-header .app-primary-nav .app-nav-item {
+  position: relative !important;
+  box-sizing: border-box !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.app-shell > .command-header .app-primary-nav .app-nav-item.active {
+  background: rgba(246, 195, 67, .12) !important;
+  color: #f6c343 !important;
+  box-shadow: 0 0 13px rgba(246, 195, 67, .18) !important;
+}
+
+.app-shell > .command-header .app-primary-nav .app-nav-item.active::after {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: -3px;
+  left: 0;
+  height: 3px;
+  background: #f6c343;
+  content: "";
+  pointer-events: none;
+}
+
+.app-shell > .command-header .app-primary-nav .app-nav-item:not(.active):hover,
+.app-shell > .command-header .app-primary-nav .app-nav-item:not(.active):focus-visible {
+  background: #123b5d !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}

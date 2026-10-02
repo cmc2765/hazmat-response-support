@@ -7,6 +7,33 @@
   const plumeStateKey = 'hazmatiq_latest_plume_overlay';
   let radarController = null;
   const markerTypes = { icp: 'ICP / Command Post', entry: 'Entry Team', decon: 'Decon Corridor', monitors: 'Monitor', staging: 'Staging', medical: 'Medical / Rehab', trafficCams: 'Traffic Camera' };
+  const liveMapStyleKey = 'hazmatiq_live_map_style';
+  const liveSatelliteStyle = {
+    version: 8,
+    sources: {
+      'live-satellite-basemap': {
+        type: 'raster',
+        tiles: [
+          'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+          'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        ],
+        tileSize: 256,
+        maxzoom: 19,
+        attribution: 'Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+      },
+    },
+    layers: [
+      { id: 'live-satellite-background', type: 'background', paint: { 'background-color': '#172b36' } },
+      { id: 'live-satellite-basemap', type: 'raster', source: 'live-satellite-basemap', paint: { 'raster-opacity': 1 } },
+    ],
+  };
+  const liveMapStyleModes = { street: detailedStreetStyle, satellite: liveSatelliteStyle, terrain3d: detailedStreetStyle };
+  const layerGroups = {
+    incident: ['plume', 'icp', 'entry', 'decon', 'staging', 'monitors', 'medical'],
+    wildfire: ['wildfireFires', 'wildfirePerimeters', 'wildfireSmoke'],
+    facilities: ['tier2Facilities'],
+    more: ['trafficCams', 'zones'],
+  };
 
   function readMapState() {
     try {
@@ -30,6 +57,115 @@
       const panel = document.querySelector(`[data-live-panel="${button.dataset.liveLayer}"]`);
       if (panel) panel.hidden = !enabled;
     });
+    Object.entries(layerGroups).forEach(([group, layers]) => {
+      const count = layers.filter((layer) => state.activeLayers[layer]).length;
+      const parent = document.querySelector(`[data-layer-group="${group}"]`);
+      const countElement = document.querySelector(`[data-layer-count="${group}"]`);
+      parent?.classList.toggle('active', count > 0);
+      if (countElement) countElement.textContent = String(count);
+    });
+  }
+
+  function closeLayerMenus(except = null) {
+    document.querySelectorAll('[data-layer-menu]').forEach((menu) => {
+      const open = menu === except;
+      menu.hidden = !open;
+      const group = menu.dataset.layerMenu;
+      document.querySelector(`[data-layer-group="${group}"]`)?.setAttribute('aria-expanded', String(open));
+    });
+  }
+
+  function bindTacticalControls() {
+    document.querySelectorAll('[data-layer-group]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const menu = document.querySelector(`[data-layer-menu="${button.dataset.layerGroup}"]`);
+        if (!menu) return;
+        closeLayerMenus(menu.hidden ? menu : null);
+      });
+    });
+    document.querySelector('[data-map-action="layers"]')?.addEventListener('click', () => {
+      const incidentButton = document.querySelector('[data-layer-group="incident"]');
+      const menu = document.querySelector('[data-layer-menu="incident"]');
+      if (incidentButton && menu) {
+        closeLayerMenus(menu);
+        incidentButton.focus();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element) || event.target.closest('.live-map-control-groups')) return;
+      closeLayerMenus();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeLayerMenus();
+    });
+    document.querySelectorAll('[data-map-style]').forEach((button) => {
+      button.addEventListener('click', () => setLiveMapStyle(button.dataset.mapStyle));
+    });
+    document.querySelectorAll('[data-map-action]').forEach((button) => {
+      const action = button.dataset.mapAction;
+      if (action === 'layers') return;
+      button.addEventListener('click', () => {
+        const map = window.hazmatiqLiveMap || fallbackMap;
+        if (action === 'fullscreen') {
+          const mapView = document.getElementById('map');
+          if (document.fullscreenElement) void document.exitFullscreen();
+          else void mapView?.requestFullscreen?.();
+          return;
+        }
+        if (!map) return;
+        if (action === 'zoom-in') map.zoomIn();
+        if (action === 'zoom-out') map.zoomOut();
+        if (action === 'compass') map.resetNorthPitch?.();
+        if (action === 'recenter') {
+          navigator.geolocation?.getCurrentPosition(({ coords }) => map.easeTo({ center: [coords.longitude, coords.latitude], zoom: 15 }));
+        }
+      });
+    });
+    document.querySelectorAll('[data-live-layer]').forEach((button) => {
+      button.addEventListener('click', () => window.requestAnimationFrame(() => syncLayerControls(readMapState())));
+    });
+  }
+
+  function updateMapReadout(map) {
+    const center = map.getCenter?.();
+    if (!center) return;
+    const latitude = Math.abs(center.lat).toFixed(4);
+    const longitude = Math.abs(center.lng).toFixed(4);
+    const coordinates = document.getElementById('live-map-coordinates');
+    if (coordinates) coordinates.textContent = `${latitude}° ${center.lat >= 0 ? 'N' : 'S'} / ${longitude}° ${center.lng >= 0 ? 'E' : 'W'}`;
+    const scale = document.getElementById('live-map-scale');
+    if (scale) scale.textContent = `SCALE 1:${Math.max(1000, Math.round(24000 / Math.pow(2, Math.max(0, map.getZoom?.() - 14 || 0)))) .toLocaleString()}`;
+  }
+
+  function setLiveMapStyle(mode = 'street') {
+    const selected = liveMapStyleModes[mode] ? mode : 'street';
+    document.querySelectorAll('[data-map-style]').forEach((button) => {
+      const active = button.dataset.mapStyle === selected;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+    try { window.localStorage.setItem(liveMapStyleKey, selected); } catch { /* In-memory mode is sufficient. */ }
+    const map = window.hazmatiqLiveMap || fallbackMap;
+    if (!map) return;
+    const isSatellite = Boolean(map.getStyle?.()?.sources?.['live-satellite-basemap']);
+    if (selected === 'terrain3d' && !isSatellite) {
+      map.easeTo({ pitch: 52, bearing: -18, duration: 350 });
+      return;
+    }
+    if (selected === 'street') map.easeTo({ pitch: 0, bearing: 0, duration: 350 });
+    const currentStyle = map.getStyle?.();
+    if ((selected === 'satellite') !== Boolean(currentStyle?.sources?.['live-satellite-basemap'])) {
+      map.once('style.load', () => {
+        const state = readMapState();
+        syncPlumeOverlay(Boolean(state.activeLayers.plume));
+        syncRadarOverlay(Boolean(state.activeLayers.weatherRadar));
+        renderFallbackMarkers(state);
+        if (selected === 'terrain3d') map.easeTo({ pitch: 52, bearing: -18, duration: 350 });
+      });
+      map.setStyle(liveMapStyleModes[selected]);
+    } else if (selected === 'terrain3d') {
+      map.easeTo({ pitch: 52, bearing: -18, duration: 350 });
+    }
   }
 
   function ensureMarker(state, layer, map) {
@@ -54,7 +190,7 @@
       element.type = 'button';
       element.className = 'live-map-marker';
       element.dataset.layer = layer;
-      element.textContent = layer === 'trafficCams' ? '📷' : layer === 'medical' ? '+' : layer === 'monitors' ? 'M' : marker.type.charAt(0);
+      element.textContent = layer === 'trafficCams' ? 'C' : layer === 'medical' ? '+' : layer === 'monitors' ? 'M' : marker.type.charAt(0);
       element.title = `${marker.name || marker.type} — drag to move`;
       const mapMarker = new window.maplibregl.Marker({ element, draggable: true }).setLngLat([marker.lng, marker.lat]).addTo(map);
       mapMarker.on('dragend', () => {
@@ -165,7 +301,7 @@
       style: detailedStreetStyle,
     });
     window.hazmatiqLiveMap = fallbackMap;
-    fallbackMap.addControl(new window.maplibregl.NavigationControl(), 'bottom-right');
+    fallbackMap.on('move', () => updateMapReadout(fallbackMap));
     fallbackMap.on('style.load', () => {
       const state = readMapState();
       Object.keys(markerTypes).forEach((layer) => {
@@ -177,7 +313,12 @@
       syncPlumeOverlay(Boolean(state.activeLayers.plume));
       renderFallbackMarkers(state);
       document.querySelector('.live-map-stage')?.classList.add('map-ready');
+      updateMapReadout(fallbackMap);
       fallbackMap.resize();
+      try {
+        const storedStyle = window.localStorage.getItem(liveMapStyleKey);
+        if (storedStyle && storedStyle !== 'street') setLiveMapStyle(storedStyle);
+      } catch { /* Use the street map default. */ }
     });
     fallbackMap.on('error', (event) => {
       if (radarController?.ownsSource(event?.sourceId)) {
@@ -190,11 +331,19 @@
     });
     navigator.geolocation?.getCurrentPosition(({ coords }) => {
       fallbackMap.jumpTo({ center: [coords.longitude, coords.latitude], zoom: 15 });
+      const gpsStatus = document.querySelector('.live-map-status-item:first-child');
+      if (gpsStatus) gpsStatus.innerHTML = '<i class="status-dot is-green"></i><b>GPS</b> LIVE';
     });
   }
 
   const view = document.getElementById('map');
   if (!view) return;
+  bindTacticalControls();
+  syncLayerControls(readMapState());
+  try {
+    const storedStyle = window.localStorage.getItem(liveMapStyleKey);
+    if (storedStyle && document.querySelector(`[data-map-style="${storedStyle}"]`)) setLiveMapStyle(storedStyle);
+  } catch { /* Use the street map default. */ }
   const radarButton = document.querySelector('[data-live-layer="weatherRadar"]');
   let radarWasEnabled = false;
   radarButton?.addEventListener('click', () => {

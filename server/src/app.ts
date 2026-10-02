@@ -19,7 +19,7 @@ import { Hono } from "hono";
 import type { Context } from "hono";
 import { logger } from "hono/logger";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { asc, eq, sql } from "drizzle-orm";
+import { asc, eq, inArray, or, sql } from "drizzle-orm";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -41,6 +41,13 @@ import { molecularWeightOf } from "../../src/data/molecular-weight.js";
 import { searchStarterHazards } from "../../src/lib/hazard-id/hazardSearch.js";
 import { starterHazardProfile } from "../../src/lib/hazard-id/hazardProfileAdapter.js";
 import type { HazardIdLane } from "../../src/lib/hazard-id/hazardTypes.js";
+import { lookupCriticalInfrastructure, type ThreatZoneFeature } from "./critical-infrastructure.js";
+import { findTier2FacilitiesInBounds, TIER2_SOURCE_SYSTEM, validateMapBounds } from "./tier2/importer.js";
+import { tier2ChildCounts } from "./tier2/verify-links.js";
+import { queryFirms } from "./wildfire/firms.js";
+import { queryHms } from "./wildfire/hms.js";
+import { queryWfigs } from "./wildfire/wfigs.js";
+import { parseMapBounds } from "./wildfire/types.js";
 
 const planningModelMode = PLUME_MODEL_MODES.HAZMATIQ_PLANNING_ESTIMATE;
 const ergModelMode = PLUME_MODEL_MODES.ERG_ISOLATION_PROTECTIVE_ACTION_OVERLAY;
@@ -1047,6 +1054,50 @@ app.get("/api/map/config", (c) => {
   });
 });
 
+function wildfireBounds(c: Context) {
+  return parseMapBounds({
+    west: c.req.query("west"),
+    south: c.req.query("south"),
+    east: c.req.query("east"),
+    north: c.req.query("north"),
+  });
+}
+
+// Wildfire feeds are proxied server-side so the FIRMS MAP_KEY never reaches browser code.
+app.get("/api/wildfire/firms", async (c) => {
+  const bounds = wildfireBounds(c);
+  if (!bounds) return c.json({ error: "valid west, south, east, and north bounds are required" }, 400);
+  const hours = Number(c.req.query("hours") || "24");
+  c.header("Cache-Control", "no-store");
+  return c.json(await queryFirms(bounds, hours));
+});
+
+app.get("/api/wildfire/perimeters", async (c) => {
+  const bounds = wildfireBounds(c);
+  if (!bounds) return c.json({ error: "valid west, south, east, and north bounds are required" }, 400);
+  c.header("Cache-Control", "no-store");
+  return c.json(await queryWfigs(bounds));
+});
+
+app.get("/api/wildfire/smoke", async (c) => {
+  const bounds = wildfireBounds(c);
+  if (!bounds) return c.json({ error: "valid west, south, east, and north bounds are required" }, 400);
+  c.header("Cache-Control", "no-store");
+  return c.json(await queryHms(bounds));
+});
+
+app.get("/api/wildfire/status", async (c) => {
+  const bounds = wildfireBounds(c);
+  if (!bounds) return c.json({ error: "valid west, south, east, and north bounds are required" }, 400);
+  c.header("Cache-Control", "no-store");
+  const [firms, perimeters, smoke] = await Promise.all([
+    queryFirms(bounds),
+    queryWfigs(bounds),
+    queryHms(bounds),
+  ]);
+  return c.json({ firms, perimeters, smoke });
+});
+
 // Live Map exposes one visual primary and one official fallback.
 app.get("/api/radar/providers", (c) => {
   const config = radarProviderConfiguration();
@@ -1155,6 +1206,109 @@ app.get("/api/weather/current", async (c) => {
 });
 
 // ─── Facilities ─────────────────────────────────────────────────────────
+function tier2FacilityMapFields(
+  row: schema.Tier2FacilityRow,
+  counts: { chemicalCount: number; ehsCount: number; contactCount: number } = { chemicalCount: 0, ehsCount: 0, contactCount: 0 },
+) {
+  return {
+    id: row.id,
+    sourceFacilityId: row.sourceFacilityId,
+    stateFacilityId: row.stateFacilityId,
+    facilityName: row.facilityName,
+    companyName: row.companyName,
+    street: row.street,
+    city: row.city,
+    county: row.county,
+    state: row.state,
+    zip: row.zip,
+    latitude: row.latitude,
+    longitude: row.longitude,
+    coordinateSource: row.coordinateSource,
+    filingYear: row.filingYear,
+    filingType: row.filingType,
+    maximumOccupants: row.maximumOccupants,
+    manned: row.manned,
+    sicCode: row.sicCode,
+    naicsCode: row.naicsCode,
+    sourceSystem: row.sourceSystem,
+    chemicalCount: counts.chemicalCount,
+    ehsCount: counts.ehsCount,
+    contactCount: counts.contactCount,
+  };
+}
+
+app.get("/api/tier2/facilities", async (c) => {
+  const requestedBounds = {
+    west: c.req.query("west"),
+    east: c.req.query("east"),
+    south: c.req.query("south"),
+    north: c.req.query("north"),
+  };
+  if (Object.values(requestedBounds).some((value) => value == null)) {
+    return c.json({ error: "west, east, south, and north map bounds are required" }, 400);
+  }
+  const bounds = validateMapBounds(requestedBounds);
+  if (!bounds) return c.json({ error: "invalid map bounds" }, 400);
+  const db = getDb();
+  const rows = await findTier2FacilitiesInBounds(db, bounds);
+  const sourceFacilityIds = rows.map((row) => row.sourceFacilityId);
+  const chemicals = sourceFacilityIds.length
+    ? await db.select().from(schema.tier2Chemicals).where(inArray(schema.tier2Chemicals.sourceFacilityId, sourceFacilityIds))
+    : [];
+  const contacts = sourceFacilityIds.length
+    ? await db.select().from(schema.tier2FacilityContacts).where(inArray(schema.tier2FacilityContacts.sourceFacilityId, sourceFacilityIds))
+    : [];
+  return c.json({
+    facilities: rows.map((row) => tier2FacilityMapFields(row, tier2ChildCounts(row, chemicals, contacts))),
+    bounds,
+    sourceSystem: TIER2_SOURCE_SYSTEM,
+  });
+});
+
+app.get("/api/tier2/facilities/:id", async (c) => {
+  const db = getDb();
+  const rows = await db.select().from(schema.tier2Facilities).where(eq(schema.tier2Facilities.id, c.req.param("id")));
+  if (!rows.length) return c.json({ error: "not found" }, 404);
+  const chemicals = await db.select({
+    id: schema.tier2Chemicals.id,
+    chemicalName: schema.tier2Chemicals.chemicalName,
+    casNumber: schema.tier2Chemicals.casNumber,
+    ehsStatus: schema.tier2Chemicals.ehsStatus,
+    maximumQuantity: schema.tier2Chemicals.maximumQuantity,
+    averageDailyQuantity: schema.tier2Chemicals.averageDailyQuantity,
+    maximumAmountLargestContainer: schema.tier2Chemicals.maximumAmountLargestContainer,
+    physicalState: schema.tier2Chemicals.physicalState,
+    hazardFlags: schema.tier2Chemicals.hazardFlags,
+    storageInformation: schema.tier2Chemicals.storageInformation,
+  }).from(schema.tier2Chemicals).where(or(
+    eq(schema.tier2Chemicals.facilityId, rows[0].id),
+    eq(schema.tier2Chemicals.sourceFacilityId, rows[0].sourceFacilityId),
+  ));
+  const contacts = await db.select({
+    id: schema.tier2FacilityContacts.id,
+    contactType: schema.tier2FacilityContacts.contactType,
+    name: schema.tier2FacilityContacts.name,
+    email: schema.tier2FacilityContacts.email,
+    phone24Hour: schema.tier2FacilityContacts.phone24Hour,
+    workPhone: schema.tier2FacilityContacts.workPhone,
+  }).from(schema.tier2FacilityContacts).where(or(
+    eq(schema.tier2FacilityContacts.facilityId, rows[0].id),
+    eq(schema.tier2FacilityContacts.sourceFacilityId, rows[0].sourceFacilityId),
+  ));
+  return c.json({
+    facility: {
+      ...tier2FacilityMapFields(rows[0], { chemicalCount: chemicals.length, ehsCount: chemicals.filter((chemical) => /^(y|yes|true|1)$/i.test(chemical.ehsStatus?.trim() ?? "")).length, contactCount: contacts.length }),
+      lastModifiedDate: rows[0].lastModifiedDate,
+      firstSubmitDate: rows[0].firstSubmitDate,
+      deRegistrationDate: rows[0].deRegistrationDate,
+      hasDocuments: rows[0].hasDocuments,
+      facilityNote: rows[0].facilityNote,
+    },
+    chemicals,
+    contacts,
+  });
+});
+
 app.get("/api/facilities", async (c) => {
   const db = getDb();
   const q = c.req.query("q");
@@ -1182,6 +1336,27 @@ app.get("/api/facilities/:id", async (c) => {
     .from(schema.facilityChemicals)
     .where(eq(schema.facilityChemicals.facilityId, id));
   return c.json({ ...facilityRows[0], chemicals: chemRows });
+});
+
+app.post("/api/threat-zones/facilities", async (c) => {
+  const body = await c.req.json().catch(() => null) as { zones?: unknown } | null;
+  const zones = Array.isArray(body?.zones)
+    ? body.zones as ThreatZoneFeature[]
+    : Array.isArray((body?.zones as { features?: unknown[] } | undefined)?.features)
+      ? (body?.zones as { features: ThreatZoneFeature[] }).features
+      : [];
+  if (!zones.length || zones.some((zone) => zone?.type !== "Feature" || !zone.geometry)) {
+    return c.json({ error: "threat-zone polygon geometry is required", status: "error" }, 400);
+  }
+  try {
+    const result = await lookupCriticalInfrastructure(zones);
+    return c.json(result, result.status === "error" ? 502 : 200);
+  } catch (error) {
+    return c.json({
+      status: "error",
+      error: error instanceof Error ? error.message : "Threat-zone facility lookup failed",
+    }, 502);
+  }
 });
 
 // ─── Incident-owned FEMA ICS form drafts ──────────────────────────────

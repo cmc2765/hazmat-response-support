@@ -47,6 +47,9 @@ public/data/*.json
 public/data/*.json.gz
 public/data/*.csv
 !public/data/.gitkeep
+private-imports/
+*.tier2.csv
+*.tier2.xlsx
 
 # Cache
 .cache

@@ -112,6 +112,18 @@ describe("CBRNE search and hydrated fail-closed profiles", () => {
     expect(containsBiologicalMisuseContent(tacticalFacts)).toBe(false);
   });
 
+  it("keeps Sarin operational content visible while retaining review and provenance metadata", () => {
+    const profile = cbrneProfileById("CBRNE_CWA", "sarin-gb");
+    expect(profile?.identifiers).toMatchObject({ agentCodes: ["GB"], cas: ["107-44-8"], unNaNumbers: ["2810"] });
+    expect(profile?.identifiers.opcwSchedule).toContain("Schedule 1");
+    const operationalFacts = [profile?.overviewFacts, profile?.hazardFacts, profile?.detectionFacts, profile?.deconFacts, profile?.medicalFacts].flat();
+    expect(operationalFacts.some((fact) => String(fact?.value).includes("nerve-agent"))).toBe(true);
+    expect(operationalFacts.some((fact) => fact?.fieldName === "Cholinergic toxidrome indicators")).toBe(true);
+    expect(profile?.actionCards.some((card) => card.summary.includes("Review "))).toBe(false);
+    expect(profile?.actionCards.some((card) => card.status === "Requires SME Review")).toBe(true);
+    expect(profile?.sourceFacts.every((fact) => fact.sourceUrl && fact.sourceDocumentTitle)).toBe(true);
+  });
+
   it("uses sourced radiological frameworks without inventing distance, dose-rate, shielding, or plume values", () => {
     const profile = cbrneProfileById("RADIOLOGICAL", "cesium-137");
     expect(profile?.isolationStandoffFacts[0]).toMatchObject({ verificationStatus: "Requires SME Review" });
