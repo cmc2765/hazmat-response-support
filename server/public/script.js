@@ -13199,14 +13199,20 @@ document.getElementById('live-marker-type')?.addEventListener('change', (event) 
 });
 
 // CSS-only rail and panel changes can alter a map container without a window resize.
-// Resize rendering canvases only; plume sources, calculations, and geometry are untouched.
+// Debounce canvas resizing so responsive layout settles before MapLibre measures it.
 const operationalWorkspace = document.querySelector('.content-area');
+let liveMapResizeTimer = 0;
+function scheduleLiveMapResize() {
+  window.clearTimeout(liveMapResizeTimer);
+  liveMapResizeTimer = window.setTimeout(() => {
+    if (liveMapViewElement?.classList.contains('active')) liveMap?.resize();
+  }, 90);
+}
+window.addEventListener('resize', scheduleLiveMapResize, { passive: true });
 if (operationalWorkspace && window.ResizeObserver) {
   new ResizeObserver(() => {
-    window.requestAnimationFrame(() => {
-      plumeMap?.resize();
-      liveMap?.resize();
-    });
+    window.requestAnimationFrame(() => plumeMap?.resize());
+    scheduleLiveMapResize();
   }).observe(operationalWorkspace);
 }
 

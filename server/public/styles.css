@@ -438,7 +438,7 @@ body {
 
 @media (min-width: 820px) {
   #map.view.active {
-    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
   }
 
   #map > .hazmat-page-hero {
@@ -9114,7 +9114,7 @@ body.workspace-drawer-open { overflow: hidden; }
 @media (min-width: 820px) {
   .app-shell:has(#map.active) {
     display: grid;
-    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
     height: 100dvh;
     min-height: 0;
     overflow: hidden;
@@ -10884,26 +10884,6 @@ body,
 #map > .hazmat-page-hero {
   position: relative;
   top: auto;
-}
-
-@media (min-width: 820px) {
-  .app-shell:has(#map.active) {
-    height: auto;
-    min-height: 100dvh;
-    overflow: visible;
-  }
-
-  .layout:has(#map.active),
-  .layout:has(#map.active) > .content-area,
-  #map.view.active {
-    height: auto;
-    overflow: visible;
-  }
-
-  #map.active .live-map-stage,
-  #map.active #live-gis-map {
-    height: clamp(520px, 70dvh, 860px);
-  }
 }
 
 @media (min-width: 981px) {
@@ -13538,6 +13518,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   --map-panel-soft: rgba(10, 34, 55, 0.92);
   --map-line: rgba(110, 164, 198, 0.38);
   --map-yellow: #ffd323;
+  box-sizing: border-box;
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr) auto;
   gap: 0;
@@ -13550,9 +13531,9 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 }
 
 #map .live-map-tactical-header {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
   gap: 18px;
   min-height: 82px;
   padding: 12px 18px 10px;
@@ -13563,6 +13544,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 }
 
 #map .live-map-title-block { min-width: 0; }
+#map .live-map-title-block > * { max-width: 100%; }
 #map .live-map-eyebrow,
 #map .live-map-control-label,
 #map .live-map-incident-readout > span,
@@ -13608,19 +13590,20 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 #map .live-map-operations {
   position: relative;
   z-index: 20;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
   align-items: end;
-  justify-content: space-between;
   gap: 14px;
   min-height: 68px;
   padding: 8px 18px 9px;
   border-bottom: 1px solid rgba(111, 166, 201, .34);
   background: #081f35;
 }
-#map .live-map-control-groups { position: relative; display: flex; align-items: end; gap: 22px; min-width: 0; }
-#map .live-map-control-group { display: grid; gap: 5px; min-width: 0; }
+#map .live-map-control-groups { position: relative; display: flex; align-items: end; flex-wrap: nowrap; gap: 22px; min-width: 0; }
+#map .live-map-control-group { display: grid; flex: 0 0 auto; gap: 5px; min-width: 0; }
 #map .live-map-control-label { color: #88abc2; font-size: .56rem; letter-spacing: .16em; }
-#map .live-map-control-buttons { display: flex; flex-wrap: wrap; gap: 5px; }
+#map .live-map-control-buttons { display: flex; flex-wrap: nowrap; gap: 5px; }
 #map .live-map-mode-button,
 #map .live-map-parent-button,
 #map .live-map-edge-button {
@@ -13710,7 +13693,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 #map .live-map-menu-foot { padding: 7px 5px 2px; border-top: 1px solid rgba(117, 162, 187, .18); color: #8ba8ba; font-size: .61rem; }
 #map .live-map-menu-foot strong { color: var(--map-yellow); }
 
-#map .live-map-status-strip { display: flex; align-items: center; flex-wrap: wrap; justify-content: end; gap: 10px; padding: 0 0 1px; color: #9eb8c9; font-size: .57rem; font-weight: 800; letter-spacing: .045em; white-space: nowrap; }
+#map .live-map-status-strip { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; justify-content: end; gap: 10px; padding: 0 0 1px; color: #9eb8c9; font-size: .57rem; font-weight: 800; letter-spacing: .045em; white-space: nowrap; }
 #map .live-map-status-item { display: inline-flex; align-items: center; gap: 4px; }
 #map .live-map-status-item b { color: #e7f3f9; font-size: .57rem; }
 #map .status-dot { width: 6px; height: 6px; border-radius: 50%; box-shadow: 0 0 7px currentColor; }
@@ -13792,8 +13775,10 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 }
 
 @media (max-width: 900px) {
-  #map .live-map-operations { align-items: start; flex-direction: column; }
+  #map .live-map-operations { grid-template-columns: minmax(0, 1fr); align-items: start; }
   #map .live-map-control-groups { width: 100%; flex-wrap: wrap; gap: 10px 18px; }
+  #map .live-map-tools { grid-column: 1; }
+  #map .live-map-status-strip { grid-column: 1; }
   #map .live-map-status-strip { justify-content: start; }
   #map .live-map-layer-menus { top: 94px; }
 }
@@ -13805,13 +13790,15 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 }
 
 @media (max-width: 620px) {
-  #map .live-map-tactical-header { align-items: start; flex-direction: column; gap: 8px; min-height: 0; padding: 12px 13px 9px; }
+  #map .live-map-tactical-header { grid-template-columns: 1fr; align-items: start; gap: 8px; min-height: 0; padding: 12px 13px 9px; }
   #map .live-map-incident-readout { width: 100%; min-width: 0; padding: 7px 0 0; border-top: 1px solid var(--map-line); border-left: 0; text-align: left; }
   #map .live-map-operations { padding: 8px 13px; }
   #map .live-map-control-groups { display: grid; grid-template-columns: 1fr; }
   #map .live-map-control-buttons { width: 100%; }
-  #map .live-map-mode-button { flex: 1 1 0; }
-  #map .live-map-parent-button { flex: 1 1 auto; }
+  #map .live-map-base-group .live-map-control-buttons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  #map .live-map-ops-group .live-map-control-buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #map .live-map-mode-button,
+  #map .live-map-parent-button { min-width: 0; }
   #map .live-map-layer-menus { top: 170px; left: 0; }
   #map .live-map-panels { top: 60px; right: 13px; width: calc(100% - 26px); }
   #map .live-map-edge-readout-right { display: none; }
@@ -13824,6 +13811,8 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
    surrounding page shell is in its auto-height cascade. */
 @media (min-width: 820px) {
   .app-shell:has(#map.active) {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
     height: 100dvh;
     min-height: 0;
     overflow: hidden;
@@ -13837,10 +13826,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
     overflow: hidden;
   }
 
-  #map.active .live-map-stage {
-    height: min(70dvh, 860px);
-    min-height: 520px;
-  }
+  #map.active .live-map-stage { height: 100%; min-height: 0; }
 
   #map.active #live-gis-map {
     height: 100%;

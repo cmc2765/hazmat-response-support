@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HAZSCOPE Prototype</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
-    <link rel="stylesheet" href="styles.css?v=live-map-canvas-3" />
+    <link rel="stylesheet" href="styles.css?v=live-map-responsive-1" />
     <link rel="stylesheet" href="hero-overrides.css?v=8" />
     <link rel="stylesheet" href="hazard-id-overrides.css?v=3" />
     <link rel="stylesheet" href="global-ui-overrides.css?v=16" />
@@ -1363,8 +1363,8 @@
                 <section class="live-map-control-group live-map-base-group" aria-label="Base map">
                   <span class="live-map-control-label">BASE MAP</span>
                   <div class="live-map-control-buttons">
-                    <button class="live-map-mode-button" type="button" data-map-style="satellite" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5 12 4l8 3.5v9L12 20l-8-3.5v-9Z"/><path d="m4 7.5 8 3.5 8-3.5M12 11v9"/><path d="M12 4v3"/></svg><span>SATELLITE</span></button>
-                    <button class="live-map-mode-button active" type="button" data-map-style="street" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 5-16 6 16 5-16"/><path d="M3 8h18M3 16h18"/></svg><span>STREET</span></button>
+                    <button class="live-map-mode-button active" type="button" data-map-style="satellite" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5 12 4l8 3.5v9L12 20l-8-3.5v-9Z"/><path d="m4 7.5 8 3.5 8-3.5M12 11v9"/><path d="M12 4v3"/></svg><span>SATELLITE</span></button>
+                    <button class="live-map-mode-button" type="button" data-map-style="street" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 5-16 6 16 5-16"/><path d="M3 8h18M3 16h18"/></svg><span>STREET</span></button>
                     <button class="live-map-mode-button" type="button" data-map-style="terrain3d" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 19 6.4-9 3.3 4 2.5-3 5.8 8"/><path d="M4 19h16M7 7.5l2-2 2 2"/></svg><span>3D TERRAIN</span></button>
                   </div>
                 </section>
@@ -1786,7 +1786,7 @@
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
     <script src="plume-3d-model.js?v=plume3d-v2"></script>
-    <script src="script.js?v=chemical-profile-hotfix-3&canonical-grid=1&plume-map-fallback=1&live-map-fallback=2"></script>
+    <script src="script.js?v=chemical-profile-hotfix-3&canonical-grid=1&plume-map-fallback=1&live-map-fallback=3&live-map-responsive=1"></script>
     <script src="incident-command.js"></script>
     <script src="hazard-profile.js"></script>
     <script src="reports.js"></script>

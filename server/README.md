@@ -80,6 +80,13 @@ Browser ──> Hono (Node 20) ──┬──> serves server/public/ (static UI
 | `SQLITE_PATH` | `./local.db` | SQLite database file path |
 | `NASA_FIRMS_MAP_KEY` | empty | Server-only NASA FIRMS key; empty means active fire detections report `NOT CONFIGURED` |
 
+### External feed provenance
+
+- NASA FIRMS is used for NOAA-20/NOAA-21 VIIRS thermal active-fire detections. Its web-service metadata is retained with the response, including an approximately 15-minute refresh cadence; FIRMS detections are not fire perimeter polygons.
+- NIFC / WFIGS is used for current interagency fire perimeter polygons through the WFIGS Current Perimeters feature service. It remains a separate layer and status from NASA FIRMS detections.
+- NCES EDGE school locations are geocoded points used in HazScope's own point-in-polygon threat-zone analysis; the resulting matches require operational verification.
+- EPA Tier II documentation defines the reporting framework. E-Plan/Tier II facilities in this app are authorized imported facility data, not a live EPA facility feed.
+
 ## Docker
 
 ```bash

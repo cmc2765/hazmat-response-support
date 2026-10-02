@@ -6,6 +6,7 @@
   const mapStateKey = 'hazmatiq_live_map_state';
   const plumeStateKey = 'hazmatiq_latest_plume_overlay';
   let radarController = null;
+  let liveMapBasemapFallbackApplied = false;
   const markerTypes = { icp: 'ICP / Command Post', entry: 'Entry Team', decon: 'Decon Corridor', monitors: 'Monitor', staging: 'Staging', medical: 'Medical / Rehab', trafficCams: 'Traffic Camera' };
   const liveMapStyleKey = 'hazmatiq_live_map_style';
   const liveSatelliteStyle = {
@@ -298,7 +299,9 @@
       container: 'live-gis-map',
       center: [-86.81, 33.29],
       zoom: 14,
-      style: detailedStreetStyle,
+      // Start on the self-contained raster style so a blocked vector-style
+      // request can never leave the map console as a blank navy panel.
+      style: liveSatelliteStyle,
     });
     window.hazmatiqLiveMap = fallbackMap;
     fallbackMap.on('move', () => updateMapReadout(fallbackMap));
@@ -317,7 +320,7 @@
       fallbackMap.resize();
       try {
         const storedStyle = window.localStorage.getItem(liveMapStyleKey);
-        if (storedStyle && storedStyle !== 'street') setLiveMapStyle(storedStyle);
+        if (storedStyle) setLiveMapStyle(storedStyle);
       } catch { /* Use the street map default. */ }
     });
     fallbackMap.on('error', (event) => {
@@ -327,7 +330,11 @@
           void radarController.fallback();
         }
       }
-      else setMessage(`Map error: ${event?.error?.message || 'Basemap unavailable.'}`);
+      else if (!event?.sourceId && !liveMapBasemapFallbackApplied) {
+        liveMapBasemapFallbackApplied = true;
+        setMessage('Street basemap unavailable. Satellite map restored.');
+        try { setLiveMapStyle('satellite'); } catch { /* Keep the readable current map surface. */ }
+      } else setMessage(`Map error: ${event?.error?.message || 'Basemap unavailable.'}`);
     });
     navigator.geolocation?.getCurrentPosition(({ coords }) => {
       fallbackMap.jumpTo({ center: [coords.longitude, coords.latitude], zoom: 15 });

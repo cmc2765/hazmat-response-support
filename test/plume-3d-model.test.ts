@@ -137,6 +137,9 @@ describe("HazScope 3D plume screening model", () => {
     expect(plumeUi).toContain("restorePlumeMapOverlays();");
     expect(plumeUi).toContain("addPlume3dEnvelopeLayers();");
     expect(plumeUi).toContain("plumeMap.once('idle'");
-    expect(plumeUi).toContain("plume3dEnvelopeSourceId");
+    expect(plumeUi).toContain("const plume3dCustomLayerId = 'hazmat-plume-3d-mesh'");
+    expect(plumeUi).toContain("type: 'custom'");
+    expect(plumeUi).toContain("renderingMode: '3d'");
+    expect(plumeUi).not.toContain("'fill-extrusion-height': ['get', 'topMSL']");
   });
 });

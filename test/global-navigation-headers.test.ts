@@ -34,6 +34,15 @@ describe('global navigation and page header contract', () => {
     expect(globalStyles).toContain('@media (max-width: 1099px)');
   });
 
+  it('uses one continuous nav frame with a flush gold active accent', () => {
+    expect(globalStyles).toContain('border-top: 3px solid #5d89a7 !important;');
+    expect(globalStyles).toContain('border-bottom: 3px solid #5d89a7 !important;');
+    expect(globalStyles).toContain('.app-shell > .command-header .app-primary-nav .app-nav-item.active::after');
+    expect(globalStyles).toContain('bottom: -3px;');
+    expect(globalStyles).toContain('background: #f6c343;');
+    expect(globalStyles).toContain('box-sizing: border-box !important;');
+  });
+
   it('keeps only title/subtitle copy in page heroes and removes the legacy tertiary tagline', () => {
     expect(html).not.toContain('Real-time data. Actionable intelligence. Safer decisions.');
     expect(html).not.toContain('class="internal-command-menu"');
