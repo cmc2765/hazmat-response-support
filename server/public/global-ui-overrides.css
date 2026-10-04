@@ -1037,3 +1037,103 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
     width: min(68vw, 520px) !important;
   }
 }
+
+
+/* Mobile homepage final viewport contract */
+@media (max-width: 760px) {
+  html, body, .app-shell {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .app-shell:has(#overview.view.active) > .layout,
+  .app-shell:has(#overview.view.active) > .layout > .content-area,
+  #overview,
+  #overview .incident-overview-card,
+  #overview .incident-overview-actions,
+  #overview .overview-action-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .layout {
+    padding: 8px 6px 10px !important;
+  }
+
+  #overview .incident-overview-card {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #overview .incident-overview-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: none !important;
+    gap: 12px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #overview .overview-action-layout {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  #overview .incident-overview-actions .overview-action-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 230px !important;
+    padding: 18px !important;
+    overflow: hidden !important;
+    border-width: 2px !important;
+    border-radius: 14px !important;
+    box-sizing: border-box !important;
+  }
+
+  #overview .incident-overview-actions .overview-action-copy {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    gap: 8px !important;
+  }
+
+  #overview .incident-overview-actions .overview-action-title,
+  #overview .incident-overview-actions .overview-action-phrase,
+  #overview .incident-overview-actions .overview-action-description,
+  #overview .incident-overview-actions .overview-action-cta {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #overview .incident-overview-actions .overview-action-title {
+    font-size: clamp(1.75rem, 8vw, 2.35rem) !important;
+    line-height: 1 !important;
+    overflow-wrap: anywhere;
+  }
+
+  #overview .incident-overview-actions .overview-action-description {
+    padding-left: 0 !important;
+    font-size: clamp(.9rem, 3.8vw, 1rem) !important;
+    white-space: normal !important;
+    text-align: left !important;
+  }
+
+  #overview .incident-overview-actions .overview-action-cta {
+    width: fit-content !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    padding: 10px 14px !important;
+    font-size: clamp(.9rem, 4.1vw, 1.05rem) !important;
+  }
+
+  #overview .overview-promo-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    overflow: visible !important;
+  }
+}
