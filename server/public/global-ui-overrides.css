@@ -1,6 +1,5 @@
 /* Final shared hero/menu alignment contract. */
-.view:not(#overview) > .hazmat-page-hero .hazmat-page-hero-content,
-.view:not(#overview) > .plume-page-header .hazmat-page-hero-content {
+.view:not(#overview) > .hazmat-page-hero .hazmat-page-hero-content {
   position: relative !important;
   display: flex !important;
   align-items: flex-start !important;
@@ -8,25 +7,19 @@
   padding: 0 clamp(12px, 2.2vw, 34px) 64px !important;
   text-align: left !important;
 }
-.view:not(#overview) > .hazmat-page-hero .internal-command-title-row,
-.view:not(#overview) > .plume-page-header .internal-command-title-row {
+.view:not(#overview) > .hazmat-page-hero .internal-command-title-row {
   display: contents !important;
 }
-.view:not(#overview) > .hazmat-page-hero .hazmat-hero-title,
-.view:not(#overview) > .hazmat-page-hero .plume-page-title,
-.view:not(#overview) > .plume-page-header .hazmat-hero-title,
-.view:not(#overview) > .plume-page-header .plume-page-title {
+.view:not(#overview) > .hazmat-page-hero .hazmat-hero-title {
   width: 100% !important;
   text-align: left !important;
 }
-.view:not(#overview) > .hazmat-page-hero .hazmat-hero-subtitle,
-.view:not(#overview) > .plume-page-header .hazmat-hero-subtitle {
+.view:not(#overview) > .hazmat-page-hero .hazmat-hero-subtitle {
   width: 100% !important;
   margin-inline: 0 !important;
   text-align: left !important;
 }
-.view:not(#overview) > .hazmat-page-hero .internal-command-menu,
-.view:not(#overview) > .plume-page-header .internal-command-menu {
+.view:not(#overview) > .hazmat-page-hero .internal-command-menu {
   position: absolute !important;
   left: clamp(12px, 2.2vw, 34px) !important;
   bottom: 0 !important;
@@ -159,8 +152,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   background: #0d3152 !important;
 }
 @media (max-width: 760px) {
-  .view:not(#overview) > .hazmat-page-hero .hazmat-page-hero-content,
-  .view:not(#overview) > .plume-page-header .hazmat-page-hero-content {
+  .view:not(#overview) > .hazmat-page-hero .hazmat-page-hero-content {
     padding: 0 12px 60px !important;
   }
 }
@@ -395,15 +387,13 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   display: grid !important;
 }
 
-.view:not(#overview) > .hazmat-page-hero,
-.view:not(#overview) > .plume-page-header {
+.view:not(#overview) > .hazmat-page-hero {
   min-height: 124px !important;
   max-height: 150px !important;
   padding: 18px 24px !important;
 }
 
-.view:not(#overview) > .hazmat-page-hero .hazmat-page-hero-content,
-.view:not(#overview) > .plume-page-header .hazmat-page-hero-content {
+.view:not(#overview) > .hazmat-page-hero .hazmat-page-hero-content {
   align-items: flex-start !important;
   justify-content: center !important;
   width: min(100%, 760px) !important;
@@ -411,15 +401,12 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   text-align: left !important;
 }
 
-.view:not(#overview) > .hazmat-page-hero .hazmat-hero-title,
-.view:not(#overview) > .plume-page-header .hazmat-hero-title,
-.view:not(#overview) > .plume-page-header .plume-page-title {
+.view:not(#overview) > .hazmat-page-hero .hazmat-hero-title {
   font-size: clamp(2.15rem, 4.2vw, 4rem) !important;
   line-height: .98 !important;
 }
 
-.view:not(#overview) > .hazmat-page-hero .hazmat-hero-subtitle,
-.view:not(#overview) > .plume-page-header .hazmat-hero-subtitle {
+.view:not(#overview) > .hazmat-page-hero .hazmat-hero-subtitle {
   margin: 8px 0 0 !important;
   font-size: clamp(.98rem, 1.35vw, 1.2rem) !important;
   font-style: normal !important;
@@ -428,14 +415,11 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 }
 
 .view:not(#overview) > .hazmat-page-hero .internal-command-title-row,
-.view:not(#overview) > .plume-page-header .internal-command-title-row,
-.view:not(#overview) > .hazmat-page-hero .internal-command-menu,
-.view:not(#overview) > .plume-page-header .internal-command-menu {
+.view:not(#overview) > .hazmat-page-hero .internal-command-menu {
   display: none !important;
 }
 
 #incident .incident-command-hero .incident-command-subtitle { margin-inline: 0 !important; }
-#plume > .plume-page-header .plume-v2-header-context { align-self: center; }
 
 @media (max-width: 1099px) {
   .app-shell > .command-header.hazmat-command-bar.topbar {
@@ -470,8 +454,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   .app-shell > .command-header .command-header-footer,
   .app-shell > .command-header .hazmat-command-context.notification-center { height: 54px !important; }
   .app-shell > .command-header .hazmat-command-context .notification-system { height: 52px !important; min-height: 52px !important; }
-  .view:not(#overview) > .hazmat-page-hero,
-  .view:not(#overview) > .plume-page-header { min-height: 112px !important; padding: 16px !important; }
+  .view:not(#overview) > .hazmat-page-hero { min-height: 112px !important; padding: 16px !important; }
 }
 
 /* Keep the live tactical/weather/alerts feed below the dashboard rather than

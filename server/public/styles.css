@@ -421,14 +421,6 @@ body {
   border-top: 5px solid var(--hazmat-blue);
 }
 
-#plume .plume-page-header.hazmat-page-hero {
-  min-height: 118px;
-  max-height: 150px;
-  padding: 13px 16px;
-}
-
-#plume .plume-page-header .hazmat-hero-subtitle { margin-bottom: 4px; }
-
 button, input, select, textarea, table {
   font-family: var(--hazmatiq-font-body);
 }
@@ -1703,22 +1695,6 @@ h1 { font-weight: 800; }
     break-before: page;
   }
 }
-
-/* Simplified Weather Data card and perspective AEGL cone. */
-#plume .plume-hero-zone.zone-one,
-#plume .plume-hero-zone.zone-two,
-#plume .plume-hero-zone.zone-three {
-  transform: none;
-  transform-box: initial;
-}
-
-#plume .plume-hero-cap {
-  stroke-width: 1.1;
-}
-
-#plume .plume-hero-cap.cap-one { fill: rgba(255, 211, 35, 0.48); stroke: #ffe37a; }
-#plume .plume-hero-cap.cap-two { fill: rgba(242, 140, 24, 0.58); stroke: #ffb053; }
-#plume .plume-hero-cap.cap-three { fill: rgba(215, 25, 32, 0.7); stroke: #ff656b; }
 
 #plume .plume-weather-refresh {
   min-height: 28px;
@@ -7035,30 +7011,6 @@ textarea {
   }
 }
 
-/* Compact CAMEO/MARPLOT-style selected-area impact summary. */
-.layout:has(#plume.active) #plume #plume-demographics[open] {
-  position: static;
-  z-index: auto;
-  inset: auto;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  width: 100%;
-  max-width: 100%;
-  height: min(440px, 70dvh);
-  max-height: 440px;
-  margin: 0;
-  overflow: hidden;
-}
-
-#plume #plume-demographics .plume-lower-card-content {
-  min-height: 0;
-  padding: 8px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-gutter: stable;
-}
-
 .threat-zone-summary h3 {
   margin: 0 0 4px;
   color: #0b1f33;
@@ -7263,15 +7215,13 @@ textarea {
 .incident-overview-actions .overview-action-reports::before { background-position: center center; }
 
 .content-area > .view > .hazmat-page-hero,
-#guided-response > .guided-response-heading,
-#plume > .plume-page-header {
+#guided-response > .guided-response-heading {
   min-height: 214px;
   max-height: none;
   padding: 28px 30px;
   color: #fff;
 }
 
-#plume > .plume-page-header,
 #map > .hazmat-page-hero,
 .content-area > .view > .hazmat-page-hero-compact,
 .content-area > .view > .hazmat-page-hero.compact {
@@ -7309,7 +7259,6 @@ textarea {
   .incident-overview-actions .overview-action-btn { min-height: 245px; }
   .content-area > .view > .hazmat-page-hero,
   #guided-response > .guided-response-heading,
-  #plume > .plume-page-header,
   #map > .hazmat-page-hero { min-height: 170px; padding: 18px; }
 }
 
@@ -7644,8 +7593,7 @@ body.workspace-drawer-open { overflow: hidden; }
 
 .hazmat-page-hero,
 .content-area > .view > .hazmat-page-hero,
-#guided-response > .guided-response-heading,
-#plume > .plume-page-header {
+#guided-response > .guided-response-heading {
   min-height: 214px;
   max-height: none;
   padding: 28px 30px;
@@ -7658,7 +7606,6 @@ body.workspace-drawer-open { overflow: hidden; }
 
 .hazmat-page-hero-compact,
 .hazmat-page-hero.compact,
-#plume > .plume-page-header,
 #map > .hazmat-page-hero {
   min-height: 176px;
   max-height: none;

@@ -16,7 +16,8 @@ import Database from "better-sqlite3";
 import * as schema from "./schema.js";
 import { reconcileNpgProjection } from "./npg-projection.js";
 
-const SQLITE_PATH = process.env.SQLITE_PATH ?? "./local.db";
+const serverDirectory = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const SQLITE_PATH = process.env.SQLITE_PATH ?? path.join(serverDirectory, "local.db");
 
 export type DbClient = ReturnType<typeof drizzle<typeof schema>>;
 

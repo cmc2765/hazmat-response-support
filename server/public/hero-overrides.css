@@ -9,14 +9,12 @@
   box-shadow: 0 0 16px rgba(46,140,255,.16), inset 0 0 12px rgba(46,140,255,.08) !important;
 }
 
-.view:not(#overview) > .hazmat-page-hero,
-.view:not(#overview) > .plume-page-header {
+.view:not(#overview) > .hazmat-page-hero {
   background-position: right center !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
 }
-.view:not(#overview) > .hazmat-page-hero::before,
-.view:not(#overview) > .plume-page-header::before {
+.view:not(#overview) > .hazmat-page-hero::before {
   opacity: 1 !important;
   background:
     linear-gradient(90deg, rgba(2,11,20,.98) 0%, rgba(2,11,20,.92) 34%, rgba(2,11,20,.58) 62%, rgba(2,11,20,.18) 100%),
@@ -64,22 +62,6 @@
   .view:not(#overview) .hazmat-page-hero .hazmat-page-hero-content { padding: 0 18px 60px !important; }
 }
 
-/* Plume hero-specific composition. */
-#plume > .plume-page-header .plume-hero-plume { display: none !important; }
-#plume > .plume-page-header .hazmat-page-hero-content {
-  align-items: flex-start !important;
-  justify-content: center !important;
-  padding: 0 clamp(18px, 6vw, 96px) 62px !important;
-  text-align: left !important;
-}
-#plume > .plume-page-header .plume-page-title,
-#plume > .plume-page-header .hazmat-hero-subtitle { text-align: left !important; }
-#plume > .plume-page-header .hazmat-hero-subtitle { white-space: nowrap; }
-#plume > .plume-page-header .internal-command-menu { left: 0 !important; }
-@media (max-width: 760px) {
-  #plume > .plume-page-header .hazmat-hero-subtitle { white-space: normal; }
-}
-
 .view:not(#overview) .variant-incident { background-image: url("assets/incident-command-hero-v2.png") !important; }
 .view:not(#overview) .variant-chemical { background-image: url("assets/hazard-id-level-a-hero-v1.png") !important; }
 .view:not(#overview) .variant-chemical-profile { background-image: url("assets/chemical-id-search-background-v2.png") !important; }
@@ -91,8 +73,7 @@
 .view:not(#overview) .variant-my-chemicals { background-image: url("assets/my-chemicals-hero-v2.png") !important; }
 .view:not(#overview) .variant-about { background-image: url("assets/incident-command-hero-v2.png") !important; }
 @media (max-width: 760px) {
-  .view:not(#overview) > .hazmat-page-hero,
-  .view:not(#overview) > .plume-page-header { background-position: 68% center !important; }
+  .view:not(#overview) > .hazmat-page-hero { background-position: 68% center !important; }
 }
 
 /* Live Map hero: the supplied artwork is the complete hero surface. */
@@ -117,14 +98,12 @@
 }
 
 /* All page title headers use the Incident Command height, including compact variants. */
-.view:not(#overview) > .hazmat-page-hero,
-.view:not(#overview) > .plume-page-header {
+.view:not(#overview) > .hazmat-page-hero {
   min-height: clamp(138px, 15vw, 205px) !important;
   padding: 14px 18px !important;
 }
 @media (max-width: 760px) {
-  .view:not(#overview) > .hazmat-page-hero,
-  .view:not(#overview) > .plume-page-header { min-height: 138px !important; padding: 12px !important; }
+  .view:not(#overview) > .hazmat-page-hero { min-height: 138px !important; padding: 12px !important; }
 }
 
 /* Canonical homepage HAZSCOPE hero with a CSS-only haze treatment. */
@@ -139,8 +118,8 @@
   max-height: none !important;
   margin: 8px 0 0 !important;
   padding: 0 !important;
-  gap: 8px !important;
-  row-gap: 8px !important;
+  gap: 4px !important;
+  row-gap: 4px !important;
   overflow: visible !important;
   background:
     linear-gradient(180deg, rgba(11, 41, 68, .28), rgba(6, 26, 46, .48)),
@@ -154,11 +133,11 @@
 .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
   position: relative !important;
   display: block !important;
-  flex: 0 0 258px !important;
+  flex: 0 0 246px !important;
   width: 100% !important;
-  height: 258px !important;
+  height: 246px !important;
   min-height: 0 !important;
-  max-height: 258px !important;
+  max-height: 246px !important;
   margin: 0 !important;
   padding: 0 !important;
   overflow: hidden !important;
@@ -174,9 +153,9 @@
   inset: 0 !important;
   display: block !important;
   width: 100% !important;
-  height: 258px !important;
+  height: 246px !important;
   min-height: 0 !important;
-  max-height: 258px !important;
+  max-height: 246px !important;
   margin: 0 !important;
   padding: 0 !important;
   border: 0 !important;

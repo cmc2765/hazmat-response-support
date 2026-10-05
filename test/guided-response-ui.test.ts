@@ -117,8 +117,8 @@ describe("Guided Response workflow", () => {
       "guided-back-btn",
     ]) expect(html).toContain(`id="${id}"`);
     expect(html).toContain("Missing, outdated, unsupported, or unverified values must be treated as No Current Data Exists.");
-    expect(script).toContain("createTacticalFlowBox('Identify / Analyze'");
-    expect(script).toContain("createMitigationDecisionSupport(decisionRecord)");
+    expect(script).toContain("createGuidedCommandFlow(guidedResponse)");
+    expect(script).toContain("createGuidedSourceTrace(stage.sources)");
     expect(guidedHtml).toContain('class="guided-response-disclaimers"');
   });
 
@@ -163,13 +163,13 @@ describe("Guided Response workflow", () => {
     expect(script).toContain("else if (target === 'guided-response') void openGuidedResponseWorkspace();");
   });
 
-  it("renders the four-box tactical decision flow with responsive connectors", () => {
-    expect(script).toContain("Tactical Decision Flow");
-    for (const title of ["Identify / Analyze", "Verify and Isolate", "Life Safety", "Mitigation"]) {
-      expect(script).toContain(`'${title}'`);
+  it("renders the ten-stage command flow with source-backed branches", () => {
+    expect(script).toContain("COMMAND FLOW");
+    for (const title of ["IDENTIFY / ANALYZE", "ISOLATE / ESTABLISH ZONES", "LIFE SAFETY / PPE", "MONITOR / VERIFY", "TACTICAL MODE", "CONTROL / MITIGATION", "DECONTAMINATION", "MEDICAL", "PROTECTIVE ACTIONS", "TERMINATION / DOCUMENTATION"]) {
+      expect(builder).toContain(`title: '${title}'`);
     }
-    expect(script.match(/createTacticalFlowArrow\(\)/g)?.length).toBeGreaterThanOrEqual(3);
-    expect(script).toContain("createTacticalFlowBox('Identify / Analyze'");
+    expect(script).toContain("createGuidedCommandCard(stage)");
+    expect(script).toContain("createGuidedBranches(stage.branches)");
     for (const removed of ["Decision First", "Verify All Data", "Team Safety"]) {
       expect(guidedHtml).not.toContain(removed);
       expect(script).not.toContain(removed);
@@ -177,10 +177,10 @@ describe("Guided Response workflow", () => {
   });
 
   it("uses readable, restrained typography throughout the tactical decision flow", () => {
-    expect(styles).toMatch(/#guided-response \.guided-tactical-section-heading h3[^}]*font-size: 1\.05rem;/s);
-    expect(styles).toMatch(/#guided-response \.guided-flow-summary h4[^}]*font-size: 0\.86rem;/s);
-    expect(styles).toContain('#guided-response .guided-flow-box dt');
-    expect(styles).toMatch(/#guided-response \.guided-flow-box dl > div[^}]*font-size: 0\.75rem;/s);
+    expect(styles).toContain('.guided-command-card-summary');
+    expect(styles).toContain('.guided-command-action');
+    expect(styles).toContain('.guided-command-checklist');
+    expect(styles).toContain('.guided-source-disclosure');
   });
 
   it("does not place a selected-chemical box inside the title box", () => {
@@ -189,11 +189,21 @@ describe("Guided Response workflow", () => {
     expect(styles).not.toContain(".guided-header-summary");
   });
 
-  it("promotes Tactical Decision Flow to the full-width first content section", () => {
-    expect(script).toContain("const flow = document.createElement('section')");
-    expect(script).toContain("container.append(chemicalStrip, flow, createMitigationDecisionSupport(decisionRecord))");
-    expect(script).toContain("flow.className = 'panel-card guided-tactical-flow'");
+  it("places the critical action bar before the responsive command-flow grid", () => {
+    expect(script).toContain("const criticalActionBar = createGuidedCriticalActionBar(guidedResponse)");
+    expect(script).toContain("const flow = createGuidedCommandFlow(guidedResponse)");
+    expect(script).toContain("container.append(chemicalStrip, mobileSticky, criticalActionBar, flow)");
+    expect(script).toContain("flow.className = 'panel-card guided-command-flow'");
     expect(styles).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
+  });
+
+  it("keeps source traceability expandable and gives mobile responders a sticky context header", () => {
+    expect(script).toContain("SOURCE · ${source.label || 'Needs Verification'}");
+    expect(script).toContain("source.title || source.label || 'Source record'");
+    expect(script).toContain("createGuidedMobileStickyHeader(guidedResponse, chemicalData)");
+    expect(styles).toContain('.guided-mobile-sticky');
+    expect(styles).toContain('grid-template-columns: 1fr;');
+    expect(styles).toContain('.guided-command-flow-grid { grid-template-columns: 1fr; }');
   });
 
   it("prioritizes a source-backed SCBA decision and omits manufacturer lists", () => {
@@ -247,16 +257,11 @@ describe("Guided Response workflow", () => {
     expect(styles).toContain('border: 3px solid #f6c343;');
   });
 
-  it("keeps the Tactical Decision Flow Life Safety stage compact and ordered", () => {
-    const lifeFlow = script.slice(
-      script.indexOf("createTacticalFlowBox('Life Safety'"),
-      script.indexOf("createTacticalFlowBox('Mitigation'"),
-    );
-    const labels = ["Is SCBA Mandated?", "Recommended Protection Level", "Why This Level", "Verify Before Entry"];
-    labels.forEach((label, index) => {
-      expect(lifeFlow.indexOf(`label: '${label}'`)).toBeGreaterThan(index ? lifeFlow.indexOf(`label: '${labels[index - 1]}'`) : -1);
-    });
-    expect(lifeFlow).not.toContain("respiratorRecommendations");
+  it("keeps PPE action first and exposes downgrade blockers as verification items", () => {
+    expect(builder).toContain("Respiratory downgrade");
+    expect(builder).toContain("Verify oxygen concentration and air monitoring before entry");
+    expect(script).toContain("stage.status === 'ACTION REQUIRED' ? 'ACTION REQUIRED' : 'RECOMMENDED INITIAL ACTION'");
+    expect(script).toContain("VERIFICATION ITEMS");
   });
 
   it("builds an export-ready decision record and keeps mitigation under IC approval", () => {

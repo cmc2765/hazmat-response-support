@@ -174,4 +174,77 @@ describe("Guided Response tactical decision builder", () => {
     expect(record.lifeSafety.specificValues.plumePlanningImpact).toMatch(/does not select or downgrade PPE/i);
     expect(record.lifeSafety.limitations).toContain("Plume output alone cannot downgrade PPE or respiratory protection.");
   });
+
+  it("builds the ten-stage Hydrazine / UN 2029 command flow from source-backed facts", () => {
+    const profile = queryChemicalProfile(54) as Record<string, any>;
+    const record = builder.buildGuidedResponseDecisions({
+      masterLinked: true,
+      masterChemicalId: 54,
+      chemicalName: profile.header.name,
+      transportationIdentifier: profile.header.un,
+    }, {
+      profile,
+      approvedSources: profile.sources,
+      responderGuide: ergGuides[String(profile.header.ergGuide).replace(/P$/i, "")],
+    }, {
+      missingInputs: ["wind direction"],
+      status: "Requires Verification",
+    }, {
+      status: "Requires Verification",
+    });
+    const flow = record.guidedResponse;
+    expect(flow.sequence.map((stage: Record<string, any>) => stage.title)).toEqual([
+      "IDENTIFY / ANALYZE",
+      "ISOLATE / ESTABLISH ZONES",
+      "LIFE SAFETY / PPE",
+      "MONITOR / VERIFY",
+      "TACTICAL MODE",
+      "CONTROL / MITIGATION",
+      "DECONTAMINATION",
+      "MEDICAL",
+      "PROTECTIVE ACTIONS",
+      "TERMINATION / DOCUMENTATION",
+    ]);
+    expect(flow.identification.criticalFacts).toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: "Chemical", value: "Hydrazine" }),
+      expect.objectContaining({ label: "UN / NA", value: "2029" }),
+      expect.objectContaining({ label: "Hazards", value: expect.stringMatching(/toxic|flammable|corrosive/i) }),
+    ]));
+    expect(flow.isolation.criticalFacts).toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: "Initial isolation", value: "50 meters" }),
+      expect.objectContaining({ label: "Large spill isolation", value: "50 meters" }),
+    ]));
+    expect(flow.ppe.action).toMatch(/Level B w\/ SCBA/i);
+    expect(flow.ppe.criticalFacts).toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: "Respiratory protection", value: expect.stringMatching(/SCBA/i) }),
+      expect.objectContaining({ label: "Chemical protection", value: expect.any(String) }),
+    ]));
+    expect(flow.tacticalMode.criticalFacts.map((fact: Record<string, string>) => fact.value).join(" ")).toMatch(/upwind|ignition/i);
+    expect(flow.fireControl.available).toBe(true);
+    expect(flow.fireControl.branches.map((branch: Record<string, any>) => branch.title)).toEqual(expect.arrayContaining([
+      "SMALL FIRE", "LARGE FIRE", "TANK / CONTAINER FIRE",
+    ]));
+    expect(flow.spillControl.branches.flatMap((branch: Record<string, any>) => branch.facts).join(" ")).toMatch(/dry sand|inert absorbent/i);
+    expect(flow.decon.criticalFacts.map((fact: Record<string, string>) => fact.value).join(" ")).toMatch(/flush|wash|decon/i);
+    expect(flow.medical.criticalFacts.map((fact: Record<string, string>) => fact.value).join(" ")).toMatch(/fresh air|medical|oxygen/i);
+    expect(flow.protectiveActions.criticalFacts.map((fact: Record<string, string>) => fact.label).join(" ")).toMatch(/ERG initial isolation|HAZSCOPE plume estimate/);
+    expect(flow.sequence.every((stage: Record<string, any>) => stage.sources.length > 0)).toBe(true);
+  });
+
+  it("fails closed in the canonical flow when source sections are missing", () => {
+    const record = builder.buildGuidedResponseDecisions({
+      masterLinked: true,
+      masterChemicalId: 7001,
+      chemicalName: "Verified sparse record",
+    }, {
+      profile: { header: { name: "Verified sparse record" } },
+      approvedSources: ["Chemical Companion"],
+    });
+    expect(record.guidedResponse.ppe.status).toBe("VERIFY");
+    expect(record.guidedResponse.fireControl.available).toBe(false);
+    expect(record.guidedResponse.spillControl.available).toBe(false);
+    expect(record.guidedResponse.decon.status).toBe("VERIFY");
+    expect(record.guidedResponse.decon.action).toMatch(/verify/i);
+    expect(record.guidedResponse.sequence.every((stage: Record<string, any>) => stage.sources.length > 0)).toBe(true);
+  });
 });

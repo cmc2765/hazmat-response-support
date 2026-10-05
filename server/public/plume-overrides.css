@@ -15,72 +15,6 @@
   overflow: hidden;
 }
 
-#plume.view.active .plume-v2-header {
-  min-height: 138px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(390px, 42%);
-  align-items: stretch;
-  gap: 14px;
-  padding: 16px 18px;
-  border: 1px solid #1c6894;
-  border-radius: 10px;
-  background: linear-gradient(100deg, rgba(3, 19, 35, .98), rgba(8, 37, 61, .94)), url("assets/HAZSCOPE-plume-model-target.png") center / cover no-repeat;
-  color: #f8fafc;
-}
-
-#plume.view.active .plume-v2-header-copy,
-#plume.view.active .plume-v2-header-context { min-width: 0; }
-
-#plume.view.active .plume-v2-header-copy {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3px;
-}
-
-#plume.view.active .plume-v2-header-copy .plume-hero-plume { display: none; }
-#plume.view.active .plume-v2-header-copy .hazmat-hero-title,
-#plume.view.active .plume-v2-header-copy .plume-page-title {
-  margin: 0;
-  color: #fff;
-  font-size: clamp(34px, 4vw, 56px);
-  line-height: .95;
-  letter-spacing: .025em;
-  text-transform: uppercase;
-}
-#plume.view.active .plume-v2-header-copy .hazmat-hero-subtitle {
-  margin: 0;
-  color: #ffd323;
-  font-size: clamp(16px, 1.8vw, 24px);
-  font-style: italic;
-  font-weight: 900;
-}
-#plume.view.active .plume-v2-header-copy small { color: #d7e6f2; font-size: 12px; }
-#plume.view.active .plume-mode-indicator { display: inline-block; width: fit-content; margin-top: 4px; padding: 3px 7px; border: 1px solid rgba(255,211,35,.55); border-radius: 999px; color: #ffd323; font-size: 9px; font-weight: 900; letter-spacing: .08em; }
-#plume.view.active #plume-header-chemical,
-#plume.view.active #plume-header-identifiers { display: none; }
-
-#plume.view.active .plume-v2-header-context {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-self: stretch;
-  gap: 8px;
-}
-#plume.view.active .plume-v2-header-context > div {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  justify-content: center;
-  padding: 12px;
-  border: 1px solid #1d648f;
-  border-radius: 8px;
-  background: rgba(4, 24, 42, .88);
-}
-#plume.view.active .plume-v2-header-context span,
-#plume.view.active .plume-v2-header-context strong { overflow-wrap: anywhere; }
-#plume.view.active .plume-v2-header-context span { color: #9fb8cb; font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
-#plume.view.active .plume-v2-header-context strong { margin-top: 5px; color: #fff; font-size: 15px; }
-
 #plume.view.active .plume-v2-workspace {
   display: grid;
   width: 100%;
@@ -540,11 +474,6 @@
 #plume.view.active .plume-command-facts > div { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid rgba(145,190,224,.18); padding-bottom: 4px; }
 #plume.view.active .plume-command-facts dt { color: #a9c0d2; font-size: 11px; }
 #plume.view.active .plume-command-facts dd { margin: 0; color: #fff; font-size: 11px; text-align: right; }
-#plume.view.active .plume-guidance-card { border-color: #1ba676; }
-#plume.view.active .plume-guidance-card summary { color: #d8fff0; cursor: pointer; font-size: 12px; font-weight: 850; }
-#plume.view.active .plume-guidance-card p { margin: 6px 0 0; color: #c7dedb; font-size: 11px; }
-#plume.view.active .plume-guidance-card > details { display: block; margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(145,190,224,.18); }
-#plume.view.active .plume-guidance-card > details p { overflow-wrap: anywhere; }
 #plume.view.active .plume-readiness-card { border-color: #d39b0c; }
 #plume.view.active .plume-readiness-card .plume-intelligence-heading h2 { color: #ffd323; }
 #plume.view.active .plume-command-details { display: none; }
@@ -559,25 +488,10 @@
   display: none !important;
 }
 
-/* Legacy threat-zone demographics remain in the DOM only for export/data
-   compatibility. The v2 right rail is the sole visible result presentation. */
-#plume-results-section,
-#plume-results-section[hidden],
-#plume.view.active #plume-results-section {
-  display: none !important;
-  visibility: hidden !important;
-  max-height: 0 !important;
-  overflow: hidden !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
 @media (max-width: 1300px) and (min-width: 951px) {
   #plume.view.active .plume-v2-workspace { grid-template-columns: minmax(260px, 20fr) minmax(0, 56fr) minmax(270px, 24fr); }
   #plume.view.active .plume-v2-location-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   #plume.view.active .plume-compass-control { right: 452px; }
-  #plume.view.active .plume-v2-header { grid-template-columns: 1fr; min-height: 174px; }
-  #plume.view.active .plume-v2-header-context { min-height: 64px; }
   #plume.view.active .plume-location-field { grid-column: 1 / -1; }
 }
 @media (max-width: 950px) {
@@ -589,9 +503,6 @@
   #plume.view.active .plume-compass-control { top: auto; right: 12px; bottom: 78px; }
 }
 @media (max-width: 620px) {
-  #plume.view.active .plume-v2-header { grid-template-columns: 1fr; padding: 12px; }
-  #plume.view.active .plume-v2-header-context { grid-template-columns: 1fr; }
-  #plume.view.active .plume-v2-header-context > div { min-height: 58px; }
   #plume.view.active .plume-release-grid,
   #plume.view.active .plume-weather-grid,
   #plume.view.active .plume-criteria-grid { grid-template-columns: 1fr; }
@@ -601,45 +512,6 @@
   #plume.view.active .plume-v2-location-toolbar { grid-template-columns: 1fr 1fr; }
   #plume.view.active .plume-location-field { grid-column: 1 / -1; }
   #plume.view.active .plume-v2-map-column { min-height: 0; }
-}
-
-/* Plume map regression guardrails: controls live above the map, while the
-   camera cluster stays pinned to the map's upper-right corner. */
-#plume.view.active .plume-v2-header {
-  min-height: 132px;
-  grid-template-columns: minmax(0, 1fr) minmax(390px, 42%);
-  align-items: center;
-}
-#plume.view.active .plume-v2-header-copy {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 68px;
-  align-items: center;
-  gap: 10px;
-}
-#plume.view.active .plume-v2-header-copy .plume-hero-plume {
-  display: block;
-  grid-column: 2;
-  grid-row: 1;
-  justify-self: end;
-  width: 62px;
-  height: 48px;
-}
-#plume.view.active .plume-v2-header-copy .hazmat-page-hero-content {
-  grid-column: 1;
-  grid-row: 1;
-  min-width: 0;
-  display: grid;
-  align-content: center;
-  gap: 2px;
-}
-#plume.view.active .plume-v2-header-copy .plume-page-title {
-  max-width: 100%;
-  font-size: clamp(32px, 3.5vw, 50px);
-  line-height: .98;
-}
-#plume.view.active .plume-v2-header-copy .hazmat-hero-subtitle {
-  max-width: 38rem;
-  line-height: 1.1;
 }
 
 #plume.view.active .plume-map-shell { height: clamp(430px, calc(100dvh - 430px), 700px); min-height: 430px; max-height: 700px; }
@@ -719,33 +591,10 @@
 #plume.view.active .plume-weather-wind-copy small { color: #a9c5d7; font-size: 9px; line-height: 1.25; }
 #plume.view.active .plume-cws-sample { grid-column: 1 / -1; }
 
-@media (max-width: 950px) {
-  #plume.view.active .plume-v2-header { grid-template-columns: 1fr; }
-}
 @media (max-width: 620px) {
-  #plume.view.active .plume-v2-header-copy { grid-template-columns: 54px minmax(0, 1fr); gap: 7px; }
-  #plume.view.active .plume-v2-header-copy .plume-hero-plume { width: 50px; height: 40px; }
-  #plume.view.active .plume-v2-header-copy .plume-page-title { font-size: clamp(28px, 10vw, 42px); }
   #plume.view.active .plume-map-availability { left: 8px; max-width: calc(100% - 130px); }
   #plume.view.active .plume-compass-control { top: 8px; right: 8px; bottom: auto; }
 }
-
-/* Final Plume layout and verification polish. Keep these selectors scoped to
-   the Plume page so the shared dark-card system remains unchanged. */
-#plume.view.active .plume-v2-header-copy {
-  grid-template-columns: minmax(0, 1fr) 68px;
-}
-#plume.view.active .plume-v2-header-copy .hazmat-page-hero-content {
-  grid-column: 1;
-  grid-row: 1;
-}
-#plume.view.active .plume-v2-header-copy .plume-hero-plume {
-  grid-column: 2;
-  grid-row: 1;
-  justify-self: end;
-}
-#plume.view.active .plume-v2-header-copy .hazmat-hero-subtitle,
-#plume.view.active .plume-v2-header-copy .plume-mode-indicator { display: none; }
 
 #plume.view.active .plume-v2-workspace {
   align-items: stretch;
@@ -927,10 +776,8 @@ body.plume-map-maximized-open { overflow: hidden; }
   overflow: hidden;
   background: #020f1d;
 }
-#plume.view.active.plume-map-maximized .plume-v2-header,
 #plume.view.active.plume-map-maximized .plume-v2-input-column,
-#plume.view.active.plume-map-maximized .plume-v2-intelligence-column,
-#plume.view.active.plume-map-maximized .plume-results-section { display: none !important; }
+#plume.view.active.plume-map-maximized .plume-v2-intelligence-column { display: none !important; }
 #plume.view.active.plume-map-maximized .plume-v2-workspace,
 #plume.view.active.plume-map-maximized .plume-v2-map-column,
 #plume.view.active.plume-map-maximized .plume-v2-map-card {
@@ -952,7 +799,6 @@ body.plume-map-maximized-open { overflow: hidden; }
 #plume.view.active.plume-map-maximized .plume-map-maximize-button { top: 12px; left: 12px; }
 
 @media (max-width: 620px) {
-  #plume.view.active .plume-v2-header-copy { grid-template-columns: minmax(0, 1fr) 54px; }
   #plume.view.active .plume-weather-review .plume-weather-verification { grid-template-columns: 1fr; }
 }
 
@@ -1475,15 +1321,6 @@ body.plume-map-maximized-open { overflow: hidden; }
   #plume.view.active .plume-weather-glance-metrics { gap: 4px; }
 }
 
-/* The plume model header carries operational context; keep the title clear
-   without the decorative cone graphic. */
-#plume.view.active .plume-v2-header-copy {
-  grid-template-columns: minmax(0, 1fr);
-}
-#plume.view.active .plume-v2-header-copy .hazmat-page-hero-content {
-  grid-column: 1 / -1;
-}
-
 /* Runtime-generated vertical plume readouts stay compact, readable, and out
    of the map's operational controls. */
 #plume.view.active .plume-3d-envelope-status {
@@ -1551,4 +1388,192 @@ body.plume-map-maximized-open { overflow: hidden; }
   border-color: #ff5962;
   background: rgba(86, 8, 16, .96);
   color: #fff;
+}
+
+/* Reference dashboard composition: a 35% command rail beside a large,
+   near-square map. The calculation form and existing map DOM remain intact. */
+#plume.view.active {
+  grid-template-rows: auto auto minmax(0, 1fr);
+  overflow: auto;
+}
+#plume.view.active .plume-global-action-bar {
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: minmax(260px, 2.2fr) minmax(300px, 2.4fr) repeat(5, minmax(106px, 1fr));
+  gap: 8px;
+  align-items: end;
+  padding: 8px 10px;
+  border: 1px solid #1d648f;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #082540, #061a2e);
+}
+#plume.view.active .plume-global-action-bar .plume-map-button {
+  min-height: 40px;
+  border-radius: 7px;
+}
+#plume.view.active .plume-global-action-bar .guided-response-toolbar-button {
+  border-color: #1ba676;
+  background: linear-gradient(180deg, #0ca968, #087444);
+  color: #fff;
+}
+#plume.view.active .plume-global-action-bar .guided-response-toolbar-button:hover,
+#plume.view.active .plume-global-action-bar .guided-response-toolbar-button:focus-visible {
+  border-color: #7ff0c2;
+  background: linear-gradient(180deg, #16c17b, #0a8b53);
+}
+#plume.view.active .plume-global-action-bar .plume-map-mode-controls {
+  display: flex;
+  min-width: 0;
+  min-height: 40px;
+  align-items: center;
+  gap: 5px;
+  padding: 0 8px;
+  border: 1px solid #2672a5;
+  border-radius: 7px;
+  background: #09233b;
+  overflow: hidden;
+}
+#plume.view.active .plume-global-action-bar .plume-map-mode-controls .plume-map-control-label { flex: 0 0 auto; }
+#plume.view.active .plume-global-action-bar .plume-map-mode-controls .plume-layer-button {
+  min-width: 0;
+  min-height: 30px;
+  padding: 5px 7px;
+  border-radius: 5px;
+  font-size: 10px;
+}
+
+#plume.view.active .plume-v2-workspace {
+  grid-template-columns: minmax(310px, 35fr) minmax(0, 65fr);
+  grid-template-rows: auto auto;
+  grid-template-areas: "inputs map" "threat map";
+  align-items: start;
+  min-height: 0;
+}
+#plume.view.active .plume-v2-workspace > .plume-v2-input-column {
+  grid-area: inputs;
+  align-self: start;
+  height: auto;
+}
+#plume.view.active .plume-v2-workspace > .plume-v2-map-column {
+  grid-area: map;
+  grid-row: 1 / -1;
+  align-self: stretch;
+  min-height: clamp(680px, calc(100dvh - 260px), 960px);
+}
+#plume.view.active .plume-v2-workspace > .plume-v2-intelligence-column {
+  display: contents;
+}
+#plume.view.active .plume-v2-intelligence-column > .plume-intelligence-card:first-child {
+  grid-area: threat;
+  align-self: start;
+  min-width: 0;
+}
+#plume.view.active .plume-v2-intelligence-column > .plume-readiness-card,
+#plume.view.active .plume-v2-intelligence-column > .plume-command-details,
+#plume.view.active .plume-v2-intelligence-column > .plume-command-actions { display: none; }
+#plume.view.active .plume-criteria-section { display: none; }
+
+#plume.view.active .plume-v2-map-card {
+  height: min(960px, 65vw);
+  min-height: 680px;
+}
+#plume.view.active .plume-v2-map-controls {
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  min-height: 38px;
+  padding: 5px 8px;
+  overflow: visible;
+}
+#plume.view.active .plume-map-mode-controls,
+#plume.view.active .plume-map-layer-controls,
+#plume.view.active .plume-map-action-controls {
+  flex-wrap: wrap;
+  min-width: 0;
+  padding-right: 9px;
+}
+
+#plume.view.active .plume-model-section > summary {
+  cursor: pointer;
+  list-style: none;
+}
+#plume.view.active .plume-model-section > summary::-webkit-details-marker { display: none; }
+#plume.view.active .plume-model-section > summary::after {
+  content: '⌄';
+  color: #dcecf6;
+  font-size: 19px;
+  line-height: 1;
+  transform: rotate(0deg);
+}
+#plume.view.active .plume-model-section[open] > summary::after { transform: rotate(180deg); }
+
+#plume.view.active .plume-intelligence-heading > div:first-child {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 7px;
+}
+#plume.view.active .plume-intelligence-heading > div:first-child .plume-stage-number { grid-row: 1 / span 2; }
+#plume.view.active .plume-intelligence-heading > div:first-child .plume-eyebrow,
+#plume.view.active .plume-intelligence-heading > div:first-child h2 { grid-column: 2; }
+#plume.view.active .plume-intelligence-heading-actions { display: flex; align-items: center; gap: 6px; }
+#plume.view.active .plume-card-toggle {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #5b91af;
+  border-radius: 5px;
+  background: #09233b;
+  color: #fff;
+  cursor: pointer;
+  font-size: 17px;
+  line-height: 1;
+}
+#plume.view.active .plume-card-toggle[aria-expanded="false"] { transform: rotate(180deg); }
+#plume.view.active .plume-zone-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  margin: 0 0 8px;
+}
+#plume.view.active .plume-zone-tabs button {
+  min-height: 32px;
+  border: 1px solid #477d9d;
+  border-radius: 5px;
+  background: #09233b;
+  color: #dcecf6;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 850;
+}
+#plume.view.active .plume-zone-tabs button.active,
+#plume.view.active .plume-zone-tabs button:hover,
+#plume.view.active .plume-zone-tabs button:focus-visible {
+  border-color: #ffd323;
+  background: #ffd323;
+  color: #061a2e;
+}
+#plume.view.active .plume-weather-wind-copy strong,
+#plume.view.active .plume-weather-glance-reading strong { white-space: pre-line; }
+
+@media (max-width: 1100px) and (min-width: 951px) {
+  #plume.view.active .plume-global-action-bar { grid-template-columns: minmax(220px, 1.8fr) minmax(260px, 2fr) repeat(5, minmax(86px, 1fr)); }
+  #plume.view.active .plume-v2-workspace { grid-template-columns: minmax(280px, 38fr) minmax(0, 62fr); }
+}
+@media (max-width: 950px) {
+  #plume.view.active .plume-global-action-bar { grid-template-columns: minmax(0, 1fr) repeat(5, minmax(0, 1fr)); }
+  #plume.view.active .plume-global-action-bar .plume-location-field { grid-column: 1 / -1; }
+  #plume.view.active .plume-global-action-bar .plume-map-mode-controls { grid-column: 1 / -1; }
+  #plume.view.active .plume-v2-workspace {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: "inputs" "threat" "map";
+  }
+  #plume.view.active .plume-v2-workspace > .plume-v2-map-column { grid-row: auto; min-height: 0; }
+  #plume.view.active .plume-v2-map-card { height: min(720px, 76vw); min-height: 500px; }
+}
+@media (max-width: 620px) {
+  #plume.view.active .plume-global-action-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #plume.view.active .plume-global-action-bar .plume-location-field,
+  #plume.view.active .plume-global-action-bar .guided-response-toolbar-button { grid-column: 1 / -1; }
+  #plume.view.active .plume-v2-map-card { height: 520px; min-height: 520px; }
+  #plume.view.active .plume-zone-tabs button { font-size: 9px; }
 }

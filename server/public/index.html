@@ -820,7 +820,7 @@
           <section id="guided-response" class="view guided-response-page" data-page-root="guided-response" data-page-name="Guided Response">
             <header class="hazmat-page-hero variant-guided-response guided-response-heading">
               <div class="guided-response-brand">
-                <img class="guided-response-logo" src="assets/HAZSCOPE-New-Logo.png?v=2" alt="HAZSCOPE — Incident Intelligence + Response Planning" hidden />
+                <img class="guided-response-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" hidden />
                 <div class="hazmat-page-hero-content">
                   <h1 class="hazmat-hero-title">Guided Response</h1>
                   <p class="hazmat-hero-subtitle">Tactical Decision Support.</p>
@@ -859,26 +859,34 @@
           </section>
 
           <section id="plume" class="view plume-model-page" data-page-root="plume-model" data-page-name="Plume Model">
-            <header class="plume-v2-header hazmat-page-hero hazmat-page-hero-compact variant-plume">
-              <div class="plume-v2-header-copy">
-                <div class="hazmat-page-hero-content"><h1 class="plume-page-title hazmat-hero-title">Plume Model</h1><small id="plume-header-chemical" hidden>Select a verified chemical for operational plume planning.</small><small id="plume-header-identifiers" hidden>CAS / UN / ERG pending</small></div>
+            <form class="plume-v2-location-toolbar plume-global-action-bar" id="plume-map-address-form">
+              <label class="plume-location-field" for="plume-map-address-input">
+                <span>Plume Location</span>
+                <input class="plume-location-input" id="plume-map-address-input" type="text" placeholder="Enter address, coordinates, or use incident location" autocomplete="street-address" />
+              </label>
+              <button class="plume-map-button secondary" id="use-plume-incident-location-btn" type="button">Use Incident Address</button>
+              <button class="plume-map-button secondary" type="submit">Manual Entry</button>
+              <div class="plume-map-mode-controls" role="group" aria-label="Map mode">
+                <span class="plume-map-control-label">MAP MODE</span>
+                <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
+                <button class="plume-layer-button" type="button" data-plume-map-view="street" aria-pressed="false">Street</button>
+                <button class="plume-layer-button" type="button" data-plume-map-view="terrain3d" aria-pressed="false">3D Terrain</button>
+                <button class="plume-layer-button" type="button" data-plume-map-view="plume3d" aria-pressed="false">3D Plume</button>
               </div>
-              <div class="plume-v2-header-context" aria-label="Current plume context">
-                <div><span>Location</span><strong id="plume-header-location">Awaiting location data</strong></div>
-                <div><span>Weather</span><strong id="plume-header-weather">Awaiting weather data</strong></div>
-                <div><span>Model</span><strong id="plume-header-status">Awaiting Data</strong></div>
-              </div>
-            </header>
+              <button class="module-btn plume-map-button guided-response-toolbar-button" type="button" data-command-view="guided-response">Guided Response</button>
+              <button class="plume-map-button primary" id="plot-plume-btn" type="button" disabled>Plot Plume</button>
+              <button class="module-btn plume-map-button secondary plume-live-radar-link" type="button" data-view="map">Open Live Map</button>
+            </form>
             <div class="plume-v2-workspace">
               <aside class="plume-v2-input-column" aria-label="Plume model inputs">
             <form class="plume-model-controls" id="plume-model-form">
               <div class="plume-model-input-grid">
-                <section class="plume-model-section">
-                  <header class="plume-model-section-heading">
+                <details class="plume-model-section" open>
+                  <summary class="plume-model-section-heading">
                     <span class="plume-stage-number" aria-hidden="true">1</span>
                     <div><strong>Chemical Release</strong><small>Enter the chemical and release parameters.</small></div>
                     <span class="plume-card-accent" aria-hidden="true"></span>
-                  </header>
+                  </summary>
                   <div class="plume-model-section-grid plume-release-grid">
                     <div class="plume-model-field plume-chemical-field plume-required-field">
                       <div class="plume-field-label-row">
@@ -985,12 +993,12 @@
                       </dl>
                     </details>
                   </div>
-                </section>
-                <section class="plume-model-section plume-weather-section" id="plume-weather-data-panel" aria-labelledby="plume-weather-data-heading">
-                  <header class="plume-model-section-heading">
+                </details>
+                <details class="plume-model-section plume-weather-section" id="plume-weather-data-panel" open>
+                  <summary class="plume-model-section-heading">
                     <span class="plume-stage-number" aria-hidden="true">2</span>
                     <div><strong id="plume-weather-data-heading">Weather Conditions</strong><small>Wind, temperature, stability, and roughness drive the current model.</small></div>
-                  </header>
+                  </summary>
                   <div class="plume-model-section-grid plume-weather-grid">
                     <div class="plume-weather-source-row">
                       <label class="plume-model-field" for="plume-weather-source">
@@ -1081,7 +1089,7 @@
                       </dl>
                     </details>
                   </div>
-                </section>
+                </details>
                 <section class="plume-weather-at-a-glance" aria-label="Current weather and wind direction">
                   <div class="plume-weather-glance-main">
                     <div class="plume-weather-glance-compass" aria-hidden="true">
@@ -1137,24 +1145,7 @@
 
               <main class="plume-v2-map-column">
                 <article class="plume-v2-map-card">
-                  <form class="plume-v2-location-toolbar" id="plume-map-address-form">
-                    <label class="plume-location-field" for="plume-map-address-input">
-                      <span>Plume Location</span>
-                      <input class="plume-location-input" id="plume-map-address-input" type="text" placeholder="Enter address, coordinates, or use incident location" autocomplete="street-address" />
-                    </label>
-                    <button class="plume-map-button secondary" id="use-plume-incident-location-btn" type="button">Use Incident Address</button>
-                    <button class="plume-map-button secondary" type="submit">Manual Entry</button>
-                    <button class="plume-map-button primary" id="plot-plume-btn" type="button" disabled>Plot Plume</button>
-                    <button class="module-btn plume-map-button secondary plume-live-radar-link" type="button" data-view="map">Open Live Map</button>
-                  </form>
                   <div class="plume-v2-map-controls" role="group" aria-label="Plume map controls">
-                      <div class="plume-map-mode-controls" role="group" aria-label="Map mode">
-                        <span class="plume-map-control-label">MAP MODE</span>
-                        <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
-                        <button class="plume-layer-button" type="button" data-plume-map-view="street" aria-pressed="false">Street</button>
-                        <button class="plume-layer-button" type="button" data-plume-map-view="terrain3d" aria-pressed="false">3D Terrain</button>
-                        <button class="plume-layer-button" type="button" data-plume-map-view="plume3d" aria-pressed="false">3D Plume</button>
-                      </div>
                       <div class="plume-map-layer-controls" role="group" aria-label="Map layers and overlays">
                         <span class="plume-map-control-label">LAYERS</span>
                         <button class="plume-layer-button active" type="button" data-plume-layer="zones" aria-pressed="true">Threat Zones</button>
@@ -1227,8 +1218,9 @@
 
               <aside class="plume-v2-intelligence-column" aria-label="Threat intelligence and command actions">
                 <section class="plume-intelligence-card">
-                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Threat intelligence</span><h2>Threat Zone Results</h2></div><span class="plume-status-badge" id="plume-zone-meaning-summary">Not Modeled</span></header>
+                  <header class="plume-intelligence-heading"><div><span class="plume-stage-number" aria-hidden="true">3</span><span class="plume-eyebrow">Threat intelligence</span><h2>Threat Zone Results</h2></div><div class="plume-intelligence-heading-actions"><span class="plume-status-badge" id="plume-zone-meaning-summary">Not Modeled</span><button class="plume-card-toggle" type="button" data-plume-card-toggle="threat" aria-expanded="true" aria-controls="plume-command-zone-summary">⌃</button></div></header>
                   <p id="plume-command-model-summary" class="plume-intelligence-note">Model: Awaiting verified chemical and release inputs.</p>
+                  <div class="plume-zone-tabs" role="tablist" aria-label="Threat zone views"><button class="active" type="button" role="tab" aria-selected="true">AEGL Zones</button><button type="button" role="tab" aria-selected="false">Distance Table</button><button type="button" role="tab" aria-selected="false">Model Details</button></div>
                   <div id="plume-command-zone-summary" class="plume-zone-summary" aria-live="polite">
                     <article class="plume-zone-result level-3" data-zone-level="3">
                       <span class="plume-zone-result-icon" aria-hidden="true">☠</span>
@@ -1257,17 +1249,6 @@
                     <div><dt>Weather Status</dt><dd id="plume-command-weather-status">No Current Data Exists</dd></div>
                     <div><dt>Computed</dt><dd id="plume-model-time-summary">No Current Data Exists</dd></div>
                   </dl></details>
-                </section>
-
-                <section class="plume-intelligence-card plume-guidance-card">
-                  <header class="plume-intelligence-heading"><div><span class="plume-eyebrow">Operational response</span><h2>Guided Response</h2></div></header>
-                  <p class="plume-intelligence-note">Consumes the current plume result, verified chemical guidance, weather, and mapped receptors.</p>
-                  <details open><summary>Protective Action <small id="plume-guided-protective-source">OPERATIONAL INFERENCE</small></summary><p id="plume-guided-protective">Available after a valid model response.</p></details>
-                  <details><summary>Tactical Priorities <small>MODEL-DERIVED + OPERATIONAL INFERENCE</small></summary><p id="plume-guided-tactical">Available after a valid model response.</p></details>
-                  <details><summary>Critical Facilities <small>NCES / HIFLD POINT-IN-POLYGON</small></summary><p id="plume-guided-critical">Authoritative facility records load after a valid plume result.</p></details>
-                  <details><summary>Monitoring <small id="plume-guided-monitoring-source">CHEMICAL-DERIVED + OPERATIONAL INFERENCE</small></summary><p id="plume-guidance-requirements">Available after a model response.</p></details>
-                  <details><summary>Command Considerations <small>OPERATIONAL INFERENCE</small></summary><p id="plume-guided-command">Available after a valid model response.</p></details>
-                  <details><summary>Assumptions / Limitations</summary><p id="plume-guidance-assumptions">Available after a model response.</p><p id="plume-guidance-limitations">Available after a model response.</p></details>
                 </section>
 
                 <section class="plume-intelligence-card plume-readiness-card">
@@ -1302,75 +1283,6 @@
                 </section>
               </aside>
             </div>
-
-            <section class="plume-results-section" id="plume-results-section" aria-label="Plume results" hidden>
-              <div class="plume-results-grid">
-                <article class="plume-threat-card plume-demographics" id="plume-demographics">
-                  <header class="plume-card-heading"><h3>Threat Zone</h3><span class="status-pill" id="demographics-zone-badge">No zone</span></header>
-                  <div class="plume-selected-zone"><span>Selected Zone</span><strong id="threat-zone-selected-area">No zone selected</strong></div>
-                  <p id="demographics-zone-summary" class="demographics-summary">Select a plume zone or protective-action area to view affected-area estimates.</p>
-                  <div class="plume-threat-metrics" aria-live="polite">
-                    <article class="plume-threat-metric" data-threat-metric="residentialHomes"><span class="plume-threat-label">Residential Homes</span><strong class="plume-threat-value" id="demographics-structures">No Current Data Exists</strong><small id="threat-zone-residential-method"></small></article>
-                    <article class="plume-threat-metric" data-threat-metric="currentPopulation"><span class="plume-threat-label">Current Population</span><strong class="plume-threat-value" id="demographics-current-population">No Current Data Exists</strong><small id="threat-zone-population-method"></small></article>
-                    <article class="plume-threat-metric" data-threat-metric="criticalInfrastructure"><span class="plume-threat-label">Critical Infrastructure</span><strong class="plume-threat-value" id="demographics-critical">No Current Data Exists</strong><small id="threat-zone-critical-method"></small></article>
-                    <article class="plume-threat-metric" data-threat-metric="healthcareFacilities"><span class="plume-threat-label">Healthcare Facilities</span><strong class="plume-threat-value" id="demographics-healthcare">No Current Data Exists</strong><small id="threat-zone-healthcare-method"></small></article>
-                    <article class="plume-threat-metric" data-threat-metric="schools"><span class="plume-threat-label">Schools</span><strong class="plume-threat-value" id="demographics-schools">No Current Data Exists</strong><small id="threat-zone-schools-method"></small></article>
-                  </div>
-                  <p class="demographics-estimate-warning">Planning estimates only. Verify affected areas with local GIS, field reconnaissance, field monitoring, and Incident Command.</p>
-                </article>
-              </div>
-
-              <details class="plume-model-details">
-                <summary>Model Details</summary>
-                <div class="plume-model-details-grid">
-                  <div><span>Model Mode</span><strong id="plume-model-mode-badge">Blocked</strong></div>
-                  <div><span>Confidence</span><strong id="plume-confidence-badge">Insufficient Data</strong></div>
-                  <div><span>Validation Status</span><strong id="plume-model-status-summary">No Current Data Exists</strong></div>
-                  <div><span>Source Strength Status</span><strong id="plume-source-strength-badge">Cannot Calculate</strong><small id="plume-source-strength-detail">Enter release information.</small></div>
-                  <div><span>Weather Quality</span><strong id="plume-model-weather-quality">See Weather Snapshot</strong></div>
-                  <div><span>Timestamp</span><strong id="plume-model-details-time">No Current Data Exists</strong></div>
-                </div>
-                <dl class="plume-technical-details">
-                  <div><dt>Incident Name</dt><dd id="plume-summary-incident-name"></dd></div>
-                  <div><dt>Incident Mode</dt><dd id="plume-mode-summary"></dd></div>
-                  <div><dt>GPS Location</dt><dd id="plume-gps-summary"></dd></div>
-                  <div><dt>Location Source</dt><dd id="plume-location-source"></dd></div>
-                  <div><dt>Weather Source Details</dt><dd id="open-meteo-summary"></dd></div>
-                  <div><dt>Weather Station</dt><dd id="nws-station-summary"></dd></div>
-                  <div><dt>Weather Station Details</dt><dd id="nws-weather-summary"></dd></div>
-                  <div><dt>Observation Time</dt><dd id="nws-observation-summary"></dd></div>
-                  <div><dt>Model Result</dt><dd id="backend-model-summary"></dd></div>
-                  <div><dt>Model Assumptions / Limitations</dt><dd id="plume-limitations-summary"></dd></div>
-                  <div><dt>Full Text Summary</dt><dd id="plume-text-summary"></dd></div>
-                  <div><dt>Terrain Status</dt><dd id="plume-model-terrain-status">Flat-ground planning baseline; no terrain correction is applied.</dd></div>
-                </dl>
-                <div class="plume-planning-notices">
-                  <p>HAZSCOPE is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.</p>
-                  <p>Plume results are planning estimates only and are not a substitute for field monitoring, official modeling, or Incident Command decision-making.</p>
-                  <p>Missing, outdated, or unverified data should be treated as No Current Data Exists until confirmed by an approved source.</p>
-                  <p>Weather data source and observation time must be verified. Stale or manually entered weather can significantly affect plume output.</p>
-                </div>
-                <details class="threat-zone-estimate-details" hidden>
-                  <summary>Threat Zone Estimate Details</summary>
-                  <dl>
-                    <div data-threat-detail="censusPopulation" hidden><dt>Nearby Census population</dt><dd id="demographics-population"></dd></div>
-                    <div data-threat-detail="censusHouseholds" hidden><dt>Nearby Census households</dt><dd id="demographics-census-households"></dd></div>
-                    <div data-threat-detail="buildingFootprints" hidden><dt>Building footprints counted</dt><dd id="threat-zone-detail-buildings"></dd></div>
-                    <div data-threat-detail="nursing" hidden><dt>Nursing / assisted living</dt><dd id="demographics-nursing"></dd></div>
-                    <div data-threat-detail="businesses" hidden><dt>Businesses / industrial sites</dt><dd id="demographics-businesses"></dd></div>
-                    <div data-threat-detail="criticalReceptors" hidden><dt>Critical receptors</dt><dd id="demographics-critical-receptors"></dd></div>
-                    <div data-threat-detail="protectiveAction" hidden><dt>Protective action</dt><dd id="demographics-protective-action"></dd></div>
-                    <div data-threat-detail="householdMethod" hidden><dt>Residential estimate method</dt><dd id="demographics-household-method"></dd></div>
-                    <div data-threat-detail="householdStatus" hidden><dt>Confidence / status</dt><dd id="demographics-household-status"></dd></div>
-                    <div data-threat-detail="householdLimitations" hidden><dt>Limitations</dt><dd id="demographics-household-limitations"></dd></div>
-                    <div data-threat-detail="legacyHousing" hidden><dt>Impacted households</dt><dd id="demographics-housing"></dd></div>
-                  </dl>
-                </details>
-                <p id="demographics-source-status" class="demographics-source-status">Select an affected area to load available selected-zone data.</p>
-                <span id="threat-zone-basis" hidden></span><span id="threat-zone-area" hidden></span><span id="threat-zone-method" hidden></span><span id="threat-zone-confidence" hidden></span><span id="threat-zone-generated" hidden></span>
-              </details>
-            </section>
-
           </section>
 
           <section id="map" class="view live-map-page" data-page-root="live-map" data-page-name="Live Map">

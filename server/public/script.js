@@ -594,8 +594,6 @@ function activatePage(targetId, { preserveHazardState = false, skipPlumeInitiali
   updatePageActivationState(targetId);
   document.documentElement.dataset.activeWorkspace = targetId;
   window.HazMatIQ.activePageContext = activationContext;
-  const legacyPlumeResults = document.getElementById('plume-results-section');
-  if (legacyPlumeResults && targetId !== 'plume') legacyPlumeResults.hidden = true;
   window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   syncCommandBarContext();
   const plumeMapWorkspace = document.querySelector('.plume-v2-workspace');
@@ -1573,7 +1571,6 @@ function renderSystemNotification() {
 
 function updatePlumeModeLabel() {
   const active = Boolean(getActiveIncident());
-  setText('plume-mode-summary', active ? 'Active Incident Mode' : 'Planning Mode');
 }
 
 function readPlanningState() {
@@ -4602,6 +4599,226 @@ function createMitigationDecisionSupport(record) {
   return section;
 }
 
+function createGuidedSourceTrace(sources) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'guided-source-trace';
+  const uniqueSources = [];
+  (Array.isArray(sources) ? sources : []).forEach((source) => {
+    const key = `${source?.label || ''}|${source?.title || ''}|${source?.basis || ''}`;
+    if (source && !uniqueSources.some((item) => item.key === key)) uniqueSources.push({ key, source });
+  });
+  if (!uniqueSources.length) {
+    const missing = document.createElement('span');
+    missing.className = 'guided-source-missing';
+    missing.textContent = 'SOURCE NOT AVAILABLE';
+    wrapper.append(missing);
+    return wrapper;
+  }
+  uniqueSources.forEach(({ source }) => {
+    const disclosure = document.createElement('details');
+    disclosure.className = 'guided-source-disclosure';
+    const summary = document.createElement('summary');
+    summary.textContent = `SOURCE · ${source.label || 'Needs Verification'}`;
+    const detail = document.createElement('div');
+    detail.className = 'guided-source-detail';
+    const title = document.createElement('strong');
+    title.textContent = source.title || source.label || 'Source record';
+    const basis = document.createElement('span');
+    basis.textContent = source.basis || 'Specific source basis unavailable.';
+    detail.append(title, basis);
+    if (source.reference) {
+      const reference = document.createElement('small');
+      reference.textContent = `Reference: ${source.reference}`;
+      detail.append(reference);
+    }
+    disclosure.append(summary, detail);
+    wrapper.append(disclosure);
+  });
+  return wrapper;
+}
+
+function createGuidedChecklist(items) {
+  const list = document.createElement('ul');
+  list.className = 'guided-command-checklist';
+  (Array.isArray(items) ? items : []).forEach((item) => {
+    const row = document.createElement('li');
+    const box = document.createElement('span');
+    box.className = `guided-check-box guided-check-${String(item?.state || 'REQUIRES_VERIFICATION').toLowerCase()}`;
+    box.setAttribute('aria-hidden', 'true');
+    box.textContent = item?.state === 'UNKNOWN' ? '!' : '□';
+    const label = document.createElement('span');
+    label.textContent = item?.label || noCurrentDataText;
+    row.append(box, label);
+    list.append(row);
+  });
+  return list;
+}
+
+function createGuidedFactGrid(facts) {
+  const grid = document.createElement('dl');
+  grid.className = 'guided-command-facts';
+  (Array.isArray(facts) ? facts : []).forEach((fact) => {
+    const row = document.createElement('div');
+    row.className = fact?.emphasis ? 'is-emphasis' : '';
+    const label = document.createElement('dt');
+    label.textContent = fact?.label || 'Fact';
+    const value = document.createElement('dd');
+    value.textContent = guidedDisplayValue(fact?.value);
+    row.append(label, value);
+    grid.append(row);
+  });
+  return grid;
+}
+
+function createGuidedBranches(branches) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'guided-command-branches';
+  (Array.isArray(branches) ? branches : []).forEach((branch) => {
+    const branchCard = document.createElement('details');
+    branchCard.className = 'guided-branch-card';
+    const summary = document.createElement('summary');
+    summary.textContent = `${branch.type === 'fire' ? 'FIRE' : 'RELEASE'} · ${branch.title}`;
+    const body = document.createElement('div');
+    body.className = 'guided-branch-body';
+    body.append(createGuidedChecklist((branch.facts || []).map((fact) => ({ label: fact, state: 'SOURCE_BACKED' }))));
+    body.append(createGuidedSourceTrace(branch.sources));
+    branchCard.append(summary, body);
+    wrapper.append(branchCard);
+  });
+  return wrapper;
+}
+
+function createGuidedCommandCard(stage) {
+  const card = document.createElement('details');
+  card.className = 'guided-command-card';
+  card.dataset.step = stage.id || '';
+  card.dataset.state = stage.stepState || 'UPCOMING';
+  card.open = stage.stepState === 'CURRENT' || stage.stepState === 'COMPLETE';
+
+  const summary = document.createElement('summary');
+  summary.className = 'guided-command-card-summary';
+  const number = document.createElement('span');
+  number.className = 'guided-command-number';
+  number.textContent = String(stage.number || '');
+  const title = document.createElement('span');
+  title.className = 'guided-command-title';
+  title.textContent = stage.title || 'Command step';
+  const state = document.createElement('strong');
+  state.className = 'guided-command-state';
+  state.textContent = stage.stepState || 'UPCOMING';
+  const status = document.createElement('span');
+  status.className = 'guided-command-status';
+  status.textContent = stage.status || 'VERIFY';
+  summary.append(number, title, state, status);
+
+  const body = document.createElement('div');
+  body.className = 'guided-command-card-body';
+  const actionLabel = document.createElement('span');
+  actionLabel.className = 'guided-command-action-label';
+  actionLabel.textContent = stage.status === 'ACTION REQUIRED' ? 'ACTION REQUIRED' : 'RECOMMENDED INITIAL ACTION';
+  const action = document.createElement('p');
+  action.className = 'guided-command-action';
+  action.textContent = stage.action || noCurrentDataText;
+  body.append(actionLabel, action);
+
+  const factsHeading = document.createElement('h4');
+  factsHeading.textContent = 'CRITICAL FACTS';
+  body.append(factsHeading, createGuidedFactGrid(stage.criticalFacts));
+
+  const verifyHeading = document.createElement('h4');
+  verifyHeading.textContent = 'VERIFICATION ITEMS';
+  body.append(verifyHeading, createGuidedChecklist(stage.verificationItems));
+
+  if (stage.branches?.length) body.append(createGuidedBranches(stage.branches));
+
+  if (stage.why) {
+    const why = document.createElement('details');
+    why.className = 'guided-command-why';
+    const whySummary = document.createElement('summary');
+    whySummary.textContent = 'WHY? Technical rationale';
+    const whyText = document.createElement('p');
+    whyText.textContent = stage.why;
+    why.append(whySummary, whyText);
+    body.append(why);
+  }
+
+  const sourceHeading = document.createElement('h4');
+  sourceHeading.textContent = 'SOURCE';
+  body.append(sourceHeading, createGuidedSourceTrace(stage.sources));
+  if (stage.requiresICApproval) {
+    const approval = document.createElement('p');
+    approval.className = 'guided-command-approval';
+    approval.textContent = 'INCIDENT COMMAND APPROVAL REQUIRED';
+    body.append(approval);
+  }
+  card.append(summary, body);
+  return card;
+}
+
+function createGuidedCriticalActionBar(model) {
+  const bar = document.createElement('section');
+  bar.className = 'guided-critical-action-bar';
+  const heading = document.createElement('div');
+  heading.className = 'guided-critical-action-heading';
+  const eyebrow = document.createElement('span');
+  eyebrow.textContent = 'COMMAND PRIORITY';
+  const title = document.createElement('h2');
+  title.textContent = 'CRITICAL ACTION BAR';
+  const note = document.createElement('p');
+  note.textContent = 'Source-backed guidance · Verify before entry · Incident Command approval required';
+  heading.append(eyebrow, title, note);
+  const actions = document.createElement('div');
+  actions.className = 'guided-critical-actions';
+  [model.isolation, model.ppe, model.tacticalMode].forEach((stage) => {
+    const item = document.createElement('article');
+    const label = document.createElement('span');
+    label.textContent = stage.title;
+    const value = document.createElement('strong');
+    value.textContent = stage.action || noCurrentDataText;
+    item.append(label, value);
+    actions.append(item);
+  });
+  bar.append(heading, actions);
+  return bar;
+}
+
+function createGuidedCommandFlow(model) {
+  const flow = document.createElement('section');
+  flow.className = 'panel-card guided-command-flow';
+  const heading = document.createElement('header');
+  heading.className = 'guided-command-flow-heading';
+  const title = document.createElement('h2');
+  title.textContent = 'COMMAND FLOW';
+  const subtitle = document.createElement('p');
+  subtitle.textContent = 'Sequential tactical decision support from source-backed facts to command documentation.';
+  heading.append(title, subtitle);
+  const grid = document.createElement('div');
+  grid.className = 'guided-command-flow-grid';
+  (model.sequence || []).forEach((stage) => grid.append(createGuidedCommandCard(stage)));
+  flow.append(heading, grid);
+  return flow;
+}
+
+function createGuidedMobileStickyHeader(model, chemicalData) {
+  const sticky = document.createElement('section');
+  sticky.className = 'guided-mobile-sticky';
+  sticky.setAttribute('aria-label', 'Current Guided Response step');
+  [
+    ['Chemical', chemicalData.chemicalName],
+    ['Primary hazard', chemicalData.hazardClass],
+    ['Current step', model.currentStep],
+  ].forEach(([label, value]) => {
+    const item = document.createElement('div');
+    const term = document.createElement('span');
+    term.textContent = label;
+    const detail = document.createElement('strong');
+    detail.textContent = incidentCommandValue(value);
+    item.append(term, detail);
+    sticky.append(item);
+  });
+  return sticky;
+}
+
 function guidedRouteFirstAid(values, route) {
   const rows = Array.isArray(values) ? values : [];
   const pattern = new RegExp(`^(?:${route})\\s*:`, 'i');
@@ -4710,6 +4927,8 @@ function renderGuidedResponse() {
       lifeSafety: decisions.lifeSafety,
       mitigation: decisions.mitigation,
     },
+    guidedResponse: decisions.guidedResponse,
+    commandFlow: decisions.guidedResponse,
     mitigationDecisionSupport: decisions.mitigationDecisionSupport,
     evidenceObjects: decisions.evidenceObjects,
     missingDataWarnings: decisions.missingDataWarnings,
@@ -4742,82 +4961,11 @@ function renderGuidedResponse() {
     chemicalStrip.append(item);
   });
 
-  const flow = document.createElement('section');
-  flow.className = 'panel-card guided-tactical-flow';
-  const flowHeading = document.createElement('div');
-  flowHeading.className = 'guided-tactical-section-heading';
-  const flowTitle = document.createElement('h3');
-  flowTitle.textContent = 'Tactical Decision Flow';
-  const flowSubtitle = document.createElement('p');
-  flowSubtitle.textContent = 'Source-backed response planning using Chemical Companion, ERG, NIOSH, and CAMEO.';
-  flowHeading.append(flowTitle, flowSubtitle);
-  const identifyDecision = decisionRecord.tacticalDecisionFlow.identifyAnalyze;
-  const verifyDecision = decisionRecord.tacticalDecisionFlow.verifyIsolate;
-  const lifeDecision = decisionRecord.tacticalDecisionFlow.lifeSafety;
-  const mitigationDecision = decisionRecord.tacticalDecisionFlow.mitigation;
-  const missingText = (decision) => decision.missingData.length
-    ? decision.missingData.map((field) => `${field}: ${noCurrentDataText}`).join(' · ')
-    : 'No missing values identified in this decision.';
-  const actionText = (decision) => decision.tacticalActions.length
-    ? decision.tacticalActions.join(' · ')
-    : noCurrentDataText;
-  const identifyFlow = createTacticalFlowBox('Identify / Analyze', identifyDecision.status, [
-    { label: 'Primary Decision', value: identifyDecision.primaryDecision },
-    { label: 'Direct Guidance', value: identifyDecision.directGuidance },
-    { label: 'Selected Chemical', value: identifyDecision.specificValues.chemicalName },
-    { label: 'Master Record', value: identifyDecision.specificValues.masterChemicalId },
-    { label: 'Transportation ID', value: identifyDecision.specificValues.transportationIdentifier },
-    { label: 'Major Hazard', value: identifyDecision.specificValues.majorHazardClass },
-    { label: 'Missing Data', value: missingText(identifyDecision) },
-    { label: 'Confidence', value: identifyDecision.confidence },
-    { label: 'Tactical Actions', value: actionText(identifyDecision) },
-  ], identifyDecision.sourceSummary);
-  const verifyFlow = createTacticalFlowBox('Verify and Isolate', verifyDecision.status, [
-    { label: 'Primary Tactical Question', value: 'What isolation, protective action, and perimeter controls are supported by verified data?' },
-    { label: 'Primary Decision', value: verifyDecision.primaryDecision },
-    { label: 'Direct Guidance', value: verifyDecision.directGuidance },
-    { label: 'ERG Guide', value: verifyDecision.specificValues.ergGuide },
-    { label: 'Initial Isolation', value: verifyDecision.specificValues.initialIsolation },
-    { label: 'Large Spill Isolation', value: verifyDecision.specificValues.largeSpillIsolation },
-    { label: 'Protective Action', value: verifyDecision.specificValues.protectiveAction },
-    { label: 'Day / Night Protective Action', value: verifyDecision.specificValues.dayNightProtectiveAction },
-    { label: 'Evacuate / Shelter', value: verifyDecision.specificValues.evacuationShelter },
-    { label: 'Wind / Weather Verification', value: verifyDecision.specificValues.weatherStatus },
-    { label: 'Plume Estimate', value: verifyDecision.specificValues.plumeStatus },
-    { label: 'AEGL / LOC Endpoint', value: verifyDecision.specificValues.endpointSelected },
-    { label: 'Zone Meaning', value: verifyDecision.specificValues.zoneMeaning },
-    { label: 'Field Monitoring', value: verifyDecision.specificValues.fieldMonitoringRequirement },
-    { label: 'Missing Data', value: missingText(verifyDecision) },
-    { label: 'Tactical Actions', value: actionText(verifyDecision) },
-  ], verifyDecision.sourceSummary, true);
-  const lifeFlow = createTacticalFlowBox('Life Safety', lifeDecision.status, [
-    { label: 'Is SCBA Mandated?', value: lifeDecision.specificValues.scbaDecision },
-    { label: 'Recommended Protection Level', value: lifeDecision.specificValues.recommendedProtectionLevel },
-    { label: 'Why This Level', value: lifeDecision.specificValues.whySelected },
-    { label: 'Verify Before Entry', value: lifeDecision.specificValues.requiredVerification },
-    { label: 'Level C Status', value: lifeDecision.specificValues.levelCAllowed ? 'Allowed only while all verified conditions remain satisfied.' : `Blocked — ${lifeDecision.specificValues.levelCBlockedReason}` },
-    { label: 'Direct Guidance', value: lifeDecision.directGuidance },
-    { label: 'Cartridge Status', value: lifeDecision.specificValues.cartridgeStatus },
-    { label: 'Plume Planning Impact', value: lifeDecision.specificValues.plumePlanningImpact },
-    { label: 'Source-backed Limitations', value: lifeDecision.limitations },
-    { label: 'Missing Data', value: missingText(lifeDecision) },
-    { label: 'Tactical Actions', value: actionText(lifeDecision) },
-  ], lifeDecision.sourceSummary, true);
-  const mitigationFlow = createTacticalFlowBox('Mitigation', decisionRecord.tacticalDecisionFlow.mitigation.status, [
-    { label: 'Primary Decision', value: mitigationDecision.primaryDecision },
-    { label: 'Direct Guidance', value: mitigationDecision.directGuidance },
-    { label: 'Tactical Posture', value: mitigationDecision.specificValues.tacticalPosture },
-    { label: 'Entry / Non-entry', value: mitigationDecision.specificValues.entryDecision },
-    { label: 'Contain / Control', value: mitigationDecision.specificValues.spillReleaseControl },
-    { label: 'Non-intervention', value: mitigationDecision.specificValues.nonInterventionConsiderations },
-    { label: 'Neutralization', value: mitigationDecision.specificValues.neutralization },
-    { label: 'Vapor / fire control', value: decisionRecord.mitigationDecisionSupport.vaporFireControl },
-    { label: 'Runoff / environment', value: decisionRecord.mitigationDecisionSupport.environmentalRunoff },
-    { label: 'Missing Data', value: missingText(mitigationDecision) },
-    { label: 'Tactical Actions', value: actionText(mitigationDecision) },
-  ], decisionRecord.tacticalDecisionFlow.mitigation.sourceSummary, true);
-  flow.append(flowHeading, identifyFlow, createTacticalFlowArrow(), verifyFlow, createTacticalFlowArrow(), lifeFlow, createTacticalFlowArrow(), mitigationFlow);
-  container.append(chemicalStrip, flow, createMitigationDecisionSupport(decisionRecord));
+  const guidedResponse = decisionRecord.guidedResponse;
+  const mobileSticky = createGuidedMobileStickyHeader(guidedResponse, chemicalData);
+  const criticalActionBar = createGuidedCriticalActionBar(guidedResponse);
+  const flow = createGuidedCommandFlow(guidedResponse);
+  container.append(chemicalStrip, mobileSticky, criticalActionBar, flow);
 }
 
 const chemicalSearchForm = document.getElementById('chemical-search-form');
@@ -5940,7 +6088,6 @@ function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {
         : 'Identify a chemical before plotting a plume.')).catch((error) => {
         console.warn('[chemical-companion] optional threat-zone reset failed', error);
       });
-      setText('backend-model-summary', 'Run plume model to view result.');
     } catch (error) {
       console.warn('[chemical-companion] optional plume reset failed', error);
     }
@@ -7662,7 +7809,6 @@ async function syncPlumeLocationAddressFromMap(location) {
     plumeIncidentLocation = { ...location, address: coordinateText };
     setText('plume-map-address-status', `Map pin selected at ${coordinateText}. Address lookup unavailable.`);
   }
-  updatePlumeHeroContext();
 }
 
 function updateIncidentLocationFromMap(lng, lat, action) {
@@ -7683,11 +7829,8 @@ function updateIncidentLocationFromMap(lng, lat, action) {
   plumeSourceMarker?.setLngLat([location.lon, location.lat]);
   plumeLocationSelectionLocked = true;
   plumeIncidentLocation = location;
-  updatePlumeHeroContext();
   void syncPlumeLocationAddressFromMap(location);
   if (activePlumeCommand) {
-    setText('plume-gps-summary', `${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}`);
-    setText('plume-location-source', location.source);
     window.clearTimeout(plumeAutoReplotTimer);
     plumeAutoReplotTimer = window.setTimeout(() => {
       void plotPlumeFromControls(location);
@@ -7825,7 +7968,6 @@ function ensurePlumeMap(location = null) {
   // a release point or explicitly loaded the incident location.
   if (plumeLocationSelectionLocked && validLocation.source === 'Current device GPS') return plumeMapReady;
   plumeIncidentLocation = validLocation;
-  updatePlumeHeroContext();
   plumeMap.easeTo({ center: [validLocation.lon, validLocation.lat], zoom: Math.max(13, plumeMap.getZoom()), duration: 400 });
   if (!plumeSourceMarker) {
     plumeSourceMarker = new window.maplibregl.Marker({
@@ -7846,7 +7988,6 @@ function ensurePlumeMap(location = null) {
   } else {
     plumeSourceMarker.setLngLat([validLocation.lon, validLocation.lat]);
   }
-  updatePlumeHeroContext();
   return plumeMapReady;
 }
 
@@ -8172,7 +8313,6 @@ function setThreatIntelligence(next) {
       : threatIntelligence.affectedFacilities?.length
         ? threatIntelligence.affectedFacilities.map((facility) => `${facility.name} (${facility.category.replaceAll('_', ' ')})`).join(' · ')
         : '0 facilities identified';
-  setText('plume-guided-critical', guided);
   if (latestPlumeModelResult) updatePlumeRightRailZoneResults(latestPlumeModelResult);
 }
 
@@ -8264,31 +8404,7 @@ function facilityDisplayNames(facilities = []) {
   return facilities.map((facility) => facility.name).filter(Boolean);
 }
 
-function setDemographicMetric(id, value) {
-  const element = document.getElementById(id);
-  if (element) element.textContent = value;
-}
-
-function setThreatZoneMetric(metric, value, method, confidence, available) {
-  const card = document.querySelector(`[data-threat-metric="${metric}"]`);
-  if (!card) return;
-  card.hidden = false;
-  const valueElement = card.querySelector('strong');
-  const note = card.querySelector('small');
-  if (valueElement) valueElement.textContent = available
-    ? (Number.isFinite(Number(value)) ? Number(value).toLocaleString() : String(value))
-    : noCurrentDataText;
-  if (note) note.textContent = available ? [method, confidence].filter(Boolean).join(' · ') : '';
-}
-
-function setThreatZoneDetail(detail, value, available) {
-  const row = document.querySelector(`[data-threat-detail="${detail}"]`);
-  if (!row) return;
-  row.hidden = !available;
-  if (available) row.querySelector('dd').textContent = value;
-}
-
-function resetDemographics(message = 'Select a plume zone or protective-action area to view affected-area estimates.') {
+function resetThreatZoneImpactSummary() {
   demographicsRequestToken += 1;
   latestThreatZoneHouseholdEstimate = null;
   threatZoneImpactSummary = {
@@ -8300,32 +8416,6 @@ function resetDemographics(message = 'Select a plume zone or protective-action a
   };
   window.HazMatIQ ||= {};
   window.HazMatIQ.threatZoneImpactSummary = threatZoneImpactSummary;
-  const badge = document.getElementById('demographics-zone-badge');
-  if (badge) {
-    badge.textContent = 'No zone';
-    delete badge.dataset.zoneColor;
-  }
-  setText('demographics-zone-summary', message);
-  setText('threat-zone-selected-area', 'No zone selected');
-  setText('threat-zone-basis', noCurrentDataText);
-  setText('threat-zone-area', noCurrentDataText);
-  setText('threat-zone-method', noCurrentDataText);
-  setText('threat-zone-confidence', noCurrentDataText);
-  setText('threat-zone-generated', noCurrentDataText);
-  document.querySelectorAll('[data-threat-metric]').forEach((element) => {
-    element.hidden = false;
-    const value = element.querySelector('strong');
-    const note = element.querySelector('small');
-    if (value) value.textContent = noCurrentDataText;
-    if (note) note.textContent = '';
-  });
-  document.querySelectorAll('[data-threat-detail]').forEach((element) => { element.hidden = true; });
-  const details = document.querySelector('.threat-zone-estimate-details');
-  if (details) {
-    details.open = false;
-    details.hidden = true;
-  }
-  setText('demographics-source-status', 'Select an affected area to load available selected-zone data.');
 }
 
 function formatZoneDistance(meters) {
@@ -8340,11 +8430,6 @@ async function inspectThreatZone(feature) {
   const token = ++demographicsRequestToken;
   const properties = feature.properties || {};
   const colorName = properties.colorName || 'zone';
-  const badge = document.getElementById('demographics-zone-badge');
-  if (badge) {
-    badge.textContent = `${colorName.toUpperCase()} ZONE`;
-    badge.dataset.zoneColor = colorName;
-  }
   const isErgIsolation = properties.zoneId === 'erg-initial-isolation';
   const isErgProtective = properties.zoneId === 'erg-protective-action';
   const selectedAreaLabel = isErgIsolation
@@ -8360,15 +8445,6 @@ async function inspectThreatZone(feature) {
   const generatedAt = new Date().toISOString();
   const areaSquareMeters = threatZoneAreaSquareMeters(feature);
   const areaDisplay = formatThreatZoneArea(areaSquareMeters);
-  setText('demographics-zone-summary', [properties.label || selectedAreaLabel, formatZoneDistance(properties.maxDownwindM)].filter(Boolean).join(' · '));
-  setText('threat-zone-selected-area', selectedAreaLabel);
-  setText('threat-zone-basis', basis);
-  setText('threat-zone-area', areaDisplay);
-  setText('threat-zone-method', 'Loading selected-area data…');
-  setText('threat-zone-confidence', 'Needs Verification');
-  setText('threat-zone-generated', new Date(generatedAt).toLocaleString());
-  document.querySelectorAll('[data-threat-detail]').forEach((element) => { element.hidden = true; });
-  setText('demographics-source-status', 'Loading U.S. Census and authoritative facility GIS data…');
   if (plumeMap?.getLayer('hazmat-threat-zones-selection')) {
     plumeMap.setFilter('hazmat-threat-zones-selection', ['==', ['get', 'zoneId'], String(properties.zoneId)]);
   }
@@ -8424,39 +8500,6 @@ async function inspectThreatZone(feature) {
   const facilityMethod = facilityLookup?.status === 'available' || facilityLookup?.status === 'stale'
     ? 'Exact point-in-polygon against modeled threat zones'
     : 'No facility result available';
-  const selectedFacilities = occupancy?.facilities || [];
-  setText('plume-guided-critical', facilityLookup?.status === 'error'
-    ? 'Facility data unavailable — no zero inferred.'
-    : selectedFacilities.length
-      ? selectedFacilities.map((facility) => `${facility.name} (${facility.category.replaceAll('_', ' ')})`).join(' · ')
-      : '0 authoritative facilities matched this threat zone.');
-  setThreatZoneMetric('residentialHomes', residentialStructures, 'Building-footprint estimate', 'Needs Verification', residentialStructures !== null);
-  // Intersecting Census block totals are context only; they are not displayed as selected-area population.
-  setThreatZoneMetric('currentPopulation', null, '', '', false);
-  setThreatZoneMetric('criticalInfrastructure', criticalInfrastructure, facilityMethod, facilityStatusLabel, Boolean(occupancy));
-  setThreatZoneMetric('healthcareFacilities', healthcareFacilities, facilityMethod, facilityStatusLabel, Boolean(occupancy));
-  setThreatZoneMetric('schools', schools, facilityMethod, facilityStatusLabel, Boolean(occupancy));
-
-  setThreatZoneDetail('censusPopulation', census ? `${census.population.toLocaleString()} nearby geography total — context only` : '', Boolean(census));
-  setThreatZoneDetail('censusHouseholds', census ? `${census.housing.toLocaleString()} nearby geography total — context only` : '', Boolean(census));
-  setThreatZoneDetail('buildingFootprints', residentialStructures?.toLocaleString() || '0', residentialStructures !== null);
-  setThreatZoneDetail('nursing', occupancy ? facilityCategoryCount(occupancy, 'nursing_home').toLocaleString() : '', Boolean(occupancy));
-  setThreatZoneDetail('businesses', '', false);
-  setThreatZoneDetail('criticalReceptors', occupancy
-    ? (schools + healthcareFacilities + criticalInfrastructure).toLocaleString() : '', Boolean(occupancy));
-  const protectiveAction = activeChemicalRecord?.commandFacts?.protectiveAction;
-  setThreatZoneDetail('protectiveAction', protectiveAction || '', Boolean(protectiveAction && protectiveAction !== noCurrentDataText));
-  setThreatZoneDetail('householdMethod', householdEstimateMethod, householdEstimateMethod !== noCurrentDataText);
-  setThreatZoneDetail('householdStatus', householdEstimateStatus, householdEstimateStatus !== readinessStatus.missing);
-  setThreatZoneDetail('householdLimitations', householdLimitations, householdLimitations !== noCurrentDataText);
-  setThreatZoneDetail('legacyHousing', '', false);
-  const estimateDetails = document.querySelector('.threat-zone-estimate-details');
-  if (estimateDetails) estimateDetails.hidden = !estimateDetails.querySelector('[data-threat-detail]:not([hidden])');
-
-  const primaryMethod = occupancy ? facilityMethod : census ? 'Nearby Census geography context only' : noCurrentDataText;
-  const confidence = occupancy ? facilityStatusLabel : census ? 'Context Only' : 'No Current Data Exists';
-  setText('threat-zone-method', primaryMethod);
-  setText('threat-zone-confidence', confidence);
 
   const metric = (value, method, sourceStatus, metricConfidence, limitations) => ({
     value,
@@ -8508,15 +8551,6 @@ async function inspectThreatZone(feature) {
   window.HazMatIQ ||= {};
   window.HazMatIQ.threatZoneImpactSummary = threatZoneImpactSummary;
 
-  const sources = [
-    census ? `2020 Census: ${census.blocks} intersecting block${census.blocks === 1 ? '' : 's'}; geography totals are not clipped to the plume` : 'Census unavailable',
-    facilityLookup?.status === 'available'
-      ? 'NCES / HIFLD facility data; exact point-in-polygon match'
-      : facilityLookup?.status === 'stale'
-        ? `NCES / HIFLD facility data is stale or partially unavailable${facilityLookup.errors?.length ? `: ${facilityLookup.errors.join('; ')}` : ''}`
-        : 'NCES / HIFLD facility data unavailable — no zero inferred',
-  ];
-  setText('demographics-source-status', `${sources.join(' · ')}. Only available selected-zone facility counts are shown above; nearby Census totals remain context only.`);
 }
 
 async function renderThreatZones(geojson, label) {
@@ -8543,7 +8577,7 @@ async function renderThreatZones(geojson, label) {
   setThreatIntelligenceLoading(currentThreatZoneGeoJson.features, `model-${latestPlumeModelResult?.computedAt || Date.now()}`);
   document.querySelector('[data-plume-layer="zones"]')?.setAttribute('aria-pressed', 'true');
   document.querySelector('[data-plume-layer="zones"]')?.classList.add('active');
-  resetDemographics();
+  resetThreatZoneImpactSummary();
   addThreatZoneLayers();
   setPlumeLayerVisibility('zones', true);
   if (plumeLayerState.hazards) void showPlumeHazards();
@@ -9563,7 +9597,7 @@ async function clearThreatZones(message = '') {
   syncDistanceDomMarkers();
   activePlumeCommand = null;
   renderIncidentCommandSnapshot();
-  resetDemographics('No plume zone is currently displayed.');
+  resetThreatZoneImpactSummary();
   if (message) setText('plume-overlay-status', message);
 }
 
@@ -9627,8 +9661,6 @@ function clearPlumeLocationState() {
   plumeLocationSelectionLocked = false;
   plumeSourceMarker?.remove?.();
   plumeSourceMarker = null;
-  setText('plume-gps-summary', '');
-  setText('plume-location-source', 'Location required');
 }
 
 function degreesToCompass(degrees) {
@@ -9671,26 +9703,25 @@ function formatTempFahrenheit(str) {
 }
 
 async function getIncidentCoordinates({ requestGps = true, allowPlumeManual = false } = {}) {
-  const selectedManualLocation = allowPlumeManual && plumeLocationSelectionLocked
-    ? normalizePlumeLocation(plumeManualLocation)
+  const normalizeLocation = typeof normalizePlumeLocation === 'function'
+    ? normalizePlumeLocation
+    : (location) => {
+      if (!location || !Number.isFinite(Number(location.lat)) || !Number.isFinite(Number(location.lon))) return null;
+      return { ...location, lat: Number(location.lat), lon: Number(location.lon) };
+    };
+  const reportStatus = (id, message) => {
+    if (typeof setText === 'function') setText(id, message);
+  };
+  const locationSelectionLocked = typeof plumeLocationSelectionLocked !== 'undefined'
+    && plumeLocationSelectionLocked;
+  const selectedManualLocation = allowPlumeManual && locationSelectionLocked
+    ? normalizeLocation(plumeManualLocation)
     : null;
   if (selectedManualLocation) return selectedManualLocation;
 
   let gpsError = null;
-  if (requestGps && !plumeLocationSelectionLocked) {
-    try {
-      const gps = await getCurrentGps();
-      const input = document.getElementById('incident-coordinates-input');
-      if (input) input.value = `${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}`;
-      setText('plume-map-address-status', 'Current browser GPS acquired.');
-      return { ...gps, source: 'Current device GPS' };
-    } catch (error) {
-      gpsError = error;
-    }
-  }
-
   const useFallbackLocation = (location) => {
-    if (gpsError && location) setText('plume-map-address-status', `${gpsError.message} Using ${location.source || 'the available incident location'}.`);
+    if (gpsError && location) reportStatus('plume-map-address-status', `${gpsError.message} Using ${location.source || 'the available incident location'}.`);
     return location;
   };
   const input = document.getElementById('incident-coordinates-input');
@@ -9718,8 +9749,19 @@ async function getIncidentCoordinates({ requestGps = true, allowPlumeManual = fa
       return useFallbackLocation({ ...match, source: 'Incident Brief address' });
     }
   }
+  if (requestGps && !locationSelectionLocked) {
+    try {
+      const gps = await getCurrentGps();
+      const input = document.getElementById('incident-coordinates-input');
+      if (input) input.value = `${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)}`;
+      reportStatus('plume-map-address-status', 'Current browser GPS acquired.');
+      return { ...gps, source: 'Current device GPS' };
+    } catch (error) {
+      gpsError = error;
+    }
+  }
   if (!requestGps) return null;
-  const fallbackManualLocation = normalizePlumeLocation(plumeManualLocation);
+  const fallbackManualLocation = normalizeLocation(plumeManualLocation);
   if (fallbackManualLocation) return useFallbackLocation(fallbackManualLocation);
   if (gpsError) {
     throw new Error(`${gpsError.message} No valid incident, saved, or manual location is available.`);
@@ -9802,7 +9844,6 @@ async function useIncidentPlumeLocation() {
     }
     const displayLocation = addressLabel || `${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}`;
     plumeIncidentLocation = { ...location, address: displayLocation };
-    updatePlumeHeroContext();
     if (input) input.value = displayLocation;
     setText('plume-map-address-status', `Using incident location: ${displayLocation}.`);
     await ensurePlumeMap(location);
@@ -10057,9 +10098,6 @@ async function refreshCommandWeather({ requestGps = false } = {}) {
   updateCommandWeatherState(openMeteo, nws, location);
   setText('open-meteo-location', openMeteo?.location || 'Open-Meteo unavailable');
   setText('open-meteo-conditions', openMeteo?.conditions || 'Open-Meteo unavailable');
-  setText('nws-station-summary', nws?.station || 'NWS observation station unavailable');
-  setText('nws-weather-summary', nws?.conditions || 'NWS live observation unavailable');
-  setText('nws-observation-summary', nws?.observedAt || 'Observation time unavailable');
   renderNotificationWeather(openMeteo, nws);
 }
 
@@ -10134,6 +10172,7 @@ function updatePlumeWindIndicator({ source = '', observationTime = '', message =
     : null;
   const direction = Number(liveObservation?.windDirDeg ?? document.getElementById('plume-wind-direction')?.value);
   const speed = Number(liveObservation?.windSpeedMph ?? document.getElementById('plume-wind-speed')?.value);
+  const gust = Number(liveObservation?.gustMph);
   const valid = Number.isFinite(direction) && Number.isFinite(speed) && speed >= 0;
   const freshness = getWeatherFreshness(observationTime);
   const displaySource = source || (sourceMode === 'manual' ? 'Manual Entry' : sourceMode === 'columbia-live' ? 'Columbia Weather Station' : 'Weather source pending');
@@ -10143,17 +10182,26 @@ function updatePlumeWindIndicator({ source = '', observationTime = '', message =
       ? 'Sample — not connected'
       : freshness.status;
   const statusNote = message || freshnessLabel;
+  const directionText = valid
+    ? `Wind From: ${Math.round((direction + 360) % 360)}° ${degreesToCompass(direction)}`
+    : 'Wind From: No Current Data Exists';
+  const speedText = valid ? `Wind Speed: ${speed.toFixed(1).replace(/\.0$/, '')} mph` : 'Wind Speed: No Current Data Exists';
+  const gustText = Number.isFinite(gust)
+    ? `Gusts: ${gust >= speed ? `${speed.toFixed(0)}–${gust.toFixed(0)} mph` : `${gust.toFixed(0)} mph`}`
+    : 'Gusts: No Current Data Exists';
+  const tacticalWindText = `${directionText}\n${speedText}\n${gustText}`;
   if (sourceMode === 'columbia-live') {
     reading.textContent = valid
-      ? `Wind from ${Math.round(direction)}° · ${speed.toFixed(1)} mph · Sample — not connected`
+      ? `${tacticalWindText}\nSample — not connected`
       : 'No live observation · Sample — not connected';
   } else if (valid) {
-    reading.textContent = `Wind from ${Math.round((direction + 360) % 360)}° · ${speed.toFixed(1)} mph`;
+    reading.textContent = tacticalWindText;
   } else {
     reading.textContent = 'Wind observation unavailable';
   }
   meta.textContent = `${observationTime || 'Time unknown'} · ${displaySource} · ${statusNote}`;
-  if (arrow) arrow.style.transform = valid ? `rotate(${direction}deg)` : 'rotate(0deg)';
+  const blowingTo = (direction + 180) % 360;
+  if (arrow) arrow.style.transform = valid ? `rotate(${blowingTo}deg)` : 'rotate(0deg)';
 
   const glanceReading = document.getElementById('plume-weather-glance-reading');
   const glanceArrow = document.getElementById('plume-weather-glance-arrow');
@@ -10161,7 +10209,7 @@ function updatePlumeWindIndicator({ source = '', observationTime = '', message =
   const glanceTime = document.getElementById('plume-weather-glance-time');
   const glanceTemperature = document.getElementById('plume-weather-glance-temperature');
   if (glanceReading) glanceReading.textContent = reading.textContent;
-  if (glanceArrow) glanceArrow.style.transform = valid ? `rotate(${direction}deg)` : 'rotate(0deg)';
+  if (glanceArrow) glanceArrow.style.transform = valid ? `rotate(${blowingTo}deg)` : 'rotate(0deg)';
   if (glanceSource) glanceSource.textContent = displaySource
     .replace(/\s+current conditions?$/i, '')
     .replace(/^Best Current Live Source$/i, 'Live source');
@@ -10708,19 +10756,12 @@ function updatePlumeEvidenceStatus(result = null) {
     latestPlumeModelResult = null;
     setThreatIntelligence({ status: 'idle', modelRunId: null, generatedAt: null, zones: {}, affectedFacilities: [], sourceStatuses: [], errors: [] });
     updatePlumeRightRailZoneResults(null);
-    setText('plume-model-mode-badge', 'Cannot Plot — Missing Required Data');
-    setText('plume-confidence-badge', 'Insufficient Data');
     updatePlumeCommandPanel(null);
     return;
   }
   latestPlumeModelResult = result;
   setThreatIntelligenceLoading([], `model-${result.computedAt || Date.now()}`);
-  setText('plume-model-mode-badge', result.modelModeLabel || result.display || 'HAZSCOPE Planning Estimate');
-  setText('plume-confidence-badge', result.confidenceLevel || result.plumeStatus || 'Requires Review');
   setText('plume-source-strength-badge', result.sourceStrength?.status || (result.mode === 'erg-protective-action' ? 'Not Applicable — ERG Overlay' : 'Requires Review'));
-  setText('plume-source-strength-detail', result.sourceStrength
-    ? `${result.sourceStrength.sourceStrengthMethod}. Missing: ${result.sourceStrength.missingInputs?.join(', ') || 'none'}.`
-    : 'No dispersion source-strength calculation is used for an ERG overlay.');
   setText('plume-weather-quality-badge', result.weather?.freshness || (result.mode === 'erg-protective-action' ? 'Verify Wind Direction' : 'Time Unknown'));
   setText('plume-weather-quality-detail', result.weather
     ? `${result.weather.status}. ${result.weather.limitations?.join(' ') || 'Source and time recorded.'}`
@@ -10729,77 +10770,11 @@ function updatePlumeEvidenceStatus(result = null) {
   setText('plume-endpoint-detail', result.endpoint
     ? `${result.endpoint.selectedDurationMinutes}-minute AEGL endpoint linked to CAS ${result.endpoint.casNumber}.`
     : (result.endpointStatus || 'No verified endpoint is available.'));
-  setText('plume-text-summary', result.textSummary || result.endpointStatus || 'No Current Data Exists');
   updatePlumeCommandPanel(result);
   updateOperationalPlumeReadiness(latestPlumeAvailability, result, result.textSummary || result.endpointStatus);
 }
 
 let latestPlumeAvailability = null;
-
-function updatePlumeHeroContext({ result = null } = {}) {
-  const locationElement = document.getElementById('plume-header-location');
-  const weatherElement = document.getElementById('plume-header-weather');
-  const modelElement = document.getElementById('plume-header-status');
-  if (!locationElement || !weatherElement || !modelElement) return;
-
-  const pin = plumeSourceMarker?.getLngLat?.();
-  const pinLocation = pin && Number.isFinite(Number(pin.lat)) && Number.isFinite(Number(pin.lng))
-    ? { lat: Number(pin.lat), lon: Number(pin.lng) }
-    : null;
-  const currentLocation = pinLocation || plumeIncidentLocation || plumeManualLocation;
-  const locationAddress = currentLocation?.address
-    || (!plumeLocationSelectionLocked ? getIncidentAddressValue?.() : '')
-    || (!pinLocation ? plumeManualLocation?.address : '')
-    || '';
-  if (locationAddress) {
-    locationElement.textContent = locationAddress;
-  } else if (currentLocation && Number.isFinite(Number(currentLocation.lat)) && Number.isFinite(Number(currentLocation.lon))) {
-    locationElement.textContent = `${Number(currentLocation.lat).toFixed(4)}, ${Number(currentLocation.lon).toFixed(4)}`;
-  } else {
-    locationElement.textContent = 'Awaiting location data';
-  }
-
-  const sourceMode = document.getElementById('plume-weather-source')?.value || '';
-  const liveWeather = ['auto-live', 'open-meteo'].includes(sourceMode)
-    ? (sourceMode === 'open-meteo' ? plumeWeatherSources.openMeteo : latestPlumeWeather)
-    : null;
-  const valueFromWeatherOrInput = (weatherKey, inputId) => {
-    const weatherValue = liveWeather?.[weatherKey];
-    if (weatherValue !== null && weatherValue !== undefined && weatherValue !== '') return weatherValue;
-    return document.getElementById(inputId)?.value;
-  };
-  const temperature = valueFromWeatherOrInput('temperatureF', 'plume-temperature');
-  const windSpeed = valueFromWeatherOrInput('windSpeedMph', 'plume-wind-speed');
-  const windDirection = valueFromWeatherOrInput('windDirDeg', 'plume-wind-direction');
-  const weatherSource = document.getElementById('plume-weather-source-name')?.textContent?.trim();
-  const weatherStatus = document.getElementById('plume-weather-source-state')?.textContent?.trim();
-  const weatherParts = [];
-  if (sourceMode === 'columbia-live') {
-    weatherParts.push('Sample — not connected');
-  } else if (liveWeather?.conditions) {
-    weatherParts.push(liveWeather.conditions);
-  } else if (sourceMode === 'manual') {
-    weatherParts.push('Manual Entry');
-    if (Number.isFinite(Number(temperature))) weatherParts.push(`${Number(temperature).toFixed(1)}°F`);
-    if (Number.isFinite(Number(windSpeed)) && Number.isFinite(Number(windDirection))) {
-      weatherParts.push(`Wind ${Number(windSpeed).toFixed(1)} mph from ${Math.round(Number(windDirection))}°`);
-    }
-  } else if (Number.isFinite(Number(temperature)) || Number.isFinite(Number(windSpeed))) {
-    if (Number.isFinite(Number(temperature))) weatherParts.push(`${Number(temperature).toFixed(1)}°F`);
-    if (Number.isFinite(Number(windSpeed)) && Number.isFinite(Number(windDirection))) {
-      weatherParts.push(`Wind ${Number(windSpeed).toFixed(1)} mph from ${Math.round(Number(windDirection))}°`);
-    }
-  }
-  if (!weatherParts.length && weatherSource && !/^not available$/i.test(weatherSource)) weatherParts.push(weatherSource);
-  if (weatherStatus && /sample|manual|stale|expired|unknown|unavailable|verify/i.test(weatherStatus) && !weatherParts.some((part) => part.includes(weatherStatus))) {
-    weatherParts.push(weatherStatus);
-  }
-  weatherElement.textContent = weatherParts.join(' · ') || 'Awaiting weather data';
-
-  modelElement.textContent = result
-    ? (result.modelStatus || result.modelModeLabel || (result.mode === 'erg-protective-action' ? 'ERG Guidance' : 'Planning Estimate'))
-    : (activePlumeCommand ? 'Planning Estimate' : 'Awaiting Data');
-}
 
 function updateOperationalPlumeReadiness(availability = latestPlumeAvailability, result = null, reason = '') {
   if (availability) latestPlumeAvailability = availability;
@@ -10819,11 +10794,8 @@ function updateOperationalPlumeReadiness(availability = latestPlumeAvailability,
   const ergGuide = availability?.ergAvailability?.guide || result?.ergOverlay?.guide || profileHeader.ergGuide || '';
 
   setText('plume-readiness-master', masterId && /^\d+$/.test(String(masterId)) ? 'Verified' : 'Requires Review');
-  setText('plume-header-chemical', activeChemical?.name || availability?.chemicalIdentity?.chemicalName || 'Select a verified chemical for operational plume planning.');
-  setText('plume-header-identifiers', [cas ? `CAS ${cas}` : null, un ? `UN ${un}` : null, ergGuide ? `ERG ${ergGuide}` : null].filter(Boolean).join(' · ') || 'CAS / UN / ERG pending');
   setText('plume-readiness-cas', cas || 'No Current Data Exists');
   setText('plume-endpoint-badge', endpointFound ? 'Found' : 'Missing');
-  setText('plume-header-endpoint-chip', endpointFound ? 'AEGL' : 'Missing');
   setText('plume-endpoint-detail', endpointFound
     ? `${result?.endpoint?.endpointSource || availability?.endpoint?.endpointSource || 'EPA AEGL'} · exact CAS/source link`
     : (availability?.endpointStatus || 'No verified AEGL / LOC link found.'));
@@ -10849,9 +10821,6 @@ function updateOperationalPlumeReadiness(availability = latestPlumeAvailability,
   setText('plume-readiness-release-detail', missingRelease.length ? missingRelease.join(', ') : 'Required release inputs are present.');
   if (!result?.sourceStrength) {
     setText('plume-source-strength-badge', missingRelease.length ? 'Cannot Calculate' : 'Planning Estimate');
-    setText('plume-source-strength-detail', missingRelease.length
-      ? `Missing: ${missingRelease.join(', ')}.`
-      : 'Release inputs support a planning source-strength estimate; verify assumptions and field conditions.');
   }
   setText('plume-weather-quality-badge', missingWeather.length
     ? 'Missing'
@@ -10864,8 +10833,6 @@ function updateOperationalPlumeReadiness(availability = latestPlumeAvailability,
     : weatherMode === 'manual' ? 'Manual Entry — verify field conditions.' : 'Live weather available.');
 
   const selectedMode = endpointFound && !missing.length ? 'Planning Plume' : 'Blocked';
-  setText('plume-model-mode-badge', selectedMode);
-  setText('plume-header-mode-chip', selectedMode === 'Planning Plume' ? 'Planning Estimate' : selectedMode);
   setPlumeStatusBadge(
     'plume-command-model-mode',
     selectedMode === 'Planning Plume' ? 'Ready for planning' : 'Needs Input',
@@ -10891,7 +10858,6 @@ function updateOperationalPlumeReadiness(availability = latestPlumeAvailability,
     : 'Context is retained for validation; no thermodynamic source-term calculation is implied.');
   setText('plume-command-validation-status', result?.validationStatus || (endpointFound && !missing.length ? 'Ready for planning' : 'Needs Input'));
   setText('plume-command-weather-summary', result?.weather?.freshness || (missingWeather.length ? missingWeather.join(', ') : 'Planning weather status'));
-  updatePlumeHeroContext({ result });
 }
 
 function facilityGroupLabel(category) {
@@ -11039,9 +11005,6 @@ function updatePlumeCommandPanel(result = null) {
   setText('plume-release-summary', `${controlValue('plume-release-type', { selectedLabel: true })} · ${controlValue('plume-release-quantity')} ${controlValue('plume-release-unit', { selectedLabel: true })} · ${controlValue('plume-container-type', { selectedLabel: true })}`);
   setText('plume-weather-input-summary', `${controlValue('plume-wind-speed')} mph from ${controlValue('plume-wind-direction')}° · ${controlValue('plume-temperature')}°F · ${controlValue('plume-surface-roughness', { selectedLabel: true })}`);
   setText('plume-command-limitations', (result.limitations || result.modelMetadata?.limitations || result.ergOverlay?.limitations || []).join(' · ') || 'No additional limitations returned.');
-  setText('plume-guidance-requirements', (result.fieldVerificationRequirements || []).join(' · ') || 'No additional field verification requirements returned.');
-  setText('plume-guidance-assumptions', (result.assumptions || []).join(' · ') || 'No additional assumptions returned.');
-  setText('plume-guidance-limitations', (result.limitations || result.modelMetadata?.limitations || result.ergOverlay?.limitations || []).join(' · ') || 'No additional limitations returned.');
 }
 
 function updatePlumeInputSummaries() {
@@ -11118,7 +11081,6 @@ function updatePlumeInputSummaries() {
     observationTime: document.getElementById('plume-weather-observation-time')?.textContent?.trim() || '',
     message: sourceStatus,
   });
-  updatePlumeHeroContext();
 }
 
 function getMissingPlumeRequiredInputs() {
@@ -11163,10 +11125,12 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
   const profileHeader = activeChemicalRecord?.profile?.header || {};
   const maxDownwindM = Math.max(0, ...(modeled.result.isopleths || []).map((zone) => Number(zone.maxDownwindM) || 0));
   const rangeTruncated = (modeled.result.isopleths || []).some((zone) => zone.rangeTruncated);
-  const metric = (id) => {
-    const value = document.getElementById(id)?.textContent?.trim();
-    return value && !['—', '…', 'Unavailable'].includes(value) ? value : noCurrentDataText;
+  const impactMetrics = threatZoneImpactSummary?.primaryMetrics || {};
+  const impactMetricValue = (id) => {
+    const value = impactMetrics[id]?.value;
+    return value !== null && value !== undefined && value !== '' ? value : noCurrentDataText;
   };
+  const impactSummary = threatZoneImpactSummary?.selectedArea;
   const activeIncident = getActiveIncident();
   const createdAt = modeled.result.computedAt || new Date().toISOString();
   const weatherSourceMode = document.getElementById('plume-weather-source')?.value;
@@ -11296,28 +11260,29 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
     },
     threatZone: {
       status: readinessStatus.planning,
-      summary: document.getElementById('demographics-zone-summary')?.textContent?.trim() || noCurrentDataText,
-      estimatedPopulation: metric('demographics-population'),
-      estimatedHouseholds: metric('demographics-housing'),
-      visibleFootprintStructures: metric('demographics-structures'),
-      nearbyCensusGeographyHouseholds: metric('demographics-census-households'),
+      summary: impactSummary?.label || noCurrentDataText,
+      selectedArea: impactSummary || null,
+      estimatedPopulation: impactMetricValue('currentPopulation'),
+      estimatedHouseholds: latestThreatZoneHouseholdEstimate?.householdEstimate ?? noCurrentDataText,
+      visibleFootprintStructures: impactMetricValue('residentialHomes'),
+      nearbyCensusGeographyHouseholds: threatZoneImpactSummary?.estimateDetails?.censusHouseholdTotal ?? noCurrentDataText,
       householdEstimateMethod: latestThreatZoneHouseholdEstimate?.householdEstimateMethod || noCurrentDataText,
       householdEstimateStatus: latestThreatZoneHouseholdEstimate?.householdEstimateStatus || readinessStatus.missing,
       householdEstimateSource: latestThreatZoneHouseholdEstimate?.source || noCurrentDataText,
       householdEstimateLimitations: latestThreatZoneHouseholdEstimate?.limitations || noCurrentDataText,
-      schoolsAndDaycares: metric('demographics-schools'),
-      healthcareFacilities: metric('demographics-healthcare'),
-      nursingAndAssistedLiving: metric('demographics-nursing'),
-      criticalInfrastructure: metric('demographics-critical'),
-      businessesAndIndustrialSites: metric('demographics-businesses'),
+      schoolsAndDaycares: impactMetricValue('schools'),
+      healthcareFacilities: impactMetricValue('healthcareFacilities'),
+      nursingAndAssistedLiving: noCurrentDataText,
+      criticalInfrastructure: impactMetricValue('criticalInfrastructure'),
+      businessesAndIndustrialSites: noCurrentDataText,
       criticalReceptors: {
-        schoolsAndDaycares: metric('demographics-schools'),
-        healthcareFacilities: metric('demographics-healthcare'),
-        nursingAndAssistedLiving: metric('demographics-nursing'),
-        criticalInfrastructure: metric('demographics-critical'),
+        schoolsAndDaycares: impactMetricValue('schools'),
+        healthcareFacilities: impactMetricValue('healthcareFacilities'),
+        nursingAndAssistedLiving: noCurrentDataText,
+        criticalInfrastructure: impactMetricValue('criticalInfrastructure'),
       },
       protectiveActionSummary: activeChemicalRecord?.commandFacts?.protectiveAction || noCurrentDataText,
-      sourceLabels: document.getElementById('demographics-source-status')?.textContent?.trim() || noCurrentDataText,
+      sourceLabels: threatZoneImpactSummary?.estimateDetails?.receptorSourceStatus || noCurrentDataText,
     },
     commandSummary: command,
     disclaimers: {
@@ -11464,9 +11429,6 @@ function saveLatestPlumeOverlay({ location, releaseType, windSpeed, windDirectio
 async function plotPlumeFromControls(locationOverride = null) {
   const plotButton = document.getElementById('plot-plume-btn');
   const leftPlotButton = document.getElementById('plume-left-plot-btn');
-  const resultsSection = document.getElementById('plume-results-section');
-  // Legacy result flow previously used resultsSection.hidden = false; the visible result presentation now lives in the Plume right rail.
-  if (resultsSection) resultsSection.hidden = true;
   if (plotButton) plotButton.disabled = true;
   setText('plume-input-status', 'Checking source-backed plume and ERG guidance…');
   document.getElementById('plume-input-status')?.setAttribute('data-state', 'working');
@@ -11477,11 +11439,9 @@ async function plotPlumeFromControls(locationOverride = null) {
     updateOperationalPlumeReadiness(availability.result, null, availability.summary);
     if (!availability.result) {
       updatePlumeEvidenceStatus(null);
-      setText('backend-model-summary', availability.summary);
       await clearThreatZones(availability.summary);
       if (/No Current Data Exists/i.test(availability.summary)) {
         setText('plume-endpoint-status', 'No approved AEGL / LOC or ERG isolation/protective-action distance is available.');
-        setText('plume-model-status-summary', 'No Model / No Distance Available');
         setText('plume-zone-meaning-summary', 'No Current Data Exists');
         showPlumeWorkflowMessage(availability.summary);
       } else {
@@ -11518,13 +11478,11 @@ async function plotPlumeFromControls(locationOverride = null) {
       modeled.result.inputs = inputs;
     }
     if (hasActiveIncident()) saveIncidentBrief({ quiet: true });
-    setText('backend-model-summary', modeled.summary);
     if (!modeled.result) {
       updatePlumeEvidenceStatus(null);
       await clearThreatZones(modeled.summary);
       if (/No Current Data Exists/i.test(modeled.summary)) {
         setText('plume-endpoint-status', 'No approved AEGL / LOC or ERG isolation/protective-action distance is available.');
-        setText('plume-model-status-summary', 'No Model / No Distance Available');
         setText('plume-zone-meaning-summary', 'No Current Data Exists');
         showPlumeWorkflowMessage(modeled.summary);
       } else {
@@ -11574,18 +11532,13 @@ async function plotPlumeFromControls(locationOverride = null) {
       renderIncidentCommandSnapshot();
       setText('plume-input-status', 'ERG protective-action guide displayed. Verify spill size, day/night condition, wind direction, current ERG, field observations, and Incident Command.');
       document.getElementById('plume-input-status')?.setAttribute('data-state', 'planning');
-      setText('plume-mode-summary', saveMode === 'active-incident' ? 'Active Incident Mode' : 'Planning Mode');
       setText('selected-model-summary', 'ERG Overlay — Not a Plume Model');
-      setText('plume-model-status-summary', 'ERG Protective Action Guide — Not a Modeled Plume');
-      setText('plume-limitations-summary', erg.limitations.join(' · '));
       setText('plume-endpoint-summary', `PHMSA ERG 2024 Table 1 · UN ${erg.un} · Guide ${erg.guide} · ${erg.spillSize} spill · ${erg.period}`);
       setText('plume-zone-meaning-summary', 'Bright orange: ERG Initial Isolation / Protective Action guide area — not a toxic concentration zone');
       setText('plume-endpoint-status', modeled.result.endpointStatus);
       setText('plume-model-time-summary', new Date(workflowRecord.createdAt).toLocaleString());
-      setText('plume-model-details-time', new Date(workflowRecord.createdAt).toLocaleString());
       setText('plume-result-summary', 'ERG protective-action overlay displayed. Verify with the current ERG, field observations, monitoring, and Incident Command.');
       updatePlumeCommandPanel(modeled.result);
-      if (resultsSection) resultsSection.hidden = true;
       setPlumeMapResultVisible(true);
       updatePlumeModeLabel();
       if (leftPlotButton) leftPlotButton.textContent = 'Recalculate Plume';
@@ -11632,20 +11585,15 @@ async function plotPlumeFromControls(locationOverride = null) {
     renderIncidentCommandSnapshot();
     setText('plume-input-status', '');
     document.getElementById('plume-input-status')?.removeAttribute('data-state');
-    setText('plume-mode-summary', saveMode === 'active-incident' ? 'Active Incident Mode' : 'Planning Mode');
     setText('selected-model-summary', 'Planning Estimate');
-    setText('plume-model-status-summary', workflowRecord.model.confidenceStatus);
-    setText('plume-limitations-summary', (modeled.result.limitations || modeled.result.modelMetadata?.limitations || []).join(' · '));
     setText('plume-release-summary', `${releaseType} · ${releaseQuantity} ${releaseUnit} · ${controlValue('plume-container-type', { selectedLabel: true })}`);
     setText('plume-weather-input-summary', `${workflowRecord.weather.source} · ${windSpeed} mph from ${windDirection}° · stability ${stability}`);
     setText('plume-endpoint-summary', `EPA AEGL · ${modeled.result.endpoint.selectedDurationMinutes}-minute endpoint · AEGL-1 ${modeled.result.endpoint.aegl1} / AEGL-2 ${modeled.result.endpoint.aegl2} / AEGL-3 ${modeled.result.endpoint.aegl3} ${modeled.result.endpoint.units}`);
     setText('plume-zone-meaning-summary', 'Red: AEGL-3 · Orange: AEGL-2 · Yellow: AEGL-1');
     setText('plume-endpoint-status', `EPA final AEGL values linked by Chemical Companion master record and CAS ${modeled.result.endpoint.casNumber}.`);
     setText('plume-model-time-summary', new Date(workflowRecord.createdAt).toLocaleString());
-    setText('plume-model-details-time', new Date(workflowRecord.createdAt).toLocaleString());
     setText('plume-result-summary', 'Planning plume plotted. Field monitoring and Incident Command verification are required.');
     updatePlumeCommandPanel(modeled.result);
-    if (resultsSection) resultsSection.hidden = true;
     setPlumeMapResultVisible(true);
     updatePlumeModeLabel();
     if (leftPlotButton) leftPlotButton.textContent = 'Recalculate Plume';
@@ -11665,6 +11613,15 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   const token = ++plumeRefreshToken;
   const status = document.getElementById('plume-live-status');
   if (status) status.textContent = 'Resolving incident location…';
+  const incidentIsActive = typeof hasActiveIncident === 'function'
+    ? hasActiveIncident()
+    : Boolean(getActiveIncident?.());
+  const resetLocationState = () => {
+    if (typeof clearPlumeLocationState === 'function') {
+      clearPlumeLocationState();
+      return;
+    }
+  };
 
   // Chemical restoration and the basemap must not depend on GPS permission.
   const chemicalReady = activeChemicalRecord ? Promise.resolve() : restoreSelectedChemical();
@@ -11674,7 +11631,7 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
 
   const plumeAddressInput = document.getElementById('plume-map-address-input');
   const incidentAddress = getIncidentAddressValue();
-  if (plumeAddressInput && incidentAddress && (hasActiveIncident() || !plumeAddressInput.value.trim())) {
+  if (plumeAddressInput && incidentAddress && (incidentIsActive || !plumeAddressInput.value.trim())) {
     plumeAddressInput.value = incidentAddress;
   }
 
@@ -11684,7 +11641,7 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   } catch (error) {
     if (token !== plumeRefreshToken) return;
     const message = error instanceof Error ? error.message : 'A valid location could not be resolved.';
-    clearPlumeLocationState();
+    resetLocationState();
     if (status) status.textContent = `${message} Enter an address or coordinates above to load local weather.`;
     setText('plume-map-address-status', message);
     return;
@@ -11692,14 +11649,14 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   if (token !== plumeRefreshToken) return;
   if (!location) {
     const message = 'No valid incident, saved, manual, or browser GPS location is available.';
-    clearPlumeLocationState();
+    resetLocationState();
     if (status) status.textContent = message;
     setText('plume-map-address-status', message);
     return;
   }
 
   const incident = getActiveIncident();
-  if (hasActiveIncident() && !getIncidentAddressValue()) {
+  if (incidentIsActive && !getIncidentAddressValue()) {
     try {
       const address = await reverseGeocodePlumeLocation(location);
       if (address) {
@@ -11720,16 +11677,9 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
     }
   }
   const resolvedIncidentAddress = getIncidentAddressValue();
-  if (plumeAddressInput && hasActiveIncident() && resolvedIncidentAddress) {
+  if (plumeAddressInput && incidentIsActive && resolvedIncidentAddress) {
     plumeAddressInput.value = resolvedIncidentAddress;
   }
-  setText('plume-summary-incident-name', incident?.incidentName || 'Planning Mode');
-  setText('plume-gps-summary', `${location.lat.toFixed(6)}, ${location.lon.toFixed(6)}`);
-  setText('plume-location-source', location.source);
-  const manualProduct = document.getElementById('incident-product')?.value.trim();
-  setText('plume-product-summary', activeChemical
-    ? `${activeChemical.name} · CAMEO record`
-    : (manualProduct ? `${manualProduct} · manual incident entry` : 'No chemical selected'));
   setText('selected-model-summary', 'Plume Model');
 
   // Map tiles and styles are visual support, not a prerequisite for weather.
@@ -11749,12 +11699,6 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   }
   setText('open-meteo-location', openMeteo?.location || 'Open-Meteo unavailable');
   setText('open-meteo-conditions', openMeteo?.conditions || 'Open-Meteo unavailable');
-  setText('open-meteo-summary', openMeteo
-    ? `${openMeteo.conditions}${openMeteo.elevationFt === null ? '' : ` · Elevation ${openMeteo.elevationFt.toLocaleString()} ft`}`
-    : 'Open-Meteo unavailable');
-  setText('nws-station-summary', nws?.station || 'NWS observation station unavailable');
-  setText('nws-weather-summary', nws?.conditions || 'NWS live observation unavailable');
-  setText('nws-observation-summary', nws?.observedAt || 'Observation time unavailable');
 
   renderNotificationWeather(openMeteo, nws);
   const weatherSourceMode = document.getElementById('plume-weather-source')?.value;
@@ -11781,7 +11725,6 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
     setText('plume-weather-prompt', 'Live weather unavailable — enter wind direction and wind speed.');
     setText('plume-input-status', 'Live weather is unavailable. Enter wind direction and wind speed to continue.');
   }
-  setText('backend-model-summary', 'Run plume model to view result.');
   await Promise.all([mapReadyPromise, chemicalReady]);
   if (token !== plumeRefreshToken) return;
   if (activePlumeMapView === 'plume3d') await setPlumeMapView('plume3d');
@@ -12290,6 +12233,25 @@ window.setInterval(() => {
 }, 5 * 60 * 1000);
 document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
   button.addEventListener('click', () => setPlumeMapView(button.dataset.plumeMapView));
+});
+document.querySelectorAll('[data-plume-card-toggle]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const target = document.getElementById(button.getAttribute('aria-controls'));
+    if (!target) return;
+    const expanded = button.getAttribute('aria-expanded') !== 'true';
+    target.hidden = !expanded;
+    button.setAttribute('aria-expanded', String(expanded));
+  });
+});
+document.querySelectorAll('.plume-zone-tabs [role="tab"]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const tabGroup = button.closest('.plume-zone-tabs');
+    tabGroup?.querySelectorAll('[role="tab"]').forEach((tab) => {
+      const active = tab === button;
+      tab.classList.toggle('active', active);
+      tab.setAttribute('aria-selected', String(active));
+    });
+  });
 });
 document.getElementById('plume-map-maximize-btn')?.addEventListener('click', () => setPlumeMapMaximized(true));
 document.getElementById('plume-map-minimize-btn')?.addEventListener('click', () => setPlumeMapMaximized(false));

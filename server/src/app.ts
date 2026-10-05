@@ -106,12 +106,14 @@ function plumeBlockedFields(display = "Cannot Plot — Missing Required Data") {
 
 const app = new Hono();
 app.use(logger());
-const publicIndexPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../public/index.html");
+const serverDirectory = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const publicDirectory = path.join(serverDirectory, "public");
+const publicIndexPath = path.join(publicDirectory, "index.html");
 const serveHazardIdWorkspace = async (c: Context) =>
   c.html(await readFile(publicIndexPath, "utf8"));
 app.get("/hazard-id", serveHazardIdWorkspace);
 app.get("/chemical-id", serveHazardIdWorkspace);
-app.use("/*", serveStatic({ root: "./public" }));
+app.use("/*", serveStatic({ root: publicDirectory }));
 
 function backendEnvironment(...names: string[]) {
   for (const name of names) {
