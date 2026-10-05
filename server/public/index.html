@@ -6,7 +6,7 @@
     <title>HAZSCOPE Prototype</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
     <link rel="stylesheet" href="styles.css?v=live-map-responsive-2" />
-    <link rel="stylesheet" href="hero-overrides.css?v=9" />
+    <link rel="stylesheet" href="hero-overrides.css?v=10" />
     <link rel="stylesheet" href="hazard-id-overrides.css?v=3" />
     <link rel="stylesheet" href="global-ui-overrides.css?v=17" />
     <link rel="stylesheet" href="incident-overrides.css?v=3" />
@@ -728,12 +728,39 @@
                 </header>
                 <article class="hazard-profile-header-card">
                   <div class="hazard-profile-emblem" id="hazard-profile-emblem" aria-hidden="true">ID</div>
-                  <div class="hazard-profile-identity"><p class="eyebrow" id="hazard-profile-lane">Hazard ID</p><div class="hazard-profile-title-line"><h2 id="hazard-profile-name">Select a hazard</h2><div class="hazard-profile-data-status" id="hazard-profile-status" aria-label="Profile data status"><span class="chemical-profile-status-chip" data-state="review">Requires Review</span></div></div><p id="hazard-profile-category"></p><div id="hazard-profile-identifiers" class="hazard-profile-identifiers"></div></div>
-                  <aside class="hazard-profile-overview" aria-labelledby="hazard-profile-overview-title"><strong id="hazard-profile-overview-title">Hazard Overview</strong><ul id="hazard-profile-overview-list"></ul></aside>
+                  <div class="hazard-profile-identity">
+                    <p class="eyebrow" id="hazard-profile-lane">Hazard ID</p>
+                    <div class="hazard-profile-title-line"><h2 id="hazard-profile-name">Select a hazard</h2><div class="hazard-profile-data-status" id="hazard-profile-status" aria-label="Profile data status"><span class="chemical-profile-status-chip" data-state="review">Requires Review</span></div></div>
+                    <p id="hazard-profile-category"></p>
+                    <div id="hazard-profile-identifiers" class="hazard-profile-identifiers"></div>
+                  </div>
+                  <aside class="hazard-profile-threat-status" aria-labelledby="hazard-profile-threat-status-title">
+                    <p id="hazard-profile-threat-status-title">Operational threat status</p>
+                    <strong id="hazard-profile-threat-title">Requires Review</strong>
+                    <span id="hazard-profile-threat-detail">Select a hazard to load source-backed threat information.</span>
+                  </aside>
+                  <aside class="hazard-profile-overview" aria-labelledby="hazard-profile-overview-title"><strong id="hazard-profile-overview-title">Profile Highlights</strong><ul id="hazard-profile-overview-list"></ul></aside>
                 </article>
                 <section class="hazard-profile-action-grid" id="hazard-profile-action-cards" aria-label="Responder action status"></section>
-                <nav id="hazard-profile-tabs" class="chemical-profile-tabs hazard-profile-tabs" aria-label="Hazard profile sections"></nav>
-                <article class="hazard-profile-content-card"><div id="hazard-profile-content" class="hazard-profile-content"></div></article>
+                <section class="hazard-profile-operational-grid" aria-label="Operational hazard intelligence">
+                  <div class="hazard-profile-column hazard-profile-column-threat">
+                    <header class="hazard-profile-column-heading"><span>01</span><h2>Threat / Exposure</h2></header>
+                    <div id="hazard-profile-threat-content"></div>
+                  </div>
+                  <div class="hazard-profile-column hazard-profile-column-field">
+                    <header class="hazard-profile-column-heading"><span>02</span><h2>Field Operations</h2></header>
+                    <div id="hazard-profile-field-content"></div>
+                  </div>
+                  <div class="hazard-profile-column hazard-profile-column-medical">
+                    <header class="hazard-profile-column-heading"><span>03</span><h2>Medical / Intelligence</h2></header>
+                    <div id="hazard-profile-medical-content"></div>
+                  </div>
+                </section>
+                <details class="hazard-profile-detail-drawer">
+                  <summary>Detailed source fact views <span>Use the original grouped profile sections</span></summary>
+                  <nav id="hazard-profile-tabs" class="chemical-profile-tabs hazard-profile-tabs" aria-label="Hazard profile sections"></nav>
+                  <article class="hazard-profile-content-card"><div id="hazard-profile-content" class="hazard-profile-content"></div></article>
+                </details>
                 <aside class="hazard-profile-limitations" id="hazard-profile-limitations" aria-label="Safety limitations"></aside>
                 <footer class="hazard-profile-source-footer" aria-label="Source status">
                   <div><span>Source Summary</span><strong id="hazard-profile-source-summary">No Current Data Exists</strong><small><b id="hazard-profile-source-pack-count">0</b> source packs · <b id="hazard-profile-source-fact-count">0</b> facts · <b id="hazard-profile-source-names">None</b></small></div>
@@ -1347,16 +1374,8 @@
           </section>
 
           <section id="map" class="view live-map-page" data-page-root="live-map" data-page-name="Live Map">
-            <header class="hazmat-page-hero hazmat-page-hero-compact variant-live-map live-map-tactical-header">
-              <div class="live-map-title-block">
-                <h1 class="hazmat-hero-title">LIVE MAP</h1>
-                <p class="hazmat-hero-subtitle">Operational Mapping &amp; Field Intelligence.</p>
-              </div>
-              <div class="live-map-incident-readout" aria-label="Current map context">
-                <span>ACTIVE WORKSPACE</span>
-                <strong id="live-map-incident-name">Planning Map</strong>
-                <small id="live-map-mode">Planning Mode</small>
-              </div>
+            <header class="hazmat-page-hero hazmat-page-hero-compact live-map-tactical-header">
+              <img class="live-map-hero-image" src="assets/live-wildfire-operational-map.png" alt="Live Map — Operational Mapping and Field Intelligence" />
             </header>
             <div class="live-map-operations" aria-label="Live Map controls">
               <div class="live-map-control-groups">
@@ -1786,7 +1805,7 @@
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
     <script src="plume-3d-model.js?v=plume3d-v2"></script>
-    <script src="script.js?v=chemical-profile-hotfix-3&canonical-grid=1&plume-map-fallback=1&live-map-fallback=3&live-map-responsive=2&live-map-reliability=1"></script>
+    <script src="script.js?v=map-consolidation-1"></script>
     <script src="incident-command.js"></script>
     <script src="hazard-profile.js"></script>
     <script src="reports.js"></script>
@@ -1794,6 +1813,5 @@
     <script src="monitor-inventory.js"></script>
     <script src="equipment.js"></script>
     <script src="sources.js"></script>
-    <script src="live-map-bootstrap.js"></script>
   </body>
 </html>

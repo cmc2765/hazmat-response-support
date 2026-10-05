@@ -1,5 +1,3 @@
-window.hazmatiqLiveMapCanonicalOwner = true;
-
 const buttons = document.querySelectorAll('.module-btn');
 const views = document.querySelectorAll('.view');
 const appShell = document.querySelector('.app-shell');
@@ -4971,7 +4969,14 @@ function renderStarterHazardTab(profile, fieldNames) {
     value.textContent = hazardProfileDisplayValue(fact);
     const status = document.createElement('span');
     status.className = 'hazard-fact-status';
-    status.textContent = hazardVerificationLabel(fact.verificationStatus);
+    status.textContent = {
+      Verified: 'Source verified',
+      'Source Imported': 'Source imported',
+      'Source Backed': 'Source backed',
+      'Requires SME Review': 'Review pending',
+      'Conflicting Sources': 'Source conflict',
+      'No Current Data Exists': 'Unavailable from current source set',
+    }[fact.verificationStatus] || fact.verificationStatus || 'Review pending';
     const notes = document.createElement('p');
     notes.textContent = fact.notes || 'Source-backed responder information; review status is retained in provenance.';
     const source = document.createElement('small');
@@ -5014,6 +5019,159 @@ function renderStarterHazardTab(profile, fieldNames) {
     fragment.append(safetyCard);
   }
   content.replaceChildren(fragment);
+}
+
+function hazardFactHasValue(fact) {
+  return fact?.value !== null && fact?.value !== undefined && String(fact.value).trim() !== '';
+}
+
+function hazardSectionStatus(facts) {
+  const available = profileFacts(facts).filter(hazardFactHasValue);
+  if (!available.length) return 'No Current Data Exists';
+  if (available.some((fact) => fact.verificationStatus === 'Conflicting Sources')) return 'Conflicting Sources';
+  if (available.some((fact) => fact.verificationStatus === 'Requires SME Review')) return 'Requires SME Review';
+  if (available.every((fact) => fact.verificationStatus === 'Verified')) return 'Verified';
+  return 'Source Backed';
+}
+
+function hazardFactSourceLabel(fact) {
+  return [fact?.sourceName, fact?.sourcePage || fact?.sourceDocumentTitle].filter(Boolean).join(' · ')
+    || 'No linked source';
+}
+
+function createHazardOperationalCard(title, facts, { tone = 'neutral', limit = 4 } = {}) {
+  const section = document.createElement('section');
+  section.className = `hazard-operational-card hazard-operational-card-${tone}`;
+  const heading = document.createElement('div');
+  heading.className = 'hazard-operational-card-heading';
+  const titleNode = document.createElement('h3');
+  titleNode.textContent = title;
+  const status = document.createElement('span');
+  status.className = 'hazard-operational-status';
+  status.dataset.status = hazardSectionStatus(facts);
+  status.textContent = hazardVerificationLabel(hazardSectionStatus(facts));
+  heading.append(titleNode, status);
+  section.append(heading);
+
+  const available = profileFacts(facts).filter(hazardFactHasValue).slice(0, limit);
+  if (!available.length) {
+    const empty = document.createElement('p');
+    empty.className = 'hazard-operational-empty';
+    empty.textContent = noCurrentDataText;
+    section.append(empty);
+    return section;
+  }
+  const list = document.createElement('dl');
+  list.className = 'hazard-operational-facts';
+  available.forEach((fact) => {
+    const row = document.createElement('div');
+    const label = document.createElement('dt');
+    label.textContent = fact.fieldName || 'Source fact';
+    const value = document.createElement('dd');
+    value.textContent = hazardProfileDisplayValue(fact);
+    row.append(label, value);
+    const source = document.createElement('small');
+    source.textContent = hazardFactSourceLabel(fact);
+    row.append(source);
+    list.append(row);
+  });
+  section.append(list);
+  return section;
+}
+
+function createHazardSourceVerificationCard(profile) {
+  const section = document.createElement('section');
+  section.className = 'hazard-operational-card hazard-operational-card-source';
+  const heading = document.createElement('div');
+  heading.className = 'hazard-operational-card-heading';
+  const title = document.createElement('h3');
+  title.textContent = 'Source Verification';
+  const status = document.createElement('span');
+  status.className = 'hazard-operational-status';
+  status.dataset.status = profile.verificationStatus || 'Requires SME Review';
+  status.textContent = hazardVerificationLabel(profile.verificationStatus);
+  heading.append(title, status);
+  section.append(heading);
+  const sourceStatus = profileObject(profile.sourceStatus);
+  const facts = [
+    ['Sources used', profileArray(sourceStatus.sourceNames).join(' · ') || noCurrentDataText],
+    ['Fact coverage', sourceStatus.sourceFactCount ? `${sourceStatus.sourceFactCount} source-backed facts` : noCurrentDataText],
+    ['Review state', sourceStatus.requiresSmeReviewCount ? `${sourceStatus.requiresSmeReviewCount} facts require SME review` : hazardVerificationLabel(profile.verificationStatus)],
+  ];
+  const list = document.createElement('dl');
+  list.className = 'hazard-operational-facts';
+  facts.forEach(([labelText, valueText]) => {
+    const row = document.createElement('div');
+    const label = document.createElement('dt');
+    label.textContent = labelText;
+    const value = document.createElement('dd');
+    value.textContent = valueText;
+    row.append(label, value);
+    list.append(row);
+  });
+  section.append(list);
+  return section;
+}
+
+function hazardActionSummary(facts) {
+  const available = profileFacts(facts).filter(hazardFactHasValue);
+  return available.length ? hazardProfileDisplayValue(available[0]) : noCurrentDataText;
+}
+
+function renderOperationalHazardProfile(profile) {
+  const columns = [
+    ['hazard-profile-threat-content', [
+      ['Immediate Life Threats', profile.hazardFacts, 'critical'],
+      ['Exposure & Effects', profile.overviewFacts, 'warning'],
+    ]],
+    ['hazard-profile-field-content', [
+      ['Detection / Monitoring', profile.detectionFacts, 'neutral'],
+      ['PPE / Respiratory', profile.ppeFacts, 'critical'],
+      ['Decontamination', profile.deconFacts, 'warning'],
+      ['Operational Actions', [...profile.isolationStandoffFacts, ...profile.protectiveActionFacts, ...profile.technicalOperationsFacts], 'neutral'],
+    ]],
+    ['hazard-profile-medical-content', [
+      ['Medical Management', profile.medicalFacts, 'critical'],
+      ['Agent Characteristics', profile.overviewFacts, 'neutral'],
+    ]],
+  ];
+  columns.forEach(([id, cards]) => {
+    const container = document.getElementById(id);
+    if (!container) return;
+    container.replaceChildren(...cards.map(([title, facts, tone]) => createHazardOperationalCard(title, facts, { tone })));
+    if (id === 'hazard-profile-medical-content') container.append(createHazardSourceVerificationCard(profile));
+  });
+
+  const status = document.getElementById('hazard-profile-threat-title');
+  const detail = document.getElementById('hazard-profile-threat-detail');
+  const firstThreat = profileFacts(profile.hazardFacts).find(hazardFactHasValue);
+  if (status) status.textContent = hazardVerificationLabel(profile.verificationStatus);
+  if (detail) detail.textContent = firstThreat
+    ? `${firstThreat.fieldName}: ${hazardProfileDisplayValue(firstThreat)}`
+    : noCurrentDataText;
+
+  const actionGrid = document.getElementById('hazard-profile-action-cards');
+  if (actionGrid) {
+    const actionGroups = [
+      ['Immediate Threat', profile.hazardFacts, 'critical'],
+      ['Isolation', profile.isolationStandoffFacts, 'warning'],
+      ['PPE', profile.ppeFacts, 'critical'],
+      ['Decon', profile.deconFacts, 'warning'],
+      ['Medical', profile.medicalFacts, 'critical'],
+    ];
+    actionGrid.replaceChildren(...actionGroups.map(([title, facts, tone]) => {
+      const card = document.createElement('article');
+      card.className = `hazard-action-ribbon-item hazard-action-ribbon-${tone}`;
+      const label = document.createElement('span');
+      label.textContent = title;
+      const value = document.createElement('strong');
+      value.textContent = hazardActionSummary(facts);
+      const state = document.createElement('small');
+      state.textContent = hazardVerificationLabel(hazardSectionStatus(facts));
+      card.append(label, value, state);
+      return card;
+    }));
+  }
 }
 
 function renderStarterHazardProfile(profile) {
@@ -5071,6 +5229,8 @@ function renderStarterHazardProfile(profile) {
       ['UN/NA', profile.identifiers?.unNaNumbers],
       ['Agent code', profile.identifiers?.agentCodes],
       ['CAS', profile.identifiers?.cas],
+      ['Alternate / common name', profile.identifiers?.aliases],
+      ['Scientific name', profile.scientificName || profile.identifiers?.scientificName],
       ['ERG Guide', profile.identifiers?.ergGuide],
       ['CWC classification', profile.identifiers?.opcwSchedule],
       ['Hazard Class', category || noCurrentDataText],
@@ -5158,6 +5318,7 @@ function renderStarterHazardProfile(profile) {
       ? 'Radiological plume/standoff requires radiological model support.'
       : 'Plume requires verified endpoint/source data.';
   }
+  renderOperationalHazardProfile(profile);
   renderStarterHazardTab(profile, ['overviewFacts', 'hazardFacts']);
 }
 
@@ -12423,6 +12584,7 @@ document.addEventListener('pointerup', () => {
 
 const liveMapStorageKey = 'hazmatiq_live_map_state';
 const latestPlumeOverlayStorageKey = 'hazmatiq_latest_plume_overlay';
+const liveMapStyleKey = 'hazmatiq_live_map_style';
 const liveMapLayerGroups = {
   incident: ['plume', 'icp', 'entry', 'decon', 'staging', 'monitors', 'medical'],
   wildfire: ['wildfireFires', 'wildfirePerimeters', 'wildfireSmoke'],
@@ -12435,8 +12597,14 @@ let liveMapMarkers = [];
 let liveMapGpsMarker = null;
 let liveMapGpsRequested = false;
 let liveMapResizeObserver = null;
+let liveMapStoredStyleApplied = false;
+let liveMapStyleRequestToken = 0;
 // Vector street style includes roads, buildings, parks, schools, hospitals, and POIs.
 const liveMapDetailedStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
+const liveMapStyleModes = Object.freeze({ street: liveMapDetailedStyleUrl, satellite: plumeSatelliteMapStyle });
+const liveMapStyleModeNames = new Set(['street', 'satellite', 'terrain3d']);
+const liveTerrainSourceId = 'live-terrain-dem';
+const liveTerrainTilesUrl = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
 let liveMapFallbackStyleApplied = false;
 let liveRadarController = null;
 const livePlumeSourceId = 'live-plume-overlay';
@@ -12516,6 +12684,187 @@ function updateLiveMapPanels() {
     document.querySelector(`[data-layer-group="${group}"]`)?.classList.toggle('active', count > 0);
     const countElement = document.querySelector(`[data-layer-count="${group}"]`);
     if (countElement) countElement.textContent = String(count);
+  });
+}
+
+function closeLiveMapLayerMenus(except = null) {
+  document.querySelectorAll('[data-layer-menu]').forEach((menu) => {
+    const open = menu === except;
+    menu.hidden = !open;
+    const group = menu.dataset.layerMenu;
+    document.querySelector(`[data-layer-group="${group}"]`)?.setAttribute('aria-expanded', String(open));
+  });
+}
+
+function updateLiveMapModeButtons(mode) {
+  document.querySelectorAll('[data-map-style]').forEach((button) => {
+    const active = button.dataset.mapStyle === mode;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
+}
+
+function updateLiveMapReadout() {
+  const center = liveMap?.getCenter?.();
+  if (!center) return;
+  const latitude = Math.abs(center.lat).toFixed(4);
+  const longitude = Math.abs(center.lng).toFixed(4);
+  setText('live-map-coordinates', `${latitude}° ${center.lat >= 0 ? 'N' : 'S'} / ${longitude}° ${center.lng >= 0 ? 'E' : 'W'}`);
+  const zoom = Math.max(0, liveMap.getZoom?.() - 14 || 0);
+  setText('live-map-scale', `SCALE 1:${Math.max(1000, Math.round(24000 / Math.pow(2, zoom))).toLocaleString()}`);
+}
+
+function enableLiveMapTerrain() {
+  if (!liveMap?.isStyleLoaded?.() || !liveMap.setTerrain) return false;
+  try {
+    if (!liveMap.getSource(liveTerrainSourceId)) {
+      liveMap.addSource(liveTerrainSourceId, {
+        type: 'raster-dem',
+        tiles: [liveTerrainTilesUrl],
+        tileSize: 256,
+        maxzoom: 15,
+        encoding: 'terrarium',
+        attribution: 'AWS Terrain Tiles / Mapzen',
+      });
+    }
+    liveMap.setTerrain({ source: liveTerrainSourceId, exaggeration: 1.05 });
+    return Boolean(liveMap.getTerrain?.());
+  } catch (error) {
+    console.error('LIVE MAP TERRAIN ERROR', error);
+    return false;
+  }
+}
+
+function disableLiveMapTerrain() {
+  if (!liveMap) return;
+  try {
+    if (liveMap.getTerrain?.()) liveMap.setTerrain(null);
+    if (liveMap.isStyleLoaded?.() && liveMap.getSource?.(liveTerrainSourceId)) liveMap.removeSource(liveTerrainSourceId);
+  } catch {
+    // A style transition may already have discarded the optional DEM.
+  }
+}
+
+function logLiveMapTerrainDiagnostic(mode) {
+  console.info('LIVE MAP TERRAIN DIAGNOSTIC', {
+    mode,
+    terrainSourcePresent: Boolean(liveMap?.getSource?.(liveTerrainSourceId)),
+    terrainEnabled: Boolean(liveMap?.getTerrain?.()),
+    styleLoaded: Boolean(liveMap?.isStyleLoaded?.()),
+    pitch: liveMap?.getPitch?.() ?? null,
+  });
+}
+
+function restoreLiveMapOverlays() {
+  if (!liveMap?.isStyleLoaded?.()) return;
+  updateLiveRadarOverlay();
+  updateLivePlumeOverlay();
+  updateTier2FacilitiesOverlay();
+  restoreWildfireLayers();
+  renderLiveMapMarkers();
+  scheduleTier2FacilityMarkerRender();
+  scheduleWildfireFireMarkerRender();
+  void refreshWildfireStatus();
+  liveMap.resize();
+}
+
+function setLiveMapStyle(mode = 'satellite') {
+  const selected = liveMapStyleModeNames.has(mode) ? mode : 'satellite';
+  updateLiveMapModeButtons(selected);
+  try { window.localStorage.setItem(liveMapStyleKey, selected); } catch { /* In-memory mode is sufficient. */ }
+  if (!liveMap) return;
+
+  const currentStyle = liveMap.getStyle?.();
+  const isSatellite = Boolean(currentStyle?.sources?.[plumeSatelliteSourceId]);
+  const requestToken = ++liveMapStyleRequestToken;
+  const finishTerrain = () => {
+    if (requestToken !== liveMapStyleRequestToken) return;
+    const terrainEnabled = enableLiveMapTerrain();
+    liveMap.easeTo({ pitch: terrainEnabled ? 52 : 0, bearing: terrainEnabled ? -18 : 0, duration: 350 });
+    restoreLiveMapOverlays();
+    logLiveMapTerrainDiagnostic(selected);
+  };
+  const finishFlatMode = () => {
+    if (requestToken !== liveMapStyleRequestToken) return;
+    disableLiveMapTerrain();
+    liveMap.easeTo({ pitch: 0, bearing: 0, duration: 350 });
+    restoreLiveMapOverlays();
+    logLiveMapTerrainDiagnostic(selected);
+  };
+
+  if (selected === 'terrain3d') {
+    // 3D Terrain is satellite imagery draped over the shared Plume Model DEM.
+    if (!isSatellite) {
+      disableLiveMapTerrain();
+      liveMap.once('style.load', finishTerrain);
+      liveMap.setStyle(clonePlumeMapStyle(plumeSatelliteMapStyle));
+    } else if (liveMap.isStyleLoaded?.()) {
+      finishTerrain();
+    } else {
+      liveMap.once('style.load', finishTerrain);
+    }
+    return;
+  }
+
+  const targetIsSatellite = selected === 'satellite';
+  if (targetIsSatellite !== isSatellite) {
+    liveMap.once('style.load', finishFlatMode);
+    liveMap.setStyle(targetIsSatellite ? clonePlumeMapStyle(plumeSatelliteMapStyle) : liveMapStyleModes.street);
+  } else {
+    finishFlatMode();
+  }
+}
+
+function bindLiveMapControls() {
+  if (document.body.dataset.liveMapControlsBound === 'true') return;
+  document.body.dataset.liveMapControlsBound = 'true';
+  document.querySelectorAll('[data-layer-group]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const menu = document.querySelector(`[data-layer-menu="${button.dataset.layerGroup}"]`);
+      if (menu) closeLiveMapLayerMenus(menu.hidden ? menu : null);
+    });
+  });
+  document.querySelector('[data-map-action="layers"]')?.addEventListener('click', () => {
+    const incidentButton = document.querySelector('[data-layer-group="incident"]');
+    const menu = document.querySelector('[data-layer-menu="incident"]');
+    if (incidentButton && menu) {
+      closeLiveMapLayerMenus(menu);
+      incidentButton.focus();
+    }
+  });
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)
+      || event.target.closest('.live-map-control-groups, .live-map-layer-menus, [data-map-action="layers"]')) return;
+    closeLiveMapLayerMenus();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeLiveMapLayerMenus();
+  });
+  document.querySelectorAll('[data-map-style]').forEach((button) => {
+    button.addEventListener('click', () => setLiveMapStyle(button.dataset.mapStyle));
+  });
+  document.querySelectorAll('[data-map-action]').forEach((button) => {
+    const action = button.dataset.mapAction;
+    if (action === 'layers') return;
+    button.addEventListener('click', () => {
+      if (action === 'fullscreen') {
+        const mapView = document.getElementById('map');
+        if (document.fullscreenElement) void document.exitFullscreen();
+        else void mapView?.requestFullscreen?.();
+        return;
+      }
+      if (!liveMap) return;
+      if (action === 'zoom-in') liveMap.zoomIn();
+      if (action === 'zoom-out') liveMap.zoomOut();
+      if (action === 'compass') liveMap.resetNorthPitch?.();
+      if (action === 'recenter') {
+        getCurrentGps().then((gps) => {
+          liveMap.easeTo({ center: [gps.lon, gps.lat], zoom: 15 });
+          updateLiveMapGpsMarker(gps);
+          setLiveMapGpsStatus('live');
+        }).catch((error) => setLiveMapGpsStatus('error', error.message));
+      }
+    });
   });
 }
 
@@ -13479,7 +13828,10 @@ function initializeLiveMap() {
     setText('live-map-status', 'The local MapLibre library did not load.');
     return;
   }
-  if (!liveMap && window.hazmatiqLiveMap) liveMap = window.hazmatiqLiveMap;
+  if (!liveMap && window.hazmatiqLiveMap) {
+    console.error('LIVE MAP OWNERSHIP ERROR: an existing MapLibre instance occupies the canonical container.');
+    return;
+  }
   const incident = getActiveIncident();
   setText('live-map-incident-name', incident?.incidentName || 'Planning Map');
   setText('live-map-mode', incident ? 'Active Incident' : 'Planning Mode');
@@ -13488,6 +13840,10 @@ function initializeLiveMap() {
   const container = document.getElementById('live-gis-map');
   observeLiveMapContainer(container);
   if (!liveMap) {
+    if (container?.querySelector('.maplibregl-canvas')) {
+      console.error('LIVE MAP OWNERSHIP ERROR: refusing to create a second MapLibre canvas.');
+      return;
+    }
     const rect = container?.getBoundingClientRect();
     if (!container || !rect || rect.width <= 100 || rect.height <= 200) {
       if (document.getElementById('map')?.classList.contains('active')) {
@@ -13516,15 +13872,18 @@ function initializeLiveMap() {
       return;
     }
     liveMap.addControl(new window.maplibregl.NavigationControl(), 'bottom-right');
+    liveMap.on('move', updateLiveMapReadout);
     liveMap.on('style.load', () => {
-      updateLiveRadarOverlay();
-      updateLivePlumeOverlay();
-      updateTier2FacilitiesOverlay();
-      restoreWildfireLayers();
-      renderLiveMapMarkers();
+      restoreLiveMapOverlays();
       document.querySelector('.live-map-stage')?.classList.add('map-ready');
       setText('live-map-status', liveMap.getStyle()?.sources?.[plumeSatelliteSourceId] ? 'Satellite basemap ready.' : 'Street map ready.');
-      void refreshWildfireStatus();
+      if (!liveMapStoredStyleApplied) {
+        liveMapStoredStyleApplied = true;
+        try {
+          const storedStyle = window.localStorage.getItem(liveMapStyleKey);
+          if (storedStyle && storedStyle !== 'satellite') setLiveMapStyle(storedStyle);
+        } catch { /* Use the satellite default. */ }
+      }
     });
     liveMap.on('idle', () => document.querySelector('.live-map-stage')?.classList.add('map-ready'));
     liveMap.on('load', () => {
@@ -13551,7 +13910,7 @@ function initializeLiveMap() {
       if (!liveMapFallbackStyleApplied && liveMap) {
         liveMapFallbackStyleApplied = true;
         try {
-          liveMap.setStyle(plumeSatelliteMapStyle);
+          setLiveMapStyle('satellite');
           setText('live-map-status', 'Street basemap unavailable. Satellite fallback active.');
           return;
         } catch {
@@ -13574,10 +13933,7 @@ function initializeLiveMap() {
     if (liveMapState.activeLayers[layer]) ensureLiveLayerMarker(layer);
   });
   updateLiveMapPanels();
-  updateLivePlumeOverlay();
-  updateTier2FacilitiesOverlay();
-  restoreWildfireLayers();
-  renderLiveMapMarkers();
+  restoreLiveMapOverlays();
   window.requestAnimationFrame(() => {
     liveMap?.resize();
     logLiveMapDiagnostic();
@@ -13612,7 +13968,6 @@ if (liveMapViewElement) {
 
 document.querySelectorAll('[data-live-layer]').forEach((button) => {
   button.addEventListener('click', () => {
-    if (!liveMap && window.hazmatiqLiveMap) liveMap = window.hazmatiqLiveMap;
     if (!liveMapState) liveMapState = readLiveMapState();
     const layer = button.dataset.liveLayer;
     liveMapState.activeLayers[layer] = !liveMapState.activeLayers[layer];
@@ -13627,6 +13982,7 @@ document.querySelectorAll('[data-live-layer]').forEach((button) => {
   });
 });
 
+bindLiveMapControls();
 bindLiveRadarControls();
 
 document.getElementById('live-map-add-marker')?.addEventListener('click', () => {

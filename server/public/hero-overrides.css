@@ -85,7 +85,6 @@
 .view:not(#overview) .variant-chemical-profile { background-image: url("assets/chemical-id-search-background-v2.png") !important; }
 .view:not(#overview) .variant-guided-response { background-image: url("assets/guided-response-hero.png") !important; }
 .view:not(#overview) .variant-plume { background-image: url("assets/plume-model-hero-v2.png") !important; }
-.view:not(#overview) .variant-live-map { background-image: url("assets/live-map-hero-v2.png") !important; }
 .view:not(#overview) .variant-planning { background-image: url("assets/home-planning-tools-hero-v4.png") !important; }
 .view:not(#overview) .variant-reports { background-image: url("assets/reports-hero-v2.png") !important; }
 .view:not(#overview) .variant-monitoring { background-image: url("assets/equipment-hero-v2.png") !important; }
@@ -96,84 +95,25 @@
   .view:not(#overview) > .plume-page-header { background-position: 68% center !important; }
 }
 
-/* Live Map hero: turn the right-side artwork into a compact operational map
-   console. The photographic command-map asset remains the foundation, while
-   this restrained overlay adds roads, grid, route, and incident cues without
-   competing with the title or the active-workspace readout. */
+/* Live Map hero: the supplied artwork is the complete hero surface. */
 #map .live-map-tactical-header {
-  background-image:
-    linear-gradient(90deg, rgba(2, 11, 20, .99) 0%, rgba(2, 11, 20, .94) 35%, rgba(2, 11, 20, .56) 66%, rgba(2, 11, 20, .2) 100%),
-    url("assets/live-map-hero-v2.png") !important;
-  background-position: center, right 54% !important;
-  background-size: cover, cover !important;
+  background: none !important;
 }
 
-#map .live-map-tactical-header::before {
-  z-index: 0 !important;
-  inset: 0 !important;
-  opacity: 1 !important;
-  background:
-    linear-gradient(90deg, rgba(2, 11, 20, .76) 0%, rgba(2, 11, 20, .28) 48%, rgba(2, 11, 20, .04) 100%),
-    repeating-linear-gradient(0deg, transparent 0 19px, rgba(102, 180, 224, .16) 20px 21px),
-    repeating-linear-gradient(90deg, transparent 0 27px, rgba(102, 180, 224, .13) 28px 29px) !important;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .12) 28%, #000 58%, #000 100%) !important;
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .12) 28%, #000 58%, #000 100%) !important;
-}
-
+#map .live-map-tactical-header::before,
 #map .live-map-tactical-header::after {
-  z-index: 1 !important;
-  top: 17% !important;
-  right: 2.5% !important;
-  width: min(43%, 520px) !important;
-  height: 66% !important;
-  border: 1px solid rgba(142, 207, 236, .55) !important;
-  border-radius: 5px !important;
-  background:
-    radial-gradient(circle at 73% 42%, #ffd323 0 3px, rgba(255, 211, 35, .42) 4px 10px, transparent 11px),
-    radial-gradient(circle at 39% 64%, #ff5a4e 0 3px, rgba(255, 90, 78, .34) 4px 10px, transparent 11px),
-    linear-gradient(148deg, transparent 0 47%, rgba(255, 211, 35, .78) 48% 49%, transparent 50% 100%),
-    linear-gradient(28deg, transparent 0 28%, rgba(92, 191, 232, .54) 29% 30%, transparent 31% 61%, rgba(92, 191, 232, .4) 62% 63%, transparent 64%),
-    repeating-linear-gradient(0deg, transparent 0 14px, rgba(144, 207, 232, .17) 15px 16px),
-    repeating-linear-gradient(90deg, transparent 0 21px, rgba(144, 207, 232, .15) 22px 23px),
-    linear-gradient(135deg, rgba(7, 38, 62, .92), rgba(7, 29, 49, .64));
-  box-shadow: inset 0 0 0 3px rgba(4, 20, 33, .48), 0 10px 28px rgba(0, 0, 0, .3);
-  opacity: .88;
-  transform: none !important;
+  display: none !important;
   pointer-events: none;
 }
 
-#map .live-map-title-block,
-#map .live-map-incident-readout {
-  position: relative;
-  z-index: 2;
-}
-
-#map .live-map-incident-readout {
-  padding: 8px 10px 8px 14px;
-  border-radius: 4px;
-  background: rgba(4, 20, 33, .72);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, .16);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-}
-
-@media (max-width: 620px) {
-  #map .live-map-tactical-header {
-    background-position: center, 72% center !important;
-  }
-
-  #map .live-map-tactical-header::after {
-    top: auto !important;
-    right: 8px !important;
-    bottom: 8px !important;
-    width: 52% !important;
-    height: 52% !important;
-    opacity: .42;
-  }
-
-  #map .live-map-incident-readout {
-    background: rgba(4, 20, 33, .84);
-  }
+#map .live-map-hero-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  object-position: center center;
 }
 
 /* All page title headers use the Incident Command height, including compact variants. */

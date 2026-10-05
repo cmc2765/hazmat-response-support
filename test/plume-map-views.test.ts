@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 const plumeUi = readFileSync(new URL("../server/public/script.js", import.meta.url), "utf8");
 const radarUi = readFileSync(new URL("../server/public/weather-radar.js", import.meta.url), "utf8");
 const radarProviders = readFileSync(new URL("../server/public/weather-radar-providers.js", import.meta.url), "utf8");
-const liveMapBootstrap = readFileSync(new URL("../server/public/live-map-bootstrap.js", import.meta.url), "utf8");
 const styles = readFileSync(new URL("../server/public/styles.css", import.meta.url), "utf8");
 const plumeStyles = readFileSync(new URL("../server/public/plume-overrides.css", import.meta.url), "utf8");
 const heroStyles = readFileSync(new URL("../server/public/hero-overrides.css", import.meta.url), "utf8");
@@ -492,7 +491,6 @@ describe("plume map views", () => {
   it("uses the provider radar controller only on Live Map", () => {
     expect(plumeUi).not.toContain("HazMatWeatherRadar.createController(plumeMap");
     expect(plumeUi).toContain("HazMatWeatherRadar.createController(liveMap");
-    expect(liveMapBootstrap).toContain("HazMatWeatherRadar.createController(map");
     expect(html).not.toContain('data-plume-layer="radar"');
     expect(html).toContain('plume-live-radar-link" type="button" data-view="map"');
     expect(html).toContain('data-live-layer="weatherRadar"');

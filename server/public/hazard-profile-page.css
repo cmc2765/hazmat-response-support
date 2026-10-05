@@ -1,26 +1,18 @@
 /* Hazard ID uses exclusive, full-page search and selected-profile surfaces. */
-.content-area > .view[hidden] {
-  display: none !important;
-}
-
-#lookup.view[hidden] {
-  display: none !important;
-}
+.content-area > .view[hidden],
+#lookup.view[hidden] { display: none !important; }
 
 #lookup[data-hazard-page-state="chemical-profile"] > #hazard-id-search-hero,
 #lookup[data-hazard-page-state="chemical-profile"] > #hazard-id-search-workspace,
 #lookup[data-hazard-page-state="chemical-profile"] > #facility-inventory,
 #lookup[data-hazard-page-state="hazard-profile"] > #hazard-id-search-hero,
 #lookup[data-hazard-page-state="hazard-profile"] > #hazard-id-search-workspace,
-#lookup[data-hazard-page-state="hazard-profile"] > #facility-inventory {
-  display: none !important;
-}
+#lookup[data-hazard-page-state="hazard-profile"] > #facility-inventory { display: none !important; }
 
 #lookup.view:not([hidden])[data-hazard-page-state="chemical-profile"],
 #lookup.view:not([hidden])[data-hazard-page-state="hazard-profile"] {
   display: block !important;
   width: 100% !important;
-  min-height: calc(100dvh - 24px) !important;
   padding: 0 !important;
 }
 
@@ -29,14 +21,12 @@
   display: block !important;
   width: 100% !important;
   max-width: none !important;
-  min-height: calc(100dvh - 24px) !important;
   margin: 0 !important;
 }
 
 #lookup[data-hazard-page-state="chemical-profile"] .chemical-profile-shell,
 #lookup[data-hazard-page-state="hazard-profile"] .hazard-profile-shell {
   width: 100% !important;
-  min-height: calc(100dvh - 24px) !important;
 }
 
 #chemical-id-results .chemical-profile-toolbar {
@@ -91,11 +81,8 @@
   line-height: 1.25;
 }
 
-/* Hazard ID is a document-sized profile. The legacy desktop dashboard locked
-   the app shell to the viewport and hid overflow, which clipped long fact
-   sets and trapped the operator inside a nested card. Keep the tactical
-   two-column layout, but let the page own vertical scrolling at tablet and
-   desktop widths. */
+/* Hazard ID is a document-sized profile. The app shell owns no fixed-height
+   profile surface; the document grows with the source-backed content. */
 @media (min-width: 768px) {
   html,
   body { min-height: 100%; overflow-y: auto; }
@@ -133,7 +120,7 @@
     height: auto !important;
     min-height: 0 !important;
     overflow: visible !important;
-    grid-template-rows: auto auto auto auto !important;
+    grid-template-rows: none !important;
   }
 
   #lookup .chemical-profile-layout,
@@ -223,35 +210,6 @@
     line-height: 1.45;
   }
 
-  #lookup .hazard-profile-action-grid {
-    display: grid !important;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 7px;
-    min-height: 0;
-    padding: 8px;
-    border: 1px solid #315f82;
-    border-radius: 8px;
-    background: rgba(4, 24, 42, 0.76);
-  }
-
-  #lookup .hazard-profile-action-grid article {
-    display: grid;
-    align-content: start;
-    gap: 5px;
-    min-height: 0;
-    padding: 9px;
-    border: 1px solid #315f82;
-    border-radius: 7px;
-    background: #082b47;
-  }
-
-  #lookup .hazard-profile-action-grid h3,
-  #lookup .hazard-profile-action-grid p { margin: 0; }
-
-  #lookup .hazard-profile-action-grid h3 { color: #fff; font-size: .82rem; }
-  #lookup .hazard-profile-action-grid p { color: #dce7f2; font-size: .72rem; line-height: 1.35; }
-  #lookup .hazard-profile-action-grid span { font-size: .62rem; }
-
   #lookup .hazard-profile-limitations {
     display: block !important;
     min-height: 0;
@@ -269,10 +227,6 @@
   }
 }
 
-@media (min-width: 768px) and (max-width: 1100px) {
-  #lookup .hazard-profile-action-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
 @media (max-width: 700px) {
   #chemical-id-results .chemical-profile-toolbar {
     grid-template-columns: 1fr auto !important;
@@ -282,6 +236,191 @@
     grid-column: 1 / -1;
     grid-row: 1;
   }
+}
+
+/* CBRN / CWA operational profile. This is the single authoritative layout for
+   the populated starter-hazard surface; every panel is content-sized. */
+.hazard-profile-shell {
+  display: grid;
+  gap: 12px;
+  min-height: 0 !important;
+  padding: 12px;
+  border: 1px solid #24577c;
+  border-radius: 12px;
+  background: linear-gradient(160deg, #061e33 0%, #031827 72%);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .28);
+}
+
+.hazard-profile-toolbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+}
+.hazard-profile-toolbar > strong {
+  color: #f8fafc;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .76rem;
+}
+.hazard-profile-toolbar-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+
+.hazard-profile-header-card {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr) minmax(225px, .4fr);
+  grid-template-areas:
+    "emblem identity threat"
+    "emblem identity highlights";
+  align-items: start;
+  gap: 14px;
+  min-height: 0 !important;
+  padding: 16px;
+  border: 1px solid #2f668d;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 80% 12%, rgba(246, 195, 67, .12), transparent 25%),
+    linear-gradient(135deg, #0b3455, #071f36 78%);
+}
+.hazard-profile-emblem { grid-area: emblem; width: 76px; height: 76px; }
+.hazard-profile-identity { grid-area: identity; min-width: 0; }
+.hazard-profile-threat-status {
+  grid-area: threat;
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  min-width: 0;
+  padding: 11px 13px;
+  border: 1px solid rgba(236, 105, 74, .62);
+  border-left: 4px solid #d9564b;
+  border-radius: 7px;
+  background: rgba(87, 21, 26, .4);
+}
+.hazard-profile-threat-status p,
+.hazard-profile-threat-status strong,
+.hazard-profile-threat-status span { margin: 0; }
+.hazard-profile-threat-status p { color: #ffb09b; font-size: .63rem; font-weight: 900; letter-spacing: .11em; text-transform: uppercase; }
+.hazard-profile-threat-status strong { color: #fff1ee; font-size: .9rem; text-transform: uppercase; }
+.hazard-profile-threat-status span { color: #f4c9c2; font-size: .72rem; line-height: 1.35; }
+.hazard-profile-overview { grid-area: highlights; min-width: 0; }
+.hazard-profile-overview > strong { color: #f6c343; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; }
+.hazard-profile-overview ul { display: grid; gap: 4px; margin: 6px 0 0; padding: 0; list-style: none; }
+.hazard-profile-overview li { display: flex; gap: 7px; color: #dce7f2; font-size: .71rem; line-height: 1.35; }
+.hazard-profile-overview li::before { content: none; }
+.hazard-profile-overview li > span:first-child { color: #f6c343; font-size: .48rem; padding-top: 3px; }
+.hazard-profile-identifiers { gap: 6px; margin-top: 10px; }
+.hazard-profile-identifiers > span { min-width: 92px; padding: 6px 8px; }
+.hazard-profile-identifiers strong { overflow-wrap: anywhere; }
+
+.hazard-profile-action-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+  min-height: 0 !important;
+  padding: 8px;
+  border: 1px solid #315f82;
+  border-radius: 8px;
+  background: rgba(4, 24, 42, .78);
+}
+.hazard-action-ribbon-item {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+  min-height: 0 !important;
+  padding: 9px 10px;
+  border: 1px solid #315f82;
+  border-top: 3px solid #d39b0c;
+  border-radius: 6px;
+  background: #082b47;
+}
+.hazard-action-ribbon-item > span { color: #f6c343; font-size: .63rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.hazard-action-ribbon-item strong { color: #f8fafc; font-size: .75rem; font-weight: 650; line-height: 1.35; overflow-wrap: anywhere; }
+.hazard-action-ribbon-item small { color: #9fc9e5; font-size: .62rem; text-transform: uppercase; }
+.hazard-action-ribbon-critical { border-top-color: #d9564b; }
+.hazard-action-ribbon-critical > span { color: #ffad9e; }
+
+.hazard-profile-operational-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.1fr) minmax(0, .95fr);
+  align-items: start;
+  gap: 10px;
+}
+.hazard-profile-column { display: grid; align-content: start; align-self: start; gap: 8px; min-width: 0; }
+.hazard-profile-column-heading { display: flex; align-items: center; gap: 8px; padding: 4px 2px 7px; border-bottom: 1px solid #326b94; }
+.hazard-profile-column-heading span { color: #f6c343; font: 900 .62rem var(--hazmatiq-font-heading); letter-spacing: .08em; }
+.hazard-profile-column-heading h2 { margin: 0; color: #f8fafc; font: 900 .86rem var(--hazmatiq-font-heading); letter-spacing: .1em; text-transform: uppercase; }
+.hazard-profile-column > div { display: grid; align-content: start; gap: 8px; }
+
+.hazard-operational-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+  min-height: 0 !important;
+  padding: 11px 12px;
+  border: 1px solid #24577c;
+  border-top: 3px solid #d39b0c;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #0a304e, #061f34);
+}
+.hazard-operational-card-critical { border-top-color: #d39b0c; }
+.hazard-profile-column-threat .hazard-operational-card-critical { border-top-color: #d9564b; }
+.hazard-operational-card-source { border-top-color: #3d9852; }
+.hazard-operational-card-heading { display: flex; align-items: start; justify-content: space-between; gap: 8px; }
+.hazard-operational-card h3 { margin: 0; color: #f6c343; font: 900 .79rem var(--hazmatiq-font-heading); letter-spacing: .08em; line-height: 1.2; text-transform: uppercase; }
+.hazard-operational-status { flex: 0 0 auto; padding: 3px 6px; border: 1px solid #a67c21; border-radius: 999px; color: #ffd65e; font-size: .56rem; font-weight: 900; line-height: 1.1; text-align: right; text-transform: uppercase; }
+.hazard-operational-status[data-status="Verified"] { border-color: #3d9852; color: #8ce3a9; }
+.hazard-operational-status[data-status="No Current Data Exists"] { border-color: #66788a; color: #d4dde5; }
+.hazard-operational-status[data-status="Conflicting Sources"] { border-color: #d9564b; color: #ffad9e; }
+.hazard-operational-facts { display: grid; gap: 6px; margin: 0; }
+.hazard-operational-facts > div { display: grid; gap: 2px; min-width: 0; padding-bottom: 6px; border-bottom: 1px solid rgba(61, 125, 170, .4); }
+.hazard-operational-facts > div:last-child { padding-bottom: 0; border-bottom: 0; }
+.hazard-operational-facts dt { color: #c8e2f3; font-size: .67rem; font-weight: 850; letter-spacing: .04em; text-transform: uppercase; }
+.hazard-operational-facts dd { margin: 0; color: #f2f7fb; font-size: .79rem; line-height: 1.45; overflow-wrap: anywhere; }
+.hazard-operational-facts small { color: #82abc7; font-size: .61rem; line-height: 1.25; overflow-wrap: anywhere; }
+.hazard-operational-empty { margin: 0; color: #9db8ca; font-size: .75rem; }
+
+.hazard-profile-detail-drawer { min-width: 0; border: 1px solid #24577c; border-radius: 8px; background: #062239; }
+.hazard-profile-detail-drawer > summary { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 10px 12px; color: #f6c343; cursor: pointer; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.hazard-profile-detail-drawer > summary span { color: #8fb4d0; font-size: .65rem; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.hazard-profile-detail-drawer[open] > summary { border-bottom: 1px solid #24577c; }
+.hazard-profile-detail-drawer .hazard-profile-content-card { min-height: 0 !important; padding: 10px; border: 0; border-radius: 0; background: transparent; }
+.hazard-profile-detail-drawer .hazard-profile-content { min-height: 0 !important; align-content: start; }
+.hazard-profile-detail-drawer .hazard-source-fact-card { min-height: 0; }
+
+.hazard-profile-limitations { min-height: 0 !important; }
+.hazard-profile-source-footer { min-height: 0 !important; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (max-width: 1080px) {
+  .hazard-profile-operational-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hazard-profile-column-medical { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hazard-profile-column-medical .hazard-profile-column-heading { grid-column: 1 / -1; }
+  .hazard-profile-column-medical > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hazard-profile-column-medical > div > .hazard-operational-card-source { grid-column: 1 / -1; }
+  .hazard-profile-action-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .hazard-profile-header-card { grid-template-columns: 62px minmax(0, 1fr); grid-template-areas: "emblem identity" "threat threat" "highlights highlights"; }
+  .hazard-profile-emblem { width: 56px; height: 56px; font-size: .9rem; }
+  .hazard-profile-operational-grid,
+  .hazard-profile-column-medical,
+  .hazard-profile-column-medical > div { grid-template-columns: 1fr; }
+  .hazard-profile-column-medical { grid-column: auto; }
+  .hazard-profile-column-medical .hazard-profile-column-heading,
+  .hazard-profile-column-medical > div > .hazard-operational-card-source { grid-column: auto; }
+  .hazard-profile-action-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hazard-profile-toolbar { grid-template-columns: 1fr auto; }
+  .hazard-profile-toolbar > strong { grid-column: 1 / -1; grid-row: 1; }
+  .hazard-profile-toolbar-actions { grid-column: 1 / -1; justify-content: flex-start; }
+  .hazard-profile-detail-drawer > summary { align-items: flex-start; flex-direction: column; gap: 3px; }
+}
+@media (max-width: 480px) {
+  .hazard-profile-shell { padding: 8px; }
+  .hazard-profile-header-card { padding: 12px; }
+  .hazard-profile-action-grid { grid-template-columns: 1fr; }
+  .hazard-profile-identifiers > span { min-width: calc(50% - 4px); }
 }
 
 /* Hazard Profile data-sheet hierarchy: section titles carry the panel identity,
