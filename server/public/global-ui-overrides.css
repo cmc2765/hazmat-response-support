@@ -1139,16 +1139,33 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 }
 
 
-/* Mobile homepage drawer containment */
+/* Mobile homepage drawer containment.
+   Mobile uses a viewport-contained sheet instead of positioning below the
+   hamburger. This prevents the drawer from being clipped by a tall homepage
+   header or dynamic --workspace-drawer-top value. */
 @media (max-width: 760px) {
   body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home {
-    left: auto !important;
+    top: calc(6px + env(safe-area-inset-top)) !important;
     right: 6px !important;
-    width: min(320px, calc(100vw - 12px)) !important;
-    max-width: calc(100vw - 12px) !important;
-    max-height: calc(100dvh - var(--workspace-drawer-top, 0px) - 8px) !important;
+    bottom: calc(6px + env(safe-area-inset-bottom)) !important;
+    left: 6px !important;
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
     overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px !important;
     box-sizing: border-box !important;
+  }
+
+  body:has(#overview.view.active) .workspace-drawer-backdrop.workspace-drawer-home {
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
   }
 
   body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home .workspace-drawer-header,
@@ -1156,6 +1173,11 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
     min-width: 0 !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
+  }
+
+  body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home .workspace-drawer-header {
+    position: sticky !important;
+    top: 0 !important;
   }
 
   body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-home .workspace-drawer-nav .module-btn,
