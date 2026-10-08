@@ -31,7 +31,7 @@
         </div>
 
         <nav class="app-primary-nav" id="app-primary-nav" aria-label="Primary navigation">
-          <button class="module-btn app-nav-item" type="button" data-view="incident" data-nav-key="dashboard" aria-label="Open Command Dashboard" aria-current="page">
+          <button class="module-btn app-nav-item" type="button" data-view="overview" data-nav-key="dashboard" aria-label="Open HAZSCOPE Dashboard" aria-current="page">
             <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg></span><span class="app-nav-label label">Dashboard</span>
           </button>
           <button class="module-btn app-nav-item" type="button" data-view="lookup" aria-label="Open Hazard ID">
@@ -43,7 +43,7 @@
           <button class="module-btn app-nav-item" type="button" data-view="map" aria-label="Open Live Map">
             <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 21s6-5.1 6-10.1a6 6 0 1 0-12 0C6 15.9 12 21 12 21Z" /><circle cx="12" cy="10.8" r="2.1" /><path d="M3 10.8h3m12 0h3M12 2.8v2.1M12 16.7v3" /></svg></span><span class="app-nav-label label">Live Map</span>
           </button>
-          <button class="module-btn app-nav-item" type="button" data-view="incident" data-nav-key="command" aria-label="Open Command">
+          <button class="module-btn app-nav-item" type="button" data-view="incident" data-nav-key="command" aria-label="Open Incident Command">
             <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="3" /><circle cx="12" cy="12" r="8" /><path d="M12 2v3m0 14v3M2 12h3m14 0h3" /><circle cx="12" cy="4" r="1" fill="currentColor" stroke="none" /><circle cx="20" cy="12" r="1" fill="currentColor" stroke="none" /></svg></span><span class="app-nav-label label">COMMAND</span>
           </button>
           <button class="module-btn app-nav-item" type="button" data-view="report" aria-label="Open Reports">
@@ -1718,6 +1718,52 @@
             </div>
           </section>
 
+          <section id="weather" class="view weather-intelligence-page" data-page-root="weather" data-page-name="Weather Intelligence">
+            <header class="hazmat-page-hero weather-intelligence-hero">
+              <div class="hazmat-page-hero-content"><p class="eyebrow">Operational Environment</p><h1 class="hazmat-hero-title">Weather Intelligence</h1><p class="hazmat-hero-subtitle">Real-Time Operational Weather.</p></div>
+            </header>
+            <section class="weather-incident-context" id="weather-incident-context" hidden aria-live="polite">
+              <span class="weather-context-dot" aria-hidden="true"></span><div><strong>Active Incident Weather</strong><span id="weather-incident-name">No active incident</span><small id="weather-incident-location">Using the selected operational location.</small></div><button class="ghost-btn" id="weather-use-incident-btn" type="button">Use Incident Location</button>
+            </section>
+            <section class="weather-conditions-strip" aria-labelledby="weather-conditions-title">
+              <header><div><p class="eyebrow">Current Conditions</p><h2 id="weather-conditions-title">Current Conditions</h2></div><div class="weather-freshness" id="weather-freshness-badge" data-state="unavailable">Unavailable</div></header>
+              <div class="weather-condition-grid">
+                <div class="weather-condition-primary"><span>Temperature</span><strong id="weather-temperature">—</strong><small id="weather-feels-like">Feels like —</small></div>
+                <div><span>Wind From</span><strong id="weather-wind-from">—</strong><small id="weather-wind-speed">—</small></div>
+                <div><span>Wind To</span><strong id="weather-wind-to">—</strong><small>Arrow shows travel direction</small></div>
+                <div><span>Gusts</span><strong id="weather-gusts">—</strong><small id="weather-humidity">Humidity —</small></div>
+                <div><span>Pressure</span><strong id="weather-pressure">—</strong><small id="weather-stability">Stability unavailable</small></div>
+                <div><span>Cloud / Rain</span><strong id="weather-cloud-cover">—</strong><small id="weather-precipitation">Precipitation —</small></div>
+                <div class="weather-condition-source"><span>Source</span><strong id="weather-source">—</strong><small id="weather-observation-time">Observed —</small><small id="weather-retrieved-time">Retrieved —</small></div>
+              </div>
+            </section>
+            <form class="weather-location-form" id="weather-location-form">
+              <label for="weather-location-input">Weather location <input id="weather-location-input" placeholder="Address or latitude, longitude" autocomplete="off" /></label>
+              <button class="ghost-btn" type="submit">Update Location</button><button class="ghost-btn" id="weather-use-gps-btn" type="button">Use Current GPS</button>
+              <span id="weather-location-status" role="status" aria-live="polite">Weather follows the active incident when one is selected.</span>
+            </form>
+            <div class="weather-workspace-grid">
+              <section class="weather-map-card" aria-labelledby="weather-map-title">
+                <header class="weather-card-header"><div><p class="eyebrow">Shared Map / Radar Infrastructure</p><h2 id="weather-map-title">Live Weather Map</h2></div><div class="weather-map-actions"><button class="weather-map-style active" type="button" data-weather-map-style="satellite">Satellite</button><button class="weather-map-style" type="button" data-weather-map-style="street">Street</button><button class="ghost-btn" id="weather-map-fullscreen-btn" type="button">Fullscreen</button></div></header>
+                <div class="weather-map-shell"><div id="weather-map" role="application" aria-label="Live weather radar map"></div><div class="weather-map-overlay"><span id="weather-map-status">Loading weather map…</span><span id="weather-map-location-readout">Location unavailable</span></div></div>
+                <div class="weather-radar-controls" aria-label="Weather radar controls"><label>Radar source<select id="weather-radar-source"><option value="BEST_AVAILABLE">Best available</option><option value="RAINVIEWER_VISUAL_PROTOTYPE">RainViewer visual radar</option><option value="NOAA_MRMS_OFFICIAL_FALLBACK">NOAA / NWS fallback</option></select></label><button class="ghost-btn" id="weather-radar-play" type="button">Play animation</button><button class="ghost-btn" id="weather-radar-refresh" type="button">Refresh radar</button><label class="weather-radar-range">Frame <input id="weather-radar-frame" type="range" min="0" max="0" value="0" step="1" disabled /><output id="weather-radar-frame-time">Current / time unavailable</output></label><label>Opacity <input id="weather-radar-opacity" type="range" min="0.1" max="1" value="0.58" step="0.05" /></label><small id="weather-radar-status">Visual radar supports situational awareness only.</small></div>
+              </section>
+              <aside class="weather-intelligence-column" aria-label="Operational weather intelligence">
+                <section class="weather-intelligence-card"><header><div><p class="eyebrow">Operational Read</p><h2>Weather Impacts</h2></div><span class="weather-card-status" id="weather-impact-status">Awaiting data</span></header><ul class="weather-impact-list" id="weather-impact-list"><li>Current observations will appear here.</li></ul></section>
+                <section class="weather-intelligence-card"><header><div><p class="eyebrow">Forward Look</p><h2>Forecast Trend</h2></div><span class="weather-card-status" id="weather-forecast-status">Awaiting data</span></header><div class="weather-forecast-grid" id="weather-forecast-grid"><p>Forecast unavailable.</p></div></section>
+                <section class="weather-intelligence-card"><header><div><p class="eyebrow">Operational Weather</p><h2>Field Conditions</h2></div></header><dl class="weather-operations-list"><div><dt>Severe weather</dt><dd id="weather-severe-status">Unavailable</dd></div><div><dt>Visibility</dt><dd id="weather-visibility-status">Not provided by current source</dd></div><div><dt>Lightning</dt><dd id="weather-lightning-status">Not provided by current source</dd></div><div><dt>Alerts</dt><dd id="weather-alert-status">No alert feed configured</dd></div></dl></section>
+              </aside>
+            </div>
+          </section>
+
+          <section id="settings" class="view settings-page" data-page-root="settings" data-page-name="Settings">
+            <header class="hazmat-page-hero settings-hero"><div class="hazmat-page-hero-content"><p class="eyebrow">Application Configuration</p><h1 class="hazmat-hero-title">Settings</h1><p class="hazmat-hero-subtitle">Appearance, sources, and application preferences.</p></div></header>
+            <div class="settings-workspace-grid">
+              <section class="settings-card settings-appearance-card" aria-labelledby="settings-appearance-title"><header><div><p class="eyebrow">Display</p><h2 id="settings-appearance-title">Appearance</h2></div><span class="settings-current-theme" id="settings-current-theme">Tactical / Dark</span></header><p class="settings-card-intro">Choose the display mode for the whole HAZSCOPE application. Tactical is optimized for command rooms; Daylight is optimized for outdoor and vehicle use.</p><div class="settings-theme-options" role="group" aria-label="Application theme"><button class="settings-theme-option" id="theme-tactical-btn" type="button" data-theme-choice="dark" aria-pressed="true"><span class="settings-theme-preview settings-theme-preview-dark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Tactical / Dark</strong><small>Dark navy command surfaces and hazard accents.</small></span><b>Active</b></button><button class="settings-theme-option" id="theme-daylight-btn" type="button" data-theme-choice="light" aria-pressed="false"><span class="settings-theme-preview settings-theme-preview-light" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Daylight / Light</strong><small>High-contrast light surfaces for bright field conditions.</small></span><b>Use</b></button></div><p class="settings-theme-status" id="settings-theme-status" role="status" aria-live="polite">Tactical / Dark is active.</p></section>
+              <section class="settings-card settings-sources-card" aria-labelledby="settings-sources-title"><header><div><p class="eyebrow">Reference Infrastructure</p><h2 id="settings-sources-title">Sources</h2></div><button class="ghost-btn" id="settings-sources-toggle" type="button" aria-expanded="false" aria-controls="settings-sources-panel">Open Sources</button></header><p class="settings-card-intro">Review the authoritative registries that support HAZSCOPE operational data. This page reports the source state already available in the application.</p><div id="settings-sources-panel" class="settings-sources-panel" hidden><div class="settings-source-category"><strong>Chemical</strong><span>Chemical Companion Master · NIOSH Pocket Guide · CAMEO Chemicals</span><b data-source-state="verified">Verified / bundled</b></div><div class="settings-source-category"><strong>Medical / Decon</strong><span>Chemical Companion medical protocols and decontamination guidance</span><b data-source-state="verified">Source-backed where available</b></div><div class="settings-source-category"><strong>CBRN / Radiological</strong><span>Curated HAZSCOPE CBRN and radiological reference corpus</span><b data-source-state="verified">Curated / offline</b></div><div class="settings-source-category"><strong>Regulatory</strong><span>ERG 2024, AEGL endpoints, and linked regulatory records</span><b data-source-state="review">Review source context</b></div><div class="settings-source-category"><strong>Weather / Mapping</strong><span>Open-Meteo, NWS observations, MapLibre basemaps, and radar providers</span><b data-source-state="available">Live / availability varies</b></div><p class="settings-source-note">Source status is informational. HAZSCOPE does not treat an available network response as automatically verified.</p></div></section>
+            </div>
+          </section>
+
           <section id="source" class="view sources-page" data-page-root="sources" data-page-name="Sources">
             <header class="hazmat-page-hero variant-about">
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Sources</h1><p class="hazmat-hero-subtitle">Incident Intelligence &amp; Source Transparency.</p></div>
@@ -1752,6 +1798,8 @@
     <script src="guided-response-decision-builder.js"></script>
     <script src="plume-3d-model.js?v=plume3d-v2"></script>
     <script src="script.js?v=map-consolidation-1"></script>
+    <script src="weather-workspace.js?v=1"></script>
+    <script src="settings-workspace.js?v=1"></script>
     <script src="incident-command.js"></script>
     <script src="hazard-profile.js"></script>
     <script src="reports.js"></script>

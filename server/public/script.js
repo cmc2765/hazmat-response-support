@@ -13,6 +13,8 @@ const pageActivationClasses = [
   'page-active-live-map',
   'page-active-equipment',
   'page-active-reports',
+  'page-active-weather',
+  'page-active-settings',
   'page-active-sources',
 ];
 const tacticalAlertMessage = document.getElementById('tactical-alert-message');
@@ -551,6 +553,8 @@ function initializeActivePage(targetId, { skipPlumeInitialization = false, conte
   if (targetId === 'lookup') window.HazMatIQ.initializeHazardProfilePage?.(context);
   if (targetId === 'monitor') window.HazMatIQ.initializeEquipmentPage?.(context);
   if (targetId === 'source') window.HazMatIQ.initializeSourcesPage?.(context);
+  if (targetId === 'weather') window.HazMatIQ.initializeWeatherPage?.(context);
+  if (targetId === 'settings') window.HazMatIQ.initializeSettingsPage?.(context);
   if (targetId === 'map') {
     window.requestAnimationFrame(() => window.requestAnimationFrame(initializeLiveMap));
   }
@@ -649,22 +653,43 @@ const workspaceProfileControl = document.getElementById('command-profile-control
 const workspaceDarkThemeOption = document.getElementById('workspace-dark-theme-option');
 let workspaceDrawerReturnFocus = null;
 
-function activateDarkCommandTheme({ persist = true } = {}) {
-  document.documentElement.dataset.theme = 'dark';
-  workspaceDarkThemeOption?.classList.add('active');
-  workspaceDarkThemeOption?.setAttribute('aria-pressed', 'true');
-  const status = workspaceDarkThemeOption?.querySelector('b');
-  if (status) status.textContent = 'Active';
-  if (!persist) return;
+function applyApplicationTheme(theme = 'dark', { persist = true } = {}) {
+  const normalized = theme === 'light' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = normalized;
+  document.documentElement.style.colorScheme = normalized === 'light' ? 'light' : 'dark';
+  document.body?.setAttribute('data-theme', normalized);
+  document.querySelectorAll('[data-theme-choice]').forEach((control) => {
+    const active = control.dataset.themeChoice === normalized;
+    control.classList.toggle('active', active);
+    control.setAttribute('aria-pressed', String(active));
+    const status = control.querySelector('b');
+    if (status) status.textContent = active ? 'Active' : 'Use';
+  });
+  workspaceDarkThemeOption?.classList.toggle('active', normalized === 'dark');
+  workspaceDarkThemeOption?.setAttribute('aria-pressed', String(normalized === 'dark'));
+  const drawerStatus = workspaceDarkThemeOption?.querySelector('b');
+  if (drawerStatus) drawerStatus.textContent = normalized === 'dark' ? 'Active' : 'Use';
+  document.getElementById('settings-current-theme')?.replaceChildren(document.createTextNode(normalized === 'light' ? 'Daylight / Light' : 'Tactical / Dark'));
+  setText('settings-theme-status', normalized === 'light'
+    ? 'Daylight / Light is active. High-contrast field display is enabled.'
+    : 'Tactical / Dark is active.');
+  if (!persist) return normalized;
   try {
-    window.localStorage.setItem('hazmatiq-theme', 'dark');
+    window.localStorage.setItem('hazmatiq-theme', normalized);
   } catch {
     // Theme persistence is optional when storage is unavailable.
   }
+  return normalized;
 }
 
-activateDarkCommandTheme({ persist: false });
-workspaceDarkThemeOption?.addEventListener('click', () => activateDarkCommandTheme());
+let savedApplicationTheme = 'dark';
+try {
+  savedApplicationTheme = window.localStorage.getItem('hazmatiq-theme') === 'light' ? 'light' : 'dark';
+} catch {
+  savedApplicationTheme = 'dark';
+}
+applyApplicationTheme(savedApplicationTheme, { persist: false });
+workspaceDarkThemeOption?.addEventListener('click', () => applyApplicationTheme('dark'));
 
 function positionHomepageWorkspaceDrawer() {
   if (!workspaceDrawer || !workspaceDrawerBackdrop || !workspaceDrawerToggle) return false;
@@ -762,7 +787,9 @@ buttons.forEach((button) => {
     } else if (button.dataset.incidentAction === 'resume') {
       resumeActiveIncident();
     }
-    if (button.dataset.view) {
+    // Settings owns its own drawer-closing/navigation handler below so the
+    // dedicated workspace is not initialized twice by the generic router.
+    if (button.id !== 'app-settings-nav' && button.dataset.view) {
       showView(button.dataset.view);
     }
   });
@@ -799,9 +826,8 @@ document.querySelectorAll('.preplan-actions [data-view]').forEach((button) => {
 });
 
 document.getElementById('app-settings-nav')?.addEventListener('click', () => {
-  const settingsMenu = document.querySelector('.workspace-settings-menu');
-  if (settingsMenu instanceof HTMLDetailsElement) settingsMenu.open = true;
-  openWorkspaceDrawer(document.getElementById('app-settings-nav'));
+  closeWorkspaceDrawer({ restoreFocus: false });
+  showView('settings', { sourcePage: 'navigation' });
 });
 
 document.querySelectorAll('[data-planning-status]').forEach((button) => {
@@ -8193,6 +8219,13 @@ let demographicsRequestToken = 0;
 let latestThreatZoneHouseholdEstimate = null;
 let threatZoneImpactSummary = null;
 let latestPlumeWeather = null;
+let canonicalWeatherState = Object.freeze({
+  location: null,
+  openMeteo: null,
+  nws: null,
+  retrievedAt: null,
+  status: 'UNAVAILABLE',
+});
 let plumeAutoReplotTimer = null;
 const plumeMapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
 const plumeSatelliteSourceId = 'plume-satellite-basemap';
@@ -10877,6 +10910,8 @@ async function fetchOpenMeteo(lat, lon) {
     latitude: String(lat),
     longitude: String(lon),
     current: 'temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure',
+    hourly: 'temperature_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m',
+    forecast_days: '2',
     temperature_unit: 'fahrenheit',
     wind_speed_unit: 'mph',
     precipitation_unit: 'inch',
@@ -10908,26 +10943,56 @@ async function fetchNwsObservation(lat, lon) {
   return null;
 }
 
-async function fetchWeatherSources(lat, lon) {
-  if (!Number.isFinite(Number(lat)) || !Number.isFinite(Number(lon)) || Math.abs(Number(lat)) > 90 || Math.abs(Number(lon)) > 180 || (Number(lat) === 0 && Number(lon) === 0)) {
+function commitCanonicalWeatherState(lat, lon, openMeteo, nws) {
+  const selected = selectPlumeWeather(openMeteo, nws);
+  const observedAt = selected?.observedAt || openMeteo?.observedAt || nws?.observedAt || null;
+  canonicalWeatherState = Object.freeze({
+    location: { lat: Number(lat), lon: Number(lon) },
+    openMeteo,
+    nws,
+    current: selected,
+    retrievedAt: new Date().toISOString(),
+    freshness: getWeatherFreshness(observedAt),
+    status: selected ? getWeatherFreshness(observedAt).status.toUpperCase() : 'UNAVAILABLE',
+  });
+  window.HazMatIQ ||= {};
+  window.HazMatIQ.weatherState = canonicalWeatherState;
+  window.dispatchEvent(new CustomEvent('hazmatiq:weather-updated', { detail: canonicalWeatherState }));
+  return canonicalWeatherState;
+}
+
+async function fetchWeatherSources(lat, lon, { force = false } = {}) {
+  const numericLat = Number(lat);
+  const numericLon = Number(lon);
+  if (!Number.isFinite(numericLat) || !Number.isFinite(numericLon) || Math.abs(numericLat) > 90 || Math.abs(numericLon) > 180 || (numericLat === 0 && numericLon === 0)) {
+    commitCanonicalWeatherState(lat, lon, null, null);
     return { openMeteo: null, nws: null };
   }
-  const proxyQuery = new URLSearchParams({ lat: String(lat), lon: String(lon), refresh: String(Date.now()) });
+  const cachedLocation = canonicalWeatherState.location;
+  const cacheAgeMs = canonicalWeatherState.retrievedAt ? Date.now() - Date.parse(canonicalWeatherState.retrievedAt) : Infinity;
+  const sameLocation = cachedLocation
+    && Math.abs(Number(cachedLocation.lat) - numericLat) < 0.0001
+    && Math.abs(Number(cachedLocation.lon) - numericLon) < 0.0001;
+  if (!force && sameLocation && cacheAgeMs >= 0 && cacheAgeMs < 5 * 60 * 1000
+    && (canonicalWeatherState.openMeteo || canonicalWeatherState.nws)) {
+    return { openMeteo: canonicalWeatherState.openMeteo, nws: canonicalWeatherState.nws };
+  }
+  const proxyQuery = new URLSearchParams({ lat: String(numericLat), lon: String(numericLon), refresh: String(Date.now()) });
   const proxy = await fetchJson(`/api/weather/current?${proxyQuery}`, { timeoutMs: 10000 });
   if (proxy?.openMeteo || proxy?.nws) {
-    return {
-      openMeteo: formatOpenMeteo(proxy.openMeteo),
-      nws: formatNws(proxy.nws),
-    };
+    const openMeteo = formatOpenMeteo(proxy.openMeteo);
+    const nws = formatNws(proxy.nws);
+    commitCanonicalWeatherState(lat, lon, openMeteo, nws);
+    return { openMeteo, nws };
   }
   const [openMeteoResult, nwsResult] = await Promise.allSettled([
     fetchOpenMeteo(lat, lon),
     fetchNwsObservation(lat, lon),
   ]);
-  return {
-    openMeteo: formatOpenMeteo(openMeteoResult.status === 'fulfilled' ? openMeteoResult.value : null),
-    nws: formatNws(nwsResult.status === 'fulfilled' ? nwsResult.value : null),
-  };
+  const openMeteo = formatOpenMeteo(openMeteoResult.status === 'fulfilled' ? openMeteoResult.value : null);
+  const nws = formatNws(nwsResult.status === 'fulfilled' ? nwsResult.value : null);
+  commitCanonicalWeatherState(lat, lon, openMeteo, nws);
+  return { openMeteo, nws };
 }
 
 async function refreshNotificationWeather({ lat, lon }) {
@@ -10984,10 +11049,23 @@ function formatOpenMeteo(data) {
   const elevationMeters = Number(data.elevation);
   const elevationFt = Number.isFinite(elevationMeters) ? Math.round(elevationMeters * 3.28084) : null;
   const feelsLike = Number.isFinite(feelsLikeF) ? ` · Feels Like ${feelsLikeF.toFixed(1)}°F` : '';
+  const forecast = Array.isArray(data.hourly?.time)
+    ? data.hourly.time.map((time, index) => ({
+      time: Number.isFinite(Number(time)) ? new Date(Number(time) * 1000).toISOString() : time,
+      temperatureF: Number(data.hourly.temperature_2m?.[index]),
+      precipitationIn: Number(data.hourly.precipitation?.[index]),
+      precipitationProbability: Number(data.hourly.precipitation_probability?.[index]),
+      windSpeedMph: Number(data.hourly.wind_speed_10m?.[index]),
+      gustMph: Number(data.hourly.wind_gusts_10m?.[index]),
+      windDirDeg: Number(data.hourly.wind_direction_10m?.[index]),
+      weatherCode: Number(data.hourly.weather_code?.[index]),
+    })).filter((item) => Number.isFinite(Date.parse(item.time)))
+    : [];
   return {
     location: `${Number(data.latitude).toFixed(4)}, ${Number(data.longitude).toFixed(4)}${elevationFt === null ? '' : ` · ${elevationFt.toLocaleString()} ft`} · ${data.timezone || 'local time'}`,
     elevationFt,
     description: weatherCodeDescription(current.weather_code),
+    weatherCode: Number(current.weather_code),
     cloudCoverPct: Number(current.cloud_cover),
     conditions: `${current.temperature_2m}°F${feelsLike} · RH ${current.relative_humidity_2m}% · Wind ${current.wind_speed_10m} mph ${degreesToCompass(current.wind_direction_10m)} · Gust ${current.wind_gusts_10m} mph · Pressure ${pressureInHg.toFixed(2)} inHg`,
     temperatureF,
@@ -11000,6 +11078,7 @@ function formatOpenMeteo(data) {
     rh: Number(current.relative_humidity_2m),
     precipitationIn: Number(current.precipitation),
     pressureInHg,
+    forecast,
     observedAt: Number.isFinite(Number(current.time))
       ? new Date(Number(current.time) * 1000).toISOString()
       : current.time,
@@ -15403,3 +15482,24 @@ window.HazMatIQ.isIncidentPlumeCurrent = isIncidentPlumeCurrent;
 
 // Bridge used by the optional Live Map bootstrap when it wins initialization.
 window.HazMatIQ.updateLiveMapGpsMarker = updateLiveMapGpsMarker;
+
+// Shared weather contract consumed by Command, Plume, Live Map, and the
+// dedicated Weather Intelligence workspace. Page renderers may add their own
+// presentation, but they do not create separate weather truth.
+window.HazMatIQ.weatherService = {
+  fetch: fetchWeatherSources,
+  getState: () => canonicalWeatherState,
+  getFreshness: getWeatherFreshness,
+  selectCurrent: selectPlumeWeather,
+};
+window.HazMatIQ.applyApplicationTheme = applyApplicationTheme;
+window.HazMatIQ.mapInfrastructure = {
+  streetStyle: liveMapDetailedStyleUrl,
+  satelliteStyle: () => clonePlumeMapStyle(plumeSatelliteMapStyle),
+  radarProviders: () => window.HazMatRadarProviders,
+};
+window.HazMatIQ.locationTools = {
+  getCurrentGps,
+  parseGpsCoordinate,
+  geocodePlumeAddress,
+};

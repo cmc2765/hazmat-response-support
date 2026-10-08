@@ -175,20 +175,21 @@ describe("HazMatIQ Command Bar", () => {
       'data-view="lookup"',
       'data-view="plume"',
       'data-view="map"',
+      'data-view="weather"',
       'data-view="monitor"',
       'data-view="report"',
-      'data-view="source"',
       'data-view="planning-tools"',
       'data-view="my-chemicals"',
+      'data-view="settings"',
     ]);
     expect(commandDrawer).not.toContain('data-view="guided-response"');
-    expect(commandDrawer).toContain("Settings");
-    expect(commandDrawer).toContain("Dark Command Theme");
-    expect(commandDrawer).toContain("Theme token · HMI-DARK");
+    expect(commandDrawer).toContain("SETTINGS");
+    expect(commandDrawer).not.toContain("Dark Command Theme");
+    expect(commandDrawer).not.toContain("Theme token · HMI-DARK");
     expect(commandDrawer).not.toContain("Not configured");
     expect(script).toContain("function openWorkspaceDrawer(");
     expect(script).toContain("function closeWorkspaceDrawer(");
-    expect(script).toContain("function activateDarkCommandTheme(");
+    expect(script).toContain("function applyApplicationTheme(");
   });
 
   it("uses static radar rings and restrained ambient motion with readable status zones", () => {

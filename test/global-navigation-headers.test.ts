@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 const html = readFileSync(new URL('../server/public/index.html', import.meta.url), 'utf8');
 const script = readFileSync(new URL('../server/public/script.js', import.meta.url), 'utf8');
 const globalStyles = readFileSync(new URL('../server/public/global-ui-overrides.css', import.meta.url), 'utf8');
+const styles = readFileSync(new URL('../server/public/styles.css', import.meta.url), 'utf8');
 
 describe('global navigation and page header contract', () => {
   it('defines one canonical horizontal primary navigation with the required modules', () => {
@@ -14,16 +15,18 @@ describe('global navigation and page header contract', () => {
       ['Hazard ID', 'lookup'],
       ['Plume Model', 'plume'],
       ['Live Map', 'map'],
-      ['Incident Command', 'incident'],
+      ['COMMAND', 'incident'],
       ['Reports', 'report'],
       ['Equipment', 'monitor'],
-      ['Sources', 'source'],
-      ['Planning', 'planning-tools'],
+      ['Weather', 'weather'],
       ['Settings', null],
     ] as const) {
-      expect(nav).toContain(`app-nav-label">${label}</span>`);
+      expect(nav).toContain(`app-nav-label label">${label}</span>`);
       if (view) expect(nav).toContain(`data-view="${view}"`);
     }
+    expect(nav).not.toContain('data-view="source"');
+    expect(nav).not.toContain('data-view="planning-tools"');
+    expect(nav.match(/class="module-btn app-nav-item/g)).toHaveLength(9);
   });
 
   it('synchronizes active navigation state through the canonical page activation path', () => {
@@ -47,7 +50,7 @@ describe('global navigation and page header contract', () => {
     expect(html).not.toContain('Real-time data. Actionable intelligence. Safer decisions.');
     expect(html).not.toContain('class="internal-command-menu"');
     expect(html).not.toContain('class="app-header-status"');
-    expect(html).toContain('class="brand-logo-command" src="assets/hazscope-incident-intelligence-response-planning.png?v=1"');
+    expect(html).toContain('class="brand-logo-command" src="assets/HAZSCOPE-New-Logo.png?v=2"');
     expect(html).toContain('>Pre-Incident Planning</h1>');
     expect(html).toContain('>Incident Command</h1>');
     expect(html).toContain('>Sources</h1>');
@@ -56,7 +59,7 @@ describe('global navigation and page header contract', () => {
   it('locks the homepage header to one compact row so legacy hero rules cannot create an overlap band', () => {
     expect(globalStyles).toContain('grid-template-rows: 76px !important;');
     expect(globalStyles).toContain('max-height: 76px !important;');
-    expect(globalStyles).toContain('.command-header .command-header-plume');
-    expect(globalStyles).toContain('.command-header .command-header-contours');
+    expect(styles).toContain('.command-header-plume');
+    expect(styles).toContain('.command-header-contours');
   });
 });
