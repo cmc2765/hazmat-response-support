@@ -15,7 +15,11 @@ function declaration(name: string) {
 function runtime(extra: string) {
   return `
     ${declaration('normalizeChemicalSelectionId')}
+    ${declaration('isChemicalCompanionSelection')}
     ${declaration('companionChemicalForUi')}
+    ${declaration('parseJsonField')}
+    ${declaration('firstChemicalDataValue')}
+    ${declaration('chemicalResultIdentifier')}
     ${declaration('chemicalProfileRecord')}
     let chemicalSearchTimer = null;
     let latestChemicalSearch = 0;
@@ -75,6 +79,17 @@ const sulfurDioxideSearchRow = {
   guidanceEligible: true,
 };
 
+const ammoniaSearchRow = {
+  ChemicalID: 10,
+  ChemicalName: 'Ammonia (anhydrous)',
+  CasNumber: '7664-41-7',
+  UnnaNumber: '1005',
+  ErgNumber: '125',
+  HazardClass: '2.3 (Toxic gas), 8 (Corrosive substance)',
+  recordType: 'master-chemical',
+  guidanceEligible: true,
+};
+
 describe('Hazard ID Chemical Companion profile loader', () => {
   it('keeps a numeric master ID through search, selection, and successful profile rendering', async () => {
     const updateChemicalCard = vi.fn();
@@ -97,6 +112,33 @@ describe('Hazard ID Chemical Companion profile loader', () => {
       id: '102', selectedChemicalId: 102, name: 'Sulfur dioxide',
     }));
     expect(result.statuses.at(-1)).toEqual({ message: '', state: '' });
+  });
+
+  it('hydrates Ammonia from the exact Chemical Companion master identity', async () => {
+    const fetchJson = vi.fn().mockResolvedValue({
+      selectedChemicalId: 10,
+      header: {
+        name: 'Ammonia (anhydrous)', cas: '7664-41-7', un: '1005', ergGuide: '125',
+        hazardClass: '2.3 (Toxic gas), 8 (Corrosive substance)', idlh: '300 ppm',
+      },
+      exposures: { idlh: '300 ppm' },
+      niosh: { status: 'VERIFIED_NIOSH', sourceRecordId: 'ammonia' },
+    });
+    const result = await runInNewContext(runtime(`
+      const chemical = companionChemicalForUi(${JSON.stringify(ammoniaSearchRow)});
+      await openChemical(chemical);
+      return ({ chemical, record: activeChemicalRecord, selectedChemicalId, activeChemical });
+    `), context({ fetchJson }));
+
+    expect(result.chemical).toMatchObject({
+      selectedChemicalId: 10, chemicalCompanionId: 10, name: 'Ammonia (anhydrous)',
+    });
+    expect(result.activeChemical).toMatchObject({ selectedChemicalId: 10, id: '10' });
+    expect(result.record).toMatchObject({
+      id: '10', selectedChemicalId: 10, name: 'Ammonia (anhydrous)',
+      cas: '7664-41-7', un: '1005', ergGuide: '125', idlh: '300 ppm',
+    });
+    expect(fetchJson).toHaveBeenCalledWith('/api/chemicals/10/profile');
   });
 
   it('does not let a stale profile response overwrite a newer chemical selection', async () => {

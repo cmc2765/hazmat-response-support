@@ -109,6 +109,7 @@ describe('Plume navigation context normalization', () => {
     const result = runInNewContext(`
       ${declaration('activeViewId')}
       ${declaration('normalizeChemicalSelectionId')}
+      function isIncidentPlumeCurrent() { return false; }
       ${declaration('normalizePlumeNavigationContext')}
       normalizePlumeNavigationContext({
         sourcePage: 'incident',

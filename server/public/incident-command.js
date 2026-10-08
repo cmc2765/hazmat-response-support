@@ -31,10 +31,16 @@
       ? { latitude: Number(source.latitude), longitude: Number(source.longitude) }
       : null;
     const profileType = source.hazardProfileType || (source.cbrneCanonicalId ? 'hazard' : 'chemical');
-    const activeChemical = source.chemicalName || source.primaryHazard
+    const hasCanonicalChemicalIdentity = Boolean(
+      source.cbrneCanonicalId
+      || source.canonicalHazardId
+      || source.selectedChemicalId
+      || source.chemicalCompanionId,
+    );
+    const activeChemical = hasCanonicalChemicalIdentity && (source.chemicalName || source.primaryHazard)
       ? {
           profileType,
-          canonicalId: String(source.cbrneCanonicalId || source.selectedChemicalId || ''),
+          canonicalId: String(source.cbrneCanonicalId || source.selectedChemicalId || source.chemicalCompanionId || ''),
           displayName: source.chemicalName || source.primaryHazard || NO_DATA,
           chemicalCompanionId: source.chemicalCompanionId ?? source.selectedChemicalId ?? null,
           cbrneCanonicalId: source.cbrneCanonicalId || null,
@@ -46,7 +52,14 @@
           sourceState: source.sourceStatuses?.chemical || NO_DATA,
         }
       : null;
-    const plume = source.plumeModelResults || null;
+    const plumeCandidate = source.plumeModelResults || null;
+    const plumeIsCurrent = typeof window.HazMatIQ?.isIncidentPlumeCurrent === 'function'
+      ? window.HazMatIQ.isIncidentPlumeCurrent(plumeCandidate, source)
+      // Keep this module independently testable when loaded without script.js;
+      // the browser application always supplies the strict incident validator.
+      : false;
+    const plume = plumeIsCurrent ? plumeCandidate : null;
+    const plumeNeedsRecalculation = Boolean(plumeCandidate && !plumeIsCurrent);
     const weather = source.weather || source.weatherSnapshot || null;
     return Object.freeze({
       incidentId: source.incidentId || null,
@@ -72,10 +85,12 @@
         windDirection: source.windDirection || null,
       },
       plume: {
-        status: plume || source.plumeMapImage ? 'PLOTTED' : 'NOT PLOTTED',
+        status: plume ? 'PLOTTED' : plumeNeedsRecalculation ? 'PLUME REQUIRES RECALCULATION' : 'NOT PLOTTED',
         result: plume,
-        summary: source.plumeSummary || plume?.commandSummary || plume?.textSummary || null,
-        mapImage: source.plumeMapImage || '',
+        summary: plume
+          ? source.plumeSummary || plume?.commandSummary || plume?.textSummary || null
+          : plumeNeedsRecalculation ? 'Saved plume belongs to a different chemical or incident state.' : null,
+        mapImage: plume ? source.plumeMapImage || '' : '',
       },
       command: {
         objectives: listValue(source.objectives),
@@ -201,7 +216,9 @@
 
   function renderPlumeSummary(state) {
     const result = state?.plume?.result;
-    const hasPlume = Boolean(result || state?.plume?.mapImage);
+    const plumeNeedsRecalculation = state?.plume?.status === 'PLUME REQUIRES RECALCULATION';
+    const hasSavedImageRef = state?.plume?.status === 'PLOTTED' && Boolean(state?.raw?.plumeMapImageRef);
+    const hasPlume = Boolean(result || state?.plume?.mapImage || hasSavedImageRef);
     const status = document.getElementById('ic-plume-status');
     const image = document.getElementById('ic-plume-preview-image');
     const empty = document.getElementById('ic-plume-preview-empty');
@@ -210,13 +227,20 @@
     const facts = document.getElementById('ic-plume-preview-facts');
     const open = document.getElementById('ic-plume-open-btn');
     if (!status || !image || !empty || !title || !summary || !facts || !open) return;
-    status.textContent = hasPlume ? 'PLOTTED' : 'NOT PLOTTED';
-    status.dataset.state = hasPlume ? 'plotted' : 'missing';
+    status.textContent = hasPlume ? 'PLOTTED' : plumeNeedsRecalculation ? 'PLUME REQUIRES RECALCULATION' : 'NOT PLOTTED';
+    status.dataset.state = hasPlume ? 'plotted' : plumeNeedsRecalculation ? 'recalculate' : 'missing';
     image.hidden = !state?.plume?.mapImage;
     image.src = state?.plume?.mapImage || '';
     empty.hidden = Boolean(state?.plume?.mapImage);
-    title.textContent = hasPlume ? (state.plume.summary?.title || 'Saved plume assessment') : 'Plot a plume from Incident Command';
-    summary.textContent = hasPlume
+    empty.textContent = hasSavedImageRef && !state?.plume?.mapImage
+      ? 'Loading saved plume snapshot…'
+      : 'No plume snapshot is saved for this incident.';
+    title.textContent = hasPlume
+      ? (state.plume.summary?.title || 'Saved plume assessment')
+      : plumeNeedsRecalculation ? 'Plume requires recalculation' : 'Plot a plume from Incident Command';
+    summary.textContent = plumeNeedsRecalculation
+      ? 'Saved plume belongs to a different chemical or incident state.'
+      : hasPlume
       ? (state.plume.summary?.summary || result?.output?.resultSummary || result?.textSummary || 'Plume result saved with this incident.')
       : 'Use the canonical Plume Model after confirming chemical identity, release inputs, and current weather.';
     const weather = result?.weather || result?.plumeResult?.weather || {};
@@ -237,7 +261,21 @@
       row.append(dt, dd);
       return row;
     }));
-    open.textContent = hasPlume ? 'OPEN PLUME MODEL' : 'PLOT PLUME';
+    open.textContent = hasPlume || plumeNeedsRecalculation ? 'OPEN PLUME MODEL' : 'PLOT PLUME';
+  }
+
+  function hydratePlumePreview(state) {
+    const imageRef = state?.raw?.plumeMapImageRef;
+    const reader = legacyApi()?.readIncidentMapSnapshot;
+    if (!imageRef || typeof reader !== 'function') return;
+    Promise.resolve(reader(imageRef)).then((imageData) => {
+      const current = getActiveIncidentState();
+      if (!imageData || current?.incidentId !== state?.incidentId) return;
+      renderPlumeSummary({
+        ...state,
+        plume: { ...state.plume, mapImage: imageData },
+      });
+    });
   }
 
   function renderCommandActions(state) {
@@ -328,6 +366,7 @@
     renderIncidentBrief(state);
     renderOperationalStatus(state);
     renderPlumeSummary(state);
+    hydratePlumePreview(state);
     renderCommandActions(state);
     return state;
   }

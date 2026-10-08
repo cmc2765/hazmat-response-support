@@ -16,7 +16,7 @@ describe('normalizeChemicalProfile', () => {
 
   it.each([
     ['Phenol', 479], ['108-95-2', 479], ['chlorine', 22], ['1017', 22],
-    ['ammonia', 10], ['1005', 10],
+    ['ammonia', 10], ['7664-41-7', 10], ['1005', 10],
   ])('resolves required regression query %s', (query, id) => {
     expect(searchCompanionChemicals(query)[0]?.ChemicalID).toBe(id);
   });

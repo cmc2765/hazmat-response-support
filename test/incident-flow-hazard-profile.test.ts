@@ -24,7 +24,7 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
       "4. Tactical Decision",
       "5. Document / Report",
     ]) expect(flow).toContain(title);
-    expect(flow).toMatch(/1\. Scene Size-Up[\s\S]*data-command-view="lookup">Open Hazard ID/);
+    expect(flow).toMatch(/1\. Scene Size-Up[\s\S]*data-incident-command-action="chemical-profile"[^>]*>Open Hazard Profile/);
     expect(incidentStyles).toContain("grid-template-columns: repeat(5, minmax(0, 1fr));");
   });
 
@@ -95,9 +95,9 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
     expect(script).toContain("profile.header?.hazardClass");
     expect(script).toContain("hazardClass: chemicalData.hazardClass || ''");
     expect(script).toContain("idlh: chemicalData.idlh || ''");
-    expect(script).toContain("const chemicalData = selectedChemicalOperationalData({ incident, profile });");
-    expect(script).toContain("const chemicalData = selectedChemicalOperationalData();");
-    expect(script).toContain("nioshSourceId: firstChemicalDataValue(niosh.sourceRecordId, incident?.nioshSourceId)");
+    expect(script).toContain("const chemicalData = selectedChemicalOperationalData({ ...chemicalContext, profile: chemicalProfile });");
+    expect(script).toContain("const chemicalData = selectedChemicalOperationalData({");
+    expect(script).toContain("nioshSourceId: firstChemicalDataValue(niosh.sourceRecordId, incidentHasCanonicalIdentity ? incident?.nioshSourceId : null)");
     expect(script).toContain("['IDLH Source', model.nioshSourceId ? `NIOSH · ${model.nioshSourceId}` : noCurrentDataText]");
     expect(script).toContain("chemicalSources: chemicalProfile ? chemicalProfileSources(chemicalProfile) : (existingIncident?.chemicalSources || [])");
     expect(script).toContain("const ppeSource = profile.ppeRecommendation || profile.ppeRespiratory || incident.ppeSummary;");

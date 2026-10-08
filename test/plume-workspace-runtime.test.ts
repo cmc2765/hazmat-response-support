@@ -65,6 +65,7 @@ describe('Plume workspace initialization', () => {
       restoreSelectedChemical: vi.fn().mockResolvedValue(undefined),
       ensurePlumeMap: vi.fn().mockResolvedValue(undefined),
       getIncidentAddressValue: () => '', getActiveIncident: () => null,
+      getIncidentChemicalContext: () => ({ matchesGlobal: false, record: null }),
       getIncidentCoordinates: vi.fn(), setText: vi.fn(), activeChemical: null,
       fetchWeatherSources: vi.fn(() => new Promise(() => {})),
     };

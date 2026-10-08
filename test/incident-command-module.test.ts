@@ -5,11 +5,25 @@ import { describe, expect, it } from 'vitest';
 const html = readFileSync(new URL('../server/public/index.html', import.meta.url), 'utf8');
 const script = readFileSync(new URL('../server/public/script.js', import.meta.url), 'utf8');
 const module = readFileSync(new URL('../server/public/incident-command.js', import.meta.url), 'utf8');
+const incidentOverrides = readFileSync(new URL('../server/public/incident-overrides.css', import.meta.url), 'utf8');
 const reports = readFileSync(new URL('../server/public/reports.js', import.meta.url), 'utf8');
 const server = readFileSync(new URL('../server/src/app.ts', import.meta.url), 'utf8');
 
 function moduleApi() {
-  const context = { window: {}, document: { getElementById: () => null } } as Record<string, unknown>;
+  const context = {
+    window: {
+      HazMatIQ: {
+        isIncidentPlumeCurrent: (plume: unknown, incident: Record<string, unknown>) => {
+          const candidate = plume as Record<string, unknown> | null;
+          const chemical = candidate?.chemical as Record<string, unknown> | null;
+          return Boolean(candidate
+            && String(candidate.incidentId || '') === String(incident.incidentId || '')
+            && String(chemical?.masterChemicalId || chemical?.selectedChemicalId || '') === String(incident.selectedChemicalId || incident.chemicalCompanionId || ''));
+        },
+      },
+    },
+    document: { getElementById: () => null },
+  } as Record<string, unknown>;
   runInNewContext(module, context);
   return (context.window as { HazMatIQ: Record<string, (...args: unknown[]) => unknown> }).HazMatIQ;
 }
@@ -36,7 +50,11 @@ describe('Incident Command operational hub', () => {
       objectives: 'Isolate release area\nIdentify leak point',
       commandStructure: 'IC / HazMat Group / Safety', communications: 'Channel 3',
       medicalPlan: 'EMS staging', stagingResources: 'South lot',
-      plumeModelResults: { output: { threatZones: [{ threatRank: 3 }] } }, plumeMapImage: 'data:image/jpeg;base64,preview',
+      plumeModelResults: {
+        incidentId: 'incident-1',
+        chemical: { masterChemicalId: 54, chemicalName: 'Hydrazine' },
+        output: { threatZones: [{ threatRank: 3 }] },
+      }, plumeMapImage: 'data:image/jpeg;base64,preview',
       incidentNotes: [{ text: 'Initial size-up' }],
     });
     expect(state).toMatchObject({
@@ -72,6 +90,16 @@ describe('Incident Command operational hub', () => {
     expect(server).toContain('normalized.includes("communicationsplan")');
   });
 
+  it('does not promote a text-only incident label into a canonical chemical profile', () => {
+    const api = moduleApi();
+    const state = api.normalizeIncidentState({
+      incidentId: 'incident-text-only', incidentName: 'Unresolved release', status: 'Active',
+      chemicalName: 'Ammonia',
+    }) as { activeChemical: unknown; plume: { status: string } };
+    expect(state.activeChemical).toBeNull();
+    expect(state.plume.status).toBe('NOT PLOTTED');
+  });
+
   it('consumes the saved plume result without creating another model', () => {
     expect(module).toContain('source.plumeModelResults || null');
     expect(module).toContain('source.plumeMapImage ||');
@@ -80,6 +108,16 @@ describe('Incident Command operational hub', () => {
     expect(module).not.toContain('ensurePlumeMap(');
     expect(script).toContain('function openPlumeModel(context = {})');
     expect(script).toContain('function savePlumeResult(command, workflowRecord, mapImage = \'\')');
+  });
+
+  it('reserves red life-safety emphasis for IDLH rows', () => {
+    expect(script).toContain("['IDLH', model.idlh, true, 'idlh']");
+    expect(script).not.toContain("['Primary Hazard', model.primaryHazard, true]");
+    expect(script).not.toContain("['Medical Concerns', model.medicalConcerns, true]");
+    expect(script).not.toContain("item.lifeSafety ? ' is-life-safety' : ''");
+    expect(incidentOverrides).toContain('.incident-command-brief-list .is-idlh');
+    expect(incidentOverrides).not.toContain('.incident-command-brief-list .is-life-safety');
+    expect(incidentOverrides).not.toContain('.incident-command-tactical-row.is-life-safety');
   });
 
   it('propagates starter-hazard identity and preserves the existing safety boundary', () => {

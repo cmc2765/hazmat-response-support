@@ -101,6 +101,7 @@ function runVisibilityFlow() {
   const runtime = `
     ${declaration('normalizeChemicalSelectionId')}
     ${declaration('normalizeChemicalQuery')}
+    ${declaration('isChemicalCompanionSelection')}
     ${declaration('companionChemicalForUi')}
     ${declaration('isUnreviewedTransportationRecord')}
     ${declaration('setHazardProfileMode')}

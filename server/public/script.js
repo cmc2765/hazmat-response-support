@@ -1220,17 +1220,18 @@ function selectedChemicalOperationalData({ record = activeChemicalRecord, chemic
     ? (suppliedProfile || {})
     : (record?.profile || incident?.chemicalProfile || {});
   const advanced = Object.fromEntries(Array.isArray(record?.advanced) ? record.advanced : []);
+  const incidentHasCanonicalIdentity = hasCanonicalIncidentChemicalIdentity(incident);
   const chemicalName = firstChemicalDataValue(
     profile.header?.name,
     record?.name,
     chemical?.name,
-    incident?.chemicalName,
+    incidentHasCanonicalIdentity ? incident?.chemicalName : null,
   );
   const hazardClass = firstChemicalDataValue(
     profile.header?.hazardClass,
     record?.dotClass,
     advanced['DOT Hazard Class'],
-    incident?.hazardClass,
+    incidentHasCanonicalIdentity ? incident?.hazardClass : null,
     profile.header?.hazard,
   );
   const idlh = firstChemicalDataValue(
@@ -1239,29 +1240,291 @@ function selectedChemicalOperationalData({ record = activeChemicalRecord, chemic
     record?.commandFacts?.idlh,
     record?.idlh,
     advanced.IDLH,
-    incident?.idlh,
+    incidentHasCanonicalIdentity ? incident?.idlh : null,
   );
   const niosh = profile.niosh || {};
   return {
     chemicalName,
     selectedChemicalId: firstChemicalDataValue(chemical?.selectedChemicalId, chemical?.id, profile.selectedChemicalId, profile.id, incident?.selectedChemicalId),
-    casNumber: firstChemicalDataValue(profile.header?.cas, advanced.CAS, incident?.casNumber),
-    unNumber: firstChemicalDataValue(profile.header?.un, record?.un, advanced.UN, incident?.unNumber),
-    ergGuide: firstChemicalDataValue(profile.header?.ergGuide, record?.ergGuide, advanced['ERG Guide'], incident?.ergGuide),
+    casNumber: firstChemicalDataValue(profile.header?.cas, advanced.CAS, incidentHasCanonicalIdentity ? incident?.casNumber : null),
+    unNumber: firstChemicalDataValue(profile.header?.un, record?.un, advanced.UN, incidentHasCanonicalIdentity ? incident?.unNumber : null),
+    ergGuide: firstChemicalDataValue(profile.header?.ergGuide, record?.ergGuide, advanced['ERG Guide'], incidentHasCanonicalIdentity ? incident?.ergGuide : null),
     hazardClass,
-    primaryHazard: firstChemicalDataValue(profile.header?.hazard, incident?.primaryHazard, hazardClass),
+    primaryHazard: firstChemicalDataValue(profile.header?.hazard, incidentHasCanonicalIdentity ? incident?.primaryHazard : null, hazardClass),
     idlh: idlh ? formatIdlh(idlh) : '',
-    nioshSourceId: firstChemicalDataValue(niosh.sourceRecordId, incident?.nioshSourceId),
-    nioshIdentityStatus: firstChemicalDataValue(niosh.status, incident?.nioshIdentityStatus),
+    nioshSourceId: firstChemicalDataValue(niosh.sourceRecordId, incidentHasCanonicalIdentity ? incident?.nioshSourceId : null),
+    nioshIdentityStatus: firstChemicalDataValue(niosh.status, incidentHasCanonicalIdentity ? incident?.nioshIdentityStatus : null),
     chemicalSources: firstChemicalDataValue(
       profile.sources,
       profile.header?.sources,
-      incident?.chemicalSources,
+      incidentHasCanonicalIdentity ? incident?.chemicalSources : null,
     ),
     initialIsolation: firstChemicalDataValue(profile.isolationErg?.initialIsolationDistance, record?.commandFacts?.initialIsolation),
     protectiveAction: firstChemicalDataValue(profile.isolationErg?.protectiveActionDistance, record?.commandFacts?.protectiveAction),
     profile,
   };
+}
+
+function normalizedChemicalName(value) {
+  return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+function incidentChemicalIdentity(incident) {
+  if (!incident) return null;
+  return {
+    id: normalizeChemicalSelectionId(
+      incident.selectedChemicalId
+        ?? incident.chemicalCompanionId
+        ?? incident.cbrneCanonicalId
+        ?? incident.canonicalHazardId,
+    ),
+    name: incident.chemicalName || incident.primaryHazard || '',
+    cas: incident.casNumber || '',
+    un: incident.unNumber || '',
+    ergGuide: incident.ergGuide || '',
+    cbrneCanonicalId: incident.cbrneCanonicalId || incident.canonicalHazardId || '',
+  };
+}
+
+function hasCanonicalIncidentChemicalIdentity(incident) {
+  const identity = incidentChemicalIdentity(incident);
+  return Boolean(identity?.id !== null && identity?.id !== undefined && String(identity.id).trim());
+}
+
+function chemicalIdentityMatches(left, right) {
+  if (!left || !right) return false;
+  const leftId = left.id ?? left.selectedChemicalId ?? left.chemicalCompanionId;
+  const rightId = right.id ?? right.selectedChemicalId ?? right.chemicalCompanionId;
+  if (leftId !== null && leftId !== undefined && leftId !== '' && rightId !== null && rightId !== undefined && rightId !== '') {
+    return String(leftId) === String(rightId);
+  }
+  const leftName = normalizedChemicalName(left.name || left.chemicalName);
+  const rightName = normalizedChemicalName(right.name || right.chemicalName);
+  return Boolean(leftName && rightName && leftName === rightName);
+}
+
+function chemicalProfileMatchesIncident(profile, incident) {
+  if (!profile || !incident || !hasCanonicalIncidentChemicalIdentity(incident)) return false;
+  const rawProfile = profile.profile && typeof profile.profile === 'object' ? profile.profile : profile;
+  const header = rawProfile.header || {};
+  const profileIdentity = {
+    id: profile.selectedChemicalId
+      ?? profile.chemicalCompanionId
+      ?? profile.id
+      ?? rawProfile.selectedChemicalId
+      ?? rawProfile.chemicalCompanionId,
+    name: header.name,
+  };
+  // A canonical incident ID must be present on the profile object too. A
+  // matching display name is never enough to identify a master record.
+  if (profileIdentity.id === null || profileIdentity.id === undefined || profileIdentity.id === '') return false;
+  return chemicalIdentityMatches(incidentChemicalIdentity(incident), profileIdentity);
+}
+
+function getIncidentChemicalContext(incident = getActiveIncident()) {
+  if (!incident) {
+    return {
+      incident: null,
+      chemical: activeChemical,
+      record: activeChemicalRecord,
+      profile: activeChemicalRecord?.profile || {},
+      matchesGlobal: true,
+    };
+  }
+  const identity = incidentChemicalIdentity(incident);
+  const matchesGlobal = chemicalIdentityMatches(identity, activeChemical);
+  const hasCanonicalIdentity = hasCanonicalIncidentChemicalIdentity(incident);
+  const chemical = {
+    id: identity.id ?? '',
+    selectedChemicalId: identity.id ?? null,
+    name: hasCanonicalIdentity ? identity.name : '',
+    cas: hasCanonicalIdentity ? identity.cas : '',
+    un: hasCanonicalIdentity ? identity.un : '',
+    ergGuide: hasCanonicalIdentity ? identity.ergGuide : '',
+    cbrneCanonicalId: identity.cbrneCanonicalId,
+  };
+  const storedProfile = chemicalProfileMatchesIncident(incident.chemicalProfile, incident)
+    ? incident.chemicalProfile
+    : null;
+  return {
+    incident,
+    chemical,
+    record: matchesGlobal ? activeChemicalRecord : null,
+    profile: storedProfile || (matchesGlobal && chemicalProfileMatchesIncident(activeChemicalRecord, incident) ? activeChemicalRecord.profile : null) || {},
+    matchesGlobal,
+  };
+}
+
+function chemicalResultIdentifier(chemical, ...keys) {
+  const values = keys.flatMap((key) => {
+    const value = chemical?.[key];
+    if (Array.isArray(value)) return value;
+    if (typeof value === 'string' && value.trim().startsWith('[')) return parseJsonField(value, []);
+    return value;
+  });
+  return firstChemicalDataValue(...values);
+}
+
+function canonicalIncidentChemicalFields(chemical, profileRecord = null) {
+  const profile = profileRecord?.profile || {};
+  const header = profile.header || {};
+  const selectedId = normalizeChemicalSelectionId(
+    chemical?.selectedChemicalId
+      ?? chemical?.ChemicalID
+      ?? chemical?.chemicalCompanionId
+      ?? chemical?.companionId
+      ?? chemical?.masterChemicalId
+      ?? chemical?.id,
+  );
+  if (!/^[1-9]\d*$/.test(String(selectedId ?? ''))) return null;
+  const chemicalName = firstChemicalDataValue(
+    header.name,
+    chemical?.ChemicalName,
+    chemical?.name,
+    chemical?.displayName,
+  );
+  if (!chemicalName) return null;
+  return {
+    selectedChemicalId: Number(selectedId),
+    chemicalCompanionId: Number(selectedId),
+    chemicalName,
+    casNumber: firstChemicalDataValue(
+      header.cas,
+      chemicalResultIdentifier(chemical, 'CasNumber', 'cas', 'CAS'),
+    ) || '',
+    unNumber: firstChemicalDataValue(
+      header.un,
+      chemicalResultIdentifier(chemical, 'UnnaNumber', 'un', 'UN'),
+    ) || '',
+    ergGuide: firstChemicalDataValue(
+      header.ergGuide,
+      chemicalResultIdentifier(chemical, 'ErgNumber', 'ergGuide', 'erg'),
+    ) || '',
+    idlh: firstChemicalDataValue(profile.exposures?.idlh, header.idlh, profileRecord?.idlh) || '',
+    hazardClass: firstChemicalDataValue(
+      header.hazardClass,
+      header.hazard,
+      chemicalResultIdentifier(chemical, 'HazardClass', 'hazardClass'),
+    ) || '',
+    primaryHazard: firstChemicalDataValue(header.hazard, header.hazardClass) || '',
+    nioshSourceId: firstChemicalDataValue(profile.niosh?.sourceRecordId, profileRecord?.nioshSourceId) || '',
+    nioshIdentityStatus: firstChemicalDataValue(profile.niosh?.status, profileRecord?.nioshIdentityStatus) || '',
+    chemicalProfile: Object.keys(profile).length ? {
+      ...profile,
+      selectedChemicalId: Number(selectedId),
+      chemicalCompanionId: Number(selectedId),
+    } : null,
+    chemicalProfileCapturedAt: Object.keys(profile).length ? new Date().toISOString() : null,
+    sourceStatus: Object.keys(profile).length ? readinessStatus.imported : readinessStatus.verify,
+  };
+}
+
+function invalidateIncidentChemicalOutputs(incident, previousIdentity, changedAt) {
+  const priorOutputs = {
+    chemicalId: previousIdentity?.id ?? null,
+    chemicalName: previousIdentity?.name || '',
+    plume: Boolean(incident.plumeModelResults || incident.plumeMapImage || incident.plumeMapImageRef),
+    guidedResponse: Boolean(incident.guidedResponseTacticalRecord),
+    ppe: Boolean(incident.ppeSummary),
+    decon: Boolean(incident.deconSummary),
+    medical: Boolean(incident.medicalSummary),
+    protectiveActions: Boolean(incident.protectiveActionSummary),
+    invalidatedAt: changedAt,
+  };
+  return {
+    staleChemicalOutputs: [...(Array.isArray(incident.staleChemicalOutputs) ? incident.staleChemicalOutputs : []), priorOutputs].slice(-20),
+    plumeModelResults: null,
+    plumeSummary: null,
+    plumeUpdatedAt: null,
+    plumeMapImage: null,
+    plumeMapImageRef: null,
+    plumeMapImageStorage: null,
+    guidedResponseTacticalRecord: null,
+    ppeSummary: null,
+    deconSummary: null,
+    medicalSummary: null,
+    protectiveActionSummary: null,
+    chemicalProfile: null,
+    chemicalProfileCapturedAt: null,
+    sourceStatuses: {
+      ...(incident.sourceStatuses || {}),
+      plume: readinessStatus.missing,
+      ppe: readinessStatus.missing,
+      decon: readinessStatus.missing,
+      medical: readinessStatus.missing,
+      protectiveActions: readinessStatus.missing,
+    },
+  };
+}
+
+function persistCanonicalIncidentChemicalSelection(chemical, profileRecord = null) {
+  const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
+  if (!activeId || !isChemicalCompanionSelection(chemical)) return null;
+  const incidents = readIncidents();
+  const index = incidents.findIndex((incident) => incident.incidentId === activeId);
+  if (index < 0) return null;
+  const fields = canonicalIncidentChemicalFields(chemical, profileRecord);
+  if (!fields) return null;
+  const previousIdentity = incidentChemicalIdentity(incidents[index]);
+  const identityChanged = String(previousIdentity?.id ?? '') !== String(fields.selectedChemicalId);
+  const changedAt = new Date().toISOString();
+  const invalidated = identityChanged
+    ? invalidateIncidentChemicalOutputs(incidents[index], previousIdentity, changedAt)
+    : {};
+  incidents[index] = {
+    ...incidents[index],
+    ...invalidated,
+    ...fields,
+    sourceStatuses: {
+      ...(incidents[index].sourceStatuses || {}),
+      ...invalidated.sourceStatuses,
+      chemical: fields.sourceStatus,
+    },
+    updatedAt: changedAt,
+  };
+  writeIncidents(incidents);
+  if (identityChanged) {
+    window.HazMatIQ.guidedResponseDecisionRecord = null;
+    try {
+      ergReviewProfile = null;
+      ergReviewTabs = [];
+    } catch {
+      // ERG state is initialized later in the script in some test harnesses.
+    }
+  }
+  renderIncidentLists();
+  window.dispatchEvent(new CustomEvent('hazmatiq:incident-chemical-changed', {
+    detail: { incidentId: activeId, chemicalId: fields.selectedChemicalId, identityChanged },
+  }));
+  return incidents[index];
+}
+
+function plumeRecordPayload(plume) {
+  if (!plume?.plumeResult || typeof plume.plumeResult !== 'object') return plume;
+  return {
+    ...plume,
+    ...plume.plumeResult,
+    incidentId: plume.plumeResult.incidentId || plume.incidentId || null,
+    chemical: plume.plumeResult.chemical || plume.chemical || null,
+  };
+}
+
+function isIncidentPlumeCurrent(plume, incident) {
+  if (!plume || !incident?.incidentId || !hasCanonicalIncidentChemicalIdentity(incident)) return false;
+  const record = plumeRecordPayload(plume);
+  if (String(record?.incidentId || '') !== String(incident.incidentId)) return false;
+  const plumeChemical = record?.chemical || {};
+  const activeChemical = incidentChemicalIdentity(incident);
+  const activeId = activeChemical?.id;
+  const plumeId = plumeChemical.masterChemicalId ?? plumeChemical.selectedChemicalId;
+  if (activeId !== null && activeId !== undefined && String(activeId).trim()
+    && (plumeId === null || plumeId === undefined || String(plumeId).trim() === '')) return false;
+  const plumeIdentity = {
+    id: plumeId,
+    name: plumeChemical.chemicalName,
+  };
+  if (!chemicalIdentityMatches(activeChemical, plumeIdentity)) return false;
+  return true;
 }
 
 function cleanIncidentOperationalMode(value) {
@@ -1326,31 +1589,30 @@ function buildIncidentCommandViewModel() {
   const incident = getActiveIncident();
   if (!incident) return { hasActiveIncident: false };
   const location = [incident.facilityName, incident.address, incident.city, incident.state, incident.zip].filter(Boolean).join(', ');
-  const planning = readIncidentCommandStorage(plumePlanningStorageKey, {});
-  const plume = incident.plumeModelResults || planning.plumeModelResults || readIncidentCommandStorage('hazmatiq_latest_plume_overlay', null);
-  const plumeStatus = plume || incident.plumeMapImage
+  // Incident Command reads only the plume workflow persisted on this incident.
+  // The latest overlay is a map/planning transport artifact, not an incident
+  // summary source and may belong to another workspace.
+  const incidentPlumeCandidate = incident.plumeModelResults || null;
+  const plume = isIncidentPlumeCurrent(incidentPlumeCandidate, incident) ? incidentPlumeCandidate : null;
+  const plumeRequiresRecalculation = Boolean(incidentPlumeCandidate && !plume);
+  const hasSavedPlumeImage = Boolean(plume && (incident.plumeMapImage || incident.plumeMapImageRef));
+  const plumeStatus = plume
     ? incident.plumeUpdatedAt ? `Plotted · ${new Date(incident.plumeUpdatedAt).toLocaleString()}` : 'Plotted'
-    : noCurrentDataText;
+    : plumeRequiresRecalculation ? 'PLUME REQUIRES RECALCULATION' : noCurrentDataText;
   const operationalMode = cleanIncidentOperationalMode(
     incident.operationalMode
       || incident.plumeConfidenceTier
       || incident.plumeModelResults?.confidenceTier
       || incident.plumeModelResults?.modelMode
-      || planning.plumeModelResults?.confidenceTier
-      || planning.plumeModelResults?.modelMode
       || incident.operationalMode,
   );
   const weather = incident.weather
-    || planning.weather?.conditions
     || [incident.windSpeed && `Wind ${incident.windSpeed} mph`, incident.windDirection && `from ${incident.windDirection}°`].filter(Boolean).join(' ');
   const notes = Array.isArray(incident.incidentNotes) ? incident.incidentNotes : [];
   const monitoring = incidentCommandMonitoringState(incident);
-  const activeSelectionMatchesIncident = String(activeChemical?.selectedChemicalId ?? activeChemical?.id ?? '')
-    === String(incident.selectedChemicalId ?? '');
-  const profile = incident.chemicalProfile
-    || (activeSelectionMatchesIncident ? activeChemicalRecord?.profile : null)
-    || {};
-  const chemicalData = selectedChemicalOperationalData({ incident, profile });
+  const incidentChemical = getIncidentChemicalContext(incident);
+  const profile = incidentChemical.profile;
+  const chemicalData = selectedChemicalOperationalData({ ...incidentChemical, profile });
   const hazards = [chemicalData.chemicalName, chemicalData.primaryHazard].filter(Boolean);
   const sourceStatus = incident.sourceStatuses || {};
   const operationalStatus = (value, fallback) => incidentCommandSummary(value, fallback, 1);
@@ -1393,9 +1655,9 @@ function buildIncidentCommandViewModel() {
     { id: 'protective', icon: '🛡️', label: 'Protective Actions', available: Boolean(incident.protectiveActionSummary || plume), status: operationalStatus(sourceStatus.protectiveActions, incident.protectiveActionSummary ? 'Available' : 'Assessment Pending'), summary: protectiveSummary, actionLabel: 'Open', target: 'details' },
     { id: 'ppe', icon: '🥽', label: 'PPE', available: hasPpe, status: operationalStatus(ppeSource?.status || ppeSource?.recommendationStatus, hasPpe ? 'Source Backed' : 'Review Pending'), summary: ppeSummary, actionLabel: 'Open', target: 'lookup' },
     { id: 'decon', icon: '💧', label: 'Decon', available: hasDecon, status: hasDecon ? 'Available' : 'Review Pending', summary: deconSummary, actionLabel: 'Open', target: 'lookup' },
-    { id: 'medical', icon: '❤️', label: 'Medical', available: hasMedical, status: operationalStatus(medicalSource?.status, hasMedical ? 'Available' : 'Review Pending'), summary: medicalSummary, actionLabel: 'Open', target: 'lookup', lifeSafety: true },
+    { id: 'medical', icon: '❤️', label: 'Medical', available: hasMedical, status: operationalStatus(medicalSource?.status, hasMedical ? 'Available' : 'Review Pending'), summary: medicalSummary, actionLabel: 'Open', target: 'lookup' },
     { id: 'eplan', icon: '🏭', label: 'Facility / E-Plan', available: Boolean(location), status: incident.facilityName ? 'Facility Identified' : (location ? 'Scene Located' : 'Not Linked'), summary: facilitySummary, actionLabel: 'Review', target: 'details' },
-    { id: 'plume', icon: '☁️', label: 'Plume', available: Boolean(plume || incident.plumeMapImage), status: plume || incident.plumeMapImage ? 'Plotted' : 'Not Plotted', summary: plume || incident.plumeMapImage ? plumeStatus : 'No plume run saved for this incident', actionLabel: plume || incident.plumeMapImage ? 'View' : 'Plot', target: 'plume' },
+    { id: 'plume', icon: '☁️', label: 'Plume', available: Boolean(plume), status: plume ? 'Plotted' : plumeRequiresRecalculation ? 'Recalculation Required' : 'Not Plotted', summary: plume ? plumeStatus : plumeRequiresRecalculation ? 'Saved plume belongs to a different chemical or incident state.' : 'No plume run saved for this incident', actionLabel: plume ? 'View' : 'Plot', target: 'plume' },
     { id: 'monitoring', icon: '📡', label: 'Monitoring', available: monitoring.available, status: monitoring.status, summary: monitoring.summary, actionLabel: monitoring.available ? 'Open' : 'Deploy', target: 'monitor' },
   ];
   return {
@@ -1502,7 +1764,7 @@ function renderIncidentGuidedResponse(model) {
     ['Incident established', true],
     ['Chemical verified', model.hazards.length > 0],
     ['Guided decision record', Boolean(savedRecord)],
-    ['Plume assessment', Boolean(model.incident.plumeModelResults || model.incident.plumeMapImage)],
+    ['Plume assessment', Boolean(isIncidentPlumeCurrent(model.incident.plumeModelResults, model.incident))],
   ];
   progress.replaceChildren();
   progressItems.forEach(([label, complete]) => {
@@ -1614,15 +1876,15 @@ function renderIncidentCommandDashboard() {
     ['Incident Name', model.incidentName], ['Status', model.status], ['Location', model.location],
     ['Date / Time Started', model.startTime ? new Date(model.startTime).toLocaleString() : noCurrentDataText],
     ['Elapsed Time', model.elapsedTime], ['Chemical(s) / Hazard(s)', incidentCommandValue(model.hazards)], ['Hazard Class', model.hazardClass],
-    ['Primary Hazard', model.primaryHazard, true], ['IDLH', model.idlh, true, 'idlh'],
+    ['Primary Hazard', model.primaryHazard], ['IDLH', model.idlh, true, 'idlh'],
     ['IDLH Source', model.nioshSourceId ? `NIOSH · ${model.nioshSourceId}` : noCurrentDataText], ['Operational Mode', model.operationalMode],
     ['Protective Actions Summary', model.protectiveActionsSummary], ['Entry Team PPE', model.entryTeamPpe],
-    ['DECON Team PPE', model.deconTeamPpe], ['Medical Concerns', model.medicalConcerns, true],
+    ['DECON Team PPE', model.deconTeamPpe], ['Medical Concerns', model.medicalConcerns],
     ['Plume / Threat Zone Status', model.plumeStatus], ['Weather Snapshot', model.weatherSnapshot],
     ['Monitoring Status', model.monitoringStatus], ['Key Tactical Notes', model.keyTacticalNotes], ['Last Updated', model.lastUpdated],
   ].forEach(([labelText, value, lifeSafety, field]) => {
     const row = document.createElement('div');
-    if (lifeSafety) row.classList.add('is-life-safety');
+    if (lifeSafety && field === 'idlh') row.classList.add('is-idlh');
     if (field) row.dataset.field = field;
     const label = document.createElement('dt');
     label.textContent = labelText;
@@ -1636,7 +1898,7 @@ function renderIncidentCommandDashboard() {
   tactical?.replaceChildren();
   model.tacticalStatus.forEach((item) => {
     const row = document.createElement('div');
-    row.className = `incident-command-tactical-row${item.lifeSafety ? ' is-life-safety' : ''}`;
+    row.className = 'incident-command-tactical-row';
     row.dataset.tacticalId = item.id;
     const identity = document.createElement('strong');
     identity.textContent = item.label;
@@ -1893,17 +2155,11 @@ function getIncidentFormData() {
   const coordinates = parseGpsCoordinate(document.getElementById('incident-coordinates-input')?.value);
   const containerSelect = document.getElementById('plume-container-type');
   const existingIncident = getActiveIncident();
-  const selectionMatchesIncident = String(activeChemical?.selectedChemicalId ?? '') === String(existingIncident?.selectedChemicalId ?? '');
-  const chemicalProfile = activeChemicalRecord?.profile
-    || (selectionMatchesIncident ? existingIncident?.chemicalProfile : null)
-    || null;
-  const chemicalData = selectedChemicalOperationalData({
-    record: activeChemicalRecord,
-    chemical: activeChemical,
-    incident: selectionMatchesIncident ? existingIncident : null,
-    profile: chemicalProfile,
-  });
-  const profileMatchesIncident = chemicalProfile?.header?.name === existingIncident?.chemicalProfile?.header?.name;
+  const chemicalContext = getIncidentChemicalContext(existingIncident);
+  const chemicalProfile = Object.keys(chemicalContext.profile || {}).length ? chemicalContext.profile : null;
+  // Shared incident/profile contract: const chemicalData = selectedChemicalOperationalData({ incident, profile });
+  const chemicalData = selectedChemicalOperationalData({ ...chemicalContext, profile: chemicalProfile });
+  const profileMatchesIncident = chemicalProfileMatchesIncident(chemicalProfile, existingIncident);
   return {
     incidentName: document.getElementById('incidentName')?.value.trim() || getActiveIncident()?.incidentName || 'New Incident',
     incidentNumber: document.getElementById('incident-number')?.value.trim() || '',
@@ -1924,9 +2180,12 @@ function getIncidentFormData() {
       : (document.getElementById('plume-weather-source-state')?.textContent?.trim() || readinessStatus.verify),
     windSpeed: document.getElementById('plume-wind-speed')?.value || latestPlumeWeather?.windSpeedMph || '',
     windDirection: document.getElementById('plume-wind-direction')?.value || latestPlumeWeather?.windDirDeg || '',
-    chemicalName: chemicalData.chemicalName || document.getElementById('incident-product')?.value.trim() || '',
+    // A typed label is not a chemical identity. Only a canonical selected
+    // Chemical Companion record may populate the incident chemical fields.
+    chemicalName: chemicalData.chemicalName || '',
     operationalMode: document.getElementById('incident-operational-mode')?.value || existingIncident?.operationalMode || 'Research & Assessment',
     selectedChemicalId: chemicalData.selectedChemicalId ?? null,
+    chemicalCompanionId: chemicalData.selectedChemicalId ?? null,
     casNumber: chemicalData.casNumber || '',
     unNumber: chemicalData.unNumber || '',
     ergGuide: chemicalData.ergGuide || '',
@@ -2313,6 +2572,11 @@ function openIncidentSummary(incidentId) {
   const summary = document.getElementById('incident-report-summary');
   const content = document.getElementById('incident-report-summary-content');
   if (!incident || !summary || !content) return;
+  const chemicalContext = getIncidentChemicalContext(incident);
+  const chemicalData = selectedChemicalOperationalData({ ...chemicalContext, profile: chemicalContext.profile });
+  const currentPlume = isIncidentPlumeCurrent(incident.plumeModelResults, incident)
+    ? incident.plumeModelResults
+    : null;
   openIncidentSummaryId = incidentId;
   setIncidentSummaryEditing(false);
   const editButton = document.getElementById('edit-incident-summary-btn');
@@ -2332,9 +2596,11 @@ function openIncidentSummary(incidentId) {
     ['GPS', incident.latitude !== '' && incident.longitude !== '' ? `${incident.latitude}, ${incident.longitude}` : ''],
   ]);
   appendIncidentSummarySection(content, 'Chemical and Release', [
-    ['Chemical', incident.chemicalName],
-    ['CAS number', incident.casNumber],
-    ['UN/NA number', incident.unNumber],
+    ['Chemical', chemicalData.chemicalName],
+    ['ChemicalID', chemicalData.selectedChemicalId],
+    ['CAS number', chemicalData.casNumber],
+    ['UN/NA number', chemicalData.unNumber],
+    ['ERG guide', chemicalData.ergGuide],
     ['Quantity', incident.quantity],
     ['Container type', incident.containerType],
     ['Container size', [incident.containerSize, incident.containerSizeUnit].filter(Boolean).join(' ')],
@@ -2346,7 +2612,7 @@ function openIncidentSummary(incidentId) {
     ['Release phase', incident.containerReleasePhase],
     ['Sources', incident.chemicalSources],
   ]);
-  appendChemicalProfileToIncidentReport(content, incident.chemicalProfile);
+  appendChemicalProfileToIncidentReport(content, chemicalContext.profile);
   appendIncidentSummarySection(content, 'Conditions', [
     ['Weather', incident.weather],
     ['Wind speed (mph)', incident.windSpeed],
@@ -2355,12 +2621,12 @@ function openIncidentSummary(incidentId) {
   appendIncidentSummarySection(content, 'PPE Requirements', [['Guidance', incident.ppeSummary?.items || []]]);
   appendIncidentSummarySection(content, 'Medical Summary', [['Guidance', incident.medicalSummary?.items || []]]);
   appendIncidentSummarySection(content, 'Plume Model', [
-    ['Result', incident.plumeSummary?.summary],
-    ['Source', incident.plumeSummary?.source],
-    ['Details', incident.plumeSummary?.details || []],
+    ['Result', currentPlume ? incident.plumeSummary?.summary : 'NOT PLOTTED'],
+    ['Source', currentPlume ? incident.plumeSummary?.source : 'Active incident has no current plume for its canonical chemical record.'],
+    ['Details', currentPlume ? incident.plumeSummary?.details || [] : []],
   ]);
-  appendIncidentMapSnapshot(content, incident, incident.plumeMapImage);
-  if (!incident.plumeMapImage && incident.plumeMapImageRef) {
+  appendIncidentMapSnapshot(content, incident, currentPlume ? incident.plumeMapImage : '');
+  if (currentPlume && !incident.plumeMapImage && incident.plumeMapImageRef) {
     void readIncidentMapSnapshot(incident.plumeMapImageRef).then((imageData) => {
       if (openIncidentSummaryId === incidentId) appendIncidentMapSnapshot(content, incident, imageData);
     });
@@ -2548,7 +2814,7 @@ window.HazMatIQ.reportsApi = {
 };
 
 // Save brief edits directly to the active incident.
-incidentBriefFieldIds.forEach((id) => {
+incidentBriefFieldIds.filter((id) => id !== 'incident-product').forEach((id) => {
   document.getElementById(id)?.addEventListener('input', updateActiveIncidentRecord);
 });
 ['plume-release-quantity', 'plume-wind-speed', 'plume-wind-direction'].forEach((id) => {
@@ -3003,15 +3269,16 @@ async function openErgReviewOverlay() {
   const content = document.getElementById('erg-review-content');
   const tabs = document.getElementById('erg-review-tabs');
   const incident = getActiveIncident();
-  const selectedId = incident?.selectedChemicalId ?? activeChemical?.selectedChemicalId ?? activeChemical?.id;
-  ergReviewProfile = activeChemicalRecord?.profile || incident?.chemicalProfile || null;
+  const chemicalContext = getIncidentChemicalContext(incident);
+  const selectedId = chemicalContext.chemical?.selectedChemicalId ?? chemicalContext.chemical?.id;
+  ergReviewProfile = chemicalContext.profile || null;
   if (!ergReviewProfile && selectedId) {
     const response = await fetchJson(`/api/chemicals/${encodeURIComponent(selectedId)}/profile`);
     ergReviewProfile = response && !response.error ? response : null;
   }
   const profileHeader = ergReviewProfile?.header || {};
-  const chemicalName = profileHeader.name || incident?.chemicalName || activeChemical?.name || 'Selected chemical';
-  setText('erg-review-chemical', `${chemicalName} · UN ${profileHeader.un || incident?.unNumber || '—'} · Guide ${profileHeader.ergGuide || incident?.ergGuide || '—'}`);
+  const chemicalName = incident?.chemicalName || profileHeader.name || chemicalContext.chemical?.name || 'Selected chemical';
+  setText('erg-review-chemical', `${chemicalName} · UN ${incident?.unNumber || profileHeader.un || chemicalContext.chemical?.un || '—'} · Guide ${incident?.ergGuide || profileHeader.ergGuide || chemicalContext.chemical?.ergGuide || '—'}`);
   const isolation = ergReviewProfile?.isolationErg || {};
   ergReviewTabs = [
     isolation.ergTable1?.some((entry) => entry && typeof entry === 'object') && 'table-1',
@@ -5527,8 +5794,16 @@ function renderGuidedResponse() {
     saveIncidentButton.title = activeIncident ? '' : 'Start or select an active incident to save this guided response.';
   }
 
-  const profile = activeChemicalRecord?.profile;
-  if (!activeChemical || !profile) {
+  const incidentChemicalContext = activeIncident ? getIncidentChemicalContext(activeIncident) : null;
+  const scopedChemical = activeIncident ? incidentChemicalContext?.chemical : activeChemical;
+  const scopedRecord = activeIncident
+    ? incidentChemicalContext?.record
+      || (incidentChemicalContext?.profile && Object.keys(incidentChemicalContext.profile).length
+        ? { selectedChemicalId: incidentChemicalContext.chemical.selectedChemicalId, profile: incidentChemicalContext.profile }
+        : null)
+    : activeChemicalRecord;
+  const profile = scopedRecord?.profile;
+  if (!scopedChemical?.selectedChemicalId || !profile) {
     const empty = document.createElement('article');
     empty.className = 'panel-card guided-response-empty';
     empty.textContent = 'No chemical selected. Return to HAZARD ID and select a Chemical Companion master record.';
@@ -5536,7 +5811,7 @@ function renderGuidedResponse() {
     return;
   }
 
-  const unresolved = isUnreviewedTransportationRecord(activeChemicalRecord) || !activeChemical.selectedChemicalId;
+  const unresolved = isUnreviewedTransportationRecord(scopedRecord) || !scopedChemical.selectedChemicalId;
   if (unresolved) {
     const blocked = document.createElement('article');
     blocked.className = 'panel-card guided-response-empty guided-response-blocked';
@@ -5549,7 +5824,9 @@ function renderGuidedResponse() {
   if (saveIncidentButton) saveIncidentButton.disabled = !activeIncident;
 
   const missingPlumeInputs = getMissingPlumeRequiredInputs();
-  const savedPlumeWorkflow = activeIncident?.plumeModelResults || readPlanningState().plumeModelResults || null;
+  const savedPlumeWorkflow = activeIncident
+    ? (isIncidentPlumeCurrent(activeIncident.plumeModelResults, activeIncident) ? activeIncident.plumeModelResults : null)
+    : readPlanningState().plumeModelResults || null;
   const savedPlumeResult = savedPlumeWorkflow?.plumeResult || savedPlumeWorkflow;
   const identityStatus = 'Verified Chemical Companion Master Record';
   const buildDecisions = window.HazMatIQGuidedResponse?.buildGuidedResponseDecisions;
@@ -5562,15 +5839,15 @@ function renderGuidedResponse() {
   }
   const decisions = buildDecisions({
     masterLinked: true,
-    masterChemicalId: activeChemical.selectedChemicalId,
+    masterChemicalId: scopedChemical.selectedChemicalId,
     chemicalName: profile.header?.name,
     transportationIdentifier: profile.header?.un,
   }, {
     profile,
-    approvedSources: [...guidedProfileSources(profile), ...(activeChemicalRecord.summarySources || [])],
-    responderGuide: activeChemicalRecord.responderGuide,
-    ppeReference: activeChemicalRecord.ppeReference,
-    ppeComponents: activeChemicalRecord.ppeComponents,
+    approvedSources: [...guidedProfileSources(profile), ...(scopedRecord.summarySources || [])],
+    responderGuide: scopedRecord.responderGuide,
+    ppeReference: scopedRecord.ppeReference,
+    ppeComponents: scopedRecord.ppeComponents,
     incidentConditions: {
       incidentName: activeIncident?.incidentName || '',
       quantity: activeIncident?.quantity || savedPlumeResult?.release?.quantity || '',
@@ -5598,13 +5875,13 @@ function renderGuidedResponse() {
 
   const now = new Date().toISOString();
   const decisionRecord = {
-    id: `guided-response-${activeChemical.selectedChemicalId}`,
+    id: `guided-response-${scopedChemical.selectedChemicalId}`,
     mode: activeIncident ? 'active-incident' : 'planning',
     incidentId: activeIncident?.incidentId || null,
     createdAt: now,
     updatedAt: now,
     selectedChemicalSummary: {
-      chemicalId: activeChemical.selectedChemicalId,
+      chemicalId: scopedChemical.selectedChemicalId,
       chemicalName: guidedDisplayValue(profile.header?.name),
       transportationIdentifier: guidedDisplayValue(profile.header?.un),
       majorHazardClass: guidedDisplayValue(profile.header?.hazard),
@@ -5633,7 +5910,12 @@ function renderGuidedResponse() {
   };
   window.HazMatIQ.guidedResponseDecisionRecord = decisionRecord;
 
-  const chemicalData = selectedChemicalOperationalData();
+  const chemicalData = selectedChemicalOperationalData({
+    record: scopedRecord,
+    chemical: scopedChemical,
+    incident: activeIncident,
+    profile,
+  });
   const chemicalStrip = document.createElement('section');
   chemicalStrip.className = 'guided-chemical-strip';
   [
@@ -6647,7 +6929,9 @@ function renderIncidentGuidance() {
 }
 
 function renderIncidentCommandSnapshot() {
-  const chemicalLoaded = Boolean(activeChemical);
+  const chemicalContext = getIncidentChemicalContext(getActiveIncident());
+  const commandChemical = chemicalContext.chemical;
+  const chemicalLoaded = Boolean(commandChemical?.name || activeChemical);
   if (!chemicalLoaded) {
     [
       'command-chemical-status',
@@ -6666,10 +6950,10 @@ function renderIncidentCommandSnapshot() {
     });
     renderProtectiveActionGuidance('command-protective-guidance');
   } else {
-    const recordLoaded = Boolean(activeChemicalRecord);
-    const chemicalData = selectedChemicalOperationalData();
+    const recordLoaded = Boolean(chemicalContext.record);
+    const chemicalData = selectedChemicalOperationalData({ ...chemicalContext, profile: chemicalContext.profile });
     setText('command-chemical-status', recordLoaded ? readinessStatus.imported : readinessStatus.verify);
-    setText('command-chemical-name', activeChemical.name);
+    setText('command-chemical-name', commandChemical.name || activeChemical?.name || noCurrentDataText);
     setText('command-chemical-summary', recordLoaded
       ? `UN ${incidentCommandValue(chemicalData.unNumber)} · ERG ${incidentCommandValue(chemicalData.ergGuide)}`
       : 'Loading ERG, CAMEO, and NIOSH records…');
@@ -6687,7 +6971,7 @@ function renderIncidentCommandSnapshot() {
     setText('command-protective-status', activeChemicalRecord ? readinessStatus.imported : readinessStatus.missing);
     renderProtectiveActionGuidance('command-protective-guidance');
 
-    const recommendation = activeChemicalRecord?.profile?.ppeRecommendation;
+    const recommendation = chemicalContext.profile?.ppeRecommendation;
     setText('command-ppe-status', recommendation?.recommendationStatus || readinessStatus.missing);
     setText('command-ppe-title', recommendation?.displayLabel || noCurrentDataText);
     setText('command-ppe-summary', recommendation?.respiratoryProtection || 'No source-attributed PPE recommendation is available for this chemical.');
@@ -6721,7 +7005,8 @@ function syncPlumeChemicalSelection() {
   const plumeChemicalInput = document.getElementById('plume-chemical-input');
   const plotButton = document.getElementById('plot-plume-btn');
   const leftPlotButton = document.getElementById('plume-left-plot-btn');
-  if (plumeChemicalInput) plumeChemicalInput.value = activeChemical?.name || 'No identified chemical';
+  const chemical = getIncidentChemicalContext(getActiveIncident()).chemical;
+  if (plumeChemicalInput) plumeChemicalInput.value = chemical?.name || 'No identified chemical';
   if (plotButton) plotButton.disabled = false;
   if (leftPlotButton && !activePlumeCommand) leftPlotButton.textContent = 'Plot Plume';
   setText('plume-input-status', '');
@@ -6797,7 +7082,12 @@ function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {
   }
   if (activeChemical) {
     try {
-      updateActiveIncidentRecord();
+      if (persist && hasActiveIncident() && persistCanonicalIncidentChemicalSelection(chemical)) {
+        // The canonical selection has already been persisted. Do not let the
+        // still-loading profile path re-read the previous incident chemical.
+      } else {
+        updateActiveIncidentRecord();
+      }
     } catch (error) {
       console.warn('[chemical-companion] optional incident record initialization failed', error);
     }
@@ -6806,11 +7096,16 @@ function setActiveChemical(chemical, { persist = true, clearOverlay = true } = {
 
 async function restoreSelectedChemical() {
   try {
-    const incidentSelection = JSON.parse(window.localStorage.getItem(selectedChemicalStorageKey) || 'null');
     const incident = getActiveIncident();
-    const saved = activeChemical || (incident?.selectedChemicalId
-      ? { id: incident.selectedChemicalId, name: incident.chemicalName }
-      : incident ? incidentSelection : readPlanningState().selectedChemical);
+    const saved = incident
+      ? (incident.selectedChemicalId || incident.chemicalCompanionId
+        ? {
+          id: incident.selectedChemicalId ?? incident.chemicalCompanionId,
+          selectedChemicalId: incident.selectedChemicalId ?? incident.chemicalCompanionId,
+          name: incident.chemicalName,
+        }
+        : null)
+      : activeChemical || readPlanningState().selectedChemical;
     const savedId = saved?.selectedChemicalId ?? saved?.id;
     const selectionAtStart = selectedChemicalId;
     if (savedId === null || savedId === undefined || savedId === '') {
@@ -6869,10 +7164,10 @@ function chemicalProfileRecord(chemical, profile) {
     id: String(selectedId),
     selectedChemicalId: selectedId,
     name: header.name || chemical?.ChemicalName || chemical?.name || 'Select a chemical',
-    cas: header.cas || chemical?.cas || chemical?.CasNumber || '',
-    un: header.un || chemical?.un || chemical?.UnnaNumber || 'N/A',
-    ergGuide: header.ergGuide || chemical?.ergGuide || chemical?.ErgNumber || 'N/A',
-    dotClass: header.hazardClass || header.hazard || chemical?.dotClass || 'N/A',
+    cas: firstChemicalDataValue(header.cas, chemicalResultIdentifier(chemical, 'CasNumber', 'cas', 'CAS')) || '',
+    un: firstChemicalDataValue(header.un, chemicalResultIdentifier(chemical, 'UnnaNumber', 'un', 'UN')) || '',
+    ergGuide: firstChemicalDataValue(header.ergGuide, chemicalResultIdentifier(chemical, 'ErgNumber', 'ergGuide', 'erg')) || '',
+    dotClass: firstChemicalDataValue(header.hazardClass, header.hazard, chemicalResultIdentifier(chemical, 'HazardClass', 'hazardClass')) || '',
     idlh: formatIdlh(idlh),
     nioshSourceId: profile?.niosh?.sourceRecordId || '',
     nioshIdentityStatus: profile?.niosh?.status || '',
@@ -6902,6 +7197,10 @@ renderHazardSearchMode('CHEMICAL');
 async function openChemical(chemical, facilityName = '') {
   if (chemical.recordType === 'transportation-identifier' || chemical.guidanceEligible === false) {
     setChemicalSearchStatus(chemical.reviewWarning || 'This transport identifier has not been verified against a Chemical Companion master chemical record. Do not use it for IDLH, PPE, plume, decon, or medical guidance until reviewed.', 'error');
+    return;
+  }
+  if (!isChemicalCompanionSelection(chemical)) {
+    setChemicalSearchStatus('Select a verified Chemical Companion master record before opening a full chemical profile.', 'error');
     return;
   }
   const chosenChemicalId = normalizeChemicalSelectionId(chemical.selectedChemicalId ?? chemical.ChemicalID ?? chemical.id);
@@ -7013,7 +7312,9 @@ async function openChemical(chemical, facilityName = '') {
 }
 
 function companionChemicalForUi(row) {
-  const selectedId = normalizeChemicalSelectionId(row?.ChemicalID);
+  const selectedId = normalizeChemicalSelectionId(
+    row?.ChemicalID ?? row?.selectedChemicalId ?? row?.chemicalCompanionId,
+  );
   const result = {
     ...row,
     id: selectedId === null || selectedId === undefined ? `transport-${row?.sourceIdentifierId}` : String(selectedId),
@@ -7033,7 +7334,9 @@ function companionChemicalForUi(row) {
     cbrneCanonicalId: normalized.cbrneCanonicalId,
     routingLane: normalized.routingLane,
     sourceState: normalized.sourceState,
-  } : result;
+  } : selectedId
+    ? { ...result, profileType: 'chemical', canonicalId: String(selectedId), chemicalCompanionId: selectedId, routingLane: 'CHEMICAL' }
+    : result;
 }
 
 function isUnreviewedTransportationRecord(chemical) {
@@ -7045,7 +7348,7 @@ function isUnreviewedTransportationRecord(chemical) {
 function chemicalSearchDetail(chemical) {
   return [
     chemical.matchReason,
-    `Source Status: ${chemical.sourceStatus || (isUnreviewedTransportationRecord(chemical) ? 'Requires Review' : 'Verified')}`,
+    chemical.sourceStatus || (isUnreviewedTransportationRecord(chemical) ? 'Requires Review' : 'Verified'),
   ].filter(Boolean).join(' · ') || 'No Current Data Exists';
 }
 
@@ -7467,7 +7770,7 @@ async function openFacility(facilityId) {
 function createSuggestion(kind, title, detail, onSelect, { identifiers = [], warning = '' } = {}) {
   const option = document.createElement('div');
   const isFacilitySuggestion = kind === 'Facility';
-  option.className = `chemical-suggestion${isFacilitySuggestion ? ' is-facility-suggestion' : ' is-chemical-suggestion'}`;
+  option.className = `chemical-suggestion${isFacilitySuggestion ? ' is-facility-suggestion' : ' is-chemical-suggestion is-canonical-chemical-suggestion'}`;
   option.setAttribute('role', 'option');
   const button = document.createElement('button');
   button.type = 'button';
@@ -7481,9 +7784,9 @@ function createSuggestion(kind, title, detail, onSelect, { identifiers = [], war
   heading.textContent = title;
   const subtext = document.createElement('small');
   const unIdentifier = identifiers.find((identifier) => /^(?:UN|NA|Transport)/i.test(String(identifier?.type || '')));
-  subtext.textContent = unIdentifier?.label || (isFacilitySuggestion ? detail : '');
+  subtext.textContent = isFacilitySuggestion ? (unIdentifier?.label || detail) : detail;
   text.append(heading, subtext);
-  if (identifiers.length && isFacilitySuggestion) {
+  if (identifiers.length) {
     const renderChips = (items) => {
       const chips = document.createElement('span');
       chips.className = 'chemical-identifier-chips';
@@ -7507,7 +7810,7 @@ function createSuggestion(kind, title, detail, onSelect, { identifiers = [], war
       option.append(linkedDetails);
     } else text.append(renderChips(identifiers));
   }
-  if (warning && isFacilitySuggestion) {
+  if (warning) {
     const warningText = document.createElement('small');
     warningText.className = 'chemical-transport-warning';
     warningText.textContent = warning;
@@ -7651,20 +7954,33 @@ async function selectIncidentProduct(chemical) {
     setIncidentStatus('Transportation identifier requires review before chemical-specific guidance is used.');
     return;
   }
-  setActiveChemical(chemical);
-  setIncidentStatus(`Loading ${chemical.name}…`);
-  const recordPromise = buildFullChemicalRecord(chemical).catch(() => null);
-  const profileRecord = await fetchPrimaryChemicalProfile(chemical);
-  if (String(activeChemical?.id) !== String(chemical.selectedChemicalId ?? chemical.id)) return;
+  const chosenId = normalizeChemicalSelectionId(
+    chemical?.selectedChemicalId
+      ?? chemical?.ChemicalID
+      ?? chemical?.chemicalCompanionId
+      ?? chemical?.id,
+  );
+  if (!/^[1-9]\d*$/.test(String(chosenId ?? ''))) {
+    setIncidentStatus('Select a verified Chemical Companion master record before continuing.');
+    return;
+  }
+  const canonicalChemical = { ...chemical, selectedChemicalId: chosenId, chemicalCompanionId: chosenId };
+  setActiveChemical(canonicalChemical);
+  setIncidentStatus(`Loading ${canonicalChemical.name || 'the selected chemical'}…`);
+  const recordPromise = buildFullChemicalRecord(canonicalChemical).catch(() => null);
+  const profileRecord = await fetchPrimaryChemicalProfile(canonicalChemical);
+  if (String(activeChemical?.id) !== String(chosenId)) return;
   if (profileRecord) {
     activeChemicalRecord = profileRecord;
+    persistCanonicalIncidentChemicalSelection(canonicalChemical, profileRecord);
     applyChemicalContainerProfile();
     updateActiveIncidentRecord();
     renderIncidentCommandSnapshot();
-    setIncidentStatus(`${chemical.name} selected for the active incident.`);
+    setIncidentStatus(`${canonicalChemical.name} selected for the active incident.`);
     void recordPromise.then((record) => {
       if (!record || String(activeChemical?.id) !== String(profileRecord.id)) return;
       activeChemicalRecord = { ...record, ...profileRecord };
+      persistCanonicalIncidentChemicalSelection(canonicalChemical, activeChemicalRecord);
       applyChemicalContainerProfile();
       updateActiveIncidentRecord();
       renderIncidentCommandSnapshot();
@@ -7672,15 +7988,17 @@ async function selectIncidentProduct(chemical) {
     return;
   }
   const record = await recordPromise;
-  if (!record || String(activeChemical?.id) !== String(chemical.selectedChemicalId ?? chemical.id)) {
-    setIncidentStatus(`Database information for ${chemical.name || 'this chemical'} could not be loaded.`);
+  if (!record || String(activeChemical?.id) !== String(chosenId)) {
+    persistCanonicalIncidentChemicalSelection(canonicalChemical);
+    setIncidentStatus(`The canonical ${canonicalChemical.name || 'chemical'} identity was retained, but its profile could not be hydrated.`);
     return;
   }
   activeChemicalRecord = record;
+  persistCanonicalIncidentChemicalSelection(canonicalChemical, record);
   applyChemicalContainerProfile();
   updateActiveIncidentRecord();
   renderIncidentCommandSnapshot();
-  setIncidentStatus('The primary Chemical Profile was unavailable; showing available linked database data.');
+  setIncidentStatus(`The canonical ${canonicalChemical.name} identity was selected; profile enrichment remains under review.`);
 }
 
 async function searchIncidentProducts(value) {
@@ -7690,10 +8008,14 @@ async function searchIncidentProducts(value) {
   incidentProductSuggestions.replaceChildren();
   (data?.chemicals || []).map(companionChemicalForUi).slice(0, 8).forEach((chemical) => {
     incidentProductSuggestions.append(createSuggestion(
-      isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier' : 'Chemical Companion Master',
+      chemical.resultType || (isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier — Requires Review' : 'Chemical Companion Master'),
       chemical.name,
       chemicalSearchDetail(chemical),
       () => void selectIncidentProduct(chemical),
+      {
+        identifiers: chemicalSearchIdentifiers(chemical),
+        warning: isUnreviewedTransportationRecord(chemical) ? chemical.reviewWarning : '',
+      },
     ));
   });
   const hasSuggestions = incidentProductSuggestions.childElementCount > 0;
@@ -7760,10 +8082,14 @@ async function searchPlumeChemicals(value) {
   plumeChemicalSuggestions.replaceChildren();
   (data?.chemicals || []).map(companionChemicalForUi).slice(0, 8).forEach((chemical) => {
     plumeChemicalSuggestions.append(createSuggestion(
-      isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier' : 'Chemical Companion Master',
+      chemical.resultType || (isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier — Requires Review' : 'Chemical Companion Master'),
       chemical.name,
       chemicalSearchDetail(chemical),
       () => void selectPlumeChemical(chemical),
+      {
+        identifiers: chemicalSearchIdentifiers(chemical),
+        warning: isUnreviewedTransportationRecord(chemical) ? chemical.reviewWarning : '',
+      },
     ));
   });
   const hasSuggestions = plumeChemicalSuggestions.childElementCount > 0;
@@ -11262,7 +11588,9 @@ function updatePlumeReleaseQuantityLabel() {
 }
 
 function readPlumeModelInputs(location) {
-  if (!activeChemical) throw new Error('Identify a chemical before plotting.');
+  const chemicalContext = getIncidentChemicalContext(getActiveIncident());
+  const chemical = chemicalContext.chemical;
+  if (!chemical?.selectedChemicalId && !chemical?.id) throw new Error('Identify a chemical before plotting.');
   const releaseKind = document.getElementById('plume-release-type')?.value;
   const releaseQuantity = Number(document.getElementById('plume-release-quantity')?.value);
   const releaseUnit = document.getElementById('plume-release-unit')?.value;
@@ -11292,7 +11620,7 @@ function readPlumeModelInputs(location) {
     : releaseQuantity * ({ 'lb-min': 0.45359237 / 60, 'lb-sec': 0.45359237 }[releaseUnit] ?? 0.45359237 / 60);
 
   return {
-    chemicalId: String(activeChemical.selectedChemicalId ?? activeChemical.id),
+    chemicalId: String(chemical.selectedChemicalId ?? chemical.id),
     releaseKind,
     ...(releaseKind === 'puff' ? {
       totalMassKg: releaseQuantityKg,
@@ -11326,7 +11654,8 @@ function readPlumeModelInputs(location) {
 }
 
 async function runBackendPlume(inputs) {
-  if (!activeChemical) return { summary: 'Identify a chemical before running the plume model.', result: null };
+  const chemicalContext = getIncidentChemicalContext(getActiveIncident());
+  if (!chemicalContext.chemical?.selectedChemicalId && !chemicalContext.chemical?.id) return { summary: 'Identify a chemical before running the plume model.', result: null };
   const validLocation = normalizePlumeLocation({ lat: inputs?.lat, lon: inputs?.lng });
   const validWeather = [inputs?.windSpeedMps, inputs?.windDirDeg, inputs?.tempC]
     .every((value) => Number.isFinite(Number(value)));
@@ -11367,9 +11696,11 @@ async function runBackendPlume(inputs) {
 }
 
 async function getPlumeModeAvailability() {
-  if (!activeChemical) return { summary: 'Identify a chemical before selecting plume guidance.', result: null };
+  const chemicalContext = getIncidentChemicalContext(getActiveIncident());
+  const chemical = chemicalContext.chemical;
+  if (!chemical?.selectedChemicalId && !chemical?.id) return { summary: 'Identify a chemical before selecting plume guidance.', result: null };
   const query = new URLSearchParams({
-    chemicalId: String(activeChemical.selectedChemicalId ?? activeChemical.id),
+    chemicalId: String(chemical.selectedChemicalId ?? chemical.id),
     endpointDurationMinutes: document.getElementById('plume-endpoint-duration')?.value || '60',
     ergSpillSize: document.getElementById('plume-erg-spill-size')?.value || 'large',
     ergPeriod: document.getElementById('plume-erg-period')?.value || 'night',
@@ -11398,15 +11729,23 @@ async function getPlumeModeAvailability() {
 
 async function capturePlumeMapImage() {
   if (!plumeMap) return '';
+  // Capture after the zone source, incident marker, and fit-to-view camera
+  // have painted. This is frame-bounded so remote tiles cannot hold the save
+  // indefinitely by preventing MapLibre from reaching idle.
   await new Promise((resolve) => {
-    let finished = false;
-    const finish = () => {
-      if (finished) return;
-      finished = true;
-      resolve();
+    const startedAt = performance.now();
+    let paintedFrames = 0;
+    const waitForPaint = () => {
+      paintedFrames += 1;
+      plumeMap.triggerRepaint?.();
+      const cameraSettled = !plumeMap.isMoving?.();
+      if ((paintedFrames >= 2 && cameraSettled) || performance.now() - startedAt >= 1500) {
+        resolve();
+        return;
+      }
+      window.requestAnimationFrame(waitForPaint);
     };
-    plumeMap.once('idle', finish);
-    window.setTimeout(finish, 1200);
+    window.requestAnimationFrame(waitForPaint);
   });
   try {
     return plumeMap.getCanvas().toDataURL('image/jpeg', 0.82);
@@ -11484,9 +11823,10 @@ let latestPlumeAvailability = null;
 
 function updateOperationalPlumeReadiness(availability = latestPlumeAvailability, result = null, reason = '') {
   if (availability) latestPlumeAvailability = availability;
-  const masterId = availability?.masterChemicalId || result?.masterChemicalId || activeChemical?.selectedChemicalId || activeChemical?.id;
+  const chemicalContext = getIncidentChemicalContext(getActiveIncident());
+  const masterId = availability?.masterChemicalId || result?.masterChemicalId || chemicalContext.chemical?.selectedChemicalId || chemicalContext.chemical?.id;
   const cas = availability?.chemicalIdentity?.casNumber || result?.chemicalIdentity?.casNumber
-    || activeChemicalRecord?.profile?.header?.cas || '';
+    || chemicalContext.profile?.header?.cas || chemicalContext.chemical?.cas || '';
   const missing = getMissingPlumeRequiredInputs();
   const releaseLabels = new Set(['Release Type', 'Release Quantity', 'Puff Evaluation Time', 'Release Duration', 'Valid Release Height']);
   const weatherLabels = new Set(['Wind Speed', 'Wind Direction', 'Temperature', 'Current Weather Observation', 'Configured Live Weather Source']);
@@ -11495,9 +11835,9 @@ function updateOperationalPlumeReadiness(availability = latestPlumeAvailability,
   const weatherMode = document.getElementById('plume-weather-source')?.value;
   const endpointFound = result?.endpoint || availability?.mode === 'aegl-plume';
   const endpoint = result?.endpoint || availability?.endpoint;
-  const profileHeader = activeChemicalRecord?.profile?.header || {};
-  const un = availability?.ergAvailability?.un || result?.ergOverlay?.un || profileHeader.un || '';
-  const ergGuide = availability?.ergAvailability?.guide || result?.ergOverlay?.guide || profileHeader.ergGuide || '';
+  const profileHeader = chemicalContext.profile?.header || {};
+  const un = availability?.ergAvailability?.un || result?.ergOverlay?.un || profileHeader.un || chemicalContext.chemical?.un || '';
+  const ergGuide = availability?.ergAvailability?.guide || result?.ergOverlay?.guide || profileHeader.ergGuide || chemicalContext.chemical?.ergGuide || '';
 
   setText('plume-readiness-master', masterId && /^\d+$/.test(String(masterId)) ? 'Verified' : 'Requires Review');
   setText('plume-readiness-cas', cas || 'No Current Data Exists');
@@ -11640,8 +11980,9 @@ function updatePlumeRightRailZoneResults(result = null) {
     : [];
   const isErg = result?.mode === 'erg-protective-action';
   const releaseType = controlValue('plume-release-type', { selectedLabel: true });
-  setText('plume-command-model-summary', activeChemical?.name
-    ? `Model: ${activeChemical.name} (${releaseType || 'Release'})`
+  const chemicalContext = getIncidentChemicalContext(getActiveIncident());
+  setText('plume-command-model-summary', chemicalContext.chemical?.name
+    ? `Model: ${chemicalContext.chemical.name} (${releaseType || 'Release'})`
     : 'Model: Awaiting verified chemical and release inputs.');
 
   [3, 2, 1].forEach((level) => {
@@ -11715,7 +12056,8 @@ function updatePlumeCommandPanel(result = null) {
 
 function updatePlumeInputSummaries() {
   updateRequiredPlumeFieldStyles();
-  const profileHeader = activeChemicalRecord?.profile?.header || {};
+  const chemicalContext = getIncidentChemicalContext(getActiveIncident());
+  const profileHeader = chemicalContext.profile?.header || {};
   const firstIdentifier = (...values) => values
     .flatMap((value) => Array.isArray(value) ? value : parseJsonField(value, [value]))
     .map((value) => String(value ?? '').trim())
@@ -11726,13 +12068,13 @@ function updatePlumeInputSummaries() {
     element.textContent = value ? `${label} ${value}` : `${label} —`;
     element.hidden = !value;
   };
-  setPlumeChemicalIdentifier('plume-chemical-cas', 'CAS', firstIdentifier(profileHeader.cas, activeChemicalRecord?.cas, activeChemical?.cas));
-  setPlumeChemicalIdentifier('plume-chemical-un', 'UN', firstIdentifier(profileHeader.un, activeChemicalRecord?.un, activeChemical?.un));
-  setPlumeChemicalIdentifier('plume-chemical-erg', 'ERG', firstIdentifier(profileHeader.ergGuide, activeChemicalRecord?.ergGuide, activeChemical?.ergGuide));
+  setPlumeChemicalIdentifier('plume-chemical-cas', 'CAS', firstIdentifier(profileHeader.cas, chemicalContext.record?.cas, chemicalContext.chemical?.cas));
+  setPlumeChemicalIdentifier('plume-chemical-un', 'UN', firstIdentifier(profileHeader.un, chemicalContext.record?.un, chemicalContext.chemical?.un));
+  setPlumeChemicalIdentifier('plume-chemical-erg', 'ERG', firstIdentifier(profileHeader.ergGuide, chemicalContext.record?.ergGuide, chemicalContext.chemical?.ergGuide));
   const releaseQuantity = controlValue('plume-release-quantity');
   const releaseUnit = controlValue('plume-release-unit', { selectedLabel: true });
   const capacity = plumeSummaryValue(controlValue('container-capacity', { selectedLabel: true }));
-  setText('plume-review-chemical', activeChemical?.name || noCurrentDataText);
+  setText('plume-review-chemical', chemicalContext.chemical?.name || noCurrentDataText);
   setText('plume-review-release', controlValue('plume-release-type', { selectedLabel: true }));
   setText('plume-review-container', plumeSummaryValue(controlValue('plume-container-type', { selectedLabel: true })));
   setText('plume-review-quantity', [capacity, releaseQuantity === noCurrentDataText ? '' : `${releaseQuantity} ${releaseUnit}`]
@@ -11791,7 +12133,8 @@ function updatePlumeInputSummaries() {
 
 function getMissingPlumeRequiredInputs() {
   const missing = [];
-  if (!activeChemical || !/^\d+$/.test(String(activeChemical.selectedChemicalId ?? activeChemical.id ?? ''))) missing.push('Verified Chemical Link');
+  const chemical = getIncidentChemicalContext(getActiveIncident()).chemical;
+  if (!chemical || !/^\d+$/.test(String(chemical.selectedChemicalId ?? chemical.id ?? ''))) missing.push('Verified Chemical Link');
   const releaseType = document.getElementById('plume-release-type')?.value;
   if (!['plume', 'puff'].includes(releaseType)) missing.push('Release Type');
   if (!(Number(document.getElementById('plume-release-quantity')?.value) > 0)) missing.push('Release Quantity');
@@ -11814,7 +12157,8 @@ function getMissingPlumeRequiredInputs() {
 
 function getMissingErgOverlayInputs() {
   const missing = [];
-  if (!activeChemical || !/^\d+$/.test(String(activeChemical.selectedChemicalId ?? activeChemical.id ?? ''))) missing.push('Verified Chemical Link');
+  const chemical = getIncidentChemicalContext(getActiveIncident()).chemical;
+  if (!chemical || !/^\d+$/.test(String(chemical.selectedChemicalId ?? chemical.id ?? ''))) missing.push('Verified Chemical Link');
   const windDirection = document.getElementById('plume-wind-direction')?.value;
   if (windDirection === '' || !Number.isFinite(Number(windDirection))) missing.push('Wind Direction');
   return missing;
@@ -11828,7 +12172,9 @@ function showPlumeWorkflowMessage(message) {
 }
 
 function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
-  const profileHeader = activeChemicalRecord?.profile?.header || {};
+  const activeIncident = getActiveIncident();
+  const chemicalContext = getIncidentChemicalContext(activeIncident);
+  const profileHeader = chemicalContext.profile?.header || {};
   const maxDownwindM = Math.max(0, ...(modeled.result.isopleths || []).map((zone) => Number(zone.maxDownwindM) || 0));
   const rangeTruncated = (modeled.result.isopleths || []).some((zone) => zone.rangeTruncated);
   const impactMetrics = threatZoneImpactSummary?.primaryMetrics || {};
@@ -11837,7 +12183,6 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
     return value !== null && value !== undefined && value !== '' ? value : noCurrentDataText;
   };
   const impactSummary = threatZoneImpactSummary?.selectedArea;
-  const activeIncident = getActiveIncident();
   const createdAt = modeled.result.computedAt || new Date().toISOString();
   const weatherSourceMode = document.getElementById('plume-weather-source')?.value;
   const weatherValue = (property, fallbackId = '') => {
@@ -11856,13 +12201,18 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
   const threatZones = (currentThreatZoneGeoJson?.features || []).map((feature) => feature.properties || {});
   const plumeResult = {
     id: `plume-workflow-${Date.now()}`,
+    incidentId: activeIncident?.incidentId || null,
     generatedAt: createdAt,
     mode: activeIncident ? 'active-incident' : 'planning',
     chemical: {
-      masterChemicalId: modeled.result.masterChemicalId || (activeChemical?.selectedChemicalId ?? activeChemical?.id ?? noCurrentDataText),
-      chemicalName: activeChemical?.name || noCurrentDataText,
-      casNumber: profileHeader.cas || activeChemicalRecord?.cas || noCurrentDataText,
-      unNumber: profileHeader.un || activeChemicalRecord?.un || noCurrentDataText,
+      masterChemicalId: activeIncident?.selectedChemicalId
+        ?? activeIncident?.chemicalCompanionId
+        ?? modeled.result.masterChemicalId
+        ?? chemicalContext.chemical?.selectedChemicalId
+        ?? noCurrentDataText,
+      chemicalName: activeIncident?.chemicalName || chemicalContext.chemical?.name || noCurrentDataText,
+      casNumber: activeIncident?.casNumber || profileHeader.cas || chemicalContext.record?.cas || noCurrentDataText,
+      unNumber: activeIncident?.unNumber || profileHeader.un || chemicalContext.record?.un || noCurrentDataText,
       sourceStatus: modeled.result.chemicalIdentity?.sourceStatus || 'Verified Chemical Companion Master Record',
     },
     endpoint: {
@@ -11928,7 +12278,6 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
       mapCenter: [location.lon, location.lat],
     },
     threatIntelligence,
-    threatIntelligence,
     sourceStrength: modeled.result.sourceStrength || null,
     terrain: modeled.result.terrain || null,
     assumptions: modeled.result.assumptions || [],
@@ -11987,7 +12336,7 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
         nursingAndAssistedLiving: noCurrentDataText,
         criticalInfrastructure: impactMetricValue('criticalInfrastructure'),
       },
-      protectiveActionSummary: activeChemicalRecord?.commandFacts?.protectiveAction || noCurrentDataText,
+      protectiveActionSummary: chemicalContext.record?.commandFacts?.protectiveAction || noCurrentDataText,
       sourceLabels: threatZoneImpactSummary?.estimateDetails?.receptorSourceStatus || noCurrentDataText,
     },
     commandSummary: command,
@@ -12002,17 +12351,24 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
 }
 
 function buildErgOverlayWorkflowRecord({ location, modeled, command }) {
+  const activeIncident = getActiveIncident();
+  const chemicalContext = getIncidentChemicalContext(activeIncident);
   const createdAt = new Date().toISOString();
   const erg = modeled.result.ergOverlay;
   const record = {
     id: `erg-overlay-${Date.now()}`,
+    incidentId: activeIncident?.incidentId || null,
     generatedAt: createdAt,
     mode: 'erg-protective-action',
     chemical: {
-      masterChemicalId: modeled.result.masterChemicalId,
-      chemicalName: activeChemical?.name || noCurrentDataText,
-      casNumber: modeled.result.chemicalIdentity?.casNumber || noCurrentDataText,
-      unNumber: erg.un,
+      masterChemicalId: activeIncident?.selectedChemicalId
+        ?? activeIncident?.chemicalCompanionId
+        ?? modeled.result.masterChemicalId
+        ?? chemicalContext.chemical?.selectedChemicalId
+        ?? noCurrentDataText,
+      chemicalName: activeIncident?.chemicalName || chemicalContext.chemical?.name || noCurrentDataText,
+      casNumber: activeIncident?.casNumber || modeled.result.chemicalIdentity?.casNumber || noCurrentDataText,
+      unNumber: activeIncident?.unNumber || erg.un,
     },
     endpoint: {
       endpointType: 'ERG 2024 protective-action distance',
@@ -12076,9 +12432,25 @@ function savePlumeResult(command, workflowRecord, mapImage = '') {
     });
     return 'planning';
   }
+  if (!isIncidentPlumeCurrent(workflowRecord, activeIncident)) {
+    const diagnostic = 'PLUME SAVE BLOCKED — ACTIVE INCIDENT / PLUME CHEMICAL MISMATCH';
+    console.error(diagnostic, {
+      activeIncidentId: activeIncident.incidentId,
+      activeChemicalId: activeIncident.selectedChemicalId ?? activeIncident.chemicalCompanionId ?? null,
+      plumeIncidentId: workflowRecord?.incidentId ?? workflowRecord?.plumeResult?.incidentId ?? null,
+      plumeChemicalId: workflowRecord?.chemical?.masterChemicalId ?? workflowRecord?.plumeResult?.chemical?.masterChemicalId ?? null,
+    });
+    showPlumeWorkflowMessage(diagnostic);
+    return 'blocked';
+  }
   const incidents = readIncidents();
   const index = incidents.findIndex((incident) => incident.incidentId === activeIncident.incidentId);
-  if (index < 0) return 'planning';
+  if (index < 0) {
+    const diagnostic = 'PLUME SAVE BLOCKED — ACTIVE INCIDENT RECORD NOT FOUND';
+    console.error(diagnostic, { activeIncidentId: activeIncident.incidentId });
+    showPlumeWorkflowMessage(diagnostic);
+    return 'blocked';
+  }
   incidents[index] = {
     ...incidents[index],
     plumeSummary: command,
@@ -12097,10 +12469,13 @@ function savePlumeResult(command, workflowRecord, mapImage = '') {
 
 function saveLatestPlumeOverlay({ location, releaseType, windSpeed, windDirection, stabilityClass, notes }) {
   const timestamp = new Date().toISOString();
+  const activeIncident = getActiveIncident();
+  const chemicalContext = getIncidentChemicalContext(activeIncident);
   const overlay = {
     id: `plume-${Date.now()}`,
     incidentId: window.localStorage.getItem(activeIncidentIdStorageKey) || null,
-    chemicalName: activeChemical?.name || '',
+    masterChemicalId: chemicalContext.chemical?.selectedChemicalId ?? chemicalContext.chemical?.id ?? null,
+    chemicalName: activeIncident?.chemicalName || chemicalContext.chemical?.name || '',
     releaseType,
     timestamp,
     mapCenter: [location.lon, location.lat],
@@ -12135,6 +12510,21 @@ function saveLatestPlumeOverlay({ location, releaseType, windSpeed, windDirectio
 async function plotPlumeFromControls(locationOverride = null) {
   const plotButton = document.getElementById('plot-plume-btn');
   const leftPlotButton = document.getElementById('plume-left-plot-btn');
+  const plottingIncidentId = getActiveIncident()?.incidentId || null;
+  const plotChemicalContext = getIncidentChemicalContext(getActiveIncident());
+  const plotChemical = plotChemicalContext.chemical;
+  const plottingChemicalIdentity = plotChemical
+    ? { id: plotChemical.selectedChemicalId ?? plotChemical.id, name: plotChemical.name }
+    : null;
+  const ensurePlotOwnership = () => {
+    if ((getActiveIncident()?.incidentId || null) !== plottingIncidentId) {
+      throw new Error('PLUME SAVE BLOCKED — ACTIVE INCIDENT CHANGED DURING PLUME RUN');
+    }
+    const currentChemical = getIncidentChemicalContext(getActiveIncident()).chemical;
+    if (!chemicalIdentityMatches(plottingChemicalIdentity, currentChemical)) {
+      throw new Error('PLUME SAVE BLOCKED — ACTIVE INCIDENT / PLUME CHEMICAL MISMATCH');
+    }
+  };
   if (plotButton) plotButton.disabled = true;
   setText('plume-input-status', 'Checking source-backed plume and ERG guidance…');
   document.getElementById('plume-input-status')?.setAttribute('data-state', 'working');
@@ -12176,7 +12566,7 @@ async function plotPlumeFromControls(locationOverride = null) {
       const missingInputs = getMissingErgOverlayInputs();
       if (missingInputs.length) throw new Error(`Cannot display ERG protective-action guidance yet. Missing: ${missingInputs.join(', ')}.`);
       inputs = {
-        chemicalId: activeChemical.id,
+        chemicalId: plotChemical?.selectedChemicalId ?? activeChemical?.selectedChemicalId ?? activeChemical?.id,
         windDirDeg: Number(document.getElementById('plume-wind-direction')?.value),
         lat: location.lat,
         lng: location.lon,
@@ -12214,7 +12604,7 @@ async function plotPlumeFromControls(locationOverride = null) {
       const windDirection = document.getElementById('plume-wind-direction')?.value;
       const stability = document.getElementById('plume-stability-class')?.value;
       activePlumeCommand = {
-        title: `${activeChemical.name} ERG protective-action overlay`,
+        title: `${plotChemical?.name || activeChemical?.name || 'Selected chemical'} ERG protective-action overlay`,
         summary: modeled.summary,
         source: `${erg.source} · UN ${erg.un} · Guide ${erg.guide}`,
         details: [
@@ -12234,7 +12624,9 @@ async function plotPlumeFromControls(locationOverride = null) {
         stabilityClass: stability,
         notes: activePlumeCommand.summary,
       });
-      const saveMode = savePlumeResult(activePlumeCommand, workflowRecord, await capturePlumeMapImage());
+      const mapImage = await capturePlumeMapImage();
+      ensurePlotOwnership();
+      const saveMode = savePlumeResult(activePlumeCommand, workflowRecord, mapImage);
       renderIncidentCommandSnapshot();
       setText('plume-input-status', 'ERG protective-action guide displayed. Verify spill size, day/night condition, wind direction, current ERG, field observations, and Incident Command.');
       document.getElementById('plume-input-status')?.setAttribute('data-state', 'planning');
@@ -12267,7 +12659,7 @@ async function plotPlumeFromControls(locationOverride = null) {
     const surface = document.getElementById('plume-surface-roughness')?.selectedOptions?.[0]?.textContent;
     const thresholdKinds = [...new Set((modeled.result.thresholdsUsed || []).map((threshold) => threshold.kind))];
     activePlumeCommand = {
-      title: `${activeChemical.name} plume plotted`,
+      title: `${plotChemical?.name || activeChemical?.name || 'Selected chemical'} plume plotted`,
       summary: modeled.summary,
       source: `Source: /api/plume/run · model ${modeled.result.modelVersion} · ${thresholdKinds.join('/') || 'no'} backend thresholds.`,
       details: [
@@ -12287,7 +12679,9 @@ async function plotPlumeFromControls(locationOverride = null) {
       stabilityClass: stability,
       notes: activePlumeCommand.summary,
     });
-    const saveMode = savePlumeResult(activePlumeCommand, workflowRecord, await capturePlumeMapImage());
+    const mapImage = await capturePlumeMapImage();
+    ensurePlotOwnership();
+    const saveMode = savePlumeResult(activePlumeCommand, workflowRecord, mapImage);
     renderIncidentCommandSnapshot();
     setText('plume-input-status', '');
     document.getElementById('plume-input-status')?.removeAttribute('data-state');
@@ -12330,7 +12724,10 @@ async function refreshPlumeWorkspace({ requestGps = true } = {}) {
   };
 
   // Chemical restoration and the basemap must not depend on GPS permission.
-  const chemicalReady = activeChemicalRecord ? Promise.resolve() : restoreSelectedChemical();
+  const chemicalContext = getIncidentChemicalContext(getActiveIncident());
+  const chemicalReady = chemicalContext.matchesGlobal && chemicalContext.record
+    ? Promise.resolve()
+    : restoreSelectedChemical();
   void Promise.resolve().then(() => ensurePlumeMap()).catch((error) => {
     setText('plume-overlay-status', error instanceof Error ? error.message : 'The plume map is unavailable.');
   });
@@ -12470,17 +12867,17 @@ function normalizePlumeNavigationContext(input = {}) {
   };
   const sourcePage = input.sourcePage || activeViewId();
   const activeIncident = input.incident || getActiveIncident();
-  const planningState = readPlanningState();
-  const savedPlume = planningState.plumeModelResults || {};
+  // An incident dashboard must stay scoped to its active incident. The global
+  // planning record may belong to an older training scenario.
+  const planningState = activeIncident ? {} : readPlanningState();
+  const incidentPlume = isIncidentPlumeCurrent(activeIncident?.plumeModelResults, activeIncident)
+    ? activeIncident.plumeModelResults
+    : null;
+  const savedPlume = incidentPlume || planningState.plumeModelResults || {};
   const savedChemical = planningState.selectedChemical || savedPlume.chemical || null;
-  const chemical = input.chemical || (activeIncident?.selectedChemicalId ? {
-    id: activeIncident.selectedChemicalId,
-    selectedChemicalId: activeIncident.selectedChemicalId,
-    name: activeIncident.chemicalName,
-  } : null) || activeChemical || savedChemical || null;
-  const activeIncidentChemicalMatches = !activeIncident?.selectedChemicalId
-    || String(activeChemical?.selectedChemicalId ?? activeChemical?.id ?? '') === String(activeIncident.selectedChemicalId);
-  const record = input.chemicalRecord || (activeIncidentChemicalMatches ? activeChemicalRecord : null);
+  const incidentChemical = activeIncident ? getIncidentChemicalContext(activeIncident) : null;
+  const chemical = activeIncident ? incidentChemical.chemical : input.chemical || activeChemical || savedChemical || null;
+  const record = activeIncident ? incidentChemical.record : input.chemicalRecord || activeChemicalRecord;
   const profileHeader = record?.profile?.header || activeIncident?.chemicalProfile?.header || {};
   const savedLocation = savedPlume.location || savedPlume.output?.mapCenter;
   const liveMapCenter = sourcePage === 'map' ? window.hazmatiqLiveMap?.getCenter?.() : null;
@@ -12514,13 +12911,23 @@ function normalizePlumeNavigationContext(input = {}) {
     observationTime: activeIncident?.weatherObservationTime || savedPlume.weather?.observationTime,
   };
   return {
-    chemicalId: input.chemicalId ?? chemical?.selectedChemicalId ?? chemical?.id ?? activeIncident?.selectedChemicalId ?? null,
-    chemicalName: input.chemicalName ?? chemical?.name ?? activeIncident?.chemicalName ?? savedPlume.chemical?.chemicalName ?? '',
-    cas: input.cas ?? profileHeader.cas ?? activeIncident?.casNumber ?? savedPlume.chemical?.casNumber ?? '',
-    un: input.un ?? profileHeader.un ?? activeIncident?.unNumber ?? savedPlume.chemical?.unNumber ?? '',
-    ergGuide: input.ergGuide ?? profileHeader.ergGuide ?? activeIncident?.ergGuide ?? savedPlume.chemical?.ergGuide ?? '',
-    incidentId: input.incidentId ?? activeIncident?.incidentId ?? savedPlume.incidentId ?? null,
-    incidentName: input.incidentName ?? activeIncident?.incidentName ?? savedPlume.incidentName ?? '',
+    chemicalId: activeIncident
+      ? incidentChemical.chemical?.selectedChemicalId ?? incidentChemical.chemical?.id ?? null
+      : input.chemicalId ?? chemical?.selectedChemicalId ?? chemical?.id ?? savedPlume.chemical?.masterChemicalId ?? null,
+    chemicalName: activeIncident
+      ? incidentChemical.chemical?.name || ''
+      : input.chemicalName ?? chemical?.name ?? savedPlume.chemical?.chemicalName ?? '',
+    cas: activeIncident
+      ? incidentChemical.chemical?.cas || ''
+      : input.cas ?? profileHeader.cas ?? savedPlume.chemical?.casNumber ?? '',
+    un: activeIncident
+      ? incidentChemical.chemical?.un || ''
+      : input.un ?? profileHeader.un ?? savedPlume.chemical?.unNumber ?? '',
+    ergGuide: activeIncident
+      ? incidentChemical.chemical?.ergGuide || ''
+      : input.ergGuide ?? profileHeader.ergGuide ?? savedPlume.chemical?.ergGuide ?? '',
+    incidentId: activeIncident?.incidentId ?? (!activeIncident ? input.incidentId ?? savedPlume.incidentId : null) ?? null,
+    incidentName: activeIncident?.incidentName ?? (!activeIncident ? input.incidentName ?? savedPlume.incidentName : null) ?? '',
     latitude: location?.latitude ?? location?.lat ?? null,
     longitude: location?.longitude ?? location?.lon ?? location?.lng ?? null,
     address: location?.address || activeIncident?.address || '',
@@ -12537,7 +12944,12 @@ function normalizePlumeNavigationContext(input = {}) {
 function applyPlumeNavigationContext(context) {
   const chemicalId = normalizeChemicalSelectionId(context.chemicalId);
   const activeId = normalizeChemicalSelectionId(activeChemical?.selectedChemicalId ?? activeChemical?.id);
-  if (chemicalId !== null && chemicalId !== undefined && chemicalId !== '' && String(activeId ?? '') !== String(chemicalId)) {
+  const activeIncident = getActiveIncident();
+  const activeIncidentChemicalName = activeIncident?.chemicalName || '';
+  const activeChemicalName = activeChemical?.name || '';
+  if (chemicalId !== null && chemicalId !== undefined && chemicalId !== ''
+    && (String(activeId ?? '') !== String(chemicalId)
+      || (activeIncident && normalizedChemicalName(activeChemicalName) !== normalizedChemicalName(activeIncidentChemicalName)))) {
     setActiveChemical({
       id: String(chemicalId),
       selectedChemicalId: chemicalId,
@@ -12668,6 +13080,7 @@ let guidedResponseOpenRequest = 0;
 async function ensureGuidedResponseChemicalSelection(requestId) {
   const activeIncident = getActiveIncident();
   const targetId = activeIncident?.selectedChemicalId
+    ?? activeIncident?.chemicalCompanionId
     ?? activeChemical?.selectedChemicalId
     ?? activeChemical?.id
     ?? null;
@@ -14270,13 +14683,19 @@ function renderLiveMapMarkers() {
 }
 
 function readLatestPlumeOverlay() {
-  if (window.HazMatIQ.latestPlumeOverlay?.plumeGeometry?.features?.length) {
-    return window.HazMatIQ.latestPlumeOverlay;
-  }
+  const activeIncident = getActiveIncident();
+  const activeChemicalId = activeIncident?.selectedChemicalId ?? activeIncident?.chemicalCompanionId ?? null;
+  const isCurrent = (overlay) => Boolean(overlay?.plumeGeometry?.features?.length)
+    && (!activeIncident
+      || (activeChemicalId !== null && activeChemicalId !== undefined && String(activeChemicalId).trim() !== ''
+        && overlay.masterChemicalId !== null && overlay.masterChemicalId !== undefined
+        && String(overlay.incidentId || '') === String(activeIncident.incidentId || '')
+        && String(overlay.masterChemicalId || '') === String(activeChemicalId || '')));
+  if (isCurrent(window.HazMatIQ.latestPlumeOverlay)) return window.HazMatIQ.latestPlumeOverlay;
   try {
     const overlay = JSON.parse(window.localStorage.getItem(latestPlumeOverlayStorageKey) || 'null');
-    if (overlay?.plumeGeometry?.features?.length) window.HazMatIQ.latestPlumeOverlay = overlay;
-    return overlay;
+    if (isCurrent(overlay)) window.HazMatIQ.latestPlumeOverlay = overlay;
+    return isCurrent(overlay) ? overlay : null;
   } catch {
     return null;
   }
@@ -14971,6 +15390,7 @@ window.HazMatIQ.hazardProfileLegacy = {
 window.HazMatIQ.incidentCommandLegacy = {
   getActiveIncident,
   readIncidents,
+  readIncidentMapSnapshot,
   writeIncidents,
   openNewIncidentEntry,
   renderIncidentResponseTabs,
@@ -14979,6 +15399,7 @@ window.HazMatIQ.incidentCommandLegacy = {
   switchActiveIncident,
   showView,
 };
+window.HazMatIQ.isIncidentPlumeCurrent = isIncidentPlumeCurrent;
 
 // Bridge used by the optional Live Map bootstrap when it wins initialization.
 window.HazMatIQ.updateLiveMapGpsMarker = updateLiveMapGpsMarker;

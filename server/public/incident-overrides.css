@@ -36,7 +36,7 @@
 }
 .incident-command-brief-list dt { color: #d8e7f1; font-weight: 700; }
 .incident-command-brief-list dd { margin: 0; color: #fff; overflow-wrap: anywhere; }
-.incident-command-brief-list .is-life-safety {
+.incident-command-brief-list .is-idlh {
   margin-inline: -6px;
   padding-inline: 6px;
   border-left: 3px solid #ef3340;
@@ -140,10 +140,6 @@
   height: 22px;
   border-radius: 3px;
   font-size: 0.57rem;
-}
-.incident-command-tactical-row.is-life-safety {
-  border-left: 3px solid #ef3340;
-  padding-left: 8px;
 }
 .incident-command-badge {
   display: inline-flex;
@@ -766,3 +762,64 @@
   #incident .incident-command-tactical-row > .incident-command-badge { grid-column: 2 !important; grid-row: 1 !important; }
   #incident .incident-command-tactical-row > p { grid-column: 1 / -1 !important; grid-row: 2 !important; }
 }
+
+/* Final readability and action-language pass. Keep the ERG distance review
+   close to the light-green print treatment used by the field guide, and keep
+   summary cards visually parallel so operators can scan them as one surface. */
+#erg-review-dialog .erg-review-content { background: #e4f1df !important; color: #173b2a !important; }
+#erg-review-dialog .erg-review-distance-card,
+#erg-review-dialog .erg-review-fact-list article { background: #f0f8ec !important; border-color: #8eb69a !important; color: #173b2a !important; }
+#erg-review-dialog .erg-review-distance-card span,
+#erg-review-dialog .erg-review-distance-card strong,
+#erg-review-dialog .erg-review-distance-card small,
+#erg-review-dialog .erg-review-fact-list strong,
+#erg-review-dialog .erg-review-fact-list p { color: #173b2a !important; }
+#erg-review-dialog .erg-review-table-wrap table,
+#erg-review-dialog .erg-review-table-wrap th,
+#erg-review-dialog .erg-review-table-wrap td { color: #173b2a !important; background: #f0f8ec !important; border-color: #8eb69a !important; }
+#erg-review-dialog .erg-review-table-wrap th { background: #d8ecd4 !important; color: #123524 !important; }
+
+#incident .incident-command-main-grid > .incident-command-panel > h2 {
+  box-sizing: border-box;
+  height: 64px;
+  min-height: 64px;
+}
+#incident .incident-command-main-grid > .incident-command-panel > h2 .incident-command-panel-title {
+  font-size: clamp(20px, 1.35vw, 26px);
+  line-height: 1.05;
+}
+#incident .incident-command-main-grid > .incident-command-panel > h2 > span[aria-hidden="true"] { font-size: 1rem; line-height: 1; }
+#incident .incident-command-guided-content h3 { font-size: .8rem; }
+#incident .incident-command-guided-list li,
+#incident .incident-command-guided-actions > div,
+#incident .incident-command-guided-progress > div,
+#incident .incident-command-tactical-row > strong,
+#incident .incident-command-tactical-row > p { font-size: .95rem; line-height: 1.25; }
+
+#incident .incident-command-brief-panel .incident-command-panel-action,
+#incident .incident-command-inline-actions button,
+#incident .incident-command-tool[data-incident-command-action="open-report"],
+#incident .incident-command-tool[data-incident-command-action="ics"],
+#incident .incident-command-tool[data-incident-command-action="generate-report"] {
+  border-color: #c5cbd1 !important;
+  color: #111827 !important;
+  background: #e5e7eb !important;
+}
+#incident .incident-command-brief-panel .incident-command-panel-action:hover,
+#incident .incident-command-brief-panel .incident-command-panel-action:focus-visible,
+#incident .incident-command-inline-actions button:hover,
+#incident .incident-command-inline-actions button:focus-visible,
+#incident .incident-command-tool[data-incident-command-action="open-report"]:hover,
+#incident .incident-command-tool[data-incident-command-action="open-report"]:focus-visible,
+#incident .incident-command-tool[data-incident-command-action="ics"]:hover,
+#incident .incident-command-tool[data-incident-command-action="ics"]:focus-visible,
+#incident .incident-command-tool[data-incident-command-action="generate-report"]:hover,
+#incident .incident-command-tool[data-incident-command-action="generate-report"]:focus-visible {
+  border-color: #111827 !important;
+  color: #000 !important;
+  background: #f3f4f6 !important;
+}
+#incident .incident-command-inline-actions button strong,
+#incident .incident-command-tool[data-incident-command-action="open-report"] strong,
+#incident .incident-command-tool[data-incident-command-action="ics"] strong,
+#incident .incident-command-tool[data-incident-command-action="generate-report"] strong { color: #111827 !important; }
