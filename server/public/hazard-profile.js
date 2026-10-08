@@ -92,6 +92,7 @@
     if (!normalized.canonicalId) return null;
     setActiveHazardState(normalized, { status: 'loading' });
     const lookup = document.getElementById('lookup');
+    if (lookup) lookup.dataset.profileReturnView = sourcePage === 'incident' ? 'incident' : 'lookup';
     if (lookup && !lookup.classList.contains('active')) {
       window.HazMatIQ.activatePage?.('lookup', { preserveHazardState: true, sourcePage });
     }

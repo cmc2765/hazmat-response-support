@@ -103,6 +103,7 @@
   #lookup.view.active {
     height: auto !important;
     min-height: calc(100vh - 16px);
+    min-height: calc(100dvh - 24px) !important;
     align-content: start;
     overflow: visible !important;
   }

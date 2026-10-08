@@ -187,7 +187,7 @@
       summary.append(list);
     }
     const profileButton = root.querySelector('[data-incident-command-action="chemical-profile"]');
-    if (profileButton) profileButton.disabled = !state?.activeChemical || !state.activeChemical.canonicalId;
+    if (profileButton) profileButton.disabled = !profileButton.dataset.allowEmptyFallback && (!state?.activeChemical || !state.activeChemical.canonicalId);
   }
 
   function renderOperationalStatus(state) {
@@ -245,7 +245,7 @@
     if (!root) return;
     root.dataset.incidentId = state?.incidentId || '';
     root.querySelectorAll('[data-incident-command-action="chemical-profile"]').forEach((button) => {
-      button.disabled = !state?.activeChemical || !state.activeChemical.canonicalId;
+      button.disabled = !button.dataset.allowEmptyFallback && (!state?.activeChemical || !state.activeChemical.canonicalId);
     });
   }
 
@@ -290,7 +290,9 @@
   function openChemicalProfile() {
     const state = getActiveIncidentState();
     const chemical = state?.activeChemical;
-    if (!chemical) return null;
+    if (!chemical || !chemical.canonicalId || (chemical.profileType === 'chemical' && !chemical.chemicalCompanionId)) {
+      return legacyApi()?.showView?.('lookup', { preserveHazardState: true, sourcePage: 'incident' });
+    }
     const result = chemical.profileType === 'hazard'
       ? { id: chemical.cbrneCanonicalId || chemical.canonicalId, lane: chemical.routingLane, displayName: chemical.displayName }
       : { selectedChemicalId: chemical.chemicalCompanionId, ChemicalName: chemical.displayName, CasNumber: chemical.cas, UnnaNumber: chemical.un, ErgNumber: chemical.erg, guidanceEligible: true };

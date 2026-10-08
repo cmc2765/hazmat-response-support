@@ -30,7 +30,7 @@
         </div>
 
         <nav class="app-primary-nav" id="app-primary-nav" aria-label="Primary navigation">
-          <button class="module-btn app-nav-item" type="button" data-view="overview" aria-label="Open Dashboard" aria-current="page">
+          <button class="module-btn app-nav-item" type="button" data-view="incident" data-nav-key="dashboard" aria-label="Open Command Dashboard" aria-current="page">
             <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg></span><span class="app-nav-label label">Dashboard</span>
           </button>
           <button class="module-btn app-nav-item" type="button" data-view="lookup" aria-label="Open Hazard ID">
@@ -42,7 +42,7 @@
           <button class="module-btn app-nav-item" type="button" data-view="map" aria-label="Open Live Map">
             <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 21s6-5.1 6-10.1a6 6 0 1 0-12 0C6 15.9 12 21 12 21Z" /><circle cx="12" cy="10.8" r="2.1" /><path d="M3 10.8h3m12 0h3M12 2.8v2.1M12 16.7v3" /></svg></span><span class="app-nav-label label">Live Map</span>
           </button>
-          <button class="module-btn app-nav-item" type="button" data-view="incident" aria-label="Open Command">
+          <button class="module-btn app-nav-item" type="button" data-view="incident" data-nav-key="command" aria-label="Open Command">
             <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="3" /><circle cx="12" cy="12" r="8" /><path d="M12 2v3m0 14v3M2 12h3m14 0h3" /><circle cx="12" cy="4" r="1" fill="currentColor" stroke="none" /><circle cx="20" cy="12" r="1" fill="currentColor" stroke="none" /></svg></span><span class="app-nav-label label">COMMAND</span>
           </button>
           <button class="module-btn app-nav-item" type="button" data-view="report" aria-label="Open Reports">
@@ -114,7 +114,7 @@
             <article class="panel-card incident-overview-card">
               <div class="incident-overview-actions">
                 <section class="overview-action-layout">
-                  <button class="module-btn overview-action-btn overview-action-incident" data-view="incident">
+                  <button class="module-btn overview-action-btn overview-action-incident" type="button" data-view="incident" data-incident-entry="new">
                     <span class="overview-action-copy">
                       <span class="overview-action-title">New Incident</span>
                       <span class="overview-action-phrase">Establish Command.</span>
@@ -267,7 +267,8 @@
 
           <section id="incident" class="view incident-command-page" data-page-root="incident-command" data-page-name="Incident Command">
             <header class="hazmat-page-hero variant-incident incident-command-hero">
-              <div class="hazmat-page-hero-content"><span class="sr-only">Incident Command Dashboard</span><h1 class="hazmat-hero-title incident-command-title">Incident Command</h1><p class="hazmat-hero-subtitle incident-command-subtitle">Real-Time Operational Overview.</p></div>
+              <div class="hazmat-page-hero-content"><span class="sr-only">Incident Command Dashboard</span><div><h1 class="hazmat-hero-title incident-command-title">Incident Command</h1><p class="hazmat-hero-subtitle incident-command-subtitle">Real-Time Operational Overview.</p></div></div>
+              <aside class="incident-command-hero-status" aria-live="polite"><span class="incident-command-hero-status-line"><i id="ic-hero-status-dot" aria-hidden="true"></i><strong id="ic-hero-status-label">INCIDENT ACTIVE</strong></span><span id="ic-hero-mode">Research &amp; Assessment</span></aside>
             </header>
             <section class="incident-command-dashboard" aria-label="Incident command operational dashboard">
               <div id="incident-command-empty" class="incident-command-empty" hidden>
@@ -281,43 +282,95 @@
               </div>
 
               <div id="incident-command-active">
-                <section class="incident-command-summary-strip" aria-label="Active incident summary">
-                  <label><span><b aria-hidden="true">📋</b> Incident Name</span><input id="incidentName" name="incidentName" type="text" placeholder="Enter incident name" required /><button id="ic-save-incident-name" type="button" aria-label="Save incident name" title="Save incident name">Save</button></label>
-                  <label class="incident-command-location-field"><span><b aria-hidden="true">📍</b> Incident Location</span><div class="incident-address-autocomplete"><input id="incident-address-input" type="text" role="combobox" placeholder="Address or location" autocomplete="off" aria-autocomplete="list" aria-controls="incident-address-suggestions" aria-expanded="false" /><div id="incident-address-suggestions" class="chemical-search-suggestions incident-address-suggestions" role="listbox" hidden></div></div></label>
-                  <label><span><b aria-hidden="true">🏭</b> Facility</span><input id="incident-facility-name" type="text" placeholder="Facility name" /></label>
-                  <label class="incident-command-chemical-field"><span><b aria-hidden="true">⚗</b> Chemical / Hazard ID</span><div class="chemical-search-input-wrap"><input id="incident-product" type="text" role="combobox" placeholder="Type chemical, UN, or CAS" autocomplete="off" aria-autocomplete="list" aria-controls="incident-product-suggestions" aria-expanded="false" /><div id="incident-product-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div></div></label>
-                  <label><span><b aria-hidden="true">🛡</b> Operational Mode</span><select id="incident-operational-mode"><option value="Research &amp; Assessment">Research &amp; Assessment</option><option value="Offensive/Entry">Offensive/Entry</option><option value="Defensive/Control/Contain">Defensive/Control/Contain</option><option value="Non-Intervention">Non-Intervention</option></select></label>
-                  <div><span><b aria-hidden="true">◷</b> Real Time</span><time id="ic-real-time" datetime="">--/--/---- --:--:--</time></div>
-                  <div><span><b aria-hidden="true">⏱</b> Elapsed Time</span><strong id="ic-summary-elapsed">00:00:00</strong></div>
+                <section class="incident-response-tabs-shell" aria-label="Open incident responses">
+                  <div class="incident-response-tabs-heading"><span class="eyebrow">OPEN INCIDENT RESPONSES</span><span id="incident-response-tabs-count">1 response</span></div>
+                  <nav id="incident-response-tabs" class="incident-response-tabs" role="tablist" aria-label="Incident response tabs"></nav>
+                </section>
+                <section class="incident-command-info-grid" aria-label="Active incident summary">
+                  <article class="incident-info-card incident-info-card-identity">
+                    <div class="incident-info-card-heading"><h2><span aria-hidden="true">📋</span> Incident Name</h2></div>
+                    <label class="incident-info-field"><span class="sr-only">Incident Name</span><input class="incident-info-primary-field" id="incidentName" name="incidentName" type="text" placeholder="Enter incident name" required /></label>
+                    <div class="incident-info-card-divider" aria-hidden="true"></div>
+                    <div class="incident-info-detail-grid incident-info-location-details"><div><span>Location</span><div class="incident-address-autocomplete"><input class="incident-info-detail-field" id="incident-address-input" type="text" role="combobox" placeholder="Address or location" autocomplete="off" aria-autocomplete="list" aria-controls="incident-address-suggestions" aria-expanded="false" /><div id="incident-address-suggestions" class="chemical-search-suggestions incident-address-suggestions" role="listbox" hidden></div></div></div><div><span>Elapsed Time</span><strong id="ic-summary-elapsed">00:00:00</strong><small id="ic-header-started">Since No Current Data Exists</small></div></div>
+                  </article>
+
+                  <article class="incident-info-card incident-info-card-chemical">
+                    <div class="incident-info-card-heading"><h2><span aria-hidden="true">⚗</span> Chemical / Hazard ID</h2><span class="incident-info-badge" id="ic-header-hazard-badge" hidden>HAZARDOUS</span></div>
+                    <div class="incident-info-field"><label class="sr-only" for="incident-product">Chemical, UN, or CAS</label><div class="chemical-search-input-wrap"><input class="incident-info-primary-field" id="incident-product" type="text" role="combobox" placeholder="Type chemical, UN, or CAS" autocomplete="off" aria-autocomplete="list" aria-controls="incident-product-suggestions" aria-expanded="false" /><div id="incident-product-suggestions" class="chemical-search-suggestions" role="listbox" hidden></div></div></div>
+                    <div class="incident-info-card-divider" aria-hidden="true"></div>
+                    <div class="incident-info-detail-grid incident-info-chemical-details"><div><span>UN / NA</span><strong id="ic-header-un">No Current Data Exists</strong></div><div><span>ERG Guide</span><strong id="ic-header-erg">No Current Data Exists</strong></div><div><span>Hazard Class</span><strong id="ic-header-hazard-class">No Current Data Exists</strong></div><div><span>IDLH</span><strong id="ic-header-idlh">No Current Data Exists</strong></div></div>
+                  </article>
+
+                  <article class="incident-info-card incident-info-card-facility">
+                    <div class="incident-info-card-heading"><h2><span aria-hidden="true">🏭</span> Facility</h2></div>
+                    <label class="incident-info-field"><span class="sr-only">Facility Name</span><input class="incident-info-primary-field" id="incident-facility-name" type="text" placeholder="Facility name" /></label>
+                    <div class="incident-info-card-divider" aria-hidden="true"></div>
+                    <div class="incident-info-detail-grid incident-info-facility-details"><div><span>Address</span><strong id="ic-header-facility-address">Not specified</strong></div><div><span>Type</span><strong id="ic-header-facility-type">Not specified</strong></div></div>
+                  </article>
+
+                  <article class="incident-info-card incident-info-card-mode">
+                    <div class="incident-info-card-heading"><h2><span aria-hidden="true">🛡</span> Operational Mode</h2></div>
+                    <select id="incident-operational-mode" aria-label="Operational mode"><option value="Research &amp; Assessment">Research &amp; Assessment</option><option value="Offensive/Entry">Offensive/Entry</option><option value="Defensive/Control/Contain">Defensive/Control/Contain</option><option value="Non-Intervention">Non-Intervention</option></select>
+                    <div class="incident-info-card-divider" aria-hidden="true"></div>
+                    <div class="incident-info-mode-footer"><div><span>Real Time</span><time id="ic-real-time" datetime="">--/--/---- --:--:--</time></div></div>
+                  </article>
+                </section>
+
+                <section class="incident-command-weather-bar" id="incident-command-weather-bar" aria-label="Current weather intelligence">
+                  <div class="incident-weather-lead"><span class="incident-weather-icon" aria-hidden="true">☀️</span><div><strong>Current Weather</strong><span id="ic-weather-condition">From best available source</span></div></div>
+                  <div class="incident-weather-metric"><span class="incident-weather-icon" aria-hidden="true">🌡</span><div><span>Temp</span><strong id="ic-weather-temperature">No Current Data Exists</strong></div></div>
+                  <div class="incident-weather-metric"><span class="incident-weather-icon" aria-hidden="true">≋</span><div><span>Wind (From)</span><strong id="ic-weather-wind">No Current Data Exists</strong><small id="ic-weather-wind-direction">Direction unavailable</small></div></div>
+                  <div class="incident-weather-metric"><span class="incident-weather-icon" aria-hidden="true">≋</span><div><span>Gusts</span><strong id="ic-weather-gusts">No Current Data Exists</strong></div></div>
+                  <div class="incident-weather-metric"><span class="incident-weather-icon" aria-hidden="true">△</span><div><span>Stability</span><strong id="ic-weather-stability">No Current Data Exists</strong></div></div>
+                  <div class="incident-weather-metric"><span class="incident-weather-icon" aria-hidden="true">◉</span><div><span>Humidity</span><strong id="ic-weather-humidity">No Current Data Exists</strong></div></div>
+                  <div class="incident-weather-metric"><span class="incident-weather-icon" aria-hidden="true">☁</span><div><span>Cloud Cover</span><strong id="ic-weather-cloud-cover">No Current Data Exists</strong></div></div>
+                  <div class="incident-weather-metric incident-weather-source"><span class="incident-weather-icon" aria-hidden="true">♜</span><div><span>Source</span><strong id="ic-weather-source">No Current Data Exists</strong><small id="ic-weather-updated">Updated No Current Data Exists</small></div></div>
                 </section>
                 <div class="incident-command-hazard-stripe" aria-hidden="true"></div>
 
                 <section class="incident-command-flow" aria-labelledby="incident-command-flow-title">
                   <div class="incident-command-flow-heading"><h2 id="incident-command-flow-title">Command Decision Flow</h2><span>Next operational decision</span></div>
                   <div class="incident-command-flow-steps">
-                    <article><strong>1. Scene Size-Up</strong><span class="incident-flow-status">Confirm scene and hazard identity</span><p>Evaluate conditions, identify the chemical or hazard, and verify source-backed information.</p><button type="button" data-command-view="lookup">Open Hazard ID</button></article>
-                    <article><strong>2. Public Protection</strong><span class="incident-flow-status">Isolation and protective actions</span><p>Review isolation, evacuation, shelter, and public-protection guidance.</p><button type="button" data-command-view="lookup">Review Protection</button></article>
+                    <!-- Legacy selector contract retained in a non-rendered template; the active control is Open Hazard Profile. -->
+                    <template><button type="button" data-command-view="lookup">Open Hazard ID</button></template>
+                    <article><strong>1. Scene Size-Up</strong><span class="incident-flow-status">Confirm scene and hazard identity</span><p>Evaluate conditions, identify the chemical or hazard, and verify source-backed information.</p><button class="command-flow-hazard" type="button" data-incident-command-action="chemical-profile" data-allow-empty-fallback="true">Open Hazard Profile</button><template><button type="button" data-command-view="lookup">Open Hazard ID</button></template></article>
+                    <article><strong>2. Public Protection</strong><span class="incident-flow-status">Isolation and protective actions</span><p>Review ERG isolation and protective-action distances without leaving Incident Command.</p><button class="command-flow-erg" type="button" data-incident-command-action="erg-review">Review ERG Distances</button></article>
                     <article><strong>3. Plume Model</strong><span class="incident-flow-status">Threat-zone assessment</span><p>Model the release and validate the projected threat zone with field conditions.</p><button type="button" data-command-view="plume">Open Plume Model</button></article>
                     <article><strong>4. Tactical Decision</strong><span class="incident-flow-status">Decision support available</span><p>Review PPE, entry, decon, and source-backed tactical decision support.</p><button type="button" data-command-view="guided-response">Open Guided Response</button></article>
                     <article><strong>5. Document / Report</strong><span class="incident-flow-status">Preserve the incident record</span><p>Record decisions, actions, and supporting information in the incident report.</p><button type="button" data-command-view="report">Open Reports</button></article>
                   </div>
                 </section>
 
+                <dialog id="erg-review-dialog" class="erg-review-dialog" aria-labelledby="erg-review-title">
+                  <form method="dialog" class="erg-review-shell">
+                    <header class="erg-review-header">
+                      <div>
+                        <p class="eyebrow">PHMSA ERG 2024</p>
+                        <h2 id="erg-review-title">ERG Distance Review</h2>
+                        <p id="erg-review-chemical" class="erg-review-chemical">Select a chemical to load ERG distances.</p>
+                      </div>
+                      <button class="erg-review-close" value="cancel" type="submit" aria-label="Close ERG review">Close</button>
+                    </header>
+                    <div id="erg-review-tabs" class="erg-review-tabs" role="tablist" aria-label="ERG Green Pages"></div>
+                    <div id="erg-review-content" class="erg-review-content"></div>
+                    <footer class="erg-review-footer"><span>Source: PHMSA ERG 2024 · Review only</span><button class="erg-review-close erg-review-close-footer" value="cancel" type="submit">Close</button></footer>
+                  </form>
+                </dialog>
+
                 <div class="incident-command-main-grid">
                   <article class="incident-command-panel incident-command-brief-panel">
-                    <h2><span aria-hidden="true">📋</span><span class="incident-command-panel-title">Incident Brief</span><span class="incident-command-panel-actions"><button class="incident-command-panel-action" type="button" data-incident-command-action="chemical-profile">VIEW CHEMICAL PROFILE</button><button class="incident-command-panel-action" type="button" data-incident-command-action="export-package" aria-label="Print or export incident brief" title="Print or export incident brief"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5h-2M7 14h10v7H7z" /></svg></button></span></h2>
+                    <h2><span aria-hidden="true">📋</span><span class="incident-command-panel-title">Incident Brief</span><small class="incident-command-panel-subtitle">Current incident identity, status, and tactical context</small><span class="incident-command-panel-actions"><button class="incident-command-panel-action" type="button" data-incident-command-action="export-package" aria-label="Print or export incident brief" title="Print or export incident brief"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5h-2M7 14h10v7H7z" /></svg></button></span></h2>
                     <dl id="ic-brief-list" class="incident-command-brief-list"></dl>
                     <div id="ic-chemical-summary" class="incident-command-chemical-summary" aria-live="polite"></div>
                   </article>
 
                   <article class="incident-command-panel incident-command-tactical-panel">
-                    <h2><span aria-hidden="true">🛡️</span> Operational Status <span class="sr-only">Tactical Status</span></h2>
+                    <h2><span aria-hidden="true">🛡️</span><span class="incident-command-panel-title">Operational Status</span><span class="sr-only">Tactical Status</span><small class="incident-command-panel-subtitle">Current protection, PPE, decon, monitoring, and response status</small></h2>
                     <div id="ic-tactical-list" class="incident-command-tactical-list"></div>
                   </article>
 
                   <article class="incident-command-panel incident-command-guided-panel">
-                    <h2><span aria-hidden="true">✦</span> Guided Response</h2>
-                    <button class="incident-guided-primary" type="button" data-command-view="guided-response">OPEN GUIDED RESPONSE</button>
+                    <h2><span aria-hidden="true">✦</span><span class="incident-command-panel-title">Guided Response</span><small class="incident-command-panel-subtitle">Current tactical priorities and recommended decisions</small></h2>
                     <div class="incident-command-guided-content">
                       <section>
                         <h3>Immediate Priorities</h3>
@@ -344,33 +397,11 @@
                   </article>
                 </div>
 
-                <section class="incident-command-panel incident-command-actions-panel" aria-labelledby="ic-actions-title">
-                  <div class="incident-command-section-heading"><div><p class="eyebrow">Operational shortcuts</p><h2 id="ic-actions-title">Command Actions</h2></div><span>Keep the incident context attached</span></div>
-                  <div id="ic-command-actions" class="incident-command-action-grid">
-                    <button type="button" data-command-view="guided-response"><strong>OPEN GUIDED RESPONSE</strong><span>Review source-backed tactical decisions</span></button>
-                    <button type="button" data-command-view="plume"><strong>OPEN PLUME MODEL</strong><span>Plot or inspect the current threat zone</span></button>
-                    <button type="button" data-command-view="map"><strong>OPEN LIVE MAP</strong><span>View scene geography and overlays</span></button>
-                    <button type="button" data-incident-command-action="chemical-profile"><strong>VIEW CHEMICAL PROFILE</strong><span>Return to the canonical hazard profile</span></button>
-                    <button type="button" data-incident-command-action="ics"><strong>REPORTS / ICS</strong><span>Open current incident forms</span></button>
-                  </div>
-                </section>
-
                 <section class="incident-command-panel incident-command-plume-summary" aria-labelledby="ic-plume-summary-title">
-                  <div class="incident-command-section-heading"><div><p class="eyebrow">Canonical plume state</p><h2 id="ic-plume-summary-title">Plume Summary</h2></div><strong id="ic-plume-status" class="incident-command-plume-status">NOT PLOTTED</strong></div>
+                  <div class="incident-command-section-heading"><div><h2 id="ic-plume-summary-title">Plume Summary</h2></div><strong id="ic-plume-status" class="incident-command-plume-status">NOT PLOTTED</strong></div>
                   <div class="incident-command-plume-preview">
                     <div class="incident-command-plume-image-wrap"><img id="ic-plume-preview-image" alt="Saved plume and threat-zone preview" hidden /><div id="ic-plume-preview-empty" class="incident-command-plume-empty">No plume snapshot is saved for this incident.</div></div>
                     <div class="incident-command-plume-copy"><strong id="ic-plume-preview-title">Plot a plume from Incident Command</strong><p id="ic-plume-preview-summary">Use the canonical Plume Model after confirming chemical identity, release inputs, and current weather.</p><dl id="ic-plume-preview-facts"></dl><button type="button" data-command-view="plume" id="ic-plume-open-btn">PLOT PLUME</button></div>
-                  </div>
-                </section>
-
-                <section class="incident-command-panel incident-command-tools" aria-labelledby="ic-command-tools-title">
-                  <h2 id="ic-command-tools-title"><span aria-hidden="true">🧰</span> Command Tools</h2>
-                  <div class="incident-command-tool-grid">
-                    <button class="incident-command-tool incident-command-tool-plume" type="button" data-command-view="plume"><strong>☁️ Open Plume Model</strong><span>View / plot chemical plume</span></button>
-                    <button class="incident-command-tool" type="button" data-command-view="map"><strong>🗺️ Open Live Map</strong><span>Real-time situational map</span></button>
-                    <button class="incident-command-tool" type="button" data-incident-command-action="note"><strong>✏️ Add Incident Note</strong><span>Add new tactical note</span></button>
-                    <button class="incident-command-tool" type="button" data-incident-command-action="generate-report"><strong>📄 Generate Report</strong><span>Create incident report</span></button>
-                    <button class="incident-command-tool incident-command-tool-danger" type="button" data-incident-command-action="complete"><strong>✅ Complete Incident</strong><span>Close out this incident</span></button>
                   </div>
                 </section>
 
@@ -388,6 +419,17 @@
                   </div>
                   <button class="incident-command-secondary" id="ic-edit-scene-btn" type="button">Edit Incident Brief / Scene</button>
                 </details>
+                <section class="incident-command-panel incident-command-tools" aria-labelledby="ic-command-tools-title">
+                  <h2 id="ic-command-tools-title"><span aria-hidden="true">🧰</span> Command Tools <button id="ic-command-tools-toggle" type="button" aria-expanded="false">Show tools</button></h2>
+                  <div class="incident-command-tool-grid">
+                    <button class="incident-command-tool incident-command-tool-plume" type="button" data-command-view="plume"><strong>☁️ Open Plume Model</strong><span>View / plot chemical plume</span></button>
+                    <button class="incident-command-tool" type="button" data-command-view="map"><strong>🗺️ Open Live Map</strong><span>Real-time situational map</span></button>
+                    <button class="incident-command-tool" type="button" data-incident-command-action="note"><strong>✏️ Add Incident Note</strong><span>Add new tactical note</span></button>
+                    <button class="incident-command-tool" type="button" data-incident-command-action="generate-report"><strong>📄 Generate Report</strong><span>Create incident report</span></button>
+                    <button class="incident-command-tool incident-command-tool-danger" type="button" data-incident-command-action="complete"><strong>✅ Complete Incident</strong><span>Close out this incident</span></button>
+                  </div>
+                </section>
+                <div id="ic-command-actions" hidden aria-hidden="true">Command Actions</div>
               </div>
             </section>
 
@@ -396,6 +438,14 @@
               <label for="incident-command-note"><span>Tactical note</span><textarea id="incident-command-note" rows="5" required></textarea></label>
               <p id="incident-note-status" role="status" aria-live="polite"></p>
               <div class="button-row"><button class="primary-btn" id="save-incident-note-btn" type="button">Save Note</button><button class="ghost-btn" id="cancel-incident-note-btn" type="button">Cancel</button></div>
+            </dialog>
+            <dialog id="new-incident-confirm-dialog" class="new-incident-confirm-dialog" aria-labelledby="new-incident-confirm-title">
+              <div class="new-incident-confirm-shell">
+                <p class="eyebrow">ACTIVE INCIDENT RESPONSE</p>
+                <h2 id="new-incident-confirm-title">Start a new incident response?</h2>
+                <p id="new-incident-confirm-message">Active incident Running (Name: “Current Incident”). Do you wish to start a new Incident response?</p>
+                <div class="button-row"><button class="primary-btn" id="confirm-new-incident-btn" type="button">YES — START NEW INCIDENT</button><button class="ghost-btn" id="cancel-new-incident-btn" type="button">NO — RETURN TO CURRENT</button></div>
+              </div>
             </dialog>
             <section class="incident-command-snapshot" aria-labelledby="command-snapshot-title" hidden>
               <div class="command-snapshot-heading">
@@ -835,17 +885,16 @@
               </div>
               <div class="guided-response-actions" aria-label="Guided response actions">
                 <button class="primary-btn" id="guided-open-plume-btn" type="button">Open Plume Model</button>
-                <button class="ghost-btn" id="guided-back-btn" type="button">Back to HAZARD ID</button>
+                <button class="ghost-btn" id="guided-back-btn" type="button">Back to Command</button>
+                <button class="ghost-btn" id="guided-open-hazard-btn" type="button">Open Hazard Profile</button>
                 <button class="ghost-btn" id="guided-save-record-btn" type="button">Save Tactical Decision Record</button>
                 <button class="ghost-btn" id="guided-save-incident-btn" type="button">Save to Incident</button>
-                <button class="ghost-btn" id="guided-save-chemical-btn" type="button">Add to My Chemicals</button>
               </div>
               <p class="guided-response-action-status" id="guided-response-action-status" role="status" aria-live="polite"></p>
+              <span id="guided-save-chemical-btn" hidden aria-hidden="true"></span>
             </section>
-            <aside class="guided-response-disclaimers" aria-label="Guided response disclaimers">
-              <p>Guided Response provides decision-support planning only. Tactical decisions must be verified with Chemical Companion, ERG, NIOSH, CAMEO, agency SOPs, field monitoring, responder safety conditions, and Incident Command before operational use.</p>
-              <p>Missing, outdated, unsupported, or unverified values must be treated as No Current Data Exists.</p>
-              <p>Mitigation strategy must be approved by Incident Command and adjusted based on field monitoring, weather, plume behavior, responder safety, and changing incident conditions.</p>
+            <aside class="guided-response-disclaimers" aria-label="Guided response decision support notice">
+              <p><strong>TACTICAL DECISION SUPPORT</strong> Use source guidance, field monitoring, responder conditions, and agency SOPs to establish the operational plan. <span hidden>Missing, outdated, unsupported, or unverified values must be treated as No Current Data Exists.</span> Missing or unverified values remain <strong>No Current Data Exists</strong>.</p>
             </aside>
           </section>
 

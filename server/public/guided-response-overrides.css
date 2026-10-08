@@ -546,3 +546,159 @@
   .guided-command-state,
   .guided-command-status { grid-column: 2; justify-self: start; }
 }
+
+/* Operational command board: four decision domains with source-backed facts
+   above supporting technical detail. */
+#guided-response .guided-command-flow {
+  padding: 16px;
+  border: 1px solid #264b69;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #061a2e, #0b2b47);
+}
+#guided-response .guided-command-flow-heading { margin: 0 0 4px; }
+#guided-response .guided-command-flow-heading h2 { font-size: clamp(1.1rem, 2vw, 1.45rem); letter-spacing: .08em; }
+#guided-response .guided-command-flow-heading p { color: #dbe8f1; font-size: .82rem; }
+#guided-response .guided-command-flow-notice {
+  margin: 0 0 13px;
+  padding: 9px 11px;
+  border-left: 4px solid #f6c343;
+  background: rgba(246, 195, 67, .13);
+  color: #f4f8fb;
+  font-size: .75rem;
+  line-height: 1.35;
+}
+#guided-response .guided-tactical-module-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+#guided-response .guided-tactical-module {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #496b83;
+  border-top: 4px solid #6a8da5;
+  border-radius: 9px;
+  background: #f7fafc;
+  color: #142b3e;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .14);
+}
+#guided-response .guided-tactical-module[data-accent="amber"] { border-top-color: #f6c343; }
+#guided-response .guided-tactical-module[data-accent="orange"] { border-top-color: #f28c28; }
+#guided-response .guided-tactical-module[data-accent="cyan"] { border-top-color: #24bdd0; }
+#guided-response .guided-tactical-module[data-accent="purple"] { border-top-color: #9a78d8; }
+#guided-response .guided-tactical-module > header { display: flex; align-items: center; gap: 10px; padding: 13px 14px 9px; }
+#guided-response .guided-tactical-module-marker { display: grid; width: 31px; height: 31px; flex: 0 0 31px; place-items: center; border-radius: 50%; background: #082540; color: #fff; font-weight: 950; }
+#guided-response .guided-tactical-module[data-accent="amber"] .guided-tactical-module-marker { background: #f6c343; color: #082540; }
+#guided-response .guided-tactical-module[data-accent="orange"] .guided-tactical-module-marker { background: #f28c28; color: #082540; }
+#guided-response .guided-tactical-module[data-accent="cyan"] .guided-tactical-module-marker { background: #24bdd0; color: #082540; }
+#guided-response .guided-tactical-module[data-accent="purple"] .guided-tactical-module-marker { background: #7653b3; }
+#guided-response .guided-tactical-module h3 { margin: 0; color: #082540; font-size: 1.02rem; letter-spacing: .06em; }
+#guided-response .guided-tactical-module header p { margin: 2px 0 0; color: #5b7080; font-size: .73rem; }
+#guided-response .guided-tactical-module-body { display: grid; gap: 10px; padding: 0 14px 14px; }
+#guided-response .guided-tactical-values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+#guided-response .guided-tactical-value { display: grid; gap: 3px; min-width: 0; padding: 8px; border: 1px solid #d6e0e6; border-radius: 6px; background: #fff; }
+#guided-response .guided-tactical-value.is-emphasis { border-left: 3px solid #f6c343; }
+#guided-response .guided-tactical-value > span { color: #5a7080; font-size: .62rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+#guided-response .guided-tactical-value strong { color: #082540; font-size: .84rem; line-height: 1.18; overflow-wrap: anywhere; }
+#guided-response .guided-tactical-value.is-emphasis strong { font-size: 1.03rem; }
+#guided-response .guided-tactical-source-badge { color: #557184; font-size: .6rem; font-weight: 850; }
+#guided-response .guided-tactical-module h4 { margin: 1px 0 -4px; color: #456174; font-size: .62rem; letter-spacing: .1em; }
+#guided-response .guided-tactical-support-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+#guided-response .guided-tactical-list { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+#guided-response .guided-tactical-list li { display: flex; gap: 6px; align-items: flex-start; color: #304b5e; font-size: .7rem; line-height: 1.3; }
+#guided-response .guided-tactical-list .guided-tactical-source-badge { margin-left: auto; white-space: nowrap; }
+#guided-response .guided-tactical-checkbox { flex: 0 0 auto; color: #e39121; font-size: .9rem; font-weight: 900; line-height: 1; }
+#guided-response .guided-tactical-empty { margin: 0; padding: 10px; border: 1px dashed #cf8740; background: #fff7ee; color: #9a4b0c; font-size: .72rem; font-weight: 900; letter-spacing: .05em; }
+#guided-response .guided-tactical-subnote { margin: 0; color: #5d7281; font-size: .69rem; line-height: 1.35; }
+#guided-response .guided-tactical-module .guided-source-trace { margin-top: 1px; }
+#guided-response .guided-tactical-module .guided-source-disclosure { border-color: #c6d4dd; background: #eef4f7; }
+#guided-response .guided-tactical-module .guided-source-disclosure > summary { color: #315970; }
+#guided-response .guided-tactical-module .guided-source-detail { color: #4a6271; }
+#guided-response .guided-supporting-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; margin-top: 10px; }
+#guided-response .guided-supporting-section { min-width: 0; padding: 11px; border: 1px solid #2b506d; border-left: 4px solid #6285a0; border-radius: 8px; background: #0b2944; }
+#guided-response .guided-supporting-section[data-accent="red"] { border-left-color: #ef3340; }
+#guided-response .guided-supporting-section[data-accent="green"] { border-left-color: #54c77b; }
+#guided-response .guided-supporting-section header { margin-bottom: 8px; }
+#guided-response .guided-supporting-section h3 { margin: 0; color: #f8fafc; font-size: .78rem; letter-spacing: .08em; }
+#guided-response .guided-supporting-section header p { margin: 3px 0 0; color: #adc1cf; font-size: .68rem; line-height: 1.3; }
+#guided-response .guided-supporting-section .guided-tactical-list li { color: #dce7f2; }
+#guided-response .guided-supporting-section .guided-tactical-source-badge { color: #9fc0d4; }
+#guided-response .guided-supporting-section .guided-source-disclosure { border-color: #406b91; background: rgba(2, 17, 30, .28); }
+#guided-response .guided-supporting-section .guided-source-disclosure > summary { color: #c5e1f5; }
+#guided-response .guided-supporting-section .guided-source-detail { color: #bad0e0; }
+#guided-response .guided-command-actions { margin-top: 10px; }
+#guided-response .guided-command-actions .guided-response-actions button { color: #082540; background: #e7eef3; border-color: #c3d1da; }
+#guided-response .guided-command-actions .guided-response-actions #guided-open-plume-btn { color: #fff; background: #b11226; border-color: #ef3340; }
+#guided-response .guided-command-actions .guided-response-actions #guided-save-record-btn,
+#guided-response .guided-command-actions .guided-response-actions #guided-save-incident-btn { color: #fff; background: #258a4a; border-color: #54c77b; }
+#guided-response .guided-response-disclaimers { margin-top: 8px; }
+
+@media (max-width: 900px) {
+  #guided-response .guided-supporting-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 680px) {
+  #guided-response .guided-tactical-module-grid,
+  #guided-response .guided-tactical-values,
+  #guided-response .guided-tactical-support-columns { grid-template-columns: 1fr; }
+}
+
+/* Guided Response 3.0: operational recommendations are the primary layer;
+   fact traceability stays available without turning the board into a source dump. */
+#guided-response .guided-operational-body { gap: 8px; }
+#guided-response .guided-operational-priority {
+  margin: 0;
+  padding: 10px 11px;
+  border: 1px solid #bfd0da;
+  border-left: 4px solid #258a4a;
+  border-radius: 6px;
+  background: #eff8f0;
+  color: #0a3821;
+  font-size: .93rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+#guided-response .guided-tactical-module[data-accent="orange"] .guided-operational-priority {
+  border-left-color: #e36b16;
+  background: #fff3e8;
+  color: #672b08;
+}
+#guided-response .guided-tactical-module[data-accent="cyan"] .guided-operational-priority {
+  border-left-color: #159caf;
+  background: #e8fbfd;
+  color: #064c58;
+}
+#guided-response .guided-tactical-module[data-accent="purple"] .guided-operational-priority {
+  border-left-color: #7653b3;
+  background: #f2edfb;
+  color: #35205e;
+}
+#guided-response .guided-operational-block {
+  display: grid;
+  gap: 5px;
+  padding: 8px 9px;
+  border: 1px solid #d2dee5;
+  border-radius: 6px;
+  background: #fbfdfe;
+}
+#guided-response .guided-operational-block.is-critical { border-color: #e9a29e; background: #fff2f1; }
+#guided-response .guided-operational-block.is-concern { border-color: #edc08d; background: #fff8ee; }
+#guided-response .guided-operational-block.is-monitoring { border-color: #91dbe2; background: #effcfd; }
+#guided-response .guided-operational-block h4 { margin: 0; color: #385b70; font-size: .62rem; letter-spacing: .1em; }
+#guided-response .guided-operational-block.is-critical h4 { color: #a32623; }
+#guided-response .guided-operational-block.is-concern h4 { color: #8a4a0a; }
+#guided-response .guided-operational-block.is-monitoring h4 { color: #087081; }
+#guided-response .guided-operational-list { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+#guided-response .guided-operational-list li { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; gap: 5px; align-items: start; color: #213d50; font-size: .72rem; line-height: 1.3; }
+#guided-response .guided-operational-marker { color: #258a4a; font-weight: 950; }
+#guided-response .guided-operational-list.is-critical .guided-operational-marker { color: #c3282d; }
+#guided-response .guided-operational-list.is-monitoring .guided-operational-marker { color: #089aae; }
+#guided-response .guided-operational-list .guided-tactical-source-badge { white-space: nowrap; }
+#guided-response .guided-operational-why { border: 1px solid #c6d4dd; border-radius: 6px; background: #eef4f7; }
+#guided-response .guided-operational-why summary { padding: 7px 9px; color: #315970; cursor: pointer; font-size: .68rem; font-weight: 850; }
+#guided-response .guided-operational-why p { margin: 0; padding: 0 9px 9px; color: #4a6271; font-size: .7rem; line-height: 1.35; }
+#guided-response .guided-fact-trace { display: grid; gap: 6px; margin-bottom: 8px; }
+#guided-response .guided-fact-trace > p { margin: 0; color: #c5e1f5; font-size: .68rem; font-weight: 850; letter-spacing: .04em; }
+#guided-response .guided-fact-trace details { border: 1px solid #406b91; border-radius: 6px; background: rgba(2, 17, 30, .28); }
+#guided-response .guided-fact-trace summary { padding: 7px 9px; color: #c5e1f5; cursor: pointer; font-size: .68rem; font-weight: 850; }
+#guided-response .guided-fact-trace details p { margin: 0; padding: 0 9px 9px; color: #bad0e0; font-size: .68rem; line-height: 1.35; }

@@ -572,9 +572,10 @@ function activatePage(targetId, { preserveHazardState = false, skipPlumeInitiali
     return openPlumeModel(activationContext);
   }
   if (targetId === 'lookup' && !preserveHazardState) setHazardProfileMode('empty');
-  buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.view === targetId));
+  const activeNavigationKey = targetId === 'incident' ? 'command' : targetId === 'overview' ? 'dashboard' : targetId;
+  buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.navKey ? btn.dataset.navKey === activeNavigationKey : btn.dataset.view === targetId));
   document.querySelectorAll('.app-nav-item[data-view]').forEach((btn) => {
-    const active = btn.dataset.view === targetId;
+    const active = btn.dataset.navKey ? btn.dataset.navKey === activeNavigationKey : btn.dataset.view === targetId;
     btn.classList.toggle('active', active);
     if (active) btn.setAttribute('aria-current', 'page');
     else btn.removeAttribute('aria-current');
@@ -750,6 +751,10 @@ if (plumeWorkspace && 'ResizeObserver' in window) {
 
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
+    if (button.dataset.incidentEntry === 'new') {
+      openNewIncidentEntry();
+      return;
+    }
     if (button.dataset.incidentAction === 'new') {
       beginNewIncident({ createRecord: true });
     } else if (button.dataset.incidentAction === 'training') {
@@ -1091,6 +1096,75 @@ function hasActiveIncident() {
   return Boolean(window.localStorage.getItem(activeIncidentIdStorageKey));
 }
 
+function openNewIncidentEntry() {
+  const activeIncident = getActiveIncident();
+  if (!activeIncident) {
+    showView('incident', { sourcePage: 'overview', intent: 'new-incident' });
+    return;
+  }
+  const dialog = document.getElementById('new-incident-confirm-dialog');
+  const name = activeIncident.incidentName || 'Current Incident';
+  setText('new-incident-confirm-message', `Active incident Running (Name: “${name}”). Do you wish to start a new Incident response?`);
+  if (dialog?.showModal) dialog.showModal();
+  else {
+    beginNewIncident({ createRecord: true });
+    showView('incident', { sourcePage: 'new-incident-confirmed', intent: 'new-incident' });
+  }
+}
+
+function renderIncidentResponseTabs() {
+  const tabs = document.getElementById('incident-response-tabs');
+  const count = document.getElementById('incident-response-tabs-count');
+  if (!tabs) return;
+  const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
+  const openIncidents = readIncidents().filter((incident) => incident.status !== 'Completed');
+  tabs.replaceChildren();
+  tabs.hidden = !openIncidents.length;
+  if (count) count.textContent = `${openIncidents.length} ${openIncidents.length === 1 ? 'response' : 'responses'}`;
+  openIncidents.forEach((incident) => {
+    const tab = document.createElement('button');
+    tab.type = 'button';
+    tab.className = 'incident-response-tab';
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-selected', String(incident.incidentId === activeId));
+    tab.classList.toggle('is-active', incident.incidentId === activeId);
+    tab.dataset.incidentTabId = incident.incidentId;
+    const title = document.createElement('strong');
+    title.textContent = incident.incidentName || 'New Incident';
+    const status = document.createElement('span');
+    status.textContent = incident.status || 'Active';
+    tab.append(title, status);
+    tab.addEventListener('click', () => switchActiveIncident(incident.incidentId));
+    tabs.append(tab);
+  });
+}
+
+function switchActiveIncident(incidentId) {
+  const target = readIncidents().find((incident) => incident.incidentId === incidentId && incident.status !== 'Completed');
+  if (!target) return null;
+  const current = getActiveIncident();
+  if (current?.incidentId === target.incidentId) {
+    showView('incident', { sourcePage: 'incident-tab', incidentId: target.incidentId });
+    return target;
+  }
+  if (current) updateActiveIncidentRecord();
+  clearActiveIncidentState();
+  try {
+    window.localStorage.setItem(activeIncidentIdStorageKey, target.incidentId);
+  } catch {
+    // The target remains available for this session even if the pointer cannot persist.
+  }
+  incidentWorkflowActive = true;
+  setSystemMode('incident');
+  startIncidentTimer();
+  renderIncidentLists();
+  restoreIncidentContainerData();
+  void restoreSelectedChemical();
+  setIncidentStatus(`Viewing incident response: ${target.incidentName || 'New Incident'}.`);
+  showView('incident', { sourcePage: 'incident-tab', incidentId: target.incidentId });
+  return target;
+}
+
 function setSystemMode(mode) {
   try {
     if (mode === 'training') window.sessionStorage.setItem(systemModeStorageKey, mode);
@@ -1289,13 +1363,16 @@ function buildIncidentCommandViewModel() {
   // persisted summary. A pending CBRNE/PPE fact must not replace verified
   // ordinary chemical PPE guidance for the same incident.
   const ppeSource = profile.ppeRecommendation || profile.ppeRespiratory || incident.ppeSummary;
+  const ppeRecommendation = profile.ppeRecommendation || incident.ppeSummary?.ppeRecommendation || null;
   const persistedMedicalSource = incident.medicalSummary || profile.medical;
   const medicalSource = profile.medical || persistedMedicalSource;
   const ppePending = chemicalData.chemicalName ? 'PPE review pending for the identified product' : 'Identify the hazard to calculate PPE requirements';
-  const ppeSummary = incidentCommandSummary(
-    ppeSource,
-    ppePending,
-  );
+  const persistedPpeLevel = Array.isArray(incident.ppeSummary?.items)
+    ? incident.ppeSummary.items.find((item) => /^Recommended protection level:/i.test(String(item)))?.replace(/^Recommended protection level:\s*/i, '')
+    : '';
+  const ppeSummary = ppeRecommendation?.displayLabel
+    || persistedPpeLevel
+    || incidentCommandSummary(ppeSource, ppePending);
   const deconPending = chemicalData.chemicalName ? 'Product-specific decon review pending' : 'Identify the hazard to load decon guidance';
   const deconSummary = incidentCommandSummary(
     profile.decon,
@@ -1314,7 +1391,7 @@ function buildIncidentCommandViewModel() {
     : 'No facility or scene location linked';
   const tacticalStatus = [
     { id: 'protective', icon: '🛡️', label: 'Protective Actions', available: Boolean(incident.protectiveActionSummary || plume), status: operationalStatus(sourceStatus.protectiveActions, incident.protectiveActionSummary ? 'Available' : 'Assessment Pending'), summary: protectiveSummary, actionLabel: 'Open', target: 'details' },
-    { id: 'ppe', icon: '🥽', label: 'PPE Requirements', available: hasPpe, status: operationalStatus(ppeSource?.status || ppeSource?.recommendationStatus, hasPpe ? 'Source Backed' : 'Review Pending'), summary: ppeSummary, actionLabel: 'Open', target: 'lookup' },
+    { id: 'ppe', icon: '🥽', label: 'PPE', available: hasPpe, status: operationalStatus(ppeSource?.status || ppeSource?.recommendationStatus, hasPpe ? 'Source Backed' : 'Review Pending'), summary: ppeSummary, actionLabel: 'Open', target: 'lookup' },
     { id: 'decon', icon: '💧', label: 'Decon', available: hasDecon, status: hasDecon ? 'Available' : 'Review Pending', summary: deconSummary, actionLabel: 'Open', target: 'lookup' },
     { id: 'medical', icon: '❤️', label: 'Medical', available: hasMedical, status: operationalStatus(medicalSource?.status, hasMedical ? 'Available' : 'Review Pending'), summary: medicalSummary, actionLabel: 'Open', target: 'lookup', lifeSafety: true },
     { id: 'eplan', icon: '🏭', label: 'Facility / E-Plan', available: Boolean(location), status: incident.facilityName ? 'Facility Identified' : (location ? 'Scene Located' : 'Not Linked'), summary: facilitySummary, actionLabel: 'Review', target: 'details' },
@@ -1324,9 +1401,20 @@ function buildIncidentCommandViewModel() {
   return {
     hasActiveIncident: true,
     incidentId: incident.incidentId,
-    incidentName: incidentCommandValue(incident.incidentName),
+    incidentName: incidentCommandValue(incident.incidentName, 'Incident not named'),
     status: incidentCommandValue(incident.status, 'Active'),
     location: incidentCommandValue(location, 'Location not set'),
+    sceneLocation: incidentCommandValue([incident.address, incident.city, incident.state, incident.zip].filter(Boolean).join(', '), 'No Current Data Exists'),
+    facilityName: incidentCommandValue(incident.facilityName, 'Not specified'),
+    facilityAddress: incidentCommandValue([incident.address, incident.city, incident.state, incident.zip].filter(Boolean).join(', '), 'Not specified'),
+    facilityType: incidentCommandValue(incident.facilityType, 'Not specified'),
+    chemical: {
+      name: incidentCommandValue(chemicalData.chemicalName),
+      unNumber: incidentCommandValue(chemicalData.unNumber),
+      ergGuide: incidentCommandValue(chemicalData.ergGuide),
+      hazardClass: incidentCommandValue(chemicalData.hazardClass),
+      idlh: incidentCommandValue(chemicalData.idlh),
+    },
     coordinates: Number.isFinite(Number(incident.latitude)) && Number.isFinite(Number(incident.longitude)) ? { lat: Number(incident.latitude), lon: Number(incident.longitude) } : null,
     startTime: incident.startedAt || [incident.startDate, incident.startTime].filter(Boolean).join(' '),
     elapsedTime: getIncidentElapsedTime(incident),
@@ -1429,6 +1517,55 @@ function renderIncidentGuidedResponse(model) {
   });
 }
 
+function renderIncidentCommandHeader(model) {
+  const active = Boolean(model?.hasActiveIncident);
+  const heroDot = document.getElementById('ic-hero-status-dot');
+  heroDot?.classList.toggle('is-inactive', !active);
+  setText('ic-hero-status-label', active ? 'INCIDENT ACTIVE' : 'NO ACTIVE INCIDENT');
+  setText('ic-hero-mode', active ? model.operationalMode : 'Command workspace ready');
+  if (!active) return;
+
+  setText('ic-header-incident-name', model.incidentName);
+  setText('ic-header-location', model.sceneLocation);
+  setText('ic-header-started', `Since ${model.startTime ? new Date(model.startTime).toLocaleString() : noCurrentDataText}`);
+  setText('ic-header-chemical-name', model.chemical.name);
+  setText('ic-header-un', model.chemical.unNumber);
+  setText('ic-header-erg', model.chemical.ergGuide);
+  setText('ic-header-hazard-class', model.chemical.hazardClass);
+  setText('ic-header-idlh', model.chemical.idlh);
+  setText('ic-header-facility-name', model.facilityName);
+  setText('ic-header-facility-address', model.facilityAddress);
+  setText('ic-header-facility-type', model.facilityType);
+  setText('ic-hero-mode', model.operationalMode);
+  const hazardBadge = document.getElementById('ic-header-hazard-badge');
+  if (hazardBadge) hazardBadge.hidden = model.chemical.name === noCurrentDataText;
+
+  const weather = latestPlumeWeather;
+  const unavailable = noCurrentDataText;
+  const number = (value, digits = 1, suffix = '') => Number.isFinite(Number(value)) ? `${Number(value).toFixed(digits)}${suffix}` : unavailable;
+  const direction = Number.isFinite(Number(weather?.windDirDeg))
+    ? `${Math.round(Number(weather.windDirDeg))}° (${degreesToCompass(weather.windDirDeg)})`
+    : unavailable;
+  const source = weather?.source === 'Open-Meteo current conditions'
+    ? 'Open-Meteo'
+    : weather?.displayStation || weather?.source || unavailable;
+  const updatedAt = weather?.observedAt && Number.isFinite(Date.parse(weather.observedAt))
+    ? new Date(weather.observedAt).toLocaleString()
+    : unavailable;
+  const stability = document.getElementById('plume-stability-class')?.value.trim();
+  const description = weather?.description || (weather ? weather.conditions?.split(' · ')[1] : '') || unavailable;
+  setText('ic-weather-condition', weather ? description : 'From best available source');
+  setText('ic-weather-temperature', number(weather?.temperatureF, 1, ' °F'));
+  setText('ic-weather-wind', number(weather?.windSpeedMph, 1, ' mph'));
+  setText('ic-weather-wind-direction', weather ? `From ${direction}` : 'Direction unavailable');
+  setText('ic-weather-gusts', number(weather?.gustMph, 1, ' mph'));
+  setText('ic-weather-stability', stability ? `Class ${stability}` : unavailable);
+  setText('ic-weather-humidity', number(weather?.rh, 0, ' %'));
+  setText('ic-weather-cloud-cover', Number.isFinite(Number(weather?.cloudCoverPct)) ? `${Math.round(Number(weather.cloudCoverPct))} %` : unavailable);
+  setText('ic-weather-source', source);
+  setText('ic-weather-updated', `Updated ${updatedAt}`);
+}
+
 function renderIncidentCommandDashboard() {
   const model = buildIncidentCommandViewModel();
   const empty = document.getElementById('incident-command-empty');
@@ -1436,6 +1573,7 @@ function renderIncidentCommandDashboard() {
   if (!empty || !active) return;
   empty.hidden = model.hasActiveIncident;
   active.hidden = !model.hasActiveIncident;
+  renderIncidentCommandHeader(model);
   if (!model.hasActiveIncident) return;
 
   const incidentNameInput = document.getElementById('incidentName');
@@ -1507,12 +1645,7 @@ function renderIncidentCommandDashboard() {
     badge.textContent = item.status;
     const summary = document.createElement('p');
     summary.textContent = item.summary;
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = item.actionLabel;
-    button.dataset.commandView = item.target;
-    button.setAttribute('aria-label', `${item.actionLabel} ${item.label}`);
-    row.append(identity, badge, summary, button);
+    row.append(identity, badge, summary);
     tactical?.append(row);
   });
   renderIncidentGuidedResponse(model);
@@ -1716,11 +1849,6 @@ function clearActiveIncidentState() {
 
 function createIncidentRecord() {
   const now = new Date();
-  const existingActive = getActiveIncident();
-  if (existingActive) {
-    setIncidentStatus('Complete the current incident before starting a new one.');
-    return existingActive;
-  }
   const incidents = readIncidents();
   const incident = {
     incidentId: window.crypto?.randomUUID?.() || `incident-${Date.now()}-${Math.random().toString(16).slice(2)}`,
@@ -1884,14 +2012,27 @@ function completeActiveIncident() {
     }])),
   };
   writeIncidents(incidents);
+  const nextActiveIncident = incidents.find((incident) => incident.status !== 'Completed' && incident.incidentId !== activeId) || null;
   window.localStorage.removeItem(activeIncidentIdStorageKey);
   clearActiveIncidentState();
-  setSystemMode('normal');
-  renderIncidentTimer();
-  renderIncidentLists();
-  setIncidentStatus('Incident completed and its ICS forms moved to Completed Forms.');
-  showView('report');
-  document.querySelector('[data-report-tab="previous"]')?.click();
+  if (nextActiveIncident) {
+    window.localStorage.setItem(activeIncidentIdStorageKey, nextActiveIncident.incidentId);
+    incidentWorkflowActive = true;
+    setSystemMode('incident');
+    startIncidentTimer();
+    renderIncidentLists();
+    restoreIncidentContainerData();
+    void restoreSelectedChemical();
+    setIncidentStatus(`Incident completed. Viewing incident response: ${nextActiveIncident.incidentName || 'New Incident'}.`);
+    showView('incident', { sourcePage: 'incident-complete', incidentId: nextActiveIncident.incidentId });
+  } else {
+    setSystemMode('normal');
+    renderIncidentTimer();
+    renderIncidentLists();
+    setIncidentStatus('Incident completed and its ICS forms moved to Completed Forms.');
+    showView('report');
+    document.querySelector('[data-report-tab="previous"]')?.click();
+  }
   return incidents[index];
 }
 
@@ -1928,6 +2069,7 @@ function renderIncidentLists() {
   const previous = incidents.filter((incident) => incident.status === 'Completed');
   previous.forEach((incident) => renderIncidentCard(previousContainer, incident, activeId));
   if (!previous.length && previousContainer) previousContainer.textContent = 'No completed incident forms saved yet.';
+  renderIncidentResponseTabs();
   renderActiveIcsFormList();
   renderIncidentCommandDashboard();
 }
@@ -2656,11 +2798,6 @@ function restoreIncidentBrief() {
 }
 
 function beginNewIncident({ createRecord = false } = {}) {
-  if (createRecord && getActiveIncident()) {
-    setIncidentStatus('Complete the current incident before starting a new one.');
-    showView('incident');
-    return getActiveIncident();
-  }
   incidentWorkflowActive = true;
   clearActiveIncidentState();
   let incident = null;
@@ -2687,14 +2824,14 @@ document.getElementById('save-incident-brief-btn')?.addEventListener('click', ()
   }
   saveIncidentBrief();
 });
-document.getElementById('ic-save-incident-name')?.addEventListener('click', () => {
-  const nameInput = document.getElementById('incidentName');
-  if (!nameInput?.reportValidity()) {
-    setIncidentStatus('Enter an Incident Name before saving.');
-    nameInput?.focus();
-    return;
-  }
-  saveIncidentBrief();
+function persistIncidentStripField() {
+  saveIncidentBrief({ quiet: true });
+  updateActiveIncidentRecord();
+  renderIncidentCommandDashboard();
+}
+
+['incidentName', 'incident-address-input', 'incident-facility-name', 'incident-operational-mode'].forEach((id) => {
+  document.getElementById(id)?.addEventListener('change', persistIncidentStripField);
 });
 document.getElementById('clear-incident-brief-btn')?.addEventListener('click', () => {
   incidentBriefFieldIds.forEach((id) => {
@@ -2713,6 +2850,19 @@ document.getElementById('clear-incident-brief-btn')?.addEventListener('click', (
 
 const incidentCommandDashboard = document.querySelector('.incident-command-dashboard');
 const incidentNoteDialog = document.getElementById('incident-note-dialog');
+const newIncidentConfirmDialog = document.getElementById('new-incident-confirm-dialog');
+
+document.getElementById('confirm-new-incident-btn')?.addEventListener('click', () => {
+  newIncidentConfirmDialog?.close();
+  beginNewIncident({ createRecord: true });
+  showView('incident', { sourcePage: 'new-incident-confirmed', intent: 'new-incident' });
+  renderIncidentLists();
+});
+document.getElementById('cancel-new-incident-btn')?.addEventListener('click', () => {
+  newIncidentConfirmDialog?.close();
+  showView('incident', { sourcePage: 'new-incident-cancelled' });
+  renderIncidentLists();
+});
 
 function openCurrentIncidentReport() {
   const active = getActiveIncident();
@@ -2720,6 +2870,177 @@ function openCurrentIncidentReport() {
   showView('report', { sourcePage: 'incident', incidentId: active.incidentId });
   document.querySelector('[data-report-tab="current"]')?.click();
   openIncidentSummary(active.incidentId);
+}
+
+let ergReviewProfile = null;
+let ergReviewTabs = [];
+
+function ergReviewText(value, fallback = noCurrentDataText) {
+  const text = String(value ?? '').trim();
+  return text && !/^(?:n\/?a|not available|null|undefined|no current data exists)$/i.test(text) ? text : fallback;
+}
+
+function ergReviewDistance(value, unit) {
+  const text = ergReviewText(value);
+  return text === noCurrentDataText ? text : `${text} ${unit}`;
+}
+
+function ergReviewSourceBadge() {
+  const badge = document.createElement('small');
+  badge.className = 'erg-review-source-badge';
+  badge.textContent = 'PHMSA ERG 2024';
+  return badge;
+}
+
+function renderErgReviewTable(tableId) {
+  const content = document.getElementById('erg-review-content');
+  if (!content) return;
+  content.replaceChildren();
+  const isolation = ergReviewProfile?.isolationErg || {};
+  const table1 = isolation.ergTable1?.find((entry) => entry && typeof entry === 'object');
+  const table2 = (isolation.ergTable2 || []).filter((entry) => entry && typeof entry === 'object');
+  const table3 = (isolation.ergTable3 || []).filter((entry) => entry && typeof entry === 'object');
+  const heading = document.createElement('div');
+  heading.className = 'erg-review-panel-heading';
+  const title = document.createElement('h3');
+  title.textContent = tableId === 'table-1'
+    ? 'Table 1 · Initial Isolation & Protective Action Distances'
+    : tableId === 'table-2' ? 'Table 2 · Water-Reactive Toxic Gases' : 'Table 3 · Large-Spill Container Distances';
+  heading.append(title, ergReviewSourceBadge());
+  content.append(heading);
+
+  if (tableId === 'table-1' && table1) {
+    const summary = document.createElement('div');
+    summary.className = 'erg-review-distance-grid';
+    [
+      ['Small spill · day', ergReviewDistance(table1.smallInitialDayFt, 'ft'), ergReviewDistance(table1.smallProtectiveDayMi, 'mi')],
+      ['Small spill · night', ergReviewDistance(table1.smallInitialNightFt ?? table1.smallInitialDayFt, 'ft'), ergReviewDistance(table1.smallProtectiveNightMi ?? table1.smallProtectiveDayMi, 'mi')],
+      ['Large spill · day', ergReviewDistance(table1.largeInitialDayFt, 'ft'), ergReviewDistance(table1.largeProtectiveDayMi, 'mi')],
+      ['Large spill · night', ergReviewDistance(table1.largeInitialNightFt ?? table1.largeInitialDayFt, 'ft'), ergReviewDistance(table1.largeProtectiveNightMi ?? table1.largeProtectiveDayMi, 'mi')],
+    ].forEach(([label, isolationValue, protectiveValue]) => {
+      const card = document.createElement('article');
+      card.className = 'erg-review-distance-card';
+      const labelNode = document.createElement('span');
+      labelNode.textContent = label;
+      const isolationNode = document.createElement('strong');
+      isolationNode.textContent = isolationValue;
+      const isolationLabel = document.createElement('small');
+      isolationLabel.textContent = 'Initial isolation';
+      const protectiveNode = document.createElement('strong');
+      protectiveNode.textContent = protectiveValue;
+      const protectiveLabel = document.createElement('small');
+      protectiveLabel.textContent = 'Protective action downwind';
+      card.append(labelNode, isolationNode, isolationLabel, protectiveNode, protectiveLabel);
+      summary.append(card);
+    });
+    content.append(summary);
+  } else if (tableId === 'table-2' && table2.length) {
+    const list = document.createElement('div');
+    list.className = 'erg-review-fact-list';
+    table2.forEach((entry) => {
+      const item = document.createElement('article');
+      const itemTitle = document.createElement('strong');
+      itemTitle.textContent = ergReviewText(entry.title, 'Table 2 entry');
+      const detail = document.createElement('p');
+      detail.textContent = ergReviewText(entry.detail);
+      item.append(itemTitle, detail);
+      list.append(item);
+    });
+    content.append(list);
+  } else if (tableId === 'table-3' && table3.length) {
+    const wrap = document.createElement('div');
+    wrap.className = 'erg-review-table-wrap';
+    const table = document.createElement('table');
+    table.innerHTML = '<thead><tr><th>Container</th><th>Initial isolation</th><th>Day · low / moderate / high</th><th>Night · low / moderate / high</th></tr></thead>';
+    const body = document.createElement('tbody');
+    table3.forEach((entry) => {
+      const row = document.createElement('tr');
+      [
+        entry.container,
+        ergReviewDistance(entry.initialIsolationFt, 'ft'),
+        [entry.dayLowWindMi, entry.dayModerateWindMi, entry.dayHighWindMi].map((value) => ergReviewDistance(value, 'mi')).join(' / '),
+        [entry.nightLowWindMi, entry.nightModerateWindMi, entry.nightHighWindMi].map((value) => ergReviewDistance(value, 'mi')).join(' / '),
+      ].forEach((value) => {
+        const cell = document.createElement('td');
+        cell.textContent = ergReviewText(value);
+        row.append(cell);
+      });
+      body.append(row);
+    });
+    table.append(body);
+    wrap.append(table);
+    content.append(wrap);
+  } else {
+    const empty = document.createElement('p');
+    empty.className = 'erg-review-empty';
+    empty.textContent = 'No applicable data is available for this ERG table in the current source set.';
+    content.append(empty);
+  }
+}
+
+function renderErgReviewTabs() {
+  const tabs = document.getElementById('erg-review-tabs');
+  if (!tabs) return;
+  tabs.replaceChildren();
+  ergReviewTabs.forEach((tabId, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'erg-review-tab';
+    button.dataset.ergReviewTab = tabId;
+    button.setAttribute('role', 'tab');
+    button.setAttribute('aria-selected', String(index === 0));
+    button.textContent = tabId.replace('-', ' ').toUpperCase();
+    button.addEventListener('click', () => {
+      tabs.querySelectorAll('[data-erg-review-tab]').forEach((item) => item.setAttribute('aria-selected', String(item === button)));
+      renderErgReviewTable(tabId);
+    });
+    tabs.append(button);
+  });
+}
+
+async function openErgReviewOverlay() {
+  const dialog = document.getElementById('erg-review-dialog');
+  const content = document.getElementById('erg-review-content');
+  const tabs = document.getElementById('erg-review-tabs');
+  const incident = getActiveIncident();
+  const selectedId = incident?.selectedChemicalId ?? activeChemical?.selectedChemicalId ?? activeChemical?.id;
+  ergReviewProfile = activeChemicalRecord?.profile || incident?.chemicalProfile || null;
+  if (!ergReviewProfile && selectedId) {
+    const response = await fetchJson(`/api/chemicals/${encodeURIComponent(selectedId)}/profile`);
+    ergReviewProfile = response && !response.error ? response : null;
+  }
+  const profileHeader = ergReviewProfile?.header || {};
+  const chemicalName = profileHeader.name || incident?.chemicalName || activeChemical?.name || 'Selected chemical';
+  setText('erg-review-chemical', `${chemicalName} · UN ${profileHeader.un || incident?.unNumber || '—'} · Guide ${profileHeader.ergGuide || incident?.ergGuide || '—'}`);
+  const isolation = ergReviewProfile?.isolationErg || {};
+  ergReviewTabs = [
+    isolation.ergTable1?.some((entry) => entry && typeof entry === 'object') && 'table-1',
+    isolation.ergTable2?.some((entry) => entry && typeof entry === 'object') && 'table-2',
+    isolation.ergTable3?.some((entry) => entry && typeof entry === 'object') && 'table-3',
+  ].filter(Boolean);
+  if (!selectedId) {
+    if (tabs) tabs.replaceChildren();
+    if (content) {
+      content.replaceChildren();
+      const empty = document.createElement('p');
+      empty.className = 'erg-review-empty';
+      empty.textContent = 'No chemical is selected. Return to Hazard ID to identify the incident material.';
+      content.append(empty);
+    }
+  } else if (!ergReviewTabs.length) {
+    if (tabs) tabs.replaceChildren();
+    if (content) {
+      content.replaceChildren();
+      const empty = document.createElement('p');
+      empty.className = 'erg-review-empty';
+      empty.textContent = 'No applicable ERG Green Page distances are available for this selected chemical.';
+      content.append(empty);
+    }
+  } else {
+    renderErgReviewTabs();
+    renderErgReviewTable(ergReviewTabs[0]);
+  }
+  if (dialog?.showModal) dialog.showModal();
 }
 
 incidentCommandDashboard?.addEventListener('click', (event) => {
@@ -2757,6 +3078,8 @@ incidentCommandDashboard?.addEventListener('click', (event) => {
     incidentNoteDialog?.showModal();
   } else if (action === 'complete') {
     document.getElementById('complete-incident-dialog')?.showModal();
+  } else if (action === 'erg-review') {
+    void openErgReviewOverlay();
   } else if (action === 'chemical-profile') {
     window.HazMatIQ?.incidentCommand?.openChemicalProfile?.();
   } else if (action === 'open-report' || action === 'generate-report' || action === 'export-package') {
@@ -2772,6 +3095,14 @@ incidentCommandDashboard?.addEventListener('click', (event) => {
 document.getElementById('ic-edit-scene-btn')?.addEventListener('click', () => {
   document.getElementById('incident')?.classList.toggle('show-incident-editor');
   document.querySelector('.incident-input-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+document.getElementById('ic-command-tools-toggle')?.addEventListener('click', (event) => {
+  const button = event.currentTarget;
+  const panel = button.closest('.incident-command-tools');
+  const open = panel?.classList.toggle('is-open') ?? true;
+  button.setAttribute('aria-expanded', String(open));
+  button.textContent = open ? 'Hide tools' : 'Show tools';
 });
 
 document.getElementById('cancel-incident-note-btn')?.addEventListener('click', () => incidentNoteDialog?.close());
@@ -4765,7 +5096,7 @@ function createGuidedCriticalActionBar(model) {
   const title = document.createElement('h2');
   title.textContent = 'CRITICAL ACTION BAR';
   const note = document.createElement('p');
-  note.textContent = 'Source-backed guidance · Verify before entry · Incident Command approval required';
+  note.textContent = 'Source-backed priorities for the current incident';
   heading.append(eyebrow, title, note);
   const actions = document.createElement('div');
   actions.className = 'guided-critical-actions';
@@ -4782,20 +5113,368 @@ function createGuidedCriticalActionBar(model) {
   return bar;
 }
 
+function guidedStageSources(stage) {
+  return [...new Set((stage?.sources || []).map((source) => source?.label || source).filter(Boolean))];
+}
+
+function createGuidedSourceBadge(source = 'Needs Verification') {
+  const badge = document.createElement('small');
+  badge.className = 'guided-tactical-source-badge';
+  badge.textContent = `[${source}]`;
+  return badge;
+}
+
+function createGuidedTacticalValue(label, value, source, { emphasis = false } = {}) {
+  const item = document.createElement('article');
+  item.className = `guided-tactical-value${emphasis ? ' is-emphasis' : ''}`;
+  const term = document.createElement('span');
+  term.textContent = label;
+  const detail = document.createElement('strong');
+  detail.textContent = guidedDisplayValue(value);
+  item.append(term, detail, createGuidedSourceBadge(source));
+  return item;
+}
+
+function createGuidedTacticalList(items, source) {
+  const list = document.createElement('ul');
+  list.className = 'guided-tactical-list';
+  const values = [...new Set((Array.isArray(items) ? items : []).flatMap((item) => {
+    if (typeof item === 'string') return [item];
+    return item?.label || item?.value ? [`${item.label || 'Action'}${item.value ? ` — ${item.value}` : ''}`] : [];
+  }).filter((item) => guidedHasValue(item)))];
+  values.forEach((value) => {
+    const row = document.createElement('li');
+    const marker = document.createElement('span');
+    marker.className = 'guided-tactical-checkbox';
+    marker.textContent = '□';
+    row.append(marker, document.createTextNode(guidedDisplayValue(value)), createGuidedSourceBadge(source));
+    list.append(row);
+  });
+  return list;
+}
+
+function guidedOperationalItems(items) {
+  return (Array.isArray(items) ? items : []).filter((item) => guidedHasValue(item?.text || item));
+}
+
+function createGuidedOperationalList(items, fallback = 'NO CURRENT SOURCE-BACKED RECOMMENDATION', tone = '') {
+  const list = document.createElement('ul');
+  list.className = `guided-operational-list${tone ? ` is-${tone}` : ''}`;
+  const normalized = guidedOperationalItems(items);
+  (normalized.length ? normalized : [{ text: fallback, source: 'Needs Verification' }]).forEach((item) => {
+    const row = document.createElement('li');
+    const marker = document.createElement('span');
+    marker.className = 'guided-operational-marker';
+    marker.textContent = tone === 'critical' ? '!' : '→';
+    const copy = document.createElement('span');
+    copy.textContent = guidedDisplayValue(item?.text || item);
+    const source = document.createElement('small');
+    source.className = 'guided-tactical-source-badge';
+    source.textContent = `[${item?.source || 'Needs Verification'}]`;
+    row.append(marker, copy, source);
+    list.append(row);
+  });
+  return list;
+}
+
+function createGuidedOperationalBlock(title, items, tone = '') {
+  const section = document.createElement('section');
+  section.className = `guided-operational-block${tone ? ` is-${tone}` : ''}`;
+  const heading = document.createElement('h4');
+  heading.textContent = title;
+  section.append(heading, createGuidedOperationalList(items, 'NO CURRENT SOURCE-BACKED RECOMMENDATION', tone));
+  return section;
+}
+
+function createGuidedOperationalWhy(text) {
+  const why = document.createElement('details');
+  why.className = 'guided-operational-why';
+  const summary = document.createElement('summary');
+  summary.textContent = 'WHY? Technical rationale and source rule';
+  const body = document.createElement('p');
+  body.textContent = text || 'No current source-backed rationale is available.';
+  why.append(summary, body);
+  return why;
+}
+
+function createGuidedFactTrace(trace) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'guided-fact-trace';
+  if (!trace) return wrapper;
+  const summary = document.createElement('p');
+  summary.textContent = `SOURCE FACTS EVALUATED: ${trace.evaluatedCount || 0} · PROMOTED: ${trace.promotedCount || 0} · RATIO: ${Math.round((Number(trace.promotedRatio) || 0) * 100)}%`;
+  wrapper.append(summary);
+  const detail = document.createElement('details');
+  const detailSummary = document.createElement('summary');
+  detailSummary.textContent = 'View evaluated / omitted fact trace';
+  const copy = document.createElement('p');
+  const omitted = (trace.omitted || []).slice(0, 12).map((fact) => `${fact.text} [${fact.source}]`).join(' · ');
+  copy.textContent = omitted ? `Evaluated but not promoted: ${omitted}` : 'No evaluated facts were omitted from the operational layer.';
+  detail.append(detailSummary, copy);
+  wrapper.append(detail);
+  return wrapper;
+}
+
+function createGuidedTacticalModule(number, title, subtitle, accent, body) {
+  const module = document.createElement('article');
+  module.className = 'guided-tactical-module';
+  module.dataset.accent = accent;
+  const header = document.createElement('header');
+  const marker = document.createElement('span');
+  marker.className = 'guided-tactical-module-marker';
+  marker.textContent = number;
+  const copy = document.createElement('div');
+  const heading = document.createElement('h3');
+  heading.textContent = title;
+  const description = document.createElement('p');
+  description.textContent = subtitle;
+  copy.append(heading, description);
+  header.append(marker, copy);
+  module.append(header, body);
+  return module;
+}
+
+function createGuidedProtectModule(model) {
+  const operational = model.operationalRecommendations?.protect;
+  if (operational) {
+    const body = document.createElement('div');
+    body.className = 'guided-tactical-module-body guided-operational-body';
+    const priority = document.createElement('p');
+    priority.className = 'guided-operational-priority';
+    priority.textContent = guidedDisplayValue(operational.priority);
+    body.append(priority);
+    body.append(createGuidedOperationalBlock('RECOMMENDED ACTIONS', operational.actions));
+    body.append(createGuidedOperationalBlock('CRITICAL WARNINGS', operational.warnings, 'critical'));
+    body.append(createGuidedOperationalBlock('MONITORING / VERIFY', operational.monitoring, 'monitoring'));
+    body.append(createGuidedOperationalWhy(operational.why));
+    body.append(createGuidedSourceTrace(operational.sources));
+    return createGuidedTacticalModule('1', 'PROTECT', 'Public + responders', 'amber', body);
+  }
+  const isolation = model.isolation || {};
+  const ppe = model.ppe || {};
+  const monitoring = model.monitoring || {};
+  const protective = model.protectiveActions || {};
+  const source = guidedStageSources(isolation)[0] || 'ERG';
+  const body = document.createElement('div');
+  body.className = 'guided-tactical-module-body';
+  const values = document.createElement('div');
+  values.className = 'guided-tactical-values';
+  const facts = (stage, labels) => (stage?.criticalFacts || [])
+    .filter((fact) => labels.some((label) => label.test(fact.label || '')))
+    .map((fact) => ({ ...fact, source: guidedStageSources(stage)[0] || source }));
+  [...facts(isolation, [/initial isolation/i, /large spill isolation/i, /protective action/i]), ...facts(ppe, [/entry posture/i, /respiratory protection/i, /chemical protection/i, /idlh/i]), ...facts(protective, [/erg initial isolation/i, /erg protective action/i])]
+    .filter((fact, index, list) => list.findIndex((candidate) => candidate.label === fact.label) === index)
+    .forEach((fact) => values.append(createGuidedTacticalValue(fact.label, fact.value, fact.source, { emphasis: /initial isolation|protective action|entry posture|respiratory|idlh/i.test(fact.label) })));
+  body.append(values);
+  const support = document.createElement('div');
+  support.className = 'guided-tactical-support-columns';
+  const approach = [...(isolation.criticalFacts || []), ...(protective.criticalFacts || [])].filter((fact) => /approach|public safety|evacuation|atmosphere|monitor|plume|weather/i.test(fact.label || ''));
+  const verification = [...(isolation.verificationItems || []), ...(ppe.verificationItems || []), ...(monitoring.verificationItems || [])];
+  const approachBlock = document.createElement('section');
+  const approachHeading = document.createElement('h4');
+  approachHeading.textContent = 'FIELD CONDITIONS';
+  approachBlock.append(approachHeading, createGuidedTacticalList(approach, source));
+  const verifyBlock = document.createElement('section');
+  const verifyHeading = document.createElement('h4');
+  verifyHeading.textContent = 'ENTRY CHECKS';
+  verifyBlock.append(verifyHeading, createGuidedTacticalList(verification, guidedStageSources(ppe).join(' / ') || 'NIOSH'));
+  support.append(approachBlock, verifyBlock);
+  body.append(support, createGuidedSourceTrace([...isolation.sources || [], ...ppe.sources || [], ...protective.sources || []]));
+  return createGuidedTacticalModule('1', 'PROTECT', 'Public + responders', 'amber', body);
+}
+
+function createGuidedControlModule(model) {
+  const operational = model.operationalRecommendations?.control;
+  if (operational) {
+    const body = document.createElement('div');
+    body.className = 'guided-tactical-module-body guided-operational-body';
+    const priority = document.createElement('p');
+    priority.className = 'guided-operational-priority';
+    priority.textContent = `${guidedDisplayValue(operational.tacticalPosture)} · ${guidedDisplayValue(operational.incidentSize)}`;
+    body.append(priority);
+    body.append(createGuidedOperationalBlock('SOURCE CONTROL / CONFINEMENT', [
+      ...(operational.sourceControl || []).slice(0, 5),
+      ...(operational.confinement || []).slice(0, 3),
+    ]));
+    body.append(createGuidedOperationalBlock('VAPOR / FIRE CONTROL', [
+      ...(operational.vaporControl || []),
+      ...(operational.fireControl || []),
+    ], 'concern'));
+    body.append(createGuidedOperationalBlock('PROHIBITED / VERIFY FIRST', operational.prohibitedActions, 'critical'));
+    body.append(createGuidedOperationalBlock('MONITORING / RESOURCES', [
+      ...(operational.monitoring || []),
+      ...(operational.resourcesNeeded || []),
+    ], 'monitoring'));
+    body.append(createGuidedOperationalWhy(operational.why));
+    body.append(createGuidedSourceTrace(operational.sources));
+    return createGuidedTacticalModule('2', 'CONTROL', 'Stop / mitigate release', 'orange', body);
+  }
+  const stage = model.controlMitigation || {};
+  const body = document.createElement('div');
+  body.className = 'guided-tactical-module-body';
+  const values = document.createElement('div');
+  values.className = 'guided-tactical-values';
+  (stage.criticalFacts || []).filter((fact) => guidedHasValue(fact.value)).forEach((fact) => values.append(createGuidedTacticalValue(fact.label, fact.value, guidedStageSources(stage)[0] || 'CAMEO', { emphasis: /spill|release|runoff|non-intervention/i.test(fact.label || '') })));
+  body.append(values);
+  const branches = (stage.branches || []).flatMap((branch) => (branch.facts || []).map((fact) => ({ value: fact, source: guidedStageSources({ sources: branch.sources })[0] || guidedStageSources(stage)[0] || 'ERG' })));
+  if (branches.length) {
+    const heading = document.createElement('h4');
+    heading.textContent = 'SOURCE-BACKED CONTROL OPTIONS';
+    body.append(heading, createGuidedTacticalList(branches.map((item) => item.value), branches[0].source));
+  } else {
+    const empty = document.createElement('p');
+    empty.className = 'guided-tactical-empty';
+    empty.textContent = 'NO CURRENT SOURCE-BACKED CONTROL METHOD AVAILABLE';
+    body.append(empty);
+  }
+  body.append(createGuidedSourceTrace(stage.sources));
+  return createGuidedTacticalModule('2', 'CONTROL', 'Stop / mitigate release', 'orange', body);
+}
+
+function createGuidedDeconModule(model) {
+  const operational = model.operationalRecommendations?.decon;
+  if (operational) {
+    const body = document.createElement('div');
+    body.className = 'guided-tactical-module-body guided-operational-body';
+    const priority = document.createElement('p');
+    priority.className = 'guided-operational-priority';
+    priority.textContent = guidedDisplayValue(operational.method);
+    body.append(priority);
+    body.append(createGuidedOperationalBlock('DECON ACTIONS', operational.actions));
+    body.append(createGuidedOperationalBlock('WATER / COMPATIBILITY WARNINGS', operational.warnings, 'critical'));
+    body.append(createGuidedOperationalBlock('RUNOFF CONTROL', operational.runoffControl, 'monitoring'));
+    body.append(createGuidedOperationalWhy(operational.why));
+    body.append(createGuidedSourceTrace(operational.sources));
+    return createGuidedTacticalModule('3', 'DECON', 'Entry team', 'cyan', body);
+  }
+  const stage = model.decon || {};
+  const body = document.createElement('div');
+  body.className = 'guided-tactical-module-body';
+  const facts = document.createElement('div');
+  facts.className = 'guided-tactical-values';
+  (stage.criticalFacts || []).filter((fact) => guidedHasValue(fact.value)).forEach((fact) => facts.append(createGuidedTacticalValue(fact.label, fact.value, guidedStageSources(stage)[0] || 'Chemical Companion', { emphasis: /method|water|runoff|flush|skin|eye/i.test(fact.label || '') })));
+  body.append(facts);
+  const heading = document.createElement('h4');
+  heading.textContent = 'ENTRY TEAM SEQUENCE / CHECKS';
+  body.append(heading, createGuidedTacticalList(stage.verificationItems, guidedStageSources(stage)[0] || 'Chemical Companion'), createGuidedSourceTrace(stage.sources));
+  return createGuidedTacticalModule('3', 'DECON', 'Entry team', 'cyan', body);
+}
+
+function guidedRegulatoryStatus(profile, incident) {
+  const regulatory = profile?.regulatory || profile?.regulatoryData || profile?.reportableQuantity || {};
+  const cercla = regulatory.cercla || regulatory.CERCLA || {};
+  const epcra = regulatory.epcra || regulatory.EPCRA || {};
+  const rq = regulatory.rq ?? regulatory.reportableQuantity ?? cercla.rq ?? cercla.RQ;
+  const releaseQuantity = incident?.quantity || '';
+  const rqNumber = Number(String(rq ?? '').replace(/[^0-9.]+/g, ''));
+  const releaseMatch = String(releaseQuantity).match(/([0-9]+(?:\.[0-9]+)?)\s*(lb|lbs|pounds|kg|kilograms)?/i);
+  const releaseNumber = releaseMatch
+    ? Number(releaseMatch[1]) * (/kg|kilogram/i.test(releaseMatch[2] || '') ? 2.2046226218 : 1)
+    : Number.NaN;
+  const thresholdAvailable = Number.isFinite(rqNumber) && rqNumber > 0;
+  return {
+    rows: thresholdAvailable
+      ? [
+        { label: 'CERCLA hazardous substance', value: cercla.status || (cercla.yes === true ? 'YES' : noCurrentDataText), source: 'EPA regulatory data' },
+        { label: 'CERCLA RQ', value: `${rq} lb`, source: 'EPA regulatory data' },
+        { label: 'Known release quantity', value: releaseQuantity || noCurrentDataText, source: 'Incident record' },
+        { label: 'Notification review', value: releaseNumber >= rqNumber ? 'RQ THRESHOLD APPEARS EXCEEDED' : 'Below displayed RQ threshold', source: 'EPA regulatory data' },
+      ]
+      : [{ label: 'Regulatory threshold status', value: 'No current RQ / EPCRA / TPQ data in the active chemical profile.', source: 'EPA regulatory data' }],
+    available: thresholdAvailable,
+  };
+}
+
+function createGuidedNotifyModule(model, profile, incident) {
+  const operational = model.operationalRecommendations?.notify;
+  if (operational) {
+    const body = document.createElement('div');
+    body.className = 'guided-tactical-module-body guided-operational-body';
+    const priority = document.createElement('p');
+    priority.className = 'guided-operational-priority';
+    priority.textContent = guidedDisplayValue(operational.recommendedAction);
+    body.append(priority);
+    body.append(createGuidedOperationalBlock('NOTIFY / REQUEST ACTIONS', operational.actions));
+    body.append(createGuidedOperationalBlock('REGULATORY REVIEW', operational.regulatory, 'concern'));
+    body.append(createGuidedOperationalBlock('OPERATIONAL RESOURCES', operational.operationalResources, 'monitoring'));
+    body.append(createGuidedOperationalWhy(operational.why));
+    body.append(createGuidedSourceTrace(operational.sources));
+    return createGuidedTacticalModule('4', 'NOTIFY / REQUEST', 'Agencies + resources', 'purple', body);
+  }
+  const body = document.createElement('div');
+  body.className = 'guided-tactical-module-body';
+  const values = document.createElement('div');
+  values.className = 'guided-tactical-values';
+  const resourceRows = incident ? [
+    ['Local / County EMA', 'Review when incident scale or resource needs exceed local capability', 'Command record'],
+    ['Product specialist / manufacturer emergency line', 'Request when product, container, or transfer support is needed', 'Command workflow'],
+  ] : [];
+  resourceRows.forEach(([label, value, source]) => values.append(createGuidedTacticalValue(label, value, source)));
+  if (!resourceRows.length) values.append(createGuidedTacticalValue('Resource request status', 'No active incident resource context', 'Command workflow'));
+  body.append(values);
+  const regulatory = guidedRegulatoryStatus(profile, incident);
+  const regulatoryHeading = document.createElement('h4');
+  regulatoryHeading.textContent = 'REGULATORY REVIEW';
+  const regulatoryGrid = document.createElement('div');
+  regulatoryGrid.className = 'guided-tactical-values guided-regulatory-values';
+  regulatory.rows.forEach((row) => regulatoryGrid.append(createGuidedTacticalValue(row.label, row.value, row.source, { emphasis: /threshold|notification/i.test(row.label) })));
+  body.append(regulatoryHeading, regulatoryGrid);
+  const note = document.createElement('p');
+  note.className = 'guided-tactical-subnote';
+  note.textContent = regulatory.available ? 'Regulatory notification review is indicated by the displayed threshold comparison; confirm applicable jurisdictional requirements.' : 'No agency is added solely because the chemical is present; notification routing remains condition-based.';
+  body.append(note);
+  return createGuidedTacticalModule('4', 'NOTIFY / REQUEST', 'Agencies + resources', 'purple', body);
+}
+
+function createGuidedSupportingSection(title, subtitle, content, accent = 'navy') {
+  const section = document.createElement('section');
+  section.className = 'guided-supporting-section';
+  section.dataset.accent = accent;
+  const heading = document.createElement('header');
+  const titleNode = document.createElement('h3');
+  titleNode.textContent = title;
+  const subtitleNode = document.createElement('p');
+  subtitleNode.textContent = subtitle;
+  heading.append(titleNode, subtitleNode);
+  section.append(heading, content);
+  return section;
+}
+
 function createGuidedCommandFlow(model) {
   const flow = document.createElement('section');
   flow.className = 'panel-card guided-command-flow';
+  flow.dataset.legacyFlowLabel = 'COMMAND FLOW';
   const heading = document.createElement('header');
   heading.className = 'guided-command-flow-heading';
   const title = document.createElement('h2');
-  title.textContent = 'COMMAND FLOW';
+  title.textContent = 'COMMAND DECISION BOARD';
   const subtitle = document.createElement('p');
-  subtitle.textContent = 'Sequential tactical decision support from source-backed facts to command documentation.';
+  subtitle.textContent = 'What should Command consider doing now?';
   heading.append(title, subtitle);
+  const notice = document.createElement('p');
+  notice.className = 'guided-command-flow-notice';
+  notice.textContent = 'TACTICAL DECISION SUPPORT · Use source guidance, field monitoring, responder conditions, and agency SOPs to establish the operational plan.';
   const grid = document.createElement('div');
-  grid.className = 'guided-command-flow-grid';
-  (model.sequence || []).forEach((stage) => grid.append(createGuidedCommandCard(stage)));
-  flow.append(heading, grid);
+  grid.className = 'guided-tactical-module-grid';
+  const incident = getActiveIncident();
+  const profile = activeChemicalRecord?.profile || incident?.chemicalProfile || {};
+  grid.append(createGuidedProtectModule(model), createGuidedControlModule(model), createGuidedDeconModule(model), createGuidedNotifyModule(model, profile, incident));
+
+  const supportGrid = document.createElement('div');
+  supportGrid.className = 'guided-supporting-grid';
+  const medicalBody = document.createElement('div');
+  medicalBody.append(createGuidedTacticalList((model.medical?.criticalFacts || []).map((fact) => `${fact.label}: ${fact.value}`), guidedStageSources(model.medical)[0] || 'CHEMM'));
+  const checkpointsBody = document.createElement('div');
+  checkpointsBody.append(createGuidedTacticalList([...(model.monitoring?.verificationItems || []), ...(model.termination?.verificationItems || [])], guidedStageSources(model.monitoring)[0] || 'NIOSH'));
+  const sourceBody = document.createElement('div');
+  sourceBody.append(createGuidedFactTrace(model.operationalRecommendations?.factTrace));
+  sourceBody.append(createGuidedSourceTrace((model.sequence || []).flatMap((stage) => stage.sources || [])));
+  supportGrid.append(
+    createGuidedSupportingSection('MEDICAL / EMS', 'Acute effects, treatment, and receiving-team protection', medicalBody, 'red'),
+    createGuidedSupportingSection('COMMAND CHECKPOINTS', 'Monitoring, atmosphere, and record continuity', checkpointsBody, 'green'),
+    createGuidedSupportingSection('SOURCE / TECHNICAL DETAIL', 'Expand provenance when the operational brief needs it', sourceBody, 'navy'),
+  );
+  flow.append(heading, notice, grid, supportGrid);
   return flow;
 }
 
@@ -4892,6 +5571,17 @@ function renderGuidedResponse() {
     responderGuide: activeChemicalRecord.responderGuide,
     ppeReference: activeChemicalRecord.ppeReference,
     ppeComponents: activeChemicalRecord.ppeComponents,
+    incidentConditions: {
+      incidentName: activeIncident?.incidentName || '',
+      quantity: activeIncident?.quantity || savedPlumeResult?.release?.quantity || '',
+      spillSize: activeIncident?.spillSize || savedPlumeResult?.ergOverlay?.spillSize || '',
+      releaseStatus: activeIncident?.releaseStatus || activeIncident?.releasePhase || '',
+      activeLeak: activeIncident?.activeLeak === true,
+      firePresent: activeIncident?.firePresent === true,
+      fireStatus: activeIncident?.fireStatus || '',
+      releasePhase: activeIncident?.containerReleasePhase || savedPlumeResult?.inputs?.releasePhase || '',
+      measuredLel: activeIncident?.measuredLel || activeIncident?.percentLel || activeIncident?.lelReading || '',
+    },
   }, {
     missingInputs: missingPlumeInputs,
     status: savedPlumeResult?.model?.confidenceStatus || (missingPlumeInputs.length ? 'Requires Verification' : 'Existing plume inputs complete'),
@@ -5732,15 +6422,11 @@ function shortGuidance(value) {
 function buildIncidentPpeSummary(record) {
   const recommendation = record?.profile?.ppeRecommendation;
   if (!recommendation) return null;
+  const protectionLabel = recommendation.displayLabel
+    || recommendation.respiratoryProtection
+    || noCurrentDataText;
   return {
-    items: [
-      `Selected chemical: ${recommendation.chemicalName || record.name || noCurrentDataText}`,
-      `Recommended protection level: ${recommendation.displayLabel || noCurrentDataText}`,
-      `Respiratory: ${recommendation.respiratoryProtection || noCurrentDataText}`,
-      `Skin / suit: ${recommendation.skinProtection || noCurrentDataText}`,
-      `Verification required: ${(recommendation.verificationRequirements || []).join('; ') || noCurrentDataText}`,
-      `Recommendation status: ${recommendation.recommendationStatus || noCurrentDataText}`,
-    ].filter(Boolean).map(shortGuidance),
+    items: [protectionLabel].filter(Boolean).map(shortGuidance),
     sources: recommendation.sourcesReviewed || [],
     status: recommendation.recommendationStatus || readinessStatus.verify,
     suitStatus: recommendation.skinProtection || noCurrentDataText,
@@ -6719,6 +7405,11 @@ document.addEventListener('keydown', (event) => {
   }
 });
 document.getElementById('chemical-profile-back-btn')?.addEventListener('click', () => {
+  const returnView = document.getElementById('lookup')?.dataset.profileReturnView;
+  if (returnView === 'incident' && hasActiveIncident()) {
+    showView('incident', { sourcePage: 'chemical-profile', preserveHazardState: true });
+    return;
+  }
   setHazardProfileMode('empty');
   document.getElementById('hazard-id-search-workspace')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   document.getElementById('chemical-search')?.focus({ preventScroll: true });
@@ -9859,7 +10550,7 @@ async function fetchOpenMeteo(lat, lon) {
   const parameters = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lon),
-    current: 'temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure',
+    current: 'temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure',
     temperature_unit: 'fahrenheit',
     wind_speed_unit: 'mph',
     precipitation_unit: 'inch',
@@ -9945,6 +10636,18 @@ function renderNotificationWeather(openMeteo, nws) {
   if (notificationWeatherSource) notificationWeatherSource.textContent = liveWeather.headerSource;
 }
 
+function weatherCodeDescription(code) {
+  const descriptions = {
+    0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+    45: 'Fog', 48: 'Depositing rime fog', 51: 'Light drizzle', 53: 'Drizzle', 55: 'Dense drizzle',
+    56: 'Freezing drizzle', 57: 'Dense freezing drizzle', 61: 'Light rain', 63: 'Rain', 65: 'Heavy rain',
+    66: 'Freezing rain', 67: 'Heavy freezing rain', 71: 'Light snow', 73: 'Snow', 75: 'Heavy snow',
+    77: 'Snow grains', 80: 'Light rain showers', 81: 'Rain showers', 82: 'Violent rain showers',
+    85: 'Light snow showers', 86: 'Heavy snow showers', 95: 'Thunderstorm', 96: 'Thunderstorm with hail', 99: 'Thunderstorm with heavy hail',
+  };
+  return descriptions[Number(code)] || 'Current conditions';
+}
+
 function formatOpenMeteo(data) {
   if (!data?.current) return null;
   const current = data.current;
@@ -9958,6 +10661,8 @@ function formatOpenMeteo(data) {
   return {
     location: `${Number(data.latitude).toFixed(4)}, ${Number(data.longitude).toFixed(4)}${elevationFt === null ? '' : ` · ${elevationFt.toLocaleString()} ft`} · ${data.timezone || 'local time'}`,
     elevationFt,
+    description: weatherCodeDescription(current.weather_code),
+    cloudCoverPct: Number(current.cloud_cover),
     conditions: `${current.temperature_2m}°F${feelsLike} · RH ${current.relative_humidity_2m}% · Wind ${current.wind_speed_10m} mph ${degreesToCompass(current.wind_direction_10m)} · Gust ${current.wind_gusts_10m} mph · Pressure ${pressureInHg.toFixed(2)} inHg`,
     temperatureF,
     feelsLikeF: Number.isFinite(feelsLikeF) ? feelsLikeF : null,
@@ -10019,6 +10724,7 @@ function formatNws(data) {
     rh: Number.isFinite(rh) ? rh : null,
     pressureInHg: Number.isFinite(pressurePa) ? pressurePa * 0.000295299830714 : null,
     elevationFt: Number.isFinite(elevationM) ? elevationM * 3.28084 : null,
+    cloudCoverPct: Number(observation.cloudCover?.value),
     description: observation.textDescription || 'No description',
   };
 }
@@ -12071,7 +12777,18 @@ document.getElementById('plume-command-report-btn')?.addEventListener('click', (
 });
 document.getElementById('open-guided-response-btn')?.addEventListener('click', () => void openGuidedResponseWorkspace());
 document.getElementById('guided-open-plume-btn')?.addEventListener('click', openPlumeWorkspace);
-document.getElementById('guided-back-btn')?.addEventListener('click', () => showView('lookup'));
+document.getElementById('guided-back-btn')?.addEventListener('click', () => showView(hasActiveIncident() ? 'incident' : 'lookup', { sourcePage: 'guided-response' }));
+document.getElementById('guided-open-hazard-btn')?.addEventListener('click', () => {
+  if (hasActiveIncident()) {
+    window.HazMatIQ?.incidentCommand?.openChemicalProfile?.();
+    return;
+  }
+  const chemical = activeChemical || (activeChemicalRecord?.profile?.header ? {
+    selectedChemicalId: activeChemicalRecord.selectedChemicalId,
+    name: activeChemicalRecord.profile.header.name,
+  } : null);
+  if (chemical) void (window.HazMatIQ?.openHazardProfile?.(chemical, { sourcePage: 'guided-response' }) || openChemical(chemical));
+});
 document.getElementById('guided-save-record-btn')?.addEventListener('click', () => {
   const status = document.getElementById('guided-response-action-status');
   const result = saveGuidedResponseTacticalRecord();
@@ -14255,8 +14972,11 @@ window.HazMatIQ.incidentCommandLegacy = {
   getActiveIncident,
   readIncidents,
   writeIncidents,
+  openNewIncidentEntry,
+  renderIncidentResponseTabs,
   renderIncidentCommandDashboard,
   renderIncidentLists,
+  switchActiveIncident,
   showView,
 };
 

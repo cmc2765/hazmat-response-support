@@ -380,6 +380,266 @@
     return itemList(valuesToUse).map((value) => ({ label, value }));
   }
 
+  function operationalFact(value, source, field) {
+    const normalized = text(value);
+    return normalized ? { text: normalized, source, field } : null;
+  }
+
+  function operationalFacts(valuesToUse, source, field) {
+    return unique(valuesToUse).map((value) => operationalFact(value, source, field)).filter(Boolean);
+  }
+
+  function factTexts(facts) {
+    return (Array.isArray(facts) ? facts : []).map((fact) => fact.text).filter(Boolean);
+  }
+
+  function recommendationSource(source, basis) {
+    return {
+      label: source || 'Needs Verification',
+      title: source === 'ERG' ? 'Emergency Response Guidebook 2024' : `${source || 'Guided Response'} source record`,
+      basis: basis || 'Source-backed fact promoted to an operational recommendation.',
+      available: Boolean(source),
+    };
+  }
+
+  function operationalRecommendation(value, source, field, rule = '') {
+    const fact = operationalFact(value, source, field);
+    return fact ? { ...fact, rule } : null;
+  }
+
+  function uniqueRecommendations(items) {
+    const seen = new Set();
+    return (Array.isArray(items) ? items : []).filter((item) => {
+      if (!item?.text || seen.has(item.text)) return false;
+      seen.add(item.text);
+      return true;
+    });
+  }
+
+  function buildOperationalRecommendations(selectedChemical, linkedSources, decisions) {
+    const profile = linkedSources.profile || {};
+    const incident = linkedSources.incidentConditions || {};
+    const response = profile.response || {};
+    const fire = profile.fire || {};
+    const reactivity = profile.reactivity || {};
+    const decon = profile.decon || {};
+    const ppe = profile.ppeRecommendation || {};
+    const incidentSize = text(incident.spillSize || incident.releaseSize)
+      || (text(incident.quantity) ? `Quantity entered: ${text(incident.quantity)}` : 'UNKNOWN — confirm small / large spill');
+    const activeLeak = incident.activeLeak === true || /active|leak|release/i.test(text(incident.releaseStatus));
+    const firePresent = incident.firePresent === true || /fire|involved|burning/i.test(text(incident.fireStatus));
+    const releasePhase = text(incident.releasePhase || incident.containerReleasePhase || profile.properties?.physicalState);
+    const sourceFacts = [
+      ...operationalFacts(profile.response?.publicSafety, 'ERG', 'publicSafety'),
+      ...operationalFacts(profile.response?.protectiveClothing, 'ERG', 'protectiveClothing'),
+      ...operationalFacts(profile.response?.evacuation, 'ERG', 'evacuation'),
+      ...operationalFacts(response.spillOrLeak, 'ERG', 'spillOrLeak'),
+      ...operationalFacts(response.fire, 'ERG', 'fire'),
+      ...operationalFacts(fire.extinguishingMedia, 'Chemical Companion', 'extinguishingMedia'),
+      ...operationalFacts(fire.firefightingPrecautions, 'Chemical Companion', 'firefightingPrecautions'),
+      ...operationalFacts(profile.spillResponse, 'Chemical Companion', 'spillResponse'),
+      ...operationalFacts(profile.releaseControl, 'Chemical Companion', 'releaseControl'),
+      ...operationalFacts(profile.detectors?.items, 'Chemical Companion', 'detectors'),
+      ...operationalFacts(profile.detectors?.lelMeterRelevance, 'Chemical Companion', 'lelMeterRelevance'),
+      ...operationalFacts(profile.exposures?.monitoringConcerns, 'NIOSH', 'monitoringConcerns'),
+      ...operationalFacts(profile.exposures?.routes, 'NIOSH', 'exposureRoutes'),
+      ...operationalFacts(profile.decon?.preferredMethod, 'Chemical Companion', 'preferredMethod'),
+      ...operationalFacts(profile.decon?.hazmatPersonnelProcedure, 'Chemical Companion', 'hazmatPersonnelProcedure'),
+      ...operationalFacts(profile.decon?.waterReactiveCautions, 'Chemical Companion', 'waterReactiveCautions'),
+      ...operationalFacts(profile.decon?.runoffContainment, 'Chemical Companion', 'runoffContainment'),
+      ...operationalFacts(profile.medical?.firstAid, 'CHEMM / NIOSH', 'firstAid'),
+      ...operationalFacts(profile.medical?.treatmentNotes, 'CHEMM / NIOSH', 'treatmentNotes'),
+      ...operationalFacts(reactivity.incompatibilities, 'Chemical Companion', 'incompatibilities'),
+      ...operationalFacts(reactivity.oxidizerReducerConcerns, 'Chemical Companion', 'oxidizerReducerConcerns'),
+      ...operationalFacts(reactivity.stabilityNotes, 'Chemical Companion', 'stabilityNotes'),
+      ...operationalFacts(reactivity.chemicalMixtureReactivity, 'CAMEO / Chemical Companion', 'chemicalMixtureReactivity'),
+      ...operationalFacts(profile.properties?.waterSolubility, 'Chemical Companion', 'waterSolubility'),
+      ...operationalFacts([profile.header?.hazard, profile.properties?.physicalState, fire.flammability, profile.properties?.lelUel], 'Chemical Companion', 'hazardClassification'),
+    ];
+    const evaluatedFacts = uniqueRecommendations(sourceFacts);
+    const isolateAction = decisions.verifyIsolate?.primaryDecision && decisions.verifyIsolate.primaryDecision !== NO_DATA
+      ? operationalRecommendation(decisions.verifyIsolate.primaryDecision, 'ERG', 'isolationErg', 'ERG isolation/protective-action values are promoted directly.')
+      : null;
+    const ppeAction = decisions.lifeSafety?.primaryDecision && decisions.lifeSafety.primaryDecision !== NO_DATA
+      ? operationalRecommendation(decisions.lifeSafety.primaryDecision, 'Chemical Companion / NIOSH', 'ppeRecommendation', 'The approved PPE recommendation object is promoted directly.')
+      : null;
+    const publicSafety = evaluatedFacts.filter((fact) => /upwind|uphill|upstream|evacuat|shelter|isolate|protective action/i.test(fact.text));
+    const monitors = evaluatedFacts.filter((fact) => /monitor|detector|sensor|tube|exposure|idlh|lel|limit/i.test(`${fact.text} ${fact.field}`));
+    const spill = evaluatedFacts.filter((fact) => /stop leak|contain|dike|dyke|absorb|collect|cover|recover|release|spill|leak/i.test(fact.text));
+    const vapor = evaluatedFacts.filter((fact) => /vapor|vapour|mist|fog|spray|cloud|ventilat|dispers/i.test(fact.text));
+    const fireFacts = evaluatedFacts.filter((fact) => /fire|flame|ignit|extinguish|foam|water spray|fog/i.test(`${fact.text} ${fact.field}`));
+    const deconFacts = evaluatedFacts.filter((fact) => /decon|contamin|remove.*cloth|cloth.*remove|flush|wash|rinse|shower|skin|eye/i.test(`${fact.text} ${fact.field}`));
+    const reactivityFacts = [
+      ...operationalFacts(reactivity.waterReactivity, 'Chemical Companion', 'waterReactivity'),
+      ...operationalFacts(decon.waterReactiveCautions, 'Chemical Companion', 'waterReactiveCautions'),
+      ...operationalFacts(reactivity.incompatibilities, 'Chemical Companion', 'incompatibilities'),
+      ...operationalFacts(reactivity.oxidizerReducerConcerns, 'Chemical Companion', 'oxidizerReducerConcerns'),
+      ...operationalFacts(reactivity.stabilityNotes, 'Chemical Companion', 'stabilityNotes'),
+      ...operationalFacts(reactivity.chemicalMixtureReactivity, 'CAMEO / Chemical Companion', 'chemicalMixtureReactivity'),
+      ...operationalFacts(profile.properties?.waterSolubility, 'Chemical Companion', 'waterSolubility'),
+    ];
+    const waterFacts = reactivityFacts.filter((fact) => /(?:react\w*|decompos\w*|violent\w*|incompat\w*|avoid|do not|caution).{0,60}\b(?:water|moisture|wet)\b|\b(?:water|moisture|wet)\b.{0,60}(?:react\w*|decompos\w*|violent\w*|incompat\w*)/i.test(fact.text));
+    const oxidizerFacts = reactivityFacts.filter((fact) => /oxidizer|oxidising|oxidizing|combustible absorbent/i.test(fact.text));
+    const acidFacts = reactivityFacts.filter((fact) => /incompatib|react|acid/i.test(fact.text) && /acid/i.test(fact.text));
+    const flammabilitySupported = Boolean(
+      fireFacts.length
+      || /flammab|combust|ignit/i.test(`${profile.header?.hazard || ''} ${fire.flammability || ''}`)
+      || /(?:\d+(?:\.\d+)?%|not available)/i.test(text(profile.properties?.lelUel)) && !/not available/i.test(text(profile.properties?.lelUel)),
+    );
+    const foamSupported = fireFacts.some((fact) => /foam/i.test(fact.text));
+    const warnings = uniqueRecommendations([
+      waterFacts.length ? operationalRecommendation('WATER REACTIVE / DO NOT APPLY WATER', 'Chemical Companion', 'waterReactivity', 'Actionable warning derived from source-backed water-reactivity language.') : null,
+      oxidizerFacts.length ? operationalRecommendation('OXIDIZER / KEEP AWAY FROM COMBUSTIBLE ABSORBENTS', 'Chemical Companion', 'oxidizerReducerConcerns', 'Actionable warning derived from source-backed oxidizer language.') : null,
+      acidFacts.length ? operationalRecommendation('INCOMPATIBLE WITH ACIDS — VERIFY MATERIAL COMPATIBILITY', 'Chemical Companion', 'incompatibilities', 'Actionable warning derived from source-backed incompatibility language.') : null,
+    ]);
+    const protectActions = uniqueRecommendations([
+      isolateAction,
+      ppeAction,
+      ...publicSafety.slice(0, 3).map((fact) => operationalRecommendation(fact.text, fact.source, fact.field, 'Direct public-safety fact promoted to PROTECT.')),
+    ]);
+    const protectMonitoring = uniqueRecommendations([
+      ...monitors.slice(0, 3).map((fact) => operationalRecommendation(fact.text, fact.source, fact.field, 'Direct exposure or detector fact promoted to monitoring.')),
+      operationalRecommendation('Confirm atmosphere and perimeter with field monitoring before entry or adjustment.', 'Derived rule', 'fieldMonitoring', 'Unknown conditions remain unknown until measured.'),
+    ]);
+    const controlActions = uniqueRecommendations([
+      operationalRecommendation(decisions.mitigationDecisionSupport?.tacticalPosture, 'Derived rule', 'tacticalPosture', 'Defensive posture is retained when source or incident verification is incomplete.'),
+      ...spill.slice(0, 4).map((fact) => operationalRecommendation(fact.text, fact.source, fact.field, 'Direct source-backed release-control fact promoted to CONTROL.')),
+    ]);
+    const sizeBranchFacts = /\blarge\b/i.test(incidentSize)
+      ? spill.filter((fact) => /large spill|large release/i.test(fact.text))
+      : /\bsmall\b/i.test(incidentSize)
+        ? spill.filter((fact) => /small spill|small release/i.test(fact.text))
+        : [];
+    const incidentBranch = uniqueRecommendations([
+      ...sizeBranchFacts.slice(0, 3).map((fact) => operationalRecommendation(fact.text, fact.source, fact.field, 'Incident size selects the matching source branch.')),
+      activeLeak
+        ? operationalRecommendation('ACTIVE LEAK — select source control only after task, PPE, monitoring, and IC approval are confirmed.', 'Derived rule', 'activeLeak', 'The incident record identifies an active leak; execution remains gated.')
+        : operationalRecommendation('ACTIVE LEAK STATUS UNKNOWN — verify release status before selecting source-control tactics.', 'Derived rule', 'activeLeak', 'A missing incident condition cannot be treated as a closed release.'),
+      !sizeBranchFacts.length ? operationalRecommendation('CONFIRM SMALL / LARGE SPILL BRANCH BEFORE CONTROL ACTION.', 'Derived rule', 'incidentSize', 'Control tactics are branched by incident size only when the incident condition is known.') : null,
+    ]);
+    const controlFire = uniqueRecommendations([
+      ...(firePresent
+        ? fireFacts.slice(0, 3).map((fact) => operationalRecommendation(fact.text, fact.source, fact.field, 'Direct source-backed fire-control fact promoted only when the fire branch is selected.'))
+        : [operationalRecommendation('FIRE STATUS UNKNOWN — verify fire involvement before selecting the source-backed fire branch.', 'Derived rule', 'firePresent', 'No fire tactic is inferred when the incident condition is absent or unknown.')]),
+      firePresent ? operationalRecommendation('FIRE PRESENT — use the source-backed fire branch and verify container condition.', 'Derived rule', 'firePresent', 'Incident fire condition selects the fire branch; no fire tactic is inferred when absent.') : null,
+    ]);
+    const prohibitedActions = uniqueRecommendations([
+      ...warnings,
+      !foamSupported ? operationalRecommendation('FOAM SELECTION REQUIRES PRODUCT-SPECIFIC VERIFICATION', 'Derived rule', 'foamSelection', 'No product-specific foam support was found in the selected source record.') : null,
+    ]);
+    const flammabilityMonitoring = flammabilitySupported
+      ? [operationalRecommendation('FLAMMABILITY MONITORING REQUIRED', 'Derived rule', 'flammabilityMonitoring', 'Source-backed flammability or LEL evidence activates this monitoring requirement.')]
+      : [];
+    const measuredLel = text(incident.measuredLel || incident.percentLel || incident.lelReading);
+    const controlMonitoring = uniqueRecommendations([
+      ...flammabilityMonitoring,
+      measuredLel ? operationalRecommendation(`Measured LEL / %LEL: ${measuredLel}`, 'Incident record', 'measuredLel', 'Operator-entered measurement is displayed as incident data; it is not a universal threshold.') : null,
+      ...monitors.slice(0, 3).map((fact) => operationalRecommendation(fact.text, fact.source, fact.field, 'Direct source-backed monitoring capability.')),
+    ]);
+    const deconActions = uniqueRecommendations([
+      ...deconFacts.slice(0, 5).map((fact) => operationalRecommendation(fact.text, fact.source, fact.field, 'Direct source-backed contamination-control or decon fact.')),
+    ]);
+    const notifyRegulatory = profile.regulatory || profile.regulatoryData || profile.reportableQuantity || {};
+    const rq = notifyRegulatory.rq ?? notifyRegulatory.reportableQuantity ?? notifyRegulatory.cercla?.rq ?? notifyRegulatory.cercla?.RQ;
+    const releaseQuantity = text(incident.quantity);
+    const rqNumber = Number(String(rq ?? '').replace(/[^0-9.]+/g, ''));
+    const releaseMatch = releaseQuantity.match(/([0-9]+(?:\.[0-9]+)?)\s*(lb|lbs|pounds|kg|kilograms)?/i);
+    const releaseNumber = releaseMatch ? Number(releaseMatch[1]) * (/kg|kilogram/i.test(releaseMatch[2] || '') ? 2.2046226218 : 1) : Number.NaN;
+    const regulatory = Number.isFinite(rqNumber) && rqNumber > 0
+      ? operationalRecommendation(
+        `RQ REVIEW: ${Number.isFinite(releaseNumber) ? (releaseNumber >= rqNumber ? 'RELEASE APPEARS AT OR ABOVE DISPLAYED RQ' : 'RELEASE BELOW DISPLAYED RQ') : 'RELEASE QUANTITY UNKNOWN'}`,
+        'EPA regulatory data',
+        'reportableQuantity',
+        'Compare the incident quantity to the displayed source RQ; confirm jurisdictional notification requirements.',
+      )
+      : operationalRecommendation('RQ / notification status: NO CURRENT SOURCE DATA — review applicable agency requirements.', 'Derived rule', 'reportableQuantity', 'No RQ was present in the active profile; no threshold comparison is invented.');
+    const notifyActions = uniqueRecommendations([
+      regulatory,
+      operationalRecommendation('Document the chemical identity, quantity, conditions, monitoring, actions, and unresolved gaps for Command and agency coordination.', 'Derived rule', 'commandRecord', 'Operational record continuity rule; it does not name an agency without a source trigger.'),
+    ]);
+    const resources = uniqueRecommendations([
+      operationalRecommendation('Incident Command approval before entry or mitigation.', 'Derived rule', 'icApproval', 'Execution gate retained from the tactical decision record.'),
+      ...(decisions.mitigationDecisionSupport?.requiredVerification || []).slice(0, 3).map((item) => operationalRecommendation(item, 'Derived rule', 'requiredVerification', 'Required verification promoted as a resource/checkpoint need.')),
+    ]);
+    const promoted = uniqueRecommendations([
+      ...protectActions, ...protectMonitoring, ...controlActions, ...controlFire, ...prohibitedActions,
+      ...controlMonitoring, ...deconActions, ...notifyActions, ...resources,
+    ]);
+    const promotedTexts = new Set(promoted.map((fact) => fact.text));
+    const omitted = evaluatedFacts.filter((fact) => !promotedTexts.has(fact.text));
+    const ratio = evaluatedFacts.length ? Number((promoted.length / evaluatedFacts.length).toFixed(2)) : 0;
+    const sourcesFor = (facts) => [...new Set(facts.map((fact) => fact.source).filter((source) => source && source !== 'Derived rule'))]
+      .map((source) => recommendationSource(source, 'Source facts promoted into this operational module.'));
+    const why = {
+      protect: 'PROTECT promotes only verified isolation, PPE, public-safety, and exposure-monitoring facts. Plume output remains planning support and cannot downgrade PPE.',
+      control: `CONTROL branches on the available incident conditions (${incidentSize}${releasePhase ? ` · ${releasePhase}` : ''}${activeLeak ? ' · active leak' : ''}${firePresent ? ' · fire present' : ''}). Missing conditions remain verification items; generic mitigation is not inferred.`,
+      decon: 'DECON promotes only the selected chemical’s method matrix, contamination-control, first-aid, and runoff facts. Water use is not assumed.',
+      notify: 'NOTIFY / REQUEST compares quantity to an RQ only when an RQ is present. Otherwise notification status remains unknown and is not assigned to an agency by assumption.',
+    };
+    return {
+      version: '3.0',
+      sourcePrecedence: {
+        protect: ['ERG', 'NIOSH', 'Chemical Companion'],
+        control: ['CAMEO', 'ERG', 'Chemical Companion'],
+        decon: ['CHEMM', 'Chemical Companion', 'ERG'],
+        notify: ['EPA regulatory data', 'Derived rule'],
+      },
+      incidentConditions: { incidentSize, activeLeak, firePresent, releasePhase: releasePhase || NO_DATA, measuredLel: measuredLel || NO_DATA },
+      protect: {
+        priority: protectActions[0]?.text || NO_DATA,
+        actions: protectActions.slice(0, 8),
+        warnings: warnings.slice(0, 5),
+        monitoring: protectMonitoring.slice(0, 5),
+        sources: sourcesFor([...protectActions, ...protectMonitoring, ...warnings]),
+        why: why.protect,
+      },
+      control: {
+        incidentSize,
+        tacticalPosture: decisions.mitigationDecisionSupport?.tacticalPosture || REVIEW,
+        recommendedAction: controlActions[0]?.text || NO_DATA,
+        sourceControl: [...incidentBranch, ...controlActions].slice(0, 8),
+        confinement: spill.filter((fact) => /contain|dike|dyke|collect|recover|absorb/i.test(fact.text)).slice(0, 5),
+        vaporControl: vapor.slice(0, 5),
+        fireControl: controlFire.slice(0, 5),
+        prohibitedActions: prohibitedActions.slice(0, 6),
+        monitoring: controlMonitoring.slice(0, 6),
+        resourcesNeeded: resources.slice(0, 6),
+        sources: sourcesFor([...controlActions, ...controlFire, ...controlMonitoring, ...prohibitedActions]),
+        why: why.control,
+      },
+      decon: {
+        method: deconActions[0]?.text || NO_DATA,
+        actions: deconActions.slice(0, 8),
+        warnings: warnings.filter((fact) => /water|oxidizer|acid/i.test(fact.text)).slice(0, 5),
+        runoffControl: operationalFacts(decon.runoffContainment, 'Chemical Companion', 'runoffContainment'),
+        sources: sourcesFor([...deconActions, ...warnings, ...operationalFacts(decon.runoffContainment, 'Chemical Companion', 'runoffContainment')]),
+        why: why.decon,
+      },
+      notify: {
+        recommendedAction: notifyActions[0]?.text || NO_DATA,
+        regulatory: regulatory ? [regulatory] : [],
+        operationalResources: resources.slice(0, 6),
+        emergencyManagement: [],
+        actions: notifyActions.slice(0, 6),
+        sources: sourcesFor(notifyActions),
+        why: why.notify,
+      },
+      supporting: {
+        medical: operationalFacts(profile.medical?.firstAid || profile.medical?.treatmentNotes, 'CHEMM / NIOSH', 'medical'),
+        monitoring: controlMonitoring.slice(0, 6),
+        checkpoints: resources.slice(0, 6),
+      },
+      factTrace: {
+        evaluated: evaluatedFacts,
+        promoted,
+        omitted,
+        evaluatedCount: evaluatedFacts.length,
+        promotedCount: promoted.length,
+        promotedRatio: ratio,
+      },
+    };
+  }
+
   function stage({ id, number, title, action, status, criticalFacts, verificationItems, sources: stageSources, why, requiresICApproval = false, branches = [] }) {
     return {
       id,
@@ -779,10 +1039,16 @@
       },
       sources,
     );
+    const operationalRecommendations = buildOperationalRecommendations(selectedChemical, linkedSources, {
+      ...decisions,
+      mitigationDecisionSupport: mitigationResult.support,
+    });
+    guidedResponse.operationalRecommendations = operationalRecommendations;
     return {
       blocked: false,
       ...decisions,
       guidedResponse,
+      operationalRecommendations,
       mitigationDecisionSupport: mitigationResult.support,
       evidenceObjects,
       missingDataWarnings: unique(Object.values(decisions).flatMap((decision) => decision.missingData.map((field) => `${field}: ${NO_DATA}`))),

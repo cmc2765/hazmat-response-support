@@ -39,6 +39,73 @@ function buildForMaster(chemicalId: number) {
 }
 
 describe("Guided Response tactical decision builder", () => {
+  function buildOperationalForMaster(chemicalId: number) {
+    const profile = queryChemicalProfile(chemicalId) as Record<string, any>;
+    if (!profile) throw new Error(`Expected Chemical Companion profile for ${chemicalId}`);
+    return builder.buildGuidedResponseDecisions({
+      masterLinked: true,
+      masterChemicalId: chemicalId,
+      chemicalName: profile.header.name,
+      transportationIdentifier: profile.header.un,
+    }, {
+      profile,
+      approvedSources: profile.sources,
+      responderGuide: ergGuides[String(profile.header.ergGuide).replace(/P$/i, "")],
+      incidentConditions: { quantity: "25 lb", spillSize: "small", activeLeak: true },
+    });
+  }
+
+  it.each([
+    [620, "Diesel fuel"],
+    [10, "Ammonia (anhydrous)"],
+    [22, "Chlorine"],
+    [105, "Sulfuric acid"],
+    [508, "Sodium"],
+  ])("builds distinct 3.0 operational modules for %s", (chemicalId, name) => {
+    const record = buildOperationalForMaster(chemicalId);
+    const operational = record.operationalRecommendations;
+    expect(record.guidedResponse.operationalRecommendations).toBe(operational);
+    expect(operational.version).toBe("3.0");
+    expect(operational.protect.actions.length).toBeLessThanOrEqual(8);
+    expect(operational.control.sourceControl.length).toBeLessThanOrEqual(8);
+    expect(operational.decon.actions.length).toBeLessThanOrEqual(8);
+    expect(operational.notify.actions.length).toBeLessThanOrEqual(6);
+    expect(operational.factTrace.evaluatedCount).toBeGreaterThanOrEqual(operational.factTrace.promotedCount);
+    expect(JSON.stringify(operational)).not.toMatch(/10% LEL/i);
+    expect(JSON.stringify(operational)).not.toMatch(/universal.*LEL/i);
+    expect(operational.incidentConditions.incidentSize).toMatch(/small/i);
+    expect(record.guidedResponse.identification.criticalFacts).toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: "Chemical", value: name }),
+    ]));
+  });
+
+  it("fails closed for unsupported foam and measured LEL claims", () => {
+    const record = builder.buildGuidedResponseDecisions({
+      masterLinked: true,
+      masterChemicalId: 999,
+      chemicalName: "Sparse verified test chemical",
+    }, {
+      profile: {
+        header: { name: "Sparse verified test chemical", hazard: "8 (Corrosive)" },
+        fire: { flammability: "Not available", extinguishingMedia: [] },
+        ppeRecommendation: { displayLabel: "No Current Data Exists", selectedLevel: "NO_CURRENT_DATA_EXISTS" },
+      },
+      approvedSources: ["Chemical Companion"],
+      incidentConditions: { activeLeak: true },
+    });
+    const operational = record.operationalRecommendations;
+    expect(operational.control.prohibitedActions.map((item: Record<string, string>) => item.text).join(" ")).toMatch(/FOAM SELECTION REQUIRES PRODUCT-SPECIFIC VERIFICATION/i);
+    expect(operational.control.monitoring.map((item: Record<string, string>) => item.text).join(" ")).not.toMatch(/FLAMMABILITY MONITORING REQUIRED/i);
+    expect(operational.control.monitoring.map((item: Record<string, string>) => item.text).join(" ")).not.toMatch(/10% LEL/i);
+  });
+
+  it("promotes water reactivity only from the selected chemical reactivity record", () => {
+    const sodium = buildOperationalForMaster(508).operationalRecommendations;
+    const diesel = buildOperationalForMaster(620).operationalRecommendations;
+    expect(sodium.control.prohibitedActions.map((item: Record<string, string>) => item.text).join(" ")).toMatch(/WATER REACTIVE \/ DO NOT APPLY WATER/i);
+    expect(diesel.control.prohibitedActions.map((item: Record<string, string>) => item.text).join(" ")).not.toMatch(/WATER REACTIVE \/ DO NOT APPLY WATER/i);
+  });
+
   it("uses real ammonia master/supporting records for direct isolation and PPE decisions", () => {
     const record = buildForMaster(10);
     expect(record.verifyIsolate.specificValues.initialIsolation).toBe("30 meters");
