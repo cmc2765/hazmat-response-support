@@ -78,7 +78,12 @@
 
 /* Live Map hero: the supplied artwork is the complete hero surface. */
 #map .live-map-tactical-header {
-  background: none !important;
+  position: relative !important;
+  height: clamp(150px, 10.5vw, 205px) !important;
+  min-height: clamp(150px, 10.5vw, 205px) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #061a2e !important;
 }
 
 #map .live-map-tactical-header::before,
@@ -93,7 +98,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
   object-position: center center;
 }
 
@@ -258,5 +263,19 @@
   .app-shell:has(#overview.view.active) > .command-header .hazmat-command-context .notification-system {
     min-height: 46px !important;
     padding: 2px 5px !important;
+  }
+}
+
+
+/* Live Map hero is artwork, not a generic page-title header. Preserve its
+   aspect and keep it from being vertically compressed by the shared hero rule. */
+@media (max-width: 760px) {
+  #map .live-map-tactical-header {
+    height: 124px !important;
+    min-height: 124px !important;
+    padding: 0 !important;
+  }
+  #map .live-map-hero-image {
+    object-fit: cover !important;
   }
 }
