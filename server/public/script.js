@@ -13776,6 +13776,9 @@ const liveMapStyleModes = Object.freeze({ street: liveMapDetailedStyleUrl, satel
 const liveMapStyleModeNames = new Set(['street', 'satellite', 'terrain3d']);
 const liveTerrainSourceId = 'live-terrain-dem';
 const liveTerrainTilesUrl = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
+const liveBuildingSourceId = 'live-openmaptiles-buildings';
+const liveBuildingLayerId = 'live-buildings-3d';
+const liveBuildingTileJsonUrl = 'https://tiles.openfreemap.org/planet';
 let liveMapFallbackStyleApplied = false;
 let liveRadarController = null;
 const livePlumeSourceId = 'live-plume-overlay';
@@ -13906,6 +13909,64 @@ function enableLiveMapTerrain() {
   }
 }
 
+function enableLiveMapBuildings3d() {
+  if (!liveMap?.isStyleLoaded?.()) return false;
+  try {
+    if (!liveMap.getSource(liveBuildingSourceId)) {
+      liveMap.addSource(liveBuildingSourceId, {
+        type: 'vector',
+        url: liveBuildingTileJsonUrl,
+        attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
+      });
+    }
+    if (!liveMap.getLayer(liveBuildingLayerId)) {
+      liveMap.addLayer({
+        id: liveBuildingLayerId,
+        type: 'fill-extrusion',
+        source: liveBuildingSourceId,
+        'source-layer': 'building',
+        minzoom: 14,
+        paint: {
+          'fill-extrusion-color': [
+            'interpolate', ['linear'], ['zoom'],
+            14, '#9aa9b6',
+            17, '#d9e2e8',
+          ],
+          'fill-extrusion-height': [
+            'coalesce',
+            ['to-number', ['get', 'render_height']],
+            ['to-number', ['get', 'height']],
+            8,
+          ],
+          'fill-extrusion-base': [
+            'coalesce',
+            ['to-number', ['get', 'render_min_height']],
+            ['to-number', ['get', 'min_height']],
+            0,
+          ],
+          'fill-extrusion-opacity': 0.86,
+          'fill-extrusion-vertical-gradient': true,
+        },
+      });
+    }
+    liveMap.setLayoutProperty(liveBuildingLayerId, 'visibility', 'visible');
+    return true;
+  } catch (error) {
+    console.error('LIVE MAP 3D BUILDINGS ERROR', error);
+    return false;
+  }
+}
+
+function disableLiveMapBuildings3d() {
+  if (!liveMap?.isStyleLoaded?.()) return;
+  try {
+    if (liveMap.getLayer(liveBuildingLayerId)) liveMap.removeLayer(liveBuildingLayerId);
+    if (liveMap.getSource(liveBuildingSourceId)) liveMap.removeSource(liveBuildingSourceId);
+  } catch {
+    // Style changes can remove the optional building source before cleanup.
+  }
+}
+
 function disableLiveMapTerrain() {
   if (!liveMap) return;
   try {
@@ -13921,6 +13982,7 @@ function logLiveMapTerrainDiagnostic(mode) {
     mode,
     terrainSourcePresent: Boolean(liveMap?.getSource?.(liveTerrainSourceId)),
     terrainEnabled: Boolean(liveMap?.getTerrain?.()),
+    buildingLayerPresent: Boolean(liveMap?.getLayer?.(liveBuildingLayerId)),
     styleLoaded: Boolean(liveMap?.isStyleLoaded?.()),
     pitch: liveMap?.getPitch?.() ?? null,
   });
@@ -13951,12 +14013,20 @@ function setLiveMapStyle(mode = 'satellite') {
   const finishTerrain = () => {
     if (requestToken !== liveMapStyleRequestToken) return;
     const terrainEnabled = enableLiveMapTerrain();
-    liveMap.easeTo({ pitch: terrainEnabled ? 52 : 0, bearing: terrainEnabled ? -18 : 0, duration: 350 });
+    const buildingsEnabled = enableLiveMapBuildings3d();
+    liveMap.easeTo({
+      pitch: terrainEnabled ? 58 : 0,
+      bearing: terrainEnabled ? -20 : 0,
+      zoom: terrainEnabled ? Math.max(liveMap.getZoom?.() || 0, 15.2) : liveMap.getZoom?.(),
+      duration: 350,
+    });
+    if (!buildingsEnabled) console.warn('LIVE MAP 3D BUILDINGS unavailable; terrain remains active.');
     restoreLiveMapOverlays();
     logLiveMapTerrainDiagnostic(selected);
   };
   const finishFlatMode = () => {
     if (requestToken !== liveMapStyleRequestToken) return;
+    disableLiveMapBuildings3d();
     disableLiveMapTerrain();
     liveMap.easeTo({ pitch: 0, bearing: 0, duration: 350 });
     restoreLiveMapOverlays();
@@ -13966,6 +14036,7 @@ function setLiveMapStyle(mode = 'satellite') {
   if (selected === 'terrain3d') {
     // 3D Terrain is satellite imagery draped over the shared Plume Model DEM.
     if (!isSatellite) {
+      disableLiveMapBuildings3d();
       disableLiveMapTerrain();
       liveMap.once('style.load', finishTerrain);
       liveMap.setStyle(clonePlumeMapStyle(plumeSatelliteMapStyle));
@@ -15500,6 +15571,7 @@ window.HazMatIQ.mapInfrastructure = {
 };
 window.HazMatIQ.locationTools = {
   getCurrentGps,
+  getIncidentCoordinates,
   parseGpsCoordinate,
   geocodePlumeAddress,
 };
