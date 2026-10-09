@@ -32,16 +32,60 @@
 
   async function resolveLocation({ preferIncident = true, requestGps = true } = {}) {
     const incident = activeIncident();
-    if (preferIncident) {
+    const tools = window.HazMatIQ?.locationTools || {};
+    if (preferIncident && incident) {
       const saved = incidentLocation(incident);
       if (saved) return saved;
+
+      // Command incidents can legitimately have an address before latitude/
+      // longitude have been persisted. Weather must still follow the incident
+      // instead of falling through to an empty GPS-only state.
+      const address = [incident.address, incident.city, incident.state, incident.zip]
+        .map((value) => String(value || '').trim())
+        .filter(Boolean)
+        .join(', ');
+      if (address && typeof tools.geocodePlumeAddress === 'function') {
+        try {
+          const match = await tools.geocodePlumeAddress(address);
+          if (match && Number.isFinite(Number(match.lat)) && Number.isFinite(Number(match.lon))) {
+            return {
+              lat: Number(match.lat),
+              lon: Number(match.lon),
+              address,
+              source: 'Active incident address',
+            };
+          }
+        } catch {
+          // Continue to the shared incident-coordinate/GPS fallbacks.
+        }
+      }
+
+      if (typeof tools.getIncidentCoordinates === 'function') {
+        try {
+          const resolved = await tools.getIncidentCoordinates({ requestGps: false });
+          if (resolved && Number.isFinite(Number(resolved.lat)) && Number.isFinite(Number(resolved.lon))) {
+            return {
+              lat: Number(resolved.lat),
+              lon: Number(resolved.lon),
+              address,
+              source: resolved.source || 'Active incident',
+            };
+          }
+        } catch {
+          // Device GPS/manual location may still recover the workspace.
+        }
+      }
     }
+
     if (weatherLocation && !requestGps) return weatherLocation;
-    const getCurrentGps = window.HazMatIQ?.locationTools?.getCurrentGps || window.getCurrentGps;
+
+    const getCurrentGps = tools.getCurrentGps || window.getCurrentGps;
     if (requestGps && typeof getCurrentGps === 'function') {
       try {
         const gps = await getCurrentGps();
-        return { lat: Number(gps.lat), lon: Number(gps.lon), address: '', source: 'Current device GPS' };
+        if (Number.isFinite(Number(gps?.lat)) && Number.isFinite(Number(gps?.lon))) {
+          return { lat: Number(gps.lat), lon: Number(gps.lon), address: '', source: 'Current device GPS' };
+        }
       } catch {
         // Manual location remains available when GPS is unavailable.
       }
@@ -233,10 +277,22 @@
     setLocationStatus(`${incident && preferIncident ? 'Using active incident location' : 'Using selected weather location'} · Loading current conditions…`);
     createMap(location);
     centerMap(location);
-    const result = await service()?.fetch?.(location.lat, location.lon, { force: true });
-    const state = service()?.getState?.() || { ...result, retrievedAt: new Date().toISOString() };
-    renderWeatherState(state);
-    setLocationStatus(`${state.current?.source || 'Weather source'} · ${state.freshness?.status || 'Time unknown'}. Browsing this location does not change the incident location.`);
+    const weatherService = service();
+    if (!weatherService?.fetch) {
+      renderWeatherState(null);
+      setLocationStatus('Weather service is not initialized. Reload the application and try again.');
+      return;
+    }
+    try {
+      const result = await weatherService.fetch(location.lat, location.lon, { force: true });
+      const state = weatherService.getState?.() || { ...result, retrievedAt: new Date().toISOString() };
+      renderWeatherState(state);
+      setLocationStatus(`${state.current?.source || 'Weather source'} · ${state.freshness?.status || 'Time unknown'}. Browsing this location does not change the incident location.`);
+    } catch (error) {
+      console.error('WEATHER INTELLIGENCE LOAD ERROR', error);
+      renderWeatherState(weatherService.getState?.() || null);
+      setLocationStatus(`Weather data could not be refreshed${error?.message ? `: ${error.message}` : '.'}`);
+    }
   }
 
   async function useManualLocation(value) {
