@@ -6,7 +6,7 @@
     <title>HAZSCOPE Prototype</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
     <link rel="stylesheet" href="styles.css?v=live-map-responsive-2" />
-    <link rel="stylesheet" href="hero-overrides.css?v=10" />
+    <link rel="stylesheet" href="hero-overrides.css?v=11" />
     <link rel="stylesheet" href="hazard-id-overrides.css?v=3" />
     <link rel="stylesheet" href="global-ui-overrides.css?v=17" />
     <link rel="stylesheet" href="incident-overrides.css?v=3" />
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="hazard-profile-page.css?v=1" />
     <link rel="stylesheet" href="page-shell.css?v=1" />
     <link rel="stylesheet" href="plume-overrides.css?v=10&canonical-grid=1" />
-    <link rel="stylesheet" href="navigation-weather.css?v=1" />
+    <link rel="stylesheet" href="navigation-weather.css?v=6" />
   </head>
   <body>
     <div class="app-shell">
@@ -94,6 +94,13 @@
         </header>
         <div class="notification-drawer-body" id="notification-drawer-body"></div>
       </aside>
+      <dialog class="weather-brief-dialog" id="weather-brief-dialog" aria-labelledby="weather-brief-dialog-title">
+        <form method="dialog" class="weather-brief-dialog-shell">
+          <header><div><p class="eyebrow">Command weather intelligence</p><h2 id="weather-brief-dialog-title">Weather Brief</h2></div><button class="ghost-btn" value="cancel" aria-label="Close Weather Brief">Close</button></header>
+          <div id="weather-brief-dialog-body"></div>
+          <footer><button class="ghost-btn" id="weather-brief-dialog-open-weather" type="button">Open Weather Intelligence</button><button class="ghost-btn" id="weather-brief-dialog-ack" type="button">Acknowledge</button></footer>
+        </form>
+      </dialog>
 
       <main class="layout">
         <section class="content-area">
@@ -269,8 +276,8 @@
               </div>
 
               <div id="incident-command-active">
-                <section class="incident-response-tabs-shell" aria-label="Open incident responses">
-                  <div class="incident-response-tabs-heading"><span class="eyebrow">OPEN INCIDENT RESPONSES</span><span id="incident-response-tabs-count">1 response</span></div>
+                <section class="incident-response-tabs-shell" aria-label="Open incident responses" hidden>
+                  <div class="incident-response-tabs-heading"><span class="eyebrow">OPEN INCIDENT RESPONSES</span><span id="incident-response-tabs-count"></span></div>
                   <nav id="incident-response-tabs" class="incident-response-tabs" role="tablist" aria-label="Incident response tabs"></nav>
                 </section>
                 <section class="incident-command-info-grid" aria-label="Active incident summary">
@@ -485,6 +492,7 @@
                     <strong id="command-weather-status"></strong>
                   </div>
                   <div class="command-weather-data" id="command-weather-data" aria-live="polite"></div>
+                  <div class="command-weather-brief" id="command-weather-brief" hidden><div><span class="command-weather-brief-label">WEATHER BRIEF <b id="command-weather-brief-new">NEW</b></span><strong id="command-weather-brief-summary"></strong><small id="command-weather-brief-time"></small></div><div class="command-weather-brief-actions"><button class="ghost-btn" id="command-weather-brief-view" type="button">View Brief</button><button class="ghost-btn" id="command-weather-brief-ack" type="button">Acknowledge</button></div></div>
                   <button class="ghost-btn command-card-action command-weather-refresh" id="refresh-command-weather-btn" type="button">Refresh Live Weather</button>
                 </article>
               </div>
@@ -1325,6 +1333,21 @@
             </header>
             <div class="live-map-operations" aria-label="Live Map controls">
               <div class="live-map-control-groups">
+                <section class="live-map-control-group live-map-utility-group" aria-label="Map actions">
+                  <span class="live-map-control-label">MAP ACTIONS</span>
+                  <div class="live-map-control-buttons">
+                    <button class="live-map-parent-button live-map-layers-button" type="button" data-map-action="layers" title="Open layer groups"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4M4 17l8 4 8-4"/></svg><span>LAYERS</span></button>
+                    <details class="live-map-tools">
+                      <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5.5 4 4M4 20l4.5-1 10-10a2.8 2.8 0 0 0-4-4l-10 10L4 20Z"/><path d="m12 12 3 3"/></svg><span>MAP TOOLS</span></summary>
+                      <div class="live-map-tools-panel">
+                        <button class="live-map-tool-button" id="live-map-add-marker" type="button"><strong>＋</strong><span>ADD MARKER</span></button>
+                        <button class="live-map-tool-button" type="button" data-command-view="plume"><strong>◈</strong><span>PLOT / EDIT PLUME</span></button>
+                        <button class="live-map-tool-button" id="live-map-save" type="button"><strong>↧</strong><span>SAVE MAP</span></button>
+                        <button class="live-map-tool-button" id="live-map-clear" type="button"><strong>×</strong><span>CLEAR DRAFT</span></button>
+                      </div>
+                    </details>
+                  </div>
+                </section>
                 <section class="live-map-control-group live-map-base-group" aria-label="Base map">
                   <span class="live-map-control-label">BASE MAP</span>
                   <div class="live-map-control-buttons">
@@ -1340,9 +1363,10 @@
                     <button class="live-map-parent-button" type="button" data-layer-group="wildfire" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 3.5c.8 3.2-1.5 4.2-1.5 6.6 0 1.2.8 2.2 2 2.2 1.8 0 2.7-2 2-4.2 3.1 2.2 4.7 5 4.7 7.5A6.7 6.7 0 1 1 7 10.8c.1 2 1 3.4 2.3 4.4-.1-4.2 1.6-7.9 4.2-11.7Z"/></svg><span>WILDFIRE</span><b data-layer-count="wildfire">0</b><i aria-hidden="true">⌄</i></button>
                     <button class="live-map-parent-button" type="button" data-layer-group="facilities" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v14H4zM8 6V4h8v2M8 10h8M8 14h3m2 0h3"/><path d="M4 20h16"/></svg><span>FACILITIES</span><b data-layer-count="facilities">0</b><i aria-hidden="true">⌄</i></button>
                     <button class="live-map-parent-button" type="button" data-layer-group="more" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/><circle cx="8" cy="5" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="10" cy="19" r="2"/></svg><span>MORE</span><i aria-hidden="true">⌄</i></button>
+                    <button class="live-map-parent-button live-map-weather-button" type="button" data-live-layer="weatherRadar" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15.5a4 4 0 0 1 1.7-7.6A6.2 6.2 0 0 1 17.5 9a3.5 3.5 0 0 1 .5 7H4Z"/><path d="M8 19h.01M12 19h.01M16 19h.01"/></svg><span>WEATHER RADAR</span></button>
                   </div>
                 </section>
-                <div class="live-map-layer-menus">
+                  <div class="live-map-layer-menus">
                   <div class="live-map-layer-menu" data-layer-menu="incident" hidden>
                     <div class="live-map-menu-heading"><strong>INCIDENT LAYERS</strong><small>FIELD POSITIONS</small></div>
                     <button type="button" data-live-layer="plume"><span class="live-map-toggle-icon">◈</span><span>Current Plume</span><em>AVAILABLE</em></button>
@@ -1358,7 +1382,6 @@
                     <button type="button" data-live-layer="wildfireFires" data-wildfire-source="firms"><span class="live-map-toggle-icon">◌</span><span>Active Fire Detections<small>NASA FIRMS</small></span><em data-wildfire-status="firms">CHECKING</em></button>
                     <button type="button" data-live-layer="wildfirePerimeters" data-wildfire-source="perimeters"><span class="live-map-toggle-icon">⌁</span><span>Fire Perimeters<small>NIFC / WFIGS</small></span><em data-wildfire-status="perimeters">CHECKING</em></button>
                     <button type="button" data-live-layer="wildfireSmoke" data-wildfire-source="smoke"><span class="live-map-toggle-icon">▱</span><span>Smoke Plumes<small>NOAA HMS</small></span><em data-wildfire-status="smoke">CHECKING</em></button>
-                    <button type="button" data-live-layer="weatherRadar"><span class="live-map-toggle-icon">≋</span><span>Weather Radar<small>Situational overlay</small></span><em>READY</em></button>
                   </div>
                   <div class="live-map-layer-menu" data-layer-menu="facilities" hidden>
                     <div class="live-map-menu-heading"><strong>FACILITIES</strong><small>HAZMAT INVENTORY</small></div>
@@ -1370,17 +1393,8 @@
                     <button type="button" data-live-layer="trafficCams"><span class="live-map-toggle-icon">▣</span><span>Traffic Cameras</span><em>0</em></button>
                     <button type="button" data-live-layer="zones"><span class="live-map-toggle-icon">◇</span><span>Response Zones</span><em>0</em></button>
                   </div>
-                </div>
-                </div>
-                <details class="live-map-tools">
-                  <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5.5 4 4M4 20l4.5-1 10-10a2.8 2.8 0 0 0-4-4l-10 10L4 20Z"/><path d="m12 12 3 3"/></svg><span>MAP TOOLS</span></summary>
-                  <div class="live-map-tools-panel">
-                    <button class="live-map-tool-button" id="live-map-add-marker" type="button"><strong>＋</strong><span>ADD MARKER</span></button>
-                    <button class="live-map-tool-button" type="button" data-command-view="plume"><strong>◈</strong><span>PLOT / EDIT PLUME</span></button>
-                    <button class="live-map-tool-button" id="live-map-save" type="button"><strong>↧</strong><span>SAVE MAP</span></button>
-                    <button class="live-map-tool-button" id="live-map-clear" type="button"><strong>×</strong><span>CLEAR DRAFT</span></button>
                   </div>
-                </details>
+                </div>
               <div class="live-map-status-strip" aria-label="Live data status">
                 <span class="live-map-status-item" id="live-map-gps-status"><i class="status-dot is-gray"></i><b>GPS</b> STANDBY</span>
                 <span class="live-map-status-item"><i class="status-dot is-green"></i><b>TIER II</b> AVAILABLE</span>
@@ -1393,9 +1407,6 @@
             <div class="live-map-stage">
               <div id="live-gis-map" aria-label="Interactive Live HazMat incident map"></div>
               <div id="live-map-loading">Loading map…</div>
-              <div class="live-map-edge-controls live-map-edge-controls-left" aria-label="Map display controls">
-                <button class="live-map-edge-button" type="button" data-map-action="layers" title="Open layer groups"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4M4 17l8 4 8-4"/></svg><span>LAYERS</span></button>
-              </div>
               <div class="live-map-edge-controls live-map-edge-controls-right" aria-label="Map navigation controls">
                 <button class="live-map-edge-button live-map-icon-button" type="button" data-map-action="zoom-in" title="Zoom in" aria-label="Zoom in">+</button>
                 <button class="live-map-edge-button live-map-icon-button" type="button" data-map-action="zoom-out" title="Zoom out" aria-label="Zoom out">−</button>
@@ -1720,38 +1731,70 @@
 
           <section id="weather" class="view weather-intelligence-page" data-page-root="weather" data-page-name="Weather Intelligence">
             <header class="hazmat-page-hero weather-intelligence-hero">
-              <div class="hazmat-page-hero-content"><p class="eyebrow">Operational Environment</p><h1 class="hazmat-hero-title">Weather Intelligence</h1><p class="hazmat-hero-subtitle">Real-Time Operational Weather.</p></div>
+              <div class="hazmat-page-hero-content"><p class="eyebrow">All-Hazards Environmental Picture</p><h1 class="hazmat-hero-title">Weather Intelligence</h1><div class="weather-hero-tags"><span>RADAR</span><span>WARNINGS</span><span>WIND</span><span>FIRE / FLOOD</span></div></div>
             </header>
-            <section class="weather-incident-context" id="weather-incident-context" hidden aria-live="polite">
-              <span class="weather-context-dot" aria-hidden="true"></span><div><strong>Active Incident Weather</strong><span id="weather-incident-name">No active incident</span><small id="weather-incident-location">Using the selected operational location.</small></div><button class="ghost-btn" id="weather-use-incident-btn" type="button">Use Incident Location</button>
-            </section>
+            <form class="weather-location-form" id="weather-location-form">
+              <div class="weather-location-heading"><span class="eyebrow">Weather Location</span><strong id="weather-location-display">Choose a location for this workspace</strong></div>
+              <label class="sr-only" for="weather-location-input">Weather location</label><input id="weather-location-input" placeholder="Address or latitude, longitude" autocomplete="off" />
+              <button class="ghost-btn" type="submit">Update Location</button><button class="ghost-btn" id="weather-use-gps-btn" type="button">Use Current GPS</button>
+              <span id="weather-location-status" role="status" aria-live="polite">Enter a location or use GPS to load weather intelligence.</span>
+            </form>
             <section class="weather-conditions-strip" aria-labelledby="weather-conditions-title">
               <header><div><p class="eyebrow">Current Conditions</p><h2 id="weather-conditions-title">Current Conditions</h2></div><div class="weather-freshness" id="weather-freshness-badge" data-state="unavailable">Unavailable</div></header>
-              <div class="weather-condition-grid">
-                <div class="weather-condition-primary"><span>Temperature</span><strong id="weather-temperature">—</strong><small id="weather-feels-like">Feels like —</small></div>
-                <div><span>Wind From</span><strong id="weather-wind-from">—</strong><small id="weather-wind-speed">—</small></div>
-                <div><span>Wind To</span><strong id="weather-wind-to">—</strong><small>Arrow shows travel direction</small></div>
-                <div><span>Gusts</span><strong id="weather-gusts">—</strong><small id="weather-humidity">Humidity —</small></div>
-                <div><span>Pressure</span><strong id="weather-pressure">—</strong><small id="weather-stability">Stability unavailable</small></div>
-                <div><span>Cloud / Rain</span><strong id="weather-cloud-cover">—</strong><small id="weather-precipitation">Precipitation —</small></div>
-                <div class="weather-condition-source"><span>Source</span><strong id="weather-source">—</strong><small id="weather-observation-time">Observed —</small><small id="weather-retrieved-time">Retrieved —</small></div>
+              <div class="weather-conditions-layout">
+                <div class="weather-conditions-readings">
+                  <div class="weather-condition-grid">
+                    <div class="weather-condition-primary"><span>Temperature</span><strong id="weather-temperature">—</strong><small id="weather-feels-like">Feels like —</small></div>
+                    <div><span>Wind From</span><strong id="weather-wind-from">—</strong><small id="weather-wind-speed">—</small></div>
+                    <div><span>Wind To</span><strong id="weather-wind-to">—</strong><small>Arrow shows travel direction</small></div>
+                    <div><span>Gusts</span><strong id="weather-gusts">—</strong><small id="weather-humidity">Humidity —</small></div>
+                    <div><span>Pressure</span><strong id="weather-pressure">—</strong><small id="weather-stability">Stability unavailable</small></div>
+                    <div><span>Cloud / Rain</span><strong id="weather-cloud-cover">—</strong><small id="weather-precipitation">Precipitation —</small></div>
+                    <div><span>Visibility</span><strong id="weather-visibility">—</strong><small>Where reported</small></div>
+                    <div><span>Dew Point</span><strong id="weather-dew-point">—</strong><small>Where reported</small></div>
+                    <div class="weather-condition-source"><span>Source</span><strong id="weather-source">—</strong><small id="weather-observation-time">Observed —</small><small id="weather-retrieved-time">Retrieved —</small></div>
+                  </div>
+                  <details class="weather-conditions-dropdown" id="weather-services-dropdown">
+                    <summary><span><b>Weather Services</b></span><i aria-hidden="true">⌄</i></summary>
+                    <section class="weather-conditions-dropdown-body" aria-label="Weather Services details"><dl class="weather-operations-list"><div><dt>NWS / NOAA</dt><dd id="weather-nws-status">Awaiting location</dd></div><div><dt>Forecast</dt><dd id="weather-forecast-service-status">Awaiting location</dd></div><div><dt>Radar</dt><dd id="weather-radar-service-status">Awaiting location</dd></div><div><dt>Wind model</dt><dd id="weather-wind-service-status">Off until selected</dd></div><div><dt>Flood / hydrology</dt><dd id="weather-flood-service-status">Off until selected</dd></div><div><dt>Fire / smoke</dt><dd id="weather-fire-service-status">Off until selected</dd></div><div><dt>Visibility</dt><dd id="weather-visibility-status">Not provided by current source</dd></div></dl></section>
+                  </details>
+                </div>
+                <section class="weather-forecast-panel" id="weather-forecast-panel" aria-labelledby="weather-forecast-title">
+                  <header class="weather-forecast-heading">
+                    <span class="weather-forecast-title-graphic" aria-hidden="true">
+                      <svg viewBox="0 0 112 72" role="presentation" focusable="false">
+                        <defs>
+                          <linearGradient id="forecast-sky-gradient" x1="0" x2="1" y1="0" y2="1">
+                            <stop offset="0" stop-color="#55d8ff" />
+                            <stop offset="1" stop-color="#1762a5" />
+                          </linearGradient>
+                          <linearGradient id="forecast-sun-gradient" x1="0" x2="1" y1="0" y2="1">
+                            <stop offset="0" stop-color="#ffe58a" />
+                            <stop offset="1" stop-color="#f39a32" />
+                          </linearGradient>
+                        </defs>
+                        <circle cx="78" cy="20" r="13" fill="url(#forecast-sun-gradient)" />
+                        <path d="M78 2v-5M78 43v5M60 20h-6M96 20h6M65 7l-4-4M91 33l4 4M91 7l4-4M65 33l-4 4" fill="none" stroke="#ffe58a" stroke-linecap="round" stroke-width="3" />
+                        <path d="M18 45c0-9 7-16 16-16 2 0 4 .4 6 1.1 3-8 10-13 19-13 10 0 18 7 20 17 2-.7 4-1.1 6-1.1 8 0 14 5 16 12H18Z" fill="url(#forecast-sky-gradient)" stroke="#b9efff" stroke-width="2" />
+                        <path d="M37 53l-5 10M55 53l-5 10M73 53l-5 10" fill="none" stroke="#8ee7ff" stroke-linecap="round" stroke-width="3" />
+                        <path d="M86 52h18M91 59h13" fill="none" stroke="#f6c343" stroke-linecap="round" stroke-width="2" />
+                      </svg>
+                    </span>
+                    <div class="weather-forecast-heading-copy"><h3 id="weather-forecast-title">Forecast Trends</h3></div>
+                    <em class="weather-card-status" id="weather-forecast-status">Awaiting data</em>
+                  </header>
+                  <div class="weather-forecast-panel-body" aria-label="Forecast Trends details"><div class="weather-forecast-grid" id="weather-forecast-grid"><p>Forecast unavailable.</p></div></div>
+                </section>
               </div>
             </section>
-            <form class="weather-location-form" id="weather-location-form">
-              <label for="weather-location-input">Weather location <input id="weather-location-input" placeholder="Address or latitude, longitude" autocomplete="off" /></label>
-              <button class="ghost-btn" type="submit">Update Location</button><button class="ghost-btn" id="weather-use-gps-btn" type="button">Use Current GPS</button>
-              <span id="weather-location-status" role="status" aria-live="polite">Weather follows the active incident when one is selected.</span>
-            </form>
             <div class="weather-workspace-grid">
               <section class="weather-map-card" aria-labelledby="weather-map-title">
-                <header class="weather-card-header"><div><p class="eyebrow">Shared Map / Radar Infrastructure</p><h2 id="weather-map-title">Live Weather Map</h2></div><div class="weather-map-actions"><button class="weather-map-style active" type="button" data-weather-map-style="satellite">Satellite</button><button class="weather-map-style" type="button" data-weather-map-style="street">Street</button><button class="ghost-btn" id="weather-map-fullscreen-btn" type="button">Fullscreen</button></div></header>
-                <div class="weather-map-shell"><div id="weather-map" role="application" aria-label="Live weather radar map"></div><div class="weather-map-overlay"><span id="weather-map-status">Loading weather map…</span><span id="weather-map-location-readout">Location unavailable</span></div></div>
-                <div class="weather-radar-controls" aria-label="Weather radar controls"><label>Radar source<select id="weather-radar-source"><option value="BEST_AVAILABLE">Best available</option><option value="RAINVIEWER_VISUAL_PROTOTYPE">RainViewer visual radar</option><option value="NOAA_MRMS_OFFICIAL_FALLBACK">NOAA / NWS fallback</option></select></label><button class="ghost-btn" id="weather-radar-play" type="button">Play animation</button><button class="ghost-btn" id="weather-radar-refresh" type="button">Refresh radar</button><label class="weather-radar-range">Frame <input id="weather-radar-frame" type="range" min="0" max="0" value="0" step="1" disabled /><output id="weather-radar-frame-time">Current / time unavailable</output></label><label>Opacity <input id="weather-radar-opacity" type="range" min="0.1" max="1" value="0.58" step="0.05" /></label><small id="weather-radar-status">Visual radar supports situational awareness only.</small></div>
+                <header class="weather-card-header"><div><p class="eyebrow">Environmental Layer System</p><h2 id="weather-map-title">Live Weather Map</h2></div><div class="weather-map-toolbar" aria-label="Weather map toolbar"><span class="weather-toolbar-label">BASE MAP</span><button class="weather-map-style active" type="button" data-weather-map-style="satellite">Satellite</button><button class="weather-map-style" type="button" data-weather-map-style="street">Street</button><span class="weather-toolbar-label">LAYERS</span><button class="weather-layer-button active" id="weather-layer-radar" type="button" data-weather-layer="radar" aria-pressed="true">Radar</button><button class="weather-layer-button" id="weather-layer-alerts" type="button" data-weather-layer="alerts" aria-pressed="false">Alerts</button><button class="weather-layer-button" id="weather-layer-wind" type="button" data-weather-layer="wind" aria-pressed="false">Wind</button><button class="weather-layer-button" id="weather-layer-flood" type="button" data-weather-layer="flood" aria-pressed="false">Flood</button><button class="weather-layer-button" id="weather-layer-fire" type="button" data-weather-layer="fire" aria-pressed="false">Fire</button><details class="weather-layer-more"><summary>More</summary><div><span>Temperature / clouds / visibility</span><small>Use the condition cards for current values. Additional map feeds are reported below.</small></div></details><button class="ghost-btn" id="weather-map-fullscreen-btn" type="button">Fullscreen</button></div></header>
+                <div class="weather-map-shell"><div id="weather-map" role="application" aria-label="Live weather radar map"></div><div class="weather-map-overlay"><span id="weather-map-status">Choose a location to load the weather map.</span><span id="weather-map-location-readout">Location unavailable</span></div></div>
+                <details class="weather-radar-settings" open><summary>Radar Settings <span id="weather-radar-status">Radar awaits a Weather location.</span></summary><div class="weather-radar-controls" aria-label="Weather radar controls"><label>Radar source<select id="weather-radar-source"><option value="BEST_AVAILABLE">Best available</option><option value="RAINVIEWER_VISUAL_PROTOTYPE">RainViewer visual radar</option><option value="NOAA_MRMS_OFFICIAL_FALLBACK">NOAA / NWS fallback</option></select></label><button class="ghost-btn" id="weather-radar-play" type="button">Play Radar</button><button class="ghost-btn" id="weather-radar-refresh" type="button">Refresh Radar</button><label class="weather-radar-range">Timeline <input id="weather-radar-frame" type="range" min="0" max="0" value="0" step="1" disabled /><output id="weather-radar-frame-time">Latest frame unavailable</output></label><label>Opacity <input id="weather-radar-opacity" type="range" min="0.1" max="1" value="0.58" step="0.05" /></label></div></details><div class="weather-wind-controls" id="weather-wind-controls" hidden><span>Wind forecast</span><button type="button" data-weather-wind-time="0" class="active">CURRENT</button><button type="button" data-weather-wind-time="1">+1 HR</button><button type="button" data-weather-wind-time="3">+3 HR</button><button type="button" data-weather-wind-time="6">+6 HR</button><output id="weather-wind-status">Wind layer is off</output></div>
               </section>
               <aside class="weather-intelligence-column" aria-label="Operational weather intelligence">
-                <section class="weather-intelligence-card"><header><div><p class="eyebrow">Operational Read</p><h2>Weather Impacts</h2></div><span class="weather-card-status" id="weather-impact-status">Awaiting data</span></header><ul class="weather-impact-list" id="weather-impact-list"><li>Current observations will appear here.</li></ul></section>
-                <section class="weather-intelligence-card"><header><div><p class="eyebrow">Forward Look</p><h2>Forecast Trend</h2></div><span class="weather-card-status" id="weather-forecast-status">Awaiting data</span></header><div class="weather-forecast-grid" id="weather-forecast-grid"><p>Forecast unavailable.</p></div></section>
-                <section class="weather-intelligence-card"><header><div><p class="eyebrow">Operational Weather</p><h2>Field Conditions</h2></div></header><dl class="weather-operations-list"><div><dt>Severe weather</dt><dd id="weather-severe-status">Unavailable</dd></div><div><dt>Visibility</dt><dd id="weather-visibility-status">Not provided by current source</dd></div><div><dt>Lightning</dt><dd id="weather-lightning-status">Not provided by current source</dd></div><div><dt>Alerts</dt><dd id="weather-alert-status">No alert feed configured</dd></div></dl></section>
+                <section class="weather-intelligence-card weather-alert-card"><header><div><p class="eyebrow">Operational Weather</p><h2>Operational Impacts</h2><p class="weather-card-intro">Weather effects relevant to current operations</p></div><span class="weather-card-status" id="weather-impact-status">Awaiting data</span></header><ul class="weather-impact-list" id="weather-impact-list"><li>Current weather and active alerts will be translated into operational meaning here.</li></ul><button class="ghost-btn weather-impact-more" id="weather-impact-more" type="button" hidden>+ 0 MORE</button><div class="weather-impact-actions"><button class="ghost-btn" id="weather-send-to-command" type="button" hidden>Send Weather Brief to Command</button><span id="weather-send-status" role="status" aria-live="polite"></span></div></section>
               </aside>
             </div>
           </section>
@@ -1793,12 +1836,12 @@
     <script src="vendor/maplibre-gl/maplibre-gl.js"></script>
     <script src="chemical-profile-text.js?v=chemical-intel-7"></script>
     <script src="responder-text.js"></script>
-    <script src="weather-radar-providers.js"></script>
+    <script src="weather-radar-providers.js?v=2"></script>
     <script src="weather-radar.js"></script>
     <script src="guided-response-decision-builder.js"></script>
     <script src="plume-3d-model.js?v=plume3d-v2"></script>
     <script src="script.js?v=map-consolidation-1"></script>
-    <script src="weather-workspace.js?v=1"></script>
+    <script src="weather-workspace.js?v=6"></script>
     <script src="settings-workspace.js?v=1"></script>
     <script src="incident-command.js"></script>
     <script src="hazard-profile.js"></script>

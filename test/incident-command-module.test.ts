@@ -28,6 +28,52 @@ function moduleApi() {
   return (context.window as { HazMatIQ: Record<string, (...args: unknown[]) => unknown> }).HazMatIQ;
 }
 
+function responseTabsRenderer() {
+  const shell = {
+    hidden: false,
+    attributes: {} as Record<string, string>,
+    setAttribute(name: string, value: string) { this.attributes[name] = value; },
+    removeAttribute(name: string) { delete this.attributes[name]; },
+  };
+  const tabs = {
+    hidden: false,
+    children: [] as Array<Record<string, unknown>>,
+    replaceChildren() { this.children = []; },
+    append(child: Record<string, unknown>) { this.children.push(child); },
+  };
+  const count = { textContent: '' };
+  const document = {
+    querySelector: () => shell,
+    getElementById: (id: string) => id === 'incident-response-tabs' ? tabs : id === 'incident-response-tabs-count' ? count : null,
+    createElement: () => {
+      const classes = new Set<string>();
+      return {
+        type: '', className: '', dataset: {} as Record<string, string>, attributes: {} as Record<string, string>,
+        classList: { toggle(name: string, active: boolean) { if (active) classes.add(name); else classes.delete(name); }, contains: (name: string) => classes.has(name) },
+        setAttribute(name: string, value: string) { this.attributes[name] = value; },
+        append() {}, addEventListener() {},
+      };
+    },
+  };
+  let incidents: Array<{ incidentId: string; incidentName: string; status: string }> = [];
+  const context = {
+    document,
+    window: { localStorage: { getItem: () => 'incident-1' } },
+    activeIncidentIdStorageKey: 'hazmatiq_active_incident_id',
+    readIncidents: () => incidents,
+  } as Record<string, unknown>;
+  const start = script.indexOf('function renderIncidentResponseTabs()');
+  const end = script.indexOf('function switchActiveIncident', start);
+  runInNewContext(`${script.slice(start, end)}; this.render = renderIncidentResponseTabs;`, context);
+  return {
+    render: context.render as () => void,
+    shell,
+    tabs,
+    count,
+    setIncidents(value: typeof incidents) { incidents = value; },
+  };
+}
+
 describe('Incident Command operational hub', () => {
   it('loads as the page-owned module and provides direct command actions', () => {
     expect(html.indexOf('<script src="incident-command.js"></script>')).toBeGreaterThan(html.indexOf('<script src="script.js'));
@@ -38,6 +84,41 @@ describe('Incident Command operational hub', () => {
     expect(script).toContain("if (targetId === 'incident') window.HazMatIQ.initializeIncidentCommand?.(context);");
     expect(script).toContain("window.dispatchEvent(new CustomEvent('hazmatiq:incident-command-updated'");
     expect(reports).toContain('context.incidentId');
+  });
+
+  it('only renders the response strip when two or more incidents are open', () => {
+    expect(html).toContain('class="incident-response-tabs-shell" aria-label="Open incident responses" hidden');
+    expect(script).toContain("const openIncidents = readIncidents().filter((incident) => incident.status !== 'Completed');");
+    expect(script).toContain('if (openIncidents.length <= 1) {');
+    expect(script).toContain("shell.hidden = true;");
+    expect(script).toContain("if (count) count.textContent = `${openIncidents.length} RESPONSES`;");
+    expect(script).toContain('shell.hidden = false;');
+  });
+
+  it('collapses 0/1 open incidents and renders tabs only for 2+ open incidents', () => {
+    const renderer = responseTabsRenderer();
+    renderer.setIncidents([]);
+    renderer.render();
+    expect(renderer.shell.hidden).toBe(true);
+    expect(renderer.tabs.children).toHaveLength(0);
+    expect(renderer.count.textContent).toBe('');
+
+    renderer.setIncidents([{ incidentId: 'incident-1', incidentName: 'Thursday Madness', status: 'Active' }]);
+    renderer.render();
+    expect(renderer.shell.hidden).toBe(true);
+    expect(renderer.tabs.children).toHaveLength(0);
+
+    renderer.setIncidents([
+      { incidentId: 'incident-1', incidentName: 'Thursday Madness', status: 'Active' },
+      { incidentId: 'incident-2', incidentName: 'Warehouse Leak', status: 'Active' },
+      { incidentId: 'incident-3', incidentName: 'Completed Drill', status: 'Completed' },
+    ]);
+    renderer.render();
+    expect(renderer.shell.hidden).toBe(false);
+    expect(renderer.tabs.children).toHaveLength(2);
+    expect(renderer.count.textContent).toBe('2 RESPONSES');
+    const activeTabClassList = renderer.tabs.children[0].classList as { contains: (name: string) => boolean };
+    expect(activeTabClassList.contains('is-active')).toBe(true);
   });
 
   it('normalizes one incident state for chemical, plume, command, and report consumers', () => {

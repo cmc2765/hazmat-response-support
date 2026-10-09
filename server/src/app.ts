@@ -48,6 +48,7 @@ import { queryFirms } from "./wildfire/firms.js";
 import { queryHms } from "./wildfire/hms.js";
 import { queryWfigs } from "./wildfire/wfigs.js";
 import { parseMapBounds } from "./wildfire/types.js";
+import { queryWeatherFlood, queryWeatherWind } from "./weather/providers.js";
 
 const planningModelMode = PLUME_MODEL_MODES.HAZMATIQ_PLANNING_ESTIMATE;
 const ergModelMode = PLUME_MODEL_MODES.ERG_ISOLATION_PROTECTIVE_ACTION_OVERLAY;
@@ -128,7 +129,11 @@ function enabledEnvironment(...names: string[]) {
 }
 
 function radarProviderConfiguration() {
-  const rainViewerEnabled = enabledEnvironment("ENABLE_RAINVIEWER_RADAR", "VITE_ENABLE_RAINVIEWER_RADAR");
+  const configured = backendEnvironment("ENABLE_RAINVIEWER_RADAR", "VITE_ENABLE_RAINVIEWER_RADAR");
+  // RainViewer supplies the animated visual frame stack used by the Weather
+  // workspace. Keep an explicit environment opt-out for deployments that
+  // require the official NOAA fallback only.
+  const rainViewerEnabled = configured ? enabledEnvironment("ENABLE_RAINVIEWER_RADAR", "VITE_ENABLE_RAINVIEWER_RADAR") : true;
   return { rainViewerEnabled };
 }
 
@@ -1130,7 +1135,7 @@ app.get("/api/weather/current", async (c) => {
     latitude: String(lat),
     longitude: String(lon),
     current:
-      "temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure",
+      "temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure,visibility,dew_point_2m",
     hourly:
       "temperature_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m",
     forecast_days: "2",
@@ -1208,6 +1213,100 @@ app.get("/api/weather/current", async (c) => {
   if (!openMeteo && !nws) return c.json({ error: "live weather feeds unavailable" }, 502);
   c.header("Cache-Control", "no-store");
   return c.json({ openMeteo, nws });
+});
+
+// NWS active alerts are kept separate from current observations so the
+// Weather Intelligence workspace can remain location-driven and incident-free.
+app.get("/api/weather/alerts", async (c) => {
+  const lat = Number(c.req.query("lat"));
+  const lon = Number(c.req.query("lon"));
+  if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180)
+    return c.json({ error: "valid lat and lon are required" }, 400);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const headers = { "User-Agent": "HazMatIQ/0.1 (weather support)" };
+    const getJson = async (url: string) => {
+      const response = await fetch(url, { headers, signal: controller.signal });
+      if (!response.ok) throw new Error(`NWS alerts request failed (${response.status})`);
+      return response.json() as Promise<{ features?: unknown[]; properties?: Record<string, unknown> }>;
+    };
+    const pointPayload = await getJson(`https://api.weather.gov/alerts/active?point=${lat.toFixed(4)},${lon.toFixed(4)}`);
+    let features = Array.isArray(pointPayload.features) ? pointPayload.features : [];
+    // The point query can omit a newly issued zone alert while the NWS point
+    // metadata is still catching up. Query the forecast zone as a narrow,
+    // location-relevant fallback before reporting a clear status.
+    if (!features.length) {
+      try {
+        const point = await getJson(`https://api.weather.gov/points/${lat.toFixed(4)},${lon.toFixed(4)}`);
+        const properties = point.properties || {};
+        const zone = typeof properties.forecastZone === "string" ? properties.forecastZone.split("/").pop() : "";
+        if (zone) {
+          const zonePayload = await getJson(`https://api.weather.gov/alerts/active?zone=${encodeURIComponent(zone)}`);
+          features = Array.isArray(zonePayload.features) ? zonePayload.features : [];
+        }
+      } catch {
+        // Keep the successful point response and its transparent empty result.
+      }
+    }
+    const uniqueFeatures = [...new Map(features.map((feature, index) => {
+      const item = feature as { id?: string };
+      return [item.id || `nws-alert-${index}`, feature] as const;
+    })).values()];
+    c.header("Cache-Control", "no-store");
+    return c.json({ source: "NWS / NOAA", location: { lat, lon }, features: uniqueFeatures, status: "connected", retrievedAt: new Date().toISOString() });
+  } catch {
+    return c.json({ source: "NWS", features: [], status: "unavailable" }, 502);
+  } finally {
+    clearTimeout(timeout);
+  }
+});
+
+function weatherLayerBounds(c: Context) {
+  return parseMapBounds({
+    west: c.req.query("west"),
+    south: c.req.query("south"),
+    east: c.req.query("east"),
+    north: c.req.query("north"),
+  });
+}
+
+function boundedWeatherLayer(bounds: ReturnType<typeof weatherLayerBounds>) {
+  return bounds && bounds.east - bounds.west <= 24 && bounds.north - bounds.south <= 18 ? bounds : null;
+}
+
+app.get("/api/weather/wind", async (c) => {
+  const bounds = boundedWeatherLayer(weatherLayerBounds(c));
+  const zoom = Number(c.req.query("zoom"));
+  if (!bounds) return c.json({ error: "zoom in to load detailed wind vectors" }, 422);
+  if (Number.isFinite(zoom) && zoom < 6) return c.json({ error: "zoom in to load detailed wind vectors" }, 422);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 9000);
+  try {
+    c.header("Cache-Control", "public, max-age=300");
+    return c.json(await queryWeatherWind(bounds, controller.signal));
+  } catch {
+    return c.json({ source: "Open-Meteo", points: [], status: "unavailable", retrievedAt: new Date().toISOString() }, 502);
+  } finally {
+    clearTimeout(timeout);
+  }
+});
+
+app.get("/api/hydrology/flood", async (c) => {
+  const bounds = boundedWeatherLayer(weatherLayerBounds(c));
+  const zoom = Number(c.req.query("zoom"));
+  if (!bounds) return c.json({ error: "zoom in to load nearby flood gauges" }, 422);
+  if (Number.isFinite(zoom) && zoom < 7) return c.json({ error: "zoom in to load nearby flood gauges" }, 422);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 12000);
+  try {
+    c.header("Cache-Control", "public, max-age=300");
+    return c.json(await queryWeatherFlood(bounds, controller.signal));
+  } catch {
+    return c.json({ gauges: [], sources: ["NOAA NWPS unavailable", "USGS unavailable"], status: "unavailable", retrievedAt: new Date().toISOString() }, 502);
+  } finally {
+    clearTimeout(timeout);
+  }
 });
 
 // ─── Facilities ─────────────────────────────────────────────────────────

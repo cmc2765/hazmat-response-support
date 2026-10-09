@@ -227,6 +227,7 @@ let tacticalClockTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 
 let tacticalClockUsesGpsTimeZone = false;
 let notificationWeatherLocation = null;
 let notificationDrawerTrigger = null;
+let weatherBriefDialogContext = null;
 const notificationHistoryStorageKey = 'hazmatiq_notification_history';
 const notificationSources = { tactical: 'System', weather: 'Weather', monitoring: 'Monitoring' };
 const notificationSeverityRank = { normal: 0, advisory: 1, warning: 2, critical: 3 };
@@ -298,6 +299,12 @@ function renderNotificationDrawer() {
     time.dateTime = entry.timestamp;
     time.textContent = new Date(entry.timestamp).toLocaleString();
     item.append(heading, message, time);
+    if (entry.type === 'WEATHER_BRIEF') {
+      const actions = document.createElement('div'); actions.className = 'notification-history-actions';
+      const view = document.createElement('button'); view.type = 'button'; view.className = 'ghost-btn'; view.dataset.notificationAction = 'view-weather-brief'; view.dataset.briefId = entry.briefId || ''; view.dataset.incidentId = entry.incidentId || ''; view.textContent = 'View Brief'; actions.append(view);
+      if (!entry.acknowledged) { const acknowledge = document.createElement('button'); acknowledge.type = 'button'; acknowledge.className = 'ghost-btn'; acknowledge.dataset.notificationAction = 'ack-weather-brief'; acknowledge.dataset.briefId = entry.briefId || ''; acknowledge.dataset.incidentId = entry.incidentId || ''; acknowledge.textContent = 'Acknowledge'; actions.append(acknowledge); }
+      item.append(actions);
+    }
     notificationDrawerBody.append(item);
   });
 }
@@ -313,18 +320,26 @@ function renderNotificationStrip() {
   renderNotificationDrawer();
 }
 
-function recordNotification(sourceKey, message) {
+function recordNotification(sourceKey, message, metadata = {}) {
   const normalized = String(message || '').trim();
   const source = notificationSources[sourceKey];
-  const previous = notificationHistory.find((entry) => entry.source === source && !entry.resolved);
+  const previous = metadata.type === 'WEATHER_BRIEF' ? null : notificationHistory.find((entry) => entry.source === source && !entry.resolved);
   if (previous?.message === normalized) return;
   if (previous) previous.resolved = true;
+  const timestamp = metadata.createdAt || new Date().toISOString();
   notificationHistory.unshift({
     id: `${Date.now()}-${sourceKey}`,
     source,
     message: normalized,
-    severity: classifyNotification(normalized),
-    timestamp: new Date().toISOString(),
+    title: metadata.title || source,
+    summary: metadata.summary || normalized,
+    severity: metadata.severity || classifyNotification(normalized),
+    type: metadata.type || 'STATUS',
+    incidentId: metadata.incidentId || null,
+    briefId: metadata.briefId || null,
+    payload: metadata.payload || null,
+    timestamp,
+    createdAt: timestamp,
     acknowledged: false,
     resolved: false,
   });
@@ -347,6 +362,96 @@ function closeNotificationDrawer() {
   notificationDrawerBackdrop.hidden = true;
   notificationDrawerTrigger?.focus?.();
 }
+
+function findWeatherBrief(briefId, incidentId) {
+  const incidents = typeof readIncidents === 'function' ? readIncidents() : [];
+  const incident = incidentId
+    ? incidents.find((item) => item.incidentId === incidentId)
+    : (typeof getActiveIncident === 'function' ? getActiveIncident() : null);
+  const brief = incident?.weatherBriefs?.find?.((item) => item.id === briefId) || (incident?.latestCommandWeatherBrief?.id === briefId ? incident.latestCommandWeatherBrief : null);
+  return brief ? { brief, incident } : null;
+}
+
+function weatherBriefSeverity(brief) {
+  const alertText = (brief?.activeAlerts || []).map((alert) => `${alert.event} ${alert.severity}`).join(' ');
+  const impactText = (brief?.operationalImpacts || []).map((impact) => `${impact.title} ${impact.severity}`).join(' ');
+  if (/tornado|flash flood|severe thunderstorm|extreme|critical|major flood|warning/i.test(`${alertText} ${impactText}`)) return 'critical';
+  if (/warning|wind shift|gust|flood|significant/i.test(`${alertText} ${impactText}`)) return 'warning';
+  return 'advisory';
+}
+
+function renderWeatherBriefDialog(brief) {
+  const body = document.getElementById('weather-brief-dialog-body');
+  if (!body || !brief) return;
+  const current = brief.currentConditions || {};
+  const section = (title, items) => {
+    const article = document.createElement('section'); const heading = document.createElement('h3'); heading.textContent = title; article.append(heading);
+    const list = document.createElement('ul'); items.forEach((item) => { const row = document.createElement('li'); row.textContent = item; list.append(row); }); article.append(list); return article;
+  };
+  const impacts = (brief.operationalImpacts || []).slice(0, 5).map((impact) => `${impact.title}: ${impact.summary}`);
+  const alerts = (brief.activeAlerts || []).map((alert) => `${alert.event}${alert.area ? ` · ${alert.area}` : ''}`);
+  const forecast = (brief.forecastSummary || []).map((item) => `+${item.hours} hr · ${item.temperatureF ?? '—'}°F · wind ${item.windSpeedMph ?? '—'} mph`);
+  body.replaceChildren(
+    section('Current Conditions', [`Wind from ${current.windFromDeg ?? '—'}° / to ${current.windToDeg ?? '—'}° · ${current.windSpeedMph ?? '—'} mph · gust ${current.gustMph ?? '—'} mph`, `Temperature ${current.temperatureF ?? '—'}°F · humidity ${current.humidity ?? '—'}% · visibility ${current.visibilityMi ?? '—'} mi`, `Observed ${brief.observationTime ? new Date(brief.observationTime).toLocaleString() : 'Unavailable'} · Retrieved ${brief.retrievedAt ? new Date(brief.retrievedAt).toLocaleString() : 'Unavailable'}`]),
+    section('Top Operational Impacts', impacts.length ? impacts : ['No prioritized impacts recorded.']),
+    section('Active Warnings / Watches', alerts.length ? alerts : ['No active alerts recorded.']),
+    section('Forecast Trend', forecast.length ? forecast : ['Forecast summary unavailable.']),
+    section('Source', (brief.sourceSummary || []).length ? brief.sourceSummary : ['Weather source unavailable.']),
+  );
+}
+
+function openWeatherBriefDialog(brief) {
+  const dialog = document.getElementById('weather-brief-dialog');
+  if (!dialog || !brief) return;
+  weatherBriefDialogContext = { briefId: brief.id, incidentId: brief.incidentId };
+  renderWeatherBriefDialog(brief);
+  const severity = weatherBriefSeverity(brief); dialog.dataset.severity = severity;
+  if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
+}
+
+function acknowledgeWeatherBrief(briefId, incidentId) {
+  const api = window.HazMatIQ?.incidentCommandLegacy;
+  const incidents = api?.readIncidents?.() || [];
+  const nextIncidents = incidents.map((incident) => {
+    if (incident.incidentId !== incidentId) return incident;
+    const weatherBriefs = (incident.weatherBriefs || []).map((brief) => brief.id === briefId ? { ...brief, acknowledgedAt: new Date().toISOString() } : brief);
+    const latestCommandWeatherBrief = incident.latestCommandWeatherBrief?.id === briefId ? weatherBriefs.find((brief) => brief.id === briefId) : incident.latestCommandWeatherBrief;
+    return { ...incident, weatherBriefs, latestCommandWeatherBrief, updatedAt: new Date().toISOString() };
+  });
+  if (!nextIncidents.some((incident, index) => incident !== incidents[index])) return;
+  api.writeIncidents?.(nextIncidents); api.renderIncidentCommandDashboard?.();
+  notificationHistory.forEach((entry) => { if (entry.type === 'WEATHER_BRIEF' && entry.briefId === briefId) entry.acknowledged = true; });
+  persistNotificationHistory(); renderNotificationStrip();
+}
+
+function receiveWeatherBrief(brief) {
+  if (!brief) return;
+  const top = brief.operationalImpacts?.[0];
+  const severity = weatherBriefSeverity(brief);
+  const summary = top?.title ? `${top.title}${top.summary ? ` · ${top.summary}` : ''}` : 'Weather brief received for Command review.';
+  const message = `${severity === 'critical' ? '⚠ WEATHER ALERT · ' : ''}WEATHER INTELLIGENCE UPDATE RECEIVED · ${summary}`;
+  recordNotification('weather', message, {
+    type: 'WEATHER_BRIEF',
+    title: severity === 'critical' ? '⚠ WEATHER ALERT' : 'WEATHER INTELLIGENCE UPDATE RECEIVED',
+    summary,
+    severity,
+    incidentId: brief.incidentId,
+    briefId: brief.id,
+    payload: brief,
+    createdAt: brief.createdAt,
+  });
+  if (notificationWeather) notificationWeather.textContent = `Brief received · ${new Date(brief.createdAt).toLocaleTimeString()}`;
+  renderNotificationStrip();
+  renderCommandWeatherBrief(typeof getActiveIncident === 'function' ? getActiveIncident() : null);
+}
+
+notificationDrawerBody?.addEventListener('click', (event) => {
+  const button = event.target.closest?.('[data-notification-action]');
+  if (!button) return;
+  const result = findWeatherBrief(button.dataset.briefId, button.dataset.incidentId);
+  if (button.dataset.notificationAction === 'view-weather-brief') { if (result) openWeatherBriefDialog(result.brief); }
+  if (button.dataset.notificationAction === 'ack-weather-brief') acknowledgeWeatherBrief(button.dataset.briefId, button.dataset.incidentId);
+});
 
 function formatConcentration(value) {
   const text = String(value ?? '').trim();
@@ -515,6 +620,7 @@ document.addEventListener('keydown', (event) => {
 
 window.HazMatIQ = window.HazMatIQ || {};
 window.HazMatIQ.updateNotifications = updateNotificationCenter;
+window.HazMatIQ.receiveWeatherBrief = receiveWeatherBrief;
 
 document.addEventListener('hazmatiq:telemetry', (event) => {
   updateNotificationCenter(event.detail || {});
@@ -1139,14 +1245,27 @@ function openNewIncidentEntry() {
 }
 
 function renderIncidentResponseTabs() {
+  const shell = document.querySelector('.incident-response-tabs-shell');
   const tabs = document.getElementById('incident-response-tabs');
   const count = document.getElementById('incident-response-tabs-count');
-  if (!tabs) return;
+  if (!shell || !tabs) return;
   const activeId = window.localStorage.getItem(activeIncidentIdStorageKey);
   const openIncidents = readIncidents().filter((incident) => incident.status !== 'Completed');
   tabs.replaceChildren();
-  tabs.hidden = !openIncidents.length;
-  if (count) count.textContent = `${openIncidents.length} ${openIncidents.length === 1 ? 'response' : 'responses'}`;
+  if (openIncidents.length <= 1) {
+    // The active incident is already represented by the command cards below.
+    // Hide the parent shell so its border, padding, and margin cannot reserve
+    // vertical space for a redundant single-incident tab.
+    shell.hidden = true;
+    shell.setAttribute('aria-hidden', 'true');
+    tabs.hidden = true;
+    if (count) count.textContent = '';
+    return;
+  }
+  shell.hidden = false;
+  shell.removeAttribute('aria-hidden');
+  tabs.hidden = false;
+  if (count) count.textContent = `${openIncidents.length} RESPONSES`;
   openIncidents.forEach((incident) => {
     const tab = document.createElement('button');
     tab.type = 'button';
@@ -1854,6 +1973,21 @@ function renderIncidentCommandHeader(model) {
   setText('ic-weather-updated', `Updated ${updatedAt}`);
 }
 
+function renderCommandWeatherBrief(incident = typeof getActiveIncident === 'function' ? getActiveIncident() : null) {
+  const panel = document.getElementById('command-weather-brief');
+  if (!panel) return;
+  const brief = incident?.latestCommandWeatherBrief;
+  panel.hidden = !brief;
+  if (!brief) return;
+  const top = brief.operationalImpacts?.[0];
+  setText('command-weather-brief-summary', top?.title || 'Weather brief received for Command review.');
+  setText('command-weather-brief-time', `Received ${new Date(brief.createdAt).toLocaleString()} · ${brief.acknowledgedAt ? 'Acknowledged' : 'Unread'}`);
+  const badge = document.getElementById('command-weather-brief-new'); if (badge) badge.hidden = Boolean(brief.acknowledgedAt);
+  panel.dataset.severity = weatherBriefSeverity(brief);
+  document.getElementById('command-weather-brief-view')?.setAttribute('data-brief-id', brief.id);
+  document.getElementById('command-weather-brief-ack')?.toggleAttribute('hidden', Boolean(brief.acknowledgedAt));
+}
+
 function renderIncidentCommandDashboard() {
   const model = buildIncidentCommandViewModel();
   const empty = document.getElementById('incident-command-empty');
@@ -1862,6 +1996,7 @@ function renderIncidentCommandDashboard() {
   empty.hidden = model.hasActiveIncident;
   active.hidden = !model.hasActiveIncident;
   renderIncidentCommandHeader(model);
+  renderCommandWeatherBrief(model.incident);
   if (!model.hasActiveIncident) return;
 
   const incidentNameInput = document.getElementById('incidentName');
@@ -1972,6 +2107,18 @@ function renderIncidentCommandDashboard() {
   setText('ic-detail-reports', model.completedReports.length ? `${model.completedReports.length} recent completed report${model.completedReports.length === 1 ? '' : 's'}` : 'No completed reports yet');
   window.dispatchEvent(new CustomEvent('hazmatiq:incident-command-updated', { detail: model.incident }));
 }
+
+document.getElementById('command-weather-brief-view')?.addEventListener('click', (event) => {
+  const result = findWeatherBrief(event.currentTarget.dataset.briefId, getActiveIncident()?.incidentId);
+  if (result) openWeatherBriefDialog(result.brief);
+});
+document.getElementById('command-weather-brief-ack')?.addEventListener('click', (event) => acknowledgeWeatherBrief(event.currentTarget.closest('#command-weather-brief')?.querySelector('#command-weather-brief-view')?.dataset.briefId, getActiveIncident()?.incidentId));
+document.getElementById('weather-brief-dialog-ack')?.addEventListener('click', () => {
+  if (weatherBriefDialogContext) acknowledgeWeatherBrief(weatherBriefDialogContext.briefId, weatherBriefDialogContext.incidentId);
+  document.getElementById('weather-brief-dialog')?.close?.();
+});
+document.getElementById('weather-brief-dialog-open-weather')?.addEventListener('click', () => { document.getElementById('weather-brief-dialog')?.close?.(); showView('weather'); });
+window.addEventListener('hazmatiq:weather-brief-received', (event) => receiveWeatherBrief(event.detail?.brief));
 
 function renderSystemNotification() {
   syncCommandBarContext();
@@ -2481,6 +2628,25 @@ function appendChemicalProfileToIncidentReport(container, profile) {
   });
 }
 
+function appendWeatherBriefsToIncidentReport(container, incident) {
+  const briefs = Array.isArray(incident?.weatherBriefs) ? incident.weatherBriefs : [];
+  if (!briefs.length) return;
+  const entries = briefs.map((brief, index) => {
+    const impacts = (brief.operationalImpacts || []).slice(0, 3).map((impact) => `${impact.title}: ${impact.summary}`);
+    const alerts = (brief.activeAlerts || []).map((alert) => `${alert.event}${alert.area ? ` · ${alert.area}` : ''}`);
+    const acknowledged = brief.acknowledgedAt
+      ? `Acknowledged ${new Date(brief.acknowledgedAt).toLocaleString()}`
+      : 'Not acknowledged';
+    return [`Weather Brief ${index + 1} · ${brief.createdAt ? new Date(brief.createdAt).toLocaleString() : 'Time unavailable'}`, [
+      `Source: ${(brief.sourceSummary || []).join(' / ') || 'Weather source unavailable'}`,
+      `Summary: ${impacts.join(' · ') || 'No prioritized operational impacts recorded.'}`,
+      `Alerts: ${alerts.join(' · ') || 'No active warnings or watches recorded.'}`,
+      acknowledged,
+    ]];
+  });
+  appendIncidentSummarySection(container, 'Weather Brief History', entries);
+}
+
 const completedReportFields = [
   ['incidentName', 'Incident name', 'text'],
   ['startDate', 'Start date', 'text'],
@@ -2644,6 +2810,7 @@ function openIncidentSummary(incidentId) {
     ['Wind speed (mph)', incident.windSpeed],
     ['Wind direction', incident.windDirection],
   ]);
+  appendWeatherBriefsToIncidentReport(content, incident);
   appendIncidentSummarySection(content, 'PPE Requirements', [['Guidance', incident.ppeSummary?.items || []]]);
   appendIncidentSummarySection(content, 'Medical Summary', [['Guidance', incident.medicalSummary?.items || []]]);
   appendIncidentSummarySection(content, 'Plume Model', [
@@ -10909,7 +11076,7 @@ async function fetchOpenMeteo(lat, lon) {
   const parameters = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lon),
-    current: 'temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure',
+    current: 'temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure,visibility,dew_point_2m',
     hourly: 'temperature_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m',
     forecast_days: '2',
     temperature_unit: 'fahrenheit',
@@ -11067,6 +11234,8 @@ function formatOpenMeteo(data) {
     description: weatherCodeDescription(current.weather_code),
     weatherCode: Number(current.weather_code),
     cloudCoverPct: Number(current.cloud_cover),
+    visibilityMiles: Number.isFinite(Number(current.visibility)) ? Number(current.visibility) / 1609.344 : null,
+    dewPointF: Number.isFinite(Number(current.dew_point_2m)) ? Number(current.dew_point_2m) : null,
     conditions: `${current.temperature_2m}°F${feelsLike} · RH ${current.relative_humidity_2m}% · Wind ${current.wind_speed_10m} mph ${degreesToCompass(current.wind_direction_10m)} · Gust ${current.wind_gusts_10m} mph · Pressure ${pressureInHg.toFixed(2)} inHg`,
     temperatureF,
     feelsLikeF: Number.isFinite(feelsLikeF) ? feelsLikeF : null,
@@ -11130,6 +11299,8 @@ function formatNws(data) {
     pressureInHg: Number.isFinite(pressurePa) ? pressurePa * 0.000295299830714 : null,
     elevationFt: Number.isFinite(elevationM) ? elevationM * 3.28084 : null,
     cloudCoverPct: Number(observation.cloudCover?.value),
+    visibilityMiles: Number.isFinite(Number(observation.visibility?.value)) ? Number(observation.visibility.value) / 1609.344 : null,
+    dewPointF: Number.isFinite(Number(observation.dewpoint?.value)) ? (Number(observation.dewpoint.value) * 9) / 5 + 32 : null,
     description: observation.textDescription || 'No description',
   };
 }

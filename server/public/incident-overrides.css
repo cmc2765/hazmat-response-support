@@ -1,5 +1,17 @@
 /* Readable, action-oriented Incident Command surface. */
 .incident-command-page { font-size: 16px; }
+.command-weather-brief { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 8px 0; padding: 8px 10px; border: 1px solid #3a829f; border-left: 3px solid #55c9f4; border-radius: 6px; background: rgba(8, 43, 63, .7); }
+.command-weather-brief[data-severity="warning"] { border-color: #d17a31; border-left-color: #f6a047; }
+.command-weather-brief[data-severity="critical"] { border-color: #c24d56; border-left-color: #ff6871; }
+.command-weather-brief > div:first-child { display: grid; gap: 2px; min-width: 0; }
+.command-weather-brief-label { color: #78d6f7; font-size: .62rem; font-weight: 900; letter-spacing: .1em; }
+.command-weather-brief-label b { margin-left: 5px; padding: 2px 4px; border-radius: 3px; background: #55c9f4; color: #062033; font-size: .53rem; }
+.command-weather-brief strong { overflow: hidden; color: #f5fbfd; font-size: .76rem; text-overflow: ellipsis; white-space: nowrap; }
+.command-weather-brief small { color: #b6d2dd; font-size: .62rem; }
+.command-weather-brief-actions { display: flex; flex: 0 0 auto; gap: 5px; }
+.command-weather-brief-actions button { min-height: 28px; padding: 4px 7px; font-size: .62rem; }
+.notification-history-actions { display: flex; gap: 6px; margin-top: 7px; }
+.notification-history-actions button { padding: 4px 7px; font-size: .64rem; }
 .incident-command-page .incident-command-panel h2,
 .incident-command-page .incident-command-flow h2 { font-size: clamp(20px, 1.35vw, 26px); font-weight: 900; }
 .incident-command-page .incident-command-panel h3,
@@ -176,6 +188,7 @@
   border-radius: 10px 10px 0 0;
   background: #061b2d;
 }
+.incident-response-tabs-shell[hidden] { display: none !important; }
 .incident-response-tabs-heading {
   display: flex;
   align-items: center;

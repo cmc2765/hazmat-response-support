@@ -75,7 +75,7 @@
       getFrames: async () => [],
       getLatestFrame: async () => null,
       getLayerConfig() {
-        return { tiles: [this.getTileUrl()], tileSize: 512, minzoom: 2, maxzoom: 17 };
+        return { tiles: [this.getTileUrl()], tileSize: 512, minzoom: 2, maxzoom: 17, timestamp: new Date().toISOString() };
       },
     },
   };
