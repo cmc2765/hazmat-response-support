@@ -77,8 +77,13 @@
 }
 
 /* Live Map hero: the supplied artwork is the complete hero surface. */
-#map .live-map-tactical-header {
-  background: none !important;
+#map.view > .hazmat-page-hero.live-map-tactical-header {
+  position: relative !important;
+  height: clamp(132px, 10vw, 168px) !important;
+  min-height: clamp(132px, 10vw, 168px) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #061a2e !important;
 }
 
 #map .live-map-tactical-header::before,
@@ -89,13 +94,40 @@
 
 #map .live-map-hero-image {
   position: absolute;
-  inset: 0;
+  top: -20%;
+  right: 0;
+  bottom: auto;
+  left: 0;
   display: block;
   width: 100%;
-  height: 100%;
+  height: 140%;
   object-fit: fill;
   object-position: center center;
 }
+
+/* Keep the map controls as a shallow command strip so the map remains the
+   primary workspace below the hero. */
+#map .live-map-operations {
+  min-height: 0;
+  padding: 4px 12px 5px;
+  gap: 6px 10px;
+}
+#map .live-map-control-groups { gap: 12px; }
+#map .live-map-utility-group .live-map-control-buttons { align-items: stretch; }
+#map .live-map-utility-group .live-map-tools { align-self: stretch; min-width: 0; }
+#map .live-map-utility-group .live-map-tools summary { min-height: 28px; padding: 4px 7px; gap: 4px; }
+#map .live-map-control-group { gap: 3px; }
+#map .live-map-mode-button,
+#map .live-map-parent-button {
+  min-height: 28px;
+  padding: 4px 7px;
+  gap: 4px;
+  font-size: .6rem;
+}
+#map .live-map-mode-button svg,
+#map .live-map-parent-button svg { width: 13px; height: 13px; }
+#map .live-map-status-strip { gap: 7px; font-size: .52rem; }
+#map .live-map-status-item b { font-size: .52rem; }
 
 /* All page title headers use the Incident Command height, including compact variants. */
 .view:not(#overview) > .hazmat-page-hero {
@@ -104,6 +136,19 @@
 }
 @media (max-width: 760px) {
   .view:not(#overview) > .hazmat-page-hero { min-height: 138px !important; padding: 12px !important; }
+}
+
+/* Keep the artwork readable on narrow displays without letting the shared
+   page-hero rules compress the Live Map banner. */
+@media (max-width: 760px) {
+  #map.view > .hazmat-page-hero.live-map-tactical-header {
+    height: 132px !important;
+    min-height: 132px !important;
+    padding: 0 !important;
+  }
+  #map .live-map-hero-image {
+    object-fit: fill !important;
+  }
 }
 
 /* Canonical homepage HAZSCOPE hero with a CSS-only haze treatment. */
