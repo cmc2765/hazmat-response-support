@@ -50,7 +50,7 @@ describe('global navigation and page header contract', () => {
     expect(html).not.toContain('Real-time data. Actionable intelligence. Safer decisions.');
     expect(html).not.toContain('class="internal-command-menu"');
     expect(html).not.toContain('class="app-header-status"');
-    expect(html).toContain('class="brand-logo-command" src="assets/emergenz-hero-header.png?v=2"');
+    expect(html).toContain('class="brand-logo-command" src="assets/emergenz-hero-header.png?v=3"');
     expect(html).toContain('>Pre-Incident Planning</h1>');
     expect(html).toContain('>Incident Command</h1>');
     expect(html).toContain('>Sources</h1>');

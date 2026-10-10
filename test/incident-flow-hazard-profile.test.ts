@@ -86,7 +86,7 @@ describe("Incident decision flow and Hazard ID profile loading", () => {
   });
 
   it("uses the transparent HAZMATIQ artwork on Guided Response", () => {
-    expect(html).toContain('class="guided-response-logo" src="assets/emergenz-hero-header.png?v=2"');
+    expect(html).toContain('class="guided-response-logo" src="assets/emergenz-hero-header.png?v=3"');
   });
 
   it("maps selected chemical profile fields into every operational consumer", () => {

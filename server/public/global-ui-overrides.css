@@ -1207,7 +1207,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
     margin: 0 !important;
     padding: 0 !important;
     overflow: hidden !important;
-    background: #061a2e url("assets/emergenz-hero-header.png?v=2") center center / cover no-repeat !important;
+    background: #061a2e url("assets/emergenz-hero-header.png?v=3") center center / cover no-repeat !important;
   }
 
   .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn {
