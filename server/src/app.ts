@@ -48,7 +48,7 @@ import { queryFirms } from "./wildfire/firms.js";
 import { queryHms } from "./wildfire/hms.js";
 import { queryWfigs } from "./wildfire/wfigs.js";
 import { parseMapBounds } from "./wildfire/types.js";
-import { queryWeatherFlood, queryWeatherWind } from "./weather/providers.js";
+import { getWeatherFloodHealth, normalizeNwpsStageflow, queryNwpsGauge, queryNwpsGaugeMetadata, queryNwpsHealth, queryNwpsStageflow, queryWeatherFlood, queryWeatherWind } from "./weather/providers.js";
 
 const planningModelMode = PLUME_MODEL_MODES.HAZMATIQ_PLANNING_ESTIMATE;
 const ergModelMode = PLUME_MODEL_MODES.ERG_ISOLATION_PROTECTIVE_ACTION_OVERLAY;
@@ -1292,6 +1292,64 @@ app.get("/api/weather/wind", async (c) => {
   }
 });
 
+app.get("/api/hydrology/health", async (c) => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 12000);
+  try {
+    return c.json(await queryNwpsHealth(controller.signal));
+  } catch {
+    return c.json(getWeatherFloodHealth());
+  } finally {
+    clearTimeout(timeout);
+  }
+});
+
+app.get("/api/hydrology/gauges", async (c) => {
+  const bounds = boundedWeatherLayer(weatherLayerBounds(c));
+  if (!bounds) return c.json({ error: "valid nearby gauge bounds are required" }, 422);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 12000);
+  try {
+    const gauges = await queryNwpsGaugeMetadata(bounds, controller.signal);
+    return c.json({ source: "NOAA NWPS", gauges, health: getWeatherFloodHealth(), retrievedAt: new Date().toISOString() });
+  } catch {
+    return c.json({ source: "NOAA NWPS", gauges: [], health: getWeatherFloodHealth(), status: "unavailable", retrievedAt: new Date().toISOString() }, 502);
+  } finally {
+    clearTimeout(timeout);
+  }
+});
+
+app.get("/api/hydrology/gauges/:id/stageflow", async (c) => {
+  const id = c.req.param("id");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 12000);
+  try {
+    const metadata = await queryNwpsGauge(id, controller.signal);
+    if (!metadata) return c.json({ error: "gauge metadata unavailable" }, 404);
+    const stageflow = await queryNwpsStageflow(id, c.req.query("product"), controller.signal);
+    return c.json({ gauge: normalizeNwpsStageflow(metadata, stageflow), source: "NOAA NWPS", retrievedAt: new Date().toISOString() });
+  } catch {
+    return c.json({ error: "gauge stageflow temporarily unavailable", source: "NOAA NWPS" }, 502);
+  } finally {
+    clearTimeout(timeout);
+  }
+});
+
+app.get("/api/hydrology/gauges/:id", async (c) => {
+  const id = c.req.param("id");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 12000);
+  try {
+    const gauge = await queryNwpsGauge(id, controller.signal);
+    if (!gauge) return c.json({ error: "gauge metadata unavailable" }, 404);
+    return c.json({ gauge, source: "NOAA NWPS", retrievedAt: new Date().toISOString() });
+  } catch {
+    return c.json({ error: "gauge metadata temporarily unavailable", source: "NOAA NWPS" }, 502);
+  } finally {
+    clearTimeout(timeout);
+  }
+});
+
 app.get("/api/hydrology/flood", async (c) => {
   const bounds = boundedWeatherLayer(weatherLayerBounds(c));
   const zoom = Number(c.req.query("zoom"));
@@ -1303,7 +1361,7 @@ app.get("/api/hydrology/flood", async (c) => {
     c.header("Cache-Control", "public, max-age=300");
     return c.json(await queryWeatherFlood(bounds, controller.signal));
   } catch {
-    return c.json({ gauges: [], sources: ["NOAA NWPS unavailable", "USGS unavailable"], status: "unavailable", retrievedAt: new Date().toISOString() }, 502);
+    return c.json({ gauges: [], sources: ["NOAA NWPS unavailable", "USGS unavailable"], status: "unavailable", nwpsHealth: getWeatherFloodHealth(), retrievedAt: new Date().toISOString() }, 502);
   } finally {
     clearTimeout(timeout);
   }

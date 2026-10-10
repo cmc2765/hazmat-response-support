@@ -149,7 +149,7 @@ describe("HazMatIQ Command Bar", () => {
     expect(html).toContain('id="command-menu-toggle"');
     expect(html).toContain('id="workspace-navigation-drawer"');
     expect(html).toContain('class="brand-logo-command"');
-    expect(html).toContain('src="assets/hazscope-incident-intelligence-response-planning.png?v=1"');
+    expect(html).toContain('src="assets/emergenz-hero-header.png?v=2"');
     const commandHeader = html.slice(
       html.indexOf('<header class="topbar hazmat-command-bar command-header">'),
       html.indexOf('</header>'),

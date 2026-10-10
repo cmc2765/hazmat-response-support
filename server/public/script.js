@@ -1066,7 +1066,7 @@ const householdEstimateLabels = Object.freeze({
 const ppeSuitWarning = 'PPE recommendations are source-backed planning guidance and must be verified by Incident Command, air monitoring, oxygen concentration, concentration below IDLH/exposure limits, suit compatibility, cartridge suitability, and agency SOPs before entry.';
 const medicalProtectiveWarning = 'Verify all medical guidance, protective actions, isolation distances, and evacuation/shelter decisions with official sources, agency SOPs, field observations, and Incident Command.';
 const plumePlanningNotices = [
-  'HAZSCOPE is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.',
+  'EMERGENZ is a decision-support and planning tool. Verify all chemical data, weather data, protective actions, isolation distances, PPE, medical guidance, and plume model outputs with official sources, agency SOPs, field observations, and Incident Command before taking action.',
   'Plume results are planning estimates only and are not a substitute for field monitoring, official modeling, or Incident Command decision-making.',
   'Missing, outdated, or unverified data should be treated as No Current Data Exists until confirmed by an approved source.',
   'Weather data source and observation time must be verified. Stale or manually entered weather can significantly affect plume output.',
@@ -1675,12 +1675,12 @@ function isIncidentPlumeCurrent(plume, incident) {
 function cleanIncidentOperationalMode(value) {
   const normalized = String(value ?? '').trim().toUpperCase().replace(/[\s-]+/g, '_');
   const modes = {
-    HAZMATIQ_ESTIMATE: 'HAZSCOPE Estimate',
-    HAZMATIQ_VALIDATED: 'HAZSCOPE Validated',
-    HAZMATIQ_FIELD_VERIFIED: 'HAZSCOPE Field Verified',
+    HAZMATIQ_ESTIMATE: 'EMERGENZ Estimate',
+    HAZMATIQ_VALIDATED: 'EMERGENZ Validated',
+    HAZMATIQ_FIELD_VERIFIED: 'EMERGENZ Field Verified',
     ERG_PROTECTIVE_ACTION_OVERLAY_ONLY: 'ERG Overlay Only',
     BLOCKED_MISSING_REQUIRED_DATA: 'Missing Required Data',
-    PLANNING_ESTIMATE: 'HAZSCOPE Estimate',
+    PLANNING_ESTIMATE: 'EMERGENZ Estimate',
   };
   return modes[normalized] || (value ? String(value).replace(/_/g, ' ') : 'Assessment Pending');
 }
@@ -6876,7 +6876,7 @@ function buildPpeStartingReference(record) {
     suitStatus: kappler.length || clothing.length ? readinessStatus.imported : readinessStatus.missing,
     summary: hazMatchBest
       ? 'Kappler HazMatch Best Match for the identified chemical; verify the garment and ensemble against incident conditions.'
-      : 'Imported PPE source text is available, but HAZSCOPE does not infer an ensemble level from incomplete source coverage.',
+      : 'Imported PPE source text is available, but EMERGENZ does not infer an ensemble level from incomplete source coverage.',
     source: `${readinessStatus.imported}: ${hasNiosh ? 'NIOSH NPG' : 'Chemical Companion'}${kappler.length ? ', Kappler HazMatch' : ''}.`,
     details: [
       clothing.length ? `Protective clothing — ${clothing.join('; ')}` : 'Protective clothing level: not specified.',
@@ -7672,7 +7672,7 @@ function buildChemicalProfilePrintRoot(profile) {
   header.className = 'chemical-profile-print-header';
   const eyebrow = document.createElement('p');
   eyebrow.className = 'chemical-profile-print-eyebrow';
-  eyebrow.textContent = 'HAZSCOPE Chemical Profile';
+  eyebrow.textContent = 'EMERGENZ Chemical Profile';
   const title = document.createElement('h1');
   title.textContent = profile?.header?.name || document.getElementById('chemical-name')?.textContent || 'Chemical Profile';
   header.append(eyebrow, title);
@@ -8683,21 +8683,27 @@ function updatePlumeTerrainStatus() {
 
 function detectConfiguredPlumeBuildings() {
   const button = document.getElementById('plume-buildings-toggle');
-  configuredPlumeBuildingLayers = (plumeMap?.getStyle()?.layers || [])
-    .filter((layer) => layer.type === 'fill-extrusion')
+  const styleLayers = plumeMap?.getStyle()?.layers || [];
+  configuredPlumeBuildingLayers = styleLayers
+    .filter((layer) => layer.type === 'fill-extrusion'
+      && (String(layer.id).toLowerCase().includes('building')
+        || String(layer['source-layer']).toLowerCase().includes('building')))
     .map((layer) => layer.id);
   if (!configuredPlumeBuildingLayers.length) {
-    const buildingFill = (plumeMap?.getStyle()?.layers || []).find((layer) => layer.type === 'fill'
-      && (String(layer.id).toLowerCase().includes('building') || String(layer['source-layer']).toLowerCase() === 'building'));
+    const buildingFill = styleLayers.find((layer) => (layer.type === 'fill' || layer.type === 'fill-extrusion')
+      && layer.source
+      && layer['source-layer']
+      && (String(layer.id).toLowerCase().includes('building')
+        || String(layer['source-layer']).toLowerCase().includes('building')));
     if (buildingFill?.source && buildingFill['source-layer'] && !plumeMap.getLayer(plumeTacticalBuildingLayerId)) {
       try {
-        const firstSymbolLayer = plumeMap.getStyle().layers.find((layer) => layer.type === 'symbol')?.id;
+        const firstSymbolLayer = styleLayers.find((layer) => layer.type === 'symbol')?.id;
         plumeMap.addLayer({
           id: plumeTacticalBuildingLayerId,
           type: 'fill-extrusion',
           source: buildingFill.source,
           'source-layer': buildingFill['source-layer'],
-          minzoom: 14,
+          minzoom: 13,
           filter: buildingFill.filter,
           layout: { visibility: 'none' },
           paint: {
@@ -8731,6 +8737,12 @@ function detectConfiguredPlumeBuildings() {
 function toggleConfiguredPlumeBuildings() {
   if (!plumeMap || !configuredPlumeBuildingLayers.length) {
     setText('plume-layers-status', '3D building height data not configured.');
+    return;
+  }
+  if (!plumeViewUsesTerrain()) {
+    plumeBuildingsVisible = true;
+    setText('plume-layers-status', 'Switching to 3D Terrain to show building heights.');
+    void setPlumeMapView('terrain3d');
     return;
   }
   plumeBuildingsVisible = !plumeBuildingsVisible;
@@ -8871,6 +8883,7 @@ function restorePlumeMapOverlays() {
   // style.load means the style graph is ready for custom sources/layers even
   // while isStyleLoaded() remains false waiting on remote basemap tiles.
   if (!plumeMap?.getStyle()) return;
+  detectConfiguredPlumeBuildings();
   if (currentThreatZoneGeoJson?.features?.length) addThreatZoneLayers();
   if (ergIsolationVisible && currentErgIsolationGeoJson?.features?.length) addErgIsolationLayer();
   if (plumeLayerState.hazards && currentPlumeHazardsGeoJson) addPlumeHazardsLayers(currentPlumeHazardsGeoJson);
@@ -9308,7 +9321,7 @@ function plumeResultToGeoJson(result, origin) {
         properties: {
           label: `${zone.thresholdKind}-${zone.thresholdLevel}`,
           zoneId: `modeled-${index}`,
-          source: `EPA AEGL ${result.endpoint?.selectedDurationMinutes || result.inputs?.endpointDurationMinutes || 60}-minute endpoint · HAZSCOPE Planning Estimate`,
+          source: `EPA AEGL ${result.endpoint?.selectedDurationMinutes || result.inputs?.endpointDurationMinutes || 60}-minute endpoint · EMERGENZ Planning Estimate`,
           thresholdKind: zone.thresholdKind,
           thresholdLevel: zone.thresholdLevel,
           threatRank,
@@ -12506,7 +12519,7 @@ function buildPlumeWorkflowRecord({ location, inputs, modeled, command }) {
     },
     model: {
       modelMode: modeled.result.modelMode || 'HAZMATIQ_PLANNING_ESTIMATE',
-      modelModeLabel: modeled.result.modelModeLabel || 'HAZSCOPE Planning Estimate',
+      modelModeLabel: modeled.result.modelModeLabel || 'EMERGENZ Planning Estimate',
       modelFamily: modeled.result.modelFamily || 'Gaussian neutral gas',
       modelName: modeled.result.modelName || modeled.result.modelMetadata?.modelName || noCurrentDataText,
       formulaName: 'Gaussian plume / puff screening equations',

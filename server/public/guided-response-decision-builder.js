@@ -915,7 +915,7 @@
           { label: 'ERG protective action', value: isolationFacts.protectiveAction || NO_DATA, emphasis: true },
           { label: 'ERG public safety', value: itemList(publicSafetyFacts).join(' · ') },
           { label: 'ERG evacuation', value: itemList(evacuationFacts).join(' · ') },
-          { label: 'HAZSCOPE plume estimate', value: itemList(plumeFacts).join(' · '), emphasis: true },
+          { label: 'EMERGENZ plume estimate', value: itemList(plumeFacts).join(' · '), emphasis: true },
         ],
         verificationItems: checkItems([
           'Confirm wind direction and current weather',

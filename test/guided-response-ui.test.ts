@@ -106,7 +106,7 @@ describe("Guided Response workflow", () => {
 
   it("provides the new view, required actions, and compact disclaimers", () => {
     expect(html).toContain('id="guided-response" class="view guided-response-page"');
-    expect(guidedHtml).toContain('class="guided-response-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1"');
+    expect(guidedHtml).toContain('class="guided-response-logo" src="assets/emergenz-hero-header.png?v=2"');
     expect(guidedHtml).toMatch(/guided-response-logo[^>]*>[\s\S]*<div class="hazmat-page-hero-content">[\s\S]*<h1 class="hazmat-hero-title">Guided Response<\/h1>/s);
     expect(guidedHtml).toContain('Command Actions');
     for (const id of [

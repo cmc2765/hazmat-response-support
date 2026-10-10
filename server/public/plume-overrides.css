@@ -1577,3 +1577,103 @@ body.plume-map-maximized-open { overflow: hidden; }
   #plume.view.active .plume-v2-map-card { height: 520px; min-height: 520px; }
   #plume.view.active .plume-zone-tabs button { font-size: 9px; }
 }
+
+/* Final Plume control contract: the location editor belongs to the map
+   surface, immediately before Layers and Actions. Keep it compact so the
+   address field remains usable without creating a second oversized toolbar. */
+#plume.view.active .plume-global-action-bar {
+  grid-template-columns: minmax(280px, 2.1fr) repeat(3, minmax(106px, 1fr));
+}
+#plume.view.active .plume-v2-map-controls {
+  display: grid;
+  grid-template-columns: minmax(215px, 1.2fr) max-content max-content;
+  align-items: stretch;
+  gap: 8px;
+  min-width: 0;
+}
+#plume.view.active .plume-map-location-control {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 4px;
+  min-width: 0;
+  margin: 0;
+  padding-right: 8px;
+  border-right: 1px solid rgba(145, 190, 224, .28);
+}
+#plume.view.active .plume-map-location-control .plume-location-field > span {
+  margin-bottom: 2px;
+  font-size: 9px;
+}
+#plume.view.active .plume-map-location-control .plume-location-input {
+  min-height: 30px;
+  padding: 5px 8px;
+  font-size: 12px;
+}
+#plume.view.active .plume-location-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+}
+#plume.view.active .plume-map-location-control .plume-map-button {
+  min-height: 27px;
+  padding: 4px 6px;
+  font-size: 9px;
+}
+#plume.view.active .plume-v2-map-controls > .plume-map-layer-controls,
+#plume.view.active .plume-v2-map-controls > .plume-map-action-controls {
+  align-self: stretch;
+  min-width: 0;
+  flex-wrap: wrap;
+  padding-right: 8px;
+  border-right: 1px solid rgba(145, 190, 224, .28);
+}
+#plume.view.active .plume-v2-map-controls > .plume-map-action-controls {
+  padding-right: 0;
+  border-right: 0;
+}
+#plume.view.active .plume-model-section {
+  padding: 7px;
+}
+#plume.view.active .plume-model-section-heading {
+  min-height: 29px;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+#plume.view.active .plume-model-section-heading strong {
+  font-size: 13px;
+}
+#plume.view.active .plume-model-section-heading small {
+  display: none;
+}
+
+@media (max-width: 1100px) and (min-width: 951px) {
+  #plume.view.active .plume-global-action-bar {
+    grid-template-columns: minmax(260px, 1.8fr) repeat(3, minmax(86px, 1fr));
+  }
+}
+@media (max-width: 950px) {
+  #plume.view.active .plume-global-action-bar {
+    grid-template-columns: minmax(0, 1fr) repeat(3, minmax(0, 1fr));
+  }
+  #plume.view.active .plume-v2-map-controls {
+    grid-template-columns: 1fr;
+  }
+  #plume.view.active .plume-map-location-control,
+  #plume.view.active .plume-v2-map-controls > .plume-map-layer-controls {
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(145, 190, 224, .28);
+    padding-bottom: 6px;
+  }
+  #plume.view.active .plume-v2-map-controls > .plume-map-action-controls {
+    padding-bottom: 0;
+  }
+}
+@media (max-width: 620px) {
+  #plume.view.active .plume-global-action-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #plume.view.active .plume-global-action-bar .plume-map-mode-controls {
+    grid-column: 1 / -1;
+  }
+}

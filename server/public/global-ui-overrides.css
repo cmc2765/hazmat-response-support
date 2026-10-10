@@ -1170,3 +1170,101 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
     white-space: normal !important;
   }
 }
+
+/* EMERGENZ Dashboard hero — single authoritative artwork layer.
+   The banner is proportional background artwork, not a stretched logo image. */
+.app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  background: #061a2e !important;
+}
+
+.app-shell:has(#overview.view.active) > .command-header::before,
+.app-shell:has(#overview.view.active) > .command-header::after,
+.app-shell:has(#overview.view.active) > .command-header .command-header-plume,
+.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn::before {
+  display: none !important;
+  animation: none !important;
+}
+
+@media (min-width: 761px) {
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity,
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    height: clamp(300px, 21vw, 340px) !important;
+    flex: 0 0 clamp(300px, 21vw, 340px) !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #061a2e url("assets/emergenz-hero-header.png?v=2") center center / cover no-repeat !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    scale: 1 !important;
+    transition: none !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+    position: absolute !important;
+    display: block !important;
+    inset: 0 !important;
+    width: 1px !important;
+    height: 1px !important;
+    max-width: none !important;
+    max-height: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1100px) {
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity,
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand {
+    height: clamp(220px, calc((100vw - 40px) / 3), 300px) !important;
+    flex-basis: clamp(220px, calc((100vw - 40px) / 3), 300px) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar,
+  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
+    background: #061a2e !important;
+  }
+
+  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
+    opacity: 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 560px !important;
+    max-height: 170px !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+}

@@ -44,6 +44,7 @@
   let weatherRefreshToken = 0;
   let weatherFirePopupFeatureId = null;
   let weatherAlertHighlightTimer = null;
+  let selectedWeatherAlertKey = null;
   let windLayerEnabled = false;
   let floodLayerEnabled = false;
   let fireLayerEnabled = false;
@@ -175,7 +176,7 @@
     return extendAlertBounds(geometry.coordinates, bounds) ? bounds : null;
   }
 
-  function flashAlertOnMap(impact) {
+  function flashAlertOnMap(impact, { pulse = false } = {}) {
     const alert = weatherAlerts.find((feature, index) => String(feature?.id || `alert-${index}`) === String(impact?.alertKey));
     if (!alert?.geometry) { setMapLayerStatus(`${impact?.title || 'Alert'} · no map boundary is available.`); return; }
     if (!weatherMap?.isStyleLoaded?.()) { setMapLayerStatus('Weather map is still loading; alert boundary unavailable.'); return; }
@@ -187,15 +188,39 @@
     const bounds = alertGeometryBounds(alert.geometry);
     if (bounds) weatherMap.fitBounds(bounds, { padding: 56, maxZoom: 10, duration: 550 });
     setMapLayerStatus(`${impact.title} · alert boundary highlighted on map.`);
-    let pulse = 0;
+    if (!pulse) return;
+    let pulseCount = 0;
     weatherAlertHighlightTimer = window.setInterval(() => {
       if (!weatherMap.getLayer(alertHighlightFillLayerId) || !weatherMap.getLayer(alertHighlightLineLayerId)) { removeAlertHighlight(); return; }
-      pulse += 1;
-      const visible = pulse % 2 === 1;
+      pulseCount += 1;
+      const visible = pulseCount % 2 === 1;
       weatherMap.setPaintProperty(alertHighlightFillLayerId, 'fill-opacity', visible ? 0.52 : 0.12);
       weatherMap.setPaintProperty(alertHighlightLineLayerId, 'line-opacity', visible ? 1 : 0.28);
-      if (pulse >= 8) { window.clearInterval(weatherAlertHighlightTimer); weatherAlertHighlightTimer = null; weatherMap.setPaintProperty(alertHighlightFillLayerId, 'fill-opacity', 0.26); weatherMap.setPaintProperty(alertHighlightLineLayerId, 'line-opacity', 0.95); }
+      if (pulseCount >= 8) { window.clearInterval(weatherAlertHighlightTimer); weatherAlertHighlightTimer = null; weatherMap.setPaintProperty(alertHighlightFillLayerId, 'fill-opacity', 0.26); weatherMap.setPaintProperty(alertHighlightLineLayerId, 'line-opacity', 0.95); }
     }, 220);
+  }
+
+  function toggleWeatherAlertHighlight(impact, item) {
+    const alertKey = String(impact?.alertKey || '');
+    if (!alertKey) return;
+    if (selectedWeatherAlertKey === alertKey) {
+      selectedWeatherAlertKey = null;
+      item.classList.remove('is-selected');
+      item.setAttribute('aria-pressed', 'false');
+      removeAlertHighlight();
+      setMapLayerStatus(`${impact.title} · alert highlight cleared.`);
+      return;
+    }
+    document.querySelectorAll('.weather-impact-map-target.is-selected').forEach((selected) => {
+      selected.classList.remove('is-selected');
+      selected.setAttribute('aria-pressed', 'false');
+    });
+    selectedWeatherAlertKey = alertKey;
+    item.classList.add('is-selected');
+    item.setAttribute('aria-pressed', 'true');
+    // A selected alert is intentionally steady. Calling this helper clears
+    // any active pulse before drawing the persistent map highlight.
+    flashAlertOnMap(impact, { pulse: false });
   }
 
   function setLayerButton(layer, active) {
@@ -330,12 +355,33 @@
     return 'normal';
   }
 
+  function floodProviderStatus(health, hasGauges = false) {
+    const state = String(health?.state || 'UNTESTED').toUpperCase();
+    if (state === 'CONNECTED') return 'NOAA NWPS — CONNECTED';
+    if (state === 'DEGRADED') return hasGauges ? 'NOAA NWPS — DEGRADED · USGS OBSERVATION AVAILABLE' : 'NOAA NWPS — DEGRADED';
+    if (state === 'UNAVAILABLE') return hasGauges ? 'NOAA NWPS TEMPORARILY UNAVAILABLE · USGS OBSERVATION AVAILABLE' : 'NOAA NWPS TEMPORARILY UNAVAILABLE';
+    return 'NOAA NWPS — LIVE VERIFICATION PENDING';
+  }
+
+  async function refreshFloodProviderHealth() {
+    try {
+      const response = await fetch('/api/hydrology/health', { cache: 'no-store' });
+      const health = await response.json();
+      writeText('weather-flood-service-status', floodProviderStatus(health));
+      return health;
+    } catch {
+      writeText('weather-flood-service-status', 'NOAA NWPS TEMPORARILY UNAVAILABLE');
+      return { state: 'UNAVAILABLE' };
+    }
+  }
+
   function showFloodPopup(gauge) {
     if (!weatherMap) return;
     closeWeatherPopups();
     const content = document.createElement('div'); content.className = 'weather-flood-popup';
     const title = document.createElement('strong'); title.textContent = String(gauge?.name || gauge?.id || 'Flood gauge').toUpperCase(); content.append(title);
-    [['Stage', number(gauge.stageFt, 1, ' ft')], ['Flood stage', number(gauge.floodStageFt, 1, ' ft')], ['Forecast crest', number(gauge.forecastCrestFt, 1, ' ft')], ['Flow', number(gauge.flowCfs, 0, ' cfs')], ['Category', gauge.category || 'Official category unavailable'], ['Observed', gauge.observedAt ? new Date(gauge.observedAt).toLocaleString() : 'Unavailable']].forEach(([label, value]) => { const row = document.createElement('small'); row.textContent = `${label}: ${value}`; content.append(row); });
+    const observed = gauge.observed || {}; const forecast = gauge.forecast || {}; const flood = gauge.flood || {};
+    [['Status', gauge.dataStatus || 'GAUGE DATA UNAVAILABLE'], ['Observed stage', number(observed.stageFt ?? gauge.stageFt, 1, ' ft')], ['Observed flow', number(observed.flowCfs ?? gauge.flowCfs, 0, ' cfs')], ['Forecast stage', number(forecast.stageFt, 1, ' ft')], ['Forecast crest', number(forecast.crestStageFt ?? gauge.forecastCrestFt, 1, ' ft')], ['Forecast valid', forecast.validAt ? new Date(forecast.validAt).toLocaleString() : 'Unavailable'], ['Flood category', flood.forecastCategory || flood.currentCategory || gauge.category || 'Official category unavailable'], ['Action / minor / moderate / major', [flood.actionStageFt, flood.minorStageFt, flood.moderateStageFt, flood.majorStageFt].map((value) => number(value, 1, ' ft')).join(' / ')], ['Observed', observed.observedAt || gauge.observedAt ? new Date(observed.observedAt || gauge.observedAt).toLocaleString() : 'Unavailable']].forEach(([label, value]) => { const row = document.createElement('small'); row.textContent = `${label}: ${value}`; content.append(row); });
     const source = document.createElement('em'); source.textContent = `${gauge.source} · Retrieved ${weatherFloodData.retrievedAt ? new Date(weatherFloodData.retrievedAt).toLocaleTimeString() : 'Unavailable'}`; content.append(source);
     weatherFloodPopup = new window.maplibregl.Popup({ closeButton: true, closeOnClick: false, offset: 16 }).setLngLat([gauge.lon, gauge.lat]).setDOMContent(content).addTo(weatherMap);
   }
@@ -362,12 +408,13 @@
     weatherFloodAbort?.abort(); weatherFloodAbort = new AbortController(); const token = weatherFloodAbort;
     const params = new URLSearchParams({ west: String(bounds.getWest()), south: String(bounds.getSouth()), east: String(bounds.getEast()), north: String(bounds.getNorth()), zoom: String(weatherMap.getZoom?.() || 9) });
     writeText('weather-flood-service-status', 'Loading'); setMapLayerStatus('Flood layer loading · NOAA NWPS and USGS gauge feeds…');
+    void refreshFloodProviderHealth();
     try {
       const response = await fetch(`/api/hydrology/flood?${params}`, { signal: token.signal, cache: 'no-store' });
       if (!response.ok) throw new Error('Flood provider unavailable');
       const value = await response.json(); if (token !== weatherFloodAbort || !floodLayerEnabled) return;
-      weatherFloodData = value; weatherFloodCache = { key, fetchedAt: Date.now(), value }; writeText('weather-flood-service-status', value.gauges?.length ? 'Ready' : 'No gauges in view'); renderFloodOverlay(); setMapLayerStatus(value.gauges?.length ? `Flood layer active · ${value.gauges.length} nearby gauge${value.gauges.length === 1 ? '' : 's'}.` : 'Flood layer active · no nearby gauges returned.');
-    } catch (error) { if (error?.name === 'AbortError') return; writeText('weather-flood-service-status', 'Unavailable'); setMapLayerStatus('Flood layer unavailable · basemap and other layers remain available.'); }
+      weatherFloodData = value; weatherFloodCache = { key, fetchedAt: Date.now(), value }; writeText('weather-flood-service-status', floodProviderStatus(value.nwpsHealth, Boolean(value.gauges?.length))); renderFloodOverlay(); setMapLayerStatus(value.gauges?.length ? `Flood layer active · ${value.gauges.length} nearby gauge${value.gauges.length === 1 ? '' : 's'}.` : 'Flood layer active · no nearby gauges returned.');
+    } catch (error) { if (error?.name === 'AbortError') return; writeText('weather-flood-service-status', 'NOAA NWPS TEMPORARILY UNAVAILABLE'); setMapLayerStatus('Flood layer unavailable · basemap and other layers remain available.'); }
   }
 
   function removeFireOverlay() {
@@ -711,10 +758,75 @@
     const moreButton = document.getElementById('weather-impact-more');
     const expanded = moreButton?.dataset.expanded === 'true';
     const visible = expanded ? impacts : impacts.slice(0, 5);
+    if (selectedWeatherAlertKey && !impacts.some((impact) => impact.alert && String(impact.alertKey) === selectedWeatherAlertKey)) {
+      selectedWeatherAlertKey = null;
+      removeAlertHighlight();
+    }
     list.replaceChildren(...visible.map((impact) => {
-      const item = document.createElement('li'); item.className = `weather-impact-row weather-impact-${impact.severity}`;
-      const icon = document.createElement('span'); icon.className = 'weather-impact-icon'; icon.textContent = impact.severity === 'critical' ? '!' : impact.category === 'HAZMAT' ? '◈' : impact.category === 'RESPONDER SAFETY' ? '✚' : impact.category === 'UAS / AVIATION' ? '↑' : impact.category === 'WILDLAND' ? '△' : '•';
-      const body = document.createElement('div'); body.className = 'weather-impact-body'; const heading = document.createElement('div'); heading.className = 'weather-impact-heading'; const title = document.createElement('strong'); title.textContent = impact.title; const badge = document.createElement('span'); badge.textContent = impact.severity.toUpperCase(); heading.append(title); if (impact.alert) { const timeWindow = document.createElement('time'); timeWindow.className = 'weather-impact-time'; timeWindow.setAttribute('aria-label', `Alert time window: ${impact.timeWindow || 'unavailable'}`); timeWindow.textContent = impact.timeWindow || 'TIME WINDOW UNAVAILABLE'; heading.append(timeWindow); } heading.append(badge); if (impact.alert) { const mapHint = document.createElement('span'); mapHint.className = 'weather-impact-map-hint'; mapHint.textContent = 'MAP'; mapHint.setAttribute('aria-hidden', 'true'); heading.append(mapHint); item.classList.add('weather-impact-map-target'); item.setAttribute('role', 'button'); item.setAttribute('tabindex', '0'); item.setAttribute('aria-label', `${impact.title}. Click to highlight this alert on the map.`); item.title = 'Click to highlight this alert on the map'; const highlight = () => { document.querySelectorAll('.weather-impact-map-target.is-selected').forEach((selected) => selected.classList.remove('is-selected')); item.classList.add('is-selected'); flashAlertOnMap(impact); }; item.addEventListener('click', (event) => { if (!event.target.closest('details')) highlight(); }); item.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); highlight(); } }); } const summary = document.createElement('p'); summary.textContent = impact.summary; body.append(heading, summary); if (impact.values) { const values = document.createElement('small'); values.textContent = impact.values; body.append(values); } if (impact.detail) { const details = document.createElement('details'); const summaryNode = document.createElement('summary'); summaryNode.textContent = impact.alert ? 'VIEW ALERT' : 'WHY?'; const detail = document.createElement('p'); detail.textContent = impact.detail; details.append(summaryNode, detail); body.append(details); } item.append(icon, body); return item;
+      const item = document.createElement('li');
+      item.className = `weather-impact-row weather-impact-${impact.severity}`;
+      const icon = document.createElement('span');
+      icon.className = 'weather-impact-icon';
+      icon.textContent = impact.severity === 'critical' ? '!' : impact.category === 'HAZMAT' ? '◈' : impact.category === 'RESPONDER SAFETY' ? '✚' : impact.category === 'UAS / AVIATION' ? '↑' : impact.category === 'WILDLAND' ? '△' : '•';
+      const body = document.createElement('div');
+      body.className = 'weather-impact-body';
+      const heading = document.createElement('div');
+      heading.className = 'weather-impact-heading';
+      const title = document.createElement('strong');
+      title.textContent = impact.title;
+      const badge = document.createElement('span');
+      badge.textContent = impact.severity.toUpperCase();
+      heading.append(title);
+      if (impact.alert) {
+        const timeWindow = document.createElement('time');
+        timeWindow.className = 'weather-impact-time';
+        timeWindow.setAttribute('aria-label', `Alert time window: ${impact.timeWindow || 'unavailable'}`);
+        timeWindow.textContent = impact.timeWindow || 'TIME WINDOW UNAVAILABLE';
+        heading.append(timeWindow);
+      }
+      heading.append(badge);
+      if (impact.alert) {
+        const mapHint = document.createElement('span');
+        mapHint.className = 'weather-impact-map-hint';
+        mapHint.textContent = 'MAP';
+        mapHint.setAttribute('aria-hidden', 'true');
+        heading.append(mapHint);
+        item.classList.add('weather-impact-map-target');
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('aria-pressed', String(selectedWeatherAlertKey === String(impact.alertKey)));
+        item.setAttribute('aria-label', `${impact.title}. Click to highlight this alert on the map.`);
+        item.title = 'Click to highlight this alert on the map';
+        if (selectedWeatherAlertKey === String(impact.alertKey)) item.classList.add('is-selected');
+        item.addEventListener('click', (event) => {
+          if (!event.target.closest('details')) toggleWeatherAlertHighlight(impact, item);
+        });
+        item.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            toggleWeatherAlertHighlight(impact, item);
+          }
+        });
+      }
+      const summary = document.createElement('p');
+      summary.textContent = impact.summary;
+      body.append(heading, summary);
+      if (impact.values) {
+        const values = document.createElement('small');
+        values.textContent = impact.values;
+        body.append(values);
+      }
+      if (impact.detail) {
+        const details = document.createElement('details');
+        const summaryNode = document.createElement('summary');
+        summaryNode.textContent = impact.alert ? 'VIEW ALERT' : 'WHY?';
+        const detail = document.createElement('p');
+        detail.textContent = impact.detail;
+        details.append(summaryNode, detail);
+        body.append(details);
+      }
+      item.append(icon, body);
+      return item;
     }));
     if (moreButton) { moreButton.hidden = impacts.length <= 5; moreButton.textContent = expanded ? 'SHOW LESS' : `+ ${impacts.length - 5} MORE`; }
     writeText('weather-impact-status', weatherState?.current ? `${impacts.length} IMPACTS` : 'Awaiting data');

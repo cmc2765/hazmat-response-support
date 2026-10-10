@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HAZSCOPE Prototype</title>
+    <title>EMERGENZ | Incident Intelligence + Response Planning</title>
     <link rel="stylesheet" href="vendor/maplibre-gl/maplibre-gl.css" />
     <link rel="stylesheet" href="styles.css?v=live-map-responsive-2" />
     <link rel="stylesheet" href="hero-overrides.css?v=11" />
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="guided-response-overrides.css?v=1" />
     <link rel="stylesheet" href="hazard-profile-page.css?v=1" />
     <link rel="stylesheet" href="page-shell.css?v=1" />
-    <link rel="stylesheet" href="plume-overrides.css?v=10&canonical-grid=1" />
+    <link rel="stylesheet" href="plume-overrides.css?v=11&canonical-grid=1" />
     <link rel="stylesheet" href="navigation-weather.css?v=6" />
   </head>
   <body>
@@ -24,14 +24,14 @@
         <span class="command-header-plume" aria-hidden="true"></span>
         <div class="hazmat-command-identity">
           <div class="brand">
-            <button class="module-btn command-brand-home" id="command-brand-home" type="button" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home">
-              <img class="brand-logo-command" src="assets/HAZSCOPE-New-Logo.png?v=2" alt="HAZSCOPE — Incident Intelligence + Response Planning" />
+            <button class="module-btn command-brand-home" id="command-brand-home" type="button" aria-label="Return to the EMERGENZ Home Page" title="Return to EMERGENZ Home">
+              <img class="brand-logo-command" src="assets/emergenz-hero-header.png?v=2" alt="EMERGENZ — Incident Intelligence + Response Planning" />
             </button>
           </div>
         </div>
 
         <nav class="app-primary-nav" id="app-primary-nav" aria-label="Primary navigation">
-          <button class="module-btn app-nav-item" type="button" data-view="overview" data-nav-key="dashboard" aria-label="Open HAZSCOPE Dashboard" aria-current="page">
+          <button class="module-btn app-nav-item" type="button" data-view="overview" data-nav-key="dashboard" aria-label="Open EMERGENZ Dashboard" aria-current="page">
             <span class="app-nav-icon icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg></span><span class="app-nav-label label">Dashboard</span>
           </button>
           <button class="module-btn app-nav-item" type="button" data-view="lookup" aria-label="Open Hazard ID">
@@ -69,7 +69,7 @@
           <button class="workspace-drawer-close" id="workspace-drawer-close" type="button" aria-label="Close workspace navigation">Close</button>
         </header>
         <nav class="workspace-drawer-nav" aria-label="Workspace navigation">
-          <button class="workspace-drawer-home" type="button" data-view="overview" aria-label="Return to the HAZSCOPE Home Page" title="Return to HAZSCOPE Home"><img src="assets/HAZSCOPE-New-Logo.png?v=2" alt="HAZSCOPE — Incident Intelligence + Response Planning" /></button>
+          <button class="workspace-drawer-home" type="button" data-view="overview" aria-label="Return to the EMERGENZ Home Page" title="Return to EMERGENZ Home"><img src="assets/emergenz-hero-header.png?v=2" alt="EMERGENZ — Incident Intelligence + Response Planning" /></button>
           <button class="module-btn" data-view="incident">INCIDENT COMMAND</button>
           <button class="module-btn" data-view="lookup">HAZARD ID</button>
           <button class="module-btn" data-view="plume">PLUME MODELING</button>
@@ -141,7 +141,7 @@
                 </section>
               </div>
 
-              <section class="command-promo-grid overview-promo-strip" aria-label="HAZSCOPE capability highlights">
+              <section class="command-promo-grid overview-promo-strip" aria-label="EMERGENZ capability highlights">
                 <article class="overview-promo-box promo-chemical"><span aria-hidden="true">⚗</span><div><strong>Chemical ID</strong><small>Source-backed hazard profiles</small></div></article>
                 <article class="overview-promo-box promo-cbrn"><span aria-hidden="true">☣</span><div><strong>Warfare Agents</strong><small>CBRN identification support</small></div></article>
                 <article class="overview-promo-box promo-rad"><span aria-hidden="true">☢</span><div><strong>Radiological ID</strong><small>Isotope response intelligence</small></div></article>
@@ -156,7 +156,7 @@
 
           <section class="home-status-bar" aria-label="Dashboard operational status">
             <section class="notification-center hazmat-command-context" id="notification-center" role="status" aria-live="polite" aria-atomic="false" data-severity="normal">
-              <strong class="notification-center-title sr-only">HAZSCOPE Command Status</strong>
+              <strong class="notification-center-title sr-only">EMERGENZ Command Status</strong>
               <div class="notification-feed">
                 <div class="notification-item notification-system">
                   <div class="notification-system-heading"><span>System</span><time class="notification-updated" id="notification-updated" aria-label="Current 24-hour time">00:00:00</time></div>
@@ -638,7 +638,7 @@
             <header class="hazmat-page-hero variant-chemical hazard-id-page-hero" id="hazard-id-search-hero">
               <span class="hazard-id-hero-atmosphere" aria-hidden="true"></span>
               <div class="hazmat-page-hero-content">
-                <img class="hazard-id-hero-logo" src="assets/HAZSCOPE-New-Logo.png?v=2" alt="HAZSCOPE — Incident Intelligence + Response Planning" hidden />
+                        <img class="hazard-id-hero-logo" src="assets/emergenz-hero-header.png?v=2" alt="EMERGENZ — Incident Intelligence + Response Planning" hidden />
                 <h1 class="hazmat-hero-title">HAZARD ID</h1>
                 <p class="hazmat-hero-subtitle">Search, Identify, Verify, Respond.</p>
               </div>
@@ -863,7 +863,7 @@
           <section id="guided-response" class="view guided-response-page" data-page-root="guided-response" data-page-name="Guided Response">
             <header class="hazmat-page-hero variant-guided-response guided-response-heading">
               <div class="guided-response-brand">
-                <img class="guided-response-logo" src="assets/hazscope-incident-intelligence-response-planning.png?v=1" alt="HAZSCOPE — Incident Intelligence + Response Planning" hidden />
+                <img class="guided-response-logo" src="assets/emergenz-hero-header.png?v=2" alt="EMERGENZ — Incident Intelligence + Response Planning" hidden />
                 <div class="hazmat-page-hero-content">
                   <h1 class="hazmat-hero-title">Guided Response</h1>
                   <p class="hazmat-hero-subtitle">Tactical Decision Support.</p>
@@ -901,13 +901,7 @@
           </section>
 
           <section id="plume" class="view plume-model-page" data-page-root="plume-model" data-page-name="Plume Model">
-            <form class="plume-v2-location-toolbar plume-global-action-bar" id="plume-map-address-form">
-              <label class="plume-location-field" for="plume-map-address-input">
-                <span>Plume Location</span>
-                <input class="plume-location-input" id="plume-map-address-input" type="text" placeholder="Enter address, coordinates, or use incident location" autocomplete="street-address" />
-              </label>
-              <button class="plume-map-button secondary" id="use-plume-incident-location-btn" type="button">Use Incident Address</button>
-              <button class="plume-map-button secondary" type="submit">Manual Entry</button>
+            <div class="plume-v2-location-toolbar plume-global-action-bar">
               <div class="plume-map-mode-controls" role="group" aria-label="Map mode">
                 <span class="plume-map-control-label">MAP MODE</span>
                 <button class="plume-layer-button active" type="button" data-plume-map-view="satellite" aria-pressed="true">Satellite</button>
@@ -918,7 +912,7 @@
               <button class="module-btn plume-map-button guided-response-toolbar-button" type="button" data-command-view="guided-response">Guided Response</button>
               <button class="plume-map-button primary" id="plot-plume-btn" type="button" disabled>Plot Plume</button>
               <button class="module-btn plume-map-button secondary plume-live-radar-link" type="button" data-view="map">Open Live Map</button>
-            </form>
+            </div>
             <div class="plume-v2-workspace">
               <aside class="plume-v2-input-column" aria-label="Plume model inputs">
             <form class="plume-model-controls" id="plume-model-form">
@@ -926,7 +920,7 @@
                 <details class="plume-model-section" open>
                   <summary class="plume-model-section-heading">
                     <span class="plume-stage-number" aria-hidden="true">1</span>
-                    <div><strong>Chemical Release</strong><small>Enter the chemical and release parameters.</small></div>
+                    <div><strong>Chemical Release</strong></div>
                     <span class="plume-card-accent" aria-hidden="true"></span>
                   </summary>
                   <div class="plume-model-section-grid plume-release-grid">
@@ -1039,7 +1033,7 @@
                 <details class="plume-model-section plume-weather-section" id="plume-weather-data-panel" open>
                   <summary class="plume-model-section-heading">
                     <span class="plume-stage-number" aria-hidden="true">2</span>
-                    <div><strong id="plume-weather-data-heading">Weather Conditions</strong><small>Wind, temperature, stability, and roughness drive the current model.</small></div>
+                    <div><strong id="plume-weather-data-heading">Weather Conditions</strong></div>
                   </summary>
                   <div class="plume-model-section-grid plume-weather-grid">
                     <div class="plume-weather-source-row">
@@ -1188,6 +1182,16 @@
               <main class="plume-v2-map-column">
                 <article class="plume-v2-map-card">
                   <div class="plume-v2-map-controls" role="group" aria-label="Plume map controls">
+                      <form class="plume-map-location-control" id="plume-map-address-form">
+                        <label class="plume-location-field" for="plume-map-address-input">
+                          <span>Plume Location</span>
+                          <input class="plume-location-input" id="plume-map-address-input" type="text" placeholder="Enter address or coordinates" autocomplete="street-address" />
+                        </label>
+                        <div class="plume-location-actions">
+                          <button class="plume-map-button secondary" id="use-plume-incident-location-btn" type="button">Use Incident Address</button>
+                          <button class="plume-map-button secondary" type="submit">Manual Entry</button>
+                        </div>
+                      </form>
                       <div class="plume-map-layer-controls" role="group" aria-label="Map layers and overlays">
                         <span class="plume-map-control-label">LAYERS</span>
                         <button class="plume-layer-button active" type="button" data-plume-layer="zones" aria-pressed="true">Threat Zones</button>
@@ -1479,7 +1483,7 @@
               <div class="hazmat-page-hero-content"><h1 class="hazmat-hero-title">Equipment</h1><p class="hazmat-hero-subtitle">Monitor Readiness, PPE &amp; Field Assets.</p><div class="hazmat-hero-chip-row"><span class="hazmat-hero-chip monitor-simulated-label">Training Data · Simulated</span></div></div>
             </header>
 
-            <p class="monitor-purpose">HAZSCOPE uses FirstDue as the future system of record for apparatus, equipment, inspections, calibration, and weekly checks. HAZSCOPE tracks which monitors are assigned to this incident, displays readings, and records timestamped monitoring activity for reports.</p>
+              <p class="monitor-purpose">EMERGENZ uses FirstDue as the future system of record for apparatus, equipment, inspections, calibration, and weekly checks. EMERGENZ tracks which monitors are assigned to this incident, displays readings, and records timestamped monitoring activity for reports.</p>
 
             <section class="monitor-status-bar" aria-label="Monitoring data status">
               <label>Data Source
@@ -1555,11 +1559,11 @@
 
             <section id="monitor-inventory" class="monitor-tab-panel" role="tabpanel" aria-labelledby="monitor-inventory-tab" hidden>
               <div class="monitor-section-heading">
-                <div><h3>Monitor Inventory / FirstDue Source</h3><p>Reference records used when assigning monitors in HAZSCOPE; this is not the official inspection or calibration system.</p></div>
-                <div class="monitor-actions"><button class="monitor-add-btn" id="monitor-add-device" type="button">Add Manual Monitor</button><button type="button" id="monitor-firstdue-import">Import FirstDue Export</button><button type="button" id="monitor-inventory-export">Export HAZSCOPE Monitor Inventory</button></div>
+                <div><h3>Monitor Inventory / FirstDue Source</h3><p>Reference records used when assigning monitors in EMERGENZ; this is not the official inspection or calibration system.</p></div>
+                <div class="monitor-actions"><button class="monitor-add-btn" id="monitor-add-device" type="button">Add Manual Monitor</button><button type="button" id="monitor-firstdue-import">Import FirstDue Export</button><button type="button" id="monitor-inventory-export">Export EMERGENZ Monitor Inventory</button></div>
               </div>
-              <article class="monitor-source-card"><div><h4>FirstDue Equipment Source</h4><p>FirstDue remains the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HAZSCOPE can use manual monitor entries now and may later import approved FirstDue equipment records.</p></div><span class="monitor-state offline">Status: Not Connected</span></article>
-              <p class="monitor-reference-note">Calibration, inspection, and weekly-check records should continue to be maintained in FirstDue according to agency policy. HAZSCOPE displays these fields only as reference data when manually entered or imported through approved access.</p>
+              <article class="monitor-source-card"><div><h4>FirstDue Equipment Source</h4><p>FirstDue remains the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. EMERGENZ can use manual monitor entries now and may later import approved FirstDue equipment records.</p></div><span class="monitor-state offline">Status: Not Connected</span></article>
+              <p class="monitor-reference-note">Calibration, inspection, and weekly-check records should continue to be maintained in FirstDue according to agency policy. EMERGENZ displays these fields only as reference data when manually entered or imported through approved access.</p>
               <p class="monitor-form-status" id="monitor-firstdue-status" role="status"></p>
               <section class="monitor-saved-inventory" id="monitor-saved-inventory" hidden>
                 <div class="monitor-inventory-label"><h4>Saved Monitor Inventory</h4><span>Stored on this device</span></div>
@@ -1636,10 +1640,10 @@
                 <span class="monitor-state caution">Pending SDK/API</span>
                 <p class="safety-suite-message">Official Honeywell Safety Suite SDK/API connection not configured. Add approved Honeywell web-service credentials or SDK access to enable live AreaRAE readings.</p>
                 <ul class="safety-suite-checklist">
-                  <li>Confirm AreaRAE monitors appear in Safety Suite</li><li>Obtain official Honeywell SDK/API documentation</li><li>Obtain approved credentials</li><li>Build secure backend adapter</li><li>Stream live readings into HAZSCOPE</li><li>Save significant readings to Monitor Activity Log</li><li>Push monitor readings/locations to Live Map</li>
+                  <li>Confirm AreaRAE monitors appear in Safety Suite</li><li>Obtain official Honeywell SDK/API documentation</li><li>Obtain approved credentials</li><li>Build secure backend adapter</li><li>Stream live readings into EMERGENZ</li><li>Save significant readings to Monitor Activity Log</li><li>Push monitor readings/locations to Live Map</li>
                 </ul>
                 <p class="monitor-placeholder-note">No live connection is attempted by this Phase 2 page.</p>
-              </article><article class="safety-suite-card"><div><p class="eyebrow">Integration status</p><h3>FirstDue Equipment / Apparatus Source</h3></div><span class="monitor-state offline">Pending approved access</span><p class="safety-suite-message">FirstDue is the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. HAZSCOPE should use approved FirstDue API/export access only. No scraping or login automation.</p><ul class="safety-suite-checklist"><li>Confirm approved export format</li><li>Map FirstDue equipment fields to HAZSCOPE monitor records</li><li>Import approved CSV/JSON export</li><li>Keep readiness data reference-only</li><li>Keep official inspection/calibration records in FirstDue</li></ul><p class="monitor-placeholder-note">No FirstDue connection is attempted by this page.</p></article></div>
+              </article><article class="safety-suite-card"><div><p class="eyebrow">Integration status</p><h3>FirstDue Equipment / Apparatus Source</h3></div><span class="monitor-state offline">Pending approved access</span><p class="safety-suite-message">FirstDue is the agency system of record for apparatus, equipment, inspections, calibration, and weekly checks. EMERGENZ should use approved FirstDue API/export access only. No scraping or login automation.</p><ul class="safety-suite-checklist"><li>Confirm approved export format</li><li>Map FirstDue equipment fields to EMERGENZ monitor records</li><li>Import approved CSV/JSON export</li><li>Keep readiness data reference-only</li><li>Keep official inspection/calibration records in FirstDue</li></ul><p class="monitor-placeholder-note">No FirstDue connection is attempted by this page.</p></article></div>
             </section>
           </section>
 
@@ -1756,7 +1760,7 @@
                   </div>
                   <details class="weather-conditions-dropdown" id="weather-services-dropdown">
                     <summary><span><b>Weather Services</b></span><i aria-hidden="true">⌄</i></summary>
-                    <section class="weather-conditions-dropdown-body" aria-label="Weather Services details"><dl class="weather-operations-list"><div><dt>NWS / NOAA</dt><dd id="weather-nws-status">Awaiting location</dd></div><div><dt>Forecast</dt><dd id="weather-forecast-service-status">Awaiting location</dd></div><div><dt>Radar</dt><dd id="weather-radar-service-status">Awaiting location</dd></div><div><dt>Wind model</dt><dd id="weather-wind-service-status">Off until selected</dd></div><div><dt>Flood / hydrology</dt><dd id="weather-flood-service-status">Off until selected</dd></div><div><dt>Fire / smoke</dt><dd id="weather-fire-service-status">Off until selected</dd></div><div><dt>Visibility</dt><dd id="weather-visibility-status">Not provided by current source</dd></div></dl></section>
+                    <section class="weather-conditions-dropdown-body" aria-label="Weather Services details"><dl class="weather-operations-list"><div><dt>NWS / NOAA</dt><dd id="weather-nws-status">Awaiting location</dd></div><div><dt>Forecast</dt><dd id="weather-forecast-service-status">Awaiting location</dd></div><div><dt>Radar</dt><dd id="weather-radar-service-status">Awaiting location</dd></div><div><dt>Wind model</dt><dd id="weather-wind-service-status">Off until selected</dd></div><div><dt>Flood / hydrology</dt><dd id="weather-flood-service-status">NWPS — LIVE VERIFICATION PENDING</dd></div><div><dt>Fire / smoke</dt><dd id="weather-fire-service-status">Off until selected</dd></div><div><dt>Visibility</dt><dd id="weather-visibility-status">Not provided by current source</dd></div></dl></section>
                   </details>
                 </div>
                 <section class="weather-forecast-panel" id="weather-forecast-panel" aria-labelledby="weather-forecast-title">
@@ -1799,11 +1803,11 @@
             </div>
           </section>
 
-          <section id="settings" class="view settings-page" data-page-root="settings" data-page-name="Settings">
+              <section id="settings" class="view settings-page" data-page-root="settings" data-page-name="Settings">
             <header class="hazmat-page-hero settings-hero"><div class="hazmat-page-hero-content"><p class="eyebrow">Application Configuration</p><h1 class="hazmat-hero-title">Settings</h1><p class="hazmat-hero-subtitle">Appearance, sources, and application preferences.</p></div></header>
             <div class="settings-workspace-grid">
-              <section class="settings-card settings-appearance-card" aria-labelledby="settings-appearance-title"><header><div><p class="eyebrow">Display</p><h2 id="settings-appearance-title">Appearance</h2></div><span class="settings-current-theme" id="settings-current-theme">Tactical / Dark</span></header><p class="settings-card-intro">Choose the display mode for the whole HAZSCOPE application. Tactical is optimized for command rooms; Daylight is optimized for outdoor and vehicle use.</p><div class="settings-theme-options" role="group" aria-label="Application theme"><button class="settings-theme-option" id="theme-tactical-btn" type="button" data-theme-choice="dark" aria-pressed="true"><span class="settings-theme-preview settings-theme-preview-dark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Tactical / Dark</strong><small>Dark navy command surfaces and hazard accents.</small></span><b>Active</b></button><button class="settings-theme-option" id="theme-daylight-btn" type="button" data-theme-choice="light" aria-pressed="false"><span class="settings-theme-preview settings-theme-preview-light" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Daylight / Light</strong><small>High-contrast light surfaces for bright field conditions.</small></span><b>Use</b></button></div><p class="settings-theme-status" id="settings-theme-status" role="status" aria-live="polite">Tactical / Dark is active.</p></section>
-              <section class="settings-card settings-sources-card" aria-labelledby="settings-sources-title"><header><div><p class="eyebrow">Reference Infrastructure</p><h2 id="settings-sources-title">Sources</h2></div><button class="ghost-btn" id="settings-sources-toggle" type="button" aria-expanded="false" aria-controls="settings-sources-panel">Open Sources</button></header><p class="settings-card-intro">Review the authoritative registries that support HAZSCOPE operational data. This page reports the source state already available in the application.</p><div id="settings-sources-panel" class="settings-sources-panel" hidden><div class="settings-source-category"><strong>Chemical</strong><span>Chemical Companion Master · NIOSH Pocket Guide · CAMEO Chemicals</span><b data-source-state="verified">Verified / bundled</b></div><div class="settings-source-category"><strong>Medical / Decon</strong><span>Chemical Companion medical protocols and decontamination guidance</span><b data-source-state="verified">Source-backed where available</b></div><div class="settings-source-category"><strong>CBRN / Radiological</strong><span>Curated HAZSCOPE CBRN and radiological reference corpus</span><b data-source-state="verified">Curated / offline</b></div><div class="settings-source-category"><strong>Regulatory</strong><span>ERG 2024, AEGL endpoints, and linked regulatory records</span><b data-source-state="review">Review source context</b></div><div class="settings-source-category"><strong>Weather / Mapping</strong><span>Open-Meteo, NWS observations, MapLibre basemaps, and radar providers</span><b data-source-state="available">Live / availability varies</b></div><p class="settings-source-note">Source status is informational. HAZSCOPE does not treat an available network response as automatically verified.</p></div></section>
+              <section class="settings-card settings-appearance-card" aria-labelledby="settings-appearance-title"><header><div><p class="eyebrow">Display</p><h2 id="settings-appearance-title">Appearance</h2></div><span class="settings-current-theme" id="settings-current-theme">Tactical / Dark</span></header><p class="settings-card-intro">Choose the display mode for the whole EMERGENZ application. Tactical is optimized for command rooms; Daylight is optimized for outdoor and vehicle use.</p><div class="settings-theme-options" role="group" aria-label="Application theme"><button class="settings-theme-option" id="theme-tactical-btn" type="button" data-theme-choice="dark" aria-pressed="true"><span class="settings-theme-preview settings-theme-preview-dark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Tactical / Dark</strong><small>Dark navy command surfaces and hazard accents.</small></span><b>Active</b></button><button class="settings-theme-option" id="theme-daylight-btn" type="button" data-theme-choice="light" aria-pressed="false"><span class="settings-theme-preview settings-theme-preview-light" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Daylight / Light</strong><small>High-contrast light surfaces for bright field conditions.</small></span><b>Use</b></button></div><p class="settings-theme-status" id="settings-theme-status" role="status" aria-live="polite">Tactical / Dark is active.</p></section>
+              <section class="settings-card settings-sources-card" aria-labelledby="settings-sources-title"><header><div><p class="eyebrow">Reference Infrastructure</p><h2 id="settings-sources-title">Sources</h2></div><button class="ghost-btn" id="settings-sources-toggle" type="button" aria-expanded="false" aria-controls="settings-sources-panel">Open Sources</button></header><p class="settings-card-intro">Review the authoritative registries that support EMERGENZ operational data. This page reports the source state already available in the application.</p><div id="settings-sources-panel" class="settings-sources-panel" hidden><div class="settings-source-category"><strong>Chemical</strong><span>Chemical Companion Master · NIOSH Pocket Guide · CAMEO Chemicals</span><b data-source-state="verified">Verified / bundled</b></div><div class="settings-source-category"><strong>Medical / Decon</strong><span>Chemical Companion medical protocols and decontamination guidance</span><b data-source-state="verified">Source-backed where available</b></div><div class="settings-source-category"><strong>CBRN / Radiological</strong><span>Curated EMERGENZ CBRN and radiological reference corpus</span><b data-source-state="verified">Curated / offline</b></div><div class="settings-source-category"><strong>Regulatory</strong><span>ERG 2024, AEGL endpoints, and linked regulatory records</span><b data-source-state="review">Review source context</b></div><div class="settings-source-category"><strong>Weather / Mapping</strong><span>Open-Meteo, NWS observations, MapLibre basemaps, and radar providers</span><b data-source-state="available">Live / availability varies</b></div><p class="settings-source-note">Source status is informational. EMERGENZ does not treat an available network response as automatically verified.</p></div></section>
             </div>
           </section>
 
@@ -1820,7 +1824,7 @@
                 <li><span>CAMEO Chemicals</span><strong>Bundled chemical and reactivity records</strong></li>
                 <li><span>NIOSH Pocket Guide</span><strong>Bundled exposure and physical-property records</strong></li>
                 <li><span>ERG 2024</span><strong>Guide and Table 1 response data</strong></li>
-                <li><span>HAZSCOPE plume model</span><strong>Backend threshold isopleths rendered as GIS polygons</strong></li>
+                <li><span>EMERGENZ plume model</span><strong>Backend threshold isopleths rendered as GIS polygons</strong></li>
                 <li><span>Planning Plume</span><strong>Source-backed AEGL endpoints with ERG fallback</strong></li>
               </ul>
             </div>

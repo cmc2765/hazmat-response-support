@@ -48,6 +48,7 @@ describe('navigation, settings, and weather workspace contract', () => {
     expect(html).toContain('data-weather-wind-time="0"');
     expect(html).toContain('data-weather-wind-time="6"');
     expect(html).toContain('weather-flood-service-status');
+    expect(html).toContain('NWPS — LIVE VERIFICATION PENDING');
     expect(html).toContain('Operational Impacts');
     expect(html).toContain('Weather effects relevant to current operations');
     expect(html).toContain('class="weather-forecast-panel" id="weather-forecast-panel"');
@@ -79,6 +80,9 @@ describe('navigation, settings, and weather workspace contract', () => {
     expect(weatherScript).toContain('/api/weather/alerts');
     expect(weatherScript).toContain('/api/weather/wind');
     expect(weatherScript).toContain('/api/hydrology/flood');
+    expect(weatherScript).toContain('/api/hydrology/health');
+    expect(weatherScript).toContain('NOAA NWPS TEMPORARILY UNAVAILABLE');
+    expect(weatherScript).toContain('NOAA NWPS — CONNECTED');
     expect(weatherScript).toContain('moveend');
     expect(weatherScript).toContain('AbortController');
     expect(weatherScript).toContain('Open-Meteo 10 m forecast grid');
