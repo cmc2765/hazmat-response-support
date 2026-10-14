@@ -70,6 +70,52 @@ describe("API routes", () => {
     expect(body.sources.cameo.recordCount).toBeGreaterThan(200);
   });
 
+  it("returns chemical identity and reported quantities from facility-linked inventory rows", async () => {
+    const searchResponse = await app.request("/api/facilities?q=water%20treatment");
+    expect(searchResponse.status).toBe(200);
+    const searchBody = await searchResponse.json() as {
+      facilities: Array<{
+        id: string;
+        name: string;
+        address: string;
+        chemicals: Array<{ chemicalName: string | null; hazardClass: string | null }>;
+      }>;
+    };
+    const facility = searchBody.facilities.find((record) => record.id === "demo-water-treatment-plant");
+    expect(facility).toBeDefined();
+    expect(facility).toMatchObject({
+      name: "Regional Water Treatment Plant",
+      address: "1200 Reservoir Rd, Austin, TX 78701",
+    });
+    expect(facility?.chemicals).toEqual(expect.arrayContaining([
+      expect.objectContaining({ chemicalName: "Chlorine", hazardClass: '["2.3","8","5.1"]' }),
+    ]));
+
+    const detailResponse = await app.request(`/api/facilities/${facility!.id}`);
+    expect(detailResponse.status).toBe(200);
+    const detail = await detailResponse.json() as {
+      chemicals: Array<{
+        chemicalId: string;
+        chemicalName: string | null;
+        cas: string | null;
+        un: string | null;
+        ergGuide: string | null;
+        maxDailyAmountValue: string;
+        maxDailyAmountUnit: string;
+      }>;
+    };
+    const chlorine = detail.chemicals.find((chemical) => chemical.chemicalId === "chlorine");
+    expect(chlorine).toMatchObject({
+      chemicalId: "chlorine",
+      chemicalName: expect.any(String),
+      maxDailyAmountValue: "18000",
+      maxDailyAmountUnit: "lb",
+    });
+    expect(chlorine).toHaveProperty("cas");
+    expect(chlorine).toHaveProperty("un");
+    expect(chlorine).toHaveProperty("ergGuide");
+  });
+
   it("reconciles the complete canonical NPG projection and manifest", async () => {
     const response = await app.request("/api/npg?limit=200&offset=0");
     expect(response.status).toBe(200);

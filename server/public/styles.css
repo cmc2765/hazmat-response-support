@@ -5276,9 +5276,14 @@ h1 { font-weight: 800; }
   display: grid;
   gap: 3px;
   min-width: 0;
-  color: #344454;
+  color: #fff;
   font-size: 0.72rem;
-  font-weight: 650;
+  font-weight: 850;
+}
+
+.container-bubble > span {
+  color: #fff;
+  font-weight: 850;
 }
 
 .container-bubble select {
@@ -5300,10 +5305,11 @@ h1 { font-weight: 800; }
   border: 1px solid #d1d7dc;
   border-radius: 9px;
   background: #eef1f3;
+  color: #102a43;
 }
 
 .container-details > summary {
-  color: #344454;
+  color: #102a43;
   cursor: pointer;
   font-size: 0.75rem;
   font-weight: 650;
@@ -5323,7 +5329,7 @@ h1 { font-weight: 800; }
 .pressure-override label {
   display: grid;
   gap: 5px;
-  color: #344454;
+  color: #102a43;
   font-size: 0.72rem;
   font-weight: 600;
 }
@@ -5381,8 +5387,8 @@ h1 { font-weight: 800; }
 .release-override-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(80px, 0.45fr); gap: 6px; }
 .release-data-facts { display: grid; gap: 5px; }
 .release-data-facts > div { display: grid; gap: 1px; }
-.release-data-facts dt { color: #66717c; font-size: 0.67rem; font-weight: 600; }
-.release-data-facts dd { margin: 0; color: var(--text); font-size: 0.82rem; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+.release-data-facts dt { color: #102a43; font-size: 0.67rem; font-weight: 700; }
+.release-data-facts dd { margin: 0; color: #102a43; font-size: 0.82rem; font-weight: 700; line-height: 1.5; overflow-wrap: anywhere; }
 
 .pressure-confidence-badge {
   display: inline-block;
@@ -5397,6 +5403,7 @@ h1 { font-weight: 800; }
 .pressure-condition-note {
   display: block;
   margin: 0 9px 9px;
+  color: #102a43;
 }
 
 .pressure-override {
@@ -5411,6 +5418,7 @@ h1 { font-weight: 800; }
   display: block;
   min-height: 0;
   padding: 2px 18px 2px 0;
+  color: #102a43;
   font-size: 0.72rem;
   font-weight: 650;
 }
@@ -10123,26 +10131,6 @@ body,
   box-shadow: 0 12px 34px rgba(1, 10, 18, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-.command-smoke-canvas {
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  right: 0;
-  width: 72%;
-  height: 72%;
-  opacity: 0.9;
-  mix-blend-mode: screen;
-  filter: contrast(1.32) saturate(0.78);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.15) 13%, #000 42%, #000 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.15) 13%, #000 42%, #000 100%);
-  pointer-events: none;
-  will-change: contents;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .command-smoke-canvas { opacity: 0.48; }
-}
-
 .hazmat-command-identity {
   position: relative;
   z-index: 2;
@@ -10155,7 +10143,8 @@ body,
 .brand-logo-command {
   display: block;
   width: min(1240px, 100%);
-  height: 218px;
+  height: auto;
+  max-height: 100%;
   object-fit: contain;
   object-position: left center;
 }
@@ -10503,7 +10492,7 @@ body,
 
 @media (max-width: 1180px) {
   .hazmat-command-bar.topbar { min-height: 0; padding: 10px 12px 12px; }
-  .brand-logo-command { width: min(980px, 100%); height: 174px; }
+  .brand-logo-command { width: min(980px, 100%); }
   .command-promo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .hazmat-command-context.notification-center { width: min(790px, 100%); justify-self: end; }
 }
@@ -10514,7 +10503,7 @@ body,
     min-height: 0;
     padding: 8px 9px 10px;
   }
-  .brand-logo-command { width: 100%; height: 140px; }
+  .brand-logo-command { width: 100%; }
   .command-promo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hazmat-command-context.notification-center { width: 100%; }
   .hazmat-command-context .notification-feed {
@@ -10528,7 +10517,7 @@ body,
 @media (max-width: 560px) {
   .app-shell { padding: 6px; }
   .hazmat-command-bar.topbar { min-height: 0; padding: 7px; }
-  .brand-logo-command { height: 122px; }
+  .brand-logo-command { width: 100%; }
   .command-center-launch { gap: 8px; }
   .command-center-launch .command-menu-toggle { width: 42px; height: 42px; flex-basis: 42px; }
   .command-center-label { font-size: 0.67rem; }
@@ -10548,21 +10537,6 @@ body,
   .overview-command-panel::after { background: linear-gradient(90deg, rgba(4, 20, 34, 0.99), rgba(6, 28, 47, 0.88) 74%, rgba(7, 34, 57, 0.62)); }
   .overview-command-links { gap: 6px; }
   .overview-command-links .module-btn { flex: 1 1 calc(50% - 6px); }
-}
-
-.command-hero-scene {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 58%;
-  opacity: 0.88;
-  filter: contrast(1.06) saturate(0.96);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.18) 34%, #000 60%, #000 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.18) 34%, #000 60%, #000 100%);
-  pointer-events: none;
 }
 
 .content-area > .view > .hazmat-page-hero,
@@ -10645,7 +10619,7 @@ body,
     max-width: 100%;
     height: 100%;
     object-fit: contain;
-    object-position: center;
+    object-position: left center;
     transform: none;
   }
 
@@ -11303,12 +11277,6 @@ body,
 }
 .incident-command-summary-strip span b { margin-right: 4px; color: #56bdf3; font-size: 0.82rem; }
 .incident-command-summary-strip strong { color: #fff; overflow-wrap: anywhere; font-size: 0.9rem; }
-
-.incident-command-hazard-stripe {
-  height: 10px;
-  border-block: 1px solid rgba(246, 195, 67, 0.3);
-  background: repeating-linear-gradient(135deg, #e3ab16 0 11px, #071522 11px 22px);
-}
 
 .incident-command-main-grid {
   display: grid;
@@ -13456,48 +13424,6 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   #map.live-map-page { height: auto; min-height: 100dvh; overflow: visible; }
   #map .live-map-stage { height: min(70dvh, 720px); min-height: 480px; }
   #map #live-gis-map { height: 100%; min-height: 0; }
-}
-
-/* The homepage hero uses the full wordmark artwork. At tablet widths it must
-   still size from the image ratio instead of the clipped desktop hero box. */
-@media (max-width: 900px) {
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity,
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn {
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: visible !important;
-  }
-  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-    position: static !important;
-    width: min(92vw, 620px) !important;
-    max-width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    transform: none !important;
-  }
-}
-
-@media (max-width: 1100px) and (orientation: landscape) and (max-height: 700px) {
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: visible !important;
-  }
-  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-    position: static !important;
-    width: min(68vw, 520px) !important;
-    max-width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    transform: none !important;
-  }
 }
 
 @media (max-width: 620px) {

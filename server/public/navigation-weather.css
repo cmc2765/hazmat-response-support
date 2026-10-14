@@ -48,55 +48,6 @@ body,
   color: var(--text-primary);
 }
 
-.app-shell > .command-header .app-primary-nav {
-  grid-template-columns: repeat(9, minmax(0, 1fr)) !important;
-}
-
-.app-shell > .command-header .app-primary-nav .app-nav-item {
-  background: var(--panel-solid) !important;
-  color: var(--text-primary) !important;
-  border-right-color: color-mix(in srgb, var(--border-primary) 72%, transparent) !important;
-}
-
-.app-shell > .command-header .app-primary-nav .app-nav-item:hover,
-.app-shell > .command-header .app-primary-nav .app-nav-item:focus-visible {
-  background: var(--panel-bg-alt) !important;
-  color: var(--text-primary) !important;
-}
-
-.app-shell > .command-header .app-primary-nav .app-nav-item.active {
-  background: color-mix(in srgb, var(--accent-gold) 14%, var(--panel-solid)) !important;
-  color: var(--accent-gold) !important;
-}
-
-[data-theme="light"] .app-shell > .command-header.hazmat-command-bar.topbar {
-  background: #f8fafb !important;
-  color: var(--text-primary) !important;
-  border-color: var(--border-strong) !important;
-  box-shadow: 0 5px 16px rgba(11, 31, 51, .16) !important;
-}
-
-[data-theme="light"] .app-shell > .command-header .app-primary-nav {
-  border-color: var(--border-strong) !important;
-}
-
-[data-theme="light"] .app-shell > .command-header .app-primary-nav .app-nav-item {
-  background: #e8eef2 !important;
-  color: #0b1f33 !important;
-  border-right-color: #8ca0b2 !important;
-}
-
-[data-theme="light"] .app-shell > .command-header .app-primary-nav .app-nav-item:hover,
-[data-theme="light"] .app-shell > .command-header .app-primary-nav .app-nav-item:focus-visible {
-  background: #d6e1e8 !important;
-  color: #061a2e !important;
-}
-
-[data-theme="light"] .app-shell > .command-header .app-primary-nav .app-nav-item.active {
-  background: var(--accent-gold) !important;
-  color: #061a2e !important;
-}
-
 .weather-intelligence-page,
 .settings-page {
   min-width: 0;
@@ -267,11 +218,6 @@ body,
 [data-theme="light"] :is(.weather-incident-context, .weather-conditions-strip, .weather-location-form, .weather-map-card, .weather-intelligence-card, .settings-card) { box-shadow: 0 4px 12px rgba(11,31,51,.12); }
 [data-theme="light"] :is(.weather-condition-grid > div, .weather-forecast-grid article, .weather-impact-list li, .settings-theme-option, .settings-source-category) { background: #f3f6f8; }
 [data-theme="light"] .weather-map-overlay span { background: rgba(255,255,255,.92); border-color: #183b5a; color: #0b1f33; }
-
-@media (max-width: 1199px) and (min-width: 761px) {
-  .app-shell > .command-header .app-primary-nav { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
-  .app-shell > .command-header .app-primary-nav .app-nav-item:nth-child(n + 7) { display: none !important; }
-}
 
 @media (max-width: 900px) {
   .weather-condition-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }

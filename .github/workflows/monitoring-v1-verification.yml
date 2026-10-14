@@ -1,0 +1,51 @@
+name: Monitoring V1 verification
+on:
+  push:
+    branches: ["feature/monitoring-console-v1"]
+  pull_request:
+    branches: ["map-consolidation-cleanup"]
+    paths:
+      - "server/public/monitoring-console*"
+      - "server/public/index.html"
+      - "server/public/script.js"
+      - "test/monitoring-console-v1.test.ts"
+  workflow_dispatch:
+concurrency:
+  group: monitoring-v1-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  monitoring-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Syntax verification
+        run: |
+          node --check server/public/monitoring-console.js
+          node --check server/public/script.js
+      - name: Monitoring regression tests
+        run: npx vitest run test/monitoring-console-v1.test.ts test/navigation-settings-weather.test.ts
+      - name: Install browser smoke tooling
+        run: npm install --no-save --package-lock=false playwright
+      - name: Chromium Monitoring UI smoke
+        run: |
+          python3 -m http.server 4177 --directory server/public > /tmp/monitoring-static.log 2>&1 &
+          sleep 2
+          node scripts/monitoring-v2-browser-smoke.mjs
+      - name: Install server dependencies for full typecheck
+        run: npm --prefix server ci
+      - name: TypeScript check
+        run: npm run typecheck
+      - name: Upload QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monitoring-v2-qa-screens
+          path: artifacts/*.png
+          if-no-files-found: ignore

@@ -528,8 +528,8 @@
   display: grid;
   align-content: start;
   min-width: 0;
-  min-height: 190px;
-  padding: 16px 18px;
+  min-height: 0;
+  padding: 12px 14px;
   border: 1px solid #187db3;
   border-radius: 8px;
   color: #f8fafc;
@@ -537,7 +537,7 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
 }
 .incident-info-card-chemical { border-color: #d52d3e; background: linear-gradient(145deg, #14283f, #09192c); }
-.incident-info-card-heading { display: flex; align-items: start; justify-content: space-between; gap: 10px; min-height: 30px; }
+.incident-info-card-heading { display: flex; align-items: start; justify-content: space-between; gap: 10px; min-height: 26px; }
 .incident-info-card-heading h2 { display: flex; align-items: center; gap: 9px; margin: 0; color: #a9d7ec; font-family: "Bahnschrift Condensed", "Arial Narrow", sans-serif; font-size: .92rem; font-weight: 900; letter-spacing: .055em; text-transform: uppercase; }
 .incident-info-card-heading h2 span { color: #54c7f5; font-size: 1.32rem; line-height: 1; }
 .incident-info-card-chemical .incident-info-card-heading h2 span { color: #f04455; }
@@ -553,7 +553,7 @@
 .incident-info-detail-grid strong { color: #fff; font-size: .86rem; line-height: 1.2; overflow-wrap: anywhere; }
 .incident-info-detail-grid small { color: #a5bfd1; font-size: .68rem; line-height: 1.25; }
 .incident-info-badge { flex: 0 0 auto; padding: 6px 9px; border-radius: 7px; color: #fff; background: #e42c42; font-size: .68rem; font-weight: 900; letter-spacing: .04em; }
-.incident-info-card-mode select { width: 100%; min-height: 52px; margin-top: 12px; padding: 8px 11px; border: 1px solid #8db4ca; border-radius: 6px; color: #071f36; background: #f3f7fa; font: inherit; font-size: .95rem; font-weight: 850; }
+.incident-info-card-mode select { width: 100%; min-height: 46px; margin-top: 8px; padding: 7px 10px; border: 1px solid #8db4ca; border-radius: 6px; color: #071f36; background: #f3f7fa; font: inherit; font-size: .95rem; font-weight: 850; }
 .incident-info-mode-footer { display: flex; align-items: end; justify-content: space-between; gap: 10px; }
 .incident-info-mode-footer > div { display: grid; gap: 4px; min-width: 0; }
 .incident-info-mode-footer time { color: #fff; font-size: .78rem; font-weight: 800; line-height: 1.2; }
@@ -578,7 +578,6 @@
 .incident-weather-metric > div > span { color: #85b7d4; font-size: .66rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
 .incident-weather-metric strong { color: #fff; font-size: .92rem; line-height: 1.15; overflow-wrap: anywhere; }
 .incident-weather-metric small { color: #b2cddd; font-size: .68rem; line-height: 1.2; }
-.incident-command-weather-bar + .incident-command-hazard-stripe { height: 10px; margin-top: 4px; }
 @media (max-width: 1180px) {
   .incident-command-info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .incident-command-weather-bar { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -611,8 +610,8 @@
 #incident .incident-command-subtitle { margin-top: 6px !important; font-size: clamp(.82rem, 1.45vw, 1.25rem); }
 #incident .incident-command-hero-status { top: 12px; right: 20px; gap: 5px; padding: 9px 13px; font-size: .78rem; }
 #incident .incident-command-info-grid { gap: 8px; padding: 8px 10px 7px; }
-#incident .incident-info-card { min-height: 148px; padding: 11px 13px; }
-#incident .incident-info-card-heading { min-height: 25px; }
+#incident .incident-info-card { min-height: 0; padding: 8px 10px; }
+#incident .incident-info-card-heading { min-height: 22px; }
 #incident .incident-info-card-heading h2 { font-size: .8rem; }
 #incident .incident-info-card-heading h2 span { font-size: 1.08rem; }
 #incident .incident-info-primary { margin: 7px 0 2px; font-size: clamp(1rem, 1.28vw, 1.32rem); }
@@ -634,8 +633,7 @@
 #incident .incident-weather-metric small { font-size: .6rem; }
 #incident .incident-weather-metric > div > span { font-size: .57rem; }
 #incident .incident-weather-metric strong { font-size: .76rem; }
-#incident .incident-command-weather-bar + .incident-command-hazard-stripe { height: 7px; margin-top: 3px; }
-#incident .incident-command-flow { margin: 8px 8px 0; padding: 11px; }
+#incident .incident-command-flow { margin: 8px 8px; padding: 11px; }
 #incident .incident-command-flow-heading { margin-bottom: 8px; }
 #incident .incident-command-flow-steps { gap: 7px; }
 #incident .incident-command-flow-steps article { gap: 6px; padding: 8px; }
@@ -690,7 +688,7 @@
 #incident .incident-command-tool { min-height: 42px; padding: 5px 7px; }
 #incident .incident-command-tool strong { font-size: .68rem; }
 #incident .incident-command-tool span { font-size: .59rem; }
-#incident .incident-command-dashboard { padding-bottom: 58px; }
+#incident .incident-command-dashboard { padding-top: 8px; padding-bottom: 58px; }
 
 @media (max-width: 900px) {
   #incident .incident-command-main-grid > .incident-command-panel { min-height: 0; }
@@ -718,15 +716,15 @@
 #incident .incident-response-tabs { min-height: 40px; }
 #incident .incident-response-tab { min-height: 38px; padding: 5px 10px; border-radius: 5px 5px 0 0; }
 #incident .incident-command-info-grid { gap: 4px; padding: 0 4px; }
-#incident .incident-info-card { min-height: 148px; padding: 9px 11px; border-width: 3px; border-color: #18c7ff; background: linear-gradient(145deg, #0e456b, #061d33); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 0 0 1px rgba(24, 199, 255, .18); }
+#incident .incident-info-card { min-height: 0; padding: 7px 10px; border-width: 3px; border-color: #18c7ff; background: linear-gradient(145deg, #0e456b, #061d33); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 0 0 1px rgba(24, 199, 255, .18); }
 #incident .incident-info-card-chemical { border-color: #ff4056; background: linear-gradient(145deg, #3b1d35, #101d35); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 0 0 1px rgba(255, 64, 86, .22); }
 #incident .incident-info-card-facility { border-color: #20e0ff; }
 #incident .incident-info-card-mode { border-color: #ffd400; background: linear-gradient(145deg, #164a61, #071e34); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 0 0 1px rgba(255, 212, 0, .24); }
-#incident .incident-info-card-heading { min-height: 23px; }
+#incident .incident-info-card-heading { min-height: 21px; }
 #incident .incident-info-card-heading h2 { color: #f7fdff; }
 #incident .incident-info-card-chemical .incident-info-card-heading h2 { color: #fff; }
 #incident .incident-info-badge { border: 1px solid #ff8a96; background: #e51d3b; }
-#incident .incident-info-field { display: block; min-width: 0; margin: 6px 0 2px; }
+#incident .incident-info-field { display: block; min-width: 0; margin: 4px 0 1px; }
 #incident .incident-info-primary-field,
 #incident .incident-info-detail-field { box-sizing: border-box; width: 100%; min-width: 0; border: 2px solid #eaf5fb; border-radius: 4px; color: #071f36; background: #fff; font: inherit; font-weight: 850; outline: none; }
 #incident .incident-info-primary-field { min-height: 34px; padding: 5px 8px; font-size: clamp(1rem, 1.28vw, 1.32rem); line-height: 1.08; }
@@ -739,11 +737,10 @@
 #incident .incident-info-card .chemical-search-input-wrap,
 #incident .incident-info-card .incident-address-autocomplete { min-width: 0; }
 #incident .incident-info-card .chemical-search-suggestions { top: calc(100% + 3px); z-index: 40; }
-#incident .incident-info-card-divider { margin: 6px 0 7px; background: rgba(157, 224, 255, .56); }
-#incident .incident-info-card-mode select { border: 2px solid #fff; background: #fff; }
+#incident .incident-info-card-divider { margin: 5px 0 6px; background: rgba(157, 224, 255, .56); }
+#incident .incident-info-card-mode select { margin-top: 4px; border: 2px solid #fff; background: #fff; }
 #incident .incident-command-weather-bar { margin: 0 4px; padding: 6px 4px; border-width: 2px; border-radius: 4px; }
-#incident .incident-command-weather-bar + .incident-command-hazard-stripe { height: 6px; margin: 0; }
-#incident .incident-command-flow { margin: 0 4px; padding: 8px; border-width: 2px; border-radius: 4px; background: #062a4a; }
+#incident .incident-command-flow { margin: 8px 4px; padding: 8px; border-width: 2px; border-radius: 4px; background: #062a4a; }
 #incident .incident-command-flow-heading { margin-bottom: 5px; }
 #incident .incident-command-flow-heading span { color: #ffd400; }
 #incident .incident-command-flow-steps { gap: 4px; }
@@ -791,6 +788,112 @@
 #erg-review-dialog .erg-review-table-wrap th,
 #erg-review-dialog .erg-review-table-wrap td { color: #173b2a !important; background: #f0f8ec !important; border-color: #8eb69a !important; }
 #erg-review-dialog .erg-review-table-wrap th { background: #d8ecd4 !important; color: #123524 !important; }
+
+.facility-search-wrap { position: relative; z-index: 5; }
+.facility-search-suggestions {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  display: grid;
+  max-height: min(42vh, 340px);
+  overflow-y: auto;
+  border: 1px solid #5d8db3;
+  border-radius: 7px;
+  background: #061b2e;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .42);
+}
+.facility-search-suggestions[hidden] { display: none; }
+.facility-search-option {
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  min-height: 52px;
+  padding: 9px 11px;
+  border: 0;
+  border-bottom: 1px solid rgba(128, 174, 206, .25);
+  background: transparent;
+  color: #f8fbff;
+  text-align: left;
+  cursor: pointer;
+}
+.facility-search-option:hover,
+.facility-search-option:focus-visible { outline: 2px solid #f6c343; outline-offset: -2px; background: #123858; }
+.facility-search-option strong { overflow-wrap: anywhere; }
+.facility-search-option small,
+.facility-search-status { color: #c4d7e5; font-size: .78rem; line-height: 1.35; }
+.facility-search-status { min-height: 1.1em; margin: 3px 0 0; }
+.facility-search-status[data-state="error"] { color: #ff969f; }
+.facility-search-status[data-state="success"] { color: #91e6b1; }
+.facility-search-status[data-state="loading"] { color: #f6c343; }
+
+.incident-involved-chemicals { margin-top: 8px; }
+.incident-involved-chemicals h3 { margin: 0 0 5px; color: #cce9f5; font-size: .74rem; line-height: 1.25; }
+.incident-involved-chemicals ul { display: grid; gap: 4px; max-height: none; overflow: visible; margin: 0; padding: 0; list-style: none; }
+.incident-involved-chemicals li { display: grid; gap: 2px; min-width: 0; padding: 6px 8px; border: 1px solid rgba(101, 177, 216, .35); border-radius: 5px; background: rgba(3, 19, 34, .72); }
+.incident-involved-chemicals li strong { color: #fff; overflow-wrap: anywhere; font-size: .78rem; }
+.incident-involved-chemicals li small { color: #c3d7e4; font-size: .66rem; line-height: 1.3; overflow-wrap: anywhere; }
+.incident-involved-chemicals li.incident-involved-chemical-empty { color: #c3d7e4; font-size: .72rem; }
+
+#incident-facility-inventory-dialog {
+  width: min(940px, calc(100vw - 28px));
+  max-width: 940px;
+  max-height: min(90dvh, 900px);
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #5d8db3;
+  border-radius: 10px;
+  background: #071d31;
+  color: #f8fbff;
+  box-shadow: 0 24px 70px rgba(1, 15, 28, .65);
+}
+#incident-facility-inventory-dialog::backdrop { background: rgba(1, 11, 20, .76); backdrop-filter: blur(2px); }
+.incident-facility-inventory-shell { display: flex; flex-direction: column; max-height: min(90dvh, 900px); }
+.incident-facility-inventory-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 18px 20px 12px; border-bottom: 1px solid #315d82; background: #082540; }
+.incident-facility-inventory-header .eyebrow { margin: 0 0 4px; color: #f6c343; font-size: .68rem; font-weight: 900; letter-spacing: .08em; }
+.incident-facility-inventory-header h2 { margin: 0; color: #fff; font-size: clamp(1.15rem, 2.8vw, 1.65rem); line-height: 1.2; overflow-wrap: anywhere; }
+.incident-facility-inventory-header p:last-child { margin: 5px 0 0; color: #c4d7e5; font-size: .83rem; }
+.incident-facility-inventory-header button { flex: 0 0 auto; min-height: 42px; }
+.incident-facility-inventory-notice { margin: 10px 20px 4px; padding: 9px 11px; border-left: 3px solid #f6c343; background: rgba(246, 195, 67, .1); color: #f8e9b3; font-size: .82rem; line-height: 1.4; }
+#incident-facility-inventory-status { margin: 8px 20px; color: #c4d7e5; font-size: .82rem; }
+.incident-facility-inventory-list { display: grid; gap: 8px; min-height: 80px; padding: 0 20px 10px; overflow: auto; overscroll-behavior: contain; }
+.facility-inventory-row { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: start; padding: 10px; border: 1px solid #315d82; border-radius: 7px; background: #0a2944; }
+.facility-inventory-row > input { width: 22px; height: 22px; margin: 3px 0 0; accent-color: #f6c343; }
+.facility-inventory-row > input:focus-visible { outline: 3px solid #f6c343; outline-offset: 3px; }
+.facility-inventory-row-content { display: grid; gap: 6px; min-width: 0; cursor: pointer; }
+.facility-inventory-row-content > strong { color: #fff; font-size: .98rem; overflow-wrap: anywhere; }
+.facility-inventory-row-content .chemical-identifier-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.facility-inventory-row-content .chemical-identifier-chip { max-width: 100%; white-space: normal; }
+.facility-inventory-row-quantity { color: #e4eef5; font-size: .83rem; }
+.facility-inventory-row-content > small { color: #b6cddd; font-size: .74rem; }
+.facility-inventory-row > input:disabled + .facility-inventory-row-content { opacity: .62; cursor: default; }
+.facility-inventory-empty,
+.facility-inventory-loading { margin: 8px 0; padding: 14px; border: 1px dashed #5d8db3; border-radius: 7px; color: #d5e5ef; }
+.incident-facility-inventory-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 20px; border-top: 1px solid #315d82; background: #082540; }
+.incident-facility-inventory-footer > span { color: #f6c343; font-weight: 800; }
+.incident-facility-inventory-footer button { min-height: 44px; }
+.incident-facility-inventory-footer button:disabled { opacity: .55; cursor: not-allowed; }
+
+.chemical-suggestion-provenance { padding: 0 12px 8px; color: #b9cede; font-size: .74rem; }
+.chemical-suggestion-provenance summary { min-height: 32px; display: flex; align-items: center; width: fit-content; cursor: pointer; color: #8dcdec; font-weight: 750; }
+.chemical-suggestion-provenance p { margin: 0 0 4px; line-height: 1.4; overflow-wrap: anywhere; }
+.chemical-suggestion.is-canonical-chemical-suggestion .chemical-suggestion-select { grid-template-columns: minmax(0, 1fr); }
+.chemical-suggestion.is-canonical-chemical-suggestion .chemical-suggestion-select > span:last-child { display: grid; gap: 2px; min-width: 0; }
+.chemical-suggestion.is-canonical-chemical-suggestion .chemical-suggestion-select > span:last-child > strong { color: #fff; font-size: 1rem; font-weight: 900; line-height: 1.2; overflow-wrap: anywhere; }
+.chemical-suggestion.is-canonical-chemical-suggestion .chemical-suggestion-select .chemical-identifier-chips { margin-top: 5px; }
+#incident .incident-plume-chemical-note { margin: 2px 0 4px; color: #c3d7e4; font-size: .68rem; line-height: 1.3; }
+
+@media (max-width: 640px) {
+  #incident-facility-inventory-dialog { width: calc(100vw - 16px); max-height: 94dvh; }
+  .incident-facility-inventory-shell { max-height: 94dvh; }
+  .incident-facility-inventory-header { padding: 14px 12px 10px; }
+  .incident-facility-inventory-header button { min-width: 66px; padding-inline: 8px; }
+  .incident-facility-inventory-notice { margin-inline: 12px; }
+  #incident-facility-inventory-status { margin-inline: 12px; }
+  .incident-facility-inventory-list { padding-inline: 12px; }
+  .incident-facility-inventory-footer { align-items: stretch; flex-direction: column; padding: 10px 12px; }
+}
 
 #incident .incident-command-main-grid > .incident-command-panel > h2 {
   box-sizing: border-box;

@@ -6,6 +6,7 @@ const radarUi = readFileSync(new URL("../server/public/weather-radar.js", import
 const radarProviders = readFileSync(new URL("../server/public/weather-radar-providers.js", import.meta.url), "utf8");
 const styles = readFileSync(new URL("../server/public/styles.css", import.meta.url), "utf8");
 const plumeStyles = readFileSync(new URL("../server/public/plume-overrides.css", import.meta.url), "utf8");
+const plumeShellStyles = readFileSync(new URL("../server/public/plume-layout-correction.css", import.meta.url), "utf8");
 const heroStyles = readFileSync(new URL("../server/public/hero-overrides.css", import.meta.url), "utf8");
 const html = readFileSync(new URL("../server/public/index.html", import.meta.url), "utf8");
 const plumeHtml = html.slice(html.indexOf('<section id="plume"'), html.indexOf('<section id="map"'));
@@ -27,6 +28,7 @@ describe("plume map views", () => {
   it("keeps viewport locking exclusive to Home and gives Plume a matching scrollable hero row", () => {
     expect(styles).toContain('body:has(#overview.view.active)');
     expect(plumeStyles).toContain('#plume.view.active');
+    expect(plumeShellStyles).toContain('grid-template-rows: auto minmax(0, 1fr) !important;');
     expect(styles).toContain('overflow-y: auto');
     expect(styles).toContain('.plume-page-header');
   });
@@ -91,9 +93,37 @@ describe("plume map views", () => {
     expect(plumeHtml).toContain('class="plume-v2-input-column"');
     expect(plumeHtml).toContain('class="plume-v2-map-column"');
     expect(plumeHtml).toContain('class="plume-v2-map-controls"');
+    expect(plumeHtml.match(/class="plume-map-location-control"/g)).toHaveLength(1);
+    expect(plumeHtml.match(/class="plume-map-mode-controls"/g)).toHaveLength(1);
+    expect(plumeHtml.indexOf('class="plume-map-location-control"')).toBeLessThan(plumeHtml.indexOf('class="plume-v2-workspace"'));
+    expect(plumeHtml.indexOf('class="plume-map-mode-controls"')).toBeGreaterThan(plumeHtml.indexOf('class="plume-v2-map-controls"'));
     expect(plumeHtml).toContain('id="plume-results-section"');
     expect(plumeHtml).toContain('id="plume-stability-class"');
     expect(plumeHtml).toContain('id="plume-surface-roughness"');
+  });
+
+  it("keeps the three model input cards in the left rail and moves Threat Zone into a popup action", () => {
+    expect(plumeHtml).toContain('class="plume-model-section plume-weather-section"');
+    expect(plumeHtml).toContain('class="plume-model-section plume-criteria-section"');
+    expect(plumeHtml).not.toContain('id="plume-left-plot-btn"');
+    expect(plumeHtml).toContain('id="plume-threat-zone-open-btn"');
+    expect(plumeHtml).toContain('aria-controls="plume-threat-zone-dialog"');
+    expect(plumeHtml).toContain('id="plume-threat-zone-dialog-content"');
+    expect(plumeUi).toContain('dialogContent.append(threatZoneCard);');
+    expect(plumeShellStyles).toContain('grid-template-areas: "inputs map" !important;');
+    expect(tacticalMapStyles).toContain('.plume-threat-zone-button');
+    expect(tacticalMapStyles).toContain('background: linear-gradient(180deg, #ff9f1c 0%, #f97316 52%, #d9480f 100%);');
+    expect(tacticalMapStyles).toContain('.plume-compass-control');
+  });
+
+  it("keeps the Plume map maximize state larger than responsive map limits", () => {
+    expect(plumeUi).toContain("plumeView.classList.toggle('plume-map-maximized', plumeMapMaximized);");
+    expect(tacticalMapStyles).toContain('#plume.view.active.plume-map-maximized');
+    expect(tacticalMapStyles).toContain('width: 100vw !important;');
+    expect(tacticalMapStyles).toContain('height: 100dvh !important;');
+    expect(tacticalMapStyles).toContain('grid-template-areas: "map" !important;');
+    expect(tacticalMapStyles).toContain('height: 100% !important;');
+    expect(tacticalMapStyles).toContain('.plume-map-shell {\n  height: 100% !important;');
   });
 
   it("keeps the chemical, weather, and map surfaces visibly framed", () => {
@@ -103,9 +133,29 @@ describe("plume map views", () => {
     expect(styles).toContain('border: 1px solid #406b91;');
   });
 
-  it("gives the release type selector the full control-rail width", () => {
+  it("keeps Chemical Release controls compact without shrinking usable inputs", () => {
     expect(plumeHtml).toContain('for="plume-release-type"');
-    expect(styles).toContain('.plume-release-grid');
+    expect(plumeHtml).not.toContain('<span class="plume-required-badge">Required</span>');
+    expect(plumeHtml).not.toContain('plume-required-control-badge');
+    expect(plumeStyles).not.toContain('plume-required-control-badge');
+    expect(styles).toContain('.release-data-facts dd { margin: 0; color: #102a43;');
+    expect(plumeStyles).toContain('.plume-release-grid > .plume-release-type-field { grid-column: 1; }');
+    expect(plumeStyles).toContain('grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.2fr) minmax(78px, .75fr);');
+    expect(plumeStyles).toContain('min-height: 0;\n  margin-bottom: 3px;');
+    expect(plumeStyles).toContain('#plume.view.active .container-profile > summary {\n  color: #fff;\n  font-weight: 950;\n}');
+    expect(styles).toContain('.container-bubble > span {\n  color: #fff;\n  font-weight: 850;\n}');
+    expect(plumeHtml).not.toContain('<b>Required</b>');
+    expect(plumeStyles).toContain('grid-template-rows: auto minmax(34px, auto);');
+    expect(plumeStyles).not.toContain('.plume-weather-grid > .plume-weather-review { grid-column: 1 / -1; }');
+    expect(plumeStyles).toContain('label[for="plume-surface-roughness"] { grid-column: 1; }');
+    expect(plumeStyles).toContain('.plume-weather-grid > .plume-weather-review { grid-column: 2; }');
+    expect(plumeStyles).toContain('.plume-release-grid > .plume-release-height-field {\n  grid-column: 2 / -1;\n}');
+    expect(plumeStyles).toContain('min-height: 34px;');
+    expect(plumeStyles).toContain('.plume-model-section-heading > .plume-card-accent { display: none; }');
+    expect(plumeStyles).toContain('.plume-model-section-heading::after { grid-column: 3; grid-row: 1; }');
+    expect(plumeStyles).toContain('grid-template-rows: minmax(0, 1fr);');
+    expect(plumeStyles).toContain('white-space: nowrap;');
+    expect(plumeShellStyles).toContain('overflow: visible !important;');
   });
 
   it("keeps atmospheric stability and terrain selectors on one readable row", () => {
@@ -403,7 +453,7 @@ describe("plume map views", () => {
     }
     expect(plumeUi).toContain('3D Plume · terrain-aware operational envelope');
     expect(plumeUi).toContain('3D building height data not configured.');
-    expect(plumeUi).toContain('Math.max(0, Math.min(70, plumeMap.getPitch() + delta))');
+    expect(plumeUi).toContain('Math.max(0, Math.min(plumeMap.getMaxPitch?.() || 85, plumeMap.getPitch() + delta))');
     expect(plumeUi).toContain('Wind from ${Math.round(windFromDegrees)}° · Downwind ${Math.round((windFromDegrees + 180) % 360)}°');
     expect(plumeUi).toContain("'hazmat-threat-zone-wind-label'");
     expect(plumeUi).toContain('plumeMap.setTerrain({ source: plumeTerrainSourceId, exaggeration: 1.05 });');

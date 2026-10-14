@@ -1422,7 +1422,7 @@
   overflow: visible;
   border: 1px solid #315f82;
   border-radius: 16px;
-  background: linear-gradient(145deg, rgba(12, 39, 66, 0.99), rgba(5, 26, 45, 0.99));
+  background: #061a2e !important;
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
@@ -1494,7 +1494,7 @@
 #lookup .hazard-unified-search-form > .primary-btn {
   min-width: 176px;
   min-height: 74px;
-  border: 1px solid #ffe174;
+  border: 2px solid #ffe174;
   border-radius: 12px;
   background: linear-gradient(180deg, #ffd85b, #eca900);
   color: #171006;
@@ -1502,14 +1502,45 @@
   font-weight: 950;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  box-shadow: 0 8px 20px rgba(246, 195, 67, 0.2);
+  box-shadow: inset 0 -5px 0 #a8750b, 0 6px 0 #8d6200, 0 12px 22px rgba(246, 195, 67, 0.24);
 }
 
 #lookup .hazard-unified-search-form > .primary-btn:hover,
-#lookup .hazard-unified-search-form > .primary-btn:focus-visible { box-shadow: 0 0 0 3px rgba(246, 195, 67, 0.18), 0 0 28px rgba(246, 195, 67, 0.35); transform: translateY(-1px); }
+#lookup .hazard-unified-search-form > .primary-btn:focus-visible {
+  box-shadow: inset 0 -5px 0 #a8750b, 0 8px 0 #8d6200, 0 0 0 3px rgba(246, 195, 67, 0.18), 0 0 28px rgba(246, 195, 67, 0.35);
+  transform: translateY(-2px);
+}
+
+#lookup .hazard-unified-search-form > .primary-btn:active {
+  box-shadow: inset 0 -3px 0 #a8750b, 0 2px 0 #8d6200, 0 5px 12px rgba(246, 195, 67, 0.2);
+  transform: translateY(3px);
+}
 
 #lookup .hazard-search-examples { min-height: 34px; color: #fff; font-size: 1rem; }
-#lookup .hazard-search-examples button { min-height: 34px; padding: 6px 12px; border-color: #38698f; background: #0a2a46; color: #fff; font-size: 0.85rem; }
+#lookup .hazard-search-examples button {
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 2px solid #477c9f;
+  border-bottom-width: 4px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #123f62, #09233b);
+  color: #fff;
+  font-size: 0.85rem;
+  box-shadow: 0 3px 0 #041522, 0 6px 12px rgba(2, 15, 29, .24);
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+#lookup .hazard-search-examples button:hover,
+#lookup .hazard-search-examples button:focus-visible {
+  border-color: #79c7ef;
+  background: linear-gradient(180deg, #1b527d, #0d3151);
+  box-shadow: 0 4px 0 #041522, 0 0 0 2px rgba(121, 199, 239, .16), 0 8px 16px rgba(2, 15, 29, .3);
+  outline: none;
+  transform: translateY(-1px);
+}
+#lookup .hazard-search-examples button:active {
+  box-shadow: 0 1px 0 #041522, 0 3px 7px rgba(2, 15, 29, .25);
+  transform: translateY(2px);
+}
 #lookup .chemical-search-status { min-height: 24px; margin: 0; color: #fff; font-size: 1rem; }
 
 #lookup .hazard-unified-suggestions {
@@ -2471,29 +2502,29 @@
   gap: 8px;
   padding: 8px;
   border-bottom: 0;
-  background: transparent;
+  background: #061a2e !important;
 }
 
 #lookup .hazard-search-tab {
   box-sizing: border-box;
-  min-height: 58px;
+  min-height: 64px;
   border: 3px solid #477c9f !important;
   border-radius: 8px;
-  background: rgba(8, 38, 64, .86);
+  background: linear-gradient(180deg, #123f62, #09233b);
   color: #e8f4fb;
   cursor: pointer;
-  box-shadow: inset 0 0 0 1px rgba(159, 211, 239, .08), 0 4px 12px rgba(2, 15, 29, .22);
+  box-shadow: inset 0 1px 0 rgba(190, 232, 252, .2), 0 5px 0 #041522, 0 10px 18px rgba(2, 15, 29, .28);
   transition: border-color 180ms ease, background 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 #lookup .hazard-search-tab:hover,
 #lookup .hazard-search-tab:focus-visible {
   border-color: #79c7ef !important;
-  background: #123f62;
+  background: linear-gradient(180deg, #1b527d, #0d3151);
   color: #fff;
   outline: none;
-  box-shadow: inset 0 0 0 1px rgba(190, 232, 252, .18), 0 0 0 2px rgba(121, 199, 239, .18), 0 6px 16px rgba(2, 15, 29, .3);
-  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(221, 243, 255, .24), 0 7px 0 #041522, 0 0 0 2px rgba(121, 199, 239, .18), 0 12px 22px rgba(2, 15, 29, .34);
+  transform: translateY(-2px);
 }
 
 #lookup .hazard-search-tab.active,
@@ -2501,8 +2532,13 @@
   border: 3px solid #f6c343 !important;
   background: linear-gradient(180deg, #f6c343, #dca62c) !important;
   color: #07111c !important;
-  box-shadow: inset 0 -4px 0 #a8750b, 0 0 0 2px rgba(246, 195, 67, .16), 0 7px 18px rgba(246, 195, 67, .2) !important;
-  transform: none;
+  box-shadow: inset 0 -5px 0 #a8750b, 0 5px 0 #8d6200, 0 0 0 2px rgba(246, 195, 67, .16), 0 10px 20px rgba(246, 195, 67, .24) !important;
+  transform: translateY(0);
+}
+
+#lookup .hazard-search-tab:active {
+  box-shadow: inset 0 -3px 0 #a8750b, 0 2px 0 #8d6200, 0 5px 10px rgba(2, 15, 29, .26) !important;
+  transform: translateY(3px);
 }
 
 /* Right-side Hazard Profile panel only — shared Chemical, CBRNE/CWA, and

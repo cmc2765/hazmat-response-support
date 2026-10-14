@@ -51,37 +51,15 @@
 /* Homepage status tabs use the same vertical title/time/value rhythm. */
 .app-shell:has(#overview.view.active) .notification-system {
   grid-template-columns: 1fr !important;
-  grid-template-rows: auto auto auto auto !important;
-}
-.app-shell:has(#overview.view.active) .notification-system .command-center-launch {
-  grid-column: 1 !important;
-  grid-row: 1 !important;
-}
-.app-shell:has(#overview.view.active) .notification-system > span {
-  grid-column: 1 !important;
-  grid-row: 2 !important;
-}
-.notification-system-heading { display: grid; justify-items: center; gap: 2px; text-align: center; }
-.notification-system-heading > span { color: #f6c343; font-size: .68rem; font-weight: 950; text-transform: uppercase; }
-.notification-system-heading > time { color: #f8fafc; font-size: .73rem; }
-.app-shell:has(#overview.view.active) .notification-system > time {
-  position: absolute !important;
-  top: 29px !important;
-  left: 50% !important;
-  grid-column: auto !important;
-  grid-row: auto !important;
-  justify-self: auto !important;
-  transform: translateX(-50%) !important;
-  text-align: center !important;
+  grid-template-rows: auto auto !important;
 }
 .app-shell:has(#overview.view.active) .notification-system > strong {
   grid-column: 1 !important;
-  grid-row: 4 !important;
+  grid-row: 2 !important;
 }
 .app-shell:has(#overview.view.active) .notification-system-heading {
   grid-column: 1 !important;
-  grid-row: 2 / span 2 !important;
-  justify-self: center !important;
+  grid-row: auto !important;
 }
 .app-shell:has(#overview.view.active) .notification-system-heading > time { position: static !important; transform: none !important; }
 .app-shell:not(:has(#overview.view.active)) .notification-system-heading { display: none !important; }
@@ -157,236 +135,6 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   }
 }
 
-/* Canonical global module navigation. The same header remains present while
-   page activation continues to flow through activatePage()/showView(). */
-.app-shell > .command-header.hazmat-command-bar.topbar {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 100 !important;
-  display: grid !important;
-  grid-template-columns: minmax(210px, 250px) minmax(0, 1fr) minmax(156px, 188px) !important;
-  grid-template-rows: 76px !important;
-  align-items: stretch !important;
-  gap: 8px !important;
-  width: 100% !important;
-  min-height: 76px !important;
-  height: 76px !important;
-  padding: 0 10px !important;
-  overflow: visible !important;
-  border: 1px solid #315d82 !important;
-  border-radius: 0 0 10px 10px !important;
-  background: linear-gradient(180deg, #0b2944 0%, #061a2e 100%) !important;
-  box-shadow: 0 7px 18px rgba(6, 26, 46, 0.28) !important;
-}
-
-.app-shell > .command-header .hazmat-command-identity,
-.app-shell > .command-header .hazmat-command-identity .brand,
-.app-shell > .command-header .command-brand-home.module-btn {
-  display: flex !important;
-  align-items: center !important;
-  width: 100% !important;
-  height: 76px !important;
-  min-width: 0 !important;
-}
-
-.app-shell > .command-header .command-brand-home.module-btn {
-  justify-content: flex-start !important;
-  padding: 0 !important;
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.app-shell > .command-header .brand-logo-command {
-  display: block !important;
-  width: min(238px, 100%) !important;
-  height: 62px !important;
-  object-fit: contain !important;
-  object-position: left center !important;
-}
-
-.app-primary-nav {
-  display: grid !important;
-  grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
-  align-items: stretch !important;
-  min-width: 0 !important;
-  height: 76px !important;
-  border-left: 1px solid rgba(104, 151, 185, 0.38) !important;
-  border-right: 1px solid rgba(104, 151, 185, 0.38) !important;
-}
-
-.app-primary-nav .app-nav-item {
-  display: grid !important;
-  grid-template-rows: 28px auto !important;
-  place-content: center !important;
-  align-items: center !important;
-  justify-items: center !important;
-  gap: 2px !important;
-  min-width: 0 !important;
-  min-height: 76px !important;
-  padding: 7px 5px !important;
-  border: 0 !important;
-  border-right: 1px solid rgba(104, 151, 185, 0.28) !important;
-  border-radius: 0 !important;
-  background: #09233b !important;
-  color: #f8fafc !important;
-  cursor: pointer !important;
-  font-size: 10px !important;
-  font-weight: 900 !important;
-  letter-spacing: .055em !important;
-  line-height: 1.05 !important;
-  text-align: center !important;
-  text-transform: uppercase !important;
-  transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease !important;
-}
-
-.app-primary-nav .app-nav-item:hover,
-.app-primary-nav .app-nav-item:focus-visible {
-  background: #15598a !important;
-  color: #fff !important;
-  outline: 0 !important;
-  box-shadow: inset 0 -3px 0 #69adff !important;
-}
-
-.app-primary-nav .app-nav-item:focus-visible {
-  box-shadow: inset 0 -3px 0 #69adff, inset 0 0 0 2px #f6c343 !important;
-}
-
-.app-primary-nav .app-nav-item.active {
-  background: #f6c343 !important;
-  color: #061a2e !important;
-  box-shadow: inset 0 -4px 0 #9d6c00, 0 0 13px rgba(246, 195, 67, .25) !important;
-}
-
-.app-nav-icon {
-  display: grid;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  color: currentColor;
-  font-size: 21px;
-  font-weight: 900;
-  line-height: 1;
-}
-
-.app-nav-label {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.app-header-status {
-  display: grid;
-  align-content: center;
-  gap: 1px;
-  min-width: 74px;
-  padding: 5px 8px;
-  border-left: 3px solid #d71920;
-  color: #f8fafc;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .04em;
-  line-height: 1.05;
-  text-transform: uppercase;
-}
-
-.app-header-status span:first-child { color: #f6c343; }
-.app-header-status span:nth-child(2) { color: #f8fafc; }
-.app-header-status span:last-child { color: #d7e5f0; }
-
-.app-shell > .command-header .command-header-footer {
-  display: flex !important;
-  align-items: center !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  height: 60px !important;
-  margin: auto 0 !important;
-}
-
-.app-shell > .command-header .hazmat-command-context.notification-center {
-  display: block !important;
-  width: 100% !important;
-  height: 60px !important;
-  min-width: 0 !important;
-  padding: 0 !important;
-  border: 1px solid #315d82 !important;
-  border-radius: 6px !important;
-  background: #082540 !important;
-}
-
-.app-shell > .command-header .hazmat-command-context .notification-feed {
-  display: block !important;
-  height: 100% !important;
-}
-
-.app-shell > .command-header .hazmat-command-context .notification-item:not(.notification-system) {
-  display: none !important;
-}
-
-.app-shell > .command-header .hazmat-command-context .notification-system {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  align-content: center !important;
-  min-height: 58px !important;
-  height: 58px !important;
-  padding: 5px 38px 5px 8px !important;
-  border: 0 !important;
-  background: transparent !important;
-}
-
-.app-shell > .command-header .notification-system-heading,
-.app-shell > .command-header .notification-system > span,
-.app-shell > .command-header .notification-system > time {
-  display: none !important;
-}
-
-.app-shell > .command-header .command-center-launch {
-  justify-content: flex-start !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  background: transparent !important;
-}
-
-.app-shell > .command-header .command-center-label {
-  overflow: hidden !important;
-  color: #a9c5d7 !important;
-  font-size: 9px !important;
-  letter-spacing: .08em !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-}
-
-.app-shell > .command-header .notification-system-message {
-  display: block !important;
-  overflow: hidden !important;
-  margin-top: 3px !important;
-  color: #f8fafc !important;
-  font-size: 11px !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-}
-
-.app-shell > .command-header .notification-alert-count {
-  right: 4px !important;
-  bottom: 4px !important;
-  min-height: 20px !important;
-  padding: 2px 4px !important;
-  border: 0 !important;
-  background: transparent !important;
-  color: #f6c343 !important;
-  font-size: 9px !important;
-}
-
-.app-shell > .command-header .command-menu-toggle { display: none !important; }
-
-/* Internal views retain the same global header; only the local hero remains page-specific. */
-.app-shell:not(:has(#overview.view.active)) > .command-header.hazmat-command-bar.topbar {
-  display: grid !important;
-}
-
 .view:not(#overview) > .hazmat-page-hero {
   min-height: 124px !important;
   max-height: 150px !important;
@@ -421,42 +169,6 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 
 #incident .incident-command-hero .incident-command-subtitle { margin-inline: 0 !important; }
 
-@media (max-width: 1099px) {
-  .app-shell > .command-header.hazmat-command-bar.topbar {
-    grid-template-columns: minmax(190px, 220px) minmax(0, 1fr) minmax(156px, 178px) !important;
-  }
-  .app-primary-nav { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
-  .app-primary-nav .app-nav-secondary { display: none !important; }
-  .app-shell > .command-header .app-header-status { display: none !important; }
-  .app-shell > .command-header .command-menu-toggle {
-    display: grid !important;
-    width: 28px !important;
-    height: 28px !important;
-    flex: 0 0 28px !important;
-    margin-right: 6px !important;
-  }
-  .app-shell > .command-header .command-menu-toggle span { width: 17px !important; height: 2px !important; }
-}
-
-@media (max-width: 760px) {
-  .app-shell > .command-header.hazmat-command-bar.topbar {
-    grid-template-columns: minmax(0, 1fr) 156px !important;
-    grid-template-rows: 64px !important;
-    height: 64px !important;
-    min-height: 64px !important;
-    padding: 0 7px !important;
-  }
-  .app-shell > .command-header .hazmat-command-identity,
-  .app-shell > .command-header .hazmat-command-identity .brand,
-  .app-shell > .command-header .command-brand-home.module-btn { height: 64px !important; }
-  .app-shell > .command-header .brand-logo-command { width: min(220px, 100%) !important; height: 54px !important; }
-  .app-primary-nav { display: none !important; }
-  .app-shell > .command-header .command-header-footer,
-  .app-shell > .command-header .hazmat-command-context.notification-center { height: 54px !important; }
-  .app-shell > .command-header .hazmat-command-context .notification-system { height: 52px !important; min-height: 52px !important; }
-  .view:not(#overview) > .hazmat-page-hero { min-height: 112px !important; padding: 16px !important; }
-}
-
 /* Keep the live tactical/weather/alerts feed below the dashboard rather than
    allowing it to become a second header row. */
 .home-status-bar {
@@ -489,6 +201,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 .home-status-bar .notification-feed {
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
   gap: 7px !important;
   width: 100% !important;
 }
@@ -500,10 +213,12 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   grid-template-columns: minmax(0, 1fr) !important;
   grid-template-rows: auto auto !important;
   align-content: center !important;
+  justify-items: center !important;
+  text-align: center !important;
   min-width: 0 !important;
-  min-height: 50px !important;
+  min-height: 58px !important;
   margin: 0 !important;
-  padding: 6px 10px !important;
+  padding: 7px 12px !important;
   border: 1px solid rgba(78, 132, 174, 0.5) !important;
   border-radius: 5px !important;
   background: rgba(5, 27, 46, 0.72) !important;
@@ -526,27 +241,30 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 .home-status-bar .notification-system-heading > time {
   min-width: 0 !important;
   overflow: hidden !important;
-  color: #f8fafc !important;
+  color: #b8c7d9 !important;
   font-size: 0.78rem !important;
+  font-weight: 850 !important;
   line-height: 1.2 !important;
   text-overflow: ellipsis !important;
-  white-space: nowrap !important;
+  white-space: normal !important;
 }
 
 .home-status-bar .notification-system-heading {
   position: static !important;
-  display: flex !important;
-  align-items: baseline !important;
-  justify-content: space-between !important;
-  gap: 8px !important;
+  display: contents !important;
+  transform: none !important;
+}
+
+.home-status-bar .notification-system-heading > span {
   grid-column: 1 !important;
   grid-row: 1 !important;
-  transform: none !important;
 }
 
 .home-status-bar .notification-system-heading > time {
   position: static !important;
-  flex: 0 0 auto !important;
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  justify-self: center !important;
   transform: none !important;
 }
 
@@ -569,6 +287,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
 .home-status-bar .notification-alerts-item > strong {
   grid-column: 1 !important;
   grid-row: 2 !important;
+  justify-self: center !important;
 }
 
 .home-status-bar .notification-alert-count {
@@ -576,136 +295,22 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   grid-column: 2 !important;
   grid-row: 2 !important;
   align-self: center !important;
+  justify-self: end !important;
   min-height: 24px !important;
   margin: 0 !important;
   padding: 3px 7px !important;
   transform: none !important;
 }
 
-/* Canonical global header layout. The brand owns a responsive left column;
-   the navigation fills every remaining pixel without a spacer column. */
-@media (min-width: 761px) {
-  .app-shell > .command-header.hazmat-command-bar.topbar,
-  .app-shell:not(:has(#overview.view.active)) > .command-header.hazmat-command-bar.topbar {
-    display: flex !important;
-    align-items: stretch !important;
-    gap: 0 !important;
-    width: 100% !important;
-    height: 76px !important;
-    min-height: 76px !important;
-    max-height: 76px !important;
-    padding: 0 !important;
-    overflow: visible !important;
-  }
-
-  .app-shell > .command-header .hazmat-command-identity {
-    display: flex !important;
-    flex: 0 0 clamp(220px, 13vw, 240px) !important;
-    align-items: center !important;
-    width: auto !important;
-    height: 76px !important;
-    min-width: 0 !important;
-    max-height: 76px !important;
-    padding: 8px 10px !important;
-    overflow: visible !important;
-  }
-
-  .app-shell > .command-header .hazmat-command-identity .brand,
-  .app-shell > .command-header .command-brand-home.module-btn {
-    display: flex !important;
-    flex: 1 1 auto !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    height: 60px !important;
-    min-width: 0 !important;
-    max-height: 60px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    border: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    transform: none !important;
-  }
-
-  .app-shell > .command-header .brand-logo-command {
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100% !important;
-    max-height: 82px !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    transform: none !important;
-    margin: 0 !important;
-    overflow: visible !important;
-    pointer-events: none !important;
-  }
-
-  .app-shell > .command-header .app-primary-nav {
-    display: grid !important;
-    flex: 1 1 auto !important;
-    width: auto !important;
-    min-width: 0 !important;
-    height: 76px !important;
-    grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
-    grid-template-rows: 1fr !important;
-    padding: 0 !important;
-    border-left: 1px solid rgba(104, 151, 185, 0.38) !important;
-    border-right: 0 !important;
-  }
-
-  .app-shell > .command-header .app-primary-nav .app-nav-item {
-    display: grid !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    height: 76px !important;
-    min-height: 76px !important;
-    max-height: 76px !important;
-    padding: 7px 5px !important;
-  }
-
-  .app-shell > .command-header .global-command-menu-toggle {
-    display: none !important;
-  }
-}
-
-@media (max-width: 1199px) and (min-width: 761px) {
-  .app-shell > .command-header .hazmat-command-identity {
-    flex-basis: clamp(210px, 22vw, 240px) !important;
-  }
-
-  .app-shell > .command-header .app-primary-nav {
-    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
-  }
-
-  .app-shell > .command-header .app-nav-secondary {
-    display: none !important;
-  }
-
-  .app-shell > .command-header .global-command-menu-toggle {
-    position: static !important;
-    display: grid !important;
-    flex: 0 0 36px !important;
-    width: 36px !important;
-    height: 36px !important;
-    min-height: 36px !important;
-    margin: auto 0 auto 6px !important;
-    transform: none !important;
-  }
+.home-status-bar .notification-weather-item > strong {
+  max-width: 100% !important;
+  letter-spacing: 0.015em !important;
+  line-height: 1.35 !important;
+  word-spacing: 0.22em !important;
 }
 
 @media (max-width: 760px) {
   .home-status-bar .notification-feed { grid-template-columns: 1fr !important; }
-
-  .app-shell > .command-header .global-command-menu-toggle {
-    position: static !important;
-    grid-column: 2 !important;
-    grid-row: 1 !important;
-    display: grid !important;
-    transform: none !important;
-  }
 }
 
 /* Preserve the existing dashboard card stretch behavior; this is outside the
@@ -716,163 +321,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
   align-self: stretch !important;
 }
 
-/* Slim tactical application header: keep the brand prominent while making
-   the global navigation read as software chrome rather than a promo strip. */
-@media (min-width: 761px) {
-  .app-shell > .command-header.hazmat-command-bar.topbar {
-    grid-template-rows: 64px !important;
-    min-height: 64px !important;
-    height: 64px !important;
-  }
-
-  .app-shell > .command-header .hazmat-command-identity,
-  .app-shell > .command-header .hazmat-command-identity .brand,
-  .app-shell > .command-header .command-brand-home.module-btn {
-    height: 64px !important;
-  }
-
-  .app-shell > .command-header .hazmat-command-identity {
-    padding: 5px 9px !important;
-  }
-
-  .app-shell > .command-header .hazmat-command-identity .brand,
-  .app-shell > .command-header .command-brand-home.module-btn {
-    justify-content: flex-start !important;
-    height: 54px !important;
-  }
-
-  .app-shell > .command-header .brand-logo-command {
-    height: 54px !important;
-    max-height: 54px !important;
-    object-position: left center !important;
-  }
-
-  .app-shell > .command-header .app-primary-nav {
-    height: 64px !important;
-  }
-
-  .app-shell > .command-header .app-primary-nav .app-nav-item {
-    height: 64px !important;
-    min-height: 64px !important;
-    max-height: 64px !important;
-    grid-template-rows: 23px auto !important;
-    gap: 4px !important;
-    padding: 4px 5px !important;
-  }
-}
-
-.app-primary-nav .app-nav-item {
-  border-right: 1px solid rgba(143, 180, 207, 0.24) !important;
-  background: #09233b !important;
-  color: #e8f0f6 !important;
-  font-size: 11px !important;
-  letter-spacing: .045em !important;
-  transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease !important;
-}
-
-.app-primary-nav .app-nav-item:hover,
-.app-primary-nav .app-nav-item:focus-visible {
-  background: #123b5d !important;
-  color: #fff !important;
-  box-shadow: inset 0 -2px 0 #69adff !important;
-}
-
-.app-primary-nav .app-nav-item:focus-visible {
-  outline: 0 !important;
-  box-shadow: inset 0 -2px 0 #69adff, inset 0 0 0 2px #f6c343 !important;
-}
-
-.app-primary-nav .app-nav-item.active {
-  background: rgba(246, 195, 67, 0.11) !important;
-  color: #f6c343 !important;
-  box-shadow: inset 0 2px 0 #f6c343, inset 0 -2px 0 #f6c343 !important;
-}
-
-.app-nav-icon {
-  display: grid !important;
-  place-items: center !important;
-  width: 23px !important;
-  height: 23px !important;
-  color: currentColor !important;
-  font-size: 0 !important;
-  line-height: 1 !important;
-}
-
-.app-nav-icon svg {
-  display: block;
-  width: 22px;
-  height: 22px;
-  overflow: visible;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.75;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.app-nav-label {
-  font-size: 11px !important;
-  line-height: 1 !important;
-}
-
-/* Primary navigation border contract: one continuous steel-blue frame around
-   the nav rail, with the active page retaining HazScope gold. The tabs are
-   sized inside the border box so their active accent can replace the bottom
-   frame edge without a vertical offset or double line. */
-.app-shell > .command-header .app-primary-nav {
-  box-sizing: border-box !important;
-  height: 64px !important;
-  min-height: 64px !important;
-  padding: 0 !important;
-  border-top: 3px solid #5d89a7 !important;
-  border-right: 0 !important;
-  border-bottom: 3px solid #5d89a7 !important;
-  border-left: 0 !important;
-  box-shadow: none !important;
-  overflow: visible !important;
-}
-
-.app-shell > .command-header .app-primary-nav .app-nav-item {
-  position: relative !important;
-  box-sizing: border-box !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  border-top: 0 !important;
-  border-bottom: 0 !important;
-  box-shadow: none !important;
-  overflow: visible !important;
-}
-
-.app-shell > .command-header .app-primary-nav .app-nav-item.active {
-  background: rgba(246, 195, 67, .12) !important;
-  color: #f6c343 !important;
-  box-shadow: 0 0 13px rgba(246, 195, 67, .18) !important;
-}
-
-.app-shell > .command-header .app-primary-nav .app-nav-item.active::after {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  bottom: -3px;
-  left: 0;
-  height: 3px;
-  background: #f6c343;
-  content: "";
-  pointer-events: none;
-}
-
-.app-shell > .command-header .app-primary-nav .app-nav-item:not(.active):hover,
-.app-shell > .command-header .app-primary-nav .app-nav-item:not(.active):focus-visible {
-  background: #123b5d !important;
-  color: #fff !important;
-  box-shadow: none !important;
-}
-
-/* Mobile dashboard brand: the homepage hero uses the real logo artwork, so
-   its aspect ratio must determine the box. The former oversized absolute
-   treatment rendered a ~2.7:1 image wider than the phone and clipped the
-   wordmark/subtitle inside the identity container. */
+/* Mobile dashboard viewport contract. */
 @media (max-width: 760px) {
   .app-shell:has(#overview.view.active) {
     padding-top: calc(6px + env(safe-area-inset-top)) !important;
@@ -881,146 +330,7 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
     padding-left: 6px !important;
   }
 
-  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    padding: 8px 8px 7px !important;
-    gap: 8px !important;
-    overflow: visible !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity,
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn {
-    position: static !important;
-    display: flex !important;
-    flex: 0 0 auto !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    transform: none !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-    position: static !important;
-    display: block !important;
-    width: 100% !important;
-    max-width: 560px !important;
-    height: clamp(112px, 26svh, 170px) !important;
-    max-height: 170px !important;
-    margin-inline: auto !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    transform: none !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header {
-    position: relative !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .app-primary-nav {
-    display: none !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .global-command-menu-toggle {
-    position: absolute !important;
-    right: 10px !important;
-    bottom: 10px !important;
-    align-self: auto !important;
-    flex: 0 0 42px !important;
-    width: 42px !important;
-    height: 42px !important;
-    min-height: 42px !important;
-    margin: 0 !important;
-    transform: none !important;
-    z-index: 4 !important;
-  }
 }
-
-/* Keep the same no-crop guarantee in phone landscape, where the viewport is
-   short and the brand should remain compact without changing its proportions. */
-@media (max-width: 760px) and (orientation: landscape) {
-  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-    width: min(78vw, 520px) !important;
-  }
-}
-
-/* Apply the same no-crop contract to tablet portrait/landscape widths after
-   the legacy homepage hero rules have loaded. */
-@media (min-width: 761px) and (max-width: 900px) {
-  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    padding: 8px !important;
-    gap: 8px !important;
-    overflow: visible !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity,
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand,
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn {
-    position: static !important;
-    display: flex !important;
-    flex: 0 0 auto !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    transform: none !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-    position: static !important;
-    width: min(92vw, 620px) !important;
-    max-width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
-    margin-inline: auto !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    transform: none !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .app-primary-nav {
-    display: none !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .global-command-menu-toggle {
-    display: grid !important;
-    align-self: flex-end !important;
-    width: 44px !important;
-    height: 44px !important;
-    min-height: 44px !important;
-    margin: 0 2px 0 0 !important;
-  }
-}
-
-@media (min-width: 761px) and (max-width: 1100px) and (orientation: landscape) and (max-height: 700px) {
-  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-    width: min(68vw, 520px) !important;
-  }
-}
-
 
 /* Mobile homepage final viewport contract */
 @media (max-width: 760px) {
@@ -1168,103 +478,5 @@ body:has(#overview.view.active) .workspace-navigation-drawer.workspace-drawer-ho
     min-width: 0 !important;
     max-width: 100% !important;
     white-space: normal !important;
-  }
-}
-
-/* EMERGENZ Dashboard hero — single authoritative artwork layer.
-   The banner is proportional background artwork, not a stretched logo image. */
-.app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  padding: 0 !important;
-  overflow: visible !important;
-  background: #061a2e !important;
-}
-
-.app-shell:has(#overview.view.active) > .command-header::before,
-.app-shell:has(#overview.view.active) > .command-header::after,
-.app-shell:has(#overview.view.active) > .command-header .command-header-plume,
-.app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn::before {
-  display: none !important;
-  animation: none !important;
-}
-
-@media (min-width: 761px) {
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity,
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand {
-    position: relative !important;
-    display: block !important;
-    width: 100% !important;
-    height: clamp(300px, 21vw, 340px) !important;
-    flex: 0 0 clamp(300px, 21vw, 340px) !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-    background: #061a2e url("assets/emergenz-hero-header.png?v=3") center center / cover no-repeat !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .command-brand-home.module-btn {
-    position: absolute !important;
-    inset: 0 !important;
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
-    scale: 1 !important;
-    transition: none !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-    position: absolute !important;
-    display: block !important;
-    inset: 0 !important;
-    width: 1px !important;
-    height: 1px !important;
-    max-width: none !important;
-    max-height: none !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-}
-
-@media (min-width: 761px) and (max-width: 1100px) {
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity,
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity .brand {
-    height: clamp(220px, calc((100vw - 40px) / 3), 300px) !important;
-    flex-basis: clamp(220px, calc((100vw - 40px) / 3), 300px) !important;
-  }
-}
-
-@media (max-width: 760px) {
-  .app-shell:has(#overview.view.active) > .command-header.hazmat-command-bar.topbar,
-  .app-shell:has(#overview.view.active) > .command-header .hazmat-command-identity {
-    background: #061a2e !important;
-  }
-
-  .app-shell:has(#overview.view.active) > .command-header .brand-logo-command {
-    opacity: 1 !important;
-    width: 100% !important;
-    height: auto !important;
-    max-width: 560px !important;
-    max-height: 170px !important;
-    object-fit: contain !important;
-    object-position: center !important;
   }
 }

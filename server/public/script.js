@@ -709,6 +709,7 @@ function activatePage(targetId, { preserveHazardState = false, skipPlumeInitiali
   syncCommandBarContext();
   const plumeMapWorkspace = document.querySelector('.plume-v2-workspace');
   if (plumeMapWorkspace) plumeMapWorkspace.hidden = targetId !== 'plume';
+  if (targetId === 'plume') window.requestAnimationFrame(syncPlumeWorkspaceHeight);
   initializeActivePage(targetId, { skipPlumeInitialization, context: activationContext });
   return targetView;
 }
@@ -844,6 +845,7 @@ workspaceDrawerClose?.addEventListener('click', () => closeWorkspaceDrawer());
 workspaceDrawerBackdrop?.addEventListener('click', () => closeWorkspaceDrawer());
 window.addEventListener('resize', () => {
   if (!workspaceDrawer?.hidden) positionHomepageWorkspaceDrawer();
+  if (document.getElementById('plume')?.classList.contains('active')) syncPlumeWorkspaceHeight();
   if (plumeMap) resizePlumeMapAfterLayout();
 });
 workspaceDrawer?.querySelectorAll('[data-view]').forEach((control) => {
@@ -871,6 +873,17 @@ workspaceDrawer?.addEventListener('keydown', (event) => {
 });
 
 // MapLibre needs an explicit resize when the responsive plume workspace changes size.
+function syncPlumeWorkspaceHeight() {
+  const workspace = document.getElementById('plume');
+  if (!workspace?.classList.contains('active') || workspace.classList.contains('plume-map-maximized')) return;
+  const top = Math.max(0, workspace.getBoundingClientRect().top);
+  workspace.style.setProperty('--plume-workspace-top', `${Math.ceil(top)}px`);
+}
+function syncPlumeMapControlsHeight() {
+  const controls = document.querySelector('.plume-v2-map-controls');
+  const card = controls?.closest('.plume-v2-map-card');
+  if (card && controls.offsetHeight) card.style.setProperty('--plume-map-controls-height', `${controls.offsetHeight}px`);
+}
 const plumeWorkspace = document.getElementById('plume');
 if (plumeWorkspace && 'ResizeObserver' in window) {
   new ResizeObserver(() => {
@@ -878,6 +891,10 @@ if (plumeWorkspace && 'ResizeObserver' in window) {
       window.requestAnimationFrame(() => plumeMap?.resize());
     }
   }).observe(plumeWorkspace);
+  new ResizeObserver(() => window.requestAnimationFrame(syncPlumeWorkspaceHeight))
+    .observe(document.querySelector('.command-header'));
+  const controls = document.querySelector('.plume-v2-map-controls');
+  if (controls) new ResizeObserver(syncPlumeMapControlsHeight).observe(controls);
 }
 
 buttons.forEach((button) => {
@@ -1616,10 +1633,27 @@ function persistCanonicalIncidentChemicalSelection(chemical, profileRecord = nul
   const invalidated = identityChanged
     ? invalidateIncidentChemicalOutputs(incidents[index], previousIdentity, changedAt)
     : {};
+  const involvedChemicals = Array.isArray(incidents[index].involvedChemicals)
+    ? [...incidents[index].involvedChemicals]
+    : [];
+  const selectedChemical = {
+    chemicalId: String(fields.selectedChemicalId),
+    chemicalCompanionId: fields.chemicalCompanionId,
+    chemicalName: fields.chemicalName,
+    cas: fields.casNumber,
+    un: fields.unNumber,
+    ergGuide: fields.ergGuide,
+    source: 'Chemical / Hazard ID selection',
+    identifiedAt: changedAt,
+  };
+  if (!isAlreadyIncidentChemical(selectedChemical, { ...incidents[index], involvedChemicals })) {
+    involvedChemicals.push(selectedChemical);
+  }
   incidents[index] = {
     ...incidents[index],
     ...invalidated,
     ...fields,
+    involvedChemicals,
     sourceStatuses: {
       ...(incidents[index].sourceStatuses || {}),
       ...invalidated.sourceStatuses,
@@ -6662,18 +6696,33 @@ function renderHazardLaneResults(lane, results) {
     return;
   }
   results.forEach((result) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'hazard-search-result-card';
     const aliases = [...(result.aliases || []), ...(result.agentCodes || [])].filter((value, index, values) => values.indexOf(value) === index);
-    const resultName = [result.displayName, result.scientificName].filter(Boolean).join(' / ');
-    button.innerHTML = `<strong>${resultName}</strong><span>${config.label} — ${result.category}</span><small>${aliases.length ? `Aliases: ${aliases.join(' · ')} · ` : ''}Status: ${result.verificationStatus}</small>`;
-    button.addEventListener('click', () => {
-      if (chemicalSearchInput) chemicalSearchInput.value = result.displayName;
-      clearChemicalSuggestions();
-      void (window.HazMatIQ.openHazardProfile?.(result) || openStarterHazard(result));
-    });
-    container.append(button);
+    const sourceSummary = [
+      `Lane: ${config.label}`,
+      result.scientificName && `Scientific name: ${result.scientificName}`,
+      result.category && `Category: ${result.category}`,
+      aliases.length && `Aliases / agent codes: ${aliases.join(' · ')}`,
+      result.verificationStatus && `Review status: ${result.verificationStatus}`,
+      ...(result.sourceSummary || []),
+    ].filter(Boolean).join(' · ');
+    container.append(createSuggestion(
+      'Hazard',
+      result.displayName,
+      '',
+      () => {
+        if (chemicalSearchInput) chemicalSearchInput.value = result.displayName;
+        clearChemicalSuggestions();
+        void (window.HazMatIQ.openHazardProfile?.(result) || openStarterHazard(result));
+      },
+      {
+        identifiers: chemicalSearchResultBadges({
+          cas: result.cas,
+          un: result.unNaNumbers,
+          ergGuide: result.ergGuide || result.erg,
+        }),
+        provenance: sourceSummary || 'Source and review details unavailable.',
+      },
+    ));
   });
   container.hidden = false;
   chemicalSearchInput?.setAttribute('aria-expanded', 'true');
@@ -7122,7 +7171,9 @@ function renderIncidentGuidance() {
 }
 
 function renderIncidentCommandSnapshot() {
-  const chemicalContext = getIncidentChemicalContext(getActiveIncident());
+  const activeIncident = getActiveIncident();
+  renderIncidentInvolvedChemicals(activeIncident);
+  const chemicalContext = getIncidentChemicalContext(activeIncident);
   const commandChemical = chemicalContext.chemical;
   const chemicalLoaded = Boolean(commandChemical?.name || activeChemical);
   if (!chemicalLoaded) {
@@ -7197,11 +7248,9 @@ document.addEventListener('hazmatiq:ppe-selection', (event) => updateIncidentPpe
 function syncPlumeChemicalSelection() {
   const plumeChemicalInput = document.getElementById('plume-chemical-input');
   const plotButton = document.getElementById('plot-plume-btn');
-  const leftPlotButton = document.getElementById('plume-left-plot-btn');
   const chemical = getIncidentChemicalContext(getActiveIncident()).chemical;
   if (plumeChemicalInput) plumeChemicalInput.value = chemical?.name || 'No identified chemical';
   if (plotButton) plotButton.disabled = false;
-  if (leftPlotButton && !activePlumeCommand) leftPlotButton.textContent = 'Plot Plume';
   setText('plume-input-status', '');
   updatePlumeInputSummaries();
 }
@@ -7545,15 +7594,39 @@ function chemicalSearchDetail(chemical) {
   ].filter(Boolean).join(' · ') || 'No Current Data Exists';
 }
 
-function chemicalSearchIdentifiers(chemical) {
-  if (Array.isArray(chemical.linkedIdentifiers) && chemical.linkedIdentifiers.length) return chemical.linkedIdentifiers;
-  const un = parseJsonField(chemical.un, [])?.[0];
-  const cas = parseJsonField(chemical.cas, [])?.[0];
+function chemicalSearchProvenance(chemical) {
   return [
-    cas && { type: 'CAS', label: `CAS ${cas}` },
-    un && { type: isUnreviewedTransportationRecord(chemical) ? 'Transport' : 'UN/NA', label: `UN ${un}` },
-    chemical.ergGuide && { type: 'ERG', label: `ERG ${chemical.ergGuide}` },
-  ].filter(Boolean);
+    chemicalSearchDetail(chemical),
+    ...(chemical.sourceBadges || []),
+    ...(chemical.sourceLinks || []).map((source) => source.sourceName || source.source || ''),
+  ].filter(Boolean).join(' · ');
+}
+
+function reportedIdentifierValue(value) {
+  if (value === null || value === undefined) return '';
+  let parsed = value;
+  if (typeof value === 'string') {
+    try {
+      parsed = JSON.parse(value);
+    } catch {
+      parsed = value;
+    }
+  }
+  if (Array.isArray(parsed)) return parsed.map(reportedIdentifierValue).find(Boolean) || '';
+  const text = String(parsed ?? '').trim();
+  return /^(?:N\/?A|Not available|No Current Data Exists)$/i.test(text) ? '' : text;
+}
+
+function chemicalSearchResultBadges(chemical) {
+  const identifiers = [
+    ['CAS', reportedIdentifierValue(chemical.cas ?? chemical.CasNumber)],
+    ['UN', reportedIdentifierValue(chemical.un ?? chemical.UnnaNumber)],
+    ['ERG', reportedIdentifierValue(chemical.ergGuide ?? chemical.erg ?? chemical.ErgNumber)],
+  ];
+  return identifiers.map(([type, value]) => ({
+    type,
+    label: `${type} ${value || 'Unavailable'}`,
+  }));
 }
 
 async function openChemicalById(chemicalId, facilityName = '') {
@@ -7916,51 +7989,19 @@ async function openFacility(facilityId) {
   window.clearTimeout(chemicalSearchTimer);
   clearChemicalSuggestions();
   setChemicalSearchStatus('Loading facility submission…', 'loading');
-  const facility = await fetchJson(`/api/facilities/${encodeURIComponent(facilityId)}`);
-  if (!facility || facility.error) {
+  try {
+    const facility = await fetchJson(`/api/facilities/${encodeURIComponent(facilityId)}`);
+    if (!facility || facility.error) throw new Error('Facility information could not be loaded.');
+    persistCommandFacilitySelection(facility);
+    showFacilityInventoryDialog(facility, chemicalSearchInput);
+    setChemicalSearchStatus(`Facility selected: ${facility.name}.`, 'success');
+  } catch (error) {
     setChemicalSearchStatus('Facility information could not be loaded.', 'error');
-    return;
+    console.error('[facility-inventory] facility detail retrieval failed', error);
   }
-
-  document.getElementById('facility-name').textContent = facility.name;
-  document.getElementById('facility-address').textContent = facility.address;
-  document.getElementById('facility-source').textContent = `${facility.source || 'Tier II'} submission`;
-
-  const list = document.getElementById('facility-chemical-list');
-  list.replaceChildren();
-  const chemicalRecords = await Promise.all(
-    facility.chemicals.map((item) => fetchJson(`/api/chemicals/${encodeURIComponent(item.chemicalId)}`)),
-  );
-  facility.chemicals.forEach((item, index) => {
-    const chemical = chemicalRecords[index];
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'facility-chemical-btn';
-    const name = document.createElement('strong');
-    name.textContent = chemical?.name || item.chemicalId.replaceAll('-', ' ');
-    const detail = document.createElement('span');
-    detail.textContent = `${Number(item.maxDailyAmountValue).toLocaleString()} ${item.maxDailyAmountUnit} · ${item.container || 'Container not reported'} · Reported ${item.lastReportedYear}`;
-    button.append(name, detail);
-    button.addEventListener('click', () => chemical && !chemical.error
-      ? openChemical(chemical, facility.name)
-      : openChemicalById(item.chemicalId, facility.name));
-    list.append(button);
-  });
-
-  if (!facility.chemicals.length) {
-    const empty = document.createElement('p');
-    empty.className = 'muted';
-    empty.textContent = 'No chemical inventory was included in this facility submission.';
-    list.append(empty);
-  }
-
-  if (facilityInventory) facilityInventory.hidden = false;
-  setHazardProfileMode('empty');
-  setChemicalSearchStatus(`${facility.chemicals.length} reported chemical${facility.chemicals.length === 1 ? '' : 's'} found for ${facility.name}.`, 'success');
-  facilityInventory?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-function createSuggestion(kind, title, detail, onSelect, { identifiers = [], warning = '' } = {}) {
+function createSuggestion(kind, title, detail, onSelect, { identifiers = [], warning = '', provenance = '' } = {}) {
   const option = document.createElement('div');
   const isFacilitySuggestion = kind === 'Facility';
   option.className = `chemical-suggestion${isFacilitySuggestion ? ' is-facility-suggestion' : ' is-chemical-suggestion is-canonical-chemical-suggestion'}`;
@@ -7969,16 +8010,13 @@ function createSuggestion(kind, title, detail, onSelect, { identifiers = [], war
   button.type = 'button';
   button.className = 'chemical-suggestion-select';
 
-  const type = document.createElement('span');
-  type.className = 'chemical-suggestion-type';
-  type.textContent = kind;
   const text = document.createElement('span');
   const heading = document.createElement('strong');
   heading.textContent = title;
   const subtext = document.createElement('small');
-  const unIdentifier = identifiers.find((identifier) => /^(?:UN|NA|Transport)/i.test(String(identifier?.type || '')));
-  subtext.textContent = isFacilitySuggestion ? (unIdentifier?.label || detail) : detail;
-  text.append(heading, subtext);
+  subtext.textContent = detail;
+  text.append(heading);
+  if (isFacilitySuggestion && detail) text.append(subtext);
   if (identifiers.length) {
     const renderChips = (items) => {
       const chips = document.createElement('span');
@@ -7992,16 +8030,7 @@ function createSuggestion(kind, title, detail, onSelect, { identifiers = [], war
       });
       return chips;
     };
-    if (identifiers.length > 5) {
-      text.append(renderChips(identifiers.slice(0, 3)));
-      const linkedDetails = document.createElement('details');
-      linkedDetails.className = 'chemical-linked-identifiers';
-      const linkedSummary = document.createElement('summary');
-      linkedSummary.textContent = 'View linked identifiers';
-      linkedDetails.append(linkedSummary, renderChips(identifiers.slice(3)));
-      linkedDetails.addEventListener('click', (event) => event.stopPropagation());
-      option.append(linkedDetails);
-    } else text.append(renderChips(identifiers));
+    text.append(renderChips(identifiers));
   }
   if (warning) {
     const warningText = document.createElement('small');
@@ -8009,9 +8038,26 @@ function createSuggestion(kind, title, detail, onSelect, { identifiers = [], war
     warningText.textContent = warning;
     text.append(warningText);
   }
-  button.append(type, text);
+  if (!isFacilitySuggestion && /Transportation Identifier/i.test(kind)) {
+    const type = document.createElement('span');
+    type.className = 'chemical-suggestion-type';
+    type.textContent = kind;
+    button.append(type);
+  }
+  button.append(text);
   button.addEventListener('click', onSelect);
   option.prepend(button);
+  if (!isFacilitySuggestion && provenance) {
+    const sourceDetails = document.createElement('details');
+    sourceDetails.className = 'chemical-suggestion-provenance';
+    const summary = document.createElement('summary');
+    summary.textContent = 'Source / match details';
+    const detailsText = document.createElement('p');
+    detailsText.textContent = provenance;
+    sourceDetails.append(summary, detailsText);
+    sourceDetails.addEventListener('click', (event) => event.stopPropagation());
+    option.append(sourceDetails);
+  }
   return option;
 }
 
@@ -8054,9 +8100,9 @@ async function searchChemicalId(value, { submit = false } = {}) {
   chemicalSearchSuggestions.replaceChildren();
   chemicals.slice(0, 5).forEach((chemical) => {
     chemicalSearchSuggestions.append(createSuggestion(
-      chemical.resultType || (isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier — Requires Review' : 'Chemical Companion Master'),
+      chemical.resultType || (isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier — Requires Review' : 'Chemical'),
       chemical.name,
-      chemicalSearchDetail(chemical),
+      '',
       () => {
         if (chemicalSearchInput) chemicalSearchInput.value = chemical.name;
         if (facilityInventory) facilityInventory.hidden = true;
@@ -8067,8 +8113,9 @@ async function searchChemicalId(value, { submit = false } = {}) {
         } else void (window.HazMatIQ.openHazardProfile?.(chemical) || openChemical(chemical));
       },
       {
-        identifiers: chemicalSearchIdentifiers(chemical),
+        identifiers: chemicalSearchResultBadges(chemical),
         warning: isUnreviewedTransportationRecord(chemical) ? chemical.reviewWarning : '',
+        provenance: chemicalSearchProvenance(chemical),
       },
     ));
   });
@@ -8201,13 +8248,14 @@ async function searchIncidentProducts(value) {
   incidentProductSuggestions.replaceChildren();
   (data?.chemicals || []).map(companionChemicalForUi).slice(0, 8).forEach((chemical) => {
     incidentProductSuggestions.append(createSuggestion(
-      chemical.resultType || (isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier — Requires Review' : 'Chemical Companion Master'),
+      chemical.resultType || (isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier — Requires Review' : 'Chemical'),
       chemical.name,
-      chemicalSearchDetail(chemical),
+      '',
       () => void selectIncidentProduct(chemical),
       {
-        identifiers: chemicalSearchIdentifiers(chemical),
+        identifiers: chemicalSearchResultBadges(chemical),
         warning: isUnreviewedTransportationRecord(chemical) ? chemical.reviewWarning : '',
+        provenance: chemicalSearchProvenance(chemical),
       },
     ));
   });
@@ -8275,13 +8323,14 @@ async function searchPlumeChemicals(value) {
   plumeChemicalSuggestions.replaceChildren();
   (data?.chemicals || []).map(companionChemicalForUi).slice(0, 8).forEach((chemical) => {
     plumeChemicalSuggestions.append(createSuggestion(
-      chemical.resultType || (isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier — Requires Review' : 'Chemical Companion Master'),
+      chemical.resultType || (isUnreviewedTransportationRecord(chemical) ? 'Transportation Identifier — Requires Review' : 'Chemical'),
       chemical.name,
-      chemicalSearchDetail(chemical),
+      '',
       () => void selectPlumeChemical(chemical),
       {
-        identifiers: chemicalSearchIdentifiers(chemical),
+        identifiers: chemicalSearchResultBadges(chemical),
         warning: isUnreviewedTransportationRecord(chemical) ? chemical.reviewWarning : '',
+        provenance: chemicalSearchProvenance(chemical),
       },
     ));
   });
@@ -8444,7 +8493,7 @@ const plumeFallbackMapStyle = plumeSatelliteMapStyle;
 const plumeMapViews = {
   street: { style: plumeMapStyleUrl, pitch: 0, bearing: 0 },
   satellite: { style: plumeSatelliteMapStyle, pitch: 0, bearing: 0 },
-  plume3d: { style: plumeMapStyleUrl, pitch: 54, bearing: 0, requires3d: true },
+  plume3d: { style: plumeMapStyleUrl, pitch: 82, bearing: 0, requires3d: true },
   terrain3d: { style: plumeMapStyleUrl, pitch: 60, bearing: -20, minZoom: 15, requires3d: true },
 };
 function readStoredPlumeMapView() {
@@ -8499,6 +8548,8 @@ function setPlumeMapMaximized(maximized) {
 }
 
 function updatePlumeMapViewButtons() {
+  const groundButton = document.getElementById('plume-ground-view-btn');
+  if (groundButton) groundButton.hidden = !plumeViewIsPlume();
   document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
     const isActive = button.dataset.plumeMapView === activePlumeMapView;
     button.classList.toggle('active', isActive);
@@ -8535,7 +8586,7 @@ function rotatePlumeMap(delta) {
 
 function zoomPlumeMap(delta) {
   if (!plumeMap?.getZoom || !plumeMap?.easeTo) return;
-  plumeMap.easeTo({ zoom: Math.max(1, Math.min(22, plumeMap.getZoom() + delta)), duration: 250 });
+  plumeMap.easeTo({ zoom: Math.max(1, Math.min(plumeMap.getMaxZoom?.() || 24, plumeMap.getZoom() + delta)), duration: 250 });
 }
 
 function resetPlumeMapNorth() {
@@ -8545,7 +8596,7 @@ function resetPlumeMapNorth() {
 
 function tiltPlumeMap(delta) {
   if (!plumeMap?.getPitch || !plumeMap?.easeTo) return;
-  const pitch = Math.max(0, Math.min(70, plumeMap.getPitch() + delta));
+  const pitch = Math.max(0, Math.min(plumeMap.getMaxPitch?.() || 85, plumeMap.getPitch() + delta));
   plumeMap.easeTo({ pitch, duration: 350 });
 }
 
@@ -8601,6 +8652,7 @@ function setPlumeMapResultVisible(hasResult) {
 
 function resetPlumeMapView() {
   if (!plumeMap?.easeTo) return;
+  if (plumeViewIsPlume() && setPlumeGroundView()) return;
   const view = plumeMapViews[activePlumeMapView] || plumeMapViews.satellite;
   plumeMap.easeTo({
     bearing: view.bearing,
@@ -8615,6 +8667,30 @@ function plume3dCameraBearing() {
   return Number.isFinite(windFrom) ? (windFrom + 180 + 28) % 360 : 28;
 }
 
+// A real eye-height camera, using MapLibre's public camera calculation.
+// Aim at nearby ground so the horizon and the cloud above it remain in view.
+function setPlumeGroundView(duration = 500) {
+  const mesh = currentPlume3dMeshData;
+  if (!plumeViewIsPlume() || !mesh?.origin || !plumeMap?.calculateCameraOptionsFromTo) return false;
+  const sourceSection = mesh.paths.find((path) => path.zoneRank === 3)?.sections[0] || mesh.paths[0]?.sections[0];
+  const sourceWidth = Math.max(2, Number(sourceSection?.footprintWidthM) || 2);
+  const observerLocal = [-15, -sourceWidth - 8];
+  const length = Math.hypot(...observerLocal);
+  const lookDistance = 12;
+  const targetLocal = observerLocal.map((value) => value * (1 - lookDistance / length));
+  const observer = localMetersToLngLat(observerLocal, mesh.origin, mesh.windFromDeg);
+  const target = localMetersToLngLat(targetLocal, mesh.origin, mesh.windFromDeg);
+  const ground = plume3dTerrainElevation(target, Number(sourceSection?.terrainElevationM) || 0);
+  const observerGround = plume3dTerrainElevation(observer, ground);
+  const camera = plumeMap.calculateCameraOptionsFromTo(
+    new window.maplibregl.LngLat(...observer), observerGround + 1.7,
+    new window.maplibregl.LngLat(...target), ground,
+  );
+  plumeMap.easeTo({ ...camera, duration });
+  setText('plume-layers-status', 'Ground View · eye height 1.7 m · estimated plume heights at true scale. Fit Plume returns to the zone overview.');
+  return true;
+}
+
 async function fitPlumeToView() {
   if (!plumeMap) return;
   if (plumeMapReady) await plumeMapReady;
@@ -8626,7 +8702,7 @@ async function fitPlumeToView() {
     plumeMap.fitBounds(bounds, {
       padding: 70,
       maxZoom: 15,
-      pitch: plumeMap.getPitch?.() || 0,
+      pitch: plumeViewIsPlume() ? 60 : (plumeMap.getPitch?.() || 0),
       bearing: plumeMap.getBearing?.() || 0,
       duration: 450,
     });
@@ -9086,6 +9162,8 @@ function ensurePlumeMap(location = null) {
       style: view.style,
       pitch: view.pitch,
       bearing: view.bearing,
+      maxPitch: 85,
+      maxZoom: 24,
       preserveDrawingBuffer: true,
       attributionControl: false,
     });
@@ -9825,7 +9903,10 @@ async function renderThreatZones(geojson, label) {
   }
   const bounds = new window.maplibregl.LngLatBounds();
   forEachCoordinate(currentThreatZoneGeoJson, (coordinate) => bounds.extend(coordinate));
-  if (!bounds.isEmpty()) plumeMap.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 500 });
+  if (plumeViewIsPlume()) {
+    updatePlume3dEnvelope();
+    setPlumeGroundView();
+  } else if (!bounds.isEmpty()) plumeMap.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 500 });
   setText('plume-overlay-status', label);
   return true;
 }
@@ -9905,10 +9986,18 @@ function addOptionalPlumeGuideLayer(layer) {
   }
 }
 
+function plumeMapUsesRelativeTerrain() {
+  return Number(String(window.maplibregl?.version || '4').split('.')[0]) < 5;
+}
+
 function plume3dTerrainElevation(coordinate, fallback = null) {
   try {
     const sampled = plumeMap?.queryTerrainElevation?.(coordinate, { exaggerated: false });
-    return Number.isFinite(Number(sampled)) ? Number(sampled) : fallback;
+    if (sampled === null || sampled === undefined || !Number.isFinite(Number(sampled))) return fallback;
+    // MapLibre 4 returns elevation relative to its camera target. Convert to
+    // MSL before combining terrain with the model's AGL release/cloud height.
+    const targetElevation = plumeMapUsesRelativeTerrain() ? (plumeMap.getCameraTargetElevation?.() || 0) : 0;
+    return Number(sampled) + targetElevation;
   } catch {
     return fallback;
   }
@@ -10160,6 +10249,7 @@ function getPlume3dDiagnostic() {
     envelopeFeatureCount: currentPlume3dEnvelopeGeoJson?.features?.length || 0,
     meshPathCount: meshData?.paths?.length || 0,
     meshVertexCount: vertexCount,
+    meshDrawCount: plume3dCustomLayer?.drawCount || 0,
     customLayerExists: Boolean(customLayer),
     customLayerVisible: Boolean(plume3dCustomLayer?.visible),
     styleLoaded: Boolean(plumeMap?.isStyleLoaded?.()),
@@ -10195,7 +10285,9 @@ function buildPlume3dMeshVertices(meshData) {
   const maplibre = window.maplibregl;
   if (!maplibre?.MercatorCoordinate || !meshData?.origin) return new Float32Array();
   const vertices = [];
-  const ringPoints = 14;
+  const ringPoints = 24;
+  // Small, origin-relative coordinates avoid Float32 jitter at eye-height zoom.
+  const meshOrigin = maplibre.MercatorCoordinate.fromLngLat([meshData.origin.lon, meshData.origin.lat], 0);
   const addVertex = (branch, theta, color) => {
     const width = Math.max(1.5, Number(branch.footprintWidthM) || 1.5);
     const terrain = Number(branch.terrainElevationM) || 0;
@@ -10211,15 +10303,17 @@ function buildPlume3dMeshVertices(meshData) {
         : terrain + Math.max(Number(branch.baseAGL) || 0, centerline + spread),
     );
     const altitude = Math.max(
-      terrain + 0.5,
+      terrain,
       baseMSL + ((Math.sin(theta) + 1) * 0.5) * (topMSL - baseMSL),
     );
     const coordinate = localMetersToLngLat([
       Number(branch.downwindDistanceM) || 0,
       (Number(branch.centerY) || 0) + Math.cos(theta) * width,
     ], meshData.origin, meshData.windFromDeg);
-    const mercator = maplibre.MercatorCoordinate.fromLngLat(coordinate, Math.max(0, altitude));
-    vertices.push(mercator.x, mercator.y, mercator.z, color[0], color[1], color[2], color[3]);
+    const mercator = maplibre.MercatorCoordinate.fromLngLat(coordinate, altitude);
+    const shade = 0.72 + 0.28 * ((Math.sin(theta) + 1) / 2);
+    vertices.push(mercator.x - meshOrigin.x, mercator.y - meshOrigin.y, mercator.z,
+      color[0] * shade, color[1] * shade, color[2] * shade, color[3]);
   };
   meshData.paths.forEach((path) => {
     const color = plume3dColorForRank(path.zoneRank);
@@ -10256,6 +10350,8 @@ function createPlume3dCustomLayer() {
     visible: false,
     vertexBuffer: null,
     vertexCount: 0,
+    drawCount: 0,
+    origin: null,
     gl: null,
     program: null,
     positionLocation: -1,
@@ -10263,6 +10359,7 @@ function createPlume3dCustomLayer() {
     matrixLocation: null,
     onAdd(map, gl) {
       this.gl = gl;
+      this.map = map;
       const vertexShader = gl.createShader(gl.VERTEX_SHADER);
       gl.shaderSource(vertexShader, `
         attribute vec3 a_pos;
@@ -10308,6 +10405,10 @@ function createPlume3dCustomLayer() {
       const gl = this.gl;
       if (!gl) return;
       const vertices = buildPlume3dMeshVertices(meshData);
+      this.origin = meshData?.origin
+        ? window.maplibregl.MercatorCoordinate.fromLngLat([meshData.origin.lon, meshData.origin.lat], 0)
+        : null;
+      this.drawCount = 0;
       gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
       gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
       this.vertexCount = vertices.length / 7;
@@ -10315,15 +10416,28 @@ function createPlume3dCustomLayer() {
     },
     render(gl, args) {
       if (!this.visible || !this.vertexBuffer || !this.vertexCount || !this.program) return;
-      const matrix = args?.defaultProjectionData?.mainMatrix || args?.matrix;
-      if (!matrix) return;
+      // Bundled MapLibre 4.7 passes the matrix directly. Version 5 wraps it.
+      const matrix = args?.defaultProjectionData?.mainMatrix || args?.matrix || (args?.length === 16 ? args : null);
+      if (!matrix || !this.origin) {
+        if (!this.matrixFailureReported) reportPlume3dFailure('The map did not supply a usable 3D camera matrix.');
+        this.matrixFailureReported = true;
+        return;
+      }
+      const terrainOffset = plumeMapUsesRelativeTerrain() && this.map.getTerrain?.()
+        ? -(this.map.getCameraTargetElevation?.() || 0) * this.origin.meterInMercatorCoordinateUnits()
+        : 0;
+      const translated = new Float32Array(matrix);
+      for (let row = 0; row < 4; row += 1) {
+        translated[12 + row] = matrix[row] * this.origin.x + matrix[4 + row] * this.origin.y
+          + matrix[8 + row] * terrainOffset + matrix[12 + row];
+      }
       gl.useProgram(this.program);
       gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
       gl.enableVertexAttribArray(this.positionLocation);
       gl.vertexAttribPointer(this.positionLocation, 3, gl.FLOAT, false, 28, 0);
       gl.enableVertexAttribArray(this.colorLocation);
       gl.vertexAttribPointer(this.colorLocation, 4, gl.FLOAT, false, 28, 12);
-      gl.uniformMatrix4fv(this.matrixLocation, false, matrix);
+      gl.uniformMatrix4fv(this.matrixLocation, false, translated);
       gl.enable(gl.BLEND);
       gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
       gl.enable(gl.DEPTH_TEST);
@@ -10331,6 +10445,7 @@ function createPlume3dCustomLayer() {
       gl.disable(gl.CULL_FACE);
       gl.depthMask(false);
       gl.drawArrays(gl.TRIANGLES, 0, this.vertexCount);
+      this.drawCount += 1;
       gl.depthMask(true);
       gl.disableVertexAttribArray(this.positionLocation);
       gl.disableVertexAttribArray(this.colorLocation);
@@ -10780,7 +10895,9 @@ async function setPlumeMapView(viewName) {
     updatePlume3dEnvelope();
     if (currentThreatZoneGeoJson?.features?.length) {
       plumeMap.once('idle', () => {
-        if (switchToken === plumeMapViewToken && activePlumeMapView === viewName) updatePlume3dEnvelope();
+        if (switchToken === plumeMapViewToken && activePlumeMapView === viewName) {
+          updatePlume3dEnvelope();
+        }
       });
     }
   }
@@ -10793,6 +10910,10 @@ async function setPlumeMapView(viewName) {
     duration: 500,
   };
   if (view.minZoom) camera.zoom = Math.max(plumeMap.getZoom(), view.minZoom);
+  if (plumeViewIsPlume(viewName) && setPlumeGroundView()) {
+    updatePlumeCompass();
+    return;
+  }
   if (!cameraBeforeSwitch && activeZones?.features?.length) {
     const bounds = new window.maplibregl.LngLatBounds();
     forEachCoordinate(activeZones, (coordinate) => bounds.extend(coordinate));
@@ -12772,7 +12893,6 @@ function saveLatestPlumeOverlay({ location, releaseType, windSpeed, windDirectio
 
 async function plotPlumeFromControls(locationOverride = null) {
   const plotButton = document.getElementById('plot-plume-btn');
-  const leftPlotButton = document.getElementById('plume-left-plot-btn');
   const plottingIncidentId = getActiveIncident()?.incidentId || null;
   const plotChemicalContext = getIncidentChemicalContext(getActiveIncident());
   const plotChemical = plotChemicalContext.chemical;
@@ -12902,7 +13022,6 @@ async function plotPlumeFromControls(locationOverride = null) {
       updatePlumeCommandPanel(modeled.result);
       setPlumeMapResultVisible(true);
       updatePlumeModeLabel();
-      if (leftPlotButton) leftPlotButton.textContent = 'Recalculate Plume';
       setText('plume-live-status', `ERG protective-action overlay displayed ${formatCentralZuluHtml()}.`);
       return;
     }
@@ -12959,7 +13078,6 @@ async function plotPlumeFromControls(locationOverride = null) {
     updatePlumeCommandPanel(modeled.result);
     setPlumeMapResultVisible(true);
     updatePlumeModeLabel();
-    if (leftPlotButton) leftPlotButton.textContent = 'Recalculate Plume';
     setText('plume-live-status', `Plume plotted ${formatCentralZuluHtml()}.`);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'The plume could not be plotted.';
@@ -13627,6 +13745,30 @@ window.setInterval(() => {
 document.querySelectorAll('[data-plume-map-view]').forEach((button) => {
   button.addEventListener('click', () => setPlumeMapView(button.dataset.plumeMapView));
 });
+function initializePlumeThreatZoneDialog() {
+  const dialog = document.getElementById('plume-threat-zone-dialog');
+  const dialogContent = document.getElementById('plume-threat-zone-dialog-content');
+  const threatZoneCard = document.querySelector('#plume .plume-v2-intelligence-column > .plume-intelligence-card:first-child');
+  const openButton = document.getElementById('plume-threat-zone-open-btn');
+  const closeButton = document.getElementById('plume-threat-zone-dialog-close');
+  if (!dialog || !dialogContent || !threatZoneCard || !openButton) return;
+
+  dialogContent.append(threatZoneCard);
+  const openDialog = () => {
+    if (typeof dialog.showModal === 'function') dialog.showModal();
+    else dialog.setAttribute('open', '');
+  };
+  const closeDialog = () => {
+    if (typeof dialog.close === 'function') dialog.close();
+    else dialog.removeAttribute('open');
+  };
+  openButton.addEventListener('click', openDialog);
+  closeButton?.addEventListener('click', closeDialog);
+  dialog.addEventListener('click', (event) => {
+    if (event.target === dialog) closeDialog();
+  });
+}
+initializePlumeThreatZoneDialog();
 document.querySelectorAll('[data-plume-card-toggle]').forEach((button) => {
   button.addEventListener('click', () => {
     const target = document.getElementById(button.getAttribute('aria-controls'));
@@ -13658,6 +13800,7 @@ document.getElementById('plume-buildings-toggle')?.addEventListener('click', tog
 document.getElementById('plume-fit-view-btn')?.addEventListener('click', () => void fitPlumeToView());
 document.getElementById('plume-recenter-map-btn')?.addEventListener('click', () => void recenterPlumeOnIncident());
 document.getElementById('plume-reset-view-btn')?.addEventListener('click', resetPlumeMapView);
+document.getElementById('plume-ground-view-btn')?.addEventListener('click', () => setPlumeGroundView());
 document.querySelectorAll('[data-plume-camera]').forEach((button) => {
   button.addEventListener('click', () => {
     const actions = {
@@ -13771,11 +13914,495 @@ document.getElementById('use-current-location-btn')?.addEventListener('click', a
 // ─── Tier II facilities: backed by the real /api/facilities data ───
 
 let tier2FacilitiesPromise = null;
-function getTier2Facilities() {
+function getTier2Facilities(query = '') {
+  const normalizedQuery = String(query || '').trim();
+  const endpoint = normalizedQuery
+    ? `/api/facilities?q=${encodeURIComponent(normalizedQuery)}`
+    : '/api/facilities';
+  const load = () => fetchJson(endpoint).then((data) => {
+      if (!Array.isArray(data?.facilities)) throw new Error('Facility search returned an invalid response.');
+      return data.facilities;
+    });
+  if (normalizedQuery) return load();
   if (!tier2FacilitiesPromise) {
-    tier2FacilitiesPromise = fetchJson('/api/facilities').then((data) => data?.facilities || []);
+    tier2FacilitiesPromise = load().catch((error) => {
+      tier2FacilitiesPromise = null;
+      throw error;
+    });
   }
   return tier2FacilitiesPromise;
+}
+
+const commandFacilityInput = document.getElementById('incident-facility-name');
+const commandFacilitySuggestions = document.getElementById('incident-facility-suggestions');
+const commandFacilitySearchStatus = document.getElementById('incident-facility-search-status');
+const facilityInventoryDialog = document.getElementById('incident-facility-inventory-dialog');
+const facilityInventoryList = document.getElementById('incident-facility-inventory-list');
+const facilityInventoryStatus = document.getElementById('incident-facility-inventory-status');
+const facilityInventorySelectedCount = document.getElementById('incident-facility-selected-count');
+const addFacilityChemicalsButton = document.getElementById('add-facility-chemicals-btn');
+let commandFacilitySearchTimer = null;
+let commandFacilitySearchRequest = 0;
+let facilityInventoryRequest = 0;
+let facilityInventorySelection = new Set();
+let activeFacilityInventory = null;
+let facilityInventoryOpener = null;
+
+function setCommandFacilitySearchStatus(message, state = '') {
+  if (!commandFacilitySearchStatus) return;
+  commandFacilitySearchStatus.textContent = message;
+  commandFacilitySearchStatus.dataset.state = state;
+}
+
+function clearCommandFacilitySuggestions() {
+  commandFacilitySuggestions?.replaceChildren();
+  if (commandFacilitySuggestions) commandFacilitySuggestions.hidden = true;
+  commandFacilityInput?.setAttribute('aria-expanded', 'false');
+}
+
+function renderIncidentInvolvedChemicals(incident = getActiveIncident()) {
+  const list = document.getElementById('incident-involved-chemical-list');
+  if (!list) return;
+  const chemicals = Array.isArray(incident?.involvedChemicals) ? incident.involvedChemicals : [];
+  if (!chemicals.length) {
+    const empty = document.createElement('li');
+    empty.className = 'incident-involved-chemical-empty';
+    empty.textContent = 'No chemicals have been identified as involved.';
+    list.replaceChildren(empty);
+    return;
+  }
+  list.replaceChildren(...chemicals.map((chemical) => {
+    const row = document.createElement('li');
+    const name = document.createElement('strong');
+    name.textContent = chemical.chemicalName || chemical.name || 'Chemical name unavailable';
+    const identifiers = document.createElement('small');
+    identifiers.textContent = [
+      `CAS ${reportedIdentifierValue(chemical.cas) || 'Unavailable'}`,
+      `UN ${reportedIdentifierValue(chemical.un) || 'Unavailable'}`,
+      `ERG ${reportedIdentifierValue(chemical.ergGuide) || 'Unavailable'}`,
+      chemical.reportedQuantity
+        ? `Reported ${chemical.reportedQuantity}${chemical.reportedUnit ? ` ${chemical.reportedUnit}` : ''}`
+        : '',
+    ].filter(Boolean).join(' · ');
+    row.append(name, identifiers);
+    return row;
+  }));
+}
+
+function facilityChemicalIdentity(chemical) {
+  const id = chemical?.chemicalId ?? chemical?.selectedChemicalId ?? chemical?.chemicalCompanionId ?? chemical?.id;
+  const cas = reportedIdentifierValue(chemical?.cas ?? chemical?.casNumber);
+  const un = reportedIdentifierValue(chemical?.un ?? chemical?.unNumber);
+  const name = String(chemical?.chemicalName ?? chemical?.name ?? '').trim().toLocaleLowerCase().replace(/\s+/g, ' ');
+  return {
+    id: id === null || id === undefined || !String(id).trim() ? '' : String(id).trim().toLowerCase(),
+    cas: cas.toLowerCase(),
+    un: un.toLowerCase(),
+    name,
+  };
+}
+
+function isAlreadyIncidentChemical(chemical, incident = getActiveIncident()) {
+  const candidate = facilityChemicalIdentity(chemical);
+  return (incident?.involvedChemicals || []).some((existing) => {
+    const current = facilityChemicalIdentity(existing);
+    if (candidate.cas && current.cas) return candidate.cas === current.cas;
+    if (candidate.un && current.un) return candidate.un === current.un;
+    if (candidate.id && current.id) return candidate.id === current.id;
+    return Boolean(candidate.name && current.name && candidate.name === current.name);
+  });
+}
+
+function updateFacilityInventorySelectionStatus() {
+  const count = facilityInventorySelection.size;
+  const hasActive = Boolean(getActiveIncident());
+  if (facilityInventorySelectedCount) {
+    facilityInventorySelectedCount.textContent = `${count} selected${hasActive ? '' : ' · Start an incident to add chemicals'}`;
+  }
+  if (addFacilityChemicalsButton) addFacilityChemicalsButton.disabled = count === 0 || !hasActive;
+}
+
+function facilityInventoryItemIdentifier(item, index) {
+  return String(item.id ?? `${item.chemicalId || 'inventory'}-${index}`);
+}
+
+function renderFacilityInventoryRows(facility, chemicals) {
+  if (!facilityInventoryList) return;
+  if (!chemicals.length) {
+    const empty = document.createElement('p');
+    empty.className = 'facility-inventory-empty';
+    empty.textContent = 'No reported chemical inventory is available for this facility.';
+    facilityInventoryList.replaceChildren(empty);
+    if (facilityInventoryStatus) facilityInventoryStatus.textContent = 'Inventory is empty or was not reported.';
+    updateFacilityInventorySelectionStatus();
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+  chemicals.forEach((item, index) => {
+    const row = document.createElement('article');
+    row.className = 'facility-inventory-row';
+    const checkbox = document.createElement('input');
+    const key = facilityInventoryItemIdentifier(item, index);
+    checkbox.type = 'checkbox';
+    checkbox.id = `facility-inventory-chemical-${index}`;
+    checkbox.checked = facilityInventorySelection.has(key);
+    checkbox.disabled = isAlreadyIncidentChemical(item);
+    checkbox.setAttribute('aria-label', `Select ${item.chemicalName || 'chemical name unavailable'} from the reported inventory`);
+    if (checkbox.disabled) checkbox.title = 'This chemical is already identified as involved in the incident.';
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) facilityInventorySelection.add(key);
+      else facilityInventorySelection.delete(key);
+      updateFacilityInventorySelectionStatus();
+    });
+
+    const content = document.createElement('label');
+    content.htmlFor = checkbox.id;
+    content.className = 'facility-inventory-row-content';
+    const name = document.createElement('strong');
+    name.textContent = item.chemicalName || 'Chemical name unavailable';
+    const identifiers = document.createElement('span');
+    identifiers.className = 'chemical-identifier-chips';
+    [
+      ['CAS', reportedIdentifierValue(item.cas)],
+      ['UN', reportedIdentifierValue(item.un)],
+      ['ERG', reportedIdentifierValue(item.ergGuide)],
+    ].forEach(([type, value]) => {
+      const badge = document.createElement('span');
+      badge.className = 'chemical-identifier-chip';
+      badge.dataset.identifierType = type;
+      badge.textContent = `${type} ${value || 'Unavailable'}`;
+      identifiers.append(badge);
+    });
+    const quantity = document.createElement('span');
+    quantity.className = 'facility-inventory-row-quantity';
+    const amount = reportedIdentifierValue(item.maxDailyAmountValue);
+    const unit = reportedIdentifierValue(item.maxDailyAmountUnit);
+    quantity.textContent = `Reported quantity: ${amount || 'Unavailable'}${unit ? ` ${unit}` : ''}`;
+    const reported = document.createElement('small');
+    reported.textContent = [
+      item.lastReportedYear ? `Reported ${item.lastReportedYear}` : '',
+      item.container ? `Container ${item.container}` : '',
+      checkbox.disabled ? 'Already identified as involved' : '',
+    ].filter(Boolean).join(' · ');
+    content.append(name, identifiers, quantity);
+    if (reported.textContent) content.append(reported);
+    row.append(checkbox, content);
+    fragment.append(row);
+  });
+  facilityInventoryList.replaceChildren(fragment);
+  if (facilityInventoryStatus) {
+    facilityInventoryStatus.textContent = `${chemicals.length} reported chemical${chemicals.length === 1 ? '' : 's'} in the ${facility.source || 'facility'} inventory.`;
+  }
+  updateFacilityInventorySelectionStatus();
+}
+
+async function loadFacilityInventory(facility) {
+  const request = ++facilityInventoryRequest;
+  if (facilityInventoryStatus) facilityInventoryStatus.textContent = 'Loading reported inventory…';
+  if (facilityInventoryList) {
+    const loading = document.createElement('p');
+    loading.className = 'facility-inventory-loading';
+    loading.textContent = 'Loading facility-linked chemical records…';
+    facilityInventoryList.replaceChildren(loading);
+  }
+  try {
+    const detail = await fetchJson(`/api/facilities/${encodeURIComponent(facility.id)}`);
+    if (request !== facilityInventoryRequest) return;
+    if (!detail || !Array.isArray(detail.chemicals)) throw new Error('Facility inventory response is unavailable.');
+    activeFacilityInventory = detail;
+    renderFacilityInventoryRows(detail, detail.chemicals);
+  } catch (error) {
+    if (request !== facilityInventoryRequest) return;
+    if (facilityInventoryStatus) facilityInventoryStatus.textContent = 'Facility inventory could not be retrieved.';
+    const retry = document.createElement('button');
+    retry.type = 'button';
+    retry.className = 'ghost-btn';
+    retry.textContent = 'Retry inventory retrieval';
+    retry.addEventListener('click', () => void loadFacilityInventory(facility));
+    const message = document.createElement('p');
+    message.textContent = error instanceof Error ? error.message : 'The inventory request failed.';
+    facilityInventoryList?.replaceChildren(message, retry);
+    console.error('[facility-inventory] inventory retrieval failed', error);
+  }
+}
+
+function showFacilityInventoryDialog(facility, opener = commandFacilityInput) {
+  if (!facilityInventoryDialog) return;
+  facilityInventoryOpener = opener;
+  activeFacilityInventory = facility;
+  facilityInventorySelection = new Set();
+  const name = facility.name || 'Facility';
+  document.getElementById('incident-facility-inventory-title').textContent = `${name} — Reported Chemical Inventory`;
+  document.getElementById('incident-facility-inventory-address').textContent = facility.address || 'Facility location unavailable';
+  if (facilityInventoryList) facilityInventoryList.replaceChildren();
+  if (facilityInventoryStatus) facilityInventoryStatus.textContent = 'Loading reported inventory…';
+  updateFacilityInventorySelectionStatus();
+  if (typeof facilityInventoryDialog.showModal === 'function') {
+    if (!facilityInventoryDialog.open) facilityInventoryDialog.showModal();
+  } else {
+    facilityInventoryDialog.setAttribute('open', '');
+    facilityInventoryDialog.querySelector('button')?.focus();
+  }
+  void loadFacilityInventory(facility);
+}
+
+function closeFacilityInventoryDialog() {
+  if (!facilityInventoryDialog) return;
+  if (typeof facilityInventoryDialog.close === 'function' && facilityInventoryDialog.open) {
+    facilityInventoryDialog.close();
+  } else {
+    facilityInventoryDialog.removeAttribute('open');
+    facilityInventoryOpener?.focus?.({ preventScroll: true });
+  }
+}
+
+function persistCommandFacilitySelection(facility) {
+  const incident = getActiveIncident();
+  if (!incident) return null;
+  const setValue = (id, value) => {
+    const input = document.getElementById(id);
+    if (input) input.value = value || '';
+  };
+  setValue('incident-facility-name', facility.name);
+  setValue('incident-address-input', facility.address);
+  setValue('incident-city', '');
+  setValue('incident-state', '');
+  setValue('incident-zip', '');
+  const latitude = Number(facility.lat ?? facility.latitude);
+  const longitude = Number(facility.lng ?? facility.longitude);
+  setValue('incident-coordinates-input', Number.isFinite(latitude) && Number.isFinite(longitude) ? `${latitude}, ${longitude}` : '');
+  syncIncidentAddressDownstream();
+
+  const incidents = readIncidents();
+  const index = incidents.findIndex((item) => item.incidentId === incident.incidentId);
+  if (index < 0) return null;
+  const selectedFacility = {
+    id: String(facility.id),
+    name: facility.name || '',
+    address: facility.address || '',
+    source: facility.source || '',
+  };
+  incidents[index] = {
+    ...incidents[index],
+    ...getIncidentFormData(),
+    facilityId: selectedFacility.id,
+    selectedFacility,
+    updatedAt: new Date().toISOString(),
+  };
+  writeIncidents(incidents);
+  renderIncidentLists();
+  renderIncidentCommandSnapshot();
+  window.dispatchEvent(new CustomEvent('hazmatiq:incident-command-updated'));
+  return incidents[index];
+}
+
+async function selectCommandFacility(facility, opener = commandFacilityInput) {
+  clearCommandFacilitySuggestions();
+  if (commandFacilityInput) commandFacilityInput.value = facility.name || '';
+  setCommandFacilitySearchStatus(`Loading reported inventory for ${facility.name || 'selected facility'}…`, 'loading');
+  try {
+    const detail = await fetchJson(`/api/facilities/${encodeURIComponent(facility.id)}`);
+    if (!detail || !Array.isArray(detail.chemicals)) throw new Error('Facility inventory could not be retrieved.');
+    persistCommandFacilitySelection(detail);
+    showFacilityInventoryDialog(detail, opener);
+    setCommandFacilitySearchStatus(`Selected facility: ${detail.name || facility.name}.`, 'success');
+  } catch (error) {
+    setCommandFacilitySearchStatus('Facility inventory could not be retrieved. The facility location was not changed.', 'error');
+    console.error('[facility-inventory] selected facility retrieval failed', error);
+  }
+}
+
+function renderCommandFacilityMatches(facilities) {
+  if (!commandFacilitySuggestions) return;
+  const matches = facilities.filter((facility) => String(facility.name || '').trim());
+  if (!matches.length) {
+    clearCommandFacilitySuggestions();
+    setCommandFacilitySearchStatus('No facility names matched that search.', 'error');
+    return;
+  }
+  commandFacilitySuggestions.replaceChildren(...matches.slice(0, 12).map((facility) => {
+    const option = document.createElement('button');
+    option.type = 'button';
+    option.className = 'facility-search-option';
+    option.setAttribute('role', 'option');
+    const name = document.createElement('strong');
+    name.textContent = facility.name;
+    const location = document.createElement('small');
+    location.textContent = facility.address || 'Address / location unavailable';
+    const inventory = document.createElement('small');
+    const chemicalSummary = facilityChemicalSummary(facility);
+    inventory.textContent = chemicalSummary.length
+      ? `Associated hazards: ${chemicalSummary.join(' · ')}`
+      : 'No associated chemical inventory reported';
+    option.append(name, location, inventory);
+    option.addEventListener('click', () => void selectCommandFacility(facility));
+    option.addEventListener('keydown', (event) => {
+      const options = [...commandFacilitySuggestions.querySelectorAll('button')];
+      const index = options.indexOf(option);
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        options[Math.min(index + 1, options.length - 1)]?.focus();
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (index > 0) options[index - 1].focus();
+        else commandFacilityInput?.focus();
+      } else if (event.key === 'Escape') {
+        clearCommandFacilitySuggestions();
+        commandFacilityInput?.focus();
+      }
+    });
+    return option;
+  }));
+  commandFacilitySuggestions.hidden = false;
+  commandFacilityInput?.setAttribute('aria-expanded', 'true');
+  setCommandFacilitySearchStatus(`${matches.length} matching facility${matches.length === 1 ? '' : 'ies'}. Select a facility to view its reported inventory.`);
+}
+
+async function searchCommandFacilities(query) {
+  const request = ++commandFacilitySearchRequest;
+  const normalized = query.trim().toLocaleLowerCase();
+  if (normalized.length < 2) {
+    clearCommandFacilitySuggestions();
+    setCommandFacilitySearchStatus('');
+    return;
+  }
+  setCommandFacilitySearchStatus('Searching facility names and locations…', 'loading');
+  try {
+    const facilities = await getTier2Facilities(normalized);
+    if (request !== commandFacilitySearchRequest) return;
+    const matches = filterCommandFacilities(facilities, normalized);
+    renderCommandFacilityMatches(matches);
+  } catch (error) {
+    if (request !== commandFacilitySearchRequest) return;
+    clearCommandFacilitySuggestions();
+    setCommandFacilitySearchStatus('Facility search is unavailable. Check the connection and try again.', 'error');
+    console.error('[facility-search] search request failed', error);
+  }
+}
+
+commandFacilityInput?.addEventListener('input', () => {
+  window.clearTimeout(commandFacilitySearchTimer);
+  commandFacilitySearchTimer = window.setTimeout(() => {
+    void searchCommandFacilities(commandFacilityInput.value);
+  }, 180);
+});
+commandFacilityInput?.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowDown' && commandFacilitySuggestions && !commandFacilitySuggestions.hidden) {
+    event.preventDefault();
+    commandFacilitySuggestions.querySelector('button')?.focus();
+  } else if (event.key === 'Escape') {
+    clearCommandFacilitySuggestions();
+  }
+});
+commandFacilityInput?.addEventListener('change', () => {
+  const incident = getActiveIncident();
+  if (!incident?.selectedFacility || commandFacilityInput.value.trim() === incident.selectedFacility.name) return;
+  const incidents = readIncidents();
+  const index = incidents.findIndex((item) => item.incidentId === incident.incidentId);
+  if (index < 0) return;
+  incidents[index] = {
+    ...incidents[index],
+    facilityId: null,
+    selectedFacility: null,
+    updatedAt: new Date().toISOString(),
+  };
+  writeIncidents(incidents);
+  renderIncidentLists();
+  renderIncidentCommandSnapshot();
+  window.dispatchEvent(new CustomEvent('hazmatiq:incident-command-updated'));
+});
+
+document.getElementById('close-incident-facility-inventory-btn')?.addEventListener('click', closeFacilityInventoryDialog);
+document.getElementById('incident-facility-inventory-dialog')?.addEventListener('cancel', (event) => {
+  event.preventDefault();
+  closeFacilityInventoryDialog();
+});
+document.getElementById('incident-facility-inventory-dialog')?.addEventListener('close', () => {
+  facilityInventoryOpener?.focus?.({ preventScroll: true });
+  facilityInventoryOpener = null;
+});
+document.getElementById('incident-facility-inventory-dialog')?.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && facilityInventoryDialog?.open) {
+    event.preventDefault();
+    closeFacilityInventoryDialog();
+  }
+});
+function addSelectedFacilityChemicalsToIncident() {
+  const facility = activeFacilityInventory;
+  const incident = getActiveIncident();
+  if (!facility || !incident || facilityInventorySelection.size === 0) return;
+  const selected = facility.chemicals.filter((item, index) =>
+    facilityInventorySelection.has(facilityInventoryItemIdentifier(item, index)));
+  const incidents = readIncidents();
+  const incidentIndex = incidents.findIndex((item) => item.incidentId === incident.incidentId);
+  if (incidentIndex < 0) {
+    if (facilityInventoryStatus) facilityInventoryStatus.textContent = 'The active incident is no longer available. Select an active incident before adding chemicals.';
+    updateFacilityInventorySelectionStatus();
+    return;
+  }
+  const nextIncident = incidents[incidentIndex];
+  const involvedChemicals = Array.isArray(nextIncident.involvedChemicals) ? [...nextIncident.involvedChemicals] : [];
+  let added = 0;
+  selected.forEach((item) => {
+    const chemical = {
+      chemicalId: item.chemicalId || '',
+      chemicalName: item.chemicalName || '',
+      cas: reportedIdentifierValue(item.cas),
+      un: reportedIdentifierValue(item.un),
+      ergGuide: reportedIdentifierValue(item.ergGuide),
+      reportedQuantity: reportedIdentifierValue(item.maxDailyAmountValue),
+      reportedUnit: reportedIdentifierValue(item.maxDailyAmountUnit),
+      facilityChemicalId: item.id ?? null,
+      facilityId: String(facility.id),
+      facilityName: facility.name || '',
+      source: 'Facility-reported inventory',
+      identifiedAt: new Date().toISOString(),
+    };
+    if (isAlreadyIncidentChemical(chemical, { ...nextIncident, involvedChemicals })) return;
+    involvedChemicals.push(chemical);
+    added += 1;
+  });
+  incidents[incidentIndex] = {
+    ...nextIncident,
+    involvedChemicals,
+    selectedFacility: nextIncident.selectedFacility || {
+      id: String(facility.id),
+      name: facility.name || '',
+      address: facility.address || '',
+      source: facility.source || '',
+    },
+    updatedAt: new Date().toISOString(),
+  };
+  writeIncidents(incidents);
+  renderIncidentLists();
+  renderIncidentInvolvedChemicals(incidents[incidentIndex]);
+  renderIncidentCommandSnapshot();
+  window.dispatchEvent(new CustomEvent('hazmatiq:incident-command-updated'));
+  if (added) {
+    setIncidentStatus(`${added} chemical${added === 1 ? '' : 's'} added to the incident from ${facility.name || 'the selected facility'} inventory.`);
+    closeFacilityInventoryDialog();
+  } else if (facilityInventoryStatus) {
+    facilityInventoryStatus.textContent = 'All selected chemicals are already identified as involved; no duplicates were added.';
+  }
+}
+addFacilityChemicalsButton?.addEventListener('click', addSelectedFacilityChemicalsToIncident);
+
+function filterCommandFacilities(facilities, query) {
+  const normalized = String(query || '').trim().toLocaleLowerCase();
+  if (!normalized) return [];
+  return facilities.filter((facility) =>
+    [facility.name, facility.address].some((value) => String(value || '').toLocaleLowerCase().includes(normalized)));
+}
+
+function facilityChemicalSummary(facility) {
+  if (!Array.isArray(facility?.chemicals)) return [];
+  return facility.chemicals.map((chemical) => {
+    const name = String(chemical?.chemicalName || chemical?.name || chemical?.chemicalId || '').trim();
+    if (!name) return '';
+    const hazardClass = reportedIdentifierValue(chemical?.hazardClass);
+    return hazardClass ? `${name} (Class ${hazardClass})` : name;
+  }).filter(Boolean);
 }
 
 async function getFacilityChemicalNames(facilityId) {
@@ -15014,7 +15641,53 @@ function renderLiveMapMarkers() {
     });
     liveMapMarkers.push(mapMarker);
   });
+  // Monitoring V1 canonical deployment pins. Do not create synthetic locations.
+  if (liveMapState.activeLayers.monitors && typeof window.getHazMatIQMonitorMarkers === 'function') {
+    window.getHazMatIQMonitorMarkers().forEach((monitor) => {
+      const lat = Number(monitor.latitude);
+      const lng = Number(monitor.longitude);
+      if (!Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) return;
+      const element = document.createElement('button');
+      element.type = 'button';
+      element.className = 'live-map-marker emergenz-monitoring-marker';
+      element.dataset.layer = 'monitors';
+      element.textContent = monitor.alarmState === 'Alarm' ? '!' : 'M';
+      element.title = monitor.deviceName + ' — ' + monitor.latestReadingSummary;
+      element.addEventListener('click', () => {
+        const panel = document.getElementById('live-map-selected');
+        if (!panel) return;
+        panel.replaceChildren();
+        const title = document.createElement('strong');
+        title.textContent = monitor.deviceName;
+        const details = document.createElement('span');
+        details.textContent = [monitor.team, monitor.assignmentRole, monitor.deploymentLocation,
+          monitor.latestReadingSummary, monitor.dataMode, monitor.observedAt ? new Date(monitor.observedAt).toLocaleString() : 'No observation']
+          .filter(Boolean).join(' · ');
+        panel.append(title, details);
+        panel.hidden = false;
+      });
+      const pin = new window.maplibregl.Marker({ element, draggable: false })
+        .setLngLat([lng, lat]).addTo(liveMap);
+      liveMapMarkers.push(pin);
+    });
+  }
 }
+
+// Receive field monitoring updates without creating duplicate marker sets.
+window.addEventListener('emergenz:monitoring-updated', () => {
+  if (typeof liveMap !== 'undefined' && liveMap) renderLiveMapMarkers();
+});
+window.addEventListener('emergenz:focus-monitor-live-map', (event) => {
+  if (!liveMap || !liveMapState) return;
+  liveMapState.activeLayers.monitors = true;
+  renderLiveMapMarkers();
+  const target = event.detail || {};
+  if (target.latitude !== null && target.latitude !== undefined && target.longitude !== null && target.longitude !== undefined &&
+      Number.isFinite(Number(target.latitude)) && Number.isFinite(Number(target.longitude))) {
+    liveMap.flyTo({ center: [Number(target.longitude), Number(target.latitude)], zoom: 16, essential: true });
+  }
+  saveLiveMapState('Field monitoring points enabled.');
+});
 
 function readLatestPlumeOverlay() {
   const activeIncident = getActiveIncident();
@@ -15361,11 +16034,27 @@ function initializeLiveMap() {
     liveMap.__wildfireMoveBound = true;
     liveMap.on('moveend', scheduleWildfireRefresh);
   }
-  ['icp', 'entry', 'decon', 'monitors', 'staging', 'medical', 'trafficCams'].forEach((layer) => {
-    if (liveMapState.activeLayers[layer]) ensureLiveLayerMarker(layer);
+  ['icp', 'entry', 'decon', 'staging', 'medical', 'trafficCams'].forEach((layer) => {
+    if (layer !== 'monitors' && liveMapState.activeLayers[layer]) ensureLiveLayerMarker(layer);
   });
   updateLiveMapPanels();
   restoreLiveMapOverlays();
+  // Deferred navigation from Monitoring: page transition can precede MapLibre creation.
+  const pendingMonitorFocus = window.HazMatIQ?.pendingMonitorMapFocus;
+  if (pendingMonitorFocus) {
+    delete window.HazMatIQ.pendingMonitorMapFocus;
+    liveMapState.activeLayers.monitors = true;
+    const applyMonitorFocus = () => {
+      renderLiveMapMarkers();
+      const lat = pendingMonitorFocus.latitude, lng = pendingMonitorFocus.longitude;
+      if (lat !== null && lat !== undefined && lng !== null && lng !== undefined
+        && Number.isFinite(Number(lat)) && Number.isFinite(Number(lng))) {
+        liveMap.flyTo({ center: [Number(lng), Number(lat)], zoom: 16, essential: true });
+      }
+    };
+    if (liveMap?.loaded()) applyMonitorFocus();
+    else liveMap?.once('load', applyMonitorFocus);
+  }
   window.requestAnimationFrame(() => {
     liveMap?.resize();
     logLiveMapDiagnostic();
@@ -15403,7 +16092,7 @@ document.querySelectorAll('[data-live-layer]').forEach((button) => {
     if (!liveMapState) liveMapState = readLiveMapState();
     const layer = button.dataset.liveLayer;
     liveMapState.activeLayers[layer] = !liveMapState.activeLayers[layer];
-    if (liveMapState.activeLayers[layer]) ensureLiveLayerMarker(layer);
+    if (layer !== 'monitors' && liveMapState.activeLayers[layer]) ensureLiveLayerMarker(layer);
     updateLiveMapPanels();
     if (layer === 'weatherRadar') updateLiveRadarOverlay();
     if (layer === 'plume') updateLivePlumeOverlay();

@@ -52,6 +52,19 @@
           sourceState: source.sourceStatuses?.chemical || NO_DATA,
         }
       : null;
+    const sourceInvolvedChemicals = Array.isArray(source.involvedChemicals)
+      ? source.involvedChemicals.filter((chemical) => chemical && typeof chemical === 'object' && !Array.isArray(chemical))
+      : [];
+    const involvedChemicals = sourceInvolvedChemicals.length
+      ? sourceInvolvedChemicals.map((chemical) => ({
+          ...chemical,
+          displayName: chemical.chemicalName || chemical.name || NO_DATA,
+          chemicalCompanionId: chemical.chemicalCompanionId ?? chemical.selectedChemicalId ?? chemical.chemicalId ?? null,
+          cas: chemical.cas || chemical.casNumber || null,
+          un: chemical.un || chemical.unNumber || null,
+          erg: chemical.ergGuide || chemical.erg || null,
+        }))
+      : activeChemical ? [activeChemical] : [];
     const plumeCandidate = source.plumeModelResults || null;
     const plumeIsCurrent = typeof window.HazMatIQ?.isIncidentPlumeCurrent === 'function'
       ? window.HazMatIQ.isIncidentPlumeCurrent(plumeCandidate, source)
@@ -70,7 +83,8 @@
       location: location || NO_DATA,
       coordinates,
       activeChemical,
-      activeChemicals: activeChemical ? [activeChemical] : [],
+      activeChemicals: involvedChemicals,
+      involvedChemicals,
       release: {
         quantity: source.quantity || null,
         containerType: source.containerType || null,
@@ -119,11 +133,15 @@
     const source = state.raw || {};
     const location = state.location === NO_DATA ? '' : state.location;
     const objectives = state.command.objectives.join('\n');
+    const involvedChemicalSummary = state.involvedChemicals.map((chemical) => [
+      chemical.displayName,
+      chemical.cas && `CAS ${chemical.cas}`,
+      chemical.un && `UN ${chemical.un}`,
+      chemical.erg && `ERG ${chemical.erg}`,
+    ].filter(Boolean).join(', ')).join('; ');
     const situation = [
-      state.activeChemical?.displayName,
-      state.activeChemical?.cas && `CAS ${state.activeChemical.cas}`,
-      state.activeChemical?.un && `UN ${state.activeChemical.un}`,
-      state.activeChemical?.erg && `ERG ${state.activeChemical.erg}`,
+      involvedChemicalSummary && `Chemicals identified as involved: ${involvedChemicalSummary}`,
+      state.activeChemical && `Explicit plume chemical: ${state.activeChemical.displayName}`,
       state.activeChemical?.category,
       source.notes,
       state.weather.summary,
@@ -294,8 +312,39 @@
     const normalized = window.HazMatIQ.normalizeHazardSearchResult?.(result) || result;
     const viewProfile = window.HazMatIQ.normalizeProfileForUi?.(profile) || profile || {};
     const identifiers = viewProfile.identifiers || {};
+    const hazardIdentity = {
+      chemicalId: normalized.chemicalCompanionId || normalized.cbrneCanonicalId || normalized.canonicalId || '',
+      chemicalCompanionId: normalized.chemicalCompanionId || null,
+      cbrneCanonicalId: normalized.cbrneCanonicalId || normalized.canonicalId || null,
+      chemicalName: normalized.displayName || '',
+      cas: normalized.cas || identifiers.cas || identifiers.casNumber || '',
+      un: normalized.un || identifiers.un || identifiers.unNaNumbers || '',
+      ergGuide: normalized.erg || identifiers.erg || identifiers.ergGuide || '',
+      source: 'Chemical / Hazard ID selection',
+      identifiedAt: new Date().toISOString(),
+    };
+    const involvedChemicals = Array.isArray(incident.involvedChemicals) ? [...incident.involvedChemicals] : [];
+    const sameChemical = (candidate) => {
+      const ids = [candidate.chemicalId, candidate.chemicalCompanionId, candidate.cbrneCanonicalId, candidate.id]
+        .filter((value) => value !== null && value !== undefined && String(value).trim())
+        .map(String);
+      const hazardIds = [hazardIdentity.chemicalId, hazardIdentity.chemicalCompanionId, hazardIdentity.cbrneCanonicalId]
+        .filter((value) => value !== null && value !== undefined && String(value).trim())
+        .map(String);
+      if (ids.some((id) => hazardIds.includes(id))) return true;
+      const candidateCas = String(candidate.cas || candidate.casNumber || '').trim().toLowerCase();
+      const candidateUn = String(candidate.un || candidate.unNumber || '').trim().toLowerCase();
+      const candidateName = String(candidate.chemicalName || candidate.name || '').trim().toLowerCase();
+      return Boolean(
+        (candidateCas && hazardIdentity.cas && candidateCas === String(hazardIdentity.cas).trim().toLowerCase())
+        || (candidateUn && hazardIdentity.un && candidateUn === String(hazardIdentity.un).trim().toLowerCase())
+        || (candidateName && hazardIdentity.chemicalName && candidateName === hazardIdentity.chemicalName.trim().toLowerCase()),
+      );
+    };
+    if (!involvedChemicals.some(sameChemical)) involvedChemicals.push(hazardIdentity);
     const next = {
       ...incident,
+      involvedChemicals,
       chemicalName: normalized.displayName || incident.chemicalName,
       selectedChemicalId: normalized.chemicalCompanionId ?? incident.selectedChemicalId ?? null,
       chemicalCompanionId: normalized.chemicalCompanionId ?? incident.chemicalCompanionId ?? null,

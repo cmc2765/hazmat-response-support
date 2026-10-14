@@ -1482,7 +1482,34 @@ app.get("/api/facilities", async (c) => {
           r.address.toLowerCase().includes(q.toLowerCase()),
       )
     : rows;
-  return c.json({ facilities: filtered });
+  const facilityIds = filtered.map((facility) => facility.id);
+  const chemicalRows = facilityIds.length
+    ? await db
+      .select({
+        facilityId: schema.facilityChemicals.facilityId,
+        chemicalId: schema.facilityChemicals.chemicalId,
+        chemicalName: schema.chemicals.name,
+        cas: schema.chemicals.cas,
+        un: schema.chemicals.un,
+        ergGuide: schema.chemicals.ergGuide,
+        hazardClass: schema.chemicals.hazardClass,
+      })
+      .from(schema.facilityChemicals)
+      .leftJoin(schema.chemicals, eq(schema.facilityChemicals.chemicalId, schema.chemicals.id))
+      .where(inArray(schema.facilityChemicals.facilityId, facilityIds))
+    : [];
+  const chemicalsByFacility = new Map<string, typeof chemicalRows>();
+  chemicalRows.forEach((chemical) => {
+    const existing = chemicalsByFacility.get(chemical.facilityId) || [];
+    existing.push(chemical);
+    chemicalsByFacility.set(chemical.facilityId, existing);
+  });
+  return c.json({
+    facilities: filtered.map((facility) => ({
+      ...facility,
+      chemicals: chemicalsByFacility.get(facility.id) || [],
+    })),
+  });
 });
 
 app.get("/api/facilities/:id", async (c) => {
@@ -1494,8 +1521,23 @@ app.get("/api/facilities/:id", async (c) => {
     .where(eq(schema.facilities.id, id));
   if (facilityRows.length === 0) return c.json({ error: "not found" }, 404);
   const chemRows = await db
-    .select()
+    .select({
+      id: schema.facilityChemicals.id,
+      facilityId: schema.facilityChemicals.facilityId,
+      chemicalId: schema.facilityChemicals.chemicalId,
+      maxDailyAmountValue: schema.facilityChemicals.maxDailyAmountValue,
+      maxDailyAmountUnit: schema.facilityChemicals.maxDailyAmountUnit,
+      container: schema.facilityChemicals.container,
+      conditions: schema.facilityChemicals.conditions,
+      lastReportedYear: schema.facilityChemicals.lastReportedYear,
+      updatedAt: schema.facilityChemicals.updatedAt,
+      chemicalName: schema.chemicals.name,
+      cas: schema.chemicals.cas,
+      un: schema.chemicals.un,
+      ergGuide: schema.chemicals.ergGuide,
+    })
     .from(schema.facilityChemicals)
+    .leftJoin(schema.chemicals, eq(schema.facilityChemicals.chemicalId, schema.chemicals.id))
     .where(eq(schema.facilityChemicals.facilityId, id));
   return c.json({ ...facilityRows[0], chemicals: chemRows });
 });

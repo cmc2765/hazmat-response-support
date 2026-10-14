@@ -42,7 +42,7 @@ describe("unified Hazard ID workspace", () => {
   it("keeps Chemical Companion controls and safely gates non-chemical plume actions", () => {
     expect(html).toContain('id="chemical-search-form"');
     expect(html).toContain('id="chemical-id-results"');
-    expect(html).toContain('script.js?v=chemical-profile-hotfix-3');
+    expect(html).toContain('script.js?v=command-facility-inventory-2');
     expect(html).toContain('id="open-plume-btn"');
     expect(html).toContain('id="hazard-profile-plume-btn" type="button" disabled');
     expect(script).toContain("Plume requires verified endpoint/source data.");
@@ -56,7 +56,7 @@ describe("unified Hazard ID workspace", () => {
     expect(html).toContain('id="hazard-profile-overview-list"');
     expect(profileModule).toContain("window.HazMatIQ.openHazardProfile = openHazardProfile");
     expect(script).toContain("function setHazardProfileMode(mode)");
-    expect(script).toContain("function renderChemicalProfile(profile)");
+    expect(script).toContain("function renderChemicalProfile(profile, { printPageKeys = null, printSnapshot = false } = {})");
     expect(script).toContain("function renderStarterHazardTab(profile, fieldNames)");
     expect(script).toContain("Chemical profile section rendering failed.");
     expect(script).toContain("content.replaceChildren(fragment);");
@@ -83,8 +83,8 @@ describe("unified Hazard ID workspace", () => {
   });
 
   it("keeps the Hazard ID shell fluid from desktop through tablet widths", () => {
-    expect(html).toContain('styles.css?v=hero-logo-static-2');
-    expect(html).toContain('chemical-intel.css?v=hazard-profile-panel-26');
+    expect(html).toContain('styles.css?v=live-map-responsive-2');
+    expect(html).toContain('chemical-intel.css?v=hazard-profile-panel-28');
     expect(styles).toContain('#lookup > .hazard-id-page-hero');
     expect(styles).toContain('#lookup > .hazard-id-command-console.chemical-id-search-card');
     expect(styles).toContain('@media (max-width: 700px)');

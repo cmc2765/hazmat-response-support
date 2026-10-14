@@ -57,22 +57,27 @@
 #plume.view.active .plume-model-section:first-child > .plume-model-section-grid { overflow: visible; }
 #plume.view.active .plume-model-section-heading {
   display: grid;
-  grid-template-columns: 28px minmax(0, 1fr) auto;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr);
   align-items: center;
   gap: 6px;
-  margin: 0 0 7px;
-  padding-bottom: 6px;
+  min-height: 0;
+  margin: 0 0 4px;
+  padding-bottom: 4px;
   border-bottom: 1px solid rgba(145, 190, 224, .3);
 }
-#plume.view.active .plume-model-section-heading > div { min-width: 0; }
-#plume.view.active .plume-model-section-heading strong { display: block; color: #fff; font-size: 14px; letter-spacing: .02em; text-transform: uppercase; }
+#plume.view.active .plume-model-section-heading > .plume-stage-number { grid-column: 1; grid-row: 1; }
+#plume.view.active .plume-model-section-heading > div { grid-column: 2; grid-row: 1; min-width: 0; }
+#plume.view.active .plume-model-section-heading > .plume-card-accent { display: none; }
+#plume.view.active .plume-model-section-heading::after { grid-column: 3; grid-row: 1; }
+#plume.view.active .plume-model-section-heading strong { display: block; color: #fff; font-size: 17px; font-weight: 950; letter-spacing: .02em; line-height: 1; text-transform: uppercase; white-space: nowrap; }
 #plume.view.active .plume-model-section-heading small { display: block; overflow: hidden; margin-top: 2px; color: #a9c0d2; font-size: 9px; line-height: 1.15; text-overflow: ellipsis; white-space: nowrap; }
-#plume.view.active .plume-stage-number { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #ffd323; color: #061a2e; font-size: 16px; font-weight: 950; }
+#plume.view.active .plume-stage-number { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #ffd323; color: #061a2e; font-size: 16px; font-weight: 950; }
 
 #plume.view.active .plume-release-grid,
 #plume.view.active .plume-weather-grid,
 #plume.view.active .plume-criteria-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; align-items: stretch; }
-#plume.view.active .plume-release-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) minmax(0, 1fr); gap: 6px; }
+#plume.view.active .plume-release-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.2fr) minmax(78px, .75fr); gap: 6px; }
 #plume.view.active .plume-weather-grid { gap: 6px; }
 #plume.view.active .plume-criteria-grid { grid-template-columns: 1fr; gap: 6px; }
 #plume.view.active .plume-criteria-section .plume-model-section-heading small { display: none; }
@@ -82,14 +87,15 @@
 #plume.view.active .plume-release-grid > .plume-chemical-field,
 #plume.view.active .plume-release-grid > .container-profile,
 #plume.view.active .plume-release-grid > .plume-input-review,
-#plume.view.active .plume-weather-grid > .plume-weather-source-row,
-#plume.view.active .plume-weather-grid > .plume-weather-review { grid-column: 1 / -1; }
-#plume.view.active .plume-release-grid > label[for="plume-release-type"] { grid-column: 1 / -1; }
-#plume.view.active .plume-release-grid > label[for="plume-release-quantity"] { grid-column: 1 / span 2; }
-#plume.view.active .plume-release-grid > #plume-release-duration-field,
-#plume.view.active .plume-release-grid > #plume-puff-duration-field { grid-column: 3; }
-#plume.view.active .plume-release-grid > label[for="plume-release-height"] { grid-column: 1 / -1; }
 #plume.view.active .plume-weather-grid > .plume-weather-source-row { grid-column: 1 / -1; }
+#plume.view.active .plume-release-grid > .plume-release-type-field { grid-column: 1; }
+#plume.view.active .plume-release-grid > .plume-release-quantity-field { grid-column: 2; }
+#plume.view.active .plume-release-grid > .plume-release-unit-field { grid-column: 3; }
+#plume.view.active .plume-release-grid > .plume-release-duration-field { grid-column: 1; }
+#plume.view.active .plume-release-grid > .plume-release-height-field { grid-column: 2 / -1; }
+#plume.view.active .plume-weather-grid > .plume-weather-source-row { grid-column: 1 / -1; }
+#plume.view.active .plume-weather-grid > label[for="plume-surface-roughness"] { grid-column: 1; }
+#plume.view.active .plume-weather-grid > .plume-weather-review { grid-column: 2; }
 
 #plume.view.active .plume-chemical-identifiers {
   display: flex;
@@ -190,6 +196,10 @@
   padding: 7px 28px 7px 8px;
   font-size: 11px;
 }
+#plume.view.active .container-profile > summary {
+  color: #fff;
+  font-weight: 950;
+}
 #plume.view.active .container-profile > summary::-webkit-details-marker,
 #plume.view.active .plume-input-review > summary::-webkit-details-marker,
 #plume.view.active .plume-advanced-inputs > summary::-webkit-details-marker { display: none; }
@@ -211,24 +221,6 @@
 #plume.view.active .plume-input-review > summary small,
 #plume.view.active .plume-advanced-inputs > summary small { color: #83a6bd; font-size: 10px; font-weight: 600; }
 #plume.view.active .container-bubble-grid { padding: 0 9px 9px; }
-#plume.view.active .plume-left-plot-button {
-  width: 100%;
-  min-height: 42px;
-  margin-top: auto;
-  flex: 0 0 auto;
-  border: 1px solid #ff3942;
-  border-radius: 8px;
-  background: linear-gradient(180deg, #fa2530, #bf0e19);
-  box-shadow: 0 7px 16px rgba(191, 14, 25, .28);
-  color: #fff;
-  font-size: 16px;
-  font-weight: 950;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-}
-#plume.view.active .plume-left-plot-button:hover,
-#plume.view.active .plume-left-plot-button:focus-visible { border-color: #ffd323; background: linear-gradient(180deg, #ff3942, #d71920); }
-
 #plume.view.active .plume-v2-map-card { display: flex; min-height: 0; height: 100%; flex: 1 1 auto; flex-direction: column; overflow: hidden; border: 1px solid #1d648f; border-radius: 10px; background: #020f1d; }
 
 /* The map toolbar is one control surface: a wide location anchor followed by
@@ -621,8 +613,6 @@
   max-height: none !important;
   flex: 1 1 auto;
 }
-#plume.view.active .plume-left-plot-button { margin-top: 8px; }
-
 /* The expanded weather review is intentionally light: all labels and values
    remain readable at normal size and under browser zoom. */
 #plume.view.active .plume-weather-review {
@@ -765,15 +755,19 @@
 
 body.plume-map-maximized-open { overflow: hidden; }
 #plume.view.active.plume-map-maximized {
-  position: fixed;
-  z-index: 120;
-  inset: 0;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr);
-  gap: 0;
-  min-height: 100dvh;
-  padding: 12px;
-  overflow: hidden;
+  position: fixed !important;
+  z-index: 120 !important;
+  inset: 0 !important;
+  display: grid !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  grid-template-areas: "map" !important;
+  gap: 0 !important;
+  min-height: 100dvh !important;
+  padding: 12px !important;
+  overflow: hidden !important;
   background: #020f1d;
 }
 #plume.view.active.plume-map-maximized .plume-v2-input-column,
@@ -781,22 +775,34 @@ body.plume-map-maximized-open { overflow: hidden; }
 #plume.view.active.plume-map-maximized .plume-v2-workspace,
 #plume.view.active.plume-map-maximized .plume-v2-map-column,
 #plume.view.active.plume-map-maximized .plume-v2-map-card {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
 }
-#plume.view.active.plume-map-maximized .plume-v2-workspace { display: block; }
-#plume.view.active.plume-map-maximized .plume-v2-map-column { flex-direction: column; }
-#plume.view.active.plume-map-maximized .plume-v2-map-card { flex-direction: column; }
-#plume.view.active.plume-map-maximized .plume-v2-location-toolbar { display: none; }
+#plume.view.active.plume-map-maximized .plume-v2-workspace {
+  display: block !important;
+  overflow: visible !important;
+}
+#plume.view.active.plume-map-maximized .plume-v2-map-column {
+  display: flex !important;
+  grid-area: map !important;
+  grid-row: auto !important;
+  flex-direction: column !important;
+  align-self: stretch !important;
+}
+#plume.view.active.plume-map-maximized .plume-v2-map-card {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+}
+#plume.view.active.plume-map-maximized .plume-v2-location-toolbar { display: none !important; }
 #plume.view.active.plume-map-maximized .plume-map-shell {
-  height: auto !important;
+  height: 100% !important;
   min-height: 0 !important;
   max-height: none !important;
-  flex: 1 1 auto;
+  flex: 1 1 auto !important;
 }
-#plume.view.active.plume-map-maximized .plume-map-maximize-button { top: 12px; left: 12px; }
+#plume.view.active.plume-map-maximized .plume-map-maximize-button { top: 62px; left: 12px; }
 
 @media (max-width: 620px) {
   #plume.view.active .plume-weather-review .plume-weather-verification { grid-template-columns: 1fr; }
@@ -1073,10 +1079,10 @@ body.plume-map-maximized-open { overflow: hidden; }
 #plume.view.active .plume-weather-glance-metrics strong { font-size: 10px; }
 
 /* Chemical Release uses one stable field contract: label row first, control
-   second. Required badges never share the input box or select surface. */
+   second, with controls kept clear of the field labels. */
 #plume.view.active .plume-release-grid {
   grid-template-columns: minmax(0, 1.2fr) minmax(110px, .8fr) minmax(0, 1fr);
-  gap: 12px 10px;
+  gap: 7px 8px;
   align-items: start;
 }
 #plume.view.active .plume-v2-input-column {
@@ -1084,28 +1090,29 @@ body.plume-map-maximized-open { overflow: hidden; }
 }
 #plume.view.active .plume-release-grid > .plume-chemical-field,
 #plume.view.active .plume-release-grid > .container-profile,
-#plume.view.active .plume-release-grid > .plume-input-review,
-#plume.view.active .plume-release-grid > .plume-release-type-field,
-#plume.view.active .plume-release-grid > .plume-release-height-field {
+#plume.view.active .plume-release-grid > .plume-input-review {
   grid-column: 1 / -1;
 }
 #plume.view.active .plume-release-grid > .plume-release-quantity-field {
-  grid-column: 1;
-}
-#plume.view.active .plume-release-grid > .plume-release-unit-field {
   grid-column: 2;
 }
-#plume.view.active .plume-release-grid > .plume-release-duration-field {
+#plume.view.active .plume-release-grid > .plume-release-unit-field {
   grid-column: 3;
+}
+#plume.view.active .plume-release-grid > .plume-release-duration-field {
+  grid-column: 1;
+}
+#plume.view.active .plume-release-grid > .plume-release-height-field {
+  grid-column: 2 / -1;
 }
 #plume.view.active .plume-release-grid .plume-field-label-row {
   display: flex;
   min-width: 0;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 8px;
-  min-height: 16px;
-  margin-bottom: 6px;
+  min-height: 0;
+  margin-bottom: 3px;
 }
 #plume.view.active .plume-release-grid .plume-field-label-row > label {
   min-width: 0;
@@ -1117,23 +1124,14 @@ body.plume-map-maximized-open { overflow: hidden; }
   text-transform: uppercase;
   overflow-wrap: anywhere;
 }
-#plume.view.active .plume-release-grid .plume-required-badge {
-  flex: 0 0 auto;
-  color: #ff6b6b;
-  font-size: 9px;
-  font-weight: 850;
-  letter-spacing: .06em;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
 #plume.view.active .plume-release-grid input:not([type="checkbox"]):not([type="file"]),
 #plume.view.active .plume-release-grid select {
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
-  min-height: 42px;
+  min-height: 34px;
   margin: 0;
-  padding: 9px 11px;
+  padding: 6px 9px;
   border: 1px solid #8299aa;
   border-radius: 7px;
   background: #fff;
@@ -1171,9 +1169,9 @@ body.plume-map-maximized-open { overflow: hidden; }
   flex: 0 0 auto;
   width: 78px;
   min-width: 78px;
-  min-height: 42px;
+  min-height: 34px;
   margin: 0;
-  padding: 9px 10px;
+  padding: 6px 9px;
   border-radius: 7px;
   font-size: 11px;
   font-weight: 850;
@@ -1198,6 +1196,29 @@ body.plume-map-maximized-open { overflow: hidden; }
   font-size: .9em;
   font-weight: 700;
   letter-spacing: .04em;
+}
+
+/* Keep Weather Data labels close to their controls while allowing wrapped
+   labels to grow naturally without creating a false gap above the fields. */
+#plume.view.active .plume-weather-grid > .plume-model-field,
+#plume.view.active .plume-weather-source-row .plume-model-field {
+  display: grid;
+  grid-template-rows: auto minmax(34px, auto);
+  align-content: start;
+  gap: 4px;
+}
+#plume.view.active .plume-weather-grid > .plume-model-field > span,
+#plume.view.active .plume-weather-source-row .plume-model-field > span {
+  display: flex;
+  min-height: 0;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+#plume.view.active .plume-weather-grid > .plume-model-field input,
+#plume.view.active .plume-weather-grid > .plume-model-field select,
+#plume.view.active .plume-weather-source-row .plume-model-field input,
+#plume.view.active .plume-weather-source-row .plume-model-field select {
+  margin-top: 0;
 }
 
 /* Keep the legacy mobile fallback and container queries aligned. */
@@ -1444,8 +1465,8 @@ body.plume-map-maximized-open { overflow: hidden; }
 
 #plume.view.active .plume-v2-workspace {
   grid-template-columns: minmax(310px, 35fr) minmax(0, 65fr);
-  grid-template-rows: auto auto;
-  grid-template-areas: "inputs map" "threat map";
+  grid-template-rows: auto;
+  grid-template-areas: "inputs map";
   align-items: start;
   min-height: 0;
 }
@@ -1460,18 +1481,11 @@ body.plume-map-maximized-open { overflow: hidden; }
   align-self: stretch;
   min-height: clamp(680px, calc(100dvh - 260px), 960px);
 }
-#plume.view.active .plume-v2-workspace > .plume-v2-intelligence-column {
-  display: contents;
-}
-#plume.view.active .plume-v2-intelligence-column > .plume-intelligence-card:first-child {
-  grid-area: threat;
-  align-self: start;
-  min-width: 0;
-}
+#plume.view.active .plume-v2-workspace > .plume-v2-intelligence-column { display: none !important; }
 #plume.view.active .plume-v2-intelligence-column > .plume-readiness-card,
 #plume.view.active .plume-v2-intelligence-column > .plume-command-details,
 #plume.view.active .plume-v2-intelligence-column > .plume-command-actions { display: none; }
-#plume.view.active .plume-criteria-section { display: none; }
+#plume.view.active .plume-criteria-section { display: block !important; }
 
 #plume.view.active .plume-v2-map-card {
   height: min(960px, 65vw);
@@ -1565,7 +1579,7 @@ body.plume-map-maximized-open { overflow: hidden; }
   #plume.view.active .plume-v2-workspace {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
-    grid-template-areas: "inputs" "threat" "map";
+    grid-template-areas: "inputs" "map";
   }
   #plume.view.active .plume-v2-workspace > .plume-v2-map-column { grid-row: auto; min-height: 0; }
   #plume.view.active .plume-v2-map-card { height: min(720px, 76vw); min-height: 500px; }
@@ -1578,47 +1592,49 @@ body.plume-map-maximized-open { overflow: hidden; }
   #plume.view.active .plume-zone-tabs button { font-size: 9px; }
 }
 
-/* Final Plume control contract: the location editor belongs to the map
-   surface, immediately before Layers and Actions. Keep it compact so the
-   address field remains usable without creating a second oversized toolbar. */
+/* Final Plume control contract: keep the location editor in the elongated
+   page-level strip, while Map Mode shares the map toolbar with Layers and
+   Actions. */
 #plume.view.active .plume-global-action-bar {
   grid-template-columns: minmax(280px, 2.1fr) repeat(3, minmax(106px, 1fr));
 }
 #plume.view.active .plume-v2-map-controls {
   display: grid;
-  grid-template-columns: minmax(215px, 1.2fr) max-content max-content;
+  grid-template-columns: max-content max-content max-content;
   align-items: stretch;
   gap: 8px;
   min-width: 0;
 }
-#plume.view.active .plume-map-location-control {
+#plume.view.active .plume-global-action-bar > .plume-map-location-control {
   display: grid;
-  grid-template-rows: auto auto;
-  gap: 4px;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: end;
+  gap: 4px 8px;
   min-width: 0;
   margin: 0;
   padding-right: 8px;
   border-right: 1px solid rgba(145, 190, 224, .28);
 }
-#plume.view.active .plume-map-location-control .plume-location-field > span {
+#plume.view.active .plume-global-action-bar > .plume-map-location-control .plume-location-field > span {
   margin-bottom: 2px;
   font-size: 9px;
 }
-#plume.view.active .plume-map-location-control .plume-location-input {
+#plume.view.active .plume-global-action-bar > .plume-map-location-control .plume-location-input {
   min-height: 30px;
   padding: 5px 8px;
   font-size: 12px;
 }
-#plume.view.active .plume-location-actions {
+#plume.view.active .plume-global-action-bar > .plume-map-location-control .plume-location-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px;
 }
-#plume.view.active .plume-map-location-control .plume-map-button {
+#plume.view.active .plume-global-action-bar > .plume-map-location-control .plume-map-button {
   min-height: 27px;
   padding: 4px 6px;
   font-size: 9px;
 }
+#plume.view.active .plume-v2-map-controls > .plume-map-mode-controls,
 #plume.view.active .plume-v2-map-controls > .plume-map-layer-controls,
 #plume.view.active .plume-v2-map-controls > .plume-map-action-controls {
   align-self: stretch;
@@ -1635,12 +1651,14 @@ body.plume-map-maximized-open { overflow: hidden; }
   padding: 7px;
 }
 #plume.view.active .plume-model-section-heading {
-  min-height: 29px;
-  margin-bottom: 5px;
-  padding-bottom: 5px;
+  min-height: 0;
+  margin-bottom: 4px;
+  padding-bottom: 4px;
 }
 #plume.view.active .plume-model-section-heading strong {
-  font-size: 13px;
+  font-size: 17px;
+  line-height: 1;
+  white-space: nowrap;
 }
 #plume.view.active .plume-model-section-heading small {
   display: none;
@@ -1655,10 +1673,13 @@ body.plume-map-maximized-open { overflow: hidden; }
   #plume.view.active .plume-global-action-bar {
     grid-template-columns: minmax(0, 1fr) repeat(3, minmax(0, 1fr));
   }
+  #plume.view.active .plume-global-action-bar > .plume-map-location-control {
+    grid-column: 1 / -1;
+  }
   #plume.view.active .plume-v2-map-controls {
     grid-template-columns: 1fr;
   }
-  #plume.view.active .plume-map-location-control,
+  #plume.view.active .plume-global-action-bar > .plume-map-location-control,
   #plume.view.active .plume-v2-map-controls > .plume-map-layer-controls {
     padding-right: 0;
     border-right: 0;
@@ -1673,7 +1694,356 @@ body.plume-map-maximized-open { overflow: hidden; }
   #plume.view.active .plume-global-action-bar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  #plume.view.active .plume-global-action-bar .plume-map-mode-controls {
+  #plume.view.active .plume-global-action-bar > .plume-map-location-control {
     grid-column: 1 / -1;
   }
 }
+
+/* Field workspace: one readable command rail and a viewport-contained map.
+   Details grow within the rail; individual form sections never get tiny scroll boxes. */
+#plume.view.active {
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  gap: 8px;
+  min-height: 0;
+}
+#plume.view.active .plume-global-action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+}
+#plume.view.active .plume-global-action-bar .plume-map-mode-controls {
+  flex: 1 1 auto;
+  min-height: 34px;
+  flex-wrap: wrap;
+  overflow: visible;
+  padding: 0;
+  border: 0;
+}
+#plume.view.active .plume-global-action-bar .plume-map-button,
+#plume.view.active .plume-global-action-bar .plume-layer-button {
+  width: auto;
+  min-height: 34px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+#plume.view.active .plume-v2-workspace {
+  grid-template-columns: clamp(360px, 27vw, 390px) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "inputs map";
+  height: 100%;
+  min-height: 0;
+  gap: 10px;
+}
+#plume.view.active .plume-v2-workspace > .plume-v2-input-column {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+  gap: 8px;
+}
+#plume.view.active .plume-v2-input-column > * { flex: 0 0 auto; }
+#plume.view.active .plume-model-controls { flex: 0 0 auto; overflow: visible; }
+#plume.view.active .plume-model-input-grid { gap: 6px; }
+#plume.view.active .plume-model-section {
+  display: block;
+  height: auto;
+  max-height: none;
+  overflow: visible;
+  padding: 7px 9px;
+}
+#plume.view.active .plume-model-section > .plume-model-section-grid { overflow: visible; max-height: none; }
+#plume.view.active .plume-model-section > .plume-model-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 30px;
+  height: auto;
+  margin: 0 0 6px;
+  padding: 0 0 5px;
+}
+#plume.view.active .plume-model-section-heading > div { flex: 1 1 auto; }
+#plume.view.active .plume-model-section-heading strong { font-size: 14px; line-height: 1.2; white-space: nowrap; }
+#plume.view.active .plume-model-section-heading .plume-card-accent { display: none; }
+#plume.view.active .plume-stage-number { flex: 0 0 24px; width: 24px; height: 24px; font-size: 14px; }
+#plume.view.active .plume-release-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+#plume.view.active .plume-release-grid .plume-field-label-row { gap: 4px; margin-bottom: 3px; }
+#plume.view.active .plume-release-grid .plume-field-label-row > label,
+#plume.view.active .plume-model-field > span { font-size: 12px; letter-spacing: 0; line-height: 1.25; }
+#plume.view.active .plume-required-badge,
+#plume.view.active .plume-required-label b { font-size: 9px; letter-spacing: 0; }
+#plume.view.active .plume-model-controls input:not([type="hidden"]):not([type="file"]),
+#plume.view.active .plume-model-controls select {
+  min-height: 34px;
+  height: 34px;
+  padding: 5px 7px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+#plume.view.active .plume-release-grid .plume-linked-input { grid-template-columns: minmax(0, 1fr) auto; }
+#plume.view.active #change-plume-chemical-btn,
+#plume.view.active #use-live-plume-weather-btn {
+  min-height: 34px;
+  padding: 5px 8px;
+  margin: 0;
+  font-size: 12px;
+}
+#plume.view.active .plume-chemical-identifiers { margin-top: 3px; font-size: 11px; }
+#plume.view.active .plume-model-field small { font-size: 11px; line-height: 1.25; }
+#plume.view.active .plume-weather-grid { gap: 6px; }
+#plume.view.active .plume-weather-source-row { grid-template-columns: minmax(0, 1fr) auto; gap: 6px; }
+#plume.view.active .plume-weather-section { padding-bottom: 7px; }
+#plume.view.active .plume-weather-at-a-glance { padding: 6px 8px; }
+#plume.view.active .plume-weather-glance-compass { width: 38px; height: 38px; }
+#plume.view.active .plume-weather-glance-reading strong { font-size: 12px; }
+#plume.view.active .plume-v2-intelligence-column { display: flex; flex-direction: column; height: auto; overflow: visible; gap: 6px; }
+#plume.view.active .plume-intelligence-card { flex: 0 0 auto; }
+#plume.view.active .plume-v2-intelligence-column > .plume-readiness-card { display: block; }
+#plume.view.active .plume-v2-workspace > .plume-v2-map-column {
+  grid-area: map;
+  grid-row: 1;
+  height: 100%;
+  min-height: 0;
+}
+#plume.view.active .plume-v2-map-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+#plume.view.active .plume-v2-map-controls {
+  position: absolute;
+  z-index: 26;
+  top: 8px;
+  left: 8px;
+  width: calc(100% - 16px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  min-height: 0;
+  margin: 0;
+  padding: 4px 6px;
+  border-radius: 7px;
+  box-sizing: border-box;
+  background: rgba(6, 26, 46, .96);
+}
+#plume.view.active .plume-v2-map-controls > .plume-map-layer-controls,
+#plume.view.active .plume-v2-map-controls > .plume-map-action-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+}
+#plume.view.active .plume-v2-map-controls .plume-map-action-controls { margin-left: auto; }
+#plume.view.active .plume-v2-map-controls .plume-layer-button,
+#plume.view.active .plume-location-popover > summary {
+  min-height: 30px;
+  padding: 5px 8px;
+  font-size: 12px;
+  line-height: 1.2;
+}
+#plume.view.active .plume-map-control-label { width: auto; font-size: 10px; }
+#plume.view.active .plume-location-popover { position: relative; flex: 0 0 auto; }
+#plume.view.active .plume-location-popover > summary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #55c9f4;
+  border-radius: 5px;
+  background: #102f4d;
+  color: #fff;
+  font-weight: 850;
+  list-style: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+#plume.view.active .plume-location-popover > summary::after { content: '⌄'; color: #ffd323; }
+#plume.view.active .plume-location-popover > summary::-webkit-details-marker { display: none; }
+#plume.view.active .plume-location-popover .plume-map-location-control {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 30;
+  width: min(360px, calc(100vw - 48px));
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #55c9f4;
+  border-radius: 8px;
+  background: #0b2540;
+  box-shadow: 0 8px 24px #020b14;
+  box-sizing: border-box;
+}
+#plume.view.active .plume-location-popover .plume-location-field > span { font-size: 12px; }
+#plume.view.active .plume-location-popover .plume-location-input { min-height: 36px; font-size: 13px; }
+#plume.view.active .plume-location-popover .plume-map-button { min-height: 34px; font-size: 12px; }
+#plume.view.active .plume-3d-model-facts { right: 150px; width: min(280px, calc(100% - 220px)); }
+#plume.view.active .plume-3d-model-facts[open] { max-height: calc(100% - 100px); overflow: auto; }
+#plume.view.active .plume-v2-map-shell { flex: 1 1 auto; height: 100% !important; min-height: 0 !important; }
+
+@media (min-width: 1101px) {
+  #plume.view.active:not(.plume-map-maximized) {
+    height: calc(100dvh - var(--plume-workspace-top, 140px) - 12px);
+  }
+  .app-shell:has(#plume.active) { grid-template-rows: auto minmax(0, 1fr); }
+  .layout:has(#plume.active) { height: auto; }
+}
+@media (max-width: 1100px) {
+  .app-shell:has(#plume.active), .layout:has(#plume.active),
+  .layout:has(#plume.active) > .content-area { height: auto; overflow: visible; }
+  #plume.view.active { height: auto; overflow: visible; }
+  #plume.view.active .plume-v2-workspace {
+    height: auto;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas: "inputs" "map";
+  }
+  #plume.view.active .plume-v2-workspace > .plume-v2-input-column { height: auto; overflow: visible; }
+  #plume.view.active .plume-v2-workspace > .plume-v2-map-column { grid-row: 2; height: clamp(430px, 65dvh, 720px); }
+}
+@media (max-width: 620px) {
+  #plume.view.active .plume-global-action-bar .plume-map-mode-controls { flex-basis: 100%; }
+  #plume.view.active .plume-global-action-bar .plume-map-button,
+  #plume.view.active .plume-global-action-bar .plume-layer-button { min-height: 40px; }
+  #plume.view.active .plume-v2-map-controls .plume-map-action-controls { margin-left: 0; }
+  #plume.view.active .plume-v2-map-controls .plume-map-control-label { display: none; }
+  #plume.view.active .plume-3d-model-facts { right: 8px; width: calc(100% - 160px); }
+}
+/* Fullscreen keeps its own viewport contract at every breakpoint. */
+#plume.view.active.plume-map-maximized { height: 100dvh; }
+#plume.view.active.plume-map-maximized .plume-v2-workspace { display: block; height: 100%; }
+#plume.view.active.plume-map-maximized .plume-v2-map-column { height: 100%; }
+
+#plume.view.active .plume-weather-at-a-glance { min-height: 0; gap: 4px; }
+#plume.view.active .plume-weather-glance-main {
+  min-height: 42px;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 8px;
+}
+#plume.view.active .plume-weather-glance-compass > span { font-size: 8px; }
+#plume.view.active .plume-weather-glance-compass i { height: 16px; }
+#plume.view.active .plume-release-grid > .plume-release-quantity-field { grid-column: 1; }
+#plume.view.active .plume-release-grid > .plume-release-unit-field { grid-column: 2; }
+#plume.view.active .plume-release-grid > .plume-release-duration-field { grid-column: 1; }
+#plume.view.active .plume-release-grid > .plume-release-height-field { grid-column: 2; }
+#plume.view.active .plume-release-grid .plume-field-label-row > label { overflow-wrap: normal; }
+#plume.view.active .plume-weather-source-row { display: grid; align-items: end; }
+@media (min-width: 1101px) {
+  .layout:has(#plume.active) { padding-bottom: 0; }
+}
+#plume.view.active .plume-release-grid > #plume-release-duration-field,
+#plume.view.active .plume-release-grid > #plume-puff-duration-field { grid-column: 1; }
+#plume.view.active .plume-weather-source-row > .plume-model-field { grid-column: 1; grid-row: 1; }
+#plume.view.active .plume-weather-source-row > #use-live-plume-weather-btn { grid-column: 2; grid-row: 1; }
+
+/* Keep optional source summaries on one row until their details are opened. */
+#plume.view.active .plume-release-grid > .container-profile,
+#plume.view.active .plume-release-grid > .plume-input-review {
+  grid-column: auto;
+  margin: 0;
+  padding: 5px 7px;
+}
+#plume.view.active .plume-release-grid > details[open] { grid-column: 1 / -1; }
+#plume.view.active .plume-release-grid > details > summary { font-size: 12px; line-height: 1.25; }
+#plume.view.active .plume-weather-glance-metrics { gap: 4px; font-size: 10px; }
+#plume.view.active .plume-weather-glance-metrics strong { font-size: 11px; }
+
+
+/* Wrapped buttons reserve room above the floating map tools at every width. */
+#plume.view.active .plume-map-maximize-button,
+#plume.view.active.plume-map-maximized .plume-map-maximize-button,
+#plume.view.active .plume-compass-control,
+#plume.view.active .plume-3d-model-facts {
+  top: calc(var(--plume-map-controls-height, 40px) + 22px);
+}
+/* Threat Zone is a compact hazard action in the page toolbar. Its existing
+   live result card is moved into the dialog by script, so every value remains
+   connected to the same model and facility-detail elements. */
+#plume.view.active .plume-global-action-bar .plume-threat-zone-button {
+  border-color: #ffd18a;
+  background: linear-gradient(180deg, #ff9f1c 0%, #f97316 52%, #d9480f 100%);
+  color: #fff;
+  box-shadow: inset 0 -3px 0 rgba(126, 32, 3, .48), 0 4px 0 #8f2d08, 0 7px 16px rgba(231, 92, 18, .34);
+}
+#plume.view.active .plume-global-action-bar .plume-threat-zone-button:hover,
+#plume.view.active .plume-global-action-bar .plume-threat-zone-button:focus-visible {
+  border-color: #ffe2ae;
+  background: linear-gradient(180deg, #ffb347 0%, #fb7c18 52%, #e85d04 100%);
+  color: #fff;
+  transform: translateY(-1px);
+}
+#plume.view.active .plume-global-action-bar .plume-threat-zone-button:active {
+  box-shadow: inset 0 -2px 0 rgba(126, 32, 3, .5), 0 1px 0 #8f2d08, 0 3px 8px rgba(231, 92, 18, .28);
+  transform: translateY(2px);
+}
+
+#plume.view.active .plume-threat-zone-dialog {
+  width: min(780px, calc(100vw - 32px));
+  max-width: none;
+  max-height: min(88dvh, 820px);
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid #d65d21;
+  border-radius: 12px;
+  background: #041523;
+  color: #f8fafc;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .58), 0 0 0 1px rgba(255, 154, 84, .16);
+}
+#plume.view.active .plume-threat-zone-dialog::backdrop { background: rgba(1, 10, 17, .72); backdrop-filter: blur(2px); }
+#plume.view.active .plume-threat-zone-dialog-shell { display: flex; max-height: min(88dvh, 820px); flex-direction: column; }
+#plume.view.active .plume-threat-zone-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 16px;
+  border-bottom: 1px solid rgba(214, 93, 33, .5);
+  background: linear-gradient(135deg, #5e210d, #09233b 72%);
+}
+#plume.view.active .plume-threat-zone-dialog-header h2 { margin: 2px 0 0; color: #fff; font-size: clamp(1.15rem, 2vw, 1.65rem); letter-spacing: .04em; text-transform: uppercase; }
+#plume.view.active .plume-threat-zone-dialog-header .plume-eyebrow { margin: 0; color: #ff9b61; }
+#plume.view.active .plume-threat-zone-dialog-close {
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 1px solid #d47a4b;
+  border-radius: 6px;
+  background: #09233b;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: .7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+#plume.view.active .plume-threat-zone-dialog-close:hover,
+#plume.view.active .plume-threat-zone-dialog-close:focus-visible { border-color: #ffd323; color: #ffd323; outline: none; }
+#plume.view.active .plume-threat-zone-dialog-content { min-height: 0; padding: 12px; overflow: auto; }
+#plume.view.active .plume-threat-zone-dialog-content > .plume-intelligence-card { display: block !important; min-width: 0; margin: 0; border-color: #d65d21; }
+#plume.view.active .plume-threat-zone-dialog-content .plume-zone-summary { max-height: 50vh; overflow: auto; }
+
+/* Keep the map navigator useful without letting it dominate the map face. */
+#plume.view.active .plume-compass-control {
+  width: 96px;
+  min-width: 96px;
+  grid-template-columns: 24px auto;
+  gap: 3px;
+  padding: 3px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(3, 14, 25, .3);
+}
+#plume.view.active .plume-compass-ring { width: 24px; height: 24px; }
+#plume.view.active .plume-compass-buttons { grid-template-columns: repeat(3, 20px); gap: 2px; }
+#plume.view.active .plume-compass-button { min-width: 20px; min-height: 20px; border-radius: 4px; font-size: 11px; }
+#plume.view.active #plume-bearing-output { font-size: 7px; }

@@ -146,12 +146,40 @@ describe('Incident Command operational hub', () => {
     });
   });
 
+  it('keeps facility-involved chemicals separate from the single explicitly selected plume chemical', () => {
+    const api = moduleApi();
+    const state = api.normalizeIncidentState({
+      incidentId: 'incident-multi-chemical',
+      chemicalName: 'Chlorine',
+      selectedChemicalId: 22,
+      involvedChemicals: [
+        { chemicalId: 'chlorine', chemicalName: 'Chlorine', cas: '7782-50-5' },
+        { chemicalId: 'ammonia', chemicalName: 'Ammonia', un: '1005' },
+      ],
+    });
+    expect(state).toMatchObject({
+      activeChemical: { displayName: 'Chlorine', canonicalId: '22' },
+      activeChemicals: [
+        { displayName: 'Chlorine', cas: '7782-50-5' },
+        { displayName: 'Ammonia', un: '1005' },
+      ],
+      involvedChemicals: [
+        { displayName: 'Chlorine' },
+        { displayName: 'Ammonia' },
+      ],
+    });
+  });
+
   it('maps the canonical incident state to reusable ICS prefill data', () => {
     const api = moduleApi();
     const prefill = api.buildIcsPrefill({
       incidentId: 'incident-2', incidentName: 'Hydrazine Tank Leak', incidentNumber: 'H-2',
       startDate: '09/17/2026', startTime: '10:00 AM', address: '1 Main St',
-      chemicalName: 'Hydrazine', casNumber: '302-01-2', unNumber: '2029', ergGuide: '132',
+      chemicalName: 'Hydrazine', selectedChemicalId: 54, casNumber: '302-01-2', unNumber: '2029', ergGuide: '132',
+      involvedChemicals: [
+        { chemicalId: 'hydrazine', chemicalName: 'Hydrazine', cas: '302-01-2', un: '2029' },
+        { chemicalId: 'ammonia', chemicalName: 'Ammonia', un: '1005' },
+      ],
       objectives: 'Isolate release area\nIdentify leak point', commandStructure: 'IC / HazMat Group / Safety',
       communications: 'Channel 3', medicalPlan: 'EMS staging', stagingResources: 'South lot',
       notes: 'Initial size-up',
@@ -167,6 +195,9 @@ describe('Incident Command operational hub', () => {
         '204': { assignments: 'South lot' },
       },
     });
+    const form201 = (prefill.forms as Record<string, { situationSummary: string }>)['201'];
+    expect(form201.situationSummary).toContain('Chemicals identified as involved: Hydrazine, CAS 302-01-2, UN 2029; Ammonia, UN 1005');
+    expect(form201.situationSummary).toContain('Explicit plume chemical: Hydrazine');
     expect(server).toContain('normalized.includes("objectives")');
     expect(server).toContain('normalized.includes("communicationsplan")');
   });

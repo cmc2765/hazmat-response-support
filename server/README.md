@@ -51,7 +51,7 @@ Browser ──> Hono (Node 20) ──┬──> serves server/public/ (static UI
 | GET | `/api/thresholds?chemicalId=` | AEGL/ERPG/TEEL thresholds |
 | POST | `/api/plume/run` | Runs the real Gaussian plume/puff model, returns isopleths |
 | GET | `/api/facilities?q=` | Tier II facilities |
-| GET | `/api/facilities/:id` | Single facility with chemicals |
+| GET | `/api/facilities/:id` | Single facility with its linked reported chemical rows, identifiers, and quantities |
 | GET | `/api/sync/:clientId` | Full delta sync (all tables) |
 | GET | `/api/wildfire/firms?west=&south=&east=&north=&hours=` | NASA FIRMS NOAA-20/21 detections in map bounds |
 | GET | `/api/wildfire/perimeters?west=&south=&east=&north=` | NIFC / WFIGS fire perimeters in map bounds |
