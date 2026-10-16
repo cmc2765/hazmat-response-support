@@ -40,6 +40,18 @@ describe('global navigation and page header contract', () => {
     expect(sharedHeaderStyles).toContain('@media (max-width: 1100px)');
   });
 
+  it('shows all nine primary modules in a three-column phone grid without sideways nav scrolling', () => {
+    expect(html).toContain('dashboard-header.css?v=7');
+    const phoneRules = sharedHeaderStyles.slice(sharedHeaderStyles.indexOf('/* Phone navigation: show all nine modules'));
+    expect(phoneRules).toContain('@media (max-width: 767px)');
+    expect(phoneRules).toContain('grid-template-columns: repeat(3, minmax(0, 1fr)) !important;');
+    expect(phoneRules).toContain('grid-template-rows: repeat(3, minmax(0, 1fr)) !important;');
+    expect(phoneRules).toContain('overflow-x: hidden !important;');
+    expect(phoneRules).toContain('position: relative !important;');
+    expect(phoneRules).toContain('min-width: 0 !important;');
+    expect(html.match(/class="module-btn app-nav-item/g)).toHaveLength(9);
+  });
+
   it('uses one continuous nav frame with a flush gold active accent', () => {
     expect(sharedHeaderStyles).toContain('border: 0 !important;');
     expect(sharedHeaderStyles).toContain('border: 2px solid rgba(143, 180, 207, 0.62) !important;');

@@ -438,3 +438,46 @@ body {
 #incident .incident-command-dashboard {
   padding-top: 0 !important;
 }
+
+/* Phone navigation: show all nine modules at once instead of scrolling sideways.
+   The 1100px rule above retains the existing tablet behavior. */
+@media (max-width: 767px) {
+  .app-shell > .app-header-row,
+  .app-shell > .command-header.hazmat-command-bar.topbar,
+  .app-shell:not(:has(#overview.view.active)) > .command-header.hazmat-command-bar.topbar {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: 88px 204px !important;
+    height: 292px !important;
+    min-height: 292px !important;
+    max-height: 292px !important;
+    /* A three-row sticky header would obscure most short phone screens. */
+    position: relative !important;
+    top: auto !important;
+  }
+
+  .app-shell > .app-header-row .app-primary-nav {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(3, minmax(0, 1fr)) !important;
+    height: 204px !important;
+    min-height: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none;
+  }
+
+  .app-shell > .app-header-row .app-primary-nav .app-nav-item {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    grid-template-rows: 22px minmax(0, auto) !important;
+    padding: 5px 3px !important;
+  }
+
+  .app-shell > .app-header-row .app-nav-label {
+    font-size: 11px !important;
+    line-height: 1.1 !important;
+  }
+}
